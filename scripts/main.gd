@@ -42,7 +42,8 @@ func show_character_select()->void:
 	var ids:=GameData.CHARACTERS.keys()
 	var y:=175.0
 	for id in ids:
-		var d:Dictionary=GameData.CHARACTERS[id]; var unlocked_now:=id in unlocked
+		var d:Dictionary=GameData.CHARACTERS[id]
+		var unlocked_now: bool = id in unlocked
 		var b:=Button.new(); b.position=Vector2(260,y); b.size=Vector2(760,115); b.disabled=not unlocked_now
 		b.text="%s\n%s%s" % [d.name,d.tagline,"" if unlocked_now else "  [WIN ONCE TO UNLOCK]"]
 		b.add_theme_font_size_override("font_size",20); ui.add_child(b)
