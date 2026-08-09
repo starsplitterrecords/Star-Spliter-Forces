@@ -51,5 +51,5 @@ static func xp_required(level: int) -> int:
 	return int(7 + pow(level, 1.42) * 5.0)
 
 static func format_time(seconds: float) -> String:
-	var s := max(0, int(seconds))
+	var s: int = maxi(0, int(seconds))
 	return "%02d:%02d" % [s / 60, s % 60]
