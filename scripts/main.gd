@@ -29,12 +29,16 @@ func add_button(text:String,y:float,callback:Callable,width:float=360.0)->Button
 	var b:=Button.new(); b.text=text; b.position=Vector2((1280-width)/2.0,y); b.size=Vector2(width,58); b.add_theme_font_size_override("font_size",20); b.pressed.connect(callback); ui.add_child(b); return b
 
 func show_title()->void:
-	clear_screen(); add_heading("STAR SPLITTER FORCES",105,54)
-	var sub:=add_heading("SURVIVE THE SIGNAL",174,18); sub.modulate=Color("68ecff")
-	add_button("ENTER THE FIELD",285,show_character_select)
-	add_button("SETTINGS",356,show_settings)
-	var stats:=Label.new(); stats.text="RUNS %d    •    WINS %d    •    SIGNAL %d" % [int(save.runs),int(save.wins),int(save.currency)]; stats.position=Vector2(80,450); stats.size=Vector2(1120,40); stats.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER; stats.modulate=Color(1,1,1,0.55); ui.add_child(stats)
+	clear_screen(); add_heading("STAR SPLITTER FORCES",90,54)
+	var sub:=add_heading("SURVIVE THE SIGNAL",158,18); sub.modulate=Color("68ecff")
+	add_button("ENTER THE FIELD",260,show_character_select)
+	add_button("QUICK TEST — 90 SEC",330,start_quick_test)
+	add_button("SETTINGS",400,show_settings)
+	var stats:=Label.new(); stats.text="RUNS %d    •    WINS %d    •    SIGNAL %d" % [int(save.runs),int(save.wins),int(save.currency)]; stats.position=Vector2(80,485); stats.size=Vector2(1120,40); stats.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER; stats.modulate=Color(1,1,1,0.55); ui.add_child(stats)
 	var footer:=Label.new(); footer.text="An original Star Splitter Records game • Development build"; footer.position=Vector2(80,650); footer.size=Vector2(1120,30); footer.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER; footer.modulate=Color(1,1,1,0.35); ui.add_child(footer)
+
+func start_quick_test() -> void:
+	start_run("pulse_width_codex", true)
 
 func show_character_select()->void:
 	clear_screen(); add_heading("SELECT A FORCE",70,42)
@@ -48,16 +52,16 @@ func show_character_select()->void:
 		b.text="%s\n%s%s" % [d.name,d.tagline,"" if unlocked_now else "  [WIN ONCE TO UNLOCK]"]
 		b.add_theme_font_size_override("font_size",20); ui.add_child(b)
 		if unlocked_now:
-			b.pressed.connect(start_run.bind(id))
+			b.pressed.connect(start_run.bind(String(id), false))
 		y+=135.0
 	add_button("BACK",565,show_title,240)
 
-func start_run(id:String)->void:
+func start_run(id:String, quick_test:bool=false)->void:
 	selected_character=id
 	if ui:
 		ui.queue_free()
 		ui = null
-	current_run=GameRun.new(); current_run.setup(id); add_child(current_run); current_run.finished.connect(on_run_finished)
+	current_run=GameRun.new(); current_run.setup(id, quick_test); add_child(current_run); current_run.finished.connect(on_run_finished)
 
 func on_run_finished(result:Dictionary)->void:
 	get_tree().paused = false
@@ -78,7 +82,7 @@ func show_results(result:Dictionary)->void:
 	clear_screen(); add_heading("SIGNAL STABILIZED" if result.victory else "SIGNAL LOST",105,48)
 	var summary:=Label.new(); summary.text="%s\nTIME  %s\nLEVEL  %d\nPURGED  %d\n\n+%d SIGNAL" % [GameData.CHARACTERS[result.character].name,GameData.format_time(result.time),int(result.level),int(result.kills),int(result.kills/5)+int(result.level)*2+(100 if result.victory else 0)]
 	summary.position=Vector2(390,215); summary.size=Vector2(500,230); summary.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER; summary.add_theme_font_size_override("font_size",21); ui.add_child(summary)
-	add_button("RUN AGAIN",490,start_run.bind(result.character)); add_button("RETURN TO ARRAY",560,show_title)
+	add_button("RUN AGAIN",490,start_run.bind(String(result.character), false)); add_button("RETURN TO ARRAY",560,show_title)
 
 func show_settings()->void:
 	clear_screen(); add_heading("SETTINGS",90,42)
