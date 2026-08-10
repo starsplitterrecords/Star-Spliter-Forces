@@ -16,6 +16,7 @@ var elite_clock := 45.0
 var boss_spawned := false
 var paused_for_choice := false
 var ended := false
+var quick_test_mode := false
 var hud_layer: CanvasLayer
 var hp_label: Label
 var time_label: Label
@@ -30,8 +31,12 @@ var character_id := "pulse_width_codex"
 var rng := RandomNumberGenerator.new()
 var run_length := GameData.RUN_LENGTH
 
-func setup(id: String) -> void:
+func setup(id: String, quick_test: bool=false) -> void:
 	character_id = id
+	quick_test_mode = quick_test
+	if quick_test_mode:
+		run_length = 90.0
+		elite_clock = 12.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -69,6 +74,8 @@ func build_hud() -> void:
 	level_label=Label.new(); level_label.custom_minimum_size=Vector2(250,30); level_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT; top.add_child(level_label)
 	xp_bar=ProgressBar.new(); xp_bar.position=Vector2(24,58); xp_bar.size=Vector2(1232,12); xp_bar.show_percentage=false; root.add_child(xp_bar)
 	var hint:=Label.new(); hint.text="WASD / arrows to move • P to pause • touch left side to steer"; hint.position=Vector2(24,680); hint.modulate=Color(1,1,1,0.5); root.add_child(hint)
+	if quick_test_mode:
+		var debug_label:=Label.new(); debug_label.text="QUICK TEST MODE — accelerated progression"; debug_label.position=Vector2(24,90); debug_label.modulate=Color("ffd75e"); root.add_child(debug_label)
 	choice_panel=PanelContainer.new()
 	choice_panel.process_mode = Node.PROCESS_MODE_ALWAYS
 	choice_panel.visible=false
@@ -88,18 +95,22 @@ func _process(delta: float) -> void:
 	spawn_clock -= delta
 	elite_clock -= delta
 	if spawn_clock <= 0.0:
-		spawn_clock = maxf(0.09, 0.72 - elapsed*0.0009)
-		var count := 1 + int(elapsed/150.0)
+		var progress: float = elapsed / run_length
+		spawn_clock = maxf(0.08, 0.58 - progress * 0.42) if quick_test_mode else maxf(0.09, 0.72 - elapsed*0.0009)
+		var count: int = 1 + int(progress * 3.0) if quick_test_mode else 1 + int(elapsed/150.0)
 		for i in count:
 			spawn_enemy(pick_enemy_kind())
-	if elite_clock<=0.0 and elapsed < run_length-55.0:
-		elite_clock = maxf(32.0,58.0-elapsed*0.035)
+	var elite_cutoff: float = run_length - (18.0 if quick_test_mode else 55.0)
+	if elite_clock<=0.0 and elapsed < elite_cutoff:
+		elite_clock = 14.0 if quick_test_mode else maxf(32.0,58.0-elapsed*0.035)
 		spawn_enemy("elite_null")
-	if elapsed >= run_length-45.0 and not boss_spawned:
+	var boss_lead: float = 18.0 if quick_test_mode else 45.0
+	if elapsed >= run_length-boss_lead and not boss_spawned:
 		boss_spawned=true; spawn_enemy("the_silence"); audio.set_boss(true)
 	if elapsed >= run_length and boss_spawned and not has_boss():
 		end_run(true)
-	if elapsed >= run_length+75.0:
+	var overtime: float = 25.0 if quick_test_mode else 75.0
+	if elapsed >= run_length+overtime:
 		end_run(false)
 	audio.set_intensity(elapsed/run_length)
 	update_collisions(delta)
@@ -108,8 +119,8 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func pick_enemy_kind() -> String:
-	var t := elapsed/run_length
-	var r := rng.randf()
+	var t: float = elapsed/run_length
+	var r: float = rng.randf()
 	if t > 0.45 and r < 0.16:
 		return "carrier"
 	if t > 0.16 and r < 0.42:
@@ -120,7 +131,7 @@ func spawn_enemy(kind: String) -> void:
 	if live_enemies().size() > 450 and kind not in ["elite_null", "the_silence"]:
 		return
 	var enemy:=ForceEnemy.new(); add_child(enemy)
-	var a:=rng.randf_range(0,TAU); var dist:=rng.randf_range(520,700)
+	var a: float = rng.randf_range(0,TAU); var dist: float = rng.randf_range(520,700)
 	enemy.position=player.position+Vector2.from_angle(a)*dist
 	enemy.configure(kind,player,1.0+elapsed/run_length*1.15)
 	enemy.died.connect(on_enemy_died)
@@ -133,9 +144,9 @@ func live_enemies() -> Array:
 	return out
 
 func nearest_enemy(pos: Vector2):
-	var best=null; var best_d:=INF
+	var best=null; var best_d: float = INF
 	for enemy in live_enemies():
-		var d:=pos.distance_squared_to(enemy.position)
+		var d: float = pos.distance_squared_to(enemy.position)
 		if d<best_d: best_d=d; best=enemy
 	return best
 
@@ -174,7 +185,7 @@ func update_collisions(_delta:float)->void:
 	for child in get_children():
 		if child is ForcePickup:
 			var gem:ForcePickup=child
-			var d:=gem.position.distance_to(player.position)
+			var d: float = gem.position.distance_to(player.position)
 			if d<player.pickup_range*2.2:
 				gem.velocity=gem.position.direction_to(player.position)*minf(560.0,180.0+(player.pickup_range*2.2-d)*4.0)
 			if d<24.0:
@@ -186,7 +197,8 @@ func on_enemy_died(enemy:ForceEnemy,xp_value:int)->void:
 	if enemy.boss and elapsed>=run_length-2.0: end_run(true)
 
 func gain_xp(value:int)->void:
-	xp+=value
+	var awarded_xp: int = value * 4 if quick_test_mode else value
+	xp += awarded_xp
 	if xp>=xp_need:
 		xp-=xp_need; level+=1; xp_need=GameData.xp_required(level); show_level_choices()
 
