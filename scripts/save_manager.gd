@@ -11,6 +11,10 @@ static func defaults() -> Dictionary:
 		"runs": 0,
 		"unlocked_characters": ["ilyra_venn"],
 		"unlocked_tracks": [],
+		"discovered_signals": [],
+		"discovered_projects": [],
+		"discovered_forces": ["pulse_width_codex"],
+		"archive_reads": 0,
 		"settings": {"music": 0.75, "sfx": 0.9, "screen_shake": true}
 	}
 
@@ -31,6 +35,11 @@ static func load_data() -> Dictionary:
 	if not "ilyra_venn" in unlocked:
 		unlocked.append("ilyra_venn")
 	data["unlocked_characters"] = unlocked
+	for array_key in ["unlocked_tracks", "discovered_signals", "discovered_projects", "discovered_forces"]:
+		if typeof(data.get(array_key, [])) != TYPE_ARRAY:
+			data[array_key] = []
+	if not "pulse_width_codex" in data["discovered_forces"]:
+		data["discovered_forces"].append("pulse_width_codex")
 	return data
 
 static func save_data(data: Dictionary) -> void:
