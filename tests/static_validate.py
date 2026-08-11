@@ -17,10 +17,15 @@ assert 'run/main_scene="res://scenes/Main.tscn"' in project
 run = (root / "scripts/run.gd").read_text()
 for feature in ["show_level_choices", "spawn_enemy", "InputEventScreenDrag", "end_run", "RESONANCE", "DRIFT", "FRACTURE", "seed_discoveries", "on_discovery_claimed", "spawn_patrol_encounter", "expedition_goal"]:
     assert feature in run, feature
+assert "weapons.add_upgrade" in run
+assert "weapons.apply_choice" not in run
+assert "button.process_mode=Node.PROCESS_MODE_ALWAYS" in run
+assert "get_tree().paused=true" in run
 
 weapons = (root / "scripts/weapon_system.gd").read_text()
 for weapon in ["pulse_bolt", "orbit_shard", "resonance_wave", "ion_lance", "ghost_mine", "warm_drone"]:
     assert weapon in weapons, weapon
+assert "func add_upgrade" in weapons
 
 main = (root / "scripts/main.gd").read_text()
 for feature in ["ilyra_venn", "show_archive", "discovered_signals", "unlocked_tracks", "BEGIN EXPEDITION"]:
