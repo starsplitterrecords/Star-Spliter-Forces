@@ -3,16 +3,18 @@ extends Node2D
 
 signal died
 
-var move_input := Vector2.ZERO
-var speed := 285.0
-var hp := 100.0
-var max_hp := 100.0
-var invuln := 0.0
-var accent := Color("64f4ff")
-var pickup_range := 84.0
-var damage_multiplier := 1.0
-var cooldown_multiplier := 1.0
-var character_id := "pulse_width_codex"
+var move_input: Vector2 = Vector2.ZERO
+var speed: float = 300.0
+var hp: float = 100.0
+var max_hp: float = 100.0
+var invuln: float = 0.0
+var accent: Color = Color("68ecff")
+var pickup_range: float = 84.0
+var damage_multiplier: float = 1.0
+var cooldown_multiplier: float = 1.0
+var character_id: String = "ilyra_venn"
+var movement_ratio: float = 0.0
+var force_state: String = "DRIFT"
 
 func configure(id: String) -> void:
 	character_id = id
@@ -23,11 +25,16 @@ func configure(id: String) -> void:
 	accent = d.accent
 	queue_redraw()
 
+func set_force_state(state: String) -> void:
+	force_state = state
+	queue_redraw()
+
 func _process(delta: float) -> void:
 	invuln = maxf(0.0, invuln - delta)
+	movement_ratio = move_input.limit_length(1.0).length()
 	position += move_input.limit_length(1.0) * speed * delta
-	position.x = clamp(position.x, -GameData.WORLD_HALF.x, GameData.WORLD_HALF.x)
-	position.y = clamp(position.y, -GameData.WORLD_HALF.y, GameData.WORLD_HALF.y)
+	position.x = clampf(position.x, -GameData.WORLD_HALF.x, GameData.WORLD_HALF.x)
+	position.y = clampf(position.y, -GameData.WORLD_HALF.y, GameData.WORLD_HALF.y)
 	queue_redraw()
 
 func hurt(amount: float) -> bool:
@@ -44,8 +51,17 @@ func heal(amount: float) -> void:
 	hp = minf(max_hp, hp + amount)
 
 func _draw() -> void:
-	var flicker := invuln > 0.0 and int(Time.get_ticks_msec()/60) % 2 == 0
-	var c := Color(accent, 0.35) if flicker else accent
-	draw_circle(Vector2.ZERO, 32.0, Color(c, 0.08))
-	draw_colored_polygon(PackedVector2Array([Vector2(0,-22),Vector2(19,15),Vector2(0,9),Vector2(-19,15)]), c)
-	draw_circle(Vector2.ZERO, 6.0, Color("f7fbff"))
+	var flicker: bool = invuln > 0.0 and int(Time.get_ticks_msec()/60) % 2 == 0
+	var c: Color = Color(accent, 0.35) if flicker else accent
+	var aura: Color = Color(c, 0.10)
+	if force_state == "RESONANCE":
+		aura = Color(c, 0.23)
+	elif force_state == "FRACTURE":
+		aura = Color("ff376f", 0.18)
+	draw_circle(Vector2.ZERO, 40.0 if force_state == "RESONANCE" else 34.0, aura)
+	if character_id == "ilyra_venn":
+		draw_colored_polygon(PackedVector2Array([Vector2(0,-24),Vector2(18,-8),Vector2(15,18),Vector2(0,11),Vector2(-15,18),Vector2(-18,-8)]), c)
+		draw_line(Vector2(-12,-4),Vector2(12,-4),Color("f7fbff"),3.0)
+	else:
+		draw_colored_polygon(PackedVector2Array([Vector2(0,-22),Vector2(19,15),Vector2(0,9),Vector2(-19,15)]), c)
+	draw_circle(Vector2.ZERO, 5.0, Color("f7fbff"))
