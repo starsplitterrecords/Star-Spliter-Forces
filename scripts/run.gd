@@ -67,7 +67,7 @@ func build_player()->void:
 	weapons=WeaponSystem.new();add_child(weapons);weapons.setup(player,self,String(GameData.CHARACTERS[character_id].starting_weapon));xp_need=GameData.xp_required(level)
 
 func build_hud()->void:
-	hud_layer=CanvasLayer.new();add_child(hud_layer);var root:Control=Control.new();root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);hud_layer.add_child(root)
+	hud_layer=CanvasLayer.new();hud_layer.process_mode=Node.PROCESS_MODE_ALWAYS;add_child(hud_layer);var root:Control=Control.new();root.process_mode=Node.PROCESS_MODE_ALWAYS;root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);hud_layer.add_child(root)
 	var top:HBoxContainer=HBoxContainer.new();top.position=Vector2(24,18);top.size=Vector2(1232,38);top.add_theme_constant_override("separation",22);root.add_child(top)
 	hp_label=Label.new();hp_label.custom_minimum_size=Vector2(310,30);top.add_child(hp_label);time_label=Label.new();time_label.custom_minimum_size=Vector2(180,30);time_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;top.add_child(time_label);level_label=Label.new();level_label.custom_minimum_size=Vector2(250,30);level_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT;top.add_child(level_label)
 	xp_bar=ProgressBar.new();xp_bar.position=Vector2(24,58);xp_bar.size=Vector2(1232,10);xp_bar.show_percentage=false;root.add_child(xp_bar)
@@ -75,7 +75,7 @@ func build_hud()->void:
 	resonance_bar=ProgressBar.new();resonance_bar.position=Vector2(365,83);resonance_bar.size=Vector2(520,12);resonance_bar.min_value=0;resonance_bar.max_value=100;resonance_bar.show_percentage=false;root.add_child(resonance_bar)
 	objective_label=Label.new();objective_label.position=Vector2(24,112);objective_label.size=Vector2(900,52);objective_label.add_theme_font_size_override("font_size",17);objective_label.modulate=Color("a8f7ff");root.add_child(objective_label)
 	var hint:Label=Label.new();hint.text="EXPLORE distant rings • DEBUG: 1 level  2 encounter  3 state  4 signal  5 climax  6 invuln  7 purge";hint.position=Vector2(24,680);hint.modulate=Color(1,1,1,0.42);root.add_child(hint)
-	choice_panel=PanelContainer.new();choice_panel.process_mode=Node.PROCESS_MODE_ALWAYS;choice_panel.visible=false;choice_panel.position=Vector2(290,175);choice_panel.size=Vector2(700,370);root.add_child(choice_panel)
+	choice_panel=PanelContainer.new();choice_panel.process_mode=Node.PROCESS_MODE_ALWAYS;choice_panel.visible=false;choice_panel.position=Vector2(290,175);choice_panel.size=Vector2(700,370);choice_panel.mouse_filter=Control.MOUSE_FILTER_STOP;root.add_child(choice_panel)
 
 func seed_discoveries()->void:
 	var positions:Array=[Vector2(850,-420),Vector2(-1120,-760),Vector2(1450,820)]
@@ -125,7 +125,9 @@ func spawn_enemy_at(kind:String,pos:Vector2)->void:
 	var enemy:ForceEnemy=ForceEnemy.new();add_child(enemy);enemy.position=pos;enemy.configure(kind,player,1.0+minf(0.8,elapsed/1200.0));enemy.died.connect(on_enemy_died)
 func spawn_boss()->void:
 	if has_boss():return
-	boss_spawned=true;spawn_enemy("the_silence");if audio:audio.set_boss(true);flash_message="THE SILENCE — EXTRACTION BLOCKED";flash_clock=1.8
+	boss_spawned=true;spawn_enemy("the_silence")
+	if audio:audio.set_boss(true)
+	flash_message="THE SILENCE — EXTRACTION BLOCKED";flash_clock=1.8
 func live_enemies()->Array:
 	var out:Array=[]
 	for child in get_children():
@@ -190,12 +192,16 @@ func gain_xp(value:int)->void:
 func debug_level_up()->void:xp=xp_need;gain_xp(0)
 func show_level_choices()->void:
 	var options:Array=weapons.choices();if options.is_empty():return
-	paused_for_choice=true;player.move_input=Vector2.ZERO;choice_panel.visible=true;get_tree().paused=true
+	paused_for_choice=true;player.move_input=Vector2.ZERO;choice_panel.visible=true
 	for child in choice_panel.get_children():child.queue_free()
-	var box:VBoxContainer=VBoxContainer.new();box.add_theme_constant_override("separation",12);choice_panel.add_child(box);var title:Label=Label.new();title.text="CHOOSE WHAT TO CARRY FORWARD";title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;title.add_theme_font_size_override("font_size",22);box.add_child(title)
+	var box:VBoxContainer=VBoxContainer.new();box.process_mode=Node.PROCESS_MODE_ALWAYS;box.add_theme_constant_override("separation",12);choice_panel.add_child(box)
+	var title:Label=Label.new();title.process_mode=Node.PROCESS_MODE_ALWAYS;title.text="CHOOSE WHAT TO CARRY FORWARD";title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;title.add_theme_font_size_override("font_size",22);box.add_child(title)
 	for option in options:
-		var button:Button=Button.new();var data:Dictionary=GameData.PASSIVES[option.id] if option.passive else GameData.WEAPONS[option.id];var origin:String="SYSTEM" if option.passive else String(GameData.FORCES.get(data.get("force",""),{}).get("name","UNKNOWN FORCE"));button.text="%s  •  %s\n%s" % [data.name,origin,data.desc];button.custom_minimum_size=Vector2(660,78);button.pressed.connect(choose_upgrade.bind(option));box.add_child(button)
-func choose_upgrade(option:Dictionary)->void:weapons.apply_choice(option);choice_panel.visible=false;paused_for_choice=false;get_tree().paused=false;flash_message="INTEGRATED";flash_clock=0.8
+		var button:Button=Button.new();button.process_mode=Node.PROCESS_MODE_ALWAYS;button.mouse_filter=Control.MOUSE_FILTER_STOP
+		var data:Dictionary=GameData.PASSIVES[option.id] if option.passive else GameData.WEAPONS[option.id];var origin:String="SYSTEM" if option.passive else String(GameData.FORCES.get(data.get("force",""),{}).get("name","UNKNOWN FORCE"));button.text="%s  •  %s\n%s" % [data.name,origin,data.desc];button.custom_minimum_size=Vector2(660,78);button.pressed.connect(choose_upgrade.bind(option));box.add_child(button)
+	get_tree().paused=true
+func choose_upgrade(option:Dictionary)->void:
+	weapons.add_upgrade(String(option.id),bool(option.passive));choice_panel.visible=false;paused_for_choice=false;get_tree().paused=false;flash_message="INTEGRATED";flash_clock=0.8
 func has_boss()->bool:
 	for enemy in live_enemies():
 		if enemy.boss:return true
