@@ -2,38 +2,44 @@
 
 ## Current direction
 
-Star Splitter Forces is now being built as a synthesis of the earlier survivor-game experiments and the expanded Star Splitter universe.
+Star Splitter Forces is an exploration-first survivor roguelite built to be satisfying, readable and replayable rather than frantic.
 
 - **Characters and worlds** come from fictional properties such as Rex Fleet.
 - **Forces** are Star Splitter Records creative languages expressed as combat systems.
-- **Music** is a continuous systemic layer rather than background decoration.
-- Player performance moves through **RESONANCE / DRIFT / FRACTURE** rather than a simple good/bad meter.
+- **Music** is a continuous systemic layer and a discovery reward.
+- **Exploration** exposes players to projects, tracks and Forces through in-world signals.
+- The persistent **Star Splitter Archive** becomes a record collection assembled by play.
+- Player state moves through **RESONANCE / DRIFT / FRACTURE**; none is simply a failure state.
 
 ## Implemented
 
-- Godot 4 mobile-first project and main scene.
-- Title, character selection, settings, results, persistent save/unlocks.
-- **Commodore Ilyra Venn** is the showcase starting character from Rex Fleet.
-- Ghost Driver Unit remains an unlockable alternate experimental character.
-- Save migration automatically unlocks Ilyra for existing development saves.
-- Approximately 10-minute normal survivor run plus a 90-second accelerated test mode.
-- Desktop keyboard and touch virtual-stick movement.
-- Auto targeting and six weapon families: Pulse Bolt, Orbit Shard, Resonance Wave, Ion Lance, Ghost Mine, Warm Circuit Drone.
-- Weapons are now assigned to Force families: Pulse Width Codex, Star Splitter Rex, Resonant Currents, Ghost Driver Unit.
-- Live **Resonance / Drift / Fracture** performance-state system.
-- State affects enemy pressure, visuals, weapon cadence, damage and special behavior.
-- Performance responds to kills, elites, damage and XP collection.
-- Four passive upgrade tracks and randomized level-up selection.
-- Upgrade UI identifies the originating Force for each weapon.
-- Pulse Bolt + Signal Amplifier evolution into a multi-shot barrage.
-- Three standard enemy families now have differentiated motion: weaving wisps, charging hounds, orbiting carriers.
-- Null elites surge; The Silence has escalating boss movement phases.
-- XP drops, pickup magnetism, level curve, HP/damage/death/victory.
-- Procedural environment changes visual state in Resonance and Fracture.
-- Beat/bar/intensity-aware AudioDirector with Force, state and boss metadata ready for Star Splitter masters/stems.
-- Debug harness: `1` level-up, `2` elite, `3` cycle state, `5` boss, `6` invulnerability, `7` purge enemies.
-- Enemy population cap to protect mobile performance.
+- Godot 4 mobile-first project.
+- Commodore Ilyra Venn as showcase explorer.
+- 20-minute normal expedition target plus 90-second systems test.
+- Lower ambient enemy populations and periodic authored patrol encounters rather than constant exponential swarm pressure.
+- Three discoverable signal sites placed away from the starting route.
+- Signals identify Resonant Currents, Star Splitter Rex and Ghost Driver Unit material and persist after a run.
+- Discoveries can change the active musical Force during an expedition.
+- Persistent Archive screen for discovered projects, transmissions/tracks and Forces.
+- Expedition results explicitly report discoveries.
+- Discovery objective replaces survival time as the central run motivation.
+- Six existing weapons, passive upgrades and evolution system retained.
+- Resonance / Drift / Fracture state system retained and slowed to support deliberate play.
+- Differentiated enemy movement: weaving wisps, charging hounds, orbiting carriers, elite and boss behaviors.
+- Touch and keyboard movement.
+- AudioDirector carries Force/state/intensity/boss metadata for eventual mastered Star Splitter integration.
+- Debug harness: `1` level-up, `2` patrol encounter, `3` state, `4` bring nearest discovery into test range, `5` climax boss, `6` invulnerability, `7` purge.
+
+## Design test
+
+The next playtest is not "can the player survive?" It is:
+
+1. Does movement through mostly readable space feel pleasant?
+2. Does a distant signal create curiosity strong enough to change direction?
+3. Does reaching a signal feel like a meaningful discovery rather than collecting a pickup?
+4. Does the player want to open the Archive afterward?
+5. Does another unexplored signal create a reason to run again?
 
 ## Validation status
 
-The project has previously been opened successfully in Godot and the first strict-typing parser issues were corrected through live testing. This synthesis pass has not yet been run on the user's Godot installation. First action after pulling is therefore a 90-second Quick Test plus direct debug-key validation of upgrades, states, elite and boss behavior.
+The earlier prototype was opened successfully in Godot and strict-typing parser issues were corrected through live testing. This exploration pass still needs a Godot parse/runtime pass after pull. Use Quick Test and debug key `4` to validate discovery persistence rapidly before judging normal expedition pacing.
