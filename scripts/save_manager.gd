@@ -21,11 +21,12 @@ static func load_data() -> Dictionary:
 	var file: FileAccess = FileAccess.open(PATH, FileAccess.READ)
 	if file == null:
 		return data
-	var parsed = JSON.parse_string(file.get_as_text())
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
 	if typeof(parsed) != TYPE_DICTIONARY:
 		return data
-	for key in parsed.keys():
-		data[key] = parsed[key]
+	var parsed_data: Dictionary = parsed
+	for key in parsed_data.keys():
+		data[key] = parsed_data[key]
 	var unlocked: Array = data.get("unlocked_characters", [])
 	if not "ilyra_venn" in unlocked:
 		unlocked.append("ilyra_venn")
