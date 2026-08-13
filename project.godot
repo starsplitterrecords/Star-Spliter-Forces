@@ -2,6 +2,9 @@
 config/name="Star Splitter Forces"
 run/main_scene="res://scenes/Main.tscn"
 
+[autoload]
+WorldDirector="*res://scripts/world_director.gd"
+
 [display]
 window/size/viewport_width=1280
 window/size/viewport_height=720
