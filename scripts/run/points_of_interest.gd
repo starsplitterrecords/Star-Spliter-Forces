@@ -167,10 +167,12 @@ func _lock_blocker(p: Dictionary, player: ForcePlayer) -> String:
 			if player.velocity.length() > 30.0:
 				return "HOLD STILL"
 		"guardian":
-			var g: Variant = p.get("guardian")
-			if g == null:
+			# Spawn exactly once; a freed guardian compares equal to null in
+			# Godot 4, so presence of the key — not the value — is the test.
+			if not p.has("guardian"):
 				p.guardian = run.spawn_guardian(p)
 				return "DEFEAT THE GUARDIAN"
+			var g: Variant = p.guardian
 			if is_instance_valid(g) and not (g as ForceEnemy).dead:
 				return "DEFEAT THE GUARDIAN"
 		"ensemble":

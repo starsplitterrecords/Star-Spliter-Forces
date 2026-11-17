@@ -37,7 +37,7 @@ func step(delta: float, player: ForcePlayer, hash: SpatialHash) -> void:
 			"pool":
 				if d < float(h.radius) + 10.0 and float(h.tick) <= 0.0 and float(h.max_life) - float(h.life) > 0.6:
 					h.tick = 0.7
-					run.player_hit(float(h.damage), h.pos)
+					run.player_hit(float(h.damage) * run.hazard_damage_mult(), h.pos)
 			"strike":
 				# Warning for `warn` seconds, then a single strike.
 				if not bool(h.fired) and float(h.max_life) - float(h.life) >= float(h.get("warn", 1.1)):
@@ -48,7 +48,7 @@ func step(delta: float, player: ForcePlayer, hash: SpatialHash) -> void:
 					run.shake(6.0)
 					Audio.play_sfx("strike", randf_range(0.9, 1.1), -4.0)
 					if d < float(h.radius):
-						run.player_hit(float(h.damage), h.pos)
+						run.player_hit(float(h.damage) * run.hazard_damage_mult(), h.pos)
 					for e: ForceEnemy in hash.query(h.pos, float(h.radius)):
 						if not e.dead and e.position.distance_to(h.pos) < float(h.radius) + e.radius:
 							run.damage_enemy(e, float(h.damage) * 6.0, (e.position - h.pos).normalized(), 260.0, "environment")
@@ -59,13 +59,13 @@ func step(delta: float, player: ForcePlayer, hash: SpatialHash) -> void:
 					var rel: Vector2 = player.position - h.pos
 					var along: float = rel.dot(dir)
 					if along > 0.0 and along < float(h.length) and absf(rel.cross(dir)) < float(h.radius):
-						run.player_hit(float(h.damage), h.pos)
+						run.player_hit(float(h.damage) * run.hazard_damage_mult(), h.pos)
 			"wave":
 				var progress: float = 1.0 - float(h.life) / float(h.max_life)
 				var front: float = float(h.radius) * progress
 				if not bool(h.fired) and absf(d - front) < 26.0:
 					h.fired = true
-					run.player_hit(float(h.damage), h.pos)
+					run.player_hit(float(h.damage) * run.hazard_damage_mult(), h.pos)
 		if float(h.life) <= 0.0:
 			items.remove_at(i)
 	queue_redraw()

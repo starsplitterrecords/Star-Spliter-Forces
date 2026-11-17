@@ -16,4 +16,4 @@ Severity: **S1** blocks release · **S2** important · **S3** polish.
 | 10 | S3 | Menu gamepad focus order not hand-tuned | Default focus neighbours used. |
 | 11 | S3 | Bot pathing (BalanceSim) can wedge on rock clusters; it detours randomly | Tool limitation, not game. |
 | 12 | S3 | "36 resources still in use at exit" warning when tests quit | Harmless teardown warning in headless runs. |
-| 13 | S3 | Only one destination | Data-driven; second destination is roadmap item 10. |
+| 13 | S3 | Kaldr Rift has no unique enemies, boss variant or character unlock yet | Reuses Reach enemy roster and The Silence. |

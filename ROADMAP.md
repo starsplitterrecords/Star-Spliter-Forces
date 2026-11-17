@@ -22,8 +22,7 @@ Prioritised and actionable. Milestones follow the production directive (A–H).
 
 ## Later — Milestone E/F (depth + content)
 
-10. Second destination (proposed: Kaldr Rift — canon convoy passage) reusing the
-    data-driven region system; completion unlock already wired.
+10. Kaldr Rift (implemented, first pass): add Rift-specific enemies, a boss variant and an explorer unlock.
 11. Abby Saville (summoner) as sixth explorer; Billie Rusk as optional anti-hero/boss.
 12. Expand Forces: Supersonic Being, Night Motion Archives, Robots Sing Love Songs,
     Before the Reboot (no releases listed — needs owner input before any transmission).

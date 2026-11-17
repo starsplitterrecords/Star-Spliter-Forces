@@ -15,7 +15,7 @@ balance bot, not yet by human playtesters).
 ## Implemented (verified by automated tests or rendered captures)
 
 **Core loop**
-- Departure screen: explorer + signature Force; one destination (Black Drift Reach).
+- Departure screen: explorer + signature Force + destination. Two destinations: Black Drift Reach and Kaldr Rift (unlocked by first completion).
 - Expedition: six handcrafted regions with seeded variation, ~350 collision obstacles,
   parallax starfield, region banners, fog-of-war minimap, full map, edge compass.
 - Objective: tune 3 signals, then extract at the Array Gate *or* confront The Silence.
@@ -60,10 +60,14 @@ Versioned atomic saves with backup recovery and prototype migration.
 
 ## Measured
 
-- 20/20 headless tests pass (`tools/run_tests.sh`).
+- 22/22 headless tests pass (`tools/run_tests.sh`).
 - Simulation step ≈ 0.6–0.75 ms with ~80 enemies on desktop CPU (headless, no rendering).
 - Balance bot (5 characters): ~13–14 min expeditions to completion, level 15–17 at
   the climax, boss fights 45–130 s.
+
+## Independent code review (2026-11-17)
+
+10 defects found by a separate review pass (guardian respawn loop, Naomi dash with no cooldown, touch stick sticking after pauses, second finger unable to press HUD buttons, beat weapons firing while paused, score restarting over catalog playback, level-up after run end, Naomi hazard trait incomplete, gate button under the stick, lore cards timing out behind level-ups). All fixed; regression test added.
 
 ## Not verified
 

@@ -329,6 +329,8 @@ func step(delta: float) -> void:
 		victory_clock -= delta
 		if victory_clock <= 0.0:
 			end_run("complete")
+	if ended:
+		return
 	if pending_levels > 0 and not choosing:
 		_open_level_up()
 
@@ -393,7 +395,7 @@ func _environment(delta: float) -> void:
 		if strike_clock <= 0.0:
 			strike_clock = rng.randf_range(1.8, 3.4)
 			var p: Vector2 = player.position + Vector2.from_angle(rng.randf() * TAU) * rng.randf_range(40.0, 380.0)
-			var dmg: float = 14.0 * (0.5 if character_id == "naomi_sol" else 1.0)
+			var dmg: float = 14.0
 			hazards.add("strike", p, 85.0, dmg, 1.4, Color("ffe08a"), {"warn": 1.15})
 	if world.in_beacon(player.position):
 		player.heal(3.0 * delta)
@@ -775,6 +777,8 @@ func gain_xp(value: int) -> void:
 		pending_levels += 1
 
 func _open_level_up() -> void:
+	if ended:
+		return
 	pending_levels -= 1
 	upgrades_offered += 1
 	var count: int = 4 if Profile.workshop_rank("insight") > 0 else 3
@@ -815,6 +819,11 @@ func choose_upgrade(option: Dictionary) -> void:
 		Audio.play_sfx("choose", 1.0, -3.0, 0.1)
 	player.invuln = maxf(player.invuln, 0.6)
 
+## Naomi's Corridor Sense: every hazard area (strikes, pools, waves, beams,
+## silence) hurts her half as much.
+func hazard_damage_mult() -> float:
+	return 0.5 if character_id == "naomi_sol" else 1.0
+
 func ability_damage_mult() -> float:
 	return 1.4 if damage_boost > 0.0 else 1.0
 
@@ -850,10 +859,11 @@ func use_ability() -> bool:
 	var id: String = String(GameData.CHARACTERS[character_id]["ability"])
 	if id == "corridor_run":
 		var max_charges: int = 2 if mastery_level >= 1 else 1
-		if ability_cd <= 0.0 and _naomi_charges < max_charges:
-			_naomi_charges = max_charges
 		if _naomi_charges <= 0:
-			return false
+			# Charges refill together once the cooldown has run out.
+			if ability_cd > 0.0:
+				return false
+			_naomi_charges = max_charges
 		_naomi_charges -= 1
 		if _naomi_charges <= 0:
 			ability_cd = ability_cooldown()
@@ -1154,7 +1164,7 @@ func confront() -> void:
 # ================================================================== music
 
 func _on_audio_beat(index: int) -> void:
-	if ended or choosing:
+	if ended or choosing or get_tree().paused:
 		return
 	beat_index = index
 	weapons.on_beat(index)

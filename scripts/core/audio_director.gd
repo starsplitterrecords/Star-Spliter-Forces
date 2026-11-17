@@ -157,8 +157,11 @@ func _process(delta: float) -> void:
 	if music_running and not music_layers.is_empty():
 		var pos: float = music_position()
 		var master: AudioStreamPlayer = music_layers[master_layer]
+		# While a catalog track plays the score is paused; do not restart it.
+		if catalog_track != "" and catalog_player.playing:
+			return
 		# The master always plays (possibly silent) to hold the clock.
-		if not master.playing:
+		if not master.playing and not master.stream_paused:
 			master.play(0.0)
 		for layer: String in music_layers.keys():
 			var p: AudioStreamPlayer = music_layers[layer]
@@ -168,7 +171,7 @@ func _process(delta: float) -> void:
 			p.volume_db = linear_to_db(maxf(0.0001, level * duck)) if level > 0.001 else -80.0
 			if layer == master_layer:
 				continue
-			if level > 0.001 and not p.playing:
+			if level > 0.001 and not p.playing and not p.stream_paused:
 				p.play(fmod(pos + 0.02, maxf(0.1, loop_length)))
 			elif level <= 0.001 and target <= 0.0 and p.playing:
 				p.stop()

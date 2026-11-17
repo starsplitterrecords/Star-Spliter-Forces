@@ -104,7 +104,7 @@ func _layout() -> void:
 	var ab_x: float = safe.end.x - 150 if right_hand else safe.position.x + 22
 	ability_button.position = Vector2(ab_x, safe.end.y - 150)
 	pause_button.position = Vector2(safe.end.x - 64, safe.position.y)
-	gate_panel.position = Vector2(safe.position.x + safe.size.x * 0.5 - 220, safe.end.y - 210)
+	gate_panel.position = Vector2(safe.end.x - 460, safe.end.y - 300) if right_hand else Vector2(safe.position.x + 20, safe.end.y - 300)
 
 func _build_labels() -> void:
 	hull_label = UiTheme.label("", 17, UiTheme.TEXT, "bold")
@@ -158,6 +158,8 @@ func _build_buttons() -> void:
 	for st: String in ["normal", "hover", "pressed", "disabled", "focus"]:
 		ability_button.add_theme_stylebox_override(st, clear)
 	ability_button.pressed.connect(func() -> void: run.use_ability())
+	# Touch presses are handled in _input for every finger; the Button still
+	# serves desktop mouse clicks.
 	root.add_child(ability_button)
 	pause_button = Button.new()
 	pause_button.text = "II"
@@ -196,7 +198,9 @@ func _process(delta: float) -> void:
 	toast_label.modulate.a = clampf(toast_clock * 2.0, 0.0, 1.0)
 	damage_flash = maxf(0.0, damage_flash - delta)
 	beat_pulse = maxf(0.0, beat_pulse - delta * 3.0)
-	card_clock -= delta
+	# Lore cards wait while an upgrade choice or pause covers them.
+	if not get_tree().paused:
+		card_clock -= delta
 	if card and card_clock <= 0.0:
 		card.queue_free()
 		card = null
@@ -359,6 +363,7 @@ func _build_level_panel() -> void:
 	row.add_child(reroll_button)
 
 func show_level_up(options: Array) -> void:
+	release_touch()
 	level_options = options
 	free_reroll_used = false if run.character_id == "jex_marrin" and level_panel.visible == false else free_reroll_used
 	for c: Node in level_box.get_children():
@@ -461,6 +466,7 @@ func toggle_pause() -> void:
 		pause_panel = null
 		get_tree().paused = false
 		return
+	release_touch()
 	get_tree().paused = true
 	pause_panel = Control.new()
 	pause_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -517,6 +523,7 @@ func _loadout_text() -> String:
 func open_map() -> void:
 	if run.choosing or run.ended:
 		return
+	release_touch()
 	get_tree().paused = true
 	map_overlay = MapOverlay.new()
 	map_overlay.hud = self
@@ -535,8 +542,38 @@ func _close_map() -> void:
 
 # ================================================================== touch
 
+func release_touch() -> void:
+	touch_id = -1
+	touch_vector = Vector2.ZERO
+
 func _input(event: InputEvent) -> void:
-	if run == null or get_tree().paused:
+	if run == null:
+		return
+	# Releases must always be seen, even while paused, or the stick sticks.
+	if event is InputEventScreenTouch and not (event as InputEventScreenTouch).pressed and (event as InputEventScreenTouch).index == touch_id:
+		release_touch()
+		return
+	if get_tree().paused:
+		return
+	# HUD buttons react to any finger (Godot only turns finger 0 into mouse
+	# input), so the ability works while the other thumb steers.
+	if event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed:
+		var tp: Vector2 = (event as InputEventScreenTouch).position
+		if ability_button.get_global_rect().grow(12.0).has_point(tp):
+			run.use_ability()
+			get_viewport().set_input_as_handled()
+			return
+		if pause_button.get_global_rect().grow(8.0).has_point(tp):
+			toggle_pause()
+			get_viewport().set_input_as_handled()
+			return
+		if gate_panel.visible and confront_button.visible and confront_button.get_global_rect().has_point(tp):
+			run.confront()
+			get_viewport().set_input_as_handled()
+			return
+	if event is InputEventMouseButton and (event as InputEventMouseButton).device == InputEvent.DEVICE_ID_EMULATION:
+		# Touch already handled above; ignore the emulated duplicate.
+		get_viewport().set_input_as_handled()
 		return
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var right_hand: bool = String(Profile.setting("handedness")) == "right"
@@ -544,7 +581,7 @@ func _input(event: InputEvent) -> void:
 		var st: InputEventScreenTouch = event
 		if st.pressed and touch_id == -1:
 			var on_move_side: bool = st.position.x < vp.x * 0.55 if right_hand else st.position.x > vp.x * 0.45
-			if on_move_side and not ability_button.get_global_rect().has_point(st.position) and not pause_button.get_global_rect().has_point(st.position):
+			if on_move_side:
 				touch_id = st.index
 				touch_origin = st.position
 				if String(Profile.setting("joystick_mode")) == "fixed":
@@ -747,6 +784,8 @@ class HudCanvas:
 				continue
 			var dir: Vector2 = (sp - center).normalized()
 			var edge: Vector2 = center + Vector2(dir.x * radii.x, dir.y * radii.y)
+			# Keep compass markers below the top HUD band (bars, labels, minimap).
+			edge.y = maxf(edge.y, hud.safe.position.y + 200.0)
 			var col: Color = t[2]
 			draw_colored_polygon(PackedVector2Array([edge + dir * 14.0, edge + dir.rotated(2.5) * 10.0, edge + dir.rotated(-2.5) * 10.0]), col)
 			var dist: int = int(p.distance_to(Vector2(t[0])) / 10.0)

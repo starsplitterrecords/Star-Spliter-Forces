@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_review_regressions", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	for t: String in tests:
 		current = t
@@ -44,6 +44,8 @@ func _dispatch(t: String) -> void:
 			await test_real_frames()
 		"test_second_destination":
 			await test_second_destination()
+		"test_review_regressions":
+			await test_review_regressions()
 		"test_signal_locks":
 			await test_signal_locks()
 		"test_camps_and_echoes":
@@ -608,6 +610,70 @@ func test_abilities() -> void:
 		check(run.ability_cd > 0.0 or cid == "naomi_sol", "%s ability has no cooldown" % cid)
 		_cleanup_runs()
 		await get_tree().process_frame
+
+## Regressions from the 2026-11-17 code review.
+func test_review_regressions() -> void:
+	# 1. Guardian lock under real frames: exactly one guardian, tunes after it falls.
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.player.god_mode = true
+	var beacon: Dictionary = {}
+	for q: Dictionary in run.pois.items:
+		if String(q.id) == "sig_thunderbreak_beacon":
+			beacon = q
+	var captains: Callable = func() -> int:
+		return run.enemies.filter(func(e: ForceEnemy) -> bool: return e.kind == "splinter_captain").size()
+	run.player.position = Vector2(beacon.pos)
+	for i in 30:
+		run.player.position = Vector2(beacon.pos)
+		await get_tree().process_frame
+	run.elite_times.clear()
+	var g: Variant = beacon.get("guardian")
+	check(is_instance_valid(g), "guardian missing")
+	run.damage_enemy(g, 999999.0, Vector2.ZERO, 0.0, "environment", true)
+	for i in 400:
+		run.player.position = Vector2(beacon.pos)
+		run.player.velocity = Vector2.ZERO
+		if run.choosing:
+			run.hud._pick(run.hud.level_options[0])
+		await get_tree().process_frame
+	check(captains.call() == 0, "guardian respawned after dying (%d captains)" % captains.call())
+	check("sig_thunderbreak_beacon" in run.discoveries, "guardian signal never tuned under real frames")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# 2. Naomi (mastery 1): two dashes, then cooldown.
+	Profile.mastery("naomi_sol")["level"] = 1
+	var run2: GameRun = _make_run({"character": "naomi_sol"})
+	await get_tree().process_frame
+	check(run2.use_ability() and run2.use_ability(), "Naomi should have two charges")
+	check(not run2.use_ability(), "Naomi dashed a third time without cooldown")
+	check(run2.ability_cd > 0.0, "Naomi cooldown not started after charges spent")
+	# 5. Beats do nothing while paused.
+	run2.weapons.build = 100.0
+	run2.weapons.drop_armed = true
+	get_tree().paused = true
+	run2._on_audio_beat(8)
+	check(run2.weapons.drop_time == 0.0, "Drop fired while paused")
+	get_tree().paused = false
+	# 7. No level-up after the run ends.
+	run2.pending_levels = 2
+	run2.player.hp = 1.0
+	run2.player.invuln = 0.0
+	run2.player_hit(999.0, Vector2.ZERO)
+	run2.step(1.0 / 60.0)
+	check(run2.ended and not run2.choosing and not get_tree().paused, "level-up opened after the run ended")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# 3. Stick released during a level-up pause does not stay held.
+	var run3: GameRun = _make_run()
+	await get_tree().process_frame
+	run3.hud.touch_id = 0
+	run3.hud.touch_vector = Vector2(1, 0)
+	run3.pending_levels = 1
+	run3.step(1.0 / 60.0)
+	check(run3.hud.touch_id == -1 and run3.hud.touch_vector == Vector2.ZERO, "touch not released when level-up opened")
+	# 8. Naomi halves every hazard type.
+	check(is_equal_approx(run3.hazard_damage_mult(), 1.0), "hazard mult should be 1 for Venn")
 
 func test_second_destination() -> void:
 	var run: GameRun = _make_run({"destination": "kaldr_rift"})

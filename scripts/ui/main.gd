@@ -404,9 +404,21 @@ func _archive_projects() -> Control:
 			pv.add_child(UiTheme.label("UNHEARD PROJECT", 18, UiTheme.DIM, "bold"))
 			pv.add_child(UiTheme.label("Somewhere in the drift a signal carries this sound. Find it.", 14, UiTheme.DIM))
 			continue
-		pv.add_child(UiTheme.label(pname.to_upper(), 22, pdef["accent"], "display"))
-		pv.add_child(UiTheme.label(String(pdef["field"]) + "   •   " + String(pdef["role"]), 13, UiTheme.DIM, "bold"))
-		pv.add_child(UiTheme.label(String(pdef["bio"]), 15, UiTheme.TEXT))
+		var head: HBoxContainer = HBoxContainer.new()
+		head.add_theme_constant_override("separation", 16)
+		pv.add_child(head)
+		var sleeve: RecordSleeve = RecordSleeve.new()
+		sleeve.accent = pdef["accent"]
+		sleeve.title = pname
+		sleeve.seed_value = pname.hash()
+		sleeve.custom_minimum_size = Vector2(132, 132)
+		head.add_child(sleeve)
+		var hv: VBoxContainer = VBoxContainer.new()
+		hv.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		head.add_child(hv)
+		hv.add_child(UiTheme.label(pname.to_upper(), 22, pdef["accent"], "display"))
+		hv.add_child(UiTheme.label(String(pdef["field"]) + "   •   " + String(pdef["role"]), 13, UiTheme.DIM, "bold"))
+		hv.add_child(UiTheme.label(String(pdef["bio"]), 15, UiTheme.TEXT))
 		for tid2: String in owned:
 			var t: Dictionary = GameData.TRANSMISSIONS[tid2]
 			var tr: HBoxContainer = HBoxContainer.new()
@@ -641,6 +653,48 @@ func _notification(what: int) -> void:
 			if hud and hud.has_method("toggle_pause"):
 				hud.toggle_pause()
 		Profile.save()
+
+## A procedural record sleeve in the project's catalog accent — a placeholder
+## until approved project artwork is supplied (ART_BIBLE.md).
+class RecordSleeve:
+	extends Control
+	var accent: Color = Color.WHITE
+	var title: String = ""
+	var seed_value: int = 0
+	var t: float = 0.0
+	func _process(delta: float) -> void:
+		t += delta
+		queue_redraw()
+	func _draw() -> void:
+		var sz: Vector2 = size
+		var r: RandomNumberGenerator = RandomNumberGenerator.new()
+		r.seed = seed_value
+		draw_rect(Rect2(Vector2.ZERO, sz), accent.darkened(0.78))
+		for k in 7:
+			var y: float = sz.y * (0.15 + 0.11 * k)
+			var pts: PackedVector2Array = PackedVector2Array()
+			var amp: float = r.randf_range(2.0, 9.0)
+			var freq: float = r.randf_range(0.05, 0.16)
+			for i in 24:
+				var x: float = sz.x * i / 23.0
+				pts.append(Vector2(x, y + sin(i * freq * 6.0 + k + t * 0.6) * amp))
+			draw_polyline(pts, Color(accent, 0.18 + 0.07 * (k % 3)), 2.0)
+		var c: Vector2 = Vector2(sz.x * 0.62, sz.y * 0.58)
+		var rad: float = sz.x * 0.36
+		draw_circle(c, rad, Color("0b0b10"))
+		for k in 5:
+			draw_arc(c, rad * (0.45 + k * 0.11), 0.0, TAU, 48, Color(1, 1, 1, 0.05), 1.0)
+		draw_circle(c, rad * 0.32, accent)
+		draw_circle(c, rad * 0.05, Color("0b0b10"))
+		var spin: float = t * 1.2
+		draw_arc(c, rad * 0.8, spin, spin + 0.5, 12, Color(1, 1, 1, 0.18), 3.0)
+		var words: PackedStringArray = title.split(" ")
+		var initials: String = ""
+		for w: String in words:
+			if w.length() > 0:
+				initials += w.substr(0, 1)
+		draw_string(UiTheme.font("display"), Vector2(10, 30), initials, HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color(accent.lightened(0.4), 0.95))
+		draw_rect(Rect2(Vector2.ZERO, sz), Color(accent, 0.6), false, 2.0)
 
 class MenuBackdrop:
 	extends Control
