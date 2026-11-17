@@ -168,6 +168,13 @@ func choices(count: int, attuned: Array) -> Array:
 	for e: Dictionary in evolutions:
 		if out.size() < count:
 			out.append(e)
+	# Guarantee at least one weapon option when any exist: weapons are where
+	# the build's personality comes from.
+	var weapon_opts: Array = pool.filter(func(o: Dictionary) -> bool: return String(o["type"]) == "weapon")
+	if out.size() < count and not weapon_opts.is_empty():
+		var pick: Dictionary = weapon_opts[randi() % weapon_opts.size()]
+		out.append(pick)
+		pool.erase(pick)
 	while out.size() < count and not pool.is_empty():
 		var total: float = 0.0
 		for o: Dictionary in pool:

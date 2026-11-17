@@ -50,15 +50,15 @@ class Floor:
 				var rad: float = float(r["radius"])
 				for k in 4:
 					var w: float = rad * 2.0 * (1.0 - k * 0.12)
-					draw_line(a, b, Color(col.lerp(acc, 0.04 * k), 0.55), w)
-					draw_circle(a, w * 0.5, Color(col.lerp(acc, 0.04 * k), 0.55))
-					draw_circle(b, w * 0.5, Color(col.lerp(acc, 0.04 * k), 0.55))
+					draw_line(a, b, Color(col.lerp(acc, 0.02 * k), 0.4), w)
+					draw_circle(a, w * 0.5, Color(col.lerp(acc, 0.02 * k), 0.4))
+					draw_circle(b, w * 0.5, Color(col.lerp(acc, 0.02 * k), 0.4))
 				draw_line(a, b, Color(acc, 0.05), 6.0)
 			else:
 				var c: Vector2 = r["center"]
 				var rad2: float = float(r["radius"])
 				for k in 5:
-					draw_circle(c, rad2 * (1.15 - k * 0.12), Color(col.lerp(acc, 0.05 * k), 0.35))
+					draw_circle(c, rad2 * (1.15 - k * 0.12), Color(col.lerp(acc, 0.018 * k), 0.32))
 				draw_arc(c, rad2, 0.0, TAU, 96, Color(acc, 0.10), 3.0)
 		# World edge reads as a fading boundary, not a wall.
 		draw_rect(Rect2(-hs, hs * 2.0), Color(0.4, 0.6, 1.0, 0.25), false, 6.0)

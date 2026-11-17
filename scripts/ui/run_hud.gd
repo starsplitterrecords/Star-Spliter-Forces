@@ -88,7 +88,7 @@ func _layout() -> void:
 	if gate_panel == null or ability_button == null:
 		return
 	hull_label.position = safe.position + Vector2(0, 26)
-	top_label.position = Vector2(safe.position.x + safe.size.x * 0.5 - 220, safe.position.y)
+	top_label.position = Vector2(safe.position.x + safe.size.x * 0.5 - 220, safe.position.y + 14)
 	level_label.position = safe.position + Vector2(0, 52)
 	state_label.position = safe.position + Vector2(0, 84)
 	objective_label.position = safe.position + Vector2(0, 132)
@@ -98,7 +98,7 @@ func _layout() -> void:
 	banner_sub.size.x = safe.size.x
 	toast_label.position = Vector2(safe.position.x, safe.end.y - 150)
 	toast_label.size.x = safe.size.x
-	hint_label.position = Vector2(safe.position.x + safe.size.x * 0.2, safe.end.y - 96)
+	hint_label.position = Vector2(safe.position.x + safe.size.x * 0.2, safe.end.y - 70)
 	hint_label.size.x = safe.size.x * 0.6
 	var right_hand: bool = String(Profile.setting("handedness")) == "right"
 	var ab_x: float = safe.end.x - 150 if right_hand else safe.position.x + 22
@@ -140,6 +140,8 @@ func _build_labels() -> void:
 	hint_label.add_theme_constant_override("outline_size", 6)
 	hint_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
 	root.add_child(hint_label)
+	for l0: Label in [hull_label, level_label, state_label, top_label]:
+		l0.autowrap_mode = TextServer.AUTOWRAP_OFF
 	for l: Label in [hull_label, level_label, state_label, objective_label]:
 		l.add_theme_constant_override("outline_size", 5)
 		l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.6))
@@ -312,9 +314,19 @@ func discovery_card(title: String, text: String, color: Color, first_time: bool,
 	if kind == "signal":
 		v.add_child(UiTheme.label("Listen in the Star Splitter Archive after your expedition.", 13, UiTheme.DIM))
 	root.add_child(card)
-	card.position = Vector2(safe.position.x + (safe.size.x - card.custom_minimum_size.x) * 0.5, safe.position.y + 170)
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.modulate.a = 0.0
 	card_clock = 6.5
+	# Autowrapped labels only know their height after a layout pass.
+	var c: PanelContainer = card
+	await get_tree().process_frame
+	if not is_instance_valid(c):
+		return
+	c.size = Vector2(c.custom_minimum_size.x, 0)
+	c.reset_size()
+	# Sit low on screen, clear of the ship at the centre and the HUD at the top.
+	c.position = Vector2(safe.position.x + (safe.size.x - c.size.x) * 0.5, safe.end.y - c.size.y - 96)
+	c.modulate.a = 1.0
 
 # ================================================================== level up
 
@@ -364,7 +376,7 @@ func show_level_up(options: Array) -> void:
 
 func _choice_card(option: Dictionary, index: int, width: float) -> Button:
 	var b: Button = Button.new()
-	b.custom_minimum_size = Vector2(width, 300)
+	b.custom_minimum_size = Vector2(width, 236)
 	b.process_mode = Node.PROCESS_MODE_ALWAYS
 	var type: String = String(option["type"])
 	var id: String = String(option["id"])
@@ -604,7 +616,7 @@ class HudCanvas:
 		var rx: float = rb.position.x + rb.size.x * run.resonance / 100.0
 		draw_rect(Rect2(Vector2(rx - 3, rb.position.y - 4), Vector2(6, rb.size.y + 8)), Color.WHITE)
 		# Force mechanic meters.
-		_draw_force_meters(run, safe.position + Vector2(320, 30), font)
+		_draw_force_meters(run, safe.position + Vector2(320, 44), font)
 		# Minimap.
 		_draw_minimap(run, Rect2(Vector2(safe.end.x - 220 - 70, safe.position.y), Vector2(220, 150)))
 		# Compass markers at screen edge.

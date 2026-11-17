@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	for t: String in tests:
 		current = t
@@ -40,6 +40,8 @@ func _ready() -> void:
 
 func _dispatch(t: String) -> void:
 	match t:
+		"test_real_frames":
+			await test_real_frames()
 		"test_scripts_compile":
 			await test_scripts_compile()
 		"test_data_integrity":
@@ -257,7 +259,12 @@ func test_simulated_expedition_minute() -> void:
 	check(run.player.position.distance_to(start_pos) > 1200.0, "player did not travel (obstacles stuck?) %s" % str(run.player.position))
 	check(run.kills > 5, "too few kills in a minute: %d" % run.kills)
 	check(run.level >= 3, "too few level-ups in a minute: %d" % run.level)
-	check(run.weapons.weapons.size() + run.weapons.passives.size() >= 3, "upgrades not applied")
+	var ranks: int = 0
+	for w: String in run.weapons.weapons.keys():
+		ranks += int(run.weapons.weapons[w])
+	for pz: String in run.weapons.passives.keys():
+		ranks += int(run.weapons.passives[pz])
+	check(ranks >= run.level - run.pending_levels, "upgrades not applied: %d ranks at level %d" % [ranks, run.level])
 	check(run.player.alive, "Venn died in the first minute on a straight flight")
 	check("silver_wrecks" in run.visited_regions, "region entry not tracked")
 	check(run.enemies.size() <= GameRun.MAX_ENEMIES, "enemy cap exceeded")
@@ -493,15 +500,38 @@ func test_abilities() -> void:
 		_cleanup_runs()
 		await get_tree().process_frame
 
+## Lets the engine drive the run for real frames (queue_free, signals, HUD).
+func test_real_frames() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.player.god_mode = true
+	for w: String in ["riser", "ion_lance", "trail_charges"]:
+		run.weapons.add_weapon(w)
+	for i in 40:
+		run.spawn_enemy("skiff", run.player.position + Vector2.from_angle(i * 0.5) * (120.0 + i * 5.0), true)
+	var k0: int = run.kills
+	for i in 240:
+		run.player.move_input = Vector2(cos(i * 0.03), sin(i * 0.03))
+		if run.choosing:
+			run.hud._pick(run.hud.level_options[0])
+		await get_tree().process_frame
+	check(run.kills > k0 + 10, "real-frame combat killed too few: %d" % (run.kills - k0))
+	for e: Variant in run.enemies:
+		check(is_instance_valid(e), "freed enemy left in list")
+
 func test_menu_screens_build() -> void:
 	var main_script: GDScript = load("res://scripts/ui/main.gd")
 	var main: Node = main_script.new()
 	add_child(main)
 	await get_tree().process_frame
+	Profile.data["transmissions"] = ["rc_meaningless_dub", "pwc_now_or_never"]
+	Profile.data["forces_attuned"] = GameData.FORCES.keys()
 	for fn: String in ["show_title", "show_departure", "show_archive", "show_workshop", "show_settings", "show_credits"]:
 		main.call(fn)
-		await get_tree().process_frame
+		for k in 6:
+			await get_tree().process_frame
 		check(main.screen != null and is_instance_valid(main.screen), "%s did not build" % fn)
+		_check_layout(main.screen, fn)
 	Profile.data["transmissions"] = ["rc_meaningless_dub"]
 	Profile.data["fragments"] = ["frag_01"]
 	main.show_archive()
@@ -509,12 +539,37 @@ func test_menu_screens_build() -> void:
 	main.last_result = {"outcome": "extracted", "time": 300.0, "kills": 40, "level": 7, "character": "ella_venn", "regions": ["silver_wrecks"], "weapons": {"pulse_bolt": 3}, "harmonies": ["dub_drop"], "discoveries": ["sig_green_echo"]}
 	main.last_commit = {"currency": 50, "unlocks": [{"kind": "force", "id": "resonant_currents"}, {"kind": "character", "id": "tessa_banks"}], "new_discoveries": ["sig_green_echo"], "mastery_levels": 1}
 	main.show_results()
-	await get_tree().process_frame
+	for k in 6:
+		await get_tree().process_frame
 	check(is_instance_valid(main.screen), "results did not build")
+	_check_layout(main.screen, "show_results")
 	main.start_expedition(true)
 	await get_tree().process_frame
 	check(main.current_run != null, "expedition did not start from menu")
 	main.queue_free()
+
+## Catches letter-stacked labels (autowrap with no width) and buttons pushed
+## off the 1280x720 design viewport outside of scroll areas.
+func _check_layout(node: Node, screen_name: String) -> void:
+	var vp: Rect2 = (node as Control).get_viewport_rect()
+	for c: Node in node.find_children("*", "Control", true, false):
+		var ctl: Control = c
+		if not ctl.is_visible_in_tree():
+			continue
+		var in_scroll: bool = false
+		var p: Node = ctl.get_parent()
+		while p != null and p != node:
+			if p is ScrollContainer:
+				in_scroll = true
+				break
+			p = p.get_parent()
+		if ctl is Label:
+			var l: Label = ctl
+			if l.autowrap_mode != TextServer.AUTOWRAP_OFF and l.text.length() > 4:
+				check(l.size.x >= 60.0, "%s: label squeezed to %dpx: '%s'" % [screen_name, int(l.size.x), l.text.left(30)])
+		if ctl is Button and not in_scroll:
+			var r: Rect2 = ctl.get_global_rect()
+			check(vp.grow(2.0).encloses(r), "%s: button off-screen '%s' %s" % [screen_name, (ctl as Button).text.left(24), str(r)])
 
 func test_hud_fits_aspect_ratios() -> void:
 	var run: GameRun = _make_run()

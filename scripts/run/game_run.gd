@@ -214,7 +214,7 @@ func step(delta: float) -> void:
 	# Broad-phase rebuild once per frame.
 	enemy_hash.clear()
 	for e: ForceEnemy in enemies:
-		if not e.dead:
+		if is_instance_valid(e) and not e.dead:
 			enemy_hash.insert(e, e.position, e.radius)
 	_step_enemies(delta)
 	weapons.step(delta)
@@ -539,6 +539,7 @@ func damage_enemy(e: ForceEnemy, amount: float, dir: Vector2, knock: float, weap
 		Audio.play_sfx("hit", randf_range(0.9, 1.15), -14.0, 0.05)
 
 func _on_enemy_died(e: ForceEnemy) -> void:
+	enemies.erase(e)
 	kills += 1
 	add_resonance(0.35 if not e.elite else 6.0)
 	var val: int = e.xp_value
@@ -892,6 +893,11 @@ func _claim_discovery(p: Dictionary) -> void:
 		if not Profile.is_discovered(id):
 			new_this_run.append(id)
 	var first_time: bool = id in new_this_run
+	# The tuning pulse clears breathing room so the moment can be read.
+	for e: ForceEnemy in enemy_hash.query(p.pos, 320.0).duplicate():
+		if not e.dead and not e.boss and e.position.distance_to(p.pos) < 320.0:
+			e.knock += (e.position - Vector2(p.pos)).normalized() * 520.0
+			e.slow = maxf(e.slow, 1.5)
 	add_resonance(14.0 if String(p.kind) == "signal" else 8.0, "+RESONANCE")
 	Audio.stinger("discovery", 0.0)
 	fx.ring(p.pos, 20.0, 340.0, p.color, 1.0, 8.0)

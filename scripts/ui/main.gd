@@ -147,10 +147,14 @@ func show_departure() -> void:
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(row)
 	# Explorers.
+	var list_scroll: ScrollContainer = ScrollContainer.new()
+	list_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	list_scroll.custom_minimum_size = Vector2(340, 0)
+	row.add_child(list_scroll)
 	var list: VBoxContainer = VBoxContainer.new()
 	list.add_theme_constant_override("separation", 8)
 	list.custom_minimum_size = Vector2(330, 0)
-	row.add_child(list)
+	list_scroll.add_child(list)
 	list.add_child(UiTheme.label("EXPLORER", 13, UiTheme.DIM, "bold"))
 	var first: Button = null
 	for cid: String in GameData.CHARACTERS.keys():
@@ -170,10 +174,14 @@ func show_departure() -> void:
 			list.add_child(UiTheme.label("   " + String(c["unlock"]), 12, UiTheme.DIM))
 	# Detail.
 	var c2: Dictionary = GameData.CHARACTERS[selected_character]
+	var detail_scroll: ScrollContainer = ScrollContainer.new()
+	detail_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	detail_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(detail_scroll)
 	var detail: PanelContainer = PanelContainer.new()
 	detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	detail.add_theme_stylebox_override("panel", UiTheme.box(Color(UiTheme.PANEL, 0.9), Color(c2["accent"], 0.6), 1, 14, 20))
-	row.add_child(detail)
+	detail_scroll.add_child(detail)
 	var dv: VBoxContainer = VBoxContainer.new()
 	dv.add_theme_constant_override("separation", 6)
 	detail.add_child(dv)
@@ -206,7 +214,7 @@ func show_departure() -> void:
 		var att: bool = Profile.is_attuned(fid)
 		var fb: Button = UiTheme.button(String(f["name"]) if att else "?  UNHEARD", func() -> void:
 			selected_force = fid
-			show_departure(), 200.0, 44.0)
+			show_departure(), 168.0, 40.0)
 		fb.disabled = not att
 		if fid == selected_force:
 			fb.add_theme_stylebox_override("normal", UiTheme.box(UiTheme.PANEL_HI, f["color"], 2, 10, 12))
@@ -223,7 +231,9 @@ func show_departure() -> void:
 	var go: Button = UiTheme.button("LAUNCH — " + String(dest["name"]).to_upper(), func() -> void: start_expedition(false), 420.0, 56.0)
 	go.add_theme_color_override("font_color", UiTheme.ACCENT)
 	launch.add_child(go)
-	launch.add_child(UiTheme.label(String(dest["desc"]), 13, UiTheme.DIM))
+	var dl: Label = UiTheme.label(String(dest["desc"]), 13, UiTheme.DIM)
+	dl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	launch.add_child(dl)
 	go.grab_focus()
 
 # ================================================================== expedition
@@ -311,7 +321,9 @@ func show_results() -> void:
 	buttons.add_child(UiTheme.button("OPEN ARCHIVE", show_archive, 240.0))
 	buttons.add_child(UiTheme.button("WORKSHOP", show_workshop, 200.0))
 	buttons.add_child(UiTheme.button("TITLE", show_title, 160.0))
-	buttons.add_child(UiTheme.label("Progress saved." if Profile.last_save_ok else "WARNING: progress could not be saved.", 13, UiTheme.DIM if Profile.last_save_ok else Color("ff8fa8")))
+	var saved_label: Label = UiTheme.label("Progress saved." if Profile.last_save_ok else "WARNING: progress could not be saved.", 13, UiTheme.DIM if Profile.last_save_ok else Color("ff8fa8"))
+	saved_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	buttons.add_child(saved_label)
 	again.grab_focus()
 
 # ================================================================== archive
@@ -375,7 +387,10 @@ func _archive_projects() -> Control:
 			tr.add_child(UiTheme.button("▶ PLAY" if has_master else "▶ FORCE MOTIF", func() -> void:
 				var mode: String = Audio.play_catalog(tid2)
 				_toast("Now playing: %s — %s" % [String(t["project"]), String(t["title"])] if mode == "master" else "Master not yet supplied — playing the in-game %s motif (original placeholder, not the release)." % String(GameData.FORCES[String(t["force"])]["name"])), 190.0, 42.0))
-			tr.add_child(UiTheme.label("%s   (%s)" % [String(t["title"]), String(t["meta"])], 15, UiTheme.TEXT, "bold"))
+			var tl: Label = UiTheme.label("%s   (%s)" % [String(t["title"]), String(t["meta"])], 15, UiTheme.TEXT, "bold")
+			tl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			tl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			tr.add_child(tl)
 		if String(pdef["url"]) != "":
 			pv.add_child(UiTheme.button("Listen on official platforms ↗", func() -> void: OS.shell_open(String(pdef["url"])), 300.0, 40.0))
 	inner.add_child(UiTheme.button("STOP PLAYBACK", func() -> void:
@@ -528,11 +543,19 @@ func show_settings() -> void:
 		Profile.save()
 		show_title(), 240.0)
 	row.add_child(back)
-	row.add_child(UiTheme.label("Keyboard: WASD/arrows move • Space ability • M map • Esc pause • 1-4 choose • R reroll • E confront. Gamepad: stick, A ability, Start pause, Back map.", 13, UiTheme.DIM))
+	var keys_label: Label = UiTheme.label("Keyboard: WASD/arrows move • Space ability • M map • Esc pause • 1-4 choose • R reroll • E confront. Gamepad: stick, A ability, Start pause, Back map.", 13, UiTheme.DIM)
+	keys_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(keys_label)
 	back.grab_focus()
 
+func _setting_label(grid: GridContainer, text: String) -> void:
+	var l: Label = UiTheme.label(text, 17)
+	l.autowrap_mode = TextServer.AUTOWRAP_OFF
+	l.custom_minimum_size = Vector2(360, 0)
+	grid.add_child(l)
+
 func _slider(grid: GridContainer, text: String, key: String, lo: float, hi: float, step: float) -> void:
-	grid.add_child(UiTheme.label(text, 17))
+	_setting_label(grid, text)
 	var s: HSlider = HSlider.new()
 	s.min_value = lo
 	s.max_value = hi
@@ -543,14 +566,14 @@ func _slider(grid: GridContainer, text: String, key: String, lo: float, hi: floa
 	grid.add_child(s)
 
 func _toggle(grid: GridContainer, text: String, key: String) -> void:
-	grid.add_child(UiTheme.label(text, 17))
+	_setting_label(grid, text)
 	var c: CheckButton = CheckButton.new()
 	c.button_pressed = bool(Profile.setting(key))
 	c.toggled.connect(func(on: bool) -> void: Profile.set_setting(key, on))
 	grid.add_child(c)
 
 func _choice(grid: GridContainer, text: String, key: String, options: Array) -> void:
-	grid.add_child(UiTheme.label(text, 17))
+	_setting_label(grid, text)
 	var ob: OptionButton = OptionButton.new()
 	for o: Variant in options:
 		ob.add_item(str(o).to_upper())
