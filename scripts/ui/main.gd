@@ -150,7 +150,7 @@ func show_title() -> void:
 
 func _next_goal_text() -> String:
 	if int(Profile.data["stats"]["expeditions"]) == 0:
-		return "Your first expedition: follow the columns of light, tune two signals, and come home."
+		return "Your first expedition: follow the columns of light, tune three signals, and come home."
 	var unseen_signals: int = 0
 	for id: String in GameData.DISCOVERIES.keys():
 		if String(GameData.DISCOVERIES[id]["kind"]) == "signal" and not Profile.is_discovered(id):
