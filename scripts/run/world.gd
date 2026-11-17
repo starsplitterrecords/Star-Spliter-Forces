@@ -281,7 +281,7 @@ func _build_drift() -> void:
 	# Sparse asteroids in the open drift give the space scale and cover.
 	var placed: int = 0
 	var tries: int = 0
-	while placed < 70 and tries < 600:
+	while placed < 260 and tries < 2600:
 		tries += 1
 		var p: Vector2 = Vector2(rng.randf_range(-half_size.x, half_size.x), rng.randf_range(-half_size.y, half_size.y))
 		var inside: bool = false
@@ -354,14 +354,25 @@ func in_beacon(p: Vector2) -> bool:
 	return false
 
 ## Pushes a circle out of solid obstacles. Returns the corrected position.
+## Overlapping obstacles are resolved together (summed penetration over a few
+## iterations) so two rocks can never trap a ship by pushing in turn.
 func resolve(p: Vector2, radius: float) -> Vector2:
-	for o: Dictionary in obstacle_hash.query(p, radius):
-		var op: Vector2 = o.pos
-		var min_d: float = float(o.r) + radius
-		var d2: float = p.distance_squared_to(op)
-		if d2 < min_d * min_d and d2 > 0.0001:
-			var d: float = sqrt(d2)
-			p = op + (p - op) / d * min_d
+	for iteration in 3:
+		var correction: Vector2 = Vector2.ZERO
+		var hits: int = 0
+		for o: Dictionary in obstacle_hash.query(p, radius):
+			var op: Vector2 = o.pos
+			var min_d: float = float(o.r) + radius
+			var delta: Vector2 = p - op
+			var d2: float = delta.length_squared()
+			if d2 < min_d * min_d:
+				var d: float = sqrt(d2)
+				var n: Vector2 = delta / d if d > 0.001 else Vector2.RIGHT
+				correction += n * (min_d - d)
+				hits += 1
+		if hits == 0:
+			break
+		p += correction
 	return p
 
 func clamp_to_world(p: Vector2) -> Vector2:

@@ -726,6 +726,9 @@ class HudCanvas:
 		else:
 			if run.climax_available() or run.elapsed > 900.0 or (run.player.hp < run.player.max_hp * 0.3):
 				targets.append([run.world.gate, "GATE", Color("68ecff")])
+			var echo: Dictionary = run.pois.nearest_unclaimed(p, ["echo"], true)
+			if not echo.is_empty():
+				targets.append([echo.pos, "ECHO %ds" % int(float(echo.life)), echo.color])
 			var sig: Dictionary = run.pois.nearest_unclaimed(p, ["signal", "character"], true)
 			if not sig.is_empty() and (assist or p.distance_to(sig.pos) < 1400.0):
 				targets.append([sig.pos, String(sig.title), sig.color])

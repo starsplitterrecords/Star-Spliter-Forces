@@ -5,7 +5,7 @@ extends Node2D
 ## event, not a pickup. Some sites only reveal themselves in a particular
 ## Resonance state or to a scanner sweep: curiosity is rewarded, not marked.
 
-const TUNE_TIME: Dictionary = {"signal": 1.6, "character": 2.0, "artifact": 1.2, "fragment": 0.8, "resonator": 1.4}
+const TUNE_TIME: Dictionary = {"echo": 3.0, "signal": 4.5, "character": 4.0, "artifact": 1.5, "fragment": 0.8, "resonator": 1.4}
 
 var run: Node
 var items: Array = [] # Dictionaries
@@ -39,10 +39,17 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 		elif String(d["kind"]) == "anomaly":
 			col = Color("9fe8ff")
 		var known_before: bool = profile_discovered.has(id)
-		var poi: Dictionary = add({"id": id, "kind": String(d["kind"]), "pos": world.resolve(GameData.discovery_position(id), 10.0),
+		var pos: Vector2 = GameData.discovery_position(id)
+		# Seeded variation: regional discoveries move within their region each
+		# expedition, so the landmarks stay familiar but the hunt is new.
+		if rid != "" and not bool(d.get("fixed", false)) and not bool(d.get("moving", false)) and rid != "array_gate":
+			var region3: Dictionary = GameData.REGIONS[rid]
+			if String(region3["shape"]) == "circle":
+				pos = world.random_open_point_near(region3["center"], 120.0, float(region3["radius"]) * 0.7, rng)
+		var poi: Dictionary = add({"id": id, "kind": String(d["kind"]), "pos": world.resolve(pos, 10.0),
 			"title": String(d["title"]), "hidden": String(d.get("hidden", "")), "color": col, "data": d,
 			"radius": 70.0 if String(d["kind"]) in ["signal", "character"] else 56.0,
-			"repeat": known_before, "known": String(d["kind"]) == "signal"})
+			"repeat": known_before, "known": id == "sig_now_or_never", "lock": String(d.get("lock", ""))})
 		if bool(d.get("moving", false)):
 			var region: Dictionary = GameData.REGIONS[rid]
 			poi["path_a"] = poi.pos
@@ -53,22 +60,22 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 			poi["radius"] = 48.0
 	# Seeded variation: caches, resonators and rifts move between expeditions.
 	var region_list: Array = world.region_ids
-	for i in 11:
+	for i in 24:
 		var rid2: String = String(region_list[rng.randi() % region_list.size()])
 		var region2: Dictionary = GameData.REGIONS[rid2]
 		var p: Vector2 = world.random_open_point_near(GameData.region_anchor(region2), 120.0, float(region2.get("radius", 400.0)) * 0.9, rng)
 		add({"kind": "cache", "pos": p, "title": "SUPPLY CACHE", "color": Color("7dffb2"), "radius": 40.0})
 	for i in 3:
-		var p2: Vector2 = world.random_open_point_near(Vector2.ZERO, 900.0, 2600.0, rng)
+		var p2: Vector2 = world.random_open_point_near(Vector2.ZERO, 1600.0, 5300.0, rng)
 		add({"kind": "fracture_cache", "pos": p2, "title": "FRACTURE CACHE", "hidden": "FRACTURE", "color": Color("ff4f7b"), "radius": 44.0})
 	var basin: Dictionary = GameData.REGIONS["quiet_basin"]
 	for i in 2:
 		add({"kind": "resonator", "pos": world.random_open_point_near(basin["center"], 150.0, 650.0, rng), "title": "RESONATOR", "color": Color("71cda0"), "radius": 70.0, "known": true})
-	add({"kind": "resonator", "pos": world.random_open_point_near(Vector2.ZERO, 1200.0, 2400.0, rng), "title": "RESONATOR", "color": Color("71cda0"), "radius": 70.0})
+	add({"kind": "resonator", "pos": world.random_open_point_near(Vector2.ZERO, 2100.0, 4800.0, rng), "title": "RESONATOR", "color": Color("71cda0"), "radius": 70.0})
 	var bloom: Dictionary = GameData.REGIONS["fracture_bloom"]
 	for i in 3:
 		add({"kind": "rift", "pos": world.random_open_point_near(bloom["center"], 120.0, 560.0, rng), "title": "PHASE RIFT", "color": Color("ff4f7b"), "radius": 46.0, "known": true})
-	add({"kind": "rift", "pos": world.random_open_point_near(Vector2.ZERO, 1000.0, 2500.0, rng), "title": "PHASE RIFT", "color": Color("ff4f7b"), "radius": 46.0})
+	add({"kind": "rift", "pos": world.random_open_point_near(Vector2.ZERO, 1900.0, 5000.0, rng), "title": "PHASE RIFT", "color": Color("ff4f7b"), "radius": 46.0})
 
 func is_visible_poi(p: Dictionary) -> bool:
 	if bool(p.claimed) and not String(p.kind) in ["mirror", "mirror_pair", "resonator"]:
@@ -95,11 +102,19 @@ func reveal_within(center: Vector2, radius: float, include_hidden: bool) -> int:
 
 func step(delta: float, player: ForcePlayer, scanner_range: float) -> void:
 	anim += delta
+	for p0: Dictionary in items:
+		if String(p0.kind) == "echo" and not bool(p0.claimed):
+			p0.life = float(p0.life) - delta
+			if float(p0.life) <= 0.0:
+				p0.claimed = true
+				p0.expired = true
 	for p: Dictionary in items:
 		if bool(p.claimed) and not String(p.kind) in ["mirror", "mirror_pair", "resonator"]:
 			continue
 		var d: float = player.position.distance_to(p.pos)
-		if d < scanner_range and is_visible_poi(p):
+		# Signal beams can be heard from far further than the scanner reaches.
+		var listen: float = scanner_range * (2.2 if String(p.kind) in ["signal", "character"] else 1.0)
+		if d < listen and is_visible_poi(p):
 			if not bool(p.known):
 				p.known = true
 				run.on_poi_spotted(p)
@@ -115,9 +130,17 @@ func step(delta: float, player: ForcePlayer, scanner_range: float) -> void:
 		var tune: float = float(TUNE_TIME.get(String(p.kind), 0.0))
 		if String(p.kind) == "resonator" and bool(p.claimed):
 			continue
+		if String(p.kind) == "camp":
+			continue
 		if inside:
+			if tune > 0.0 and not bool(p.get("tuning_started", false)) and String(p.kind) in ["signal", "character"]:
+				p.tuning_started = true
+				run.on_tuning_started(p)
 			if tune > 0.0:
-				p.progress = minf(tune, float(p.progress) + delta)
+				var why: String = _lock_blocker(p, player)
+				p.blocked = why
+				if why == "":
+					p.progress = minf(tune, float(p.progress) + delta)
 				if float(p.progress) >= tune:
 					_claim(p)
 			else:
@@ -125,6 +148,33 @@ func step(delta: float, player: ForcePlayer, scanner_range: float) -> void:
 		else:
 			p.progress = maxf(0.0, float(p.progress) - delta * 0.7)
 	queue_redraw()
+
+## Returns "" when the signal may tune, otherwise a short reason for the HUD.
+func _lock_blocker(p: Dictionary, player: ForcePlayer) -> String:
+	match String(p.get("lock", "")):
+		"resonance":
+			if run.force_state != "RESONANCE":
+				return "NEEDS RESONANCE"
+		"stillness":
+			if player.velocity.length() > 30.0:
+				return "HOLD STILL"
+		"guardian":
+			var g: Variant = p.get("guardian")
+			if g == null:
+				p.guardian = run.spawn_guardian(p)
+				return "DEFEAT THE GUARDIAN"
+			if is_instance_valid(g) and not (g as ForceEnemy).dead:
+				return "DEFEAT THE GUARDIAN"
+		"ensemble":
+			if not p.has("relays"):
+				p.relays = []
+				for k in 3:
+					var rp: Vector2 = run.world.resolve(Vector2(p.pos) + Vector2.from_angle(TAU * k / 3.0 + 0.5) * 300.0, 20.0)
+					p.relays.append(add({"kind": "relay", "pos": rp, "title": "RELAY", "color": p.color, "radius": 42.0, "known": true}))
+			for r: Dictionary in p.relays:
+				if not bool(r.claimed):
+					return "ACTIVATE THE RELAYS"
+	return ""
 
 func _move_signal(p: Dictionary, player: ForcePlayer, delta: float) -> void:
 	# The Night Trace stays just ahead of you until it reaches the corridor's end.
@@ -203,7 +253,7 @@ func _draw() -> void:
 			continue
 		var r: float = float(p.radius)
 		match String(p.kind):
-			"signal", "character":
+			"signal", "character", "echo":
 				# A tall broadcast beam visible from far away.
 				for k in 6:
 					var h: float = 140.0 + k * 50.0
@@ -258,6 +308,19 @@ func _draw() -> void:
 						draw_arc(pos, r * ph2, 0.0, TAU, 32, Color(c, 0.4 * (1.0 - ph2)), 2.0)
 					draw_arc(pos, r, 0.0, TAU, 40, Color(c, 0.3), 1.5)
 					_draw_progress(p, pos, r, c)
+			"camp":
+				# Shard salvage pile with red markings; pale-grey plating.
+				draw_circle(pos, r, Color(c, 0.05))
+				draw_arc(pos, r, 0.0, TAU, 32, Color(c, 0.25), 2.0)
+				for k in 4:
+					var a: float = TAU * k / 4.0 + 0.4
+					draw_rect(Rect2(pos + Vector2.from_angle(a) * 22.0 - Vector2(10, 7), Vector2(20, 14)), Color("8e939c"))
+				draw_line(pos + Vector2(0, -6), pos + Vector2(0, -44), Color("cfd3da"), 3.0)
+				draw_colored_polygon(PackedVector2Array([pos + Vector2(0, -44), pos + Vector2(22, -38), pos + Vector2(0, -31)]), c)
+			"relay":
+				draw_circle(pos, 10.0, Color(c, 0.9))
+				draw_arc(pos, r, anim, anim + TAU * 0.75, 24, Color(c, 0.6), 3.0)
+				draw_line(pos, pos + Vector2(0, -40), Color(c, 0.5), 2.0)
 			"rift":
 				var pts2: PackedVector2Array = PackedVector2Array()
 				for k in 10:
@@ -265,7 +328,7 @@ func _draw() -> void:
 					pts2.append(pos + Vector2.from_angle(TAU * k / 10.0 + anim * 0.3) * rr2)
 				draw_colored_polygon(pts2, Color(c, 0.35))
 				draw_circle(pos, r * 0.25, Color(0.05, 0.0, 0.05, 0.9))
-		if bool(p.known) and String(p.kind) in ["signal", "character", "artifact", "anomaly", "mirror"] and String(p.title) != "":
+		if bool(p.known) and String(p.kind) in ["signal", "character", "artifact", "anomaly", "mirror", "echo"] and String(p.title) != "":
 			var label: String = String(p.title)
 			var w: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
 			draw_string_outline(font, pos + Vector2(-w / 2.0, r + 24.0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, 4, Color(0, 0, 0, 0.7))
@@ -273,6 +336,11 @@ func _draw() -> void:
 
 func _draw_progress(p: Dictionary, pos: Vector2, r: float, c: Color) -> void:
 	var tune: float = float(TUNE_TIME.get(String(p.kind), 0.0))
+	var blocked: String = String(p.get("blocked", ""))
+	if blocked != "" and run.player.position.distance_to(pos) < r:
+		var w: float = font.get_string_size(blocked, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
+		draw_string_outline(font, pos + Vector2(-w / 2.0, -r - 16.0), blocked, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, 4, Color(0, 0, 0, 0.8))
+		draw_string(font, pos + Vector2(-w / 2.0, -r - 16.0), blocked, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("ffe08a"))
 	if tune <= 0.0 or float(p.progress) <= 0.0:
 		return
 	var t: float = float(p.progress) / tune

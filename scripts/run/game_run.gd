@@ -44,6 +44,7 @@ var level: int = 1
 var xp: int = 0
 var xp_need: int = 8
 var pending_levels: int = 0
+var upgrades_offered: int = 0
 var choosing: bool = false
 var rerolls: int = 0
 var ended: bool = false
@@ -86,6 +87,11 @@ var combat_heat: float = 0.0
 var damage_dealt: float = 0.0
 var map_revealed: bool = false
 var explored: Dictionary = {} # Vector2i cells of 400px
+var camps: Array = [] # {pos, region, remaining, active, members, cleared}
+var camp_clock: float = 0.0
+var echo_clock: float = 75.0
+var echoes_tuned: int = 0
+var bonus_currency: int = 0
 
 func setup(config: Dictionary) -> void:
 	character_id = String(config.get("character", "ella_venn"))
@@ -112,6 +118,7 @@ func _build() -> void:
 	pois.run = self
 	add_child(pois)
 	pois.populate(world, rng, Profile.data["discovered"])
+	_place_camps()
 	hazards = HazardSystem.new()
 	hazards.run = self
 	add_child(hazards)
@@ -181,6 +188,74 @@ func _apply_start_bonuses() -> void:
 	if Profile.data["discovered"].has("art_beacon_core"):
 		resonance = 65.0
 
+## Raider camps: idle clusters around a marked salvage pile. They give the
+## journey friction and the route a choice — go around, or clear it for an
+## upgrade. Members materialise only when the player is near.
+func _place_camps() -> void:
+	for rid: String in world.region_ids:
+		var r: Dictionary = GameData.REGIONS[rid]
+		var threat: int = int(r.get("threat", 0))
+		if threat <= 0:
+			continue
+		var count: int = 2 + (1 if threat >= 3 else 0)
+		for i in count:
+			var pos: Vector2 = world.random_open_point_near(GameData.region_anchor(r), 200.0, float(r.get("radius", 600.0)) * 0.85, rng)
+			camps.append({"pos": pos, "region": rid, "remaining": 5 + threat * 2, "active": false, "members": [], "cleared": false})
+			pois.add({"kind": "camp", "pos": pos, "title": "RAIDER CAMP", "color": Color("ff6a4f"), "radius": 70.0, "camp": camps.size() - 1})
+
+func _step_camps() -> void:
+	for i in camps.size():
+		var c: Dictionary = camps[i]
+		if bool(c.cleared):
+			continue
+		var d: float = player.position.distance_to(c.pos)
+		if not bool(c.active) and d < 1300.0:
+			c.active = true
+			var r: Dictionary = GameData.REGIONS[String(c.region)]
+			for k in int(c.remaining):
+				var kind: String = _pick_kind(r)
+				var e: ForceEnemy = spawn_enemy(kind, Vector2(c.pos) + Vector2.from_angle(rng.randf() * TAU) * rng.randf_range(40.0, 170.0), false, true)
+				if e:
+					e.camp = i
+					e.home = c.pos
+					(c.members as Array).append(e)
+		elif bool(c.active):
+			var alive: Array = (c.members as Array).filter(func(e: Variant) -> bool: return is_instance_valid(e) and not (e as ForceEnemy).dead)
+			c.members = alive
+			if alive.is_empty():
+				c.cleared = true
+				pending_levels += 1
+				pickups.drop("repair", c.pos)
+				for k in 6:
+					pickups.drop("mote", Vector2(c.pos) + Vector2.from_angle(TAU * k / 6.0) * 30.0, 3 + int(elapsed / 200.0))
+				fx.ring(c.pos, 20.0, 260.0, Color("ffe08a"), 0.8, 6.0)
+				Audio.play_sfx("discovery", 1.4, -4.0, 0.3)
+				if hud:
+					hud.toast("RAIDER CAMP CLEARED — salvage recovered")
+				for poi: Dictionary in pois.items:
+					if String(poi.kind) == "camp" and int(poi.get("camp", -1)) == i:
+						poi.claimed = true
+			elif d > 2100.0:
+				c.remaining = alive.size()
+				for e2: ForceEnemy in alive:
+					e2.dead = true
+					enemies.erase(e2)
+					e2.queue_free()
+				c.members = []
+				c.active = false
+
+## Echo transmissions: short-lived signals that surface across the Reach,
+## giving a long expedition a rhythm of new reasons to travel.
+func _spawn_echo() -> void:
+	var pos: Vector2 = world.random_open_point_near(player.position, 1500.0, 3200.0, rng)
+	var forces: Array = attuned.duplicate()
+	var fid: String = String(forces[rng.randi() % forces.size()])
+	var p: Dictionary = pois.add({"kind": "echo", "pos": pos, "title": "ECHO TRANSMISSION", "color": GameData.FORCES[fid]["color"],
+		"radius": 64.0, "known": true, "life": 75.0, "force": fid})
+	if hud:
+		hud.alert("ECHO TRANSMISSION", p.pos)
+	Audio.play_sfx("ping", 1.1, -2.0, 0.3)
+
 func _queue_onboarding() -> void:
 	if not Profile.seen("hint_move"):
 		hint_queue.append(["hint_move", "Drag anywhere on the left of the screen — or use WASD / stick — to fly. Weapons fire on their own."])
@@ -206,7 +281,15 @@ func step(delta: float) -> void:
 	elapsed += delta
 	_read_input()
 	player.step(delta)
+	var before: Vector2 = player.position
 	player.position = world.resolve(player.position, 18.0)
+	var push: Vector2 = player.position - before
+	if push.length_squared() > 0.0001:
+		# Slide along rocks and hulls instead of sticking to them.
+		var n: Vector2 = push.normalized()
+		var into: float = player.velocity.dot(n)
+		if into < 0.0:
+			player.velocity -= n * into
 	_update_region()
 	_explore_mark()
 	_update_state(delta)
@@ -224,6 +307,14 @@ func step(delta: float) -> void:
 	pois.step(delta, player, scanner_range())
 	fx.step(delta)
 	_spawn_director(delta)
+	echo_clock -= delta
+	if echo_clock <= 0.0 and not boss_spawned:
+		echo_clock = rng.randf_range(80.0, 110.0) * (0.3 if quick_test else 1.0)
+		_spawn_echo()
+	camp_clock -= delta
+	if camp_clock <= 0.0:
+		camp_clock = 0.5
+		_step_camps()
 	_environment(delta)
 	_gate_logic(delta)
 	_beat_fallback(delta)
@@ -315,7 +406,7 @@ func add_resonance(amount: float, reason: String = "") -> void:
 		fx.label(player.position + Vector2(0, -48), reason, Color("9ff7d0") if amount > 0.0 else Color("ff8fa8"), 15, 1.0)
 
 func _update_state(delta: float) -> void:
-	resonance = move_toward(resonance, 50.0, delta * 0.45)
+	resonance = move_toward(resonance, 50.0, delta * 0.7)
 	var next: String = force_state
 	match force_state:
 		"DRIFT":
@@ -381,13 +472,14 @@ func _step_enemies(delta: float) -> void:
 			if player_hit(e.contact_damage, e.position):
 				e.contact_clock = 0.9
 		# Despawn far, idle wanderers to keep the world light.
-		if d2 > 1700.0 * 1700.0 and not e.engaged and not e.elite and not e.boss:
+		if d2 > 1700.0 * 1700.0 and not e.engaged and not e.elite and not e.boss and e.camp < 0:
 			e.dead = true
 			e.queue_free()
 			enemies.remove_at(i)
 
-func spawn_enemy(kind: String, pos: Vector2, engaged: bool = false) -> ForceEnemy:
-	if enemies.size() >= MAX_ENEMIES and not GameData.ENEMIES[kind].get("elite", false) and not GameData.ENEMIES[kind].get("boss", false):
+func spawn_enemy(kind: String, pos: Vector2, engaged: bool = false, camp_member: bool = false) -> ForceEnemy:
+	var cap: int = MAX_ENEMIES + (30 if camp_member else 0)
+	if enemies.size() >= cap and not GameData.ENEMIES[kind].get("elite", false) and not GameData.ENEMIES[kind].get("boss", false):
 		return null
 	var e: ForceEnemy = ForceEnemy.new()
 	e.position = world.clamp_to_world(pos)
@@ -422,7 +514,8 @@ func _spawn_director(delta: float) -> void:
 	spawn_clock -= delta
 	if spawn_clock <= 0.0:
 		spawn_clock = 0.55 if not quick_test else 0.3
-		if float(enemies.size()) < minf(target, MAX_ENEMIES - 10):
+		var ambient: int = enemies.reduce(func(acc: int, e: ForceEnemy) -> int: return acc + (1 if e.camp < 0 else 0), 0)
+		if float(ambient) < minf(target, MAX_ENEMIES - 10):
 			var engaged: bool = rng.randf() < clampf(0.3 + elapsed / 1500.0, 0.3, 0.65)
 			_spawn_near_player("", engaged)
 	patrol_clock -= delta
@@ -486,8 +579,8 @@ func spawn_boss(pos: Vector2) -> void:
 		return
 	boss_spawned = true
 	boss = spawn_enemy("the_silence", world.random_open_point_near(pos, 0.0, 60.0, rng), true)
-	if quick_test and boss:
-		boss.hp *= 0.35
+	if boss and quick_test:
+		boss.hp *= 0.2
 		boss.max_hp = boss.hp
 	if hud:
 		hud.banner("THE SILENCE", "It isn't hunting ships. It's hunting songs. Keep playing.", Color("ff376f"), 3.2)
@@ -541,7 +634,7 @@ func damage_enemy(e: ForceEnemy, amount: float, dir: Vector2, knock: float, weap
 func _on_enemy_died(e: ForceEnemy) -> void:
 	enemies.erase(e)
 	kills += 1
-	add_resonance(0.35 if not e.elite else 6.0)
+	add_resonance(0.12 if not e.elite else 6.0)
 	var val: int = e.xp_value
 	if force_state == "FRACTURE":
 		val = int(ceil(val * 1.5))
@@ -665,7 +758,7 @@ func player_hit(amount: float, from: Vector2) -> bool:
 
 func gain_xp(value: int) -> void:
 	motes_collected += 1
-	add_resonance(0.22)
+	add_resonance(0.06)
 	if character_id == "tessa_banks":
 		var every: int = 30 if mastery_level >= 1 else 40
 		if motes_collected % every == 0:
@@ -681,6 +774,7 @@ func gain_xp(value: int) -> void:
 
 func _open_level_up() -> void:
 	pending_levels -= 1
+	upgrades_offered += 1
 	var count: int = 4 if Profile.workshop_rank("insight") > 0 else 3
 	var options: Array = weapons.choices(count, attuned)
 	if options.is_empty():
@@ -875,6 +969,28 @@ func on_poi_claimed(p: Dictionary) -> void:
 			player.heal(15.0)
 			fx.ring(p.pos, 20.0, 220.0, p.color, 0.8, 6.0)
 			Audio.play_sfx("state_up", 1.2, -4.0)
+		"echo":
+			echoes_tuned += 1
+			pending_levels += 1
+			add_resonance(10.0, "+RESONANCE")
+			bonus_currency += 8
+			fx.ring(p.pos, 20.0, 300.0, p.color, 0.8, 6.0)
+			Audio.stinger("discovery", -4.0)
+			var note: String = "An echo of %s — an upgrade and +8 Signal." % String(GameData.FORCES[String(p.force)]["name"])
+			# Rarely an echo carries a fragment of the mystery.
+			for fid2: String in ["frag_drift", "frag_corridor", "frag_wrecks"]:
+				if not Profile.is_discovered(fid2) and not fid2 in discoveries and rng.randf() < 0.35:
+					discoveries.append(fid2)
+					new_this_run.append(fid2)
+					note += "\nIt carries a log fragment: " + String(GameData.DISCOVERIES[fid2]["text"])
+					break
+			if hud:
+				hud.discovery_card("ECHO TRANSMISSION", note, p.color, false, "signal")
+		"relay":
+			fx.ring(p.pos, 10.0, 160.0, p.color, 0.5, 5.0)
+			Audio.play_sfx("choose", 1.2, -4.0)
+			if hud:
+				hud.toast("RELAY SECTION ONLINE")
 		"rift":
 			add_resonance(-38.0, "-RESONANCE")
 			for i in 6:
@@ -944,6 +1060,29 @@ func _claim_discovery(p: Dictionary) -> void:
 	if hud:
 		hud.discovery_card(heading, detail, p.color, first_time, String(p.kind))
 	_update_music(false)
+
+## Broadcasting a signal draws attention: a raider pack homes in while you tune.
+func on_tuning_started(p: Dictionary) -> void:
+	var r: Dictionary = world.region_def(world.region_at(p.pos))
+	var threat: int = int(r.get("threat", 1))
+	var n: int = 3 + threat * 2 + int(elapsed / 240.0)
+	if String(p.id) == "sig_now_or_never" and int(Profile.data["stats"]["expeditions"]) == 0:
+		n = 2 # first-ever signal: a gentle introduction
+	var dir: float = rng.randf() * TAU
+	for i in n:
+		var k: String = _pick_kind(r)
+		if k == "wreck_lurker":
+			k = "ram_cutter"
+		spawn_enemy(k, Vector2(p.pos) + Vector2.from_angle(dir + (i - n * 0.5) * 0.25) * rng.randf_range(560.0, 680.0), true)
+	if hud:
+		hud.toast("TUNING — the broadcast has drawn attention. Hold the ring.")
+	Audio.play_sfx("ping", 0.9, -4.0, 0.3)
+
+func spawn_guardian(p: Dictionary) -> ForceEnemy:
+	var g: ForceEnemy = spawn_enemy("splinter_captain", world.random_open_point_near(p.pos, 380.0, 460.0, rng), true)
+	if hud:
+		hud.alert("GUARDIAN CAPTAIN", g.position if g else p.pos)
+	return g
 
 func on_mirrorfold(from: Dictionary, to: Dictionary) -> void:
 	var dest: Vector2 = Vector2(to.pos) + Vector2(0, 70)
@@ -1067,7 +1206,7 @@ func end_run(result: String) -> void:
 	outcome = result
 	get_tree().paused = false
 	var found: int = discoveries.size()
-	var currency: float = kills / 8.0 + level * 3.0 + found * 15.0
+	var currency: float = kills / 8.0 + level * 3.0 + found * 15.0 + bonus_currency
 	match result:
 		"complete":
 			currency += 120.0

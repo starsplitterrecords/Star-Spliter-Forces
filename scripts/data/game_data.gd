@@ -22,7 +22,7 @@ const CHARACTERS: Dictionary = {
 		"bio": "Commander of the old heavy cruiser Thunderbreak. Calm, deliberate and unshowy; her authority comes from steadiness and operational clarity.",
 		"style": "cruiser",
 		"accent": Color("8fd3ff"),
-		"speed": 262.0,
+		"speed": 232.0,
 		"max_hp": 140.0,
 		"armor": 1.5,
 		"pickup": 115.0,
@@ -40,7 +40,7 @@ const CHARACTERS: Dictionary = {
 		"bio": "Veteran Verge escort commander whose corridor knowledge comes from repeated real crossings. Blunt, sharp and proud.",
 		"style": "interceptor",
 		"accent": Color("c6e27a"),
-		"speed": 340.0,
+		"speed": 300.0,
 		"max_hp": 82.0,
 		"armor": 0.0,
 		"pickup": 110.0,
@@ -58,7 +58,7 @@ const CHARACTERS: Dictionary = {
 		"bio": "Captain of the Gravefire, a compact Shard working ship kept alive through visible repair. Sparse, cutting, honest and weary of ideology.",
 		"style": "hauler",
 		"accent": Color("e9e4dc"),
-		"speed": 282.0,
+		"speed": 248.0,
 		"max_hp": 110.0,
 		"armor": 0.5,
 		"pickup": 150.0,
@@ -76,7 +76,7 @@ const CHARACTERS: Dictionary = {
 		"bio": "Lead survey pilot of the Glass Horizon, flying the cutter Lantern Two. Quick, practical and lightly funny under pressure.",
 		"style": "scout",
 		"accent": Color("c8a2ff"),
-		"speed": 305.0,
+		"speed": 268.0,
 		"max_hp": 92.0,
 		"armor": 0.0,
 		"pickup": 125.0,
@@ -94,7 +94,7 @@ const CHARACTERS: Dictionary = {
 		"bio": "Independent Veil Market broker who knows timing windows, shear markers and traffic. Smooth, sardonic, transactional — anomaly-glass beads sewn into his cloak bend the light.",
 		"style": "wraith",
 		"accent": Color("ffcf7a"),
-		"speed": 300.0,
+		"speed": 264.0,
 		"max_hp": 86.0,
 		"armor": 0.0,
 		"pickup": 115.0,
@@ -289,7 +289,7 @@ const ENEMIES: Dictionary = {
 	"shield_tug": {"name": "Shield Tug", "hp": 60.0, "speed": 80.0, "damage": 10.0, "xp": 4, "radius": 19.0, "color": Color("9fe8ff"), "behavior": "warden", "shape": "warden", "aggro": 520.0},
 	"echo_mote": {"name": "Gravitic Echo", "hp": 22.0, "speed": 70.0, "damage": 7.0, "xp": 2, "radius": 14.0, "color": Color("8ff0c8"), "behavior": "drift", "shape": "orb", "aggro": 360.0},
 	"splinter_captain": {"name": "Splinter Captain", "hp": 520.0, "speed": 84.0, "damage": 22.0, "xp": 30, "radius": 36.0, "color": Color("ffd75e"), "behavior": "surge", "shape": "elite", "elite": true, "aggro": 9999.0},
-	"the_silence": {"name": "The Silence", "hp": 6200.0, "speed": 78.0, "damage": 26.0, "xp": 0, "radius": 72.0, "color": Color("ff376f"), "behavior": "boss", "shape": "silence", "boss": true, "aggro": 99999.0},
+	"the_silence": {"name": "The Silence", "hp": 30000.0, "speed": 78.0, "damage": 26.0, "xp": 0, "radius": 72.0, "color": Color("ff376f"), "behavior": "boss", "shape": "silence", "boss": true, "aggro": 99999.0},
 }
 
 # ============================================================== destinations & regions
@@ -298,10 +298,10 @@ const DESTINATIONS: Dictionary = {
 	"black_drift_reach": {
 		"name": "Black Drift Reach",
 		"desc": "The broken frontier around Black Drift, where corridor beacons flicker and signals from across the catalog drift through the wreckage.",
-		"half_size": Vector2(3400.0, 2400.0),
+		"half_size": Vector2(6400.0, 4500.0),
 		"gate": Vector2.ZERO,
-		"goal_signals": 2,
-		"climax_time": 1080.0,
+		"goal_signals": 3,
+		"climax_time": 1140.0,
 		"background": Color("070a15"),
 		"regions": ["array_gate", "silver_wrecks", "thunderbreak_shelf", "quiet_basin", "night_corridor", "fracture_bloom"],
 		"completion_unlocks": ["kess_darrow"],
@@ -311,22 +311,22 @@ const DESTINATIONS: Dictionary = {
 
 ## shape: "circle" uses center+radius; "capsule" uses a,b endpoints + radius.
 const REGIONS: Dictionary = {
-	"array_gate": {"name": "ARRAY GATE", "shape": "circle", "center": Vector2(0, 0), "radius": 430.0,
+	"array_gate": {"name": "ARRAY GATE", "shape": "circle", "center": Vector2(0, 0), "radius": 494.0,
 		"color": Color("68ecff"), "floor": Color("0a1424"), "props": "gate", "density": 0.25, "music": "region_gate",
 		"enemies": {"skiff": 1.0}, "blurb": "A reblazed corridor gate. Extraction point.", "threat": 0},
-	"silver_wrecks": {"name": "SILVER WRECKS", "shape": "circle", "center": Vector2(1750, 1150), "radius": 920.0,
+	"silver_wrecks": {"name": "SILVER WRECKS", "shape": "circle", "center": Vector2(3325, 2128), "radius": 1208.0,
 		"color": Color("9fb4d0"), "floor": Color("0b111c"), "props": "wreck", "density": 1.0, "music": "region_wrecks",
 		"enemies": {"skiff": 0.9, "ram_cutter": 0.6, "wreck_lurker": 0.55, "shield_tug": 0.25}, "blurb": "Old hull wreckage. Not every piece of debris is debris.", "threat": 2},
-	"thunderbreak_shelf": {"name": "THUNDERBREAK SHELF", "shape": "circle", "center": Vector2(-2050, -1150), "radius": 980.0,
+	"thunderbreak_shelf": {"name": "THUNDERBREAK SHELF", "shape": "circle", "center": Vector2(-3857, -2128), "radius": 1265.0,
 		"color": Color("ff9a5f"), "floor": Color("150d0c"), "props": "crystal", "density": 1.0, "music": "region_shelf",
 		"enemies": {"skiff": 0.8, "rail_picket": 0.8, "ram_cutter": 0.4}, "blurb": "Crystalline shelves charged with stray lightning. Watch the sky.", "threat": 2, "strikes": true},
-	"quiet_basin": {"name": "QUIET BASIN", "shape": "circle", "center": Vector2(-1350, 1450), "radius": 900.0,
+	"quiet_basin": {"name": "QUIET BASIN", "shape": "circle", "center": Vector2(-2660, 2660), "radius": 1150.0,
 		"color": Color("71cda0"), "floor": Color("08130f"), "props": "pools", "density": 0.45, "music": "region_basin",
 		"enemies": {"echo_mote": 1.0, "swarm_tender": 0.25}, "blurb": "Still water and slow echoes. A place to breathe — and to tune.", "threat": 1},
-	"night_corridor": {"name": "NIGHT CORRIDOR", "shape": "capsule", "a": Vector2(800, -650), "b": Vector2(3050, -1650), "radius": 330.0,
+	"night_corridor": {"name": "NIGHT CORRIDOR", "shape": "capsule", "a": Vector2(1463, -1197), "b": Vector2(5719, -3192), "radius": 391.0,
 		"color": Color("b07cff"), "floor": Color("0c0918"), "props": "corridor", "density": 0.8, "music": "region_corridor",
 		"enemies": {"skiff": 0.8, "mine_hauler": 0.7, "ram_cutter": 0.35}, "blurb": "A half-reblazed lane. Green beacons still mark safe volume.", "threat": 2},
-	"fracture_bloom": {"name": "FRACTURE BLOOM", "shape": "circle", "center": Vector2(250, -1850), "radius": 640.0,
+	"fracture_bloom": {"name": "FRACTURE BLOOM", "shape": "circle", "center": Vector2(399, -3591), "radius": 828.0,
 		"color": Color("ff4f7b"), "floor": Color("16070f"), "props": "bloom", "density": 0.9, "music": "region_bloom",
 		"enemies": {"shield_tug": 0.5, "ram_cutter": 0.6, "skiff": 0.6, "rail_picket": 0.4}, "blurb": "A phase anomaly in full bloom. Rifts here unbalance everything.", "threat": 3},
 }
@@ -343,21 +343,21 @@ const DISCOVERIES: Dictionary = {
 		"force": "pulse_width_codex", "transmission": "pwc_now_or_never",
 		"text": "A bright carrier wave just outside the gate — a melody strong enough to cross broken corridors."},
 	"sig_green_echo": {"kind": "signal", "region": "quiet_basin", "offset": Vector2(-150, 120), "title": "GREEN ECHO",
-		"force": "resonant_currents", "transmission": "rc_meaningless_dub",
+		"force": "resonant_currents", "transmission": "rc_meaningless_dub", "lock": "resonance",
 		"text": "A delayed signal repeating through empty space, each repeat a little deeper than the last."},
 	"sig_thunderbreak_beacon": {"kind": "signal", "region": "thunderbreak_shelf", "offset": Vector2(180, -60), "title": "SHELF BEACON",
-		"force": "star_splitter_rex", "transmission": "rex_signals_and_shadows",
+		"force": "star_splitter_rex", "transmission": "rex_signals_and_shadows", "lock": "guardian",
 		"text": "Something enormous is playing under the lightning. It sounds like the moment before a fight."},
 	"sig_night_trace": {"kind": "signal", "region": "night_corridor", "offset": Vector2(-200, 0), "title": "NIGHT TRACE", "moving": true,
 		"force": "ghost_driver_unit", "transmission": "gdu_watch_out",
 		"text": "A transmission that keeps moving just ahead of you down the corridor — catch it."},
 	"sig_ignition": {"kind": "signal", "region": "silver_wrecks", "offset": Vector2(320, 260), "title": "IGNITION CHORUS",
-		"force": "ion_drive_orchestra", "transmission": "ido_ignition_sequence",
+		"force": "ion_drive_orchestra", "transmission": "ido_ignition_sequence", "lock": "ensemble",
 		"text": "Strings and engines tuning together inside a dead hull."},
 	"sig_hexagonis": {"kind": "signal", "region": "fracture_bloom", "offset": Vector2(0, -160), "title": "HEXAGONAL HAZE",
-		"force": "minor_collapse", "transmission": "mc_hexagonis",
+		"force": "minor_collapse", "transmission": "mc_hexagonis", "lock": "stillness",
 		"text": "A wall of fuzz-soaked sound, so quiet at its center you can hear yourself."},
-	"sig_campfire": {"kind": "signal", "region": "", "world": Vector2(-2950, 2050), "title": "ANALOG CAMPFIRE",
+	"sig_campfire": {"kind": "signal", "region": "", "world": Vector2(-5586, 3924), "title": "ANALOG CAMPFIRE",
 		"force": "warm_circuits_rise", "transmission": "wcr_this_paths_for_you",
 		"text": "Far out in the drift, a warm improvised groove circles a ring of old beacons."},
 	# Characters
@@ -379,10 +379,18 @@ const DISCOVERIES: Dictionary = {
 	"frag_gate": {"kind": "fragment", "region": "array_gate", "offset": Vector2(-300, 210), "title": "GATE LOG", "fragment": "frag_01", "text": "Gate log, partial: \"...the beacons don't fail. They go quiet. Like something is listening for them.\""},
 	"frag_wrecks": {"kind": "fragment", "region": "silver_wrecks", "offset": Vector2(80, -420), "title": "FLIGHT RECORDER", "fragment": "frag_03", "hidden": "SCAN", "text": "Flight recorder: \"Comms are clear but empty. Not static. Empty.\""},
 	"frag_corridor": {"kind": "fragment", "region": "night_corridor", "offset": Vector2(900, -80), "title": "BEACON SHADOW", "fragment": "frag_05", "text": "A beacon still broadcasting into a pocket of nothing. The nothing is moving."},
-	"frag_drift": {"kind": "fragment", "region": "", "world": Vector2(2900, 2000), "title": "LONE BUOY", "fragment": "frag_06", "hidden": "SCAN", "text": "Lone buoy, last entry: \"It isn't hunting ships. It's hunting songs.\""},
+	"frag_drift": {"kind": "fragment", "region": "", "world": Vector2(5586, 3857), "title": "LONE BUOY", "fragment": "frag_06", "hidden": "SCAN", "text": "Lone buoy, last entry: \"It isn't hunting ships. It's hunting songs.\""},
 	# Anomalies (in-run effects)
 	"anom_memory_well": {"kind": "anomaly", "region": "quiet_basin", "offset": Vector2(220, 330), "title": "MEMORY WELL", "effect": "memory_well", "text": "An echo anomaly. It plays back a choice you haven't made yet."},
-	"anom_mirrorfold": {"kind": "anomaly", "region": "", "world": Vector2(-700, -900), "title": "MIRRORFOLD", "effect": "mirrorfold", "pair": Vector2(1500, -100), "text": "A metric anomaly folds two places into one. Step through."},
+	"anom_mirrorfold": {"kind": "anomaly", "region": "", "world": Vector2(-1463, -1729), "title": "MIRRORFOLD", "effect": "mirrorfold", "pair": Vector2(3192, -200), "text": "A metric anomaly folds two places into one. Step through."},
+}
+
+## Signal locks: each project's signal asks to be heard in its own way.
+const LOCKS: Dictionary = {
+	"resonance": "Only resolves in RESONANCE. Find a resonator, or play in harmony.",
+	"guardian": "A guardian captain answers the broadcast. Defeat it to finish tuning.",
+	"stillness": "Only resolves in stillness. Hold your position.",
+	"ensemble": "Three relay sections must play together. Activate the relays around the signal.",
 }
 
 const FRAGMENTS: Dictionary = {
@@ -457,7 +465,7 @@ const SFX_NAMES: Array[String] = [
 # ============================================================== helpers
 
 static func xp_required(level: int) -> int:
-	return int(4 + pow(float(level), 1.48) * 3.0)
+	return int(5 + pow(float(level), 1.45) * 4.5)
 
 static func format_time(seconds: float) -> String:
 	var s: int = maxi(0, int(seconds))

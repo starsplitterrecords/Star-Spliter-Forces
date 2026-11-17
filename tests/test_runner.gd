@@ -18,7 +18,7 @@ func _ready() -> void:
 	var tests: Array[String] = [
 		"test_scripts_compile", "test_data_integrity", "test_save_migration_and_recovery",
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
-		"test_hidden_sites_follow_state", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries",
+		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
 		"test_real_frames", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
@@ -42,6 +42,10 @@ func _dispatch(t: String) -> void:
 	match t:
 		"test_real_frames":
 			await test_real_frames()
+		"test_signal_locks":
+			await test_signal_locks()
+		"test_camps_and_echoes":
+			await test_camps_and_echoes()
 		"test_scripts_compile":
 			await test_scripts_compile()
 		"test_data_integrity":
@@ -247,7 +251,7 @@ func test_simulated_expedition_minute() -> void:
 	# Bot: fly toward Silver Wrecks.
 	# A plausible player: heads for the wrecks but swerves for nearby motes.
 	var bot: Callable = func(r: GameRun) -> void:
-		var goal: Vector2 = Vector2(1750, 1150)
+		var goal: Vector2 = GameData.REGIONS["silver_wrecks"]["center"]
 		var best: Vector2 = Vector2.INF
 		for it: Dictionary in r.pickups.items:
 			if Vector2(it.pos).distance_to(r.player.position) < 320.0:
@@ -314,9 +318,16 @@ func test_signal_discovery_attunes_force() -> void:
 	check(not poi.is_empty(), "green echo signal not placed")
 	run.player.position = Vector2(poi.pos)
 	run.player.god_mode = true
-	_sim(run, 0.6)
-	check(not "sig_green_echo" in run.discoveries, "signal claimed without tuning")
+	run.resonance = 50.0
+	run.set_force_state("DRIFT")
 	_sim(run, 2.0, func(r: GameRun) -> void:
+		r.resonance = 50.0
+		r.player.position = Vector2(poi.pos)
+		r.player.velocity = Vector2.ZERO)
+	check(not "sig_green_echo" in run.discoveries, "Resonance-locked signal tuned outside Resonance")
+	check(String(poi.get("blocked", "")) == "NEEDS RESONANCE", "lock reason not reported: " + String(poi.get("blocked", "")))
+	_sim(run, 5.0, func(r: GameRun) -> void:
+		r.resonance = 90.0
 		r.player.position = Vector2(poi.pos)
 		r.player.velocity = Vector2.ZERO)
 	check("sig_green_echo" in run.discoveries, "signal not claimed after tuning")
@@ -381,7 +392,9 @@ func test_boss_completion_and_unlocks() -> void:
 	run.player.god_mode = true
 	check(not run.climax_available(), "climax available before signals")
 	run.discoveries = ["sig_green_echo", "sig_now_or_never"]
-	check(run.climax_available(), "climax not available after two signals")
+	check(not run.climax_available(), "climax available below the signal goal")
+	run.discoveries.append("sig_hexagonis")
+	check(run.climax_available(), "climax not available at the signal goal")
 	run.left_gate = true
 	run.player.position = run.world.gate
 	run.confront()
@@ -403,6 +416,86 @@ func test_boss_completion_and_unlocks() -> void:
 	check(Profile.has_character("kess_darrow"), "completion unlock (Kess Darrow) not granted")
 	check(int(commit["currency"]) > 100, "completion currency too low")
 	check(int(Profile.data["stats"]["completions"]) == 1, "completion not counted")
+
+func test_signal_locks() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.player.god_mode = true
+	var find: Callable = func(id: String) -> Dictionary:
+		for q: Dictionary in run.pois.items:
+			if String(q.id) == id:
+				return q
+		return {}
+	# Stillness: moving never tunes; holding still does.
+	var haze: Dictionary = find.call("sig_hexagonis")
+	_sim(run, 6.0, func(r: GameRun) -> void:
+		r.player.position = Vector2(haze.pos) + Vector2(cos(r.elapsed * 6.0), sin(r.elapsed * 6.0)) * 20.0
+		r.player.velocity = Vector2(200, 0))
+	check(not "sig_hexagonis" in run.discoveries, "stillness signal tuned while moving")
+	_sim(run, 5.0, func(r: GameRun) -> void:
+		r.player.position = Vector2(haze.pos)
+		r.player.velocity = Vector2.ZERO)
+	check("sig_hexagonis" in run.discoveries, "stillness signal did not tune while still")
+	# Guardian: a captain spawns and must die first.
+	var beacon: Dictionary = find.call("sig_thunderbreak_beacon")
+	run.player.position = Vector2(beacon.pos)
+	_sim(run, 1.0, func(r: GameRun) -> void: r.player.position = Vector2(beacon.pos))
+	var g: Variant = beacon.get("guardian")
+	check(g != null and is_instance_valid(g), "guardian not spawned")
+	_sim(run, 5.0, func(r: GameRun) -> void: r.player.position = Vector2(beacon.pos))
+	check(not "sig_thunderbreak_beacon" in run.discoveries, "guardian signal tuned with guardian alive")
+	if g != null and is_instance_valid(g):
+		run.damage_enemy(g, 99999.0, Vector2.ZERO, 0.0, "environment", true)
+	_sim(run, 5.0, func(r: GameRun) -> void: r.player.position = Vector2(beacon.pos))
+	check("sig_thunderbreak_beacon" in run.discoveries, "guardian signal did not tune after guardian fell")
+	# Ensemble: three relays.
+	var chorus: Dictionary = find.call("sig_ignition")
+	_sim(run, 0.5, func(r: GameRun) -> void: r.player.position = Vector2(chorus.pos))
+	check(chorus.has("relays") and (chorus.relays as Array).size() == 3, "relays not created")
+	for relay: Dictionary in chorus.get("relays", []):
+		_sim(run, 0.3, func(r: GameRun) -> void: r.player.position = Vector2(relay.pos))
+	_sim(run, 5.0, func(r: GameRun) -> void: r.player.position = Vector2(chorus.pos))
+	check("sig_ignition" in run.discoveries, "ensemble signal did not tune after relays")
+	check(run.weapons.weapons.size() >= 2, "attuned Force weapons not granted")
+
+func test_camps_and_echoes() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.player.god_mode = true
+	check(run.camps.size() >= 8, "too few raider camps: %d" % run.camps.size())
+	var c: Dictionary = run.camps[0]
+	run.player.position = Vector2(c.pos) + Vector2(900, 0)
+	_sim(run, 0.6)
+	check(bool(c.active) and (c.members as Array).size() > 0, "camp did not materialise when approached")
+	var lv: int = run.upgrades_offered + run.pending_levels
+	for e: Variant in (c.members as Array).duplicate():
+		if is_instance_valid(e):
+			run.damage_enemy(e, 99999.0, Vector2.ZERO, 0.0, "environment", true)
+	_sim(run, 0.6)
+	check(bool(c.cleared), "camp not cleared")
+	check(run.upgrades_offered + run.pending_levels > lv, "camp clear did not grant an upgrade")
+	# Far camps dematerialise and keep their remaining count.
+	var c2: Dictionary = run.camps[1]
+	run.player.position = Vector2(c2.pos) + Vector2(500, 0)
+	_sim(run, 0.6)
+	var n: int = (c2.members as Array).size()
+	run.player.position = Vector2(c2.pos) + Vector2(2600, 0)
+	run.player.position = run.world.clamp_to_world(run.player.position)
+	_sim(run, 0.6)
+	check(not bool(c2.active) and int(c2.remaining) == n, "camp did not dematerialise cleanly")
+	# Echo transmissions spawn, can be tuned, and expire.
+	run._spawn_echo()
+	var echo: Dictionary = run.pois.nearest_unclaimed(run.player.position, ["echo"], true)
+	check(not echo.is_empty(), "echo not spawned")
+	var lv2: int = run.upgrades_offered + run.pending_levels
+	_sim(run, 3.5, func(r: GameRun) -> void: r.player.position = Vector2(echo.pos))
+	check(bool(echo.claimed) and run.echoes_tuned == 1, "echo not tuned")
+	check(run.upgrades_offered + run.pending_levels > lv2, "echo did not grant an upgrade")
+	run._spawn_echo()
+	var echo2: Dictionary = run.pois.nearest_unclaimed(run.player.position, ["echo"], true)
+	echo2.life = 0.1
+	_sim(run, 0.3)
+	check(bool(echo2.claimed) and bool(echo2.get("expired", false)), "echo did not expire")
 
 func test_death_keeps_discoveries() -> void:
 	var run: GameRun = _make_run()

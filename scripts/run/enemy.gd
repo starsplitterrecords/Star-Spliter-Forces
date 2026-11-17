@@ -23,6 +23,7 @@ var shape: String = "orb"
 var elite: bool = false
 var boss: bool = false
 var region_id: String = ""
+var camp: int = -1
 
 var engaged: bool = false
 var aggro_radius: float = 420.0
@@ -97,7 +98,8 @@ func step(delta: float, player_pos: Vector2) -> void:
 			return
 	elif dist > aggro_radius * 2.6 and not elite and not boss:
 		engaged = false
-		home = position
+		if camp < 0:
+			home = position
 	if telegraph > 0.0:
 		telegraph -= delta
 		if telegraph <= 0.0:
