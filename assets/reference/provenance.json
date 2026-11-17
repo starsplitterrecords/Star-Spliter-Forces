@@ -1,0 +1,890 @@
+{
+  "generated_by": "tools/import_reference_assets.py",
+  "entries": [
+    {
+      "id": "portrait_ella_venn",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/ella_venn_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "c81325d0361eb8ee263965e52f21f03026b68baf8605bb9181a9b52520dba8d5"
+        },
+        {
+          "out": "assets/characters/ella_venn_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "6be845b31d3ebb46f5580dd374e1b4f3678b9fc30fd50461a21ae265a2cf3b6b"
+        }
+      ]
+    },
+    {
+      "id": "portrait_cael_dominion",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/cael_dominion_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "8b35ab85cb57f37c8c4cd10c459845379ee2212701239c5d80237a6cf34b366f"
+        },
+        {
+          "out": "assets/characters/cael_dominion_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "54a5b02fc21b5574ef78640835f9b5eae008a417305272d184b7bfd9f402685a"
+        }
+      ]
+    },
+    {
+      "id": "portrait_colin_rhyne",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/colin_rhyne_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "5f6576310ee8044c92b67163b946949eae9fbb36f2bd945964d11cfdc3d96d8d"
+        },
+        {
+          "out": "assets/characters/colin_rhyne_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "60b77252bafe91315cbfbeb567f231c3691137b4b3c86be81a65790fbd40105b"
+        }
+      ]
+    },
+    {
+      "id": "portrait_naomi_sol",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/naomi_sol_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "f4f300433a3e918fc0446ebf151e2bf6c1510fe28cdd7307aea1346c53dec37c"
+        },
+        {
+          "out": "assets/characters/naomi_sol_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "8d753d7cf78f7121ddf4391b58c5c83220c74880b39a81ade9627b54792a7bb5"
+        }
+      ]
+    },
+    {
+      "id": "portrait_chris_halev",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/chris_halev_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "c23203267e74eae2f3ee920bc1b7d92eab559563e7cc6461333c879e99acae02"
+        },
+        {
+          "out": "assets/characters/chris_halev_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "ef266303a6b5fede87d5ba198ef41408a41c328884b0a00b8be1f6735392e2be"
+        }
+      ]
+    },
+    {
+      "id": "portrait_abby_saville",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/abby_saville_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "a14e5217767e6642e179b0d008aadce03fc653c37873d048ed573af04e9ee32b"
+        },
+        {
+          "out": "assets/characters/abby_saville_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "c0389a2144862c6f97e35d9cfa978b8034182248d88e99d97557dfaddc80ff9f"
+        }
+      ]
+    },
+    {
+      "id": "portrait_billie_rusk",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/billie_rusk_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "fef0bffeb13d284e2639adfef6fcd426fac9cb2b05c8f80ff1b59c23564ad732"
+        },
+        {
+          "out": "assets/characters/billie_rusk_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "7397f4ce58aef260e4845b1ba9cac370d5e36d23c61604429357871a62e526fd"
+        }
+      ]
+    },
+    {
+      "id": "portrait_tessa_banks",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/tessa_banks_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "cfa0aff9f602bf4035a591531f3df4bd641ec5630eae3820828d0d5ce9fdcf7a"
+        },
+        {
+          "out": "assets/characters/tessa_banks_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "eaebb769caf0ee3e451211d97aa4af58e6dcf7f352f7dea79d37176f839ef111"
+        }
+      ]
+    },
+    {
+      "id": "portrait_raid_mask",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/raid_mask_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "c059584507271129e007bf15f5694e06428c51287d8ce2b3c76a4cdebf319caf"
+        },
+        {
+          "out": "assets/characters/raid_mask_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "e3cac3c2a663d2bba75ab01c4cb3469ef1c78bc09aef0d7c161f47827214d27e"
+        }
+      ]
+    },
+    {
+      "id": "portrait_trade_mask",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/trade_mask_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "5df3e2b44a5efee63019b88c0761e2e2f22e3882a41358c1a652a32c9cf7dc52"
+        },
+        {
+          "out": "assets/characters/trade_mask_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "178d5e1544f218a2c1c16066fdbff689976fe7f206d6222a8caa2fd68abfd35e"
+        }
+      ]
+    },
+    {
+      "id": "portrait_fear_mask",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/fear_mask_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "e0d75b9619aa23c9abfa735bbf20d6bf0ed290e6627371f24560bde3703e0c8b"
+        },
+        {
+          "out": "assets/characters/fear_mask_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "7a4e539401325edbacfe35d7527bc9a30df3c77f29f296a57849e36fadd18991"
+        }
+      ]
+    },
+    {
+      "id": "portrait_jex_marrin",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "pending_review",
+      "use": "Explorer/character portrait cropped from the released Rex Fleet Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": true,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/jex_marrin_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "5eaefaa86230fbccb901af78d5116d101ff8c5d60514bfb4488561efc08df08d"
+        },
+        {
+          "out": "assets/characters/jex_marrin_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "4823496b045f279baa7cf600251bcc4933837db6ce3ee5a72e2c208e550579c1"
+        }
+      ]
+    },
+    {
+      "id": "rex_fleet_issue01_cover",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/rex-fleet-issue-01-green-corridor.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive Rex Fleet universe page",
+      "source_sha256": "42d7752b33b561935fc1b97cfcfb1c0d1b79ee19b53978f55768f9a1472d2f44",
+      "review_required": false,
+      "source_size": [
+        993,
+        1584
+      ],
+      "outputs": [
+        {
+          "out": "assets/universe/rex_fleet_issue01_cover.png",
+          "size": [
+            300,
+            478
+          ],
+          "sha256": "7a631c164995456f80d6b39a982bf18f406a35c91a158f2cfa78baab376da4a6"
+        }
+      ]
+    },
+    {
+      "id": "identity_pulse_width_codex",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/pulse-width-codex.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "cd288b271d3937e65ca26a22717bf2dfb4423108001f4fabdd6f1a1e475471b9",
+      "review_required": false,
+      "source_size": [
+        312,
+        312
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/pulse_width_codex.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "74155a109176861733d41ee3a3144199dd8ac0454bd85658ea80cb7fcaf172ce"
+        }
+      ]
+    },
+    {
+      "id": "identity_ghost_driver_unit",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/ghost-driver-unit.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "d0267bd06d03d77e7354ed4395925ac6fe7f97e50987501198ec2448b894f40f",
+      "review_required": false,
+      "source_size": [
+        2048,
+        2048
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/ghost_driver_unit.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "ed1a7fb2530c96a71612c9926d997a223889b8ec450c1627343b4413c33c1fca"
+        }
+      ]
+    },
+    {
+      "id": "identity_resonant_currents",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/resonant-currents.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "81248563d05e953411f0b79cb7eac1ef6d4a66d38f25b371531efba322a5abad",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/resonant_currents.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "a8308c14d29604ce6739df292f23b7f3686e7b1bbba2108f2bb62fd7579dec72"
+        }
+      ]
+    },
+    {
+      "id": "identity_star_splitter_rex",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/chatgpt-image-jun-24-2025-012441-pm.png",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "4a472d199b2fb3f2e37404a241b1cc3219da998192a320282063a58ca04db5aa",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/star_splitter_rex.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "36bb2b1e8ae0471c9656c1ff82490ed00b5d57b13178d14ee08208f4435c11bd"
+        }
+      ]
+    },
+    {
+      "id": "identity_minor_collapse",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/minor-collapse.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "694d4819946d32ba378b600526978f0545a75006ff25095815325577b6cf6b91",
+      "review_required": false,
+      "source_size": [
+        2048,
+        2048
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/minor_collapse.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "0bbc594b30fa2d349d0d738a987e59afb40e8aa5d6a2da35a6e176386db4a9df"
+        }
+      ]
+    },
+    {
+      "id": "identity_warm_circuits_rise",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/warmcircuitsrise.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "67f8cbde29a07fdacd1c9b2ea477c3c4762a66d71b5c771cae6f1c24c753bd77",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/warm_circuits_rise.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "70676cb59df6101446954b15b7180c3108b0c00e513ff043500f0dfcb9d6cb87"
+        }
+      ]
+    },
+    {
+      "id": "identity_ion_drive_orchestra",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/chatgpt-image-jun-21-2025-042715-pm.png",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "4661728bd18189f0eec1c6823716056d40e9a7ff4e8b546e22edc96f53efa054",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/ion_drive_orchestra.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "4e671e0811a5de6eeb258a45ada60be675b96c036cb367a89e17c8e4dfc6d0a7"
+        }
+      ]
+    },
+    {
+      "id": "identity_supersonic_being",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/supersonic-being.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "24de8b5f4baafd452ca9aa9ae743b4959bc1badc38faca2a29048b459c85c351",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/supersonic_being.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "87b113713350952a0a32e16aa96fa30f716511614f6cd287dea10d280063b407"
+        }
+      ]
+    },
+    {
+      "id": "identity_night_motion_archives",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/chatgpt-image-jun-21-2025-040052-pm.png",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "846d7f22d46e02268689cc60d3cef168484329ad3370236ad03a6c6ed0b69d02",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/night_motion_archives.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "836ceaab620c49e229574b6921bd70adbaf53035c968bb434f1b82469a899b53"
+        }
+      ]
+    },
+    {
+      "id": "identity_robots_sing_love_songs",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/robots-sing-love-songs.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "e069e2619fc4a296fa2a348f5b1bc3a740bb7d3a690685eb5e28d8633e65d6d0",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/robots_sing_love_songs.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "34b0f0dc01ec3d5bef64b4f7eb9395b27800c0c31d0edb030c4836635891057f"
+        }
+      ]
+    },
+    {
+      "id": "identity_before_the_reboot",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/before-the-reboot.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "d12ca464fe46bdb3da43f82381dbbd6e0700428f6aa280ece6b9483d79c73442",
+      "review_required": false,
+      "source_size": [
+        1254,
+        1254
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/before_the_reboot.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "21582ce875248b1d3202db4ac065f3a1b1def9e28e13c82f389ace93585556a9"
+        }
+      ]
+    },
+    {
+      "id": "cover_gdu_watch_out",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/ghost-driver-unit-watch-out.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive transmission cover art (release image)",
+      "source_sha256": "d0267bd06d03d77e7354ed4395925ac6fe7f97e50987501198ec2448b894f40f",
+      "review_required": false,
+      "source_size": [
+        2048,
+        2048
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/covers/gdu_watch_out.png",
+          "size": [
+            192,
+            192
+          ],
+          "sha256": "ba7a465d1ad5ee935733a40115da5a8cb1139efd8690fc7aac2e52603082196e"
+        }
+      ]
+    },
+    {
+      "id": "cover_gdu_its_a_grind",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/ghost-driver-unit-it-s-a-grind-ghost-mode-remix.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive transmission cover art (release image)",
+      "source_sha256": "e927df4168562298b7c8d9c9be838f0b0c49f0fec44ed9d0a34428701a0f59fb",
+      "review_required": false,
+      "source_size": [
+        2048,
+        2048
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/covers/gdu_its_a_grind.png",
+          "size": [
+            192,
+            192
+          ],
+          "sha256": "f690571692b76464542c7befa589467b2d2db13ccbdc7b13699106561e2f21e2"
+        }
+      ]
+    },
+    {
+      "id": "cover_mc_mach_point_five",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/minor-collapse-mach-point-five.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive transmission cover art (release image)",
+      "source_sha256": "694d4819946d32ba378b600526978f0545a75006ff25095815325577b6cf6b91",
+      "review_required": false,
+      "source_size": [
+        2048,
+        2048
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/covers/mc_mach_point_five.png",
+          "size": [
+            192,
+            192
+          ],
+          "sha256": "9424e398d8ade321c02c4b45fa158516e5c46f51056a575fe5658ff9e7e5c410"
+        }
+      ]
+    },
+    {
+      "id": "cover_ido_freeze_frame",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/ion-drive-orchestra-freeze-frame.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive transmission cover art (release image)",
+      "source_sha256": "587ce917614a2fb406dc736a18a65fdb0fc780ac6ece82e3ed27f1ee5b7d7374",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/covers/ido_freeze_frame.png",
+          "size": [
+            192,
+            192
+          ],
+          "sha256": "3fc5a1d2717a5c371576d75f00036e7706a2e9eb777c711ab5d1053783cef693"
+        }
+      ]
+    },
+    {
+      "id": "cover_rex_dominions_reach",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/star-splitter-rex-dominion-s-reach.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive transmission cover art (release image)",
+      "source_sha256": "419e44c4afeffee86f82ecc28842053baeea9c888f8cc6533444328f5abd5fd5",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/covers/rex_dominions_reach.png",
+          "size": [
+            192,
+            192
+          ],
+          "sha256": "a4aa862d8c23668cf63e1298be4ba462b7daa4c99a11384e14af0d7cfafc0992"
+        }
+      ]
+    },
+    {
+      "id": "cover_wcr_this_paths_for_you",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/warmcircuitsrise-this-path-s-for-you.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive transmission cover art (release image)",
+      "source_sha256": "67f8cbde29a07fdacd1c9b2ea477c3c4762a66d71b5c771cae6f1c24c753bd77",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/covers/wcr_this_paths_for_you.png",
+          "size": [
+            192,
+            192
+          ],
+          "sha256": "2441fd549930e3cb367de400cf8d1ff31b7b042f40573551bc0509f8c096a199"
+        }
+      ]
+    },
+    {
+      "id": "cover_wcr_shine",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/warmcircuitsrise-shine-feat-cheddr.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive transmission cover art (release image)",
+      "source_sha256": "67f8cbde29a07fdacd1c9b2ea477c3c4762a66d71b5c771cae6f1c24c753bd77",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/covers/wcr_shine.png",
+          "size": [
+            192,
+            192
+          ],
+          "sha256": "2441fd549930e3cb367de400cf8d1ff31b7b042f40573551bc0509f8c096a199"
+        }
+      ]
+    },
+    {
+      "id": "cover_pwc_where_the_light_meets_the_water",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/pulse-width-codex-where-the-light-meets-the-water.webp",
+      "commit": "b35d7d8f298c",
+      "status": "draft",
+      "use": "EXCLUDED: file shows the 'I Never Want to Not Do This' cover (mismatch)",
+      "skipped": "status draft is not importable"
+    },
+    {
+      "id": "cover_mc_hexagonis",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/minor-collapse-hexagonis.webp",
+      "commit": "b35d7d8f298c",
+      "status": "draft",
+      "use": "EXCLUDED: file shows 'MACH POINT FIVE' art (mismatch)",
+      "skipped": "status draft is not importable"
+    },
+    {
+      "id": "cover_ido_ignition_sequence",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/releases/ion-drive-orchestra-ignition-sequence-feat-cheddr.webp",
+      "commit": "b35d7d8f298c",
+      "status": "draft",
+      "use": "EXCLUDED: 0-byte file",
+      "skipped": "status draft is not importable"
+    },
+    {
+      "id": "identity_star_splitter_rex_webp",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/star-splitter-rex.webp",
+      "commit": "b35d7d8f298c",
+      "status": "draft",
+      "use": "EXCLUDED: shows 'BACKYARD ROCKET MUSIC' (mismatch); JSON uses the chatgpt PNG",
+      "skipped": "status draft is not importable"
+    },
+    {
+      "id": "identity_night_motion_archives_webp",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/night-motion-archives.webp",
+      "commit": "b35d7d8f298c",
+      "status": "draft",
+      "use": "EXCLUDED: 0-byte file",
+      "skipped": "status draft is not importable"
+    }
+  ]
+}
