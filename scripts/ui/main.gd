@@ -1,0 +1,618 @@
+extends Node
+## Screen flow: Title → Departure → Expedition → Results → Archive/Workshop.
+
+var ui_layer: CanvasLayer
+var screen: Control
+var theme_res: Theme
+var current_run: GameRun
+var selected_character: String = "ella_venn"
+var selected_force: String = "pulse_width_codex"
+var selected_destination: String = "black_drift_reach"
+var last_result: Dictionary = {}
+var last_commit: Dictionary = {}
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	ui_layer = CanvasLayer.new()
+	ui_layer.layer = 5
+	add_child(ui_layer)
+	theme_res = UiTheme.build()
+	Profile.settings_changed.connect(func() -> void: theme_res = UiTheme.build())
+	selected_character = String(Profile.data.get("last_character", "ella_venn"))
+	if not Profile.has_character(selected_character):
+		selected_character = "ella_venn"
+	show_title()
+	if Profile.last_load_note != "":
+		_toast(Profile.last_load_note)
+
+func _menu_music() -> void:
+	Audio.stop_catalog()
+	Audio.set_mix({"menu": 0.9, "bed": 0.35})
+
+# ================================================================== scaffolding
+
+func _new_screen() -> VBoxContainer:
+	if current_run and is_instance_valid(current_run):
+		current_run.queue_free()
+		current_run = null
+	get_tree().paused = false
+	if screen and is_instance_valid(screen):
+		screen.queue_free()
+	screen = Control.new()
+	screen.theme = theme_res
+	screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	ui_layer.add_child(screen)
+	var bg: MenuBackdrop = MenuBackdrop.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	screen.add_child(bg)
+	var margin: MarginContainer = MarginContainer.new()
+	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for side: String in ["left", "right"]:
+		margin.add_theme_constant_override("margin_" + side, 48)
+	for side2: String in ["top", "bottom"]:
+		margin.add_theme_constant_override("margin_" + side2, 28)
+	screen.add_child(margin)
+	var v: VBoxContainer = VBoxContainer.new()
+	v.add_theme_constant_override("separation", 14)
+	margin.add_child(v)
+	return v
+
+func _heading(parent: Control, text: String, sub: String = "") -> void:
+	var t: Label = UiTheme.label(text, 40, Color.WHITE, "display")
+	parent.add_child(t)
+	if sub != "":
+		parent.add_child(UiTheme.label(sub, 16, UiTheme.DIM))
+
+func _toast(text: String) -> void:
+	if screen == null:
+		return
+	var l: Label = UiTheme.label(text, 15, UiTheme.GOLD, "bold")
+	l.position = Vector2(48, 680)
+	screen.add_child(l)
+	var tw: Tween = create_tween()
+	tw.tween_interval(3.0)
+	tw.tween_property(l, "modulate:a", 0.0, 0.8)
+	tw.tween_callback(l.queue_free)
+
+func _back_row(parent: Control, callback: Callable) -> void:
+	var row: HBoxContainer = HBoxContainer.new()
+	parent.add_child(row)
+	var b: Button = UiTheme.button("BACK", callback, 200.0, 50.0)
+	row.add_child(b)
+
+# ================================================================== title
+
+func show_title() -> void:
+	var v: VBoxContainer = _new_screen()
+	_menu_music()
+	var spacer: Control = Control.new()
+	spacer.custom_minimum_size = Vector2(0, 40)
+	v.add_child(spacer)
+	var title: Label = UiTheme.label("STAR SPLITTER FORCES", 64, Color.WHITE, "display")
+	v.add_child(title)
+	v.add_child(UiTheme.label("I wonder what is over there.", 20, UiTheme.ACCENT))
+	var row: HBoxContainer = HBoxContainer.new()
+	row.add_theme_constant_override("separation", 40)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v.add_child(row)
+	var menu: VBoxContainer = VBoxContainer.new()
+	menu.add_theme_constant_override("separation", 10)
+	row.add_child(menu)
+	var begin: Button = UiTheme.button("BEGIN EXPEDITION", show_departure, 340.0, 60.0)
+	menu.add_child(begin)
+	menu.add_child(UiTheme.button("STAR SPLITTER ARCHIVE", show_archive, 340.0))
+	menu.add_child(UiTheme.button("FLEET WORKSHOP", show_workshop, 340.0))
+	menu.add_child(UiTheme.button("SETTINGS", show_settings, 340.0))
+	menu.add_child(UiTheme.button("CREDITS", show_credits, 340.0))
+	if OS.is_debug_build():
+		menu.add_child(UiTheme.button("QUICK TEST (dev)", func() -> void: start_expedition(true), 340.0, 44.0))
+	var info: VBoxContainer = VBoxContainer.new()
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.add_theme_constant_override("separation", 6)
+	row.add_child(info)
+	var s: Dictionary = Profile.data["stats"]
+	var discovered: int = Profile.discovered_count()
+	var total: int = GameData.DISCOVERIES.size()
+	info.add_child(UiTheme.label("ARCHIVE %d / %d DISCOVERIES" % [discovered, total], 15, UiTheme.GOLD, "bold"))
+	info.add_child(UiTheme.label("Expeditions %d   •   Completed %d   •   Extracted %d   •   Signal %d" % [int(s["expeditions"]), int(s["completions"]), int(s["extractions"]), int(Profile.data["currency"])], 15, UiTheme.DIM))
+	var forces: Array = []
+	for f: String in Profile.data["forces_attuned"]:
+		forces.append(String(GameData.FORCES[f]["name"]))
+	info.add_child(UiTheme.label("Forces attuned: " + ", ".join(forces), 15, UiTheme.DIM))
+	var next: String = _next_goal_text()
+	if next != "":
+		info.add_child(UiTheme.label(next, 16, Color("bfe9ff")))
+	v.add_child(UiTheme.label("Characters from Rex Fleet. Forces from Star Splitter Records. A provisional pre-release build.", 13, Color(1, 1, 1, 0.35)))
+	begin.grab_focus()
+
+func _next_goal_text() -> String:
+	if int(Profile.data["stats"]["expeditions"]) == 0:
+		return "Your first expedition: follow the columns of light, tune two signals, and come home."
+	var unseen_signals: int = 0
+	for id: String in GameData.DISCOVERIES.keys():
+		if String(GameData.DISCOVERIES[id]["kind"]) == "signal" and not Profile.is_discovered(id):
+			unseen_signals += 1
+	if unseen_signals > 0:
+		return "%d signal%s still unheard somewhere in the Reach." % [unseen_signals, "" if unseen_signals == 1 else "s"]
+	return "Every signal in the Reach is charted. Hunt the hidden sites — some only show themselves in Fracture or Resonance."
+
+# ================================================================== departure
+
+func show_departure() -> void:
+	var v: VBoxContainer = _new_screen()
+	_heading(v, "DEPARTURE", "Choose an explorer and the Force you carry out of the gate.")
+	var row: HBoxContainer = HBoxContainer.new()
+	row.add_theme_constant_override("separation", 18)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v.add_child(row)
+	# Explorers.
+	var list: VBoxContainer = VBoxContainer.new()
+	list.add_theme_constant_override("separation", 8)
+	list.custom_minimum_size = Vector2(330, 0)
+	row.add_child(list)
+	list.add_child(UiTheme.label("EXPLORER", 13, UiTheme.DIM, "bold"))
+	var first: Button = null
+	for cid: String in GameData.CHARACTERS.keys():
+		var c: Dictionary = GameData.CHARACTERS[cid]
+		var unlocked: bool = Profile.has_character(cid)
+		var b: Button = UiTheme.button((String(c["name"]) if unlocked else "UNKNOWN CONTACT"), func() -> void:
+			selected_character = cid
+			show_departure(), 330.0, 50.0)
+		b.disabled = not unlocked
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		if cid == selected_character:
+			b.add_theme_stylebox_override("normal", UiTheme.box(UiTheme.PANEL_HI, c["accent"], 2, 10, 16))
+		list.add_child(b)
+		if first == null and unlocked:
+			first = b
+		if not unlocked:
+			list.add_child(UiTheme.label("   " + String(c["unlock"]), 12, UiTheme.DIM))
+	# Detail.
+	var c2: Dictionary = GameData.CHARACTERS[selected_character]
+	var detail: PanelContainer = PanelContainer.new()
+	detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	detail.add_theme_stylebox_override("panel", UiTheme.box(Color(UiTheme.PANEL, 0.9), Color(c2["accent"], 0.6), 1, 14, 20))
+	row.add_child(detail)
+	var dv: VBoxContainer = VBoxContainer.new()
+	dv.add_theme_constant_override("separation", 6)
+	detail.add_child(dv)
+	dv.add_child(UiTheme.label(String(c2["origin"]).to_upper() + "   •   " + String(c2["vessel"]), 13, c2["accent"], "bold"))
+	dv.add_child(UiTheme.label(String(c2["name"]), 30, Color.WHITE, "display"))
+	dv.add_child(UiTheme.label("“%s”" % String(c2["tagline"]), 16, UiTheme.TEXT))
+	dv.add_child(UiTheme.label(String(c2["bio"]), 14, UiTheme.DIM))
+	var ab: Dictionary = GameData.ABILITIES[String(c2["ability"])]
+	dv.add_child(UiTheme.label("ABILITY — %s (%ds): %s" % [String(ab["name"]), int(ab["cooldown"]), String(ab["desc"])], 14, Color("bfe9ff")))
+	dv.add_child(UiTheme.label("TRAIT — " + String(c2["trait"]), 14, Color("9ff7d0")))
+	dv.add_child(UiTheme.label("TRADE-OFF — " + String(c2["weakness"]), 14, Color("ff9fb4")))
+	dv.add_child(UiTheme.label("HULL %d   •   SPEED %d   •   ARMOUR %.1f" % [int(c2["max_hp"]), int(c2["speed"]), float(c2.get("armor", 0.0))], 14, UiTheme.DIM))
+	var m: Dictionary = Profile.mastery(selected_character)
+	var perks: Array = GameData.MASTERY[selected_character]
+	var mlvl: int = int(m["level"])
+	var mtext: String = "MASTERY %d / %d" % [mlvl, perks.size()]
+	if mlvl < perks.size():
+		mtext += "   •   next: " + String(perks[mlvl]) + " (%d / %d xp)" % [int(m["xp"]), int(GameData.MASTERY_THRESHOLDS[mlvl])]
+	dv.add_child(UiTheme.label(mtext, 13, UiTheme.GOLD))
+	# Force.
+	dv.add_child(UiTheme.label("SIGNATURE FORCE", 13, UiTheme.DIM, "bold"))
+	var frow: HFlowContainer = HFlowContainer.new()
+	frow.add_theme_constant_override("h_separation", 8)
+	frow.add_theme_constant_override("v_separation", 8)
+	dv.add_child(frow)
+	if not Profile.is_attuned(selected_force):
+		selected_force = "pulse_width_codex"
+	for fid: String in GameData.FORCES.keys():
+		var f: Dictionary = GameData.FORCES[fid]
+		var att: bool = Profile.is_attuned(fid)
+		var fb: Button = UiTheme.button(String(f["name"]) if att else "?  UNHEARD", func() -> void:
+			selected_force = fid
+			show_departure(), 200.0, 44.0)
+		fb.disabled = not att
+		if fid == selected_force:
+			fb.add_theme_stylebox_override("normal", UiTheme.box(UiTheme.PANEL_HI, f["color"], 2, 10, 12))
+		fb.add_theme_font_size_override("font_size", UiTheme.fs(14))
+		frow.add_child(fb)
+	var sf: Dictionary = GameData.FORCES[selected_force]
+	dv.add_child(UiTheme.label("%s — %s: %s  Starts with %s." % [String(sf["name"]), String(sf["mechanic"]), String(sf["desc"]), GameData.weapon_name(String(sf["primary"]))], 14, sf["color"]))
+	# Launch row.
+	var launch: HBoxContainer = HBoxContainer.new()
+	launch.add_theme_constant_override("separation", 12)
+	v.add_child(launch)
+	launch.add_child(UiTheme.button("BACK", show_title, 180.0, 56.0))
+	var dest: Dictionary = GameData.DESTINATIONS[selected_destination]
+	var go: Button = UiTheme.button("LAUNCH — " + String(dest["name"]).to_upper(), func() -> void: start_expedition(false), 420.0, 56.0)
+	go.add_theme_color_override("font_color", UiTheme.ACCENT)
+	launch.add_child(go)
+	launch.add_child(UiTheme.label(String(dest["desc"]), 13, UiTheme.DIM))
+	go.grab_focus()
+
+# ================================================================== expedition
+
+func start_expedition(quick: bool) -> void:
+	if screen:
+		screen.queue_free()
+		screen = null
+	current_run = GameRun.new()
+	current_run.setup({"character": selected_character, "destination": selected_destination, "force": selected_force, "quick_test": quick})
+	current_run.finished.connect(_on_run_finished)
+	add_child(current_run)
+
+func _on_run_finished(result: Dictionary) -> void:
+	last_result = result
+	last_commit = Profile.record_expedition(result)
+	# Let the final moment breathe before the results screen.
+	await get_tree().create_timer(1.2, true, false, true).timeout
+	show_results()
+
+func show_results() -> void:
+	var v: VBoxContainer = _new_screen()
+	var r: Dictionary = last_result
+	var title: String = {"complete": "EXPEDITION COMPLETE", "extracted": "SAFE RETURN", "defeat": "LOST SIGNAL"}.get(String(r["outcome"]), "EXPEDITION ENDED")
+	var sub: String = {"complete": "The Silence is broken and the Reach can hear itself again.", "extracted": "You came home with what you found.", "defeat": "Thunderbreak's relays caught your discoveries before the signal dropped."}.get(String(r["outcome"]), "")
+	_heading(v, title, sub)
+	var row: HBoxContainer = HBoxContainer.new()
+	row.add_theme_constant_override("separation", 24)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v.add_child(row)
+	var left: VBoxContainer = VBoxContainer.new()
+	left.custom_minimum_size = Vector2(420, 0)
+	left.add_theme_constant_override("separation", 4)
+	row.add_child(left)
+	left.add_child(UiTheme.label(String(GameData.CHARACTERS[String(r["character"])]["name"]), 22, Color.WHITE, "bold"))
+	left.add_child(UiTheme.label("Time %s   •   Level %d   •   %d cleared" % [GameData.format_time(float(r["time"])), int(r["level"]), int(r["kills"])], 16, UiTheme.TEXT))
+	var regions: Array = []
+	for rid: String in r["regions"]:
+		regions.append(String(GameData.REGIONS[rid]["name"]))
+	left.add_child(UiTheme.label("Regions visited: " + (", ".join(regions) if not regions.is_empty() else "none"), 14, UiTheme.DIM))
+	var wl: Array = []
+	for wid: String in (r["weapons"] as Dictionary).keys():
+		wl.append(GameData.weapon_name(wid))
+	left.add_child(UiTheme.label("Loadout: " + ", ".join(wl), 14, UiTheme.DIM))
+	if not (r["harmonies"] as Array).is_empty():
+		var hl: Array = []
+		for h: String in r["harmonies"]:
+			hl.append(String(GameData.HARMONIES[h]["name"]))
+		left.add_child(UiTheme.label("Harmonies found: " + ", ".join(hl), 14, UiTheme.GOLD))
+	left.add_child(UiTheme.label("+%d SIGNAL%s" % [int(last_commit.get("currency", 0)), "   (halved — signal lost)" if String(r["outcome"]) == "defeat" else ""], 20, UiTheme.GOLD, "bold"))
+	if int(last_commit.get("mastery_levels", 0)) > 0:
+		left.add_child(UiTheme.label("MASTERY UP — new perk unlocked for this explorer", 15, UiTheme.GOLD))
+	var right: VBoxContainer = VBoxContainer.new()
+	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	right.add_theme_constant_override("separation", 4)
+	row.add_child(right)
+	right.add_child(UiTheme.label("DISCOVERIES", 13, UiTheme.DIM, "bold"))
+	var discs: Array = r["discoveries"]
+	if discs.is_empty():
+		right.add_child(UiTheme.label("None this time. Columns of light are signals — fly into the ring and hold still.", 15, UiTheme.TEXT))
+	for did: String in discs:
+		var d: Dictionary = GameData.DISCOVERIES[did]
+		var is_new: bool = did in (last_commit.get("new_discoveries", []) as Array)
+		right.add_child(UiTheme.label(("NEW  " if is_new else "") + String(d["title"]) + "  —  " + String(d["kind"]).to_upper(), 15, UiTheme.GOLD if is_new else UiTheme.TEXT))
+	for u: Dictionary in last_commit.get("unlocks", []):
+		var text: String = ""
+		match String(u["kind"]):
+			"force":
+				text = "FORCE ATTUNED: " + String(GameData.FORCES[String(u["id"])]["name"])
+			"transmission":
+				var t: Dictionary = GameData.TRANSMISSIONS[String(u["id"])]
+				text = "ARCHIVE: %s — %s" % [String(t["project"]), String(t["title"])]
+			"character":
+				text = "NEW EXPLORER: " + String(GameData.CHARACTERS[String(u["id"])]["name"])
+			"fragment":
+				text = "MYSTERY FRAGMENT RECOVERED"
+			"destination":
+				text = "NEW DESTINATION: " + String(GameData.DESTINATIONS[String(u["id"])]["name"])
+		right.add_child(UiTheme.label(text, 15, Color("9ff7d0"), "bold"))
+	var buttons: HBoxContainer = HBoxContainer.new()
+	buttons.add_theme_constant_override("separation", 12)
+	v.add_child(buttons)
+	var again: Button = UiTheme.button("EXPLORE AGAIN", show_departure, 260.0)
+	buttons.add_child(again)
+	buttons.add_child(UiTheme.button("OPEN ARCHIVE", show_archive, 240.0))
+	buttons.add_child(UiTheme.button("WORKSHOP", show_workshop, 200.0))
+	buttons.add_child(UiTheme.button("TITLE", show_title, 160.0))
+	buttons.add_child(UiTheme.label("Progress saved." if Profile.last_save_ok else "WARNING: progress could not be saved.", 13, UiTheme.DIM if Profile.last_save_ok else Color("ff8fa8")))
+	again.grab_focus()
+
+# ================================================================== archive
+
+func show_archive() -> void:
+	var v: VBoxContainer = _new_screen()
+	Audio.set_mix({"menu": 0.6, "bed": 0.3})
+	var found: int = Profile.discovered_count()
+	_heading(v, "STAR SPLITTER ARCHIVE", "A record collection assembled by exploration — %d of %d discoveries." % [found, GameData.DISCOVERIES.size()])
+	var tabs: TabContainer = TabContainer.new()
+	tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v.add_child(tabs)
+	tabs.add_child(_archive_projects())
+	tabs.add_child(_archive_forces())
+	tabs.add_child(_archive_explorers())
+	tabs.add_child(_archive_mystery())
+	tabs.add_child(_archive_log())
+	_back_row(v, func() -> void:
+		Audio.stop_catalog()
+		show_title())
+
+func _scroll(name: String) -> Array:
+	var sc: ScrollContainer = ScrollContainer.new()
+	sc.name = name
+	sc.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var inner: VBoxContainer = VBoxContainer.new()
+	inner.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	inner.add_theme_constant_override("separation", 10)
+	sc.add_child(inner)
+	return [sc, inner]
+
+func _archive_projects() -> Control:
+	var s: Array = _scroll("Records")
+	var inner: VBoxContainer = s[1]
+	var transmissions: Array = Profile.data["transmissions"]
+	for pname: String in GameData.PROJECTS.keys():
+		var pdef: Dictionary = GameData.PROJECTS[pname]
+		var owned: Array = []
+		for tid: String in GameData.TRANSMISSIONS.keys():
+			if String(GameData.TRANSMISSIONS[tid]["project"]) == pname and tid in transmissions:
+				owned.append(tid)
+		var panel: PanelContainer = PanelContainer.new()
+		var known: bool = not owned.is_empty()
+		panel.add_theme_stylebox_override("panel", UiTheme.box(Color(UiTheme.PANEL, 0.9), Color(pdef["accent"], 0.7 if known else 0.15), 1, 12, 16))
+		inner.add_child(panel)
+		var pv: VBoxContainer = VBoxContainer.new()
+		panel.add_child(pv)
+		if not known:
+			pv.add_child(UiTheme.label("UNHEARD PROJECT", 18, UiTheme.DIM, "bold"))
+			pv.add_child(UiTheme.label("Somewhere in the drift a signal carries this sound. Find it.", 14, UiTheme.DIM))
+			continue
+		pv.add_child(UiTheme.label(pname.to_upper(), 22, pdef["accent"], "display"))
+		pv.add_child(UiTheme.label(String(pdef["field"]) + "   •   " + String(pdef["role"]), 13, UiTheme.DIM, "bold"))
+		pv.add_child(UiTheme.label(String(pdef["bio"]), 15, UiTheme.TEXT))
+		for tid2: String in owned:
+			var t: Dictionary = GameData.TRANSMISSIONS[tid2]
+			var tr: HBoxContainer = HBoxContainer.new()
+			tr.add_theme_constant_override("separation", 10)
+			pv.add_child(tr)
+			var has_master: bool = Audio.has_master(tid2)
+			tr.add_child(UiTheme.button("▶ PLAY" if has_master else "▶ FORCE MOTIF", func() -> void:
+				var mode: String = Audio.play_catalog(tid2)
+				_toast("Now playing: %s — %s" % [String(t["project"]), String(t["title"])] if mode == "master" else "Master not yet supplied — playing the in-game %s motif (original placeholder, not the release)." % String(GameData.FORCES[String(t["force"])]["name"])), 190.0, 42.0))
+			tr.add_child(UiTheme.label("%s   (%s)" % [String(t["title"]), String(t["meta"])], 15, UiTheme.TEXT, "bold"))
+		if String(pdef["url"]) != "":
+			pv.add_child(UiTheme.button("Listen on official platforms ↗", func() -> void: OS.shell_open(String(pdef["url"])), 300.0, 40.0))
+	inner.add_child(UiTheme.button("STOP PLAYBACK", func() -> void:
+		Audio.stop_catalog()
+		Audio.set_mix({"menu": 0.6, "bed": 0.3}), 220.0, 44.0))
+	return s[0]
+
+func _archive_forces() -> Control:
+	var s: Array = _scroll("Forces")
+	var inner: VBoxContainer = s[1]
+	for fid: String in GameData.FORCES.keys():
+		var f: Dictionary = GameData.FORCES[fid]
+		var att: bool = Profile.is_attuned(fid)
+		if not att:
+			inner.add_child(UiTheme.label("? — an unheard Force", 16, UiTheme.DIM, "bold"))
+			continue
+		inner.add_child(UiTheme.label("%s   •   %s" % [String(f["name"]).to_upper(), String(f["mechanic"])], 20, f["color"], "display"))
+		inner.add_child(UiTheme.label("“%s”  %s" % [String(f["tagline"]), String(f["desc"])], 14, UiTheme.TEXT))
+		var ws: Array = []
+		for wid: String in GameData.WEAPONS.keys():
+			if String(GameData.WEAPONS[wid]["force"]) == fid:
+				ws.append("%s → %s" % [GameData.WEAPONS[wid]["name"], GameData.EVOLUTIONS[String(GameData.WEAPONS[wid]["evolution"])]["name"]])
+		inner.add_child(UiTheme.label("Weapons: " + ", ".join(ws), 13, UiTheme.DIM))
+	inner.add_child(UiTheme.label("HARMONIES", 16, UiTheme.GOLD, "bold"))
+	for hid: String in GameData.HARMONIES.keys():
+		var h: Dictionary = GameData.HARMONIES[hid]
+		var seen: bool = Profile.seen("harmony_" + hid)
+		var a: String = String(GameData.FORCES[String(h["forces"][0])]["name"])
+		var b: String = String(GameData.FORCES[String(h["forces"][1])]["name"])
+		inner.add_child(UiTheme.label(("%s (%s + %s): %s" % [h["name"], a, b, h["desc"]]) if seen else "??? — raise two Forces together to level 3 to discover a harmony.", 14, UiTheme.TEXT if seen else UiTheme.DIM))
+	return s[0]
+
+func _archive_explorers() -> Control:
+	var s: Array = _scroll("Explorers")
+	var inner: VBoxContainer = s[1]
+	for cid: String in GameData.CHARACTERS.keys():
+		var c: Dictionary = GameData.CHARACTERS[cid]
+		if not Profile.has_character(cid):
+			inner.add_child(UiTheme.label("UNKNOWN CONTACT — " + String(c["unlock"]), 15, UiTheme.DIM))
+			continue
+		var m: Dictionary = Profile.mastery(cid)
+		inner.add_child(UiTheme.label(String(c["name"]).to_upper(), 20, c["accent"], "display"))
+		inner.add_child(UiTheme.label(String(c["bio"]), 14, UiTheme.TEXT))
+		var perks: Array = GameData.MASTERY[cid]
+		var lines: Array = []
+		for i in perks.size():
+			lines.append(("✓ " if i < int(m["level"]) else "· ") + String(perks[i]))
+		inner.add_child(UiTheme.label("Mastery %d — expeditions %d, completions %d\n%s" % [int(m["level"]), int(m["expeditions"]), int(m["completions"]), "\n".join(lines)], 13, UiTheme.DIM))
+	return s[0]
+
+func _archive_mystery() -> Control:
+	var s: Array = _scroll("Mystery")
+	var inner: VBoxContainer = s[1]
+	inner.add_child(UiTheme.label(GameData.FRAGMENT_TITLE, 22, Color("d7d0ff"), "display"))
+	var have: Array = Profile.data["fragments"]
+	inner.add_child(UiTheme.label("%d / %d fragments recovered" % [have.size(), GameData.FRAGMENTS.size()], 14, UiTheme.DIM))
+	var keys: Array = GameData.FRAGMENTS.keys()
+	keys.sort()
+	for fid: String in keys:
+		if fid in have:
+			inner.add_child(UiTheme.label("• " + String(GameData.FRAGMENTS[fid]), 16, UiTheme.TEXT))
+		else:
+			inner.add_child(UiTheme.label("• ▒▒▒▒▒▒ ▒▒▒ ▒▒▒▒▒▒▒▒ ▒▒▒▒", 16, Color(UiTheme.DIM, 0.5)))
+	if have.size() == GameData.FRAGMENTS.size():
+		inner.add_child(UiTheme.label("Every fragment points the same way: the quiet is drawn to music. So keep playing.", 16, UiTheme.GOLD))
+	return s[0]
+
+func _archive_log() -> Control:
+	var s: Array = _scroll("Discoveries")
+	var inner: VBoxContainer = s[1]
+	var kinds: Array = ["signal", "character", "artifact", "anomaly", "fragment"]
+	for k: String in kinds:
+		var total: int = 0
+		var found: int = 0
+		for id: String in GameData.DISCOVERIES.keys():
+			if String(GameData.DISCOVERIES[id]["kind"]) == k:
+				total += 1
+				if Profile.is_discovered(id):
+					found += 1
+		inner.add_child(UiTheme.label("%sS  %d / %d" % [k.to_upper(), found, total], 15, UiTheme.GOLD, "bold"))
+		for id2: String in GameData.DISCOVERIES.keys():
+			var d: Dictionary = GameData.DISCOVERIES[id2]
+			if String(d["kind"]) != k:
+				continue
+			if Profile.is_discovered(id2):
+				var region: String = String(GameData.REGIONS[String(d["region"])]["name"]) if String(d.get("region", "")) != "" else "OPEN DRIFT"
+				inner.add_child(UiTheme.label("%s — %s\n%s" % [String(d["title"]), region, String(d["text"])], 14, UiTheme.TEXT))
+			else:
+				var hint: String = {"FRACTURE": " (only visible in Fracture)", "RESONANCE": " (only visible in Resonance)", "SCAN": " (hidden from casual eyes)"}.get(String(d.get("hidden", "")), "")
+				inner.add_child(UiTheme.label("??? — somewhere in %s%s" % [String(GameData.REGIONS[String(d["region"])]["name"]) if String(d.get("region", "")) != "" else "the open drift", hint], 14, UiTheme.DIM))
+	return s[0]
+
+# ================================================================== workshop
+
+func show_workshop() -> void:
+	var v: VBoxContainer = _new_screen()
+	_heading(v, "FLEET WORKSHOP", "Spend Signal on permanent refits. You have %d Signal." % int(Profile.data["currency"]))
+	var grid: GridContainer = GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 14)
+	grid.add_theme_constant_override("v_separation", 10)
+	grid.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v.add_child(grid)
+	var first: Button = null
+	for wid: String in GameData.WORKSHOP.keys():
+		var w: Dictionary = GameData.WORKSHOP[wid]
+		var rank: int = Profile.workshop_rank(wid)
+		var maxed: bool = rank >= int(w["max"])
+		var cost: int = GameData.workshop_cost(wid, rank)
+		var text: String = "%s  %d/%d\n%s\n%s" % [String(w["name"]), rank, int(w["max"]), String(w["desc"]), "MAXED" if maxed else "%d SIGNAL" % cost]
+		var b: Button = UiTheme.button(text, func() -> void:
+			if Profile.buy_workshop(wid):
+				Audio.play_sfx("choose")
+			show_workshop(), 520.0, 92.0)
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.disabled = maxed or int(Profile.data["currency"]) < cost
+		b.add_theme_font_size_override("font_size", UiTheme.fs(15))
+		grid.add_child(b)
+		if first == null and not b.disabled:
+			first = b
+	_back_row(v, show_title)
+	if first:
+		first.grab_focus()
+
+# ================================================================== settings
+
+func show_settings() -> void:
+	var v: VBoxContainer = _new_screen()
+	_heading(v, "SETTINGS", "Changes save automatically.")
+	var grid: GridContainer = GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 24)
+	grid.add_theme_constant_override("v_separation", 12)
+	grid.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v.add_child(grid)
+	_slider(grid, "Music volume", "music_volume", 0.0, 1.0, 0.05)
+	_slider(grid, "Effects volume", "sfx_volume", 0.0, 1.0, 0.05)
+	_slider(grid, "Screen shake", "screen_shake", 0.0, 1.0, 0.25)
+	_slider(grid, "Text size", "text_scale", 0.8, 1.4, 0.1)
+	_toggle(grid, "Reduced flashes & hit-stop", "reduced_flashes")
+	_toggle(grid, "Damage numbers", "damage_numbers")
+	_toggle(grid, "Navigation assist (edge compass)", "nav_assist")
+	_choice(grid, "Movement stick", "joystick_mode", ["floating", "fixed"])
+	_choice(grid, "Handedness (stick side)", "handedness", ["right", "left"])
+	_choice(grid, "Frame rate cap", "fps_cap", [60, 30])
+	var row: HBoxContainer = HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	v.add_child(row)
+	var back: Button = UiTheme.button("SAVE & BACK", func() -> void:
+		Profile.save()
+		show_title(), 240.0)
+	row.add_child(back)
+	row.add_child(UiTheme.label("Keyboard: WASD/arrows move • Space ability • M map • Esc pause • 1-4 choose • R reroll • E confront. Gamepad: stick, A ability, Start pause, Back map.", 13, UiTheme.DIM))
+	back.grab_focus()
+
+func _slider(grid: GridContainer, text: String, key: String, lo: float, hi: float, step: float) -> void:
+	grid.add_child(UiTheme.label(text, 17))
+	var s: HSlider = HSlider.new()
+	s.min_value = lo
+	s.max_value = hi
+	s.step = step
+	s.value = float(Profile.setting(key))
+	s.custom_minimum_size = Vector2(380, 36)
+	s.value_changed.connect(func(val: float) -> void: Profile.set_setting(key, val))
+	grid.add_child(s)
+
+func _toggle(grid: GridContainer, text: String, key: String) -> void:
+	grid.add_child(UiTheme.label(text, 17))
+	var c: CheckButton = CheckButton.new()
+	c.button_pressed = bool(Profile.setting(key))
+	c.toggled.connect(func(on: bool) -> void: Profile.set_setting(key, on))
+	grid.add_child(c)
+
+func _choice(grid: GridContainer, text: String, key: String, options: Array) -> void:
+	grid.add_child(UiTheme.label(text, 17))
+	var ob: OptionButton = OptionButton.new()
+	for o: Variant in options:
+		ob.add_item(str(o).to_upper())
+	ob.selected = maxi(0, options.find(Profile.setting(key)))
+	ob.item_selected.connect(func(i: int) -> void: Profile.set_setting(key, options[i]))
+	ob.custom_minimum_size = Vector2(220, 44)
+	grid.add_child(ob)
+
+# ================================================================== credits
+
+func show_credits() -> void:
+	var v: VBoxContainer = _new_screen()
+	_heading(v, "CREDITS")
+	var text: String = "\n".join([
+		"STAR SPLITTER FORCES — pre-release development build",
+		"Music projects and catalog metadata: Star Splitter Records (original music by Jeff Hines).",
+		"Rex Fleet characters, factions and setting: Star Splitter Visions.",
+		"Forces are gameplay interpretations of each project's documented musical language — not official releases.",
+		"In-game score and sound effects: original placeholder audio generated for this build (tools/generate_audio.py).",
+		"No Star Splitter masters are bundled in this build. Archive playback uses authorised masters when supplied.",
+		"Typeface: Inter by The Inter Project Authors, SIL Open Font License 1.1.",
+		"Engine: Godot Engine (MIT licence).",
+	])
+	var l: Label = UiTheme.label(text, 16, UiTheme.TEXT)
+	l.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v.add_child(l)
+	_back_row(v, show_title)
+
+# ================================================================== app lifecycle
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_PAUSED or what == NOTIFICATION_WM_GO_BACK_REQUEST or what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		# Mobile interruption: pause the expedition and persist settings.
+		if current_run and is_instance_valid(current_run) and not current_run.ended and not get_tree().paused:
+			var hud: Node = current_run.hud
+			if hud and hud.has_method("toggle_pause"):
+				hud.toggle_pause()
+		Profile.save()
+
+class MenuBackdrop:
+	extends Control
+	var t: float = 0.0
+	func _process(delta: float) -> void:
+		t += delta
+		queue_redraw()
+	func _draw() -> void:
+		var vp: Vector2 = size
+		draw_rect(Rect2(Vector2.ZERO, vp), UiTheme.BG)
+		var r: RandomNumberGenerator = RandomNumberGenerator.new()
+		r.seed = 99
+		for i in 140:
+			var p: Vector2 = Vector2(r.randf() * vp.x, r.randf() * vp.y)
+			var drift: Vector2 = Vector2(fmod(p.x - t * (4.0 + r.randf() * 10.0), vp.x), p.y)
+			if drift.x < 0.0:
+				drift.x += vp.x
+			draw_circle(drift, r.randf_range(0.6, 1.8), Color(0.7, 0.85, 1.0, r.randf_range(0.2, 0.7)))
+		var c: Vector2 = Vector2(vp.x * 0.78, vp.y * 0.55)
+		for k in 4:
+			var rad: float = 120.0 + k * 55.0
+			draw_arc(c, rad, t * (0.1 + k * 0.05), t * (0.1 + k * 0.05) + PI * 1.3, 64, Color(UiTheme.ACCENT, 0.12 - k * 0.02), 2.0)
+		var wave: PackedVector2Array = PackedVector2Array()
+		for i in 64:
+			var x: float = vp.x * i / 63.0
+			wave.append(Vector2(x, vp.y * 0.92 + sin(i * 0.4 + t * 1.5) * 8.0 * sin(t * 0.5 + i * 0.05)))
+		draw_polyline(wave, Color(UiTheme.ACCENT, 0.25), 2.0)

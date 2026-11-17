@@ -1,0 +1,548 @@
+extends Node
+## Headless gameplay test suite. Run with:
+##   godot --headless res://tests/TestRunner.tscn
+## Exits with code 0 when every test passes, 1 otherwise.
+## These tests drive the real simulation (GameRun.step) — not text searches.
+
+const TEST_SAVE: String = "user://test_profile.json"
+
+var failures: Array = []
+var passes: int = 0
+var current: String = ""
+var finished_result: Dictionary = {}
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	await get_tree().process_frame
+	_reset_profile()
+	var tests: Array[String] = [
+		"test_scripts_compile", "test_data_integrity", "test_save_migration_and_recovery",
+		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
+		"test_hidden_sites_follow_state", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries",
+		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
+		"test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+	]
+	for t: String in tests:
+		current = t
+		var before: int = failures.size()
+		await _dispatch(t)
+		_cleanup_runs()
+		if failures.size() == before:
+			passes += 1
+			print("  PASS  ", t)
+		else:
+			print("  FAIL  ", t)
+	print("\n%d passed, %d failed" % [passes, tests.size() - passes])
+	for f: String in failures:
+		print("  - ", f)
+	_remove_test_saves()
+	get_tree().quit(0 if failures.is_empty() else 1)
+
+func _dispatch(t: String) -> void:
+	match t:
+		"test_scripts_compile":
+			await test_scripts_compile()
+		"test_data_integrity":
+			await test_data_integrity()
+		"test_save_migration_and_recovery":
+			await test_save_migration_and_recovery()
+		"test_simulated_expedition_minute":
+			await test_simulated_expedition_minute()
+		"test_upgrade_pause_cycle":
+			await test_upgrade_pause_cycle()
+		"test_signal_discovery_attunes_force":
+			await test_signal_discovery_attunes_force()
+		"test_hidden_sites_follow_state":
+			await test_hidden_sites_follow_state()
+		"test_extraction":
+			await test_extraction()
+		"test_boss_completion_and_unlocks":
+			await test_boss_completion_and_unlocks()
+		"test_death_keeps_discoveries":
+			await test_death_keeps_discoveries()
+		"test_evolution_offer":
+			await test_evolution_offer()
+		"test_every_weapon_fires":
+			await test_every_weapon_fires()
+		"test_harmony_discovery":
+			await test_harmony_discovery()
+		"test_abilities":
+			await test_abilities()
+		"test_menu_screens_build":
+			await test_menu_screens_build()
+		"test_hud_fits_aspect_ratios":
+			await test_hud_fits_aspect_ratios()
+		"test_performance_budget":
+			await test_performance_budget()
+
+func check(cond: bool, msg: String) -> void:
+	if not cond:
+		failures.append("%s: %s" % [current, msg])
+
+func _reset_profile() -> void:
+	Profile.save_path = TEST_SAVE
+	Profile.data = Profile.defaults()
+	Profile.data["settings"]["screen_shake"] = 0.0
+
+func _remove_test_saves() -> void:
+	var dir: DirAccess = DirAccess.open("user://")
+	if dir:
+		for f: String in ["test_profile.json", "test_profile.backup.json", "test_profile.tmp", "test_migrate.json", "test_migrate.backup.json"]:
+			if dir.file_exists(f):
+				dir.remove(f)
+
+func _cleanup_runs() -> void:
+	get_tree().paused = false
+	for c: Node in get_children():
+		c.queue_free()
+	_reset_profile()
+
+func _make_run(config: Dictionary = {}) -> GameRun:
+	var run: GameRun = GameRun.new()
+	var cfg: Dictionary = {"character": "ella_venn", "force": "pulse_width_codex", "seed": 1234}
+	cfg.merge(config, true)
+	run.setup(cfg)
+	run.debug_enabled = false
+	run.scripted_input = true
+	add_child(run)
+	run.hint_queue.clear()
+	run.finished.connect(func(r: Dictionary) -> void: finished_result = r)
+	finished_result = {}
+	return run
+
+## Advances the simulation, auto-choosing the first upgrade whenever offered.
+func _sim(run: GameRun, seconds: float, bot: Callable = Callable()) -> void:
+	var dt: float = 1.0 / 60.0
+	var steps: int = int(seconds / dt)
+	for i in steps:
+		if run.ended:
+			return
+		if run.choosing:
+			var opts: Array = run.hud.level_options
+			check(get_tree().paused, "tree must be paused while choosing")
+			if not opts.is_empty():
+				run.hud._pick(opts[0])
+			check(not run.choosing and not get_tree().paused, "choosing an upgrade must resume play")
+		if bot.is_valid():
+			bot.call(run)
+		run.step(dt)
+
+# ------------------------------------------------------------------ tests
+
+func test_scripts_compile() -> void:
+	var paths: Array = []
+	for dir_path: String in ["res://scripts/core", "res://scripts/data", "res://scripts/run", "res://scripts/ui"]:
+		var d: DirAccess = DirAccess.open(dir_path)
+		check(d != null, "missing dir " + dir_path)
+		if d == null:
+			continue
+		for f: String in d.get_files():
+			if f.ends_with(".gd"):
+				paths.append(dir_path + "/" + f)
+	check(paths.size() >= 15, "expected at least 15 scripts, found %d" % paths.size())
+	for p: String in paths:
+		var s: GDScript = load(p)
+		check(s != null and s.can_instantiate(), "script failed to compile: " + p)
+	var scene: PackedScene = load("res://scenes/Main.tscn")
+	check(scene != null, "Main.tscn failed to load")
+
+func test_data_integrity() -> void:
+	for wid: String in GameData.WEAPONS.keys():
+		var w: Dictionary = GameData.WEAPONS[wid]
+		check(GameData.FORCES.has(String(w["force"])), "weapon %s has unknown force" % wid)
+		check(GameData.EVOLUTIONS.has(String(w["evolution"])), "weapon %s evolution missing" % wid)
+		check(GameData.PASSIVES.has(String(w["evolve_with"])), "weapon %s evolve_with unknown" % wid)
+		check((w["notes"] as Array).size() == 5, "weapon %s needs 5 level notes" % wid)
+	var used_passives: Dictionary = {}
+	for wid2: String in GameData.WEAPONS.keys():
+		var ew: String = String(GameData.WEAPONS[wid2]["evolve_with"])
+		check(not used_passives.has(ew), "two evolutions share passive " + ew)
+		used_passives[ew] = true
+	for fid: String in GameData.FORCES.keys():
+		var f: Dictionary = GameData.FORCES[fid]
+		check(GameData.WEAPONS.has(String(f["primary"])), "force %s primary weapon missing" % fid)
+		check(String(f["motif_layer"]) in GameData.SCORE_LAYERS, "force %s motif layer not in score" % fid)
+	for did: String in GameData.DISCOVERIES.keys():
+		var d: Dictionary = GameData.DISCOVERIES[did]
+		if String(d.get("region", "")) != "":
+			check(GameData.REGIONS.has(String(d["region"])), "discovery %s region" % did)
+		if d.has("force"):
+			check(GameData.FORCES.has(String(d["force"])), "discovery %s force" % did)
+		if d.has("transmission"):
+			check(GameData.TRANSMISSIONS.has(String(d["transmission"])), "discovery %s transmission" % did)
+		if d.has("unlock_character"):
+			check(GameData.CHARACTERS.has(String(d["unlock_character"])), "discovery %s character" % did)
+		if d.has("fragment"):
+			check(GameData.FRAGMENTS.has(String(d["fragment"])), "discovery %s fragment" % did)
+		var p: Vector2 = GameData.discovery_position(did)
+		var hs: Vector2 = GameData.DESTINATIONS["black_drift_reach"]["half_size"]
+		check(absf(p.x) < hs.x and absf(p.y) < hs.y, "discovery %s outside world" % did)
+	for cid: String in GameData.CHARACTERS.keys():
+		check(GameData.ABILITIES.has(String(GameData.CHARACTERS[cid]["ability"])), "character %s ability" % cid)
+		check(GameData.MASTERY.has(cid), "character %s mastery" % cid)
+	for tid: String in GameData.TRANSMISSIONS.keys():
+		check(GameData.PROJECTS.has(String(GameData.TRANSMISSIONS[tid]["project"])), "transmission %s project page" % tid)
+	# Every non-starting character must be unlockable somehow.
+	for cid2: String in GameData.CHARACTERS.keys():
+		if cid2 == "ella_venn":
+			continue
+		var reachable: bool = false
+		for did2: String in GameData.DISCOVERIES.keys():
+			if String(GameData.DISCOVERIES[did2].get("unlock_character", "")) == cid2:
+				reachable = true
+		for dest: String in GameData.DESTINATIONS.keys():
+			if cid2 in GameData.DESTINATIONS[dest].get("completion_unlocks", []):
+				reachable = true
+		check(reachable, "character %s cannot be unlocked" % cid2)
+	# No retired canon names may appear in shipped data.
+	var src: String = FileAccess.get_file_as_string("res://scripts/data/game_data.gd")
+	for retired: String in ["Ilyra Venn", "Varra Cindral", "Elyra Vorn", "Sira Red Fang", "Nira Sol"]:
+		check(src.find(retired) == -1, "retired name in data: " + retired)
+
+func test_save_migration_and_recovery() -> void:
+	var legacy: Dictionary = {"currency": 42, "best_time": 77.0, "wins": 1, "runs": 3, "unlocked_characters": ["ilyra_venn", "ghost_driver_unit"],
+		"unlocked_tracks": ["x"], "discovered_signals": ["rc_echo_01", "gdu_trace_01"], "discovered_projects": ["Resonant Currents"],
+		"discovered_forces": ["pulse_width_codex", "ghost_driver", "resonant_currents"], "archive_reads": 2,
+		"settings": {"music": 0.5, "sfx": 0.4, "screen_shake": false}}
+	var m: Dictionary = Profile.migrate(legacy)
+	check(int(m["version"]) == Profile.SAVE_VERSION, "version not upgraded")
+	check(int(m["currency"]) == 42, "currency lost")
+	check(int(m["stats"]["expeditions"]) == 3 and int(m["stats"]["completions"]) == 1, "stats lost")
+	check(m["discovered"].has("sig_green_echo") and m["discovered"].has("sig_night_trace"), "legacy discoveries not remapped")
+	check("ghost_driver_unit" in m["forces_attuned"] and "resonant_currents" in m["forces_attuned"], "forces not migrated")
+	check("rc_meaningless_dub" in m["transmissions"], "transmission not derived from discovery")
+	check("ella_venn" in m["unlocked_characters"], "starting explorer missing")
+	check(not "ghost_driver_unit" in m["unlocked_characters"], "musical project leaked into explorers")
+	check(is_equal_approx(float(m["settings"]["music_volume"]), 0.5), "settings not migrated")
+	# v2 save with retired id.
+	var v2: Dictionary = Profile.defaults()
+	v2["unlocked_characters"] = ["ilyra_venn"]
+	v2["last_character"] = "ilyra_venn"
+	var m2: Dictionary = Profile.migrate(v2)
+	check(m2["unlocked_characters"] == ["ella_venn"] and String(m2["last_character"]) == "ella_venn", "retired character id not migrated")
+	# Round trip + corruption recovery.
+	Profile.save_path = "user://test_migrate.json"
+	Profile.data = m
+	check(Profile.save(), "save failed")
+	check(Profile.save(), "second save failed (backup rotation)")
+	var f: FileAccess = FileAccess.open("user://test_migrate.json", FileAccess.WRITE)
+	f.store_string("{ this is not json")
+	f.close()
+	Profile.load_profile("user://test_migrate.json")
+	check(int(Profile.data["currency"]) == 42, "did not recover from backup after corruption")
+	check(Profile.last_load_note.find("backup") != -1, "recovery not reported to player")
+	var dir: DirAccess = DirAccess.open("user://")
+	dir.remove("test_migrate.json")
+	dir.remove("test_migrate.backup.json")
+	_reset_profile()
+
+func test_simulated_expedition_minute() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	check(run.world.obstacles.size() > 50, "world has too few obstacles: %d" % run.world.obstacles.size())
+	check(run.pois.items.size() > 20, "too few points of interest")
+	var start_pos: Vector2 = run.player.position
+	# Bot: fly toward Silver Wrecks.
+	# A plausible player: heads for the wrecks but swerves for nearby motes.
+	var bot: Callable = func(r: GameRun) -> void:
+		var goal: Vector2 = Vector2(1750, 1150)
+		var best: Vector2 = Vector2.INF
+		for it: Dictionary in r.pickups.items:
+			if Vector2(it.pos).distance_to(r.player.position) < 320.0:
+				best = it.pos
+				break
+		r.player.move_input = r.player.position.direction_to(best if best != Vector2.INF else goal)
+	_sim(run, 60.0, bot)
+	print("        first minute: level %d, kills %d, motes %d, xp %d/%d, field motes %d, hp %d/%d, enemies %d, pos %s" % [run.level, run.kills, run.motes_collected, run.xp, run.xp_need, run.pickups.items.size(), int(run.player.hp), int(run.player.max_hp), run.enemies.size(), str(run.player.position)])
+	check(run.player.position.distance_to(start_pos) > 1200.0, "player did not travel (obstacles stuck?) %s" % str(run.player.position))
+	check(run.kills > 5, "too few kills in a minute: %d" % run.kills)
+	check(run.level >= 3, "too few level-ups in a minute: %d" % run.level)
+	check(run.weapons.weapons.size() + run.weapons.passives.size() >= 3, "upgrades not applied")
+	check(run.player.alive, "Venn died in the first minute on a straight flight")
+	check("silver_wrecks" in run.visited_regions, "region entry not tracked")
+	check(run.enemies.size() <= GameRun.MAX_ENEMIES, "enemy cap exceeded")
+
+func test_upgrade_pause_cycle() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.pending_levels = 1
+	run.step(1.0 / 60.0)
+	check(run.choosing, "level up did not open choices")
+	check(get_tree().paused, "tree not paused during choice")
+	var before_hp: float = run.player.hp
+	var t: float = run.elapsed
+	run.step(1.0 / 60.0)
+	check(is_equal_approx(run.elapsed, t), "simulation advanced during choice")
+	var opts: Array = run.hud.level_options
+	check(opts.size() >= 3, "fewer than 3 options")
+	var sig: Array = []
+	for o: Dictionary in opts:
+		sig.append(String(o["type"]) + ":" + String(o["id"]))
+	check(sig.size() == _unique(sig).size(), "duplicate options offered")
+	run.hud._pick(opts[0])
+	check(not run.choosing and not get_tree().paused, "did not resume after choosing")
+	check(run.player.hp >= before_hp - 0.01, "hp changed during choice")
+	# Pause menu toggles cleanly.
+	run.hud.toggle_pause()
+	check(get_tree().paused, "pause menu did not pause")
+	run.hud.toggle_pause()
+	check(not get_tree().paused, "pause menu did not resume")
+	# Choice cannot be opened twice from the same level.
+	run.hud._pick(opts[0])
+	check(not run.choosing, "stale pick reopened choice")
+
+func _unique(a: Array) -> Array:
+	var d: Dictionary = {}
+	for x: Variant in a:
+		d[x] = true
+	return d.keys()
+
+func test_signal_discovery_attunes_force() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	var poi: Dictionary = {}
+	for p: Dictionary in run.pois.items:
+		if String(p.id) == "sig_green_echo":
+			poi = p
+	check(not poi.is_empty(), "green echo signal not placed")
+	run.player.position = Vector2(poi.pos)
+	run.player.god_mode = true
+	_sim(run, 0.6)
+	check(not "sig_green_echo" in run.discoveries, "signal claimed without tuning")
+	_sim(run, 2.0, func(r: GameRun) -> void:
+		r.player.position = Vector2(poi.pos)
+		r.player.velocity = Vector2.ZERO)
+	check("sig_green_echo" in run.discoveries, "signal not claimed after tuning")
+	check("resonant_currents" in run.attuned, "force not attuned in run")
+	check(run.weapons.has_base("sub_wave"), "discovered Force weapon not granted")
+	var commit: Dictionary = Profile.record_expedition({"outcome": "extracted", "time": 100.0, "discoveries": run.discoveries, "character": "ella_venn", "destination": "black_drift_reach", "currency": 10, "mastery_xp": 10})
+	check(Profile.is_attuned("resonant_currents"), "force not persisted")
+	check("rc_meaningless_dub" in Profile.data["transmissions"], "transmission not persisted to Archive")
+	check("sig_green_echo" in commit["new_discoveries"], "new discovery not reported")
+	var p2: Dictionary = {}
+	for q: Dictionary in run.pois.items:
+		if String(q.id) == "sig_night_trace":
+			p2 = q
+	var start: Vector2 = p2.pos
+	run.player.position = start + Vector2(-150, 0)
+	_sim(run, 1.0)
+	check(Vector2(p2.pos).distance_to(start) > 50.0, "Night Trace did not move away")
+
+func test_hidden_sites_follow_state() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	var token: Dictionary = {}
+	for p: Dictionary in run.pois.items:
+		if String(p.id) == "art_route_token":
+			token = p
+	check(not token.is_empty(), "route token missing")
+	run.set_force_state("DRIFT")
+	check(not run.pois.is_visible_poi(token), "fracture site visible in Drift")
+	run.resonance = 10.0
+	run.step(1.0 / 60.0)
+	check(run.force_state == "FRACTURE", "low resonance did not enter Fracture")
+	check(run.pois.is_visible_poi(token), "fracture site hidden in Fracture")
+	run.resonance = 90.0
+	run.step(1.0 / 60.0)
+	check(run.force_state == "DRIFT", "state must pass through Drift (hysteresis)")
+	_sim(run, 0.1)
+	check(run.force_state == "RESONANCE", "high resonance did not enter Resonance")
+	# Rifts push toward Fracture; resonators toward Resonance.
+	run.resonance = 50.0
+	run.set_force_state("DRIFT")
+	run.on_poi_claimed({"kind": "rift", "pos": run.player.position, "color": Color.RED})
+	check(run.resonance < 20.0, "rift did not drop resonance")
+
+func test_extraction() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.player.god_mode = true
+	_sim(run, 0.5)
+	check(not run.left_gate, "left_gate set while still at the gate")
+	run.player.position = Vector2(600, 0)
+	_sim(run, 0.2)
+	check(run.left_gate, "left_gate not set after leaving")
+	run.player.position = run.world.gate
+	_sim(run, 1.0, func(r: GameRun) -> void: r.player.position = r.world.gate)
+	check(not run.ended, "extracted too quickly")
+	_sim(run, 2.5, func(r: GameRun) -> void: r.player.position = r.world.gate)
+	check(run.ended and String(finished_result.get("outcome", "")) == "extracted", "extraction did not complete: %s" % str(finished_result.get("outcome")))
+
+func test_boss_completion_and_unlocks() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.player.god_mode = true
+	check(not run.climax_available(), "climax available before signals")
+	run.discoveries = ["sig_green_echo", "sig_now_or_never"]
+	check(run.climax_available(), "climax not available after two signals")
+	run.left_gate = true
+	run.player.position = run.world.gate
+	run.confront()
+	check(run.boss_spawned and run.boss != null, "boss not spawned")
+	_sim(run, 1.0)
+	check(run.extract_progress == 0.0, "can extract while boss alive")
+	# Fight for a while with heavy damage to traverse all phases.
+	var phases: Dictionary = {}
+	for i in 40:
+		if run.boss and not run.boss.dead:
+			run.damage_enemy(run.boss, run.boss.max_hp * 0.03, Vector2.ZERO, 0.0, "environment", true)
+			phases[run.boss.boss_phase] = true
+		_sim(run, 0.25)
+	check(phases.has(1) and phases.has(2) and phases.has(3), "boss did not pass through all phases: %s" % str(phases.keys()))
+	check(run.boss_defeated, "boss not defeated")
+	_sim(run, 6.0)
+	check(String(finished_result.get("outcome", "")) == "complete", "completion not reached: %s" % str(finished_result.get("outcome")))
+	var commit: Dictionary = Profile.record_expedition(finished_result)
+	check(Profile.has_character("kess_darrow"), "completion unlock (Kess Darrow) not granted")
+	check(int(commit["currency"]) > 100, "completion currency too low")
+	check(int(Profile.data["stats"]["completions"]) == 1, "completion not counted")
+
+func test_death_keeps_discoveries() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.discoveries = ["char_gravefire"]
+	run.player.hp = 1.0
+	run.player.invuln = 0.0
+	run.player_hit(50.0, Vector2.ZERO)
+	check(run.ended and String(finished_result.get("outcome", "")) == "defeat", "death did not end run")
+	Profile.record_expedition(finished_result)
+	check(Profile.has_character("tessa_banks"), "discoveries lost on defeat")
+	check(int(Profile.data["stats"]["defeats"]) == 1, "defeat not counted")
+	# Second Wind workshop upgrade.
+	_reset_profile()
+	Profile.data["workshop"]["second_wind"] = 1
+	var run2: GameRun = _make_run()
+	await get_tree().process_frame
+	run2.player.hp = 1.0
+	run2.player.invuln = 0.0
+	run2.player_hit(50.0, Vector2.ZERO)
+	check(not run2.ended and run2.player.alive, "second wind did not trigger")
+
+func test_evolution_offer() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.weapons.weapons["pulse_bolt"] = 5
+	run.weapons.add_passive("amplifier")
+	var opts: Array = run.weapons.choices(3, run.attuned)
+	var found: bool = false
+	for o: Dictionary in opts:
+		if String(o["type"]) == "evolution" and String(o["id"]) == "anthem_bolt":
+			found = true
+			run.weapons.apply_choice(o)
+	check(found, "evolution not offered")
+	check(run.weapons.weapons.has("anthem_bolt") and not run.weapons.weapons.has("pulse_bolt"), "evolution not applied")
+	check(run.weapons.weapon_order.has("anthem_bolt"), "weapon order not updated")
+	var opts2: Array = run.weapons.choices(3, run.attuned)
+	for o2: Dictionary in opts2:
+		check(String(o2["id"]) != "pulse_bolt", "base weapon re-offered after evolution")
+
+func test_every_weapon_fires() -> void:
+	for group: Array in [["pulse_bolt", "riser", "sub_wave", "echo_tap", "power_chord"], ["trail_charges", "ion_lance", "riff_blades", "section_drones", "analog_star"], ["fuzz_wall"]]:
+		var run: GameRun = _make_run()
+		await get_tree().process_frame
+		run.player.god_mode = true
+		run.weapons.weapons.clear()
+		run.weapons.weapon_order.clear()
+		for w: String in group:
+			run.weapons.add_weapon(w)
+		for i in 30:
+			run.spawn_enemy("skiff", run.player.position + Vector2.from_angle(i * 0.7) * (90.0 + i * 8.0), true)
+		var dmg0: float = run.damage_dealt
+		_sim(run, 6.0, func(r: GameRun) -> void: r.player.move_input = Vector2(cos(r.elapsed), sin(r.elapsed)))
+		check(run.damage_dealt > dmg0 + 100.0, "weapons %s dealt too little damage: %d" % [str(group), int(run.damage_dealt - dmg0)])
+		# Evolved forms.
+		for w2: String in group:
+			if run.weapons.weapons.has(w2):
+				run.weapons.weapons[w2] = 5
+				run.weapons.evolve(String(GameData.WEAPONS[w2]["evolution"]))
+		for i in 25:
+			run.spawn_enemy("ram_cutter", run.player.position + Vector2.from_angle(i * 0.9) * (100.0 + i * 6.0), true)
+		var dmg1: float = run.damage_dealt
+		_sim(run, 6.0, func(r: GameRun) -> void: r.player.move_input = Vector2(cos(r.elapsed * 0.7), sin(r.elapsed * 0.7)))
+		check(run.damage_dealt > dmg1 + 100.0, "evolved %s dealt too little damage" % str(group))
+		_cleanup_runs()
+		await get_tree().process_frame
+
+func test_harmony_discovery() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.weapons.weapons["pulse_bolt"] = 3
+	run.weapons.add_weapon("sub_wave")
+	run.weapons.add_weapon("sub_wave")
+	run.weapons.add_weapon("sub_wave")
+	check(run.weapons.has_harmony("dub_drop"), "Dub Drop harmony not discovered at level 3+3")
+	# Build & Drop lands a Drop on the bar.
+	run.weapons.build = 100.0
+	run.weapons.drop_armed = true
+	run.weapons.on_beat(4)
+	check(run.weapons.drop_time > 0.0, "Drop did not trigger on downbeat")
+	check(run.weapons.echoes.size() >= 2, "Dub Drop did not schedule echoes")
+
+func test_abilities() -> void:
+	for cid: String in GameData.CHARACTERS.keys():
+		var run: GameRun = _make_run({"character": cid})
+		await get_tree().process_frame
+		run.player.god_mode = true
+		for i in 10:
+			run.spawn_enemy("skiff", run.player.position + Vector2.from_angle(i) * 120.0, true)
+		_sim(run, 0.2)
+		var ok: bool = run.use_ability()
+		check(ok, "%s ability did not activate" % cid)
+		_sim(run, 1.0)
+		check(run.ability_cd > 0.0 or cid == "naomi_sol", "%s ability has no cooldown" % cid)
+		_cleanup_runs()
+		await get_tree().process_frame
+
+func test_menu_screens_build() -> void:
+	var main_script: GDScript = load("res://scripts/ui/main.gd")
+	var main: Node = main_script.new()
+	add_child(main)
+	await get_tree().process_frame
+	for fn: String in ["show_title", "show_departure", "show_archive", "show_workshop", "show_settings", "show_credits"]:
+		main.call(fn)
+		await get_tree().process_frame
+		check(main.screen != null and is_instance_valid(main.screen), "%s did not build" % fn)
+	Profile.data["transmissions"] = ["rc_meaningless_dub"]
+	Profile.data["fragments"] = ["frag_01"]
+	main.show_archive()
+	await get_tree().process_frame
+	main.last_result = {"outcome": "extracted", "time": 300.0, "kills": 40, "level": 7, "character": "ella_venn", "regions": ["silver_wrecks"], "weapons": {"pulse_bolt": 3}, "harmonies": ["dub_drop"], "discoveries": ["sig_green_echo"]}
+	main.last_commit = {"currency": 50, "unlocks": [{"kind": "force", "id": "resonant_currents"}, {"kind": "character", "id": "tessa_banks"}], "new_discoveries": ["sig_green_echo"], "mastery_levels": 1}
+	main.show_results()
+	await get_tree().process_frame
+	check(is_instance_valid(main.screen), "results did not build")
+	main.start_expedition(true)
+	await get_tree().process_frame
+	check(main.current_run != null, "expedition did not start from menu")
+	main.queue_free()
+
+func test_hud_fits_aspect_ratios() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	for size: Vector2 in [Vector2(1280, 720), Vector2(1560, 720), Vector2(960, 720)]:
+		run.hud.safe = Rect2(Vector2(16, 12), size - Vector2(32, 24))
+		run.hud._layout()
+		var ab: Rect2 = Rect2(run.hud.ability_button.position, run.hud.ability_button.size)
+		check(Rect2(Vector2.ZERO, size).encloses(ab), "ability button off-screen at %s" % str(size))
+		check(ab.size.x >= 88.0, "ability button below touch target size")
+		check(run.hud.pause_button.position.x + 48 <= size.x, "pause button off-screen at %s" % str(size))
+
+func test_performance_budget() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.player.god_mode = true
+	for w: String in ["riser", "sub_wave", "riff_blades", "section_drones", "analog_star"]:
+		run.weapons.add_weapon(w)
+	for i in 85:
+		run.spawn_enemy(["skiff", "ram_cutter", "rail_picket", "swarm_tender"][i % 4], run.player.position + Vector2.from_angle(i * 0.37) * (200.0 + (i % 9) * 60.0), true)
+	var dt: float = 1.0 / 60.0
+	var t0: int = Time.get_ticks_usec()
+	var frames: int = 300
+	for i in frames:
+		run.player.move_input = Vector2(cos(i * 0.02), sin(i * 0.02))
+		if run.choosing:
+			run.hud._pick(run.hud.level_options[0])
+		run.step(dt)
+	var avg_ms: float = float(Time.get_ticks_usec() - t0) / frames / 1000.0
+	print("        simulation step avg: %.2f ms with %d enemies, %d shots" % [avg_ms, run.enemies.size(), run.projectiles.shots.size()])
+	check(avg_ms < 8.0, "simulation step too slow: %.2f ms" % avg_ms)
