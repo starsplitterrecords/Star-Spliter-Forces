@@ -72,7 +72,7 @@ Versioned atomic saves with backup recovery and prototype migration.
 ## Not verified
 
 - **No human has played this build.** Feel, readability and fun are unvalidated.
-- No real iOS/Android device run; no export presets yet; GPU performance unmeasured.
+- No real iOS/Android device run (export presets exist but no signed build); GPU performance unmeasured.
 - Audio mix has only been checked numerically (seams, loudness), not by ear.
 - Gamepad navigation in menus is implemented via focus but untested with hardware.
 
