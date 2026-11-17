@@ -1,5 +1,7 @@
 # Content Manifest & Source-of-Truth Inventory
 
+> Superseded in detail by the 2026-11-17 source intake: `CANON_REGISTRY.md`, `CHARACTER_REFERENCE_REGISTRY.md`, `MUSIC_CATALOG_MANIFEST.md`, `VISUAL_REFERENCE_ATLAS.md`, `SOURCE_PROVENANCE.md`, `GAME_CANON_ADAPTATION.md`. This file remains a quick summary.
+
 Status key: **CANON** documented in Star Splitter sources · **CATALOG** verbatim
 Star Splitter Records metadata · **APPROVED** _(none yet — needs owner sign-off)_ ·
 **PROVISIONAL** our interpretation of canon for gameplay · **NEW** invented for this game.
@@ -18,10 +20,11 @@ Sources consulted (read-only clones, 2026-11-17):
 | Commodore Ella Venn, Thunderbreak, Fleet, look/voice | CANON | `characters.json` `C_commodore_ella_venn`; name pending owner (D-02) |
 | Captain Naomi Sol, Verge escort, corridor knowledge | CANON | `characters.json` |
 | Tessa Banks, Gravefire cutter, Shards | CANON | `characters.json` |
-| Kess Darrow, Glass Horizon, cutter Lantern Two | CANON | `rex-fleet-glass-horizon` |
+| Abby Saville, Warlord of the Scythe of Saville, Shards | CANON (released art, Issue 01 page 003) | `characters.json` |
+| Kess Darrow | CANON (spin-off data) — **removed from roster**: no approved image | `rex-fleet-glass-horizon` |
 | Jex Marrin, Veil Market broker, anomaly-glass beads | CANON | `characters.json` |
 | All abilities, traits, trade-offs, mastery perks, stats | PROVISIONAL | Derived from canon roles |
-| Character beacon dialogue lines (Tessa, Naomi) | NEW | Written in-voice; owner review |
+| Character beacon text | Naomi: released line (Issue 01 page 010); Tessa: narration (no invented quotes) | — |
 
 ## Factions, places, enemies
 
@@ -67,6 +70,7 @@ Sources consulted (read-only clones, 2026-11-17):
 
 | Asset | Status |
 |---|---|
-| All ships, enemies, props, effects | NEW procedural vector placeholders |
+| Explorer portraits, Rex Fleet cover, project identity art, release covers | RELEASED source art via `tools/import_reference_assets.py` (portrait crops flagged for review) |
+| Ships, enemies, props, effects | NEW procedural vector art in faction palettes |
 | Inter typeface | Third-party, SIL OFL 1.1 (`assets/fonts/OFL.txt`) |
-| Project artwork / Rex Fleet character art | Not imported — needs approved exports (see `ART_BIBLE.md`) |
+

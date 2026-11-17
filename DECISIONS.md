@@ -6,7 +6,7 @@ need confirmation from the Star Splitter team.
 | ID | Decision | Why | Status |
 |----|----------|-----|--------|
 | D-01 | Rebuild the prototype into modules (`core/`, `data/`, `run/`, `ui/`) instead of patching | Original scripts were minified one-liners and a `WorldDirector` autoload scanned the scene tree every frame to inject the world; untestable and fragile. | Done |
-| D-02 | **OWNER** — Use **Commodore Ella Venn** (current canon) rather than "Ilyra Venn" | Both StarSplitterVisions (`series/rex-fleet.json`) and RexPrompt (`characters.json`) use Ella; RexPrompt's validator rejects "Ilyra". The released Issue 1 editorial still says Ilyra and an audit item is open. One-line change in `GameData.CHARACTERS` if the owner prefers Ilyra. Saves migrate `ilyra_venn → ella_venn`. | Needs confirmation |
+| D-02 | **OWNER** — Use **Commodore Ella Venn** rather than "Ilyra Venn" | The **released** Issue 01 (22 pages) letters "ELLA VENN" on the cast plate (page 003) and "Commodore Ella Venn" in the editor's letter (page 022); site copy and CI require Ella; RexPrompt production data and validator agree. "Ilyra" survives only in a superseded earlier edition and stale QC/audit docs. RexPrompt audit VIS-C3-001 still asks for written owner confirmation. Saves migrate `ilyra_venn → ella_venn`. | Ella per released canon; owner confirmation requested |
 | D-03 | Musical projects are never characters. Ghost Driver Unit (a playable "character" in the prototype) became a Force only. | Directive §2: Forces are musical identities; characters come from fiction. | Done |
 | D-04 | Playable roster from Rex Fleet canon: Venn, Naomi Sol, Tessa Banks, Kess Darrow, Jex Marrin | Distinct canon roles map to distinct kits (tank, skirmisher, support, scout, broker). Kits are provisional interpretations. | Done |
 | D-05 | Enemies are the canon "unmarked raider splinter group" plus measurable anomalies, not "the Shards" | Canon insists the Shards are not all villains. | Done |
@@ -21,4 +21,7 @@ need confirmation from the Star Splitter team.
 | D-14 | Inter (OFL) bundled as the UI typeface | Legible at small sizes; licence permits bundling. | Done |
 | D-15 | Runtime input map (`InputSetup`) instead of `project.godot` input section | Testable, remappable later, keyboard/gamepad/touch share action names. | Done |
 | D-16 | Debug cheats only in debug builds and only with Ctrl modifier | Prototype's bare number keys collided with upgrade hotkeys. | Done |
+| D-18 | Roster passes the canon quality gate: Kess Darrow (spin-off data only, no approved image) replaced by **Abby Saville** (released art, page 003). Saves migrate `kess_darrow → abby_saville` | `GAME_CANON_ADAPTATION.md` quality gate | Done |
+| D-19 | Enemies are de-badged (no Shard white/red); explorer ships use faction palettes; portraits and project art come only from released/published sources through `tools/import_reference_assets.py` | CANON_REGISTRY §3, VISUAL_REFERENCE_ATLAS | Done |
+| D-20 | Music crossover is framed as a noncanonical "Signal Space" layer, stated in the Archive | GAME_CANON_ADAPTATION | Done |
 | D-17 | **OWNER** — Proposed bundle/package id `com.starsplitterrecords.forces`; export presets carry no signing data | Needed for device builds; ids are hard to change after store submission. | Needs confirmation |

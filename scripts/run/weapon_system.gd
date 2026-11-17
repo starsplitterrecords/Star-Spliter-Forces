@@ -213,7 +213,7 @@ func cooldown_for(id: String) -> float:
 		cd *= 1.0 / (1.0 + 0.15 * harmonics_mult())
 	if drop_time > 0.0:
 		cd *= 0.55
-	if run.character_id == "kess_darrow":
+	if run.character_id == "abby_saville":
 		cd *= 1.1
 	return maxf(0.08, cd)
 
@@ -233,6 +233,8 @@ func damage_for(id: String, base: float) -> float:
 		dmg *= 0.8 + swell * 0.8
 	if run.character_id == "tessa_banks":
 		dmg *= 0.9
+	if run.character_id == "abby_saville" and player.movement_ratio() < 0.15:
+		dmg *= 1.2
 	if run.character_id == "naomi_sol" and player.movement_ratio() > 0.9:
 		dmg *= 1.15
 	dmg *= run.ability_damage_mult()
@@ -633,6 +635,13 @@ func _draw_chord_fx(dir: Vector2, reach: float, half_angle: float) -> void:
 func _draw() -> void:
 	if player == null:
 		return
+	# Abby's answering Shard captains: pale hulls, red seams.
+	for a: Dictionary in run.allies:
+		var ap: Vector2 = run.ally_position(a)
+		var fwd: Vector2 = Vector2.from_angle(float(a.angle) + run.elapsed * 1.4 + PI / 2.0)
+		var sd: Vector2 = fwd.orthogonal()
+		draw_colored_polygon(PackedVector2Array([ap + fwd * 12.0, ap - fwd * 8.0 + sd * 8.0, ap - fwd * 8.0 - sd * 8.0]), Color("e6e3dc"))
+		draw_line(ap - fwd * 6.0, ap + fwd * 8.0, Color("d8323a"), 2.0)
 	for id: String in weapon_order:
 		var b: String = base_id(id)
 		if b == "riff_blades":

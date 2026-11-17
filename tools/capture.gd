@@ -15,7 +15,7 @@ func _ready() -> void:
 	Profile.data = Profile.defaults()
 	Profile.data["forces_attuned"] = ["pulse_width_codex", "resonant_currents", "star_splitter_rex"]
 	Profile.data["transmissions"] = ["pwc_now_or_never", "rc_meaningless_dub"]
-	Profile.data["unlocked_characters"] = ["ella_venn", "naomi_sol"]
+	Profile.data["unlocked_characters"] = ["ella_venn", "naomi_sol", "abby_saville"]
 	main = load("res://scripts/ui/main.gd").new()
 	add_child(main)
 	await _wait(0.6)
@@ -26,6 +26,14 @@ func _ready() -> void:
 	main.show_archive()
 	await _wait(0.3)
 	await _shot("03_archive")
+	var tabs: TabContainer = main.screen.find_children("*", "TabContainer", true, false)[0]
+	tabs.current_tab = 1
+	await _wait(0.3)
+	await _shot("03a_archive_rex_fleet")
+	main.selected_character = "abby_saville"
+	main.show_departure()
+	await _wait(0.3)
+	await _shot("02b_departure_abby")
 	main.show_settings()
 	await _wait(0.3)
 	await _shot("03b_settings")

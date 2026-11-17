@@ -80,6 +80,8 @@ var ability_charges: int = 1
 var ability_active: float = 0.0
 var damage_boost: float = 0.0
 var mastery_level: int = 0
+var allies: Array = [] # Abby's answering captains: {angle, clock}
+var ally_time: float = 0.0
 var debug_enabled: bool = true
 var scripted_input: bool = false # tests/bots drive player.move_input directly
 var hint_queue: Array = []
@@ -136,8 +138,6 @@ func _build() -> void:
 	weapons = WeaponSystem.new()
 	add_child(weapons)
 	weapons.setup(self, player, String(GameData.FORCES[signature_force]["primary"]))
-	if character_id == "kess_darrow" and mastery_level >= 3:
-		weapons.add_passive("scanner")
 	weapons.apply_passives()
 	player.hp = player.max_hp
 	projectiles = ProjectileSystem.new()
@@ -203,7 +203,7 @@ func _place_camps() -> void:
 		for i in count:
 			var pos: Vector2 = world.random_open_point_near(GameData.region_anchor(r), 200.0, float(r.get("radius", 600.0)) * 0.85, rng)
 			camps.append({"pos": pos, "region": rid, "remaining": 5 + threat * 2, "active": false, "members": [], "cleared": false})
-			pois.add({"kind": "camp", "pos": pos, "title": "RAIDER CAMP", "color": Color("ff6a4f"), "radius": 70.0, "camp": camps.size() - 1})
+			pois.add({"kind": "camp", "pos": pos, "title": "RAIDER CAMP", "color": Color("d0743c"), "radius": 70.0, "camp": camps.size() - 1})
 
 func _step_camps() -> void:
 	for i in camps.size():
@@ -381,8 +381,6 @@ func scanner_range() -> float:
 	var r: float = 620.0 * (1.0 + 0.3 * int(weapons.passives.get("scanner", 0)) if weapons else 1.0)
 	if force_state == "DRIFT":
 		r *= 1.5
-	if character_id == "kess_darrow":
-		r *= 2.0
 	return r
 
 func current_region_def() -> Dictionary:
@@ -841,7 +839,7 @@ func ability_cooldown() -> float:
 		"tessa_banks":
 			if mastery_level >= 4:
 				cd -= 6.0
-		"kess_darrow":
+		"abby_saville":
 			if mastery_level >= 4:
 				cd -= 4.0
 	return cd
@@ -898,25 +896,16 @@ func use_ability() -> bool:
 			if mastery_level >= 2:
 				add_resonance(20.0, "+RESONANCE")
 			fx.ring(player.position, 20.0, 140.0, Color("7dffb2"), 0.6, 6.0)
-		"survey_ping":
-			var radius: float = 1800.0 * (1.5 if mastery_level >= 1 else 1.0)
-			var found: int = pois.reveal_within(player.position, radius, true)
-			if mastery_level >= 2:
-				var cells: int = int(radius / 400.0)
-				var c0: Vector2i = Vector2i(floori(player.position.x / 400.0), floori(player.position.y / 400.0))
-				for x in range(-cells, cells + 1):
-					for y in range(-cells, cells + 1):
-						if Vector2(x, y).length() <= cells:
-							explored[c0 + Vector2i(x, y)] = true
-			for e: ForceEnemy in enemy_hash.query(player.position, 260.0).duplicate():
-				if not e.dead and e.position.distance_to(player.position) < 260.0:
-					e.slow = 1.6
-					e.telegraph = 0.0
-					e.knock += (e.position - player.position).normalized() * 200.0
-			fx.ring(player.position, 30.0, 900.0, Color("c8a2ff"), 1.0, 4.0)
-			Audio.play_sfx("ping", 1.0, 0.0, 0.1)
+		"call_the_captains":
+			# Allied Shard cutters answer Abby's call and hold a ring around her.
+			var n: int = 4 if mastery_level >= 2 else 3
+			allies.clear()
+			for i in n:
+				allies.append({"angle": TAU * i / n, "clock": 0.2 * i})
+			ally_time = 8.0 + (2.0 if mastery_level >= 1 else 0.0)
+			fx.ring(player.position, 20.0, 160.0, Color("d8323a"), 0.6, 6.0)
 			if hud:
-				hud.toast("SURVEY: %d new site%s charted" % [found, "" if found == 1 else "s"])
+				hud.toast("SHARD CAPTAINS ANSWER THE CALL")
 		"veil_step":
 			player_veiled = 4.0 + (2.0 if mastery_level >= 3 else 0.0)
 			for e: ForceEnemy in enemies:
@@ -926,7 +915,26 @@ func use_ability() -> bool:
 			fx.ring(player.position, 20.0, 160.0, Color("ffcf7a"), 0.5, 4.0)
 	return true
 
+func ally_position(a: Dictionary) -> Vector2:
+	return player.position + Vector2.from_angle(float(a.angle) + elapsed * 1.4) * 115.0
+
+func _step_allies(delta: float) -> void:
+	if ally_time <= 0.0:
+		if not allies.is_empty():
+			allies.clear()
+		return
+	ally_time -= delta
+	for a: Dictionary in allies:
+		a.clock = float(a.clock) - delta
+		if float(a.clock) <= 0.0:
+			a.clock = 0.45
+			var p: Vector2 = ally_position(a)
+			var t: ForceEnemy = nearest_enemy(p, 480.0)
+			if t:
+				projectiles.spawn(p, p.direction_to(t.position) * 600.0, 16.0 * player.damage_mult, 1.0, 6.0, Color("ff5a5f"), {"weapon": "", "knock": 60.0})
+
 func _update_ability(delta: float) -> void:
+	_step_allies(delta)
 	ability_cd = maxf(0.0, ability_cd - delta)
 	damage_boost = maxf(0.0, damage_boost - delta)
 	player_veiled = maxf(0.0, player_veiled - delta)
@@ -1057,8 +1065,6 @@ func _claim_discovery(p: Dictionary) -> void:
 					detail += "\nNEW FORCE ATTUNED: %s — %s joins your loadout." % [GameData.FORCES[force_id]["name"], GameData.weapon_name(primary)]
 			elif newly_attuned:
 				detail += "\nNEW FORCE ATTUNED: its weapons now appear in upgrades."
-			if character_id == "kess_darrow":
-				pending_levels += 1
 		"character":
 			var cid: String = String(d.get("unlock_character", ""))
 			if cid != "" and not Profile.has_character(cid):

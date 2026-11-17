@@ -163,12 +163,16 @@ static func migrate(raw: Dictionary) -> Dictionary:
 			else:
 				out[key] = raw[key]
 	# The prototype used the retired name "Ilyra"; current Rex Fleet canon is Ella Venn.
-	out["unlocked_characters"] = out["unlocked_characters"].map(func(c: Variant) -> String: return "ella_venn" if String(c) == "ilyra_venn" else String(c))
-	if String(out.get("last_character", "")) == "ilyra_venn":
-		out["last_character"] = "ella_venn"
-	if out["mastery"].has("ilyra_venn"):
-		out["mastery"]["ella_venn"] = out["mastery"]["ilyra_venn"]
-		out["mastery"].erase("ilyra_venn")
+	# Retired ids: "ilyra_venn" (prototype name) and "kess_darrow" (removed from
+	# the roster 2026-11-17: no approved art). Her unlock carries to Abby Saville.
+	var retired: Dictionary = {"ilyra_venn": "ella_venn", "kess_darrow": "abby_saville"}
+	out["unlocked_characters"] = out["unlocked_characters"].map(func(c: Variant) -> String: return String(retired.get(String(c), String(c))))
+	if retired.has(String(out.get("last_character", ""))):
+		out["last_character"] = retired[String(out["last_character"])]
+	for old_id: String in retired.keys():
+		if out["mastery"].has(old_id) and not out["mastery"].has(retired[old_id]):
+			out["mastery"][retired[old_id]] = out["mastery"][old_id]
+		out["mastery"].erase(old_id)
 	if not "ella_venn" in out["unlocked_characters"]:
 		out["unlocked_characters"].append("ella_venn")
 	if not "black_drift_reach" in out["unlocked_destinations"]:

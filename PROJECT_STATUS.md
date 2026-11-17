@@ -24,7 +24,7 @@ balance bot, not yet by human playtesters).
 - Outcomes: complete / extracted / defeat. Defeat keeps discoveries, halves Signal.
 
 **Characters** (Rex Fleet canon identities; kits provisional) — Commodore Ella Venn,
-Captain Naomi Sol, Tessa Banks, Kess Darrow, Jex Marrin. Each has a distinct hull,
+Captain Naomi Sol, Tessa Banks, Abby Saville, Jex Marrin — all on the released Issue 01 cast plate, with released portraits. Each has a distinct hull,
 ability (bulwark / dash / repair+shield / survey ping / veil cloak), trait, trade-off,
 and a 4-step mastery track.
 
@@ -68,6 +68,10 @@ Versioned atomic saves with backup recovery and prototype migration.
 ## Independent code review (2026-11-17)
 
 10 defects found by a separate review pass (guardian respawn loop, Naomi dash with no cooldown, touch stick sticking after pauses, second finger unable to press HUD buttons, beat weapons firing while paused, score restarting over catalog playback, level-up after run end, Naomi hazard trait incomplete, gate button under the stick, lore cards timing out behind level-ups). All fixed; regression test added.
+
+## Source intake (2026-11-17)
+
+Six source deliverables written from inspected files (see `SOURCE_PROVENANCE.md`). Canon fixes applied: roster gate (Abby replaces Kess), de-badged enemies, faction ship palettes, released portraits/cover/project art via a provenance pipeline, invented quotes removed, Kaldr naming aligned with page 005/010, noncanonical signal layer stated in the Archive. Not reachable: Suno profile, private `ssr-tools`.
 
 ## Not verified
 

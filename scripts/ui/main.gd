@@ -65,6 +65,27 @@ func _heading(parent: Control, text: String, sub: String = "") -> void:
 	if sub != "":
 		parent.add_child(UiTheme.label(sub, 16, UiTheme.DIM))
 
+## Canonical artwork imported by tools/import_reference_assets.py.
+func _art(path: String, size: Vector2) -> TextureRect:
+	if not ResourceLoader.exists(path):
+		return null
+	var tr: TextureRect = TextureRect.new()
+	tr.texture = load(path)
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tr.custom_minimum_size = size
+	return tr
+
+func _portrait(cid: String, size: float) -> TextureRect:
+	var key: String = String(GameData.CHARACTERS.get(cid, {}).get("portrait", cid))
+	return _art("res://assets/characters/%s_256.png" % key, Vector2(size, size))
+
+func _project_force(pname: String) -> String:
+	for fid: String in GameData.FORCES.keys():
+		if String(GameData.FORCES[fid]["name"]) == pname:
+			return fid
+	return pname.to_lower().replace(" ", "_")
+
 func _toast(text: String) -> void:
 	if screen == null:
 		return
@@ -186,9 +207,18 @@ func show_departure() -> void:
 	var dv: VBoxContainer = VBoxContainer.new()
 	dv.add_theme_constant_override("separation", 6)
 	detail.add_child(dv)
-	dv.add_child(UiTheme.label(String(c2["origin"]).to_upper() + "   •   " + String(c2["vessel"]), 13, c2["accent"], "bold"))
-	dv.add_child(UiTheme.label(String(c2["name"]), 30, Color.WHITE, "display"))
-	dv.add_child(UiTheme.label("“%s”" % String(c2["tagline"]), 16, UiTheme.TEXT))
+	var ch_head: HBoxContainer = HBoxContainer.new()
+	ch_head.add_theme_constant_override("separation", 14)
+	dv.add_child(ch_head)
+	var pic: TextureRect = _portrait(selected_character, 112.0)
+	if pic:
+		ch_head.add_child(pic)
+	var ch_txt: VBoxContainer = VBoxContainer.new()
+	ch_txt.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	ch_head.add_child(ch_txt)
+	ch_txt.add_child(UiTheme.label(String(c2["origin"]).to_upper() + "   •   " + String(c2["vessel"]), 13, c2["accent"], "bold"))
+	ch_txt.add_child(UiTheme.label(String(c2["name"]), 30, Color.WHITE, "display"))
+	ch_txt.add_child(UiTheme.label(String(c2["tagline"]), 16, UiTheme.TEXT))
 	dv.add_child(UiTheme.label(String(c2["bio"]), 14, UiTheme.DIM))
 	var ab: Dictionary = GameData.ABILITIES[String(c2["ability"])]
 	dv.add_child(UiTheme.label("ABILITY — %s (%ds): %s" % [String(ab["name"]), int(ab["cooldown"]), String(ab["desc"])], 14, Color("bfe9ff")))
@@ -287,7 +317,7 @@ func show_results() -> void:
 	var v: VBoxContainer = _new_screen()
 	var r: Dictionary = last_result
 	var title: String = {"complete": "EXPEDITION COMPLETE", "extracted": "SAFE RETURN", "defeat": "LOST SIGNAL"}.get(String(r["outcome"]), "EXPEDITION ENDED")
-	var sub: String = {"complete": "The Silence is broken and the Reach can hear itself again.", "extracted": "You came home with what you found.", "defeat": "Thunderbreak's relays caught your discoveries before the signal dropped."}.get(String(r["outcome"]), "")
+	var sub: String = {"complete": "The Silence is broken and the Reach can hear itself again.", "extracted": "You came home with what you found.", "defeat": "Your logs reached the gate relays before the signal dropped."}.get(String(r["outcome"]), "")
 	_heading(v, title, sub)
 	var row: HBoxContainer = HBoxContainer.new()
 	row.add_theme_constant_override("separation", 24)
@@ -297,6 +327,9 @@ func show_results() -> void:
 	left.custom_minimum_size = Vector2(420, 0)
 	left.add_theme_constant_override("separation", 4)
 	row.add_child(left)
+	var rp: TextureRect = _portrait(String(r["character"]), 96.0)
+	if rp:
+		left.add_child(rp)
 	left.add_child(UiTheme.label(String(GameData.CHARACTERS[String(r["character"])]["name"]), 22, Color.WHITE, "bold"))
 	left.add_child(UiTheme.label("Time %s   •   Level %d   •   %d cleared" % [GameData.format_time(float(r["time"])), int(r["level"]), int(r["kills"])], 16, UiTheme.TEXT))
 	var regions: Array = []
@@ -366,6 +399,7 @@ func show_archive() -> void:
 	tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(tabs)
 	tabs.add_child(_archive_projects())
+	tabs.add_child(_archive_universe())
 	tabs.add_child(_archive_forces())
 	tabs.add_child(_archive_explorers())
 	tabs.add_child(_archive_mystery())
@@ -407,12 +441,16 @@ func _archive_projects() -> Control:
 		var head: HBoxContainer = HBoxContainer.new()
 		head.add_theme_constant_override("separation", 16)
 		pv.add_child(head)
-		var sleeve: RecordSleeve = RecordSleeve.new()
-		sleeve.accent = pdef["accent"]
-		sleeve.title = pname
-		sleeve.seed_value = pname.hash()
-		sleeve.custom_minimum_size = Vector2(132, 132)
-		head.add_child(sleeve)
+		var ident: TextureRect = _art("res://assets/music/identity/%s.png" % _project_force(pname), Vector2(132, 132))
+		if ident:
+			head.add_child(ident)
+		else:
+			var sleeve: RecordSleeve = RecordSleeve.new()
+			sleeve.accent = pdef["accent"]
+			sleeve.title = pname
+			sleeve.seed_value = pname.hash()
+			sleeve.custom_minimum_size = Vector2(132, 132)
+			head.add_child(sleeve)
 		var hv: VBoxContainer = VBoxContainer.new()
 		hv.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		head.add_child(hv)
@@ -424,6 +462,9 @@ func _archive_projects() -> Control:
 			var tr: HBoxContainer = HBoxContainer.new()
 			tr.add_theme_constant_override("separation", 10)
 			pv.add_child(tr)
+			var cover: TextureRect = _art("res://assets/music/covers/%s.png" % tid2, Vector2(42, 42))
+			if cover:
+				tr.add_child(cover)
 			var has_master: bool = Audio.has_master(tid2)
 			tr.add_child(UiTheme.button("▶ PLAY" if has_master else "▶ FORCE MOTIF", func() -> void:
 				var mode: String = Audio.play_catalog(tid2)
@@ -437,6 +478,37 @@ func _archive_projects() -> Control:
 	inner.add_child(UiTheme.button("STOP PLAYBACK", func() -> void:
 		Audio.stop_catalog()
 		Audio.set_mix({"menu": 0.6, "bed": 0.3}), 220.0, 44.0))
+	return s[0]
+
+## Rex Fleet: the released fiction the explorers come from, plus a clear note
+## on what the game adds (GAME_CANON_ADAPTATION.md).
+func _archive_universe() -> Control:
+	var s: Array = _scroll("Rex Fleet")
+	var inner: VBoxContainer = s[1]
+	var row: HBoxContainer = HBoxContainer.new()
+	row.add_theme_constant_override("separation", 18)
+	inner.add_child(row)
+	var cover: TextureRect = _art("res://assets/universe/rex_fleet_issue01_cover.png", Vector2(190, 303))
+	if cover:
+		row.add_child(cover)
+	var v: VBoxContainer = VBoxContainer.new()
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	v.add_theme_constant_override("separation", 8)
+	row.add_child(v)
+	v.add_child(UiTheme.label("REX FLEET — ISSUE 01: GREEN CORRIDOR", 22, Color("74e6a5"), "display"))
+	v.add_child(UiTheme.label("Star Splitter Visions · released August 15, 2026 · \"Three powers. One frontier.\"", 13, UiTheme.DIM, "bold"))
+	v.add_child(UiTheme.label("After the Shattering, three rival powers carry different versions of history into the same contested frontier. Commodore Ella Venn is trying to keep people alive on a frontier divided among the Core, the Shards, and the Verge.", 15, UiTheme.TEXT))
+	v.add_child(UiTheme.label("THE FLEET — navy and gold, the four-point star.   THE VERGE — tan and green, the leaf.   THE SHARDS — white and red, the fang. Not villains: survivors of the wreckage zones.", 13, UiTheme.DIM))
+	var cast: HFlowContainer = HFlowContainer.new()
+	cast.add_theme_constant_override("h_separation", 8)
+	v.add_child(cast)
+	for key: String in ["ella_venn", "cael_dominion", "colin_rhyne", "naomi_sol", "chris_halev", "abby_saville", "billie_rusk", "tessa_banks", "jex_marrin"]:
+		var pc: TextureRect = _art("res://assets/characters/%s_96.png" % key, Vector2(56, 56))
+		if pc:
+			pc.tooltip_text = key.replace("_", " ").capitalize()
+			cast.add_child(pc)
+	inner.add_child(UiTheme.label("ABOUT THIS GAME'S SIGNALS", 14, UiTheme.GOLD, "bold"))
+	inner.add_child(UiTheme.label("The characters, factions and places come from Rex Fleet. The signals do not: Star Splitter Records music reaching the frontier, the Forces, and the hush that hunts it are original to Star Splitter Forces and are not part of Rex Fleet canon.", 14, UiTheme.TEXT))
 	return s[0]
 
 func _archive_forces() -> Control:
@@ -473,8 +545,18 @@ func _archive_explorers() -> Control:
 			inner.add_child(UiTheme.label("UNKNOWN CONTACT — " + String(c["unlock"]), 15, UiTheme.DIM))
 			continue
 		var m: Dictionary = Profile.mastery(cid)
-		inner.add_child(UiTheme.label(String(c["name"]).to_upper(), 20, c["accent"], "display"))
-		inner.add_child(UiTheme.label(String(c["bio"]), 14, UiTheme.TEXT))
+		var eh: HBoxContainer = HBoxContainer.new()
+		eh.add_theme_constant_override("separation", 12)
+		inner.add_child(eh)
+		var ep: TextureRect = _portrait(cid, 72.0)
+		if ep:
+			eh.add_child(ep)
+		var ev: VBoxContainer = VBoxContainer.new()
+		ev.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		eh.add_child(ev)
+		ev.add_child(UiTheme.label(String(c["name"]).to_upper(), 20, c["accent"], "display"))
+		ev.add_child(UiTheme.label(String(c["origin"]) + "   •   " + String(c["tagline"]), 13, UiTheme.DIM))
+		ev.add_child(UiTheme.label(String(c["bio"]), 14, UiTheme.TEXT))
 		var perks: Array = GameData.MASTERY[cid]
 		var lines: Array = []
 		for i in perks.size():

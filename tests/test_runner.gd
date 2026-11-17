@@ -218,6 +218,19 @@ func test_data_integrity() -> void:
 			if cid2 in GameData.DESTINATIONS[dest].get("completion_unlocks", []):
 				reachable = true
 		check(reachable, "character %s cannot be unlocked" % cid2)
+	# Canon gate: every explorer has a faction palette and a released portrait.
+	for cid3: String in GameData.CHARACTERS.keys():
+		var c3: Dictionary = GameData.CHARACTERS[cid3]
+		check(c3.has("hull") and c3.has("trim") and c3.has("faction"), "explorer %s lacks faction palette" % cid3)
+		check(ResourceLoader.exists("res://assets/characters/%s_256.png" % String(c3.get("portrait", cid3))), "explorer %s lacks a released portrait" % cid3)
+	# Unmarked raiders must not wear the Shard palette (pale white + bright red).
+	for eid: String in GameData.ENEMIES.keys():
+		var ec: Color = GameData.ENEMIES[eid]["color"]
+		check(not (ec.r > 0.9 and ec.g < 0.45 and ec.b < 0.4), "enemy %s uses Shard bright red" % eid)
+	# Every transmission title must be a verbatim SSV catalog title (manifest).
+	var manifest: String = FileAccess.get_file_as_string("res://MUSIC_CATALOG_MANIFEST.md")
+	for tid4: String in GameData.TRANSMISSIONS.keys():
+		check(manifest.find(String(GameData.TRANSMISSIONS[tid4]["title"])) != -1, "transmission %s not in the verified catalog manifest" % tid4)
 	# No retired canon names may appear in shipped data.
 	var src: String = FileAccess.get_file_as_string("res://scripts/data/game_data.gd")
 	for retired: String in ["Ilyra Venn", "Varra Cindral", "Elyra Vorn", "Sira Red Fang", "Nira Sol"]:
@@ -431,7 +444,7 @@ func test_boss_completion_and_unlocks() -> void:
 	_sim(run, 6.0)
 	check(String(finished_result.get("outcome", "")) == "complete", "completion not reached: %s" % str(finished_result.get("outcome")))
 	var commit: Dictionary = Profile.record_expedition(finished_result)
-	check(Profile.has_character("kess_darrow"), "completion unlock (Kess Darrow) not granted")
+	check(Profile.has_character("abby_saville"), "completion unlock (Abby Saville) not granted")
 	check(int(commit["currency"]) > 100, "completion currency too low")
 	check(int(Profile.data["stats"]["completions"]) == 1, "completion not counted")
 

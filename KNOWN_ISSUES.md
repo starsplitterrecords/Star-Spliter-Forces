@@ -7,7 +7,8 @@ Severity: **S1** blocks release · **S2** important · **S3** polish.
 | 1 | S1 | No human playtest yet | All "fun" claims unverified. See `PLAYTEST.md`. |
 | 2 | S1 | No mobile export presets / device build | Requires Xcode + Apple signing (owner machine) and Android SDK. |
 | 3 | S1 | No authorised Star Splitter masters bundled | Archive plays labelled Force motifs. Masters + rights needed (`AUDIO_DESIGN.md`). |
-| 4 | S2 | All art is procedural vector placeholder | Specs in `ART_BIBLE.md`; consistent, readable, but not final. |
+| 4 | S2 | Ships/enemies/props are vector art (faction palettes); portraits/cover/project art are released sources | Ship sprites from released references still to do (GAME_CANON_ADAPTATION queue 8). |
+| 14 | S1 | Suno catalog and private `ssr-tools` not accessible to the agent | Owner action needed (SOURCE_PROVENANCE). |
 | 5 | S2 | Venn name pending owner decision (Ella vs Ilyra) | `DECISIONS.md` D-02. |
 | 6 | S2 | Generated score never listened to by a person | Loudness/seams checked numerically only. |
 | 7 | S2 | GPU/frame time on device unmeasured | CPU sim step ≈0.7 ms @ 80 enemies on desktop. |

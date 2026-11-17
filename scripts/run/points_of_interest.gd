@@ -319,14 +319,15 @@ func _draw() -> void:
 					draw_arc(pos, r, 0.0, TAU, 40, Color(c, 0.3), 1.5)
 					_draw_progress(p, pos, r, c)
 			"camp":
-				# Shard salvage pile with red markings; pale-grey plating.
+				# Unmarked raider salvage pile: mismatched plating, no faction marks.
 				draw_circle(pos, r, Color(c, 0.05))
 				draw_arc(pos, r, 0.0, TAU, 32, Color(c, 0.25), 2.0)
+				var salvage: Array = [Color("8a8f99"), Color("7d7f4a"), Color("b0683a"), Color("5f6670")]
 				for k in 4:
 					var a: float = TAU * k / 4.0 + 0.4
-					draw_rect(Rect2(pos + Vector2.from_angle(a) * 22.0 - Vector2(10, 7), Vector2(20, 14)), Color("8e939c"))
-				draw_line(pos + Vector2(0, -6), pos + Vector2(0, -44), Color("cfd3da"), 3.0)
-				draw_colored_polygon(PackedVector2Array([pos + Vector2(0, -44), pos + Vector2(22, -38), pos + Vector2(0, -31)]), c)
+					draw_rect(Rect2(pos + Vector2.from_angle(a) * 22.0 - Vector2(10, 7), Vector2(20, 14)), salvage[k])
+				draw_line(pos + Vector2(0, -6), pos + Vector2(0, -44), Color("8a8f99"), 3.0)
+				draw_rect(Rect2(pos + Vector2(0, -44), Vector2(20, 12)), Color("b0683a"))
 			"relay":
 				draw_circle(pos, 10.0, Color(c, 0.9))
 				draw_arc(pos, r, anim, anim + TAU * 0.75, 24, Color(c, 0.6), 3.0)

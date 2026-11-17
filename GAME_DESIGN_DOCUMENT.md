@@ -38,12 +38,12 @@ zone 12%, follows the thumb beyond 1.6× radius; optional fixed stick.
 | Ella Venn — Thunderbreak | 140 | 232 | Hold the Line (16 s): 5 s bulwark, destroys shots, slows/pushes, repairs | +1.5 armour | Slowest |
 | Naomi Sol — Verge escort | 82 | 300 | Corridor Run (6 s): invulnerable dash, damaging slipstream | Half hazard damage; +15% dmg at full speed | Fragile |
 | Tessa Banks — Gravefire | 110 | 248 | Seal the Breach (20 s): +35% hull, 40 shield 4 s | Repair 4 per 40 motes; big pickup | −10% damage |
-| Kess Darrow — Lantern Two | 92 | 268 | Survey Ping (14 s): reveal sites within 1800, stun nearby | 2× scanner; signals grant a level | −10% fire rate |
+| Abby Saville — Shard command ship | 118 | 244 | Call the Captains (18 s): allied Shard cutters ring and defend for 8 s | +20% damage while holding position | −10% fire rate |
 | Jex Marrin — Veil courier | 86 | 264 | Veil Step (15 s): enemies lose track, +35% speed | +40% Signal; free reroll each level | +15% damage taken |
 
 Unlocks: Naomi — Verge escort beacon (Night Corridor); Tessa — Gravefire distress call
 (Silver Wrecks); Jex — Veil route token (Fracture Bloom, visible only in Fracture);
-Kess — first completion. Mastery: 4 perks each (thresholds 120/360/800/1500 xp).
+Abby — first completion of the Reach. Portraits and identities: `CHARACTER_REFERENCE_REGISTRY.md`. Mastery: 4 perks each (thresholds 120/360/800/1500 xp).
 
 ## 5. Forces
 

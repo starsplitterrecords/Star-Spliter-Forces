@@ -12,6 +12,8 @@ const BRAKE: float = 3800.0
 var character_id: String = "ilyra_venn"
 var def: Dictionary = {}
 var accent: Color = Color("68ecff")
+var hull_color: Color = Color("68ecff")
+var trim_color: Color = Color.WHITE
 var style: String = "cruiser"
 
 var move_input: Vector2 = Vector2.ZERO
@@ -52,6 +54,8 @@ func configure(id: String) -> void:
 	character_id = id
 	def = GameData.CHARACTERS[id]
 	accent = def["accent"]
+	hull_color = def.get("hull", accent)
+	trim_color = def.get("trim", Color.WHITE)
 	style = String(def.get("style", "cruiser"))
 	base_speed = float(def["speed"])
 	max_hp = float(def["max_hp"])
@@ -126,7 +130,7 @@ func heal(amount: float) -> void:
 
 func _draw() -> void:
 	var flicker: bool = invuln > 0.0 and int(anim * 16.0) % 2 == 0
-	var body: Color = accent
+	var body: Color = hull_color
 	if hurt_flash > 0.0:
 		body = body.lerp(Color.WHITE, 0.6)
 	if flicker:
@@ -152,42 +156,60 @@ func _draw() -> void:
 	_draw_hull(body)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
+## Ships use their faction palette (CHARACTER_REFERENCE_REGISTRY): hull
+## colour + trim + a pale edge so dark hulls (Fleet navy) read on the void.
 func _draw_hull(c: Color) -> void:
-	var dark: Color = Color("0b1020")
+	var t: Color = trim_color
+	var edge: Color = Color(1, 1, 1, 0.55)
+	var engine_c: Color = Color("6fb8ff") if style == "cruiser" else (Color("ff5a6a") if style in ["hauler", "warlord"] else accent)
 	var engine: float = 0.6 + movement_ratio() * 0.6 + sin(anim * 30.0) * 0.08
+	var pts: PackedVector2Array
 	match style:
 		"cruiser":
-			# Command cruiser: broad swept wings, raised bridge, twin engines.
-			draw_circle(Vector2(-8, 20), 5.0 * engine, Color(c, 0.55))
-			draw_circle(Vector2(8, 20), 5.0 * engine, Color(c, 0.55))
-			draw_colored_polygon(PackedVector2Array([Vector2(0, -28), Vector2(9, -10), Vector2(24, 10), Vector2(10, 18), Vector2(0, 12), Vector2(-10, 18), Vector2(-24, 10), Vector2(-9, -10)]), c)
-			draw_colored_polygon(PackedVector2Array([Vector2(0, -18), Vector2(5, -4), Vector2(0, 4), Vector2(-5, -4)]), dark)
-			draw_line(Vector2(-18, 8), Vector2(18, 8), Color(1, 1, 1, 0.7), 2.0)
+			# Thunderbreak: long heavy-cruiser hull, gold trim, blue engines.
+			draw_circle(Vector2(-7, 24), 5.0 * engine, Color(engine_c, 0.7))
+			draw_circle(Vector2(7, 24), 5.0 * engine, Color(engine_c, 0.7))
+			pts = PackedVector2Array([Vector2(0, -32), Vector2(7, -16), Vector2(12, 6), Vector2(22, 12), Vector2(12, 22), Vector2(-12, 22), Vector2(-22, 12), Vector2(-12, 6), Vector2(-7, -16)])
+			draw_colored_polygon(pts, c)
+			draw_polyline(pts + PackedVector2Array([pts[0]]), edge, 1.5)
+			draw_line(Vector2(0, -26), Vector2(0, 16), t, 2.5)
+			draw_line(Vector2(-18, 13), Vector2(18, 13), t, 2.5)
+			draw_rect(Rect2(-4, -6, 8, 8), Color("e8ecf5"))
 		"interceptor":
-			# Long needle with forward-swept fins: fast, fragile.
-			draw_circle(Vector2(0, 22), 6.0 * engine, Color(c, 0.6))
-			draw_colored_polygon(PackedVector2Array([Vector2(0, -32), Vector2(5, -6), Vector2(18, -14), Vector2(10, 14), Vector2(0, 18), Vector2(-10, 14), Vector2(-18, -14), Vector2(-5, -6)]), c)
-			draw_line(Vector2(0, -24), Vector2(0, 8), dark, 3.0)
+			# Verge escort fighter: tan hull, muted-green panels.
+			draw_circle(Vector2(0, 22), 6.0 * engine, Color(engine_c, 0.6))
+			pts = PackedVector2Array([Vector2(0, -30), Vector2(5, -6), Vector2(18, -12), Vector2(10, 14), Vector2(0, 18), Vector2(-10, 14), Vector2(-18, -12), Vector2(-5, -6)])
+			draw_colored_polygon(pts, c)
+			draw_polyline(pts + PackedVector2Array([pts[0]]), edge, 1.2)
+			draw_colored_polygon(PackedVector2Array([Vector2(5, -6), Vector2(18, -12), Vector2(12, 4)]), t)
+			draw_colored_polygon(PackedVector2Array([Vector2(-5, -6), Vector2(-18, -12), Vector2(-12, 4)]), t)
 		"hauler":
-			# Heavy armoured block with side pods.
-			draw_circle(Vector2(-12, 22), 5.0 * engine, Color(c, 0.5))
-			draw_circle(Vector2(12, 22), 5.0 * engine, Color(c, 0.5))
-			draw_colored_polygon(PackedVector2Array([Vector2(-14, -22), Vector2(14, -22), Vector2(22, -6), Vector2(22, 18), Vector2(-22, 18), Vector2(-22, -6)]), c)
-			draw_rect(Rect2(-9, -14, 18, 12), dark)
-			draw_rect(Rect2(-28, -4, 6, 18), Color(c.darkened(0.3)))
-			draw_rect(Rect2(22, -4, 6, 18), Color(c.darkened(0.3)))
-		"scout":
-			# Ring-hulled survey craft: round silhouette, sensor mast.
-			draw_circle(Vector2(0, 16), 5.0 * engine, Color(c, 0.6))
-			draw_arc(Vector2.ZERO, 16.0, 0.0, TAU, 28, c, 6.0)
-			draw_circle(Vector2.ZERO, 7.0, c)
-			draw_line(Vector2(0, -8), Vector2(0, -30), c, 3.0)
-			draw_circle(Vector2(0, -30), 3.5, Color.WHITE)
+			# Gravefire: compact Shard working cutter, pale plating, red seams.
+			draw_circle(Vector2(-10, 22), 5.0 * engine, Color(engine_c, 0.6))
+			draw_circle(Vector2(10, 22), 5.0 * engine, Color(engine_c, 0.6))
+			pts = PackedVector2Array([Vector2(-12, -22), Vector2(12, -22), Vector2(20, -6), Vector2(20, 18), Vector2(-20, 18), Vector2(-20, -6)])
+			draw_colored_polygon(pts, c)
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color("1a1a1e"), 1.5)
+			draw_line(Vector2(-20, -2), Vector2(20, -2), t, 3.0)
+			draw_line(Vector2(0, -22), Vector2(0, 18), t, 2.0)
+			draw_rect(Rect2(-7, -16, 14, 9), Color("1a1a1e"))
+		"warlord":
+			# Abby Saville's command ship: broad pale hull, narrow red seams.
+			draw_circle(Vector2(-12, 22), 5.0 * engine, Color(engine_c, 0.6))
+			draw_circle(Vector2(12, 22), 5.0 * engine, Color(engine_c, 0.6))
+			pts = PackedVector2Array([Vector2(0, -30), Vector2(10, -14), Vector2(24, -4), Vector2(18, 20), Vector2(0, 14), Vector2(-18, 20), Vector2(-24, -4), Vector2(-10, -14)])
+			draw_colored_polygon(pts, c)
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color("1a1a1e"), 1.5)
+			draw_line(Vector2(-22, -2), Vector2(-4, 10), t, 2.5)
+			draw_line(Vector2(22, -2), Vector2(4, 10), t, 2.5)
+			draw_line(Vector2(0, -24), Vector2(0, 8), t, 2.0)
 		"wraith":
-			# Split-hull runner: two blades around an empty centre.
-			draw_circle(Vector2(0, 20), 4.0 * engine, Color(c, 0.6))
+			# Veil courier: bronze split hull with anomaly-glass shimmer.
+			draw_circle(Vector2(0, 20), 4.0 * engine, Color(engine_c, 0.6))
 			draw_colored_polygon(PackedVector2Array([Vector2(-4, -30), Vector2(-2, 16), Vector2(-20, 10), Vector2(-14, -6)]), c)
 			draw_colored_polygon(PackedVector2Array([Vector2(4, -30), Vector2(14, -6), Vector2(20, 10), Vector2(2, 16)]), c)
+			for k in 3:
+				draw_circle(Vector2(sin(anim * 2.0 + k * 2.1) * 6.0, -10.0 + k * 9.0), 1.8, Color(t, 0.6 + 0.3 * sin(anim * 4.0 + k)))
 		_:
 			draw_colored_polygon(PackedVector2Array([Vector2(0, -24), Vector2(18, 16), Vector2(0, 9), Vector2(-18, 16)]), c)
-	draw_circle(Vector2(0, -2), 3.5, Color("f7fbff"))
+	draw_circle(Vector2(0, -2), 3.0, Color("f7fbff"))
