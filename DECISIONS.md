@@ -21,3 +21,4 @@ need confirmation from the Star Splitter team.
 | D-14 | Inter (OFL) bundled as the UI typeface | Legible at small sizes; licence permits bundling. | Done |
 | D-15 | Runtime input map (`InputSetup`) instead of `project.godot` input section | Testable, remappable later, keyboard/gamepad/touch share action names. | Done |
 | D-16 | Debug cheats only in debug builds and only with Ctrl modifier | Prototype's bare number keys collided with upgrade hotkeys. | Done |
+| D-17 | **OWNER** — Proposed bundle/package id `com.starsplitterrecords.forces`; export presets carry no signing data | Needed for device builds; ids are hard to change after store submission. | Needs confirmation |

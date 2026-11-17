@@ -44,6 +44,9 @@ var state: String = "DRIFT"
 var anim: float = 0.0
 var alive: bool = true
 var god_mode: bool = false
+var wake: PackedVector2Array = PackedVector2Array() # recent world positions
+var wake_clock: float = 0.0
+const WAKE_POINTS: int = 14
 
 func configure(id: String) -> void:
 	character_id = id
@@ -84,6 +87,16 @@ func step(delta: float) -> void:
 		bank = lerpf(bank, clampf(diff * 1.4, -0.6, 0.6), minf(1.0, delta * 10.0))
 	else:
 		bank = lerpf(bank, 0.0, minf(1.0, delta * 6.0))
+	# Engine wake: a fading ribbon that makes speed and turns readable.
+	wake_clock -= delta
+	if wake_clock <= 0.0:
+		wake_clock = 0.03
+		if velocity.length_squared() > 900.0:
+			wake.insert(0, position - Vector2.from_angle(facing) * 16.0)
+		elif wake.size() > 0:
+			wake.remove_at(wake.size() - 1)
+		if wake.size() > WAKE_POINTS:
+			wake.resize(WAKE_POINTS)
 	if regen > 0.0 and alive:
 		heal(regen * delta)
 	if max_shield > 0.0:
@@ -130,6 +143,9 @@ func _draw() -> void:
 				var r1: float = aura_r + 4.0 + sin(anim * 9.0 + i) * 4.0
 				draw_line(Vector2.from_angle(a) * r1, Vector2.from_angle(a + 0.35) * (r1 + 6.0), Color("ff4f7b", 0.55), 2.0)
 	draw_circle(Vector2.ZERO, aura_r, Color(accent, 0.07))
+	for i in range(wake.size() - 1):
+		var t: float = 1.0 - float(i) / float(WAKE_POINTS)
+		draw_line(wake[i] - position, wake[i + 1] - position, Color(accent, 0.35 * t), 2.0 + 7.0 * t * movement_ratio())
 	if shield > 1.0:
 		draw_arc(Vector2.ZERO, 30.0, 0.0, TAU, 32, Color("bff6ff", 0.25 + 0.4 * shield / maxf(1.0, max_shield)), 3.0)
 	draw_set_transform(Vector2.ZERO, facing + PI / 2.0, Vector2(1.0 - absf(bank) * 0.35, 1.0))

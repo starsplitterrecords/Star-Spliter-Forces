@@ -45,26 +45,44 @@ func _ready() -> void:
 	run.player.god_mode = true
 	await _wait(0.5)
 	await _shot("04_gate_start")
-	await _drive(run, Vector2(1750, 1150), 9.0)
+	var wrecks: Vector2 = GameData.REGIONS["silver_wrecks"]["center"]
+	await _drive(run, wrecks, 9.0)
 	await _shot("05_en_route")
-	await _drive(run, Vector2(1750, 1150), 6.0)
+	await _teleport(run, wrecks - Vector2(300, 200))
+	await _drive(run, wrecks, 3.0)
 	await _shot("06_silver_wrecks")
-	run.player.position = Vector2(-1350, 1450)
-	run.camera.reset_smoothing()
-	await _drive(run, Vector2(-1500, 1570), 3.0)
+	var basin: Vector2 = GameData.REGIONS["quiet_basin"]["center"]
+	await _teleport(run, basin)
+	await _drive(run, basin + Vector2(-150, 120), 3.0)
 	await _shot("07_quiet_basin")
-	run.player.position = Vector2(-2050, -1150)
-	run.camera.reset_smoothing()
-	await _drive(run, Vector2(-1870, -1210), 3.0)
+	var shelf: Vector2 = GameData.REGIONS["thunderbreak_shelf"]["center"]
+	await _teleport(run, shelf)
+	await _drive(run, shelf + Vector2(180, -60), 3.0)
 	await _shot("08_thunderbreak")
-	run.player.position = Vector2(1300, -900)
-	run.camera.reset_smoothing()
-	await _drive(run, Vector2(2200, -1300), 3.0)
+	var ca: Vector2 = GameData.REGIONS["night_corridor"]["a"]
+	var cb: Vector2 = GameData.REGIONS["night_corridor"]["b"]
+	await _teleport(run, ca.lerp(cb, 0.3))
+	await _drive(run, ca.lerp(cb, 0.45), 3.0)
 	await _shot("09_night_corridor")
+	# Camp, relays and an echo.
+	var camp: Dictionary = run.camps[0]
+	await _teleport(run, Vector2(camp.pos) + Vector2(260, 0))
+	await _drive(run, Vector2(camp.pos) + Vector2(240, 0), 1.5)
+	await _shot("09b_raider_camp")
+	for q: Dictionary in run.pois.items:
+		if String(q.id) == "sig_ignition":
+			await _teleport(run, q.pos)
+			await _drive(run, q.pos, 1.5)
+			await _shot("09c_ensemble_lock")
+	run._spawn_echo()
+	var echo: Dictionary = run.pois.nearest_unclaimed(run.player.position, ["echo"], true)
+	await _teleport(run, Vector2(echo.pos) + Vector2(-500, 200))
+	await _drive(run, Vector2(echo.pos) + Vector2(-400, 150), 1.0)
+	await _shot("09d_echo")
 	run.resonance = 10.0
-	run.player.position = Vector2(250, -1700)
-	run.camera.reset_smoothing()
-	await _drive(run, Vector2(100, -1600), 3.0)
+	var bloom: Vector2 = GameData.REGIONS["fracture_bloom"]["center"]
+	await _teleport(run, bloom)
+	await _drive(run, bloom + Vector2(-150, 100), 3.0)
 	await _shot("10_fracture_bloom")
 	run.pending_levels = 1
 	await _wait(0.4)
@@ -90,6 +108,12 @@ func _drive(run: GameRun, target: Vector2, seconds: float) -> void:
 		run.player.move_input = run.player.position.direction_to(target) if run.player.position.distance_to(target) > 30.0 else Vector2.ZERO
 		await get_tree().process_frame
 		t += get_process_delta_time()
+
+func _teleport(run: GameRun, pos: Vector2) -> void:
+	run.player.position = pos
+	run.camera.position = pos
+	run.camera.reset_smoothing()
+	await get_tree().process_frame
 
 func _wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds, true, false, true).timeout
