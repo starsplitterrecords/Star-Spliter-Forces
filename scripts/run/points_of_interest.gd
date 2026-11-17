@@ -24,10 +24,11 @@ func add(poi: Dictionary) -> Dictionary:
 	return p
 
 func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discovered: Dictionary) -> void:
+	var gate_region: String = world.region_at(world.gate)
 	for id: String in GameData.DISCOVERIES.keys():
 		var d: Dictionary = GameData.DISCOVERIES[id]
 		var rid: String = String(d.get("region", ""))
-		if rid != "" and not rid in world.region_ids:
+		if not GameData.discovery_in_destination(id, world.destination_id):
 			continue
 		var col: Color = Color("cfe9ff")
 		if d.has("force"):
@@ -42,14 +43,14 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 		var pos: Vector2 = GameData.discovery_position(id)
 		# Seeded variation: regional discoveries move within their region each
 		# expedition, so the landmarks stay familiar but the hunt is new.
-		if rid != "" and not bool(d.get("fixed", false)) and not bool(d.get("moving", false)) and rid != "array_gate":
+		if rid != "" and not bool(d.get("fixed", false)) and not bool(d.get("moving", false)) and rid != gate_region:
 			var region3: Dictionary = GameData.REGIONS[rid]
 			if String(region3["shape"]) == "circle":
 				pos = world.random_open_point_near(region3["center"], 120.0, float(region3["radius"]) * 0.7, rng)
 		var poi: Dictionary = add({"id": id, "kind": String(d["kind"]), "pos": world.resolve(pos, 10.0),
 			"title": String(d["title"]), "hidden": String(d.get("hidden", "")), "color": col, "data": d,
 			"radius": 70.0 if String(d["kind"]) in ["signal", "character"] else 56.0,
-			"repeat": known_before, "known": id == "sig_now_or_never", "lock": String(d.get("lock", ""))})
+			"repeat": known_before, "known": rid == gate_region and String(d["kind"]) == "signal", "lock": String(d.get("lock", ""))})
 		if bool(d.get("moving", false)):
 			var region: Dictionary = GameData.REGIONS[rid]
 			poi["path_a"] = poi.pos
@@ -66,16 +67,23 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 		var p: Vector2 = world.random_open_point_near(GameData.region_anchor(region2), 120.0, float(region2.get("radius", 400.0)) * 0.9, rng)
 		add({"kind": "cache", "pos": p, "title": "SUPPLY CACHE", "color": Color("7dffb2"), "radius": 40.0})
 	for i in 3:
-		var p2: Vector2 = world.random_open_point_near(Vector2.ZERO, 1600.0, 5300.0, rng)
+		var p2: Vector2 = world.random_open_point_near(world.gate, 1600.0, maxf(world.half_size.x, world.half_size.y) * 0.85, rng)
 		add({"kind": "fracture_cache", "pos": p2, "title": "FRACTURE CACHE", "hidden": "FRACTURE", "color": Color("ff4f7b"), "radius": 44.0})
-	var basin: Dictionary = GameData.REGIONS["quiet_basin"]
-	for i in 2:
-		add({"kind": "resonator", "pos": world.random_open_point_near(basin["center"], 150.0, 650.0, rng), "title": "RESONATOR", "color": Color("71cda0"), "radius": 70.0, "known": true})
-	add({"kind": "resonator", "pos": world.random_open_point_near(Vector2.ZERO, 2100.0, 4800.0, rng), "title": "RESONATOR", "color": Color("71cda0"), "radius": 70.0})
-	var bloom: Dictionary = GameData.REGIONS["fracture_bloom"]
-	for i in 3:
-		add({"kind": "rift", "pos": world.random_open_point_near(bloom["center"], 120.0, 560.0, rng), "title": "PHASE RIFT", "color": Color("ff4f7b"), "radius": 46.0, "known": true})
-	add({"kind": "rift", "pos": world.random_open_point_near(Vector2.ZERO, 1900.0, 5000.0, rng), "title": "PHASE RIFT", "color": Color("ff4f7b"), "radius": 46.0})
+	# Resonators gather in calm water; rifts in phase blooms and asteroid belts.
+	for rid4: String in region_list:
+		var r4: Dictionary = GameData.REGIONS[rid4]
+		var anchor4: Vector2 = GameData.region_anchor(r4)
+		var spread: float = float(r4.get("radius", 600.0)) * 0.6
+		match String(r4["props"]):
+			"pools":
+				for i in 2:
+					add({"kind": "resonator", "pos": world.random_open_point_near(anchor4, 150.0, spread, rng), "title": "RESONATOR", "color": Color("71cda0"), "radius": 70.0, "known": true})
+			"bloom", "belt":
+				for i in 3:
+					add({"kind": "rift", "pos": world.random_open_point_near(anchor4, 120.0, spread, rng), "title": "PHASE RIFT", "color": Color("ff4f7b"), "radius": 46.0, "known": true})
+	var reach: float = minf(world.half_size.x, world.half_size.y)
+	add({"kind": "resonator", "pos": world.random_open_point_near(world.gate, reach * 0.45, reach * 1.05, rng), "title": "RESONATOR", "color": Color("71cda0"), "radius": 70.0})
+	add({"kind": "rift", "pos": world.random_open_point_near(world.gate, reach * 0.4, reach * 1.1, rng), "title": "PHASE RIFT", "color": Color("ff4f7b"), "radius": 46.0})
 
 func is_visible_poi(p: Dictionary) -> bool:
 	if bool(p.claimed) and not String(p.kind) in ["mirror", "mirror_pair", "resonator"]:

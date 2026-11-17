@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	for t: String in tests:
 		current = t
@@ -42,6 +42,8 @@ func _dispatch(t: String) -> void:
 	match t:
 		"test_real_frames":
 			await test_real_frames()
+		"test_second_destination":
+			await test_second_destination()
 		"test_signal_locks":
 			await test_signal_locks()
 		"test_camps_and_echoes":
@@ -181,8 +183,22 @@ func test_data_integrity() -> void:
 		if d.has("fragment"):
 			check(GameData.FRAGMENTS.has(String(d["fragment"])), "discovery %s fragment" % did)
 		var p: Vector2 = GameData.discovery_position(did)
-		var hs: Vector2 = GameData.DESTINATIONS["black_drift_reach"]["half_size"]
-		check(absf(p.x) < hs.x and absf(p.y) < hs.y, "discovery %s outside world" % did)
+		var dest_id: String = GameData.discovery_destination(did)
+		check(dest_id != "", "discovery %s belongs to no destination" % did)
+		if dest_id != "":
+			var hs: Vector2 = GameData.DESTINATIONS[dest_id]["half_size"]
+			check(absf(p.x) < hs.x and absf(p.y) < hs.y, "discovery %s outside world" % did)
+	for dest2: String in GameData.DESTINATIONS.keys():
+		var dd: Dictionary = GameData.DESTINATIONS[dest2]
+		for rid2: String in dd["regions"]:
+			check(GameData.REGIONS.has(rid2), "destination %s region %s missing" % [dest2, rid2])
+			var anchor: Vector2 = GameData.region_anchor(GameData.REGIONS[rid2])
+			check(absf(anchor.x) < Vector2(dd["half_size"]).x and absf(anchor.y) < Vector2(dd["half_size"]).y, "region %s outside %s" % [rid2, dest2])
+		var sigs: int = 0
+		for did3: String in GameData.DISCOVERIES.keys():
+			if GameData.discovery_in_destination(did3, dest2) and String(GameData.DISCOVERIES[did3]["kind"]) == "signal":
+				sigs += 1
+		check(sigs >= int(dd["goal_signals"]) + 2, "destination %s has too few signals for its goal" % dest2)
 	for cid: String in GameData.CHARACTERS.keys():
 		check(GameData.ABILITIES.has(String(GameData.CHARACTERS[cid]["ability"])), "character %s ability" % cid)
 		check(GameData.MASTERY.has(cid), "character %s mastery" % cid)
@@ -592,6 +608,23 @@ func test_abilities() -> void:
 		check(run.ability_cd > 0.0 or cid == "naomi_sol", "%s ability has no cooldown" % cid)
 		_cleanup_runs()
 		await get_tree().process_frame
+
+func test_second_destination() -> void:
+	var run: GameRun = _make_run({"destination": "kaldr_rift"})
+	await get_tree().process_frame
+	check(run.player.position.distance_to(Vector2(-6300, 0)) < 200.0, "player did not start at the Rift Mouth")
+	var ids: Array = run.pois.items.map(func(q: Dictionary) -> String: return String(q.id))
+	check("sig_grind" in ids and "sig_shine" in ids, "Kaldr signals missing")
+	check(not "sig_green_echo" in ids and not "sig_campfire" in ids, "Black Drift discoveries leaked into Kaldr")
+	check(run.camps.size() >= 8, "Kaldr camps missing")
+	check(run.gate_name() == "RIFT MOUTH", "gate name wrong: " + run.gate_name())
+	var reached: Array = []
+	_sim(run, 20.0, func(r: GameRun) -> void:
+		r.player.move_input = r.player.position.direction_to(GameData.REGIONS["grain_convoy"]["center"]))
+	check("grain_convoy" in run.visited_regions, "could not travel into the Grain Convoy region")
+	# Unlock path: completing the Reach charts Kaldr.
+	Profile.record_expedition({"outcome": "complete", "destination": "black_drift_reach", "character": "ella_venn", "time": 600.0})
+	check(Profile.has_destination("kaldr_rift"), "Kaldr Rift not unlocked by completing the Reach")
 
 ## Lets the engine drive the run for real frames (queue_free, signals, HUD).
 func test_real_frames() -> void:

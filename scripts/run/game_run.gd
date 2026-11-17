@@ -264,7 +264,7 @@ func _queue_onboarding() -> void:
 	if not Profile.seen("hint_signal"):
 		hint_queue.append(["hint_signal", "Columns of light are SIGNALS. Fly into the ring and hold still to tune them in."])
 	if not Profile.seen("hint_extract"):
-		hint_queue.append(["hint_extract", "Return to the ARRAY GATE ring at any time to extract with everything you've found."])
+		hint_queue.append(["hint_extract", "Return to the %s ring at any time to extract with everything you've found." % gate_name()])
 
 # ================================================================== loop
 
@@ -1075,7 +1075,7 @@ func on_tuning_started(p: Dictionary) -> void:
 	var r: Dictionary = world.region_def(world.region_at(p.pos))
 	var threat: int = int(r.get("threat", 1))
 	var n: int = 3 + threat * 2 + int(elapsed / 240.0)
-	if String(p.id) == "sig_now_or_never" and int(Profile.data["stats"]["expeditions"]) == 0:
+	if world.region_at(p.pos) == world.region_at(world.gate) and int(Profile.data["stats"]["expeditions"]) == 0:
 		n = 2 # first-ever signal: a gentle introduction
 	var dir: float = rng.randf() * TAU
 	for i in n:
@@ -1112,6 +1112,9 @@ func on_harmony(hid: String) -> void:
 	seen["harmony_" + hid] = true
 
 # ================================================================== gate / extraction
+
+func gate_name() -> String:
+	return String(world.region_def(world.region_at(world.gate))["name"])
 
 func signals_found() -> int:
 	var n: int = 0

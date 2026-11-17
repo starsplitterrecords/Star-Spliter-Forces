@@ -10,12 +10,13 @@ func _ready() -> void:
 	var force: String = args[1] if args.size() > 1 else "pulse_width_codex"
 	var seed_value: int = int(args[2]) if args.size() > 2 else 7
 	var plan: String = args[3] if args.size() > 3 else "explore"
+	var destination: String = args[4] if args.size() > 4 else "black_drift_reach"
 	Profile.save_path = "user://balance_profile.json"
 	Profile.data = Profile.defaults()
 	Profile.data["forces_attuned"] = [force, "pulse_width_codex"]
 	Profile.data["unlocked_characters"] = GameData.CHARACTERS.keys()
 	var run: GameRun = GameRun.new()
-	run.setup({"character": character, "force": force, "seed": seed_value})
+	run.setup({"character": character, "force": force, "seed": seed_value, "destination": destination})
 	run.scripted_input = true
 	run.debug_enabled = false
 	add_child(run)
@@ -127,5 +128,5 @@ func _goal(run: GameRun, plan: String) -> Vector2:
 			best = a
 	if best == run.world.gate and plan == "explore" and run.elapsed < 720.0:
 		# Everything charted: patrol the drift, waiting for echoes.
-		return Vector2(cos(run.elapsed * 0.05), sin(run.elapsed * 0.05)) * 2500.0
+		return run.world.gate * 0.4 + Vector2(cos(run.elapsed * 0.05) * run.world.half_size.x * 0.5, sin(run.elapsed * 0.05) * run.world.half_size.y * 0.5)
 	return best

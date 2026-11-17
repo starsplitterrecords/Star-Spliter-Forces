@@ -161,7 +161,7 @@ func _clear_of_discoveries(p: Vector2, margin: float) -> bool:
 		return false
 	for id: String in GameData.DISCOVERIES.keys():
 		var d: Dictionary = GameData.DISCOVERIES[id]
-		if d.has("region") and String(d["region"]) != "" and not String(d["region"]) in region_ids:
+		if not GameData.discovery_in_destination(id, destination_id):
 			continue
 		if GameData.discovery_position(id).distance_to(p) < margin:
 			return false
@@ -258,6 +258,21 @@ func _build_region(rid: String, r: Dictionary) -> void:
 				var bp: Vector2 = a + axis * bt + side * rng.randf_range(-60.0, 60.0)
 				beacons.append({"pos": bp, "r": 95.0})
 				bt += 520.0
+		"belt":
+			# Dense asteroid fragments with open lanes between clusters.
+			for i in int(90 * density):
+				var p8: Vector2 = _scatter_point(r)
+				if p8.x == INF:
+					continue
+				var cluster: int = 1 + rng.randi() % 3
+				for k in cluster:
+					_rock(p8 + Vector2.from_angle(rng.randf() * TAU) * rng.randf_range(0.0, 60.0), rng.randf_range(18.0, 52.0), Color("2a2420"), rng.randf() < 0.8)
+			for i in 6:
+				var lane_start: Vector2 = _scatter_point(r)
+				if lane_start.x == INF:
+					continue
+				var lane_dir: Vector2 = Vector2.from_angle(rng.randf() * TAU)
+				_op(lane_start, ["line", PackedVector2Array([lane_start - lane_dir * 500.0, lane_start + lane_dir * 500.0]), Color(acc, 0.08), 40.0])
 		"bloom":
 			var c2: Vector2 = r["center"]
 			for i in 9:
@@ -345,7 +360,14 @@ func region_at(p: Vector2) -> String:
 	return best
 
 func region_def(rid: String) -> Dictionary:
-	return GameData.REGIONS.get(rid, GameData.DRIFT_REGION)
+	if GameData.REGIONS.has(rid):
+		return GameData.REGIONS[rid]
+	if _drift.is_empty():
+		_drift = GameData.DRIFT_REGION.duplicate()
+		_drift["name"] = String(dest.get("drift_name", "OPEN DRIFT"))
+	return _drift
+
+var _drift: Dictionary = {}
 
 func in_beacon(p: Vector2) -> bool:
 	for b: Dictionary in beacons:

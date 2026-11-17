@@ -254,9 +254,9 @@ func _update_labels() -> void:
 	elif run.boss_defeated:
 		obj = "Signal restored — returning home"
 	elif run.climax_available():
-		obj = "SIGNALS %d/%d ✓   Return to the ARRAY GATE to extract — or confront The Silence" % [found, run.goal_signals()]
+		obj = "SIGNALS %d/%d ✓   Return to the %s to extract — or confront The Silence" % [found, run.goal_signals(), run.gate_name()]
 	else:
-		obj = "SIGNALS %d/%d   Tune distant signals • Extract at the ARRAY GATE any time" % [found, run.goal_signals()]
+		obj = "SIGNALS %d/%d   Tune distant signals • Extract at the %s any time" % [found, run.goal_signals(), run.gate_name()]
 	objective_label.text = obj
 
 func _state_color() -> Color:
@@ -833,7 +833,7 @@ class MapOverlay:
 				draw_string(font, mp + Vector2(9, 5), String(poi.title), HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(12), Color(c, 0.85))
 		var g: Vector2 = center + world.gate * sc
 		draw_arc(g, 9.0, 0.0, TAU, 20, Color("68ecff"), 2.5)
-		draw_string(font, g + Vector2(12, -8), "ARRAY GATE (extract)", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(12), Color("68ecff"))
+		draw_string(font, g + Vector2(12, -8), run.gate_name() + " (extract)", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(12), Color("68ecff"))
 		var pp: Vector2 = center + run.player.position * sc
 		var f: Vector2 = Vector2.from_angle(run.player.facing)
 		draw_colored_polygon(PackedVector2Array([pp + f * 10.0, pp + f.rotated(2.4) * 7.0, pp + f.rotated(-2.4) * 7.0]), Color.WHITE)

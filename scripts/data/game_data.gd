@@ -303,9 +303,23 @@ const DESTINATIONS: Dictionary = {
 		"goal_signals": 3,
 		"climax_time": 1140.0,
 		"background": Color("070a15"),
+		"drift_name": "BLACK DRIFT",
 		"regions": ["array_gate", "silver_wrecks", "thunderbreak_shelf", "quiet_basin", "night_corridor", "fracture_bloom"],
-		"completion_unlocks": ["kess_darrow"],
+		"completion_unlocks": ["kess_darrow", "kaldr_rift"],
 		"seed": 7741,
+	},
+	"kaldr_rift": {
+		"name": "Kaldr Rift",
+		"desc": "A hazardous convoy passage through dense asteroid fragments, broken industrial structures and old hull wreckage. Signals here travel the long way round.",
+		"half_size": Vector2(7400.0, 3200.0),
+		"gate": Vector2(-6300.0, 0.0),
+		"goal_signals": 3,
+		"climax_time": 1200.0,
+		"background": Color("080a12"),
+		"drift_name": "OPEN RIFT",
+		"regions": ["rift_mouth", "grain_convoy", "fragment_belt", "broken_foundry", "shear_window", "echo_shallows"],
+		"completion_unlocks": [],
+		"seed": 9152,
 	},
 }
 
@@ -329,6 +343,24 @@ const REGIONS: Dictionary = {
 	"fracture_bloom": {"name": "FRACTURE BLOOM", "shape": "circle", "center": Vector2(399, -3591), "radius": 828.0,
 		"color": Color("ff4f7b"), "floor": Color("16070f"), "props": "bloom", "density": 0.9, "music": "region_bloom",
 		"enemies": {"shield_tug": 0.5, "ram_cutter": 0.6, "skiff": 0.6, "rail_picket": 0.4}, "blurb": "A phase anomaly in full bloom. Rifts here unbalance everything.", "threat": 3},
+	"rift_mouth": {"name": "RIFT MOUTH", "shape": "circle", "center": Vector2(-6300, 0), "radius": 520.0,
+		"color": Color("68ecff"), "floor": Color("0a1424"), "props": "gate", "density": 0.25, "music": "region_gate",
+		"enemies": {"skiff": 1.0}, "blurb": "Convoy staging point. Extraction.", "threat": 0},
+	"grain_convoy": {"name": "GRAIN CONVOY WRECK", "shape": "circle", "center": Vector2(-3500, 1100), "radius": 1150.0,
+		"color": Color("c6e27a"), "floor": Color("0d120a"), "props": "wreck", "density": 1.1, "music": "region_wrecks",
+		"enemies": {"skiff": 0.9, "ram_cutter": 0.7, "wreck_lurker": 0.6}, "blurb": "What is left of a Verge grain convoy. Someone is still picking it over.", "threat": 2},
+	"fragment_belt": {"name": "FRAGMENT BELT", "shape": "circle", "center": Vector2(-700, -1000), "radius": 1350.0,
+		"color": Color("b9a68a"), "floor": Color("100d0a"), "props": "belt", "density": 1.0, "music": "region_shelf",
+		"enemies": {"skiff": 0.8, "rail_picket": 0.7, "mine_hauler": 0.4}, "blurb": "Dense asteroid fragments. Find the lanes, or make them.", "threat": 2, "strikes": true},
+	"broken_foundry": {"name": "BROKEN FOUNDRY", "shape": "circle", "center": Vector2(2300, 900), "radius": 1150.0,
+		"color": Color("ff9a5f"), "floor": Color("140c08"), "props": "wreck", "density": 0.9, "music": "region_wrecks",
+		"enemies": {"shield_tug": 0.5, "ram_cutter": 0.6, "swarm_tender": 0.4, "skiff": 0.6}, "blurb": "Broken industrial structures, still warm.", "threat": 3},
+	"shear_window": {"name": "SHEAR WINDOW", "shape": "capsule", "a": Vector2(3600, -1900), "b": Vector2(6600, -700), "radius": 400.0,
+		"color": Color("b07cff"), "floor": Color("0c0918"), "props": "corridor", "density": 0.8, "music": "region_corridor",
+		"enemies": {"skiff": 0.8, "mine_hauler": 0.6, "rail_picket": 0.4}, "blurb": "A timing window through the shear. Beacons hold it open.", "threat": 2},
+	"echo_shallows": {"name": "ECHO SHALLOWS", "shape": "circle", "center": Vector2(5800, 1900), "radius": 950.0,
+		"color": Color("71cda0"), "floor": Color("08130f"), "props": "pools", "density": 0.5, "music": "region_basin",
+		"enemies": {"echo_mote": 1.0, "swarm_tender": 0.3}, "blurb": "Gravitic echoes pool here. Quiet, mostly.", "threat": 1},
 }
 
 const DRIFT_REGION: Dictionary = {"name": "BLACK DRIFT", "color": Color("5b6b8a"), "floor": Color("070a15"), "music": "", "enemies": {"skiff": 1.0, "ram_cutter": 0.25}, "density": 0.35, "threat": 1, "blurb": "Open drift between landmarks."}
@@ -357,9 +389,35 @@ const DISCOVERIES: Dictionary = {
 	"sig_hexagonis": {"kind": "signal", "region": "fracture_bloom", "offset": Vector2(0, -160), "title": "HEXAGONAL HAZE",
 		"force": "minor_collapse", "transmission": "mc_hexagonis", "lock": "stillness",
 		"text": "A wall of fuzz-soaked sound, so quiet at its center you can hear yourself."},
-	"sig_campfire": {"kind": "signal", "region": "", "world": Vector2(-5586, 3924), "title": "ANALOG CAMPFIRE",
+	"sig_campfire": {"kind": "signal", "region": "", "destination": "black_drift_reach", "world": Vector2(-5586, 3924), "title": "ANALOG CAMPFIRE",
 		"force": "warm_circuits_rise", "transmission": "wcr_this_paths_for_you",
 		"text": "Far out in the drift, a warm improvised groove circles a ring of old beacons."},
+	# Kaldr Rift signals [CATALOG titles]
+	"sig_light_water": {"kind": "signal", "region": "rift_mouth", "offset": Vector2(300, 200), "title": "LIGHT ON THE WATER",
+		"force": "pulse_width_codex", "transmission": "pwc_where_the_light_meets_the_water",
+		"text": "A melody reflecting off ice-bright fragments, steady enough to steer by."},
+	"sig_grind": {"kind": "signal", "region": "grain_convoy", "offset": Vector2(0, 0), "title": "GRIND TRACE", "lock": "guardian",
+		"force": "ghost_driver_unit", "transmission": "gdu_its_a_grind",
+		"text": "A riff looping through a salvage crew's comms. They do not want to share it."},
+	"sig_away": {"kind": "signal", "region": "echo_shallows", "offset": Vector2(0, 0), "title": "AWAY AWAY", "lock": "resonance",
+		"force": "resonant_currents", "transmission": "rc_away_away",
+		"text": "A bassline arriving long after the drums, as if from very far away."},
+	"sig_dominion": {"kind": "signal", "region": "broken_foundry", "offset": Vector2(0, 0), "title": "FOUNDRY CRESCENDO", "lock": "ensemble",
+		"force": "star_splitter_rex", "transmission": "rex_dominions_reach",
+		"text": "The foundry's dead machinery hums a score built for scale."},
+	"sig_freeze": {"kind": "signal", "region": "fragment_belt", "offset": Vector2(0, 0), "title": "FROZEN FRAME", "lock": "stillness",
+		"force": "ion_drive_orchestra", "transmission": "ido_freeze_frame",
+		"text": "Strings suspended mid-phrase. Move and you lose it."},
+	"sig_mach": {"kind": "signal", "region": "shear_window", "offset": Vector2(-400, 0), "title": "MACH POINT FIVE", "moving": true,
+		"force": "minor_collapse", "transmission": "mc_mach_point_five",
+		"text": "A slow-burning wall of sound sliding through the shear window."},
+	"sig_shine": {"kind": "signal", "region": "", "world": Vector2(800, 2700), "destination": "kaldr_rift", "title": "SHINE",
+		"force": "warm_circuits_rise", "transmission": "wcr_shine",
+		"text": "A warm improvised glow in the empty rift floor, far from any lane."},
+	"frag_convoy": {"kind": "fragment", "region": "grain_convoy", "offset": Vector2(400, -300), "title": "CONVOY MANIFEST", "fragment": "frag_07", "hidden": "SCAN",
+		"text": "Manifest, annotated: \"Cargo intact. Crew intact. Music library: erased.\""},
+	"frag_foundry": {"kind": "fragment", "region": "broken_foundry", "offset": Vector2(-400, 300), "title": "FOUNDRY LOG", "fragment": "frag_08", "hidden": "FRACTURE",
+		"text": "Foundry log: \"We ran the machines loud on purpose. The hush stays away from the loud places.\""},
 	# Characters
 	"char_gravefire": {"kind": "character", "region": "silver_wrecks", "offset": Vector2(-380, -200), "title": "GRAVEFIRE DISTRESS CALL",
 		"unlock_character": "tessa_banks", "fragment": "frag_02",
@@ -379,10 +437,10 @@ const DISCOVERIES: Dictionary = {
 	"frag_gate": {"kind": "fragment", "region": "array_gate", "offset": Vector2(-300, 210), "title": "GATE LOG", "fragment": "frag_01", "text": "Gate log, partial: \"...the beacons don't fail. They go quiet. Like something is listening for them.\""},
 	"frag_wrecks": {"kind": "fragment", "region": "silver_wrecks", "offset": Vector2(80, -420), "title": "FLIGHT RECORDER", "fragment": "frag_03", "hidden": "SCAN", "text": "Flight recorder: \"Comms are clear but empty. Not static. Empty.\""},
 	"frag_corridor": {"kind": "fragment", "region": "night_corridor", "offset": Vector2(900, -80), "title": "BEACON SHADOW", "fragment": "frag_05", "text": "A beacon still broadcasting into a pocket of nothing. The nothing is moving."},
-	"frag_drift": {"kind": "fragment", "region": "", "world": Vector2(5586, 3857), "title": "LONE BUOY", "fragment": "frag_06", "hidden": "SCAN", "text": "Lone buoy, last entry: \"It isn't hunting ships. It's hunting songs.\""},
+	"frag_drift": {"kind": "fragment", "region": "", "destination": "black_drift_reach", "world": Vector2(5586, 3857), "title": "LONE BUOY", "fragment": "frag_06", "hidden": "SCAN", "text": "Lone buoy, last entry: \"It isn't hunting ships. It's hunting songs.\""},
 	# Anomalies (in-run effects)
 	"anom_memory_well": {"kind": "anomaly", "region": "quiet_basin", "offset": Vector2(220, 330), "title": "MEMORY WELL", "effect": "memory_well", "text": "An echo anomaly. It plays back a choice you haven't made yet."},
-	"anom_mirrorfold": {"kind": "anomaly", "region": "", "world": Vector2(-1463, -1729), "title": "MIRRORFOLD", "effect": "mirrorfold", "pair": Vector2(3192, -200), "text": "A metric anomaly folds two places into one. Step through."},
+	"anom_mirrorfold": {"kind": "anomaly", "region": "", "destination": "black_drift_reach", "world": Vector2(-1463, -1729), "title": "MIRRORFOLD", "effect": "mirrorfold", "pair": Vector2(3192, -200), "text": "A metric anomaly folds two places into one. Step through."},
 }
 
 ## Signal locks: each project's signal asks to be heard in its own way.
@@ -400,6 +458,8 @@ const FRAGMENTS: Dictionary = {
 	"frag_04": "Veil brokers sell routes around a region they call 'the hush'. The price keeps going up.",
 	"frag_05": "A beacon broadcasting into a pocket of nothing. The nothing moves toward whatever is loudest.",
 	"frag_06": "It isn't hunting ships. It's hunting songs. Keep playing.",
+	"frag_07": "Kaldr convoys arrive with cargo and crew intact — and every recording aboard erased.",
+	"frag_08": "The hush keeps away from loud places. Someone learned that the hard way, and kept the furnaces roaring.",
 }
 
 const FRAGMENT_TITLE: String = "THE HUSH (provisional mystery)"
@@ -415,6 +475,13 @@ const TRANSMISSIONS: Dictionary = {
 	"gdu_watch_out": {"project": "Ghost Driver Unit", "force": "ghost_driver_unit", "title": "Watch Out", "meta": "Upcoming · October 10, 2026", "master_file": "gdu_watch_out.ogg"},
 	"ido_ignition_sequence": {"project": "Ion Drive Orchestra", "force": "ion_drive_orchestra", "title": "Ignition Sequence (feat. Cheddr)", "meta": "Selected catalog", "master_file": "ido_ignition_sequence.ogg"},
 	"mc_hexagonis": {"project": "Minor Collapse", "force": "minor_collapse", "title": "Hexagonis", "meta": "Selected catalog", "master_file": "mc_hexagonis.ogg"},
+	"pwc_where_the_light_meets_the_water": {"project": "Pulse Width Codex", "force": "pulse_width_codex", "title": "Where the Light Meets the Water", "meta": "Selected catalog", "master_file": "pwc_where_the_light_meets_the_water.ogg"},
+	"gdu_its_a_grind": {"project": "Ghost Driver Unit", "force": "ghost_driver_unit", "title": "It’s a Grind (Ghost Mode Remix)", "meta": "Upcoming · August 17, 2026", "master_file": "gdu_its_a_grind.ogg"},
+	"rc_away_away": {"project": "Resonant Currents", "force": "resonant_currents", "title": "Away Away", "meta": "Upcoming · October 31, 2026", "master_file": "rc_away_away.ogg"},
+	"rex_dominions_reach": {"project": "Star Splitter Rex", "force": "star_splitter_rex", "title": "Dominion’s Reach", "meta": "Selected catalog", "master_file": "rex_dominions_reach.ogg"},
+	"ido_freeze_frame": {"project": "Ion Drive Orchestra", "force": "ion_drive_orchestra", "title": "Freeze Frame", "meta": "Released · January 8, 2026", "master_file": "ido_freeze_frame.ogg"},
+	"mc_mach_point_five": {"project": "Minor Collapse", "force": "minor_collapse", "title": "Mach Point Five", "meta": "Upcoming · December 13, 2026", "master_file": "mc_mach_point_five.ogg"},
+	"wcr_shine": {"project": "Warm Circuits Rise", "force": "warm_circuits_rise", "title": "Shine (feat. Cheddr)", "meta": "Selected catalog", "master_file": "wcr_shine.ogg"},
 	"wcr_this_paths_for_you": {"project": "Warm Circuits Rise", "force": "warm_circuits_rise", "title": "This Path’s for You", "meta": "Selected catalog", "master_file": "wcr_this_paths_for_you.ogg"},
 }
 
@@ -503,6 +570,21 @@ static func region_anchor(region: Dictionary) -> Vector2:
 	if String(region.get("shape", "circle")) == "capsule":
 		return (Vector2(region["a"]) + Vector2(region["b"])) * 0.5
 	return region["center"]
+
+## True when a discovery belongs to the given destination (by region, or by
+## an explicit "destination" tag for open-drift sites).
+static func discovery_in_destination(id: String, destination_id: String) -> bool:
+	var d: Dictionary = DISCOVERIES[id]
+	var rid: String = String(d.get("region", ""))
+	if rid != "":
+		return rid in DESTINATIONS[destination_id]["regions"]
+	return String(d.get("destination", "black_drift_reach")) == destination_id
+
+static func discovery_destination(id: String) -> String:
+	for dest: String in DESTINATIONS.keys():
+		if discovery_in_destination(id, dest):
+			return dest
+	return ""
 
 static func discovery_position(id: String) -> Vector2:
 	var d: Dictionary = DISCOVERIES[id]

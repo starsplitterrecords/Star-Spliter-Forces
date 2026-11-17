@@ -19,6 +19,7 @@ func _ready() -> void:
 	theme_res = UiTheme.build()
 	Profile.settings_changed.connect(func() -> void: theme_res = UiTheme.build())
 	selected_character = String(Profile.data.get("last_character", "ella_venn"))
+	selected_destination = String(Profile.data.get("last_destination", "black_drift_reach"))
 	if not Profile.has_character(selected_character):
 		selected_character = "ella_venn"
 	show_title()
@@ -222,6 +223,34 @@ func show_departure() -> void:
 		frow.add_child(fb)
 	var sf: Dictionary = GameData.FORCES[selected_force]
 	dv.add_child(UiTheme.label("%s — %s: %s  Starts with %s." % [String(sf["name"]), String(sf["mechanic"]), String(sf["desc"]), GameData.weapon_name(String(sf["primary"]))], 14, sf["color"]))
+	# Destination.
+	var unlocked_dests: Array = GameData.DESTINATIONS.keys().filter(func(d: String) -> bool: return Profile.has_destination(d))
+	if not selected_destination in unlocked_dests:
+		selected_destination = "black_drift_reach"
+	if unlocked_dests.size() > 1:
+		dv.add_child(UiTheme.label("DESTINATION", 13, UiTheme.DIM, "bold"))
+		var drow: HFlowContainer = HFlowContainer.new()
+		drow.add_theme_constant_override("h_separation", 8)
+		dv.add_child(drow)
+		for did: String in GameData.DESTINATIONS.keys():
+			var dd: Dictionary = GameData.DESTINATIONS[did]
+			var open: bool = did in unlocked_dests
+			var db: Button = UiTheme.button(String(dd["name"]) if open else "?  UNCHARTED", func() -> void:
+				selected_destination = did
+				show_departure(), 240.0, 40.0)
+			db.disabled = not open
+			db.add_theme_font_size_override("font_size", UiTheme.fs(14))
+			if did == selected_destination:
+				db.add_theme_stylebox_override("normal", UiTheme.box(UiTheme.PANEL_HI, UiTheme.ACCENT, 2, 10, 12))
+			drow.add_child(db)
+		var found: int = 0
+		var total: int = 0
+		for disc: String in GameData.DISCOVERIES.keys():
+			if GameData.discovery_in_destination(disc, selected_destination):
+				total += 1
+				if Profile.is_discovered(disc):
+					found += 1
+		dv.add_child(UiTheme.label("%s — %d / %d discoveries charted" % [String(GameData.DESTINATIONS[selected_destination]["name"]), found, total], 13, UiTheme.DIM))
 	# Launch row.
 	var launch: HBoxContainer = HBoxContainer.new()
 	launch.add_theme_constant_override("separation", 12)
