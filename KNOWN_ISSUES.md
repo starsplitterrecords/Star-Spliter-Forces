@@ -1,9 +1,19 @@
-# Known Issues / External Dependencies
+# Known Issues
 
-1. Godot is not installed in the authoring execution environment, so this commit has not yet been parsed by the Godot engine.
-2. No iOS signing certificate, Apple developer profile, or physical-device test environment is available here.
-3. Final Star Splitter audio masters/stems have not been added; current audio layer is architecture only.
-4. Procedural vector visuals are intentional development art, not final project-derived character/environment art.
-5. Collision checks are currently straightforward O(projectiles × enemies) loops. Population is capped at 450; profiling may require grid partitioning or pooled entities.
-6. Touch joystick rendering is basic and needs safe-area/device tuning.
-7. Full pause UI, controller remapping, haptics, accessibility text scaling, and device-specific graphics settings remain production tasks.
+Severity: **S1** blocks release · **S2** important · **S3** polish.
+
+| # | Sev | Issue | Notes |
+|---|-----|-------|-------|
+| 1 | S1 | No human playtest yet | All "fun" claims unverified. See `PLAYTEST.md`. |
+| 2 | S1 | No mobile export presets / device build | Requires Xcode + Apple signing (owner machine) and Android SDK. |
+| 3 | S1 | No authorised Star Splitter masters bundled | Archive plays labelled Force motifs. Masters + rights needed (`AUDIO_DESIGN.md`). |
+| 4 | S2 | All art is procedural vector placeholder | Specs in `ART_BIBLE.md`; consistent, readable, but not final. |
+| 5 | S2 | Venn name pending owner decision (Ella vs Ilyra) | `DECISIONS.md` D-02. |
+| 6 | S2 | Generated score never listened to by a person | Loudness/seams checked numerically only. |
+| 7 | S2 | GPU/frame time on device unmeasured | CPU sim step ≈0.7 ms @ 80 enemies on desktop. |
+| 8 | S2 | Corridor Run on touch dashes in move direction only | Fine with stick held; a stationary tap dashes along facing. |
+| 9 | S3 | Compass labels can overlap when two targets share a screen edge | Cosmetic. |
+| 10 | S3 | Menu gamepad focus order not hand-tuned | Default focus neighbours used. |
+| 11 | S3 | Bot pathing (BalanceSim) can wedge on rock clusters; it detours randomly | Tool limitation, not game. |
+| 12 | S3 | "36 resources still in use at exit" warning when tests quit | Harmless teardown warning in headless runs. |
+| 13 | S3 | Only one destination | Data-driven; second destination is roadmap item 10. |

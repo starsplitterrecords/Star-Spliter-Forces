@@ -75,7 +75,7 @@ func _collect(it: Dictionary, player: ForcePlayer) -> void:
 			Audio.play_sfx("pickup", 1.0 + minf(combo, 24) * 0.035, -9.0, 0.03)
 			run.gain_xp(int(it.value))
 		"repair":
-			player.heal(player.max_hp * 0.25)
+			player.heal(player.max_hp * 0.25 * (1.5 if run.character_id == "ella_venn" else 1.0))
 			run.fx.label(player.position + Vector2(0, -40), "REPAIRED", Color("7dffb2"), 18, 1.0)
 			run.fx.ring(player.position, 20.0, 80.0, Color("7dffb2"), 0.5)
 			Audio.play_sfx("heal", 1.0, -3.0)

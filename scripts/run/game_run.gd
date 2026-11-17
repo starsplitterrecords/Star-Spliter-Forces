@@ -136,6 +136,8 @@ func _build() -> void:
 	weapons = WeaponSystem.new()
 	add_child(weapons)
 	weapons.setup(self, player, String(GameData.FORCES[signature_force]["primary"]))
+	if character_id == "kess_darrow" and mastery_level >= 3:
+		weapons.add_passive("scanner")
 	weapons.apply_passives()
 	player.hp = player.max_hp
 	projectiles = ProjectileSystem.new()
@@ -889,6 +891,13 @@ func use_ability() -> bool:
 		"survey_ping":
 			var radius: float = 1800.0 * (1.5 if mastery_level >= 1 else 1.0)
 			var found: int = pois.reveal_within(player.position, radius, true)
+			if mastery_level >= 2:
+				var cells: int = int(radius / 400.0)
+				var c0: Vector2i = Vector2i(floori(player.position.x / 400.0), floori(player.position.y / 400.0))
+				for x in range(-cells, cells + 1):
+					for y in range(-cells, cells + 1):
+						if Vector2(x, y).length() <= cells:
+							explored[c0 + Vector2i(x, y)] = true
 			for e: ForceEnemy in enemy_hash.query(player.position, 260.0).duplicate():
 				if not e.dead and e.position.distance_to(player.position) < 260.0:
 					e.slow = 1.6

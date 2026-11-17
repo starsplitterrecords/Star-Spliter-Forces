@@ -1,65 +1,43 @@
 # Roadmap
 
-## North star
+Prioritised and actionable. Milestones follow the production directive (A–H).
 
-Build a small, finished-feeling indie game with a clear identity: **characters and worlds from Star Splitter fiction, combat Forces derived from Star Splitter Records creative languages, and music as a continuous game-state system.** Quality and distinctiveness outrank content count.
+## Now — Milestone A/B close-out (stability + the satisfying minute)
 
-## P0 — Validate the synthesis build
-- Pull the synthesis branch and run Quick Test in Godot.
-- Eliminate any strict-typing/parser/runtime issues.
-- Validate debug keys: level, elite, state cycle, boss, invulnerability, purge.
-- Confirm Resonance/Drift/Fracture visibly and mechanically alter a run.
-- Confirm Ilyra Venn is the starting character on both new and migrated saves.
+1. **Human playtest of the first 3 minutes** on desktop and on a phone (see `PLAYTEST.md`
+   script). Highest-value unknown in the project.
+2. Owner decision on the Venn name (Ella vs Ilyra — see `DECISIONS.md` D-02).
+3. Listen to the generated score in-game; adjust layer levels in `tools/generate_audio.py`
+   (`LEVELS`) and the mix in `GameRun._update_music`.
+4. Add iOS + Android export presets, app icon and launch screen; first device build.
 
-## P1 — Make 90 seconds compulsively replayable
-- Add hit-stop on heavy Force attacks.
-- Add impact particles, kill bursts, damage numbers and stronger XP collection feedback.
-- Add enemy telegraphs for charge/surge/boss actions.
-- Add designed spawn formations and short encounter motifs rather than only radial spawning.
-- Tune Resonance gain/loss so all three states appear naturally without feeling arbitrary.
-- Make Fracture dangerous but strategically desirable for selected builds.
-- Upgrade level-choice presentation so each Force is recognizable instantly.
+## Next — Milestone C/D (exploration worth doing, musical identity)
 
-**Gate:** a tester voluntarily presses Run Again after the 90-second test.
+5. Region-specific enemy variants and one mini-boss per region (Shard captain types).
+6. Two more anomaly families (Lattice Tide lanes, Gravitic echo wells).
+7. Archive: project artwork panels (needs approved artwork export from
+   StarSplitterVisions), per-transmission notes, listening history.
+8. Stem-aware transitions once any authorised stems exist (`AUDIO_DESIGN.md`).
+9. Ability touch UX: hold-to-aim for Corridor Run on touch (currently uses move direction).
 
-## P2 — Build the showcase run
-- Build one Rex Fleet environment with a recognizable setting and visual grammar.
-- Give Ilyra Venn a character-specific command/survival mechanic beyond base stats.
-- Turn The Silence from a large enemy into a multi-pattern boss encounter.
-- Implement one transformative evolution for each showcase Force.
-- Integrate the first licensed Star Splitter master and track metadata.
-- Add section/bar events so gameplay responds to musical structure without becoming a rhythm game.
+## Later — Milestone E/F (depth + content)
 
-**Gate:** a 10-minute run can be shown externally without describing the visuals/gameplay as placeholder.
+10. Second destination (proposed: Kaldr Rift — canon convoy passage) reusing the
+    data-driven region system; completion unlock already wired.
+11. Abby Saville (summoner) as sixth explorer; Billie Rusk as optional anti-hero/boss.
+12. Expand Forces: Supersonic Being, Night Motion Archives, Robots Sing Love Songs,
+    Before the Reboot (no releases listed — needs owner input before any transmission).
+13. Challenge modifiers ("Hush levels") unlocked by completion.
+14. Weapon count 11 → ~20 with a second weapon per later Force.
 
-## P3 — Prove character breadth
-- Build a second genuinely different playable character whose incentives change movement and build strategy.
-- Decide whether Ghost Driver Unit remains a literal character or becomes purely a Force once a second fictional-property character is ready.
-- Add at least one second Star Splitter fictional world.
-- Validate that the same Forces behave differently in different character/world contexts.
+## Polish — Milestone G/H
 
-## P4 — Deep buildcraft
-- Expand to 12–18 weapons before considering larger counts.
-- Add selected cross-Force evolutions with surprising mechanical transformations.
-- Add artifacts/passives that deliberately favor Resonance, Drift or Fracture builds.
-- Add secrets, challenge modifiers and a lightweight permanent progression structure.
-- Add jukebox/music discovery interface tied to tracks encountered in play.
+15. Replace vector placeholder art per `ART_BIBLE.md` asset specs.
+16. Controller remapping UI, colour-blind palette review, localisation framework.
+17. Device profiling (midrange Android, iPhone 12-class), thermal/battery checks.
+18. Licensing review of every transmission and master before distribution.
 
-## P5 — Production art, audio and UX
-- Establish a visual bible for characters, enemies, Force effects, environments and UI.
-- Replace procedural placeholders selectively; consistency matters more than asset volume.
-- Add proper animation, screen feedback, transitions, pause/resume/quit, onboarding and accessibility.
-- Build real layered/stem behavior where source material supports it.
+## Done this cycle
 
-## P6 — Mobile production
-- Pool enemies/projectiles/pickups.
-- Benchmark collision loops; migrate hot paths to spatial partitioning if required.
-- Configure iOS/Android export presets, icons, launch screen and signing workflow.
-- Device QA, safe areas, battery/thermal profiling and performance targets under late-run density.
-
-## Initial launch-size target
-- 6–8 meaningfully different playable characters.
-- 4 highly distinctive environments.
-- Roughly 30 weapons and 15–20 major evolutions/hybrids.
-- 5–7 enemy behaviors/families per environment plus major bosses.
-- Strong replayability rather than a huge disposable content library.
+- Modular rebuild, headless tests, balance simulator, capture tool, placeholder audio,
+  five-character roster, seven Forces, signal locks, camps, echoes, Archive, Workshop.

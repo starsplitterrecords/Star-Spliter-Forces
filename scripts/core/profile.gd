@@ -193,6 +193,15 @@ func set_setting(key: String, value: Variant) -> void:
 	data["settings"][key] = value
 	apply_settings()
 	settings_changed.emit()
+	_settings_dirty = true
+
+var _settings_dirty: bool = false
+
+func _process(_delta: float) -> void:
+	# Coalesce slider drags into one write per frame.
+	if _settings_dirty:
+		_settings_dirty = false
+		save()
 
 func is_discovered(id: String) -> bool:
 	return data["discovered"].has(id)

@@ -1,9 +1,23 @@
 # Decisions
 
-- **Godot 4, procedural 2D:** fastest route to a playable mobile build without dependency on an art pipeline.
-- **Original electronic/cosmic identity:** avoids duplicating Vampire Survivors' gothic pixel-art expression.
-- **Data-first catalogs in `GameData`:** character, weapon, passive and enemy identities are centralized for fast expansion.
-- **Distance-based combat collisions for the slice:** simpler and predictable for hundreds of small objects; should be profiled before production scale.
-- **No placeholder licensed music:** audio architecture is present, but actual Star Splitter masters should be supplied deliberately.
-- **Boss at 9:15, target victory at 10:00:** creates a clear musical/final-act structure.
-- **Pulse Width Codex first:** its waveform/signal identity naturally defines the game's baseline visual language.
+Reversible decisions taken autonomously, with reasons. Items marked **OWNER**
+need confirmation from the Star Splitter team.
+
+| ID | Decision | Why | Status |
+|----|----------|-----|--------|
+| D-01 | Rebuild the prototype into modules (`core/`, `data/`, `run/`, `ui/`) instead of patching | Original scripts were minified one-liners and a `WorldDirector` autoload scanned the scene tree every frame to inject the world; untestable and fragile. | Done |
+| D-02 | **OWNER** — Use **Commodore Ella Venn** (current canon) rather than "Ilyra Venn" | Both StarSplitterVisions (`series/rex-fleet.json`) and RexPrompt (`characters.json`) use Ella; RexPrompt's validator rejects "Ilyra". The released Issue 1 editorial still says Ilyra and an audit item is open. One-line change in `GameData.CHARACTERS` if the owner prefers Ilyra. Saves migrate `ilyra_venn → ella_venn`. | Needs confirmation |
+| D-03 | Musical projects are never characters. Ghost Driver Unit (a playable "character" in the prototype) became a Force only. | Directive §2: Forces are musical identities; characters come from fiction. | Done |
+| D-04 | Playable roster from Rex Fleet canon: Venn, Naomi Sol, Tessa Banks, Kess Darrow, Jex Marrin | Distinct canon roles map to distinct kits (tank, skirmisher, support, scout, broker). Kits are provisional interpretations. | Done |
+| D-05 | Enemies are the canon "unmarked raider splinter group" plus measurable anomalies, not "the Shards" | Canon insists the Shards are not all villains. | Done |
+| D-06 | "The Silence" / "the hush" mystery is **new provisional lore**, not canon | Needed a final encounter tied to music; avoids inventing events for canon antagonists (Triarch, Pike, Billie). Clearly flagged in data and Archive title. | Needs owner review |
+| D-07 | Transmissions use **verbatim catalog titles and dates**; no audio is bundled for them | Directive forbids fabricating recordings. Archive plays the Force motif (labelled placeholder) until a master is supplied. | Done |
+| D-08 | Generate an original placeholder score/SFX procedurally (`tools/generate_audio.py`) | The game had no sound at all; feel and the Force identity need audio now. Fully replaceable; labelled in Credits. | Done |
+| D-09 | Score: 20 tempo-locked layers (112 BPM, 16 bars, D minor), faded not switched | Guarantees musically aligned transitions without stems; same structure accepts real stems later. | Done |
+| D-10 | Signals need **tuning** (hold in ring 4.5 s) and four have project-specific locks | Balance bot showed signals were collectible in ~20 s as pickups; locks make each discovery an event and express the project's identity. | Done |
+| D-11 | Boss HP fixed (30k × time scale), not scaled to player level | Level scaling removed any reason to grow before confronting. Now early confrontation is a real risk/reward choice; extraction is always available. | Done |
+| D-12 | World 12,800 × 9,000 px with lazily materialised raider camps; discoveries move within regions per seed | Balance bot exhausted the map in ~4 min with fixed positions and no travel friction. | Done |
+| D-13 | Data-oriented projectiles/pickups/FX drawn in single canvas items; enemies as nodes; spatial hash broad-phase | Mobile CPU/GPU budget: one draw item per system, O(n) collision. | Done |
+| D-14 | Inter (OFL) bundled as the UI typeface | Legible at small sizes; licence permits bundling. | Done |
+| D-15 | Runtime input map (`InputSetup`) instead of `project.godot` input section | Testable, remappable later, keyboard/gamepad/touch share action names. | Done |
+| D-16 | Debug cheats only in debug builds and only with Ctrl modifier | Prototype's bare number keys collided with upgrade hotkeys. | Done |

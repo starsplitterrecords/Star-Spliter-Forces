@@ -81,7 +81,7 @@ const CHARACTERS: Dictionary = {
 		"armor": 0.0,
 		"pickup": 125.0,
 		"ability": "survey_ping",
-		"trait": "Survey Instruments: double scanner range; discoveries grant a bonus level.",
+		"trait": "Survey Instruments: double scanner range; every tuned signal grants a bonus upgrade.",
 		"weakness": "Weapons recharge 10% slower.",
 		"unlock": "Complete an expedition — Glass Horizon follows the cleared signal.",
 	},
@@ -118,7 +118,7 @@ const MASTERY: Dictionary = {
 	"ella_venn": ["Bulwark lasts 1s longer.", "Bulwark pulses damage to enemies inside.", "Start each expedition with +20 max hull.", "Bulwark cooldown -4s."],
 	"naomi_sol": ["Corridor Run gains a second charge.", "Slipstream damage doubled.", "+6% base speed.", "Corridor Run grants 1.5s of +40% damage."],
 	"tessa_banks": ["Field Repair every 30 motes.", "Seal the Breach also restores 20 Resonance.", "+0.5 armour.", "Seal the Breach cooldown -6s."],
-	"kess_darrow": ["Survey Ping radius +50%.", "Ping marks hidden caches for the whole run.", "Start with the Survey Scanner passive.", "Ping cooldown -4s."],
+	"kess_darrow": ["Survey Ping radius +50%.", "Ping also charts the map fog it sweeps.", "Start with the Survey Scanner passive.", "Ping cooldown -4s."],
 	"jex_marrin": ["Caches drop an extra magnet core.", "+15% Signal earned (stacks).", "Veil Step lasts 2s longer.", "Start with one extra upgrade choice."],
 }
 
