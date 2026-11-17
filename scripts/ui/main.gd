@@ -18,6 +18,8 @@ func _ready() -> void:
 	add_child(ui_layer)
 	theme_res = UiTheme.build()
 	Profile.settings_changed.connect(func() -> void: theme_res = UiTheme.build())
+	get_window().size_changed.connect(_apply_ui_scale)
+	_apply_ui_scale()
 	selected_character = String(Profile.data.get("last_character", "ella_venn"))
 	selected_destination = String(Profile.data.get("last_destination", "black_drift_reach"))
 	if not Profile.has_character(selected_character):
@@ -54,9 +56,15 @@ func _new_screen() -> VBoxContainer:
 	for side2: String in ["top", "bottom"]:
 		margin.add_theme_constant_override("margin_" + side2, 28)
 	screen.add_child(margin)
+	# Short windows (phones, browser panels) scroll instead of clipping.
+	var scroll: ScrollContainer = ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	margin.add_child(scroll)
 	var v: VBoxContainer = VBoxContainer.new()
 	v.add_theme_constant_override("separation", 14)
-	margin.add_child(v)
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	v.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.add_child(v)
 	return v
 
 func _heading(parent: Control, text: String, sub: String = "") -> void:
@@ -64,6 +72,28 @@ func _heading(parent: Control, text: String, sub: String = "") -> void:
 	parent.add_child(t)
 	if sub != "":
 		parent.add_child(UiTheme.label(sub, 16, UiTheme.DIM))
+
+## Keeps text readable in small windows (browser panels, phones): the layout
+## is designed at 1280x720, but when the window is too small to show it at
+## READABLE_SCALE CSS pixels per design pixel, the design canvas shrinks
+## instead, down to MIN_LAYOUT so every screen still fits.
+const DESIGN_SIZE: Vector2 = Vector2(1280, 720)
+const MIN_LAYOUT: Vector2 = Vector2(880, 500)
+const READABLE_SCALE: float = 0.9
+
+func _apply_ui_scale() -> void:
+	var win: Window = get_window()
+	var dpr: float = maxf(1.0, DisplayServer.screen_get_scale())
+	var css: Vector2 = Vector2(win.size) / dpr
+	if css.x < 2.0 or css.y < 2.0:
+		return
+	var fit: float = minf(css.x / DESIGN_SIZE.x, css.y / DESIGN_SIZE.y)
+	var layout: Vector2 = DESIGN_SIZE
+	if fit < READABLE_SCALE:
+		layout = (css / READABLE_SCALE).max(MIN_LAYOUT)
+	var target: Vector2i = Vector2i(layout.round())
+	if win.content_scale_size != target:
+		win.content_scale_size = target
 
 ## Canonical artwork imported by tools/import_reference_assets.py.
 func _art(path: String, size: Vector2) -> TextureRect:
@@ -109,7 +139,7 @@ func show_title() -> void:
 	var v: VBoxContainer = _new_screen()
 	_menu_music()
 	var spacer: Control = Control.new()
-	spacer.custom_minimum_size = Vector2(0, 40)
+	spacer.custom_minimum_size = Vector2(0, 40 if get_viewport().get_visible_rect().size.y >= 640 else 0)
 	v.add_child(spacer)
 	var title: Label = UiTheme.label("STAR SPLITTER FORCES", 64, Color.WHITE, "display")
 	v.add_child(title)
@@ -385,6 +415,7 @@ func show_results() -> void:
 	buttons.add_child(UiTheme.button("TITLE", show_title, 160.0))
 	var saved_label: Label = UiTheme.label("Progress saved." if Profile.last_save_ok else "WARNING: progress could not be saved.", 13, UiTheme.DIM if Profile.last_save_ok else Color("ff8fa8"))
 	saved_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	saved_label.autowrap_mode = TextServer.AUTOWRAP_OFF
 	buttons.add_child(saved_label)
 	again.grab_focus()
 
