@@ -16,46 +16,51 @@ three.js (r170) loads from jsDelivr, so the first load needs a network connectio
 
 ## Controls
 
+You hover by default. Hold to fly, let go to hover in place. Diving builds speed and climbing bleeds it off.
+
 | Action | Desktop | Touch |
 | --- | --- | --- |
-| Steer | Point the mouse where you want to fly, or WASD / arrows | Left thumb joystick |
-| Strike (lunge to grab prey, hit wasps) | Space or left click | Strike button |
-| Boost (uses stamina) | Hold Shift or right mouse | Boost button |
-| Hover / slow down | Hold Q | Hover button |
+| Fly forward | Hold W or the left mouse button | Hold Fly |
+| Steer | Mouse (click the game to capture it), or A/D and the arrow keys | Left stick |
+| Strike | Space or right-click: when the hex locks on, you swoop straight onto the target | Strike |
+| Boost | Hold Shift while flying (uses stamina) | Boost |
+| Back off | S | |
 | Pause / mute | Esc or P / M | Pause button |
 
-## Mounts
+## Mounts and their jobs
 
-| Mount | Strengths |
-| --- | --- |
-| Emperor Dragonfly | Fastest and most agile, biggest catch reach, bonus for skimming water |
-| Honeybee | Carries 20 pollen, sting does double damage to wasps |
-| Privet Hawk-moth | Sees in the dark (less fog at night), nectar gives double stamina, huge stamina pool |
-| Seven-spot Ladybird | Heavy armour, aphids score double |
+Every insect does what it does in nature, so the objectives depend on which one you ride.
+
+| Mount | Does | Lock-on targets |
+| --- | --- | --- |
+| Emperor Dragonfly | Hunts mosquitoes, gnats and midges; fights wasps; skims water | Flying prey, wasps |
+| Honeybee | Gathers pollen for the nest (20 per trip); stings wasps for double damage | Pollen flowers, the nest, wasps |
+| Privet Hawk-moth | Hovers inside flowers to sip nectar; sees in the dark | Unvisited flowers |
+| Seven-spot Ladybird | Eats aphids off stems (double points); heavy armour | Aphids |
 
 ## Habitats
 
-| Habitat | Objectives | Threats |
-| --- | --- | --- |
-| Lily Pond | Catch 15 mosquitoes, skim the water 5 times | Bullfrog tongues, swallow dives, spider webs |
-| Wildflower Meadow | Deliver 40 pollen to the hive, drive off 3 wasps | Wasps, swallow dives, webs |
-| Moonlit Garden (night) | Sip from 8 different moonflowers, catch 12 midges | Bats, webs |
-| Bramble Hedgerow | Eat 25 aphids, deliver 20 pollen | Wasps, swallow dives, many webs |
+| Habitat | Dragonfly | Honeybee | Hawk-moth | Ladybird | Threats |
+| --- | --- | --- | --- | --- | --- |
+| Lily Pond | 12 mosquitoes, 4 skims | 16 pollen, dodge 2 dives | 6 flowers, dodge 2 dives | 14 aphids, dodge 2 dives | Frogs, swallow, webs |
+| Wildflower Meadow | 12 gnats, 2 wasps | 30 pollen, 2 wasps | 10 flowers, dodge 2 dives | 16 aphids, dodge 2 dives | Wasps, swallow, webs |
+| Moonlit Garden | 12 midges, dodge 2 bats | 14 pollen, dodge 2 bats | 8 flowers, dodge 2 bats | 14 aphids, dodge 2 bats | Bats, webs |
+| Bramble Hedgerow | 12 gnats, 2 wasps | 20 pollen, 2 wasps | 8 flowers, dodge 2 dives | 20 aphids, dodge 2 dives | Wasps, swallow, webs |
 
-Flowers with pollen glow gold; fly into the head to collect, then into the gold hex ring at the nest to deliver.
-Birds warn before they dive and their shadow grows; fly low into the grass to make them lose you.
-Stars: finish every objective, finish with at least half health, finish with a minute to spare.
+Each run lasts four minutes. A gold arrow always points to your next goal, and the first run walks you through
+the controls. Birds sound an alarm before diving: drop into the grass or turn hard, and each dive you escape
+counts as a dodge. Stars: finish every objective, finish with at least half health, finish with a minute to spare.
 
 ## How it is built
 
 Everything is procedural: terrain from value noise, instanced grass with a wind shader, flowers and props
 merged into one vertex-coloured mesh per habitat, creatures assembled from primitives, and all sound
-synthesized with the Web Audio API. No external art or audio assets.
+synthesized with the Web Audio API, including a generative soundtrack that picks up as you fly faster. No external art or audio assets.
 
 ## Tests
 
-`tests/gameplay.test.cjs` drives the game in headless Chromium with Playwright (pollen, delivery, catching,
-wasp combat, pause, win and downed endings). It routes the jsDelivr request to a local copy of three.js:
+`tests/gameplay.test.cjs` drives the game in headless Chromium with Playwright (hover and flight, lock-on swoops for each mount,
+skimming, pollen, nectar, wasps, dodging, win flow). It routes the jsDelivr request to a local copy of three.js:
 
 ```sh
 npm i three@0.170.0   # somewhere, e.g. a scratch folder
