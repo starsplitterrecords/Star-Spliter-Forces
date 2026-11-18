@@ -1603,7 +1603,8 @@ function readInput() {
 /* ============================================================
    Game state
    ============================================================ */
-const game = { state: 'loading', time: 0, score: 0, combo: 1, comboT: 0, obj: [], nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, toastT: 0, shake: 0, titleT: 0, hitStop: 0, camKick: 0 };
+const newTele = () => ({ strikes: 0, swoops: 0, swoopHit: 0, swoopMiss: 0, catchSwoop: 0, catchTouch: 0, dmg: {}, hits: {}, bumps: 0, hover: 0, stuck: 0, dist: 0, camClip: 0, noGoal: 0, lockAvail: 0, goalFar: 0, playT: 0 });
+const game = { tele: newTele(), state: 'loading', time: 0, score: 0, combo: 1, comboT: 0, obj: [], nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, toastT: 0, shake: 0, titleT: 0, hitStop: 0, camKick: 0 };
 const sel = Object.assign({ mount: 'dragonfly', hab: 'pond' }, store.get('hexapod-sel', {}));
 if (!MOUNTS[sel.mount]) sel.mount = 'dragonfly';
 if (!HABITATS[sel.hab]) sel.hab = 'pond';
@@ -1639,7 +1640,7 @@ function onEvent(type, kind, n = 1) {
     if (o.kind && o.kind !== kind) continue;
     o.count = Math.min(o.target, o.count + n);
     if (o.count >= o.target) {
-      o.done = true; finishedNow = true; Sound.sfx.objective();
+      o.done = true; o.doneAt = Math.round(world.H.time - game.time); finishedNow = true; Sound.sfx.objective();
       const next = game.obj.find((x) => !x.done);
       toast(`${o.label}: done!`, next ? `Next: ${next.label}` : '');
     }
@@ -1653,6 +1654,7 @@ function onEvent(type, kind, n = 1) {
 function hurt(amount, from, label) {
   if (player.invuln > 0 || player.dead || game.ending) return;
   const dmg = amount / player.mount.armor;
+  const tl = (label || 'other').replace('!', ''); game.tele.dmg[tl] = (game.tele.dmg[tl] || 0) + dmg; game.tele.hits[tl] = (game.tele.hits[tl] || 0) + 1;
   player.health -= dmg; player.invuln = 1.0; player.hurtT = 0; game.shake = Math.min(1, 0.35 + dmg / 40);
   game.combo = 1; game.comboT = 0; player.swoopT = 0; player.swoop = null;
   Sound.sfx.hurt(); FX.burst(player.pos, '#ff6a4a', 12, 6, 0.5, 0.5); hitStop(0.05);
@@ -1697,19 +1699,22 @@ function swoopTargetPos() {
 function tryStrike() {
   const M = player.mount;
   if (player.strikeCD > 0 || player.dead) return;
+  game.tele.strikes++;
   player.strikeCD = 0.45; game.camKick = Math.max(game.camKick, 0.7); Sound.sfx.strike();
   const L = player.lock;
-  if (L && L.d <= SWOOP_RANGE) { player.swoop = { type: L.type, ref: L.ref }; player.swoopT = 1.2; }
+  if (L && L.d <= SWOOP_RANGE) { player.swoop = { type: L.type, ref: L.ref }; player.swoopT = 1.2; game.tele.swoops++; }
   else { player.strikeT = 0.35; player.vel.addScaledVector(player.aim, 14); }
   for (let i = 0; i < 10; i++) FX.spawn(player.pos, player.aim.clone().multiplyScalar(-MR(4, 9)).add(new V3(MR(-2, 2), MR(-2, 2), MR(-2, 2))), '#e8fff8', 0.35, 0.35);
 }
 function arriveSwoop(hit) {
   const s = player.swoop; player.swoopT = 0; player.swoop = null; if (!s) return;
-  if (s.type === 'prey' && hit && s.ref.alive) catchPrey(s.ref);
+  if (s.type === 'prey' || s.type === 'wasp') { if (hit && s.ref.alive) game.tele.swoopHit++; else game.tele.swoopMiss++; }
+  if (s.type === 'prey' && hit && s.ref.alive) catchPrey(s.ref, true);
   else if (s.type === 'wasp' && hit && s.ref.alive) hitWasp(s.ref);
   else if (s.type === 'flower' || s.type === 'nest') { player.vel.multiplyScalar(0.12); player.thr = 0; }
 }
-function catchPrey(p) {
+function catchPrey(p, viaSwoop = false) {
+  if (viaSwoop) game.tele.catchSwoop++; else game.tele.catchTouch++;
   const M = player.mount, K = PREY[p.kind];
   p.alive = false; p.m.root.visible = false; p.respawn = MR(10, 16);
   const pts = K.pts * (p.kind === 'aphid' && M.aphidBonus ? M.aphidBonus : 1);
@@ -1838,7 +1843,7 @@ function updatePlayer(dt) {
   if (player.cargo > 0 && player.trailT <= 0) { player.trailT = 0.05; FX.spawn(player.pos.clone().addScaledVector(player.fwd, -0.8), new V3(MR(-0.5, 0.5), MR(-1, 0.2), MR(-0.5, 0.5)), '#ffd34a', 0.8, 0.35, 2, 1); }
   applyPlayerTransform(dt);
 }
-function bump() { if (player.bumpCD > 0) return; player.bumpCD = 0.5; player.vel.multiplyScalar(0.6); game.shake = Math.max(game.shake, 0.15); Sound.noise(0.1, 260, 0.8, 0.08, 'lowpass'); }
+function bump() { if (player.bumpCD > 0) return; player.bumpCD = 0.5; game.tele.bumps++; player.vel.multiplyScalar(0.6); game.shake = Math.max(game.shake, 0.15); Sound.noise(0.1, 260, 0.8, 0.08, 'lowpass'); }
 function applyPlayerTransform(dt) {
   const mdl = player.model, M = player.mount, s01 = clamp(player.speed / M.boost, 0, 1);
   if (!player.dead) player.roll = damp(player.roll, clamp(-player.yawRate * 0.5 * (0.35 + 0.65 * s01), -1.15, 1.15), 6, dt);
@@ -2289,7 +2294,7 @@ function startRun() {
   setMount(sel.mount); setAtmosphere(world.H, player.mount);
   resetEntities(); spawnPlayer(); FX.clear();
   const H = world.H;
-  Object.assign(game, { state: 'play', time: H.time, score: 0, combo: 1, comboT: 0, obj: H.jobs[player.mount.key].map((o) => ({ ...o, count: 0, done: false })), nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, shake: 0, hitStop: 0, camKick: 0 });
+  Object.assign(game, { tele: newTele(), state: 'play', time: H.time, score: 0, combo: 1, comboT: 0, obj: H.jobs[player.mount.key].map((o) => ({ ...o, count: 0, done: false })), nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, shake: 0, hitStop: 0, camKick: 0 });
   $('#hudHab').textContent = `${H.name} · ${player.mount.name}`;
   renderObjectives(); alertEl.hidden = true;
   show('hud'); $('#touchUI').hidden = !isTouch; document.body.classList.toggle('touch', isTouch);
@@ -2341,6 +2346,35 @@ $('#quitBtn').addEventListener('click', goTitle);
 $('#againBtn').addEventListener('click', () => { startRun(); requestLock(); });
 $('#menuBtn').addEventListener('click', goTitle);
 
+function recordTele(dt) {
+  const T = game.tele, M = player.mount; T.playT += dt; T.dist += player.speed * dt;
+  if (player.speed < 1.5) T.hover += dt;
+  if (input.thrust && player.speed < 3 && player.stunT <= 0 && player.swoopT <= 0) T.stuck += dt;
+  if (player.lock && player.lock.d <= SWOOP_RANGE) T.lockAvail += dt;
+  const o = game.obj.find((x) => !x.done);
+  if (o && o.type !== 'dodge') { const G = goalTarget(); if (!G || !G.pos) { if (!(o.type === 'skim' && player.overWater)) T.noGoal += dt; } else if (G.pos.distanceTo(player.pos) > 90) T.goalFar += dt; }
+  const c = camera.position;
+  for (const f of world.flowers) { const r = f.r + 0.4; if (Math.abs(c.x - f.head.x) < r && Math.abs(c.z - f.head.z) < r && Math.abs(c.y - f.head.y) < r && c.distanceTo(f.head) < r) { T.camClip += dt; return; } }
+  for (const cy of world.cyl) { if (c.y > cy.y0 && c.y < cy.y1 && Math.hypot(c.x - cy.x, c.z - cy.z) < cy.r) { T.camClip += dt; return; } }
+}
+function simulatePlay(dt, rdt) {
+    if (game.bot) game.bot(dt); else readInput();
+    updatePlayer(dt);
+    const playing = !game.ending;
+    updatePrey(dt, playing); updateWasps(dt, playing); updateBirds(dt, playing); updateFrogs(dt, playing); updateWebs(dt, playing); updateFlowers(dt, playing); updateNest(dt, playing);
+    updateTargeting(); updateMarks();
+    if (game.state === 'play') {
+      if (!game.ending && !player.dead) { game.time -= dt; if (game.time <= 0) { game.time = 0; endRun('time'); } }
+      if (game.ending) { game.ending -= dt; if (game.ending <= 0) endRun('win'); }
+      if (game.comboT > 0) { game.comboT -= dt; if (game.comboT <= 0) game.combo = 1; }
+      updateCamera(rdt); updateHUD(rdt); updateCoach(rdt);
+      recordTele(dt);
+      Sound.updateEngine(clamp(player.speed / player.mount.boost, 0, 1), player.boosting);
+      Sound.ambience(dt, world.key); Sound.musicTick(clamp(player.speed / player.mount.cruise, 0, 1.5) * 0.6 + (game.combo - 1) * 0.15);
+    }
+    Motes.update(dt, player.pos);
+}
+
 /* ============================================================
    Main loop
    ============================================================ */
@@ -2352,22 +2386,8 @@ function frame(now) {
   let dt = rdt;
   if (game.hitStop > 0) { game.hitStop -= rdt; dt = rdt * 0.12; }
   if (game.state !== 'pause') uTime.value += dt;
-  if (game.state === 'play') {
-    readInput();
-    updatePlayer(dt);
-    const playing = !game.ending;
-    updatePrey(dt, playing); updateWasps(dt, playing); updateBirds(dt, playing); updateFrogs(dt, playing); updateWebs(dt, playing); updateFlowers(dt, playing); updateNest(dt, playing);
-    updateTargeting(); updateMarks();
-    if (game.state === 'play') {
-      if (!game.ending && !player.dead) { game.time -= dt; if (game.time <= 0) { game.time = 0; endRun('time'); } }
-      if (game.ending) { game.ending -= dt; if (game.ending <= 0) endRun('win'); }
-      if (game.comboT > 0) { game.comboT -= dt; if (game.comboT <= 0) game.combo = 1; }
-      updateCamera(rdt); updateHUD(rdt); updateCoach(rdt);
-      Sound.updateEngine(clamp(player.speed / player.mount.boost, 0, 1), player.boosting);
-      Sound.ambience(dt, world.key); Sound.musicTick(clamp(player.speed / player.mount.cruise, 0, 1.5) * 0.6 + (game.combo - 1) * 0.15);
-    }
-    Motes.update(dt, player.pos);
-  } else if (game.state === 'title' || game.state === 'end') {
+  if (game.state === 'play') { if (!game.headless) simulatePlay(dt, rdt); }
+  else if (game.state === 'title' || game.state === 'end') {
     game.titleT += dt;
     updatePrey(dt, false); updateBirds(dt, false); updateFrogs(dt, false); updateFlowers(dt, false); updateNest(dt, false); updateMarks();
     for (const w of world.wasps) { w.m.root.position.copy(w.pos); flapWings(w.m, uTime.value, 60, 0.8); }
@@ -2406,7 +2426,10 @@ function boot(data) {
 }
 window.claude?.hot?.snapshot?.(() => ({ sel: { ...sel } }));
 if (window.claude?.hot?.ready) window.claude.hot.ready(boot); else boot(window.claude?.hot?.data ?? {});
-window.__hexapod = { game, player, get world() { return world; }, startRun, endRun, MOUNTS, HABITATS, sel, input, settings };
+window.__hexapod = { game, player, get world() { return world; }, startRun, endRun, MOUNTS, HABITATS, PREY, sel, input, settings, goalTarget, SWOOP_RANGE, LOCK_RANGE,
+  // fixed-timestep simulation for automated playtests (no rendering)
+  sim(seconds, step = 1 / 30) { const n = Math.round(seconds / step); for (let i = 0; i < n && game.state === 'play'; i++) { let dt = step; if (game.hitStop > 0) { game.hitStop -= step; dt = step * 0.12; } uTime.value += dt; simulatePlay(dt, step); FX.update(dt); } },
+  render() { renderer.render(scene, camera); } };
 </script>
 </body>
 </html>

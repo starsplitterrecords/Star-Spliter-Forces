@@ -1,0 +1,4148 @@
+[
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "meadow",
+  "s": 1,
+  "reason": "win",
+  "score": 5480,
+  "timeLeft": 221,
+  "hp": 94,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 12,
+    "doneAt": 9
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 19
+   }
+  ],
+  "tele": {
+   "strikes": 18,
+   "swoops": 18,
+   "swoopHit": 9,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 16,
+   "dmg": {
+    "Webbed": 6
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 1,
+   "hover": 0.49999999999999994,
+   "stuck": 0.9999999999999999,
+   "dist": 584.6099004042414,
+   "camClip": 0,
+   "noGoal": 0,
+   "lockAvail": 10.151999999999967,
+   "goalFar": 3.6053333333333306,
+   "playT": 22.002666666666922
+  },
+  "curve": [
+   [
+    12,
+    0
+   ]
+  ],
+  "wall": 6403
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "meadow",
+  "s": 2,
+  "reason": "win",
+  "score": 5110,
+  "timeLeft": 221,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 12,
+    "doneAt": 10
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 19
+   }
+  ],
+  "tele": {
+   "strikes": 13,
+   "swoops": 13,
+   "swoopHit": 6,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 15,
+   "dmg": {},
+   "hits": {},
+   "bumps": 0,
+   "hover": 0.36666666666666664,
+   "stuck": 0.6,
+   "dist": 678.68207264616,
+   "camClip": 0.16666666666666666,
+   "noGoal": 0,
+   "lockAvail": 8.23733333333331,
+   "goalFar": 4.635999999999994,
+   "playT": 21.892000000000248
+  },
+  "curve": [
+   [
+    12,
+    0
+   ]
+  ],
+  "wall": 428
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "garden",
+  "s": 1,
+  "reason": "win",
+  "score": 4360,
+  "timeLeft": 206,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch midges",
+    "count": 12,
+    "target": 12,
+    "doneAt": 21
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 34
+   }
+  ],
+  "tele": {
+   "strikes": 9,
+   "swoops": 9,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {
+    "Webbed": 6
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 0,
+   "hover": 0.2333333333333333,
+   "stuck": 0.2333333333333333,
+   "dist": 1122.9010055111648,
+   "camClip": 0,
+   "noGoal": 0,
+   "lockAvail": 4.971999999999991,
+   "goalFar": 8.057333333333315,
+   "playT": 37.01866666666714
+  },
+  "curve": [
+   [
+    8,
+    0
+   ],
+   [
+    12,
+    1
+   ]
+  ],
+  "wall": 3131
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "garden",
+  "s": 2,
+  "reason": "win",
+  "score": 4750,
+  "timeLeft": 209,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch midges",
+    "count": 12,
+    "target": 12,
+    "doneAt": 19
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 31
+   }
+  ],
+  "tele": {
+   "strikes": 11,
+   "swoops": 11,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 14,
+   "dmg": {},
+   "hits": {},
+   "bumps": 0,
+   "hover": 0.06666666666666667,
+   "stuck": 0.1,
+   "dist": 1093.9021075676476,
+   "camClip": 0,
+   "noGoal": 0,
+   "lockAvail": 7.85999999999998,
+   "goalFar": 2.0120000000000027,
+   "playT": 33.922666666667304
+  },
+  "curve": [
+   [
+    10,
+    0
+   ],
+   [
+    12,
+    1
+   ]
+  ],
+  "wall": 506
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "win",
+  "score": 4010,
+  "timeLeft": 206,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 12,
+    "doneAt": 17
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 34
+   }
+  ],
+  "tele": {
+   "strikes": 17,
+   "swoops": 17,
+   "swoopHit": 7,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {},
+   "hits": {},
+   "bumps": 2,
+   "hover": 0.3,
+   "stuck": 0.7333333333333333,
+   "dist": 1104.7590676403802,
+   "camClip": 0.13333333333333333,
+   "noGoal": 0,
+   "lockAvail": 9.445333333333307,
+   "goalFar": 13.10266666666663,
+   "playT": 37.06666666666711
+  },
+  "curve": [
+   [
+    8,
+    0
+   ],
+   [
+    12,
+    0
+   ]
+  ],
+  "wall": 2635
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "pond",
+  "s": 1,
+  "reason": "downed",
+  "score": 6300,
+  "timeLeft": 157,
+  "hp": 0,
+  "obj": [
+   {
+    "label": "Catch mosquitoes",
+    "count": 12,
+    "target": 12,
+    "doneAt": 10
+   },
+   {
+    "label": "Skim the water",
+    "count": 0,
+    "target": 4,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "strikes": 46,
+   "swoops": 46,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 47,
+   "dmg": {
+    "Frog tongue": 216,
+    "Webbed": 6
+   },
+   "hits": {
+    "Frog tongue": 12,
+    "Webbed": 1
+   },
+   "bumps": 22,
+   "hover": 0.3,
+   "stuck": 0.3333333333333333,
+   "dist": 2559.465001099802,
+   "camClip": 1.5786666666666684,
+   "noGoal": 0,
+   "lockAvail": 27.920000000000545,
+   "goalFar": 0,
+   "playT": 85.5346666666644
+  },
+  "curve": [
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ]
+  ],
+  "wall": 15942
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "win",
+  "score": 3990,
+  "timeLeft": 204,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 12,
+    "doneAt": 24
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 36
+   }
+  ],
+  "tele": {
+   "strikes": 17,
+   "swoops": 17,
+   "swoopHit": 7,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {},
+   "hits": {},
+   "bumps": 1,
+   "hover": 0.36666666666666664,
+   "stuck": 0.7999999999999999,
+   "dist": 1119.896748686905,
+   "camClip": 0.1,
+   "noGoal": 0,
+   "lockAvail": 10.558666666666634,
+   "goalFar": 9.469333333333308,
+   "playT": 39.08800000000033
+  },
+  "curve": [
+   [
+    7,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    2
+   ]
+  ],
+  "wall": 6888
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "pond",
+  "s": 1,
+  "reason": "win",
+  "score": 3350,
+  "timeLeft": 169,
+  "hp": 87,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 16,
+    "target": 16,
+    "doneAt": 12
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 71
+   }
+  ],
+  "tele": {
+   "strikes": 23,
+   "swoops": 23,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 49.09090909090909
+   },
+   "hits": {
+    "Frog tongue": 3
+   },
+   "bumps": 12,
+   "hover": 2.9079999999999995,
+   "stuck": 2.1333333333333355,
+   "dist": 1385.9530750065232,
+   "camClip": 2.033333333333336,
+   "noGoal": 0,
+   "lockAvail": 16.241333333333298,
+   "goalFar": 0.6666666666666666,
+   "playT": 73.4359999999984
+  },
+  "curve": [
+   [
+    16,
+    0
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    16,
+    2
+   ]
+  ],
+  "wall": 17324
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "pond",
+  "s": 2,
+  "reason": "win",
+  "score": 3370,
+  "timeLeft": 195,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 16,
+    "target": 16,
+    "doneAt": 12
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 45
+   }
+  ],
+  "tele": {
+   "strikes": 17,
+   "swoops": 17,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 32.72727272727273
+   },
+   "hits": {
+    "Frog tongue": 2
+   },
+   "bumps": 11,
+   "hover": 2.6413333333333338,
+   "stuck": 1.7333333333333354,
+   "dist": 809.8846071260147,
+   "camClip": 1.704000000000002,
+   "noGoal": 0,
+   "lockAvail": 11.9413333333333,
+   "goalFar": 0.6,
+   "playT": 47.63199999999987
+  },
+  "curve": [
+   [
+    16,
+    0
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    16,
+    1
+   ]
+  ],
+  "wall": 15391
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "meadow",
+  "s": 1,
+  "reason": "win",
+  "score": 5220,
+  "timeLeft": 192,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 30,
+    "target": 30,
+    "doneAt": 30
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 48
+   }
+  ],
+  "tele": {
+   "strikes": 44,
+   "swoops": 44,
+   "swoopHit": 8,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 3,
+   "hover": 4.349333333333328,
+   "stuck": 3.0413333333333323,
+   "dist": 890.7598208880953,
+   "camClip": 3.7493333333333303,
+   "noGoal": 0,
+   "lockAvail": 31.156000000000724,
+   "goalFar": 17.974666666666717,
+   "playT": 50.87999999999965
+  },
+  "curve": [
+   [
+    20,
+    0
+   ],
+   [
+    25,
+    0
+   ],
+   [
+    30,
+    1
+   ]
+  ],
+  "wall": 13577
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "meadow",
+  "s": 2,
+  "reason": "win",
+  "score": 4805,
+  "timeLeft": 188,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 30,
+    "target": 30,
+    "doneAt": 31
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 52
+   }
+  ],
+  "tele": {
+   "strikes": 56,
+   "swoops": 56,
+   "swoopHit": 7,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 1,
+   "hover": 4.657333333333327,
+   "stuck": 4.266666666666661,
+   "dist": 955.2034474476632,
+   "camClip": 3.174666666666665,
+   "noGoal": 0,
+   "lockAvail": 37.64800000000041,
+   "goalFar": 17.508000000000028,
+   "playT": 54.91333333333275
+  },
+  "curve": [
+   [
+    9,
+    0
+   ],
+   [
+    29,
+    0
+   ],
+   [
+    30,
+    0
+   ],
+   [
+    30,
+    2
+   ]
+  ],
+  "wall": 11083
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "pond",
+  "s": 2,
+  "reason": "time",
+  "score": 12500,
+  "timeLeft": 0,
+  "hp": 91,
+  "obj": [
+   {
+    "label": "Catch mosquitoes",
+    "count": 12,
+    "target": 12,
+    "doneAt": 10
+   },
+   {
+    "label": "Skim the water",
+    "count": 0,
+    "target": 4,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "strikes": 81,
+   "swoops": 81,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 87,
+   "dmg": {
+    "Frog tongue": 162,
+    "Webbed": 6
+   },
+   "hits": {
+    "Frog tongue": 9,
+    "Webbed": 1
+   },
+   "bumps": 89,
+   "hover": 0.1,
+   "stuck": 0.16666666666666666,
+   "dist": 6578.263473036713,
+   "camClip": 2.512000000000001,
+   "noGoal": 0,
+   "lockAvail": 52.14399999999956,
+   "goalFar": 0,
+   "playT": 240.02933333332157
+  },
+  "curve": [
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ]
+  ],
+  "wall": 49569
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "win",
+  "score": 3620,
+  "timeLeft": 217,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 20,
+    "target": 20,
+    "doneAt": 17
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 23
+   }
+  ],
+  "tele": {
+   "strikes": 17,
+   "swoops": 17,
+   "swoopHit": 4,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 7,
+   "hover": 1.474666666666668,
+   "stuck": 1.5666666666666682,
+   "dist": 463.7792087459821,
+   "camClip": 0.39999999999999997,
+   "noGoal": 0,
+   "lockAvail": 10.449333333333305,
+   "goalFar": 3.474666666666664,
+   "playT": 25.74000000000045
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    2
+   ]
+  ],
+  "wall": 3108
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "win",
+  "score": 4170,
+  "timeLeft": 217,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 20,
+    "target": 20,
+    "doneAt": 17
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 23
+   }
+  ],
+  "tele": {
+   "strikes": 19,
+   "swoops": 19,
+   "swoopHit": 6,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 6,
+   "hover": 1.2666666666666673,
+   "stuck": 2.1333333333333355,
+   "dist": 448.77713686441245,
+   "camClip": 0.3,
+   "noGoal": 0,
+   "lockAvail": 11.8573333333333,
+   "goalFar": 3.2079999999999984,
+   "playT": 25.822666666667125
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    2
+   ]
+  ],
+  "wall": 264
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "garden",
+  "s": 1,
+  "reason": "win",
+  "score": 3210,
+  "timeLeft": 206,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 14,
+    "target": 14,
+    "doneAt": 15
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 34
+   }
+  ],
+  "tele": {
+   "strikes": 22,
+   "swoops": 22,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 5.454545454545454
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 2,
+   "hover": 3.3413333333333313,
+   "stuck": 2.1333333333333355,
+   "dist": 607.0478024468614,
+   "camClip": 2.066666666666669,
+   "noGoal": 0,
+   "lockAvail": 14.00799999999996,
+   "goalFar": 0,
+   "playT": 36.14933333333385
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    14,
+    1
+   ]
+  ],
+  "wall": 11459
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "pond",
+  "s": 1,
+  "reason": "win",
+  "score": 9860,
+  "timeLeft": 183,
+  "hp": 86,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 6,
+    "target": 6,
+    "doneAt": 10
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 57
+   }
+  ],
+  "tele": {
+   "strikes": 56,
+   "swoops": 56,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 69.23076923076923
+   },
+   "hits": {
+    "Frog tongue": 5
+   },
+   "bumps": 6,
+   "hover": 7.775999999999973,
+   "stuck": 4.7119999999999935,
+   "dist": 919.4746951978832,
+   "camClip": 2.9413333333333327,
+   "noGoal": 0,
+   "lockAvail": 37.3293333333338,
+   "goalFar": 0,
+   "playT": 59.2226666666658
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "wall": 10624
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "garden",
+  "s": 2,
+  "reason": "win",
+  "score": 3230,
+  "timeLeft": 209,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 14,
+    "target": 14,
+    "doneAt": 17
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 31
+   }
+  ],
+  "tele": {
+   "strikes": 20,
+   "swoops": 20,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 5.454545454545454
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 2,
+   "hover": 3.74133333333333,
+   "stuck": 2.033333333333336,
+   "dist": 518.5911855801897,
+   "camClip": 1.5000000000000013,
+   "noGoal": 0,
+   "lockAvail": 14.241333333333293,
+   "goalFar": 0,
+   "playT": 33.72400000000066
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    14,
+    1
+   ]
+  ],
+  "wall": 15418
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "meadow",
+  "s": 1,
+  "reason": "win",
+  "score": 12900,
+  "timeLeft": 190,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 10,
+    "target": 10,
+    "doneAt": 15
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 50
+   }
+  ],
+  "tele": {
+   "strikes": 51,
+   "swoops": 51,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 4.615384615384615
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 2,
+   "hover": 9.06799999999997,
+   "stuck": 4.170666666666662,
+   "dist": 829.6615202960381,
+   "camClip": 2.9373333333333327,
+   "noGoal": 0,
+   "lockAvail": 33.94000000000064,
+   "goalFar": 0,
+   "playT": 52.73333333333288
+  },
+  "curve": [
+   [
+    9,
+    0
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    10,
+    1
+   ]
+  ],
+  "wall": 6885
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "meadow",
+  "s": 2,
+  "reason": "win",
+  "score": 10850,
+  "timeLeft": 195,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 10,
+    "target": 10,
+    "doneAt": 14
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 45
+   }
+  ],
+  "tele": {
+   "strikes": 47,
+   "swoops": 47,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 4.615384615384615
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 0,
+   "hover": 6.9613333333333145,
+   "stuck": 3.9746666666666624,
+   "dist": 773.8097469199774,
+   "camClip": 1.933333333333336,
+   "noGoal": 0,
+   "lockAvail": 31.28933333333405,
+   "goalFar": 0,
+   "playT": 47.350666666666534
+  },
+  "curve": [
+   [
+    10,
+    0
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    10,
+    1
+   ]
+  ],
+  "wall": 9240
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "garden",
+  "s": 1,
+  "reason": "win",
+  "score": 6360,
+  "timeLeft": 212,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 8,
+    "target": 8,
+    "doneAt": 19
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 28
+   }
+  ],
+  "tele": {
+   "strikes": 21,
+   "swoops": 21,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 4.615384615384615
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 1,
+   "hover": 4.971999999999992,
+   "stuck": 1.837333333333336,
+   "dist": 516.7765527570789,
+   "camClip": 1.5000000000000013,
+   "noGoal": 0,
+   "lockAvail": 13.982666666666628,
+   "goalFar": 0,
+   "playT": 30.313333333334
+  },
+  "curve": [
+   [
+    5,
+    0
+   ],
+   [
+    8,
+    2
+   ]
+  ],
+  "wall": 4870
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "garden",
+  "s": 2,
+  "reason": "win",
+  "score": 5600,
+  "timeLeft": 206,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 8,
+    "target": 8,
+    "doneAt": 22
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 34
+   }
+  ],
+  "tele": {
+   "strikes": 20,
+   "swoops": 20,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 4.615384615384615
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 0,
+   "hover": 3.6973333333333307,
+   "stuck": 1.7666666666666688,
+   "dist": 731.5119238779354,
+   "camClip": 0.9666666666666666,
+   "noGoal": 0,
+   "lockAvail": 13.407999999999962,
+   "goalFar": 0,
+   "playT": 36.713333333333814
+  },
+  "curve": [
+   [
+    5,
+    0
+   ],
+   [
+    8,
+    1
+   ]
+  ],
+  "wall": 3602
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "pond",
+  "s": 2,
+  "reason": "win",
+  "score": 8370,
+  "timeLeft": 189,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 6,
+    "target": 6,
+    "doneAt": 12
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 51
+   }
+  ],
+  "tele": {
+   "strikes": 41,
+   "swoops": 41,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 55.38461538461538
+   },
+   "hits": {
+    "Frog tongue": 4
+   },
+   "bumps": 10,
+   "hover": 6.027999999999984,
+   "stuck": 3.586666666666664,
+   "dist": 859.086923316709,
+   "camClip": 2.857333333333333,
+   "noGoal": 0,
+   "lockAvail": 28.13866666666723,
+   "goalFar": 0,
+   "playT": 53.33333333333285
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ]
+  ],
+  "wall": 18677
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "win",
+  "score": 7400,
+  "timeLeft": 170,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 8,
+    "target": 8,
+    "doneAt": 14
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 70
+   }
+  ],
+  "tele": {
+   "strikes": 44,
+   "swoops": 44,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 21.538461538461537
+   },
+   "hits": {
+    "Swallow strike": 1
+   },
+   "bumps": 38,
+   "hover": 5.837333333333319,
+   "stuck": 3.166666666666665,
+   "dist": 1394.705400222111,
+   "camClip": 0.8999999999999999,
+   "noGoal": 0,
+   "lockAvail": 34.297333333333945,
+   "goalFar": 0,
+   "playT": 72.65999999999843
+  },
+  "curve": [
+   [
+    8,
+    0
+   ],
+   [
+    8,
+    0
+   ],
+   [
+    8,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    8,
+    2
+   ]
+  ],
+  "wall": 8252
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "win",
+  "score": 7640,
+  "timeLeft": 184,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 8,
+    "target": 8,
+    "doneAt": 15
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 56
+   }
+  ],
+  "tele": {
+   "strikes": 32,
+   "swoops": 32,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 15,
+   "hover": 5.762666666666653,
+   "stuck": 3.0453333333333323,
+   "dist": 1030.182839863469,
+   "camClip": 1.4373333333333347,
+   "noGoal": 0,
+   "lockAvail": 22.448000000000274,
+   "goalFar": 0,
+   "playT": 58.74399999999921
+  },
+  "curve": [
+   [
+    7,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    8,
+    2
+   ]
+  ],
+  "wall": 7433
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "pond",
+  "s": 2,
+  "reason": "win",
+  "score": 7650,
+  "timeLeft": 190,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 14,
+    "target": 14,
+    "doneAt": 17
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 50
+   }
+  ],
+  "tele": {
+   "strikes": 25,
+   "swoops": 25,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 25,
+   "dmg": {
+    "Frog tongue": 8.181818181818182
+   },
+   "hits": {
+    "Frog tongue": 1
+   },
+   "bumps": 33,
+   "hover": 0.2333333333333333,
+   "stuck": 0.13333333333333333,
+   "dist": 1133.1216040315912,
+   "camClip": 0.34933333333333333,
+   "noGoal": 0,
+   "lockAvail": 18.641333333333428,
+   "goalFar": 0,
+   "playT": 52.9746666666662
+  },
+  "curve": [
+   [
+    12,
+    0
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    14,
+    2
+   ]
+  ],
+  "wall": 7457
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "pond",
+  "s": 1,
+  "reason": "win",
+  "score": 4820,
+  "timeLeft": 192,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 14,
+    "target": 14,
+    "doneAt": 31
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 48
+   }
+  ],
+  "tele": {
+   "strikes": 13,
+   "swoops": 13,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 15,
+   "dmg": {
+    "Webbed": 2.727272727272727
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 19,
+   "hover": 0.49999999999999994,
+   "stuck": 0.26666666666666666,
+   "dist": 1043.9654589111815,
+   "camClip": 0.6706666666666666,
+   "noGoal": 0,
+   "lockAvail": 10.602666666666638,
+   "goalFar": 4.427999999999993,
+   "playT": 50.79333333333303
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    13,
+    1
+   ],
+   [
+    14,
+    1
+   ]
+  ],
+  "wall": 14948
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "meadow",
+  "s": 2,
+  "reason": "win",
+  "score": 4510,
+  "timeLeft": 186,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 16,
+    "target": 16,
+    "doneAt": 54
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 51
+   }
+  ],
+  "tele": {
+   "strikes": 15,
+   "swoops": 15,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 16,
+   "dmg": {},
+   "hits": {},
+   "bumps": 14,
+   "hover": 0.1,
+   "stuck": 0.13333333333333333,
+   "dist": 1105.3644324667669,
+   "camClip": 0.9333333333333332,
+   "noGoal": 0,
+   "lockAvail": 13.023999999999962,
+   "goalFar": 2.624000000000001,
+   "playT": 56.579999999999345
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    15,
+    1
+   ],
+   [
+    16,
+    2
+   ]
+  ],
+  "wall": 965
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "garden",
+  "s": 1,
+  "reason": "win",
+  "score": 4140,
+  "timeLeft": 194,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 14,
+    "target": 14,
+    "doneAt": 46
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 36
+   }
+  ],
+  "tele": {
+   "strikes": 15,
+   "swoops": 15,
+   "swoopHit": 1,
+   "swoopMiss": 0,
+   "catchSwoop": 1,
+   "catchTouch": 14,
+   "dmg": {},
+   "hits": {},
+   "bumps": 12,
+   "hover": 0.1,
+   "stuck": 0.13333333333333333,
+   "dist": 1011.6960054824002,
+   "camClip": 0.26666666666666666,
+   "noGoal": 0,
+   "lockAvail": 11.0693333333333,
+   "goalFar": 6.490666666666653,
+   "playT": 48.21333333333313
+  },
+  "curve": [
+   [
+    4,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    12,
+    2
+   ]
+  ],
+  "wall": 1681
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "meadow",
+  "s": 1,
+  "reason": "win",
+  "score": 4130,
+  "timeLeft": 183,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 16,
+    "target": 16,
+    "doneAt": 57
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 49
+   }
+  ],
+  "tele": {
+   "strikes": 15,
+   "swoops": 15,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 16,
+   "dmg": {},
+   "hits": {},
+   "bumps": 14,
+   "hover": 0.16666666666666666,
+   "stuck": 0.3,
+   "dist": 1190.7207927002084,
+   "camClip": 1.1,
+   "noGoal": 0,
+   "lockAvail": 13.311999999999962,
+   "goalFar": 3.190666666666665,
+   "playT": 59.17999999999917
+  },
+  "curve": [
+   [
+    5,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    16,
+    2
+   ]
+  ],
+  "wall": 10524
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "garden",
+  "s": 2,
+  "reason": "win",
+  "score": 4550,
+  "timeLeft": 205,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 14,
+    "target": 14,
+    "doneAt": 35
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 28
+   }
+  ],
+  "tele": {
+   "strikes": 11,
+   "swoops": 11,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 14,
+   "dmg": {},
+   "hits": {},
+   "bumps": 8,
+   "hover": 0.16666666666666666,
+   "stuck": 0.3,
+   "dist": 784.4763777637631,
+   "camClip": 0.26666666666666666,
+   "noGoal": 0,
+   "lockAvail": 9.645333333333308,
+   "goalFar": 1.112,
+   "playT": 37.844000000000435
+  },
+  "curve": [
+   [
+    4,
+    0
+   ],
+   [
+    8,
+    2
+   ]
+  ],
+  "wall": 7550
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "pond",
+  "s": 1,
+  "reason": "downed",
+  "score": 2590,
+  "timeLeft": 181,
+  "hp": 0,
+  "obj": [
+   {
+    "label": "Catch mosquitoes",
+    "count": 12,
+    "target": 12,
+    "doneAt": 26
+   },
+   {
+    "label": "Skim the water",
+    "count": 1,
+    "target": 4,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "strikes": 16,
+   "swoops": 16,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 18,
+   "dmg": {
+    "Frog tongue": 162
+   },
+   "hits": {
+    "Frog tongue": 9
+   },
+   "bumps": 21,
+   "hover": 0.1,
+   "stuck": 0.19999999999999998,
+   "dist": 1511.5556478656956,
+   "camClip": 1.4080000000000013,
+   "noGoal": 0,
+   "lockAvail": 23.056000000000306,
+   "goalFar": 0,
+   "playT": 61.69199999999903
+  },
+  "curve": [
+   [
+    5,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ]
+  ],
+  "wall": 12052
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "time",
+  "score": 1900,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 6,
+    "target": 20,
+    "doneAt": null
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 56
+   }
+  ],
+  "tele": {
+   "strikes": 191,
+   "swoops": 191,
+   "swoopHit": 0,
+   "swoopMiss": 186,
+   "catchSwoop": 0,
+   "catchTouch": 6,
+   "dmg": {},
+   "hits": {},
+   "bumps": 437,
+   "hover": 0.19999999999999998,
+   "stuck": 0.3,
+   "dist": 7683.901202100009,
+   "camClip": 0.13333333333333333,
+   "noGoal": 0,
+   "lockAvail": 234.29999999998927,
+   "goalFar": 0,
+   "playT": 240.0146666666556
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "wall": 17849
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "meadow",
+  "s": 1,
+  "reason": "win",
+  "score": 4130,
+  "timeLeft": 203,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 12,
+    "doneAt": 18
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 37
+   }
+  ],
+  "tele": {
+   "strikes": 13,
+   "swoops": 13,
+   "swoopHit": 7,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {
+    "Stung": 12
+   },
+   "hits": {
+    "Stung": 1
+   },
+   "bumps": 4,
+   "hover": 0.2333333333333333,
+   "stuck": 0.6666666666666666,
+   "dist": 884.1305137134738,
+   "camClip": 0.16666666666666666,
+   "noGoal": 0,
+   "lockAvail": 14.590666666666618,
+   "goalFar": 4.227999999999995,
+   "playT": 39.766666666666964
+  },
+  "curve": [
+   [
+    8,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    2
+   ]
+  ],
+  "wall": 5664
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "time",
+  "score": 2150,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 7,
+    "target": 20,
+    "doneAt": null
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 51
+   }
+  ],
+  "tele": {
+   "strikes": 192,
+   "swoops": 192,
+   "swoopHit": 0,
+   "swoopMiss": 184,
+   "catchSwoop": 0,
+   "catchTouch": 7,
+   "dmg": {},
+   "hits": {},
+   "bumps": 431,
+   "hover": 0.19999999999999998,
+   "stuck": 0.3,
+   "dist": 7640.764421290478,
+   "camClip": 0.49999999999999994,
+   "noGoal": 0,
+   "lockAvail": 232.79999999998935,
+   "goalFar": 0,
+   "playT": 240.01733333332226
+  },
+  "curve": [
+   [
+    7,
+    0
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    7,
+    2
+   ]
+  ],
+  "wall": 26202
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "meadow",
+  "s": 2,
+  "reason": "win",
+  "score": 3730,
+  "timeLeft": 180,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 12,
+    "doneAt": 28
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 60
+   }
+  ],
+  "tele": {
+   "strikes": 15,
+   "swoops": 15,
+   "swoopHit": 6,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {},
+   "hits": {},
+   "bumps": 4,
+   "hover": 0.19999999999999998,
+   "stuck": 0.6666666666666666,
+   "dist": 1440.6149879534303,
+   "camClip": 0.3,
+   "noGoal": 0,
+   "lockAvail": 17.95466666666671,
+   "goalFar": 6.45733333333332,
+   "playT": 62.825333333332324
+  },
+  "curve": [
+   [
+    5,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    1
+   ]
+  ],
+  "wall": 5271
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "garden",
+  "s": 1,
+  "reason": "win",
+  "score": 3800,
+  "timeLeft": 202,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch midges",
+    "count": 12,
+    "target": 12,
+    "doneAt": 38
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 36
+   }
+  ],
+  "tele": {
+   "strikes": 9,
+   "swoops": 9,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {},
+   "hits": {},
+   "bumps": 0,
+   "hover": 0.1,
+   "stuck": 0.19999999999999998,
+   "dist": 999.3257412830139,
+   "camClip": 0,
+   "noGoal": 0,
+   "lockAvail": 9.471999999999971,
+   "goalFar": 8.802666666666644,
+   "playT": 40.477333333333604
+  },
+  "curve": [
+   [
+    4,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    12,
+    2
+   ]
+  ],
+  "wall": 4596
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "garden",
+  "s": 2,
+  "reason": "win",
+  "score": 3750,
+  "timeLeft": 197,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch midges",
+    "count": 12,
+    "target": 12,
+    "doneAt": 43
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 31
+   }
+  ],
+  "tele": {
+   "strikes": 10,
+   "swoops": 10,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {},
+   "hits": {},
+   "bumps": 0,
+   "hover": 0.1,
+   "stuck": 0.19999999999999998,
+   "dist": 1129.2719618690733,
+   "camClip": 0,
+   "noGoal": 0,
+   "lockAvail": 11.32799999999997,
+   "goalFar": 11.902666666666633,
+   "playT": 45.83199999999996
+  },
+  "curve": [
+   [
+    4,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    12,
+    2
+   ]
+  ],
+  "wall": 4508
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "pond",
+  "s": 2,
+  "reason": "win",
+  "score": 4120,
+  "timeLeft": 87,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch mosquitoes",
+    "count": 12,
+    "target": 12,
+    "doneAt": 25
+   },
+   {
+    "label": "Skim the water",
+    "count": 4,
+    "target": 4,
+    "doneAt": 153
+   }
+  ],
+  "tele": {
+   "strikes": 11,
+   "swoops": 11,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {
+    "Frog tongue": 72
+   },
+   "hits": {
+    "Frog tongue": 4
+   },
+   "bumps": 39,
+   "hover": 0.1,
+   "stuck": 0.16666666666666666,
+   "dist": 3475.8576907719234,
+   "camClip": 4.674666666666659,
+   "noGoal": 0,
+   "lockAvail": 13.307999999999955,
+   "goalFar": 0,
+   "playT": 155.5079999999937
+  },
+  "curve": [
+   [
+    8,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    3
+   ],
+   [
+    12,
+    3
+   ],
+   [
+    12,
+    3
+   ],
+   [
+    12,
+    3
+   ],
+   [
+    12,
+    3
+   ],
+   [
+    12,
+    3
+   ],
+   [
+    12,
+    3
+   ]
+  ],
+  "wall": 21617
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "win",
+  "score": 3650,
+  "timeLeft": 172,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 12,
+    "doneAt": 32
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 68
+   }
+  ],
+  "tele": {
+   "strikes": 14,
+   "swoops": 14,
+   "swoopHit": 6,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {
+    "Stung": 12
+   },
+   "hits": {
+    "Stung": 1
+   },
+   "bumps": 1,
+   "hover": 0.3,
+   "stuck": 0.7,
+   "dist": 1613.1238089569406,
+   "camClip": 0.19999999999999998,
+   "noGoal": 0,
+   "lockAvail": 16.999999999999996,
+   "goalFar": 14.069333333333292,
+   "playT": 70.50933333333191
+  },
+  "curve": [
+   [
+    4,
+    0
+   ],
+   [
+    11,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    2
+   ]
+  ],
+  "wall": 7748
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "pond",
+  "s": 1,
+  "reason": "win",
+  "score": 3250,
+  "timeLeft": 195,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 16,
+    "target": 16,
+    "doneAt": 11
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 45
+   }
+  ],
+  "tele": {
+   "strikes": 10,
+   "swoops": 10,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 16.363636363636363
+   },
+   "hits": {
+    "Frog tongue": 1
+   },
+   "bumps": 8,
+   "hover": 1.3413333333333342,
+   "stuck": 0.5413333333333333,
+   "dist": 665.9267630063257,
+   "camClip": 1.5080000000000016,
+   "noGoal": 0,
+   "lockAvail": 15.099999999999957,
+   "goalFar": 0,
+   "playT": 48.0826666666665
+  },
+  "curve": [
+   [
+    16,
+    0
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    16,
+    1
+   ]
+  ],
+  "wall": 7526
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "pond",
+  "s": 2,
+  "reason": "win",
+  "score": 3230,
+  "timeLeft": 193,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 16,
+    "target": 16,
+    "doneAt": 14
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 47
+   }
+  ],
+  "tele": {
+   "strikes": 12,
+   "swoops": 12,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 10,
+   "hover": 1.0413333333333334,
+   "stuck": 0.39999999999999997,
+   "dist": 687.9818161392722,
+   "camClip": 3.707999999999997,
+   "noGoal": 0,
+   "lockAvail": 22.033333333333587,
+   "goalFar": 0,
+   "playT": 49.10799999999978
+  },
+  "curve": [
+   [
+    16,
+    0
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    16,
+    1
+   ]
+  ],
+  "wall": 9790
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "win",
+  "score": 3470,
+  "timeLeft": 172,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 12,
+    "doneAt": 48
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 68
+   }
+  ],
+  "tele": {
+   "strikes": 17,
+   "swoops": 17,
+   "swoopHit": 6,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 12,
+   "dmg": {
+    "Webbed": 6
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 1,
+   "hover": 0.49999999999999994,
+   "stuck": 0.7666666666666666,
+   "dist": 1604.9053351722566,
+   "camClip": 0.4333333333333333,
+   "noGoal": 0,
+   "lockAvail": 19.542666666666797,
+   "goalFar": 12.047999999999965,
+   "playT": 70.4333333333319
+  },
+  "curve": [
+   [
+    4,
+    0
+   ],
+   [
+    8,
+    0
+   ],
+   [
+    11,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    2
+   ]
+  ],
+  "wall": 26246
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "meadow",
+  "s": 1,
+  "reason": "win",
+  "score": 3445,
+  "timeLeft": 189,
+  "hp": 65,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 30,
+    "target": 30,
+    "doneAt": 32
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 51
+   }
+  ],
+  "tele": {
+   "strikes": 17,
+   "swoops": 17,
+   "swoopHit": 4,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Stung": 10.909090909090908,
+    "Swallow strike": 25.454545454545453
+   },
+   "hits": {
+    "Stung": 1,
+    "Swallow strike": 1
+   },
+   "bumps": 0,
+   "hover": 0.4666666666666666,
+   "stuck": 1.2000000000000004,
+   "dist": 742.4945160226802,
+   "camClip": 1.6000000000000016,
+   "noGoal": 0,
+   "lockAvail": 32.022666666667426,
+   "goalFar": 4.807999999999994,
+   "playT": 53.96399999999947
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    30,
+    1
+   ]
+  ],
+  "wall": 10480
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "garden",
+  "s": 2,
+  "reason": "win",
+  "score": 3145,
+  "timeLeft": 207,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 14,
+    "target": 14,
+    "doneAt": 23
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 33
+   }
+  ],
+  "tele": {
+   "strikes": 6,
+   "swoops": 6,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 5.454545454545454
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 0,
+   "hover": 0.4746666666666666,
+   "stuck": 1.1413333333333338,
+   "dist": 495.0403477293592,
+   "camClip": 0.9999999999999999,
+   "noGoal": 0,
+   "lockAvail": 11.574666666666635,
+   "goalFar": 3.933333333333329,
+   "playT": 35.18266666666724
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    14,
+    1
+   ]
+  ],
+  "wall": 1348
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "win",
+  "score": 3610,
+  "timeLeft": 206,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 20,
+    "target": 20,
+    "doneAt": 25
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 34
+   }
+  ],
+  "tele": {
+   "strikes": 13,
+   "swoops": 13,
+   "swoopHit": 4,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 7,
+   "hover": 2.066666666666669,
+   "stuck": 1.3333333333333341,
+   "dist": 445.10851585303345,
+   "camClip": 0.9746666666666666,
+   "noGoal": 0,
+   "lockAvail": 15.023999999999955,
+   "goalFar": 4.541333333333327,
+   "playT": 36.206666666667175
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    0
+   ]
+  ],
+  "wall": 686
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "meadow",
+  "s": 2,
+  "reason": "win",
+  "score": 3710,
+  "timeLeft": 192,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 30,
+    "target": 30,
+    "doneAt": 26
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 48
+   }
+  ],
+  "tele": {
+   "strikes": 16,
+   "swoops": 16,
+   "swoopHit": 4,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 6,
+   "hover": 0.4333333333333333,
+   "stuck": 1.1333333333333335,
+   "dist": 710.1006706439096,
+   "camClip": 2.066666666666669,
+   "noGoal": 0,
+   "lockAvail": 29.22400000000062,
+   "goalFar": 5.60799999999999,
+   "playT": 50.27333333333303
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    30,
+    0
+   ],
+   [
+    30,
+    1
+   ]
+  ],
+  "wall": 8429
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "win",
+  "score": 3270,
+  "timeLeft": 187,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 20,
+    "target": 20,
+    "doneAt": 36
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 53
+   }
+  ],
+  "tele": {
+   "strikes": 17,
+   "swoops": 17,
+   "swoopHit": 4,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 25.454545454545453
+   },
+   "hits": {
+    "Swallow strike": 1
+   },
+   "bumps": 3,
+   "hover": 1.7413333333333354,
+   "stuck": 1.7666666666666688,
+   "dist": 705.3557948208396,
+   "camClip": 0.03333333333333333,
+   "noGoal": 0,
+   "lockAvail": 19.224000000000114,
+   "goalFar": 1.9080000000000026,
+   "playT": 55.647999999999385
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    1
+   ],
+   [
+    20,
+    2
+   ]
+  ],
+  "wall": 3060
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "garden",
+  "s": 1,
+  "reason": "win",
+  "score": 3190,
+  "timeLeft": 206,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 14,
+    "target": 14,
+    "doneAt": 24
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 34
+   }
+  ],
+  "tele": {
+   "strikes": 9,
+   "swoops": 9,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 5.454545454545454
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 0,
+   "hover": 0.6746666666666666,
+   "stuck": 0.8746666666666666,
+   "dist": 498.12463827265503,
+   "camClip": 0.7999999999999999,
+   "noGoal": 0,
+   "lockAvail": 13.774666666666628,
+   "goalFar": 4.199999999999995,
+   "playT": 36.38266666666717
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    14,
+    1
+   ]
+  ],
+  "wall": 6500
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "pond",
+  "s": 1,
+  "reason": "win",
+  "score": 4000,
+  "timeLeft": 190,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 6,
+    "target": 6,
+    "doneAt": 12
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 50
+   }
+  ],
+  "tele": {
+   "strikes": 7,
+   "swoops": 7,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 27.69230769230769
+   },
+   "hits": {
+    "Frog tongue": 2
+   },
+   "bumps": 12,
+   "hover": 0.9746666666666666,
+   "stuck": 0.13333333333333333,
+   "dist": 908.7555313312823,
+   "camClip": 0.49999999999999994,
+   "noGoal": 0,
+   "lockAvail": 15.374666666666622,
+   "goalFar": 0,
+   "playT": 52.83866666666623
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ]
+  ],
+  "wall": 8927
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "meadow",
+  "s": 1,
+  "reason": "win",
+  "score": 8290,
+  "timeLeft": 189,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 10,
+    "target": 10,
+    "doneAt": 22
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 51
+   }
+  ],
+  "tele": {
+   "strikes": 15,
+   "swoops": 15,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 1,
+   "hover": 0.4666666666666666,
+   "stuck": 0.8453333333333333,
+   "dist": 852.6606931139236,
+   "camClip": 1.1333333333333335,
+   "noGoal": 0,
+   "lockAvail": 29.73200000000064,
+   "goalFar": 0,
+   "playT": 53.28666666666621
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    10,
+    1
+   ]
+  ],
+  "wall": 7883
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "pond",
+  "s": 2,
+  "reason": "win",
+  "score": 4440,
+  "timeLeft": 194,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 6,
+    "target": 6,
+    "doneAt": 14
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 46
+   }
+  ],
+  "tele": {
+   "strikes": 11,
+   "swoops": 11,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 27.69230769230769
+   },
+   "hits": {
+    "Frog tongue": 2
+   },
+   "bumps": 6,
+   "hover": 0.9999999999999999,
+   "stuck": 0.19999999999999998,
+   "dist": 819.2992768215149,
+   "camClip": 1.2333333333333338,
+   "noGoal": 0,
+   "lockAvail": 23.24000000000031,
+   "goalFar": 0,
+   "playT": 48.52933333333313
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ]
+  ],
+  "wall": 9381
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "garden",
+  "s": 1,
+  "reason": "win",
+  "score": 6270,
+  "timeLeft": 203,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 8,
+    "target": 8,
+    "doneAt": 23
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 37
+   }
+  ],
+  "tele": {
+   "strikes": 10,
+   "swoops": 10,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 4.615384615384615
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 1,
+   "hover": 0.5746666666666667,
+   "stuck": 0.5333333333333333,
+   "dist": 631.1048354057901,
+   "camClip": 0.7999999999999999,
+   "noGoal": 0,
+   "lockAvail": 17.257333333333346,
+   "goalFar": 0,
+   "playT": 39.28000000000034
+  },
+  "curve": [
+   [
+    4,
+    0
+   ],
+   [
+    8,
+    1
+   ]
+  ],
+  "wall": 3572
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "meadow",
+  "s": 2,
+  "reason": "win",
+  "score": 6320,
+  "timeLeft": 192,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 10,
+    "target": 10,
+    "doneAt": 26
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 48
+   }
+  ],
+  "tele": {
+   "strikes": 15,
+   "swoops": 15,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 0,
+   "hover": 0.39999999999999997,
+   "stuck": 0.4666666666666666,
+   "dist": 799.0734403929908,
+   "camClip": 0.4666666666666666,
+   "noGoal": 0,
+   "lockAvail": 24.882666666667063,
+   "goalFar": 0,
+   "playT": 50.41199999999969
+  },
+  "curve": [
+   [
+    5,
+    0
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    10,
+    1
+   ]
+  ],
+  "wall": 8878
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "garden",
+  "s": 2,
+  "reason": "win",
+  "score": 5280,
+  "timeLeft": 206,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 8,
+    "target": 8,
+    "doneAt": 28
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 34
+   }
+  ],
+  "tele": {
+   "strikes": 9,
+   "swoops": 9,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 4.615384615384615
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 0,
+   "hover": 2.366666666666668,
+   "stuck": 1.0666666666666667,
+   "dist": 521.5483208680772,
+   "camClip": 0.26666666666666666,
+   "noGoal": 0,
+   "lockAvail": 16.207999999999963,
+   "goalFar": 0,
+   "playT": 36.77200000000048
+  },
+  "curve": [
+   [
+    3,
+    0
+   ],
+   [
+    8,
+    1
+   ]
+  ],
+  "wall": 8472
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "win",
+  "score": 6170,
+  "timeLeft": 187,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 8,
+    "target": 8,
+    "doneAt": 16
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 53
+   }
+  ],
+  "tele": {
+   "strikes": 11,
+   "swoops": 11,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 7,
+   "hover": 2.7413333333333334,
+   "stuck": 0.7999999999999999,
+   "dist": 897.6548972784452,
+   "camClip": 0.03333333333333333,
+   "noGoal": 0,
+   "lockAvail": 15.09866666666662,
+   "goalFar": 0,
+   "playT": 55.179999999999424
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    8,
+    2
+   ]
+  ],
+  "wall": 8190
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "win",
+  "score": 4350,
+  "timeLeft": 195,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 8,
+    "target": 8,
+    "doneAt": 28
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 45
+   }
+  ],
+  "tele": {
+   "strikes": 10,
+   "swoops": 10,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {},
+   "hits": {},
+   "bumps": 10,
+   "hover": 2.8573333333333335,
+   "stuck": 1.008,
+   "dist": 713.1227568333975,
+   "camClip": 1.308000000000001,
+   "noGoal": 0,
+   "lockAvail": 15.831999999999951,
+   "goalFar": 0,
+   "playT": 47.23866666666655
+  },
+  "curve": [
+   [
+    5,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    8,
+    1
+   ]
+  ],
+  "wall": 5516
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "pond",
+  "s": 1,
+  "reason": "win",
+  "score": 4870,
+  "timeLeft": 187,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 14,
+    "target": 14,
+    "doneAt": 27
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 53
+   }
+  ],
+  "tele": {
+   "strikes": 12,
+   "swoops": 12,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 14,
+   "dmg": {
+    "Webbed": 2.727272727272727,
+    "Frog tongue": 16.363636363636363
+   },
+   "hits": {
+    "Webbed": 1,
+    "Frog tongue": 2
+   },
+   "bumps": 24,
+   "hover": 0.6333333333333333,
+   "stuck": 0.6333333333333333,
+   "dist": 850.3881739549739,
+   "camClip": 1.4120000000000013,
+   "noGoal": 0,
+   "lockAvail": 17.6426666666667,
+   "goalFar": 0,
+   "playT": 55.258666666666116
+  },
+  "curve": [
+   [
+    7,
+    0
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    14,
+    2
+   ]
+  ],
+  "wall": 6111
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "pond",
+  "s": 2,
+  "reason": "win",
+  "score": 4470,
+  "timeLeft": 192,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 14,
+    "target": 14,
+    "doneAt": 35
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 48
+   }
+  ],
+  "tele": {
+   "strikes": 15,
+   "swoops": 15,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 15,
+   "dmg": {
+    "Webbed": 2.727272727272727,
+    "Frog tongue": 16.363636363636363
+   },
+   "hits": {
+    "Webbed": 1,
+    "Frog tongue": 2
+   },
+   "bumps": 20,
+   "hover": 0.6666666666666666,
+   "stuck": 0.6,
+   "dist": 827.703614263048,
+   "camClip": 0.8039999999999999,
+   "noGoal": 0,
+   "lockAvail": 20.024000000000157,
+   "goalFar": 0,
+   "playT": 50.703999999999674
+  },
+  "curve": [
+   [
+    6,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    14,
+    1
+   ]
+  ],
+  "wall": 6252
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "meadow",
+  "s": 2,
+  "reason": "win",
+  "score": 4240,
+  "timeLeft": 174,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 16,
+    "target": 16,
+    "doneAt": 66
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 47
+   }
+  ],
+  "tele": {
+   "strikes": 15,
+   "swoops": 15,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 16,
+   "dmg": {},
+   "hits": {},
+   "bumps": 16,
+   "hover": 0.16666666666666666,
+   "stuck": 0.3,
+   "dist": 1100.2828055972202,
+   "camClip": 0.1,
+   "noGoal": 0,
+   "lockAvail": 23.578666666666997,
+   "goalFar": 5.590666666666657,
+   "playT": 68.77999999999864
+  },
+  "curve": [
+   [
+    5,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    13,
+    1
+   ],
+   [
+    15,
+    2
+   ],
+   [
+    16,
+    2
+   ]
+  ],
+  "wall": 4595
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "garden",
+  "s": 1,
+  "reason": "win",
+  "score": 3750,
+  "timeLeft": 165,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 14,
+    "target": 14,
+    "doneAt": 75
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 27
+   }
+  ],
+  "tele": {
+   "strikes": 13,
+   "swoops": 13,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 14,
+   "dmg": {},
+   "hits": {},
+   "bumps": 14,
+   "hover": 0.19999999999999998,
+   "stuck": 0.3,
+   "dist": 1190.7798917075802,
+   "camClip": 0.9666666666666666,
+   "noGoal": 0,
+   "lockAvail": 19.633333333333468,
+   "goalFar": 8.647999999999977,
+   "playT": 77.3559999999982
+  },
+  "curve": [
+   [
+    2,
+    0
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    11,
+    2
+   ],
+   [
+    13,
+    2
+   ]
+  ],
+  "wall": 3036
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "meadow",
+  "s": 1,
+  "reason": "win",
+  "score": 3800,
+  "timeLeft": 165,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 16,
+    "target": 16,
+    "doneAt": 75
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 48
+   }
+  ],
+  "tele": {
+   "strikes": 16,
+   "swoops": 16,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 16,
+   "dmg": {
+    "Webbed": 5.454545454545454
+   },
+   "hits": {
+    "Webbed": 2
+   },
+   "bumps": 17,
+   "hover": 1.0666666666666667,
+   "stuck": 0.7999999999999999,
+   "dist": 1187.5183521870815,
+   "camClip": 0.8333333333333333,
+   "noGoal": 0,
+   "lockAvail": 23.969333333333687,
+   "goalFar": 5.345333333333325,
+   "playT": 77.80799999999813
+  },
+  "curve": [
+   [
+    3,
+    0
+   ],
+   [
+    5,
+    1
+   ],
+   [
+    9,
+    1
+   ],
+   [
+    13,
+    2
+   ],
+   [
+    15,
+    2
+   ]
+  ],
+  "wall": 11056
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "garden",
+  "s": 2,
+  "reason": "win",
+  "score": 4530,
+  "timeLeft": 188,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 14,
+    "target": 14,
+    "doneAt": 52
+   },
+   {
+    "label": "Dodge the bat's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 31
+   }
+  ],
+  "tele": {
+   "strikes": 12,
+   "swoops": 12,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 14,
+   "dmg": {},
+   "hits": {},
+   "bumps": 10,
+   "hover": 0.16666666666666666,
+   "stuck": 0.3,
+   "dist": 886.4261887961147,
+   "camClip": 0.7666666666666666,
+   "noGoal": 0,
+   "lockAvail": 18.357333333333408,
+   "goalFar": 7.257333333333317,
+   "playT": 54.77733333333275
+  },
+  "curve": [
+   [
+    3,
+    0
+   ],
+   [
+    4,
+    1
+   ],
+   [
+    9,
+    2
+   ],
+   [
+    14,
+    2
+   ]
+  ],
+  "wall": 6003
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "win",
+  "score": 5160,
+  "timeLeft": 171,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 20,
+    "target": 20,
+    "doneAt": 69
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 57
+   }
+  ],
+  "tele": {
+   "strikes": 17,
+   "swoops": 17,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 20,
+   "dmg": {},
+   "hits": {},
+   "bumps": 18,
+   "hover": 0.19999999999999998,
+   "stuck": 0.3,
+   "dist": 1182.7153754243282,
+   "camClip": 1.3000000000000007,
+   "noGoal": 0,
+   "lockAvail": 25.802666666667115,
+   "goalFar": 7.67866666666665,
+   "playT": 71.99466666666513
+  },
+  "curve": [
+   [
+    5,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    15,
+    2
+   ],
+   [
+    20,
+    2
+   ]
+  ],
+  "wall": 9189
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "time",
+  "score": 2950,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 17,
+    "target": 20,
+    "doneAt": null
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 2,
+    "target": 2,
+    "doneAt": 50
+   }
+  ],
+  "tele": {
+   "strikes": 155,
+   "swoops": 155,
+   "swoopHit": 0,
+   "swoopMiss": 139,
+   "catchSwoop": 0,
+   "catchTouch": 17,
+   "dmg": {
+    "Webbed": 2.727272727272727
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 334,
+   "hover": 0.49999999999999994,
+   "stuck": 0.3333333333333333,
+   "dist": 6692.962813418497,
+   "camClip": 1.3333333333333341,
+   "noGoal": 0,
+   "lockAvail": 196.15599999999142,
+   "goalFar": 4.635999999999994,
+   "playT": 240.03333333332228
+  },
+  "curve": [
+   [
+    4,
+    0
+   ],
+   [
+    9,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    15,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ],
+   [
+    17,
+    2
+   ]
+  ],
+  "wall": 51706
+ }
+]
