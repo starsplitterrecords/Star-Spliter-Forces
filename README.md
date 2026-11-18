@@ -18,3 +18,7 @@ The initial character is **Pulse Width Codex**. Winning a run unlocks **Ghost Dr
 ## Music assets
 
 No third-party music is embedded. Add licensed Star Splitter masters/stems under `audio/` and connect them through `AudioDirector`. See `audio/README.md`.
+
+## Also in this repo: Hexapod Skies
+
+`hexapod-skies/` holds a separate browser game, an arcade insect-flight sim. See `hexapod-skies/README.md`.
