@@ -138,7 +138,7 @@ kbd{font-family:inherit;font-size:.78rem;border:1px solid var(--line);border-bot
 #toast small{display:block;font-family:var(--body);font-weight:600;font-size:.85rem;color:var(--text);margin-top:6px;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:4px 12px;text-shadow:none}
 #alert{position:absolute;left:50%;top:calc(96px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:var(--danger);color:#fff;font-weight:700;padding:6px 14px;border-radius:999px;font-size:.88rem;animation:pulse .5s infinite alternate;white-space:nowrap}
 @keyframes pulse{from{opacity:.65}to{opacity:1}}
-#pauseBtn{pointer-events:auto;position:absolute;right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--glass);cursor:pointer;font-weight:700;letter-spacing:-2px}
+#pauseBtn{z-index:3;pointer-events:auto;position:absolute;right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--glass);cursor:pointer;font-weight:700;letter-spacing:-2px}
 #vignette{position:fixed;inset:0;pointer-events:none;z-index:9;opacity:0;background:radial-gradient(ellipse at center,transparent 45%,rgba(255,40,20,.55) 100%);transition:opacity .2s}
 #pops{position:fixed;inset:0;pointer-events:none;z-index:11;overflow:hidden}
 .pop{position:absolute;font-family:var(--display);font-weight:800;font-size:1rem;color:var(--pollen);text-shadow:0 2px 8px rgba(0,0,0,.6);transform:translate(-50%,-50%);animation:rise .9s ease-out forwards;white-space:nowrap}
@@ -146,16 +146,22 @@ kbd{font-family:inherit;font-size:.78rem;border:1px solid var(--line);border-bot
 .pop.red{color:var(--danger)}
 @keyframes rise{from{opacity:1;transform:translate(-50%,-50%)}to{opacity:0;transform:translate(-50%,-160%)}}
 
-/* touch */
+/* touch: one thumb */
+#touchUI{z-index:2}
+#thumbZone{position:absolute;inset:0;pointer-events:auto;touch-action:none}
+#thumbBase{position:absolute;left:0;top:0;width:112px;height:112px;margin:-56px 0 0 -56px;border-radius:50%;border:2px solid rgba(255,255,255,.4);background:rgba(0,0,0,.15);pointer-events:none}
+#thumbBase.boost{border-color:var(--teal);box-shadow:0 0 0 8px rgba(65,216,198,.25)}
+#thumbKnob{position:absolute;left:31px;top:31px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.55)}
+#thumbHint{position:absolute;left:50%;bottom:calc(76px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--glass-hi);border:1px solid var(--pollen);border-radius:14px;padding:9px 14px;font-size:.85rem;text-align:center;max-width:calc(100vw - 32px);pointer-events:none}
+#frogWarn{position:absolute;left:0;top:0;margin:-14px 0 0 -30px;width:60px;text-align:center;font-weight:800;font-size:.8rem;color:#fff;background:var(--danger);border-radius:999px;padding:4px 0;animation:pulse .2s infinite alternate;pointer-events:none}
+#lock.side svg{color:rgba(255,255,255,.55)}
+#lock.side span{color:rgba(255,255,255,.7)}
+.hud-stage{margin:-2px 0 7px;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);font-weight:700}
+.card ol.goals{list-style:none;counter-reset:st}
+.card ol.goals li{counter-increment:st}
+.card ol.goals li::before{content:counter(st);clip-path:none;background:none;color:var(--pollen);font-weight:800;width:auto;height:auto;margin-right:6px}
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 #touchUI{position:absolute;inset:0;pointer-events:none}
-#joyZone{position:absolute;left:0;bottom:0;width:50%;height:62%;pointer-events:auto;touch-action:none}
-#joyBase{position:absolute;width:120px;height:120px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:rgba(0,0,0,.18);left:calc(36px + env(safe-area-inset-left,0px));bottom:calc(140px + env(safe-area-inset-bottom,0px))}
-#joyKnob{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.4)}
-#touchBtns{position:absolute;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(70px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:auto auto;gap:12px;pointer-events:auto}
-#touchBtns button{width:76px;height:76px;border-radius:50%;border:2px solid rgba(255,255,255,.3);background:rgba(10,20,14,.55);font-weight:700;font-size:.8rem;touch-action:none}
-#touchBtns #tFly{grid-row:span 2;width:100px;height:100px;align-self:center;background:rgba(65,216,198,.3);border-color:var(--teal)}
-#touchBtns #tStrike{background:rgba(245,184,33,.35);border-color:var(--pollen)}
-#touchBtns button.on{background:rgba(65,216,198,.45)}
 
 /* ---------- Pause / results ---------- */
 .modal{display:grid;place-items:center;background:rgba(6,12,9,.55);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
@@ -194,9 +200,8 @@ kbd{font-family:inherit;font-size:.78rem;border:1px solid var(--line);border-bot
   #minimap{width:96px;height:96px}
   .hud-tr{width:calc(50vw - 56px);align-items:flex-end}
   .hud-bl{width:min(210px,calc(100vw - 90px));padding:7px 9px;gap:5px}
-  body.touch .hud-bl{bottom:auto;top:calc(150px + env(safe-area-inset-top,0px))}
   #toast{top:42%;font-size:1.1rem}
-  #coach{bottom:auto;top:calc(52% + 40px);font-size:.85rem}
+  #coach{bottom:auto;top:calc(118px + env(safe-area-inset-top,0px));font-size:.85rem}
   #objList li small{display:none}
 }
 @media (max-width:460px){ .cards{grid-template-columns:1fr} }
@@ -209,7 +214,7 @@ kbd{font-family:inherit;font-size:.78rem;border:1px solid var(--line);border-bot
 <div id="pops"></div>
 
 <div id="hud" hidden>
-  <div class="hud-tl panel"><p class="hud-hab" id="hudHab"></p><ul id="objList"></ul></div>
+  <div class="hud-tl panel"><p class="hud-hab" id="hudHab"></p><p class="hud-stage" id="hudStage"></p><ul id="objList"></ul></div>
   <div class="hud-tc"><div id="hudTime">4:00</div><div id="hudScore">0</div><div id="hudCombo"></div></div>
   <div class="hud-tr"><canvas id="minimap" width="336" height="336"></canvas><div id="hudSpeed">0 km/h</div></div>
   <div class="hud-bl panel">
@@ -226,9 +231,11 @@ kbd{font-family:inherit;font-size:.78rem;border:1px solid var(--line);border-bot
   <div id="toast"></div>
   <div id="alert" hidden></div>
   <button id="pauseBtn" aria-label="Pause">❚❚</button>
+  <div id="frogWarn" hidden>Frog!</div>
   <div id="touchUI" hidden>
-    <div id="joyZone"><div id="joyBase"><div id="joyKnob"></div></div></div>
-    <div id="touchBtns"><button id="tBoost">Boost</button><button id="tStrike">Strike</button><button id="tFly">Fly</button></div>
+    <div id="thumbZone"></div>
+    <div id="thumbBase" hidden><div id="thumbKnob"></div></div>
+    <div id="thumbHint">Touch and drag to fly · Lift to hover · Tap to strike · Push past the ring to boost</div>
   </div>
 </div>
 
@@ -256,7 +263,7 @@ kbd{font-family:inherit;font-size:.78rem;border:1px solid var(--line);border-bot
         <dt>Strike</dt><dd><kbd>Space</kbd> or right-click. When the hex locks on, you swoop straight onto the target</dd>
         <dt>Boost</dt><dd>Hold <kbd>Shift</kbd> while flying (uses stamina). <kbd>S</kbd> backs off</dd>
         <dt>Pause</dt><dd><kbd>Esc</kbd> or <kbd>P</kbd> &nbsp; Mute <kbd>M</kbd></dd>
-        <dt>Touch</dt><dd>Left stick steers; hold Fly to move, Strike to swoop</dd>
+        <dt>Touch</dt><dd>One thumb: touch and drag to fly and steer, lift to hover, tap to strike, push past the ring to boost</dd>
       </dl>
     </div>
     <p class="credit">Each insect has its own job in every habitat. Birds dive when their shadow grows; drop into the grass to lose them.</p>
@@ -353,9 +360,9 @@ const MOUNTS = {
     stamina: 150, drain: 15, nightVision: true, camDist: 7.5, camH: 2.3, eats: [], fights: false, flowers: 'nectar',
     stats: { Speed: 4, Agility: 2, Armour: 3, Stamina: 5 }, buzz: { type: 'triangle', f: 35, lp: 420, vol: 0.7 } },
   ladybird: { key: 'ladybird', name: 'Seven-spot Ladybird', short: 'ladybird', latin: 'Coccinella septempunctata', hz: 85, role: 'Armoured grazer', diet: 'Eats aphids',
-    desc: 'Grazes aphids off the stems and shrugs off stings and beaks with its hard wing cases. Aphids score double.',
+    desc: 'Grazes aphids off the stems and shrugs off stings and beaks with its hard wing cases. Aphids score extra.',
     cruise: 14, boost: 26, turnResp: 4.5, grip: 4, accel: 2.0, armor: 2.2, cargo: 0, catchR: 2.0, strikeR: 3.2, strikeDmg: 1,
-    stamina: 100, drain: 19, aphidBonus: 2, camDist: 5.6, camH: 1.8, eats: ['aphid'], fights: false, flowers: null,
+    stamina: 100, drain: 19, aphidBonus: 1.5, camDist: 5.6, camH: 1.8, eats: ['aphid'], fights: false, flowers: null,
     stats: { Speed: 2, Agility: 3, Armour: 5, Stamina: 3 }, buzz: { type: 'sawtooth', f: 85, lp: 700, vol: 0.45 } },
 };
 const MOUNT_ORDER = ['dragonfly', 'honeybee', 'hawkmoth', 'ladybird'];
@@ -384,9 +391,8 @@ const HABITATS = {
     pond: { r: 72 }, water: 0, waterColor: '#24626a',
     grass: { count: 12000, c1: '#4c7a28', c2: '#a2b84e', h: [4, 11] },
     flowers: [['waterlily', 22], ['iris', 16], ['daisy', 12]],
-    props: { reeds: 160, pads: 46, rocks: 12, trees: 26, treeColor: ['#4a3a2a', '#3f6b2e'] },
-    prey: [['mosquito', 26], ['aphid', 22]], wasps: 0, birds: ['swallow'], frogs: 5, webs: 5, nest: 'stump', nestAt: [0, -104],
-    jobs: { dragonfly: [J.catch('mosquito', 12), J.skim(4)], honeybee: [J.deliver(16), J.dodge(2)], hawkmoth: [J.nectar(6), J.dodge(2)], ladybird: [J.catch('aphid', 14), J.dodge(2)] },
+    props: { reeds: 110, pads: 46, rocks: 12, trees: 26, treeColor: ['#4a3a2a', '#3f6b2e'] },
+    flyer: 'mosquito', prey: [['mosquito', 26], ['aphid', 22]], wasps: 0, birds: ['swallow'], frogs: 5, webs: 5, nest: 'stump', nestAt: [0, -104],
   },
   meadow: {
     key: 'meadow', name: 'Wildflower Meadow', sub: 'Golden hour, warm breeze', seed: 23, time: 240, recommend: 'honeybee',
@@ -396,8 +402,7 @@ const HABITATS = {
     water: null, grass: { count: 16000, c1: '#5b8a2a', c2: '#c8c25a', h: [4, 12] },
     flowers: [['daisy', 26], ['poppy', 26], ['cornflower', 20], ['clover', 30], ['sunflower', 7]],
     props: { reeds: 0, pads: 0, rocks: 10, trees: 22, treeColor: ['#4f3d2b', '#4c7a32'], waspNest: true },
-    prey: [['gnat', 22], ['aphid', 24]], wasps: 4, birds: ['swallow'], frogs: 0, webs: 4, nest: 'skep', nestAt: [-30, -96],
-    jobs: { dragonfly: [J.catch('gnat', 12), J.defeat(2)], honeybee: [J.deliver(30), J.defeat(2)], hawkmoth: [J.nectar(10), J.dodge(2)], ladybird: [J.catch('aphid', 16), J.dodge(2)] },
+    flyer: 'gnat', prey: [['gnat', 22], ['aphid', 24]], wasps: 4, birds: ['swallow'], frogs: 0, webs: 4, nest: 'skep', nestAt: [-30, -96],
   },
   garden: {
     key: 'garden', name: 'Moonlit Garden', sub: 'Midnight, dew on everything', seed: 37, time: 240, recommend: 'hawkmoth', night: true,
@@ -407,8 +412,7 @@ const HABITATS = {
     water: null, grass: { count: 11000, c1: '#1e4426', c2: '#4f7a3a', h: [3, 7] },
     flowers: [['moonflower', 20], ['rose', 16], ['lavender', 22]],
     props: { reeds: 0, pads: 0, rocks: 16, trees: 24, treeColor: ['#1c1a18', '#16261b'], mushrooms: 14, glowShrooms: 26 },
-    prey: [['midge', 24], ['aphid', 20]], wasps: 0, birds: ['bat', 'bat'], frogs: 0, webs: 7, nest: 'stump', nestAt: [20, -88],
-    jobs: { dragonfly: [J.catch('midge', 12), J.dodge(2, 'bat')], honeybee: [J.deliver(14), J.dodge(2, 'bat')], hawkmoth: [J.nectar(8), J.dodge(2, 'bat')], ladybird: [J.catch('aphid', 14), J.dodge(2, 'bat')] },
+    flyer: 'midge', prey: [['midge', 24], ['aphid', 20]], wasps: 0, birds: ['bat', 'bat'], frogs: 0, webs: 7, nest: 'stump', nestAt: [20, -88],
   },
   hedgerow: {
     key: 'hedgerow', name: 'Bramble Hedgerow', sub: 'Morning, dappled shade', seed: 53, time: 240, recommend: 'ladybird',
@@ -418,11 +422,36 @@ const HABITATS = {
     water: null, grass: { count: 9000, c1: '#3f6a25', c2: '#88a446', h: [2.5, 7] },
     flowers: [['bramble', 26], ['foxglove', 10]],
     props: { reeds: 0, pads: 0, rocks: 8, trees: 30, treeColor: ['#3d2f22', '#2f5a27'], mushrooms: 22, ferns: 34, log: true, waspNest: true },
-    prey: [['gnat', 18], ['aphid', 36]], wasps: 3, birds: ['swallow'], frogs: 0, webs: 9, nest: 'stump', nestAt: [0, -92],
-    jobs: { dragonfly: [J.catch('gnat', 12), J.defeat(2)], honeybee: [J.deliver(20), J.defeat(2)], hawkmoth: [J.nectar(8), J.dodge(2)], ladybird: [J.catch('aphid', 20), J.dodge(2)] },
+    flyer: 'gnat', prey: [['gnat', 18], ['aphid', 36]], wasps: 3, birds: ['swallow'], frogs: 0, webs: 9, nest: 'stump', nestAt: [0, -92],
   },
 };
 const HAB_ORDER = ['pond', 'meadow', 'garden', 'hedgerow'];
+// Each run is three stages that ramp up. Jobs follow what each insect does in nature.
+function buildStages(hab, mount) {
+  const H = HABITATS[hab], fly = H.flyer, wasps = H.wasps > 0, who = H.birds[0] === 'bat' ? 'bat' : 'swallow';
+  if (mount === 'dragonfly') return [
+    { name: 'Warm-up hunt', obj: [J.catch(fly, 12)] },
+    hab === 'pond' ? { name: 'Skim and strike', obj: [J.skim(4), J.catch(fly, 10)] } : wasps ? { name: 'Hold the territory', obj: [J.defeat(3), J.catch(fly, 10)] } : { name: 'Night hunt', obj: [J.catch(fly, 12), J.dodge(2, who)] },
+    { name: 'The swarm', obj: [J.catch(fly, 18), J.dodge(1, who)], swarm: fly },
+  ];
+  if (mount === 'honeybee') return [
+    { name: 'First foraging', obj: [J.deliver(16)] },
+    wasps ? { name: 'Defend the hive', obj: [J.deliver(16), J.defeat(3)] } : { name: 'Busy flowers', obj: [J.deliver(18), J.dodge(2, who)] },
+    wasps ? { name: 'Wasp raid', obj: [J.defeat(4), J.deliver(14)], raid: true } : { name: 'Last light', obj: [J.deliver(24), J.dodge(1, who)] },
+  ];
+  if (mount === 'hawkmoth') return [
+    { name: 'First sips', obj: [J.nectar(6)] },
+    { name: 'Mind the sky', obj: [J.nectar(6), J.dodge(2, who)] },
+    { name: H.night ? 'Before dawn' : 'Nectar run', obj: [J.nectar(9), J.dodge(1, who)] },
+  ];
+  return [
+    { name: 'Grazing', obj: [J.catch('aphid', 12)] },
+    { name: 'Mind the sky', obj: [J.catch('aphid', 12), J.dodge(2, who)] },
+    { name: 'Aphid boom', obj: [J.catch('aphid', 20), J.dodge(1, who)], swarm: 'aphid' },
+  ];
+}
+// three-star score for each mount, set from automated playtests
+const PAR = { dragonfly: 12000, honeybee: 7800, hawkmoth: 9500, ladybird: 12000 };
 
 /* ============================================================
    Audio (all synthesized)
@@ -978,7 +1007,7 @@ function modelFrog() {
   P(g, GEO.sph, PM.frogBelly, 0, 1.4, 0.4, 2.6, 1.4, 3.2);
   P(g, GEO.sph, PM.frog, 0, 2.6, 2.7, 2.4, 1.5, 2.0);
   for (let i = 0; i < 6; i++) P(g, GEO.sphLo, PM.frogDark, MR(-1.8, 1.8), 3.6, MR(-2.5, 1.5), MR(0.4, 0.8), 0.25, MR(0.4, 0.8));
-  const throat = P(g, GEO.sph, PM.frogBelly, 0, 1.5, 3.4, 1.5, 0.9, 1.3);
+  const throat = P(g, GEO.sph, stdMat('#e3e2b4', { r: 0.6, e: '#ff3b1f', ei: 0 }), 0, 1.5, 3.4, 1.5, 0.9, 1.3); throat.userData.ownMat = true;
   for (const s of [-1, 1]) {
     P(g, GEO.sph, PM.frogEye, s * 1.3, 3.9, 3.0, 0.8); P(g, GEO.sph, PM.pupil, s * 1.45, 4.05, 3.6, 0.42, 0.3, 0.3);
     P(g, GEO.sph, PM.frog, s * 2.6, 1.2, -1.4, 1.2, 1.0, 2.6, 0, s * 0.3);
@@ -1413,6 +1442,10 @@ function loadHabitat(key) {
   for (let i = 0; i < pr.trees; i++) buildTree(FB, (i / pr.trees) * TAU + R(-0.08, 0.08), R(245, 300), pr.treeColor);
   const fm = FB.build(floraMat); if (fm) group.add(fm);
   const gm = GB.build(glowMat); if (gm) group.add(gm);
+  // nothing to catch or sip may sit inside a log, rock, trunk or nest
+  const buried = (p) => world.sph.some((o) => o.r > 2 && p.distanceTo(o) < o.r + 0.8) || world.cyl.some((c) => c.r > 1 && p.y > c.y0 && p.y < c.y1 + 1 && Math.hypot(p.x - c.x, p.z - c.z) < c.r + 0.8);
+  world.aphidSpots = world.aphidSpots.filter((p) => !buried(p));
+  world.flowers = world.flowers.filter((f) => !buried(f.head)); world.flowers.forEach((f, i) => { f.idx = i; });
   buildEntities();
   buildPollenGlow();
   rng = Math.random;
@@ -1427,8 +1460,10 @@ function buildPollenGlow() {
    Entities
    ============================================================ */
 function preyHome(kind) {
-  const H = world.H;
-  if (kind === 'mosquito') { const [x, z] = pondPoint(0.2); return new V3(x, world.water + R(2.5, 9), z); }
+  if (kind === 'mosquito') {
+    for (let i = 0; i < 25; i++) { const [x, z] = pondPoint(0.2); if (!world.frogs.some((f) => Math.hypot(f.pos.x - x, f.pos.z - z) < 17)) return new V3(x, world.water + R(2.5, 9), z); }
+    const [x, z] = pondPoint(0.2); return new V3(x, world.water + R(4, 9), z);
+  }
   if (kind === 'aphid') return pick(world.aphidSpots).clone();
   const pool = world.flowers.filter((f) => (kind === 'midge' ? f.kind !== 'lavender' : true));
   const f = pick(pool.length ? pool : world.flowers);
@@ -1436,6 +1471,17 @@ function preyHome(kind) {
 }
 function buildEntities() {
   const H = world.H;
+  const pads = world.pads.slice().sort((a, b) => b.r - a.r);
+  for (let i = 0; i < H.frogs && i < pads.length; i++) {
+    const p = pads[i * 2] || pads[i], m = modelFrog(); world.group.add(m.root);
+    m.root.position.set(p.x, world.water + 0.1, p.z); m.root.rotation.y = Math.atan2(-p.x, -p.z); m.root.scale.setScalar(0.85);
+    world.frogs.push({ m, pos: m.root.position.clone(), state: 'idle', t: 0, cd: R(0, 2), target: new V3(), len: 0, hit: false });
+  }
+  const reserves = [[H.flyer, 16], ['aphid', 20]];
+  for (const [kind, n] of reserves) for (let i = 0; i < n; i++) {
+    const m = modelPrey(kind); m.root.visible = false; world.group.add(m.root);
+    world.prey.push({ kind, m, reserve: true, home: new V3(), pos: new V3(0, -99, 0), vel: new V3(), target: new V3(), timer: 0, alive: false, respawn: Infinity, ph: R(0, TAU) });
+  }
   for (const [kind, n] of H.prey) {
     let home = null;
     for (let i = 0; i < n; i++) {
@@ -1455,18 +1501,35 @@ function buildEntities() {
     sh.userData.ownMat = true; world.group.add(sh);
     world.birds.push({ kind, m, sh, idx: i, pos: new V3(), vel: new V3(), center: new V3(), ang: R(0, TAU), rad: 80 + i * 35, alt: kind === 'bat' ? 38 + i * 8 : 60, state: 'circle', t: 0, attackT: 0, hitDone: false });
   });
-  const pads = world.pads.slice().sort((a, b) => b.r - a.r);
-  for (let i = 0; i < H.frogs && i < pads.length; i++) {
-    const p = pads[i * 2] || pads[i], m = modelFrog(); world.group.add(m.root);
-    m.root.position.set(p.x, world.water + 0.1, p.z); m.root.rotation.y = Math.atan2(-p.x, -p.z); m.root.scale.setScalar(0.85);
-    world.frogs.push({ m, pos: m.root.position.clone(), state: 'idle', t: 0, cd: R(0, 2), target: new V3(), len: 0, hit: false });
-  }
   const anchors = world.reeds.length ? world.reeds : world.flowers.map((f) => new V3(f.head.x, world.height(f.head.x, f.head.z), f.head.z));
   for (let i = 0; i < H.webs; i++) {
     const a = pick(anchors), ang = R(0, TAU), dist = R(3.5, 5.5), x = a.x + Math.sin(ang) * dist, z = a.z + Math.cos(ang) * dist;
     const gy = Math.max(world.height(x, z), world.water ?? -99), y = gy + R(6, 12);
     world.webs.push(buildWeb(x, z, y, R(3.5, 5.5), ang + Math.PI / 2, dist, gy));
   }
+}
+function spawnSwarm(kind) {
+  const pool = world.prey.filter((p) => p.reserve && p.kind === kind);
+  let center;
+  if (kind === 'aphid') {
+    const far = world.aphidSpots.filter((a) => a.distanceTo(player.pos) > 50 && a.distanceTo(player.pos) < 140);
+    center = (far.length ? pick(far) : pick(world.aphidSpots)).clone();
+    const spots = world.aphidSpots.slice().sort((a, b) => a.distanceTo(center) - b.distanceTo(center));
+    pool.forEach((p, i) => { p.home.copy(spots[i % spots.length]); p.pos.copy(p.home); });
+  } else {
+    center = preyHome(kind); for (let i = 0; i < 8 && center.distanceTo(player.pos) < 50; i++) center = preyHome(kind);
+    pool.forEach((p) => { p.home.copy(center); p.pos.copy(center).add(new V3(MR(-4, 4), MR(-1, 3), MR(-4, 4))); });
+  }
+  for (const p of pool) { p.alive = true; p.respawn = Infinity; p.vel.set(0, 0, 0); p.target.copy(p.pos); p.m.root.visible = true; p.m.root.position.copy(p.pos); p.m.root.scale.setScalar(kind === 'aphid' ? 2.1 : 1.7); }
+  FX.burst(center, '#ffffff', 30, 6, 1.2, 0.7);
+  return center;
+}
+function startRaid() {
+  world.wasps.forEach((w, i) => {
+    w.home.copy(world.nestEntrance).add(new V3(Math.cos(i * 2.1) * 10, 4, Math.sin(i * 2.1) * 10));
+    if (!w.alive) { w.alive = true; w.hp = 3; w.state = 'patrol'; w.pos.copy(w.home).add(new V3(0, 30, 0)); w.vel.set(0, 0, 0); w.m.root.visible = true; w.m.root.rotation.set(0, 0, 0); }
+    w.aggroCD = 0; w.respawn = 12;
+  });
 }
 function placePrey(p, fresh) {
   if (!fresh && p.kind !== 'aphid' && Math.random() < 0.5) p.home = preyHome(p.kind);
@@ -1475,8 +1538,8 @@ function placePrey(p, fresh) {
   p.vel.set(0, 0, 0); p.target.copy(p.pos); p.alive = true; p.m.root.visible = true; p.m.root.position.copy(p.pos); p.m.root.scale.setScalar(p.kind === 'aphid' ? 2.1 : 1.7);
 }
 function resetEntities() {
-  for (const p of world.prey) placePrey(p, true);
-  for (const w of world.wasps) { w.pos.copy(w.home).add(new V3(MR(-8, 8), MR(2, 8), MR(-8, 8))); w.vel.set(0, 0, 0); w.hp = 3; w.state = 'patrol'; w.alive = true; w.m.root.visible = true; w.t = 0; w.hitCD = 0; w.stun = 0; w.aggroCD = 2; w.m.root.rotation.set(0, 0, 0); }
+  for (const p of world.prey) { p.noLockUntil = 0; if (p.reserve) { p.alive = false; p.respawn = Infinity; p.m.root.visible = false; p.pos.set(0, -99, 0); } else placePrey(p, true); }
+  for (const w of world.wasps) { if (w.home0) w.home.copy(w.home0); else w.home0 = w.home.clone(); w.pos.copy(w.home).add(new V3(MR(-8, 8), MR(2, 8), MR(-8, 8))); w.vel.set(0, 0, 0); w.hp = 3; w.state = 'patrol'; w.alive = true; w.m.root.visible = true; w.t = 0; w.hitCD = 0; w.stun = 0; w.aggroCD = 2; w.m.root.rotation.set(0, 0, 0); }
   for (const b of world.birds) { b.state = 'circle'; b.center.set(0, 0, 0); b.attackT = MR(16, 24) + b.idx * 8; b.ang = MR(0, TAU); b.pos.set(Math.cos(b.ang) * b.rad, b.alt, Math.sin(b.ang) * b.rad); }
   for (const f of world.frogs) { f.state = 'idle'; f.cd = MR(1, 3); f.m.tongue.visible = false; f.m.throat.scale.set(1.5, 0.9, 1.3); }
   for (const w of world.webs) { w.alive = true; w.grp.visible = true; }
@@ -1526,8 +1589,6 @@ function spawnPlayer() {
 const keys = new Set();
 const input = { turnX: 0, turnY: 0, lookX: 0, lookY: 0, thrust: false, back: false, boost: false, strike: false };
 const mouse = { x: 0, y: 0, active: false, left: false, locked: false, hadLock: false, lockFailed: false };
-const joy = { id: null, ox: 0, oy: 0, x: 0, y: 0 };
-const touchBtn = { boost: false, fly: false };
 const settings = Object.assign({ mouse: true, invert: false, sound: true, music: true, sens: 1 }, store.get('hexapod-settings', {}));
 const isTouch = matchMedia('(pointer: coarse)').matches;
 if (isTouch) settings.mouse = false;
@@ -1565,25 +1626,35 @@ canvas.addEventListener('pointerdown', (e) => {
 addEventListener('pointerup', (e) => { if (e.button === 0) mouse.left = false; });
 canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
-const joyZone = $('#joyZone'), joyBase = $('#joyBase'), joyKnob = $('#joyKnob');
-joyZone.addEventListener('pointerdown', (e) => {
-  joy.id = e.pointerId; joyZone.setPointerCapture(e.pointerId);
-  const r = joyBase.getBoundingClientRect(); joy.ox = r.left + r.width / 2; joy.oy = r.top + r.height / 2; moveJoy(e);
+// One-thumb touch: put a thumb down anywhere to fly, drag it to steer, lift to hover,
+// tap to strike, push past the ring to boost.
+const thumb = { id: null, ox: 0, oy: 0, x: 0, y: 0, t0: 0, moved: 0, boost: false, used: false };
+const TR = 52, thumbZone = $('#thumbZone'), thumbBase = $('#thumbBase'), thumbKnob = $('#thumbKnob');
+thumbZone.addEventListener('pointerdown', (e) => {
+  if (thumb.id !== null || game.state !== 'play') return;
+  e.preventDefault(); thumb.id = e.pointerId; try { thumbZone.setPointerCapture(e.pointerId); } catch (er) { /* not capturable */ }
+  thumb.ox = e.clientX; thumb.oy = e.clientY; thumb.x = thumb.y = 0; thumb.t0 = performance.now(); thumb.moved = 0; thumb.boost = false;
+  thumbBase.hidden = false; thumbBase.style.transform = `translate(${thumb.ox}px, ${thumb.oy}px)`; thumbKnob.style.transform = '';
+  if (!thumb.used) { thumb.used = true; $('#thumbHint').hidden = true; }
+  Sound.init(); Sound.resume();
 });
-joyZone.addEventListener('pointermove', (e) => { if (e.pointerId === joy.id) moveJoy(e); });
-const endJoy = (e) => { if (e.pointerId !== joy.id) return; joy.id = null; joy.x = joy.y = 0; joyKnob.style.transform = ''; };
-joyZone.addEventListener('pointerup', endJoy); joyZone.addEventListener('pointercancel', endJoy);
-function moveJoy(e) {
-  let dx = (e.clientX - joy.ox) / 50, dy = (e.clientY - joy.oy) / 50; const l = Math.hypot(dx, dy); if (l > 1) { dx /= l; dy /= l; }
-  joy.x = dx; joy.y = -dy; joyKnob.style.transform = `translate(${dx * 36}px, ${dy * 36}px)`;
-}
-function holdBtn(el, k) {
-  el.addEventListener('pointerdown', (e) => { e.preventDefault(); touchBtn[k] = true; el.classList.add('on'); });
-  const up = () => { touchBtn[k] = false; el.classList.remove('on'); };
-  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); el.addEventListener('pointerleave', up);
-}
-holdBtn($('#tBoost'), 'boost'); holdBtn($('#tFly'), 'fly');
-$('#tStrike').addEventListener('pointerdown', (e) => { e.preventDefault(); input.strike = true; });
+thumbZone.addEventListener('pointermove', (e) => {
+  if (e.pointerId !== thumb.id) return;
+  let dx = e.clientX - thumb.ox, dy = e.clientY - thumb.oy, len = Math.hypot(dx, dy);
+  thumb.moved = Math.max(thumb.moved, len);
+  const maxL = TR * 1.6;
+  if (len > maxL) { thumb.ox += dx * (1 - maxL / len); thumb.oy += dy * (1 - maxL / len); dx = e.clientX - thumb.ox; dy = e.clientY - thumb.oy; len = maxL; thumbBase.style.transform = `translate(${thumb.ox}px, ${thumb.oy}px)`; }
+  thumb.boost = len > TR * 1.3;
+  const k = Math.min(1, len / TR) / (len || 1); thumb.x = dx * k; thumb.y = dy * k;
+  thumbBase.classList.toggle('boost', thumb.boost);
+  thumbKnob.style.transform = `translate(${dx}px, ${dy}px)`;
+});
+const endThumb = (e) => {
+  if (e.pointerId !== thumb.id) return;
+  if (performance.now() - thumb.t0 < 230 && thumb.moved < 14) input.strike = true;
+  thumb.id = null; thumb.x = thumb.y = 0; thumb.boost = false; thumbBase.hidden = true; thumbBase.classList.remove('boost');
+};
+thumbZone.addEventListener('pointerup', endThumb); thumbZone.addEventListener('pointercancel', endThumb);
 
 function dz(v, d = 0.08) { const a = Math.abs(v); return a < d ? 0 : Math.sign(v) * Math.pow(Math.min(1, (a - d) / (1 - d)), 1.4); }
 function readInput() {
@@ -1593,28 +1664,28 @@ function readInput() {
   if (keys.has('ArrowUp') || keys.has('KeyR')) ty += 1;
   if (keys.has('ArrowDown') || keys.has('KeyF')) ty -= 1;
   if (!mouse.locked && settings.mouse && mouse.active && !isTouch) { tx += dz(mouse.x * 1.2, 0.12); ty += dz(-mouse.y * 1.3, 0.12); }
-  if (joy.id !== null) { tx += joy.x * Math.abs(joy.x); ty += joy.y * Math.abs(joy.y); }
+  if (thumb.id !== null) { tx += dz(thumb.x, 0.14) * 1.15; ty += dz(-thumb.y, 0.14); }
   input.turnX = clamp(tx, -1, 1); input.turnY = clamp(ty, -1, 1) * (settings.invert ? -1 : 1);
-  input.thrust = keys.has('KeyW') || mouse.left || touchBtn.fly;
+  input.thrust = keys.has('KeyW') || mouse.left || thumb.id !== null;
   input.back = keys.has('KeyS');
-  input.boost = keys.has('ShiftLeft') || keys.has('ShiftRight') || touchBtn.boost;
+  input.boost = keys.has('ShiftLeft') || keys.has('ShiftRight') || thumb.boost;
 }
 
 /* ============================================================
    Game state
    ============================================================ */
-const newTele = () => ({ strikes: 0, swoops: 0, swoopHit: 0, swoopMiss: 0, catchSwoop: 0, catchTouch: 0, dmg: {}, hits: {}, bumps: 0, hover: 0, stuck: 0, dist: 0, camClip: 0, noGoal: 0, lockAvail: 0, goalFar: 0, playT: 0 });
-const game = { tele: newTele(), state: 'loading', time: 0, score: 0, combo: 1, comboT: 0, obj: [], nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, toastT: 0, shake: 0, titleT: 0, hitStop: 0, camKick: 0 };
+const newTele = () => ({ stageAt: [], jukes: 0, clean: 0, chains: 0, strikes: 0, swoops: 0, swoopHit: 0, swoopMiss: 0, catchSwoop: 0, catchTouch: 0, dmg: {}, hits: {}, bumps: 0, hover: 0, stuck: 0, dist: 0, camClip: 0, noGoal: 0, lockAvail: 0, goalFar: 0, playT: 0 });
+const game = { tele: newTele(), stage: 0, stages: [], stageT: 0, chain: 0, lastCatchT: -9, state: 'loading', time: 0, score: 0, combo: 1, comboT: 0, obj: [], nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, toastT: 0, shake: 0, titleT: 0, hitStop: 0, camKick: 0 };
 const sel = Object.assign({ mount: 'dragonfly', hab: 'pond' }, store.get('hexapod-sel', {}));
 if (!MOUNTS[sel.mount]) sel.mount = 'dragonfly';
 if (!HABITATS[sel.hab]) sel.hab = 'pond';
 const HOW = {
-  catch: (o) => `Fly through them, or press ${isTouch ? 'Strike' : 'Space'} when the hex locks on`,
+  catch: (o) => `Fly through them, or ${isTouch ? 'tap' : 'press Space'} when the hex turns gold. Close swoops never miss`,
   skim: () => 'Dive to the water and fly fast just above it',
   deliver: () => 'Hover in glowing flowers, then bring it to the gold hex at the nest',
   nectar: () => 'Hover inside a glowing flower until the ring fills',
-  defeat: () => `Lock on and press ${isTouch ? 'Strike' : 'Space'} to drive them off`,
-  dodge: () => 'When the alarm sounds, drop into the grass or turn hard',
+  defeat: () => `Lock on and ${isTouch ? 'tap' : 'press Space'} to drive them off`,
+  dodge: () => 'When the alarm sounds, drop into the grass, or turn hard just before it reaches you',
 };
 
 function addScore(pts, at, cls = '') { const v = Math.round(pts); game.score += v; popAt(at, `+${v}`, cls); }
@@ -1642,14 +1713,27 @@ function onEvent(type, kind, n = 1) {
     if (o.count >= o.target) {
       o.done = true; o.doneAt = Math.round(world.H.time - game.time); finishedNow = true; Sound.sfx.objective();
       const next = game.obj.find((x) => !x.done);
-      toast(`${o.label}: done!`, next ? `Next: ${next.label}` : '');
+      if (next) toast(`${o.label}: done!`, `Next: ${next.label}`);
     }
   }
   renderObjectives();
-  if (finishedNow && game.obj.every((x) => x.done) && !game.ending) {
-    game.ending = 2.6; Sound.sfx.win(); toast('Habitat mastered!', `${Math.ceil(game.time)} seconds to spare`, 2.6);
-    FX.burst(player.pos, '#ffd34a', 40, 12, 1.2, 0.8); FX.burst(player.pos, '#41d8c6', 30, 10, 1.2, 0.7);
+  if (finishedNow && game.obj.every((x) => x.done) && !game.ending && game.stageT <= 0) {
+    game.tele.stageAt.push(Math.round(game.tele.playT));
+    if (game.stage < game.stages.length - 1) { game.stageT = 1.6; toast(`Stage ${game.stage + 1} clear!`, '+20 seconds', 1.6); FX.burst(player.pos, '#ffd34a', 30, 10, 1, 0.7); }
+    else { game.ending = 2.6; Sound.sfx.win(); toast('Habitat mastered!', `${Math.ceil(game.time)} seconds to spare`, 2.6); FX.burst(player.pos, '#ffd34a', 40, 12, 1.2, 0.8); FX.burst(player.pos, '#41d8c6', 30, 10, 1.2, 0.7); }
   }
+}
+function setStage(i) {
+  game.stage = i; const st = game.stages[i];
+  game.obj = st.obj.map((o) => ({ ...o, count: 0, done: false }));
+  renderObjectives();
+  let where = null;
+  if (st.swarm) where = spawnSwarm(st.swarm);
+  if (st.raid) startRaid();
+  if (i > 0) { for (const b of world.birds) b.attackT = Math.min(b.attackT, MR(5, 9)); game.time += 20; Sound.sfx.objective(); }
+  const sub = st.raid ? 'Wasps are raiding the hive!' : st.swarm ? `A ${st.swarm === 'aphid' ? 'colony of aphids' : 'swarm'} has appeared. Follow the arrow` : game.obj.map((o) => `${o.label} ×${o.target}`).join(' · ');
+  toast(`Stage ${i + 1}: ${st.name}`, sub, 3);
+  return where;
 }
 function hurt(amount, from, label) {
   if (player.invuln > 0 || player.dead || game.ending) return;
@@ -1668,24 +1752,30 @@ function hurt(amount, from, label) {
    Targeting & strike
    ============================================================ */
 const LOCK_RANGE = 44, SWOOP_RANGE = 30;
+function objectiveWants() {
+  const w = { kinds: new Set(), wasp: false, flower: false };
+  for (const o of game.obj) { if (o.done) continue; if (o.type === 'catch') w.kinds.add(o.kind); if (o.type === 'defeat') w.wasp = true; if (o.type === 'deliver' || o.type === 'nectar') w.flower = true; }
+  return w;
+}
 function updateTargeting() {
-  const M = player.mount, aim = player.aim;
+  const M = player.mount, aim = player.aim, now = uTime.value, W = objectiveWants();
   if (player.swoopT > 0 && player.swoop) return;
   let best = null, bestS = Infinity;
-  const consider = (type, ref, p) => {
+  const consider = (type, ref, p, wanted) => {
+    if (ref && ref.noLockUntil > now) return;
     const tx = p.x - player.pos.x, ty = p.y - player.pos.y, tz = p.z - player.pos.z, d = Math.hypot(tx, ty, tz);
     if (d > LOCK_RANGE) return;
     const c = d < 0.5 ? 1 : (tx * aim.x + ty * aim.y + tz * aim.z) / d;
     if (c < 0.8 && d > 4) return;
-    const s = d * (1 + (1 - c) * 8) * (type === 'wasp' ? 0.6 : 1);
-    if (s < bestS) { bestS = s; best = { type, ref, d, pos: p }; }
+    const s = d * (1 + (1 - c) * 8) * (wanted ? 1 : 3.5) * (type === 'wasp' ? 0.7 : 1);
+    if (s < bestS) { bestS = s; best = { type, ref, d, pos: p, wanted }; }
   };
-  if (M.eats.length) for (const p of world.prey) if (p.alive && M.eats.includes(p.kind)) consider('prey', p, p.pos);
-  if (M.fights) for (const w of world.wasps) if (w.alive) consider('wasp', w, w.pos);
+  if (M.eats.length) for (const p of world.prey) if (p.alive && M.eats.includes(p.kind)) consider('prey', p, p.pos, W.kinds.has(p.kind));
+  if (M.fights) for (const w of world.wasps) if (w.alive) consider('wasp', w, w.pos, W.wasp || w.state === 'chase');
   if (M.flowers === 'pollen') {
-    if (player.cargo < M.cargo) for (const f of world.flowers) if (f.stock > 0) consider('flower', f, f.head);
-    if (player.cargo > 0) consider('nest', null, world.nestEntrance);
-  } else if (M.flowers === 'nectar') for (const f of world.flowers) if (!game.nectarSeen.has(f.idx)) consider('flower', f, f.head);
+    if (player.cargo < M.cargo) for (const f of world.flowers) if (f.stock > 0) consider('flower', f, f.head, W.flower);
+    if (player.cargo > 0) consider('nest', null, world.nestEntrance, W.flower);
+  } else if (M.flowers === 'nectar') for (const f of world.flowers) if (!game.nectarSeen.has(f.idx)) consider('flower', f, f.head, W.flower);
   player.lock = best;
 }
 function swoopTargetPos() {
@@ -1699,28 +1789,35 @@ function swoopTargetPos() {
 function tryStrike() {
   const M = player.mount;
   if (player.strikeCD > 0 || player.dead) return;
-  game.tele.strikes++;
+  const chain = uTime.value - game.lastCatchT < 1.6, cost = chain ? 0 : 9;
+  if (player.stamina < cost) { popAt(player.pos.clone().add(new V3(0, 1.5, 0)), 'Too tired to strike', 'red'); player.strikeCD = 0.4; return; }
+  game.tele.strikes++; player.stamina -= cost;
   player.strikeCD = 0.45; game.camKick = Math.max(game.camKick, 0.7); Sound.sfx.strike();
   const L = player.lock;
-  if (L && L.d <= SWOOP_RANGE) { player.swoop = { type: L.type, ref: L.ref }; player.swoopT = 1.2; game.tele.swoops++; }
+  if (L && L.d <= SWOOP_RANGE) { player.swoop = { type: L.type, ref: L.ref, startD: L.d, chain, juked: false }; player.swoopT = 1.2; game.tele.swoops++; }
   else { player.strikeT = 0.35; player.vel.addScaledVector(player.aim, 14); }
   for (let i = 0; i < 10; i++) FX.spawn(player.pos, player.aim.clone().multiplyScalar(-MR(4, 9)).add(new V3(MR(-2, 2), MR(-2, 2), MR(-2, 2))), '#e8fff8', 0.35, 0.35);
 }
 function arriveSwoop(hit) {
   const s = player.swoop; player.swoopT = 0; player.swoop = null; if (!s) return;
-  if (s.type === 'prey' || s.type === 'wasp') { if (hit && s.ref.alive) game.tele.swoopHit++; else game.tele.swoopMiss++; }
-  if (s.type === 'prey' && hit && s.ref.alive) catchPrey(s.ref, true);
+  if (s.type === 'prey' || s.type === 'wasp') { if (hit && s.ref.alive) game.tele.swoopHit++; else { game.tele.swoopMiss++; if (s.ref) s.ref.noLockUntil = uTime.value + 3; } }
+  if (s.type === 'prey' && hit && s.ref.alive) catchPrey(s.ref, true, s.chain);
   else if (s.type === 'wasp' && hit && s.ref.alive) hitWasp(s.ref);
   else if (s.type === 'flower' || s.type === 'nest') { player.vel.multiplyScalar(0.12); player.thr = 0; }
 }
-function catchPrey(p, viaSwoop = false) {
+function catchPrey(p, viaSwoop = false, chained = false) {
   if (viaSwoop) game.tele.catchSwoop++; else game.tele.catchTouch++;
   const M = player.mount, K = PREY[p.kind];
   p.alive = false; p.m.root.visible = false; p.respawn = MR(10, 16);
+  let mult = 1, tag = '';
+  if (!viaSwoop && player.strikeT <= 0) { mult = 1.5; tag = 'Clean catch!'; game.tele.clean++; }
+  if (chained) { game.chain = Math.min(6, game.chain + 1); mult *= 1 + 0.25 * game.chain; tag = `Chain ×${game.chain + 1}!`; game.tele.chains++; } else if (viaSwoop) game.chain = 0;
+  game.lastCatchT = uTime.value;
   const pts = K.pts * (p.kind === 'aphid' && M.aphidBonus ? M.aphidBonus : 1);
-  bumpCombo(); addScore(pts * game.combo, p.pos.clone(), 'teal');
+  bumpCombo(); addScore(pts * game.combo * mult, p.pos.clone(), 'teal');
+  if (tag) popAt(p.pos.clone().add(new V3(0, 1.6, 0)), tag, '');
   player.health = Math.min(100, player.health + 3); player.stamina = Math.min(M.stamina, player.stamina + 10);
-  Sound.sfx.catch(game.combo);
+  Sound.sfx.catch(game.combo + game.chain);
   FX.burst(p.pos, K.glint, 22, 8, 0.6, 0.55); FX.burst(p.pos, '#ffffff', 8, 3, 0.35, 0.9);
   hitStop(0.07); game.camKick = Math.max(game.camKick, 1); game.shake = Math.max(game.shake, 0.18);
   onEvent('catch', p.kind);
@@ -1775,9 +1872,17 @@ function updatePlayer(dt) {
   const f = player.fwd;
   if (sw) {
     player.swoopT -= dt;
-    const to = _v.subVectors(sw, player.pos), d = to.length(), spd = Math.max(M.boost * 1.15, 34);
+    const to = _v.subVectors(sw, player.pos), d = to.length(), spd = Math.max(M.boost * 1.15, 34), S = player.swoop;
     player.vel.lerp(to.multiplyScalar(spd / Math.max(d, 0.001)), 1 - Math.exp(-14 * dt));
-    if (d < 1.8) arriveSwoop(true); else if (player.swoopT <= 0) arriveSwoop(d < 3);
+    if (S.type === 'prey' && S.ref.kind !== 'aphid' && !S.juked && d < 6) {
+      S.juked = true;
+      if (S.startD > 18 && Math.random() < [0.35, 0.5, 0.65][game.stage]) {
+        const p = S.ref, side = new V3(-player.vel.z, MR(-0.3, 0.6), player.vel.x).normalize().multiplyScalar(Math.random() < 0.5 ? 16 : -16);
+        p.vel.copy(side); p.target.copy(p.pos).addScaledVector(side, 0.5); p.timer = 1.2; game.tele.jukes++;
+        popAt(p.pos.clone().add(new V3(0, 1.2, 0)), 'Dodged! Get closer', 'red'); arriveSwoop(false);
+      }
+    }
+    if (player.swoop) { if (d < 2.2) arriveSwoop(true); else if (player.swoopT <= 0) arriveSwoop(d < 3.2); }
   } else {
     let tgt = (player.boosting ? M.boost : M.cruise) * player.thr;
     tgt += (M.cruise * 0.8 * Math.max(0, -f.y) - M.cruise * 0.3 * Math.max(0, f.y)) * player.thr;
@@ -1807,10 +1912,10 @@ function updatePlayer(dt) {
   player.bumpCD -= dt;
   if (player.pos.y > 170) { player.pos.y = 170; if (player.vel.y > 0) player.vel.y = 0; }
   // skimming
-  if (player.overWater && player.pos.y - world.water < 1.7 && player.speed > M.cruise * 0.7 && !player.skimLock) {
+  if (player.overWater && player.pos.y - world.water < 2.3 && player.speed > M.cruise * 0.65 && !player.skimLock) {
     player.skimT += dt;
     if (Math.random() < 0.7) FX.spawn(new V3(player.pos.x, world.water + 0.15, player.pos.z), new V3(MR(-2, 2), MR(1.5, 4), MR(-2, 2)).addScaledVector(player.fwd, -3), '#dff6ff', 0.6, 0.4, 10, 0.5);
-    if (player.skimT > 0.9) {
+    if (player.skimT > 0.7) {
       player.skimT = 0; player.skimLock = true; Sound.sfx.skim(); hitStop(0.04); game.camKick = 0.8;
       bumpCombo(); addScore(120 * (M.skimBonus || 1) * game.combo, player.pos, 'teal'); onEvent('skim');
       popAt(player.pos.clone().add(new V3(0, 2, 0)), 'Skim! Climb, then dip again', 'teal');
@@ -1824,17 +1929,18 @@ function updatePlayer(dt) {
     if (game.alertT <= 0) alertMsg('Edge of the habitat. Turning back', 1.2);
     if (r > 250) { player.pos.x *= 250 / r; player.pos.z *= 250 / r; }
   }
-  // stems, rocks, logs: slide off them
-  for (const c of world.cyl) {
+  // stems, rocks, logs: slide along them (a swoop passes through on its final approach)
+  const ghost = sw && player.pos.distanceTo(sw) < 4.5;
+  if (!ghost) for (const c of world.cyl) {
     const dx = player.pos.x - c.x, dz2 = player.pos.z - c.z; if (Math.abs(dx) > c.r + 2 || Math.abs(dz2) > c.r + 2) continue;
     if (player.pos.y < c.y0 || player.pos.y > c.y1) continue;
     const d = Math.hypot(dx, dz2), min = c.r + 0.55;
-    if (d < min) { const kk = (min - d) / (d || 1); player.pos.x += dx * kk; player.pos.z += dz2 * kk; bump(); }
+    if (d < min) { const kk = (min - d) / (d || 1); player.pos.x += dx * kk; player.pos.z += dz2 * kk; bump(dx / (d || 1), 0, dz2 / (d || 1)); }
   }
-  for (const s of world.sph) {
+  if (!ghost) for (const s of world.sph) {
     const dx = player.pos.x - s.x, dy = player.pos.y - s.y, dz2 = player.pos.z - s.z, min = s.r + 0.6;
     if (Math.abs(dx) > min || Math.abs(dz2) > min || Math.abs(dy) > min) continue;
-    const d = Math.hypot(dx, dy, dz2); if (d < min) { const kk = (min - d) / (d || 1); player.pos.x += dx * kk; player.pos.y += dy * kk; player.pos.z += dz2 * kk; bump(); }
+    const d = Math.hypot(dx, dy, dz2); if (d < min) { const kk = (min - d) / (d || 1); player.pos.x += dx * kk; player.pos.y += dy * kk; player.pos.z += dz2 * kk; bump(dx / (d || 1), dy / (d || 1), dz2 / (d || 1)); }
   }
   player.invuln -= dt; player.hurtT += dt;
   if (player.hurtT > 5) player.health = Math.min(100, player.health + 2.5 * dt);
@@ -1843,7 +1949,19 @@ function updatePlayer(dt) {
   if (player.cargo > 0 && player.trailT <= 0) { player.trailT = 0.05; FX.spawn(player.pos.clone().addScaledVector(player.fwd, -0.8), new V3(MR(-0.5, 0.5), MR(-1, 0.2), MR(-0.5, 0.5)), '#ffd34a', 0.8, 0.35, 2, 1); }
   applyPlayerTransform(dt);
 }
-function bump() { if (player.bumpCD > 0) return; player.bumpCD = 0.5; game.tele.bumps++; player.vel.multiplyScalar(0.6); game.shake = Math.max(game.shake, 0.15); Sound.noise(0.1, 260, 0.8, 0.08, 'lowpass'); }
+function bump(nx, ny, nz) {
+  const v = player.vel, vn = v.x * nx + v.y * ny + v.z * nz;
+  if (vn < 0) {
+    v.x -= vn * nx; v.y -= vn * ny; v.z -= vn * nz;
+    // turn the lost speed into a glance: around a stem, or up and over a rounded obstacle
+    let tx, ty, tz;
+    if (ny === 0) { tx = -nz; ty = 0; tz = nx; if (tx * v.x + tz * v.z < 0) { tx = -tx; tz = -tz; } }
+    else { tx = -nx * ny; ty = 1 - ny * ny; tz = -nz * ny; const l = Math.hypot(tx, ty, tz) || 1; tx /= l; ty /= l; tz /= l; }
+    const g = -vn * 0.7; v.x += tx * g; v.y += ty * g; v.z += tz * g;
+  }
+  if (player.bumpCD > 0 || vn > -6) return;
+  player.bumpCD = 0.5; game.tele.bumps++; player.vel.multiplyScalar(0.88); game.shake = Math.max(game.shake, 0.12); Sound.noise(0.1, 260, 0.8, 0.07, 'lowpass');
+}
 function applyPlayerTransform(dt) {
   const mdl = player.model, M = player.mount, s01 = clamp(player.speed / M.boost, 0, 1);
   if (!player.dead) player.roll = damp(player.roll, clamp(-player.yawRate * 0.5 * (0.35 + 0.65 * s01), -1.15, 1.15), 6, dt);
@@ -1867,7 +1985,7 @@ function applyPlayerTransform(dt) {
 function updatePrey(dt, playing) {
   const M = player.mount, mouth = _v.copy(player.pos).addScaledVector(player.fwd, 0.9);
   for (const p of world.prey) {
-    if (!p.alive) { p.respawn -= dt; if (p.respawn <= 0) placePrey(p, false); continue; }
+    if (!p.alive) { if (!p.reserve) { p.respawn -= dt; if (p.respawn <= 0) placePrey(p, false); } continue; }
     const K = PREY[p.kind]; p.ph += dt;
     if (K.sits) p.m.root.position.set(p.pos.x, p.pos.y + Math.sin(p.ph * 3) * 0.04, p.pos.z);
     else {
@@ -1882,8 +2000,9 @@ function updatePrey(dt, playing) {
       flapWings(p.m, p.ph, 70, 0.7);
     }
     if (!playing || player.dead || !M.eats.includes(p.kind)) continue;
-    const d = p.pos.distanceTo(mouth);
-    if (d < M.catchR || (player.strikeT > 0 && d < M.strikeR)) catchPrey(p);
+    const d = Math.min(p.pos.distanceTo(mouth), p.pos.distanceTo(player.pos) + 0.3);
+    if (player.swoopT > 0 && player.swoop && player.swoop.ref === p) { if (d < M.catchR + 0.4) arriveSwoop(true); }
+    else if (d < M.catchR || (player.strikeT > 0 && d < M.strikeR)) catchPrey(p);
   }
 }
 
@@ -1902,7 +2021,7 @@ function updateWasps(dt, playing) {
       des.subVectors(w.target, w.pos).normalize().multiplyScalar(8);
       if (playing && !player.dead && d < 38 && w.aggroCD <= 0) { w.state = 'chase'; w.t = 8; if (game.alertT <= 0) alertMsg(M.fights ? 'Wasp incoming! Lock on and strike' : 'Wasp incoming! Fly away', 1.6); Sound.tone(180, 240, 0.4, 'sawtooth', 0.05); }
     } else {
-      des.copy(toP).normalize().multiplyScalar(13);
+      des.copy(toP).normalize().multiplyScalar(13 + game.stage);
       if (w.t <= 0 || d > 70 || player.dead) { w.state = 'patrol'; w.aggroCD = 5; w.t = 0; }
     }
     if (w.stun > 0) des.set(0, 0, 0);
@@ -1918,9 +2037,11 @@ function updateWasps(dt, playing) {
   }
 }
 
-function birdDodged(b) {
+function birdDodged(b, hid) {
   if (!b.targeting || player.dead) return; b.targeting = false;
-  popAt(player.pos.clone().add(new V3(0, 2, 0)), 'Dodged!', 'teal'); addScore(100, null); Sound.sfx.skim(); onEvent('dodge');
+  if (!hid && b.minD > 15) return;
+  game.tele.dodgesReal = (game.tele.dodgesReal || 0) + 1;
+  popAt(player.pos.clone().add(new V3(0, 2, 0)), hid ? 'Hidden! Dodged' : 'Dodged!', 'teal'); addScore(150, null); Sound.sfx.skim(); onEvent('dodge');
 }
 function updateBirds(dt, playing) {
   for (const b of world.birds) {
@@ -1934,21 +2055,23 @@ function updateBirds(dt, playing) {
       if (b.state === 'circle') {
         if (playing && !player.dead && !game.ending) b.attackT -= dt;
         if (b.attackT <= 0) { b.state = 'warn'; b.t = 1.8; if (bat) Sound.sfx.batWarn(); else Sound.sfx.warn(); alertMsg(bat ? 'Bat swooping! Drop into the grass or turn hard' : 'Swallow diving! Drop into the grass or turn hard', 2.4); }
-      } else if (b.t <= 0) { b.state = 'dive'; b.t = 3.2; b.hitDone = false; b.targeting = true; b.vel.subVectors(player.pos, b.pos).normalize().multiplyScalar(bat ? 42 : 50); b.lost = false; }
+      } else if (b.t <= 0) { b.state = 'dive'; b.t = 3.6; b.hitDone = false; b.targeting = true; b.committed = false; b.minD = Infinity; b.vel.subVectors(player.pos, b.pos).normalize().multiplyScalar(bat ? 42 : 50); b.lost = false; }
     } else if (b.state === 'dive') {
       const speed = bat ? 42 : 50;
-      const des = _v.copy(player.pos).addScaledVector(player.vel, 0.25).sub(b.pos).normalize().multiplyScalar(speed);
-      b.vel.lerp(des, 1 - Math.exp(-(bat ? 1.6 : 1.2) * dt)).setLength(speed);
+      const dNow = b.pos.distanceTo(player.pos);
+      if (dNow < 24) b.committed = true;
+      if (!b.committed) { const des = _v.copy(player.pos).addScaledVector(player.vel, dNow / speed * 0.8).sub(b.pos).normalize().multiplyScalar(speed); b.vel.lerp(des, 1 - Math.exp(-(bat ? 3.2 : 2.6) * dt)).setLength(speed); }
       b.pos.addScaledVector(b.vel, dt);
       const fl = floorAt(b.pos.x, b.pos.z) + 3; if (b.pos.y < fl) { b.pos.y = fl; b.vel.y = Math.abs(b.vel.y) * 0.3; }
       const d = b.pos.distanceTo(player.pos), hidden = !player.overWater && player.groundGap < 6;
-      if (hidden && d < 30 && !b.lost) { b.lost = true; b.state = 'climb'; b.t = 4; birdDodged(b); }
+      b.minD = Math.min(b.minD, d);
+      if (hidden && d < 30 && !b.lost) { b.lost = true; b.state = 'climb'; b.t = 4; birdDodged(b, true); }
       else if (d < (bat ? 3.0 : 3.6) && !b.hitDone) { b.hitDone = true; b.targeting = false; hurt(bat ? 22 : 28, b.pos, bat ? 'Bat strike!' : 'Swallow strike!'); b.state = 'climb'; b.t = 4; }
       else if (b.t <= 0 || (b.vel.dot(_v2.subVectors(player.pos, b.pos)) < 0 && d > 8)) { b.state = 'climb'; b.t = 4; birdDodged(b); }
     } else if (b.state === 'climb') {
       const tgt = _v.set(b.center.x + Math.cos(b.ang) * b.rad, b.alt, b.center.z + Math.sin(b.ang) * b.rad);
       b.vel.lerp(_v2.subVectors(tgt, b.pos).normalize().multiplyScalar(30), 1 - Math.exp(-2 * dt)); b.pos.addScaledVector(b.vel, dt);
-      if (b.pos.y > b.alt - 4 || b.t <= 0) { b.state = 'circle'; b.ang = Math.atan2(b.pos.z - b.center.z, b.pos.x - b.center.x); b.attackT = bat ? MR(10, 16) : MR(14, 22); }
+      if (b.pos.y > b.alt - 4 || b.t <= 0) { b.state = 'circle'; b.ang = Math.atan2(b.pos.z - b.center.z, b.pos.x - b.center.x); b.attackT = (bat ? MR(10, 16) : MR(14, 22)) * [1, 0.75, 0.55][game.stage]; }
     }
     b.m.root.position.copy(b.pos);
     if (b.vel.lengthSq() > 1) { b.m.root.lookAt(_v.copy(b.pos).add(b.vel)); if (b.state === 'circle' || b.state === 'warn') b.m.root.rotateZ(-0.5); }
@@ -1968,17 +2091,19 @@ function updateFrogs(dt, playing) {
     const face = (rate) => { const want = Math.atan2(player.pos.x - f.pos.x, player.pos.z - f.pos.z); m.root.rotation.y += wrapA(want - m.root.rotation.y) * Math.min(1, dt * rate); };
     if (f.state === 'idle') {
       m.throat.scale.y = 0.9 + Math.sin(uTime.value * 3 + f.pos.x) * 0.08;
-      if (playing && !player.dead && d < 20 && player.pos.y < f.pos.y + 10 && f.cd <= 0) { f.state = 'wind'; f.t = 0.7; Sound.tone(110, 90, 0.5, 'sawtooth', 0.05); }
+      m.throat.material.emissiveIntensity = 0;
+      if (playing && !player.dead && d < 20 && player.pos.y < f.pos.y + 10 && f.cd <= 0) { f.state = 'wind'; f.t = 1.0; Sound.tone(130, 85, 0.6, 'sawtooth', 0.09); Sound.tone(150, 95, 0.4, 'sawtooth', 0.07, 0.45); }
       if (d < 40) face(1.5);
     } else if (f.state === 'wind') {
-      f.t -= dt; m.throat.scale.set(1.5 + (0.7 - f.t) * 1.4, 0.9 + (0.7 - f.t) * 1.2, 1.3); face(6);
-      if (f.t <= 0) { f.state = 'lash'; f.t = 0.38; f.hit = false; f.target.copy(player.pos).addScaledVector(player.vel, 0.12); Sound.sfx.tongue(); m.tongue.visible = true; m.throat.scale.set(1.5, 0.9, 1.3); }
+      f.t -= dt; m.throat.scale.set(1.5 + (1 - f.t) * 1.1, 0.9 + (1 - f.t) * 1.0, 1.3); face(6);
+      m.throat.material.emissiveIntensity = 0.5 + 0.5 * Math.sin(f.t * 30);
+      if (f.t <= 0) { f.state = 'lash'; f.t = 0.38; f.hit = false; f.target.copy(player.pos); Sound.sfx.tongue(); m.tongue.visible = true; m.throat.scale.set(1.5, 0.9, 1.3); m.throat.material.emissiveIntensity = 0; }
     } else if (f.state === 'lash') {
       f.t -= dt; const k = Math.sin((1 - f.t / 0.38) * Math.PI);
       const full = Math.min(24, mouth.distanceTo(f.target)), len = Math.max(0.1, full * k / 0.85);
       m.tongue.lookAt(f.target); m.tm.scale.set(0.25, len, 0.25); m.tm.position.z = len / 2; m.tip.position.z = len;
       const tipW = _v2.copy(mouth).add(_v3.subVectors(f.target, mouth).normalize().multiplyScalar(full * k));
-      if (!f.hit && k > 0.5 && tipW.distanceTo(player.pos) < 2.0) { f.hit = true; hurt(18, f.pos, 'Frog tongue!'); }
+      if (!f.hit && k > 0.5 && tipW.distanceTo(player.pos) < 2.0) { f.hit = true; hurt(12, f.pos, 'Frog tongue!'); player.stunT = 0.5; }
       if (f.t <= 0) { f.state = 'idle'; f.cd = MR(3, 5); m.tongue.visible = false; }
     }
   }
@@ -2027,7 +2152,7 @@ function updateFlowers(dt, playing) {
         if (Math.random() < 0.4) FX.spawn(f.head, new V3(MR(-1, 1), MR(0, 1.5), MR(-1, 1)), '#cfe0ff', 0.5, 0.35);
         if (f.sipT >= SIP_TIME) {
           game.nectarSeen.add(f.idx); f.sipT = 0; Sound.sfx.nectar(); hitStop(0.04);
-          FX.burst(f.head, '#cfe0ff', 24, 5, 0.9, 0.55); bumpCombo(); addScore((f.nectar ? 140 : 100) * game.combo, f.head.clone(), 'teal');
+          FX.burst(f.head, '#cfe0ff', 24, 5, 0.9, 0.55); bumpCombo(); game.lastCatchT = uTime.value; addScore((f.nectar ? 110 : 80) * game.combo, f.head.clone(), 'teal');
           player.stamina = M.stamina; player.health = Math.min(100, player.health + 8); onEvent('nectar');
         }
       }
@@ -2046,9 +2171,9 @@ function updateNest(dt, playing) {
   if (carrying && player.pos.distanceTo(world.nestEntrance) < 7) {
     if (player.deliverT <= 0) {
       player.deliverT = 0.06; player.cargo--; player.deliverN++;
-      game.score += 20 * game.combo; Sound.sfx.deliver(player.deliverN); onEvent('deliver');
+      game.score += 30 * game.combo; Sound.sfx.deliver(player.deliverN); onEvent('deliver');
       FX.spawn(player.pos, _v.subVectors(world.nestEntrance, player.pos).multiplyScalar(3), '#ffd34a', 0.4, 0.5);
-      if (player.cargo === 0) { FX.burst(world.nestEntrance, '#ffd34a', 30, 8, 0.8, 0.6); hitStop(0.05); popAt(world.nestEntrance, `Delivered ${player.deliverN}!`, ''); player.deliverN = 0; player.stamina = M.stamina; bumpCombo(); }
+      if (player.cargo === 0) { FX.burst(world.nestEntrance, '#ffd34a', 30, 8, 0.8, 0.6); hitStop(0.05); game.score += player.deliverN * 15; popAt(world.nestEntrance, `Delivered ${player.deliverN}! +${player.deliverN * 15}`, ''); player.deliverN = 0; player.stamina = M.stamina; bumpCombo(); }
     }
   } else if (player.deliverN && !carrying) player.deliverN = 0;
 }
@@ -2092,13 +2217,25 @@ const Streaks = {
 Streaks.init();
 
 /* camera */
-const camTarget = new V3(), camPos = new V3();
+const camTarget = new V3(), camPos = new V3(); let camAllow = 1;
+function camHit(p) {
+  const q = player.pos;
+  for (const c of world.cyl) { if (p.y < c.y0 || p.y > c.y1) continue; const dx = p.x - c.x, dz = p.z - c.z, r = c.r + 0.35; if (dx * dx + dz * dz < r * r) return true; }
+  for (const s of world.sph) { const dx = p.x - s.x, dy = p.y - s.y, dz = p.z - s.z, r = s.r + 0.35; if (dx * dx + dy * dy + dz * dz < r * r && q.distanceTo(s) > r) return true; }
+  for (const f of world.flowers) { const dx = p.x - f.head.x, dy = p.y - f.head.y, dz = p.z - f.head.z, r = f.r * 0.9; if (dx * dx + dy * dy + dz * dz < r * r && q.distanceTo(f.head) > f.r + 1) return true; }
+  return false;
+}
 function updateCamera(dt, snap = false) {
   const M = player.mount, s01 = clamp(player.speed / M.boost, 0, 1.3);
   const cd = fwdFrom(player.aimYaw, player.aimPitch * 0.8, _v3);
   const dist = M.camDist * (0.95 + 0.3 * s01);
   const des = _v2.copy(player.pos).addScaledVector(cd, -dist).add(_v.set(0, M.camH * (1 - 0.35 * Math.max(0, player.aimPitch)), 0));
+  let allow = 1; const probe = new V3();
+  for (let i = 1; i <= 8; i++) { probe.lerpVectors(player.pos, des, i / 8); if (camHit(probe)) { allow = Math.max(0.2, (i - 1) / 8); break; } }
+  camAllow = allow < camAllow ? allow : damp(camAllow, allow, 2.5, dt);
+  des.lerpVectors(player.pos, des, camAllow);
   if (snap) camPos.copy(des); else camPos.lerp(des, 1 - Math.exp(-10 * dt));
+  if (camHit(camPos)) camPos.copy(des);
   const fl = floorAt(camPos.x, camPos.z) + 0.8; if (camPos.y < fl) camPos.y = fl;
   camera.position.copy(camPos);
   if (game.shake > 0) { camera.position.add(new V3(MR(-1, 1), MR(-1, 1), MR(-1, 1)).multiplyScalar(game.shake * 0.35)); game.shake = Math.max(0, game.shake - dt * 2.2); }
@@ -2112,11 +2249,12 @@ function updateCamera(dt, snap = false) {
 /* ============================================================
    HUD
    ============================================================ */
-const hud = { time: $('#hudTime'), score: $('#hudScore'), combo: $('#hudCombo'), speed: $('#hudSpeed'), health: $('#barHealth'), stam: $('#barStam'), cargo: $('#barCargo'), cargoTxt: $('#cargoTxt'), healthTxt: $('#healthTxt'), stamTxt: $('#stamTxt'), mHealth: $('#mHealth'), mCargo: $('#mCargo'), ring: $('#strikeRing'), reticle: $('#reticle'), lock: $('#lock'), lockLabel: $('#lock span'), lockFill: $('#lockFill'), goalArrow: $('#goalArrow'), goalLabel: $('#goalLabel'), goalMark: $('#goalMark'), coach: $('#coach'), lockHint: $('#lockHint') };
+const hud = { time: $('#hudTime'), score: $('#hudScore'), combo: $('#hudCombo'), speed: $('#hudSpeed'), health: $('#barHealth'), stam: $('#barStam'), cargo: $('#barCargo'), cargoTxt: $('#cargoTxt'), healthTxt: $('#healthTxt'), stamTxt: $('#stamTxt'), mHealth: $('#mHealth'), mCargo: $('#mCargo'), ring: $('#strikeRing'), reticle: $('#reticle'), lock: $('#lock'), lockLabel: $('#lock span'), lockFill: $('#lockFill'), goalArrow: $('#goalArrow'), goalLabel: $('#goalLabel'), goalMark: $('#goalMark'), coach: $('#coach'), lockHint: $('#lockHint'), frogWarn: $('#frogWarn'), stage: $('#hudStage') };
 const cache = {};
 function setText(el, key, v) { if (cache[key] !== v) { cache[key] = v; el.textContent = v; } }
 function renderObjectives() {
   const ul = $('#objList'); ul.innerHTML = '';
+  if (game.stages.length) hud.stage.textContent = `Stage ${game.stage + 1} of ${game.stages.length} · ${game.stages[game.stage].name}`;
   const focus = game.obj.find((o) => !o.done);
   for (const o of game.obj) {
     const li = document.createElement('li'); if (o.done) li.className = 'done'; if (o === focus) li.classList.add('focus');
@@ -2170,9 +2308,9 @@ function updateHUD(dt) {
       hud.lock.hidden = false;
       hud.lock.style.transform = `translate(${(p.x + 1) / 2 * innerWidth}px, ${(1 - p.y) / 2 * innerHeight}px)`;
       hud.lock.style.setProperty('--s', size + 'px');
-      hud.lock.classList.toggle('inrange', d <= SWOOP_RANGE || player.swoopT > 0);
+      hud.lock.classList.toggle('inrange', d <= SWOOP_RANGE || player.swoopT > 0); hud.lock.classList.toggle('side', L.wanted === false);
       const label = L.type === 'prey' ? PREY[L.ref.kind].label : L.type === 'flower' ? LOCK_LABEL.flower[M.flowers] : LOCK_LABEL[L.type];
-      setText(hud.lockLabel, 'lockl', d <= SWOOP_RANGE ? `${label} · ${isTouch ? 'Strike' : 'Space'}` : label);
+      setText(hud.lockLabel, 'lockl', d <= SWOOP_RANGE ? `${label} · ${isTouch ? 'tap' : 'Space'}` : label);
       const fill = L.type === 'flower' && M.flowers === 'nectar' ? (L.ref.sipT || 0) / SIP_TIME : 0;
       hud.lockFill.style.strokeDashoffset = String(126 * (1 - clamp(fill, 0, 1)));
     } else hud.lock.hidden = true;
@@ -2194,6 +2332,10 @@ function updateHUD(dt) {
       hud.goalLabel.style.transform = `translate(${rx + Math.sin(ang) * 104}px, ${ry - Math.cos(ang) * 104}px) translate(-50%, -50%)`;
     }
   }
+  // frog windup warning
+  let fw = null; for (const f of world.frogs) if (f.state === 'wind') { fw = f; break; }
+  hud.frogWarn.hidden = !fw;
+  if (fw) { const p = _v2.copy(fw.pos).add(_v3.set(0, 4, 0)).project(camera); const px = clamp((p.z > 1 ? -p.x : p.x), -0.92, 0.92), py = clamp((p.z > 1 ? -p.y : p.y), -0.85, 0.85); hud.frogWarn.style.transform = `translate(${clamp((px + 1) / 2 * innerWidth, 40, innerWidth - 40)}px, ${clamp((1 - py) / 2 * innerHeight, 120, innerHeight - 60)}px)`; }
   hud.lockHint.hidden = !(settings.mouse && !isTouch && !mouse.locked && !mouse.lockFailed);
   if (game.toastT > 0) { game.toastT -= dt; if (game.toastT <= 0) toastEl.classList.remove('show'); }
   if (game.alertT > 0) { game.alertT -= dt; if (game.alertT <= 0) alertEl.hidden = true; }
@@ -2203,13 +2345,13 @@ function updateHUD(dt) {
 /* coaching prompts */
 const coach = { step: 0, t: 0, acc: 0, lastAim: 0 };
 function coachText(i) {
-  const M = player.mount, sp = isTouch ? '<b>Strike</b>' : '<kbd>Space</kbd> or right-click';
-  if (i === 0) return isTouch ? 'Hold <b>Fly</b> to move forward. Let go and you hover in place.' : 'Hold <kbd>W</kbd> or the <b>left mouse button</b> to fly. Let go and you hover in place.';
-  if (i === 1) return isTouch ? 'Drag the <b>left stick</b> to steer. Dive to gain speed, climb to slow down.' : 'Move the <b>mouse</b> to steer. Dive to gain speed, climb to slow down.';
+  const M = player.mount, sp = isTouch ? '<b>tap the screen</b>' : 'press <kbd>Space</kbd> or right-click';
+  if (i === 0) return isTouch ? '<b>Touch and hold</b> anywhere to fly. Lift your thumb to hover.' : 'Hold <kbd>W</kbd> or the <b>left mouse button</b> to fly. Let go and you hover in place.';
+  if (i === 1) return isTouch ? '<b>Drag</b> that same thumb to steer: up climbs, down dives. Push past the ring to boost.' : 'Move the <b>mouse</b> to steer. Dive to gain speed, climb to slow down.';
   if (i === 2) {
-    if (M.flowers === 'pollen') return `The hex locks onto flowers with pollen. Press ${sp} to swoop in, then hover there to gather.`;
-    if (M.flowers === 'nectar') return `The hex locks onto flowers with nectar. Press ${sp} to swoop in, then hover until the ring fills.`;
-    return `The hex locks onto ${M.eats.includes('aphid') ? 'aphids' : 'prey'}. Press ${sp} to swoop onto it and catch it.`;
+    if (M.flowers === 'pollen') return `The hex locks onto flowers with pollen. When it turns gold, ${sp} to swoop in, then hover there to gather.`;
+    if (M.flowers === 'nectar') return `The hex locks onto flowers with nectar. When it turns gold, ${sp} to swoop in, then hover until the ring fills.`;
+    return `The hex locks onto ${M.eats.includes('aphid') ? 'aphids' : 'prey'}. When it turns gold, ${sp} to swoop. Get close: far-off prey can dodge.`;
   }
   return 'Follow the gold arrow to your next goal.';
 }
@@ -2269,7 +2411,7 @@ function buildTitleCards() {
   for (const k of HAB_ORDER) {
     const h = HABITATS[k], b = document.createElement('button'); b.className = 'card'; b.type = 'button'; b.setAttribute('aria-pressed', String(sel.hab === k));
     const bs = best[k + ':' + sel.mount];
-    b.innerHTML = `<span class="role">${h.sub}</span><h3>${h.name}</h3><p>${h.blurb}</p><p class="jobs-for">As a ${MOUNTS[sel.mount].short}:</p><ul class="goals">${h.jobs[sel.mount].map((o) => `<li>${o.label} ×${o.target}</li>`).join('')}</ul><div class="foot"><span>${h.time / 60} minutes</span><span>${bs ? `Best ${'★'.repeat(bs.stars)}${'☆'.repeat(3 - bs.stars)} ${bs.score.toLocaleString()}` : 'Not flown yet'}</span></div>`;
+    b.innerHTML = `<span class="role">${h.sub}</span><h3>${h.name}</h3><p>${h.blurb}</p><p class="jobs-for">As a ${MOUNTS[sel.mount].short}, in three stages:</p><ol class="goals">${buildStages(k, sel.mount).map((st) => `<li><b>${st.name}</b> ${st.obj.map((o) => `${o.label.toLowerCase()} ×${o.target}`).join(', ')}</li>`).join('')}</ol><div class="foot"><span>${h.time / 60} minutes</span><span>${bs ? `Best ${'★'.repeat(bs.stars)}${'☆'.repeat(3 - bs.stars)} ${bs.score.toLocaleString()}` : 'Not flown yet'}</span></div>`;
     b.addEventListener('click', () => { if (sel.hab === k) return; sel.hab = k; store.set('hexapod-sel', sel); buildTitleCards(); switchHabitat(k); });
     hc.append(b);
   }
@@ -2294,14 +2436,14 @@ function startRun() {
   setMount(sel.mount); setAtmosphere(world.H, player.mount);
   resetEntities(); spawnPlayer(); FX.clear();
   const H = world.H;
-  Object.assign(game, { tele: newTele(), state: 'play', time: H.time, score: 0, combo: 1, comboT: 0, obj: H.jobs[player.mount.key].map((o) => ({ ...o, count: 0, done: false })), nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, shake: 0, hitStop: 0, camKick: 0 });
+  Object.assign(game, { tele: newTele(), stage: 0, stages: buildStages(H.key, player.mount.key), stageT: 0, chain: 0, lastCatchT: -9, state: 'play', time: H.time, score: 0, combo: 1, comboT: 0, obj: [], nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, shake: 0, hitStop: 0, camKick: 0 });
   $('#hudHab').textContent = `${H.name} · ${player.mount.name}`;
-  renderObjectives(); alertEl.hidden = true;
+  setStage(0); alertEl.hidden = true; camAllow = 1;
+  thumb.id = null; thumbBase.hidden = true; $('#thumbHint').hidden = true;
   show('hud'); $('#touchUI').hidden = !isTouch; document.body.classList.toggle('touch', isTouch);
   onResize(); input.lookX = input.lookY = 0; input.strike = false; mouse.left = false;
   updateCamera(0, true);
   Sound.startEngine(player.mount); Sound.startMusic(world.key);
-  toast(H.name, game.obj.map((o) => `${o.label} ×${o.target}`).join(' · '), 3.2);
   startCoach(); canvas.focus();
 }
 function pauseGame() { if (game.state !== 'play') return; game.state = 'pause'; show('pause'); Sound.stopEngine(); Sound.stopMusic(); releaseLock(); mouse.left = false; syncSettingsUI(); }
@@ -2313,9 +2455,9 @@ function endRun(reason) {
   const bonus = complete ? Math.round(game.time) * 10 + Math.round(player.health) * 5 : 0;
   game.score += bonus;
   const crit = [
-    { t: 'Finish every objective', ok: complete },
+    { t: 'Clear all three stages', ok: complete },
     { t: 'Finish with at least half your wings intact', ok: complete && player.health >= 50 },
-    { t: 'Finish with a minute or more to spare', ok: complete && game.time >= 60 },
+    { t: `Score ${PAR[player.mount.key].toLocaleString()} or more`, ok: complete && game.score >= PAR[player.mount.key] },
   ];
   const stars = crit.filter((c) => c.ok).length;
   const best = store.get('hexapod-best', {}), key = H.key + ':' + player.mount.key, prev = best[key];
@@ -2325,7 +2467,7 @@ function endRun(reason) {
   $('#resSub').textContent = `${H.name} on a ${player.mount.name}`;
   [...$('#resStars').children].forEach((el, i) => el.classList.toggle('on', i < stars));
   $('#resCrit').innerHTML = crit.map((c) => `<li class="${c.ok ? 'ok' : ''}">${c.t}</li>`).join('');
-  const rows = [['Score', game.score.toLocaleString(), 'big'], ...game.obj.map((o) => [o.label, `${o.count}/${o.target}`]), ['Finish bonus', bonus ? `+${bonus.toLocaleString()}` : '—'], ['Best', isBest ? 'New best!' : prev.score.toLocaleString()]];
+  const rows = [['Score', game.score.toLocaleString(), 'big'], ['Stages cleared', `${complete ? game.stages.length : game.stage}/${game.stages.length}`], ...(complete ? [] : game.obj.map((o) => [o.label, `${o.count}/${o.target}`])), ['Clean catches', String(game.tele.clean)], ['Best chain', String(game.tele.chains)], ['Finish bonus', bonus ? `+${bonus.toLocaleString()}` : '—'], ['Best', isBest ? 'New best!' : prev.score.toLocaleString()]];
   $('#resTally').innerHTML = rows.map(([a, b, c]) => `<dt>${a}</dt><dd class="${c || ''}">${b}</dd>`).join('');
   hud.coach.hidden = true;
   setTimeout(() => { if (game.state === 'end') show('results'); }, 400);
@@ -2366,6 +2508,7 @@ function simulatePlay(dt, rdt) {
     if (game.state === 'play') {
       if (!game.ending && !player.dead) { game.time -= dt; if (game.time <= 0) { game.time = 0; endRun('time'); } }
       if (game.ending) { game.ending -= dt; if (game.ending <= 0) endRun('win'); }
+      if (game.stageT > 0) { game.stageT -= dt; if (game.stageT <= 0) setStage(game.stage + 1); }
       if (game.comboT > 0) { game.comboT -= dt; if (game.comboT <= 0) game.combo = 1; }
       updateCamera(rdt); updateHUD(rdt); updateCoach(rdt);
       recordTele(dt);
@@ -2426,7 +2569,7 @@ function boot(data) {
 }
 window.claude?.hot?.snapshot?.(() => ({ sel: { ...sel } }));
 if (window.claude?.hot?.ready) window.claude.hot.ready(boot); else boot(window.claude?.hot?.data ?? {});
-window.__hexapod = { game, player, get world() { return world; }, startRun, endRun, MOUNTS, HABITATS, PREY, sel, input, settings, goalTarget, SWOOP_RANGE, LOCK_RANGE,
+window.__hexapod = { game, player, get world() { return world; }, startRun, endRun, setStage, thumb, MOUNTS, HABITATS, PREY, sel, input, settings, goalTarget, SWOOP_RANGE, LOCK_RANGE,
   // fixed-timestep simulation for automated playtests (no rendering)
   sim(seconds, step = 1 / 30) { const n = Math.round(seconds / step); for (let i = 0; i < n && game.state === 'play'; i++) { let dt = step; if (game.hitStop > 0) { game.hitStop -= step; dt = step * 0.12; } uTime.value += dt; simulatePlay(dt, step); FX.update(dt); } },
   render() { renderer.render(scene, camera); } };

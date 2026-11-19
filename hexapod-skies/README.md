@@ -16,40 +16,42 @@ three.js (r170) loads from jsDelivr, so the first load needs a network connectio
 
 ## Controls
 
-You hover by default. Hold to fly, let go to hover in place. Diving builds speed and climbing bleeds it off.
+You hover by default. Fly forward, let go to hover in place. Diving builds speed and climbing bleeds it off.
 
-| Action | Desktop | Touch |
-| --- | --- | --- |
-| Fly forward | Hold W or the left mouse button | Hold Fly |
-| Steer | Mouse (click the game to capture it), or A/D and the arrow keys | Left stick |
-| Strike | Space or right-click: when the hex locks on, you swoop straight onto the target | Strike |
-| Boost | Hold Shift while flying (uses stamina) | Boost |
-| Back off | S | |
-| Pause / mute | Esc or P / M | Pause button |
+**Phone (one thumb).** Touch anywhere and you fly; drag that thumb to steer (up climbs, down dives, sideways turns);
+lift to hover; tap to strike; push past the ring to boost.
 
-## Mounts and their jobs
+**Desktop.**
 
-Every insect does what it does in nature, so the objectives depend on which one you ride.
+| Action | Keys and mouse |
+| --- | --- |
+| Fly forward | Hold W or the left mouse button |
+| Steer | Mouse (click the game to capture it), or A/D and the arrow keys |
+| Strike | Space or right-click. When the hex turns gold you swoop straight onto the target |
+| Boost | Hold Shift while flying (uses stamina) |
+| Back off | S |
+| Pause / mute | Esc or P / M |
 
-| Mount | Does | Lock-on targets |
-| --- | --- | --- |
-| Emperor Dragonfly | Hunts mosquitoes, gnats and midges; fights wasps; skims water | Flying prey, wasps |
-| Honeybee | Gathers pollen for the nest (20 per trip); stings wasps for double damage | Pollen flowers, the nest, wasps |
-| Privet Hawk-moth | Hovers inside flowers to sip nectar; sees in the dark | Unvisited flowers |
-| Seven-spot Ladybird | Eats aphids off stems (double points); heavy armour | Aphids |
+## How a run works
 
-## Habitats
+Each run is three stages that ramp up, and the jobs depend on your insect. Clearing a stage adds 20 seconds.
+The hex locks onto targets for your current job (a white hex marks something you can catch that isn't the job right now).
+Close swoops always land; prey you swoop at from far away may dodge. Catching by flying straight through scores a
+"clean catch" bonus, and swooping again within 1.6 s of a catch is free and builds a chain.
 
-| Habitat | Dragonfly | Honeybee | Hawk-moth | Ladybird | Threats |
-| --- | --- | --- | --- | --- | --- |
-| Lily Pond | 12 mosquitoes, 4 skims | 16 pollen, dodge 2 dives | 6 flowers, dodge 2 dives | 14 aphids, dodge 2 dives | Frogs, swallow, webs |
-| Wildflower Meadow | 12 gnats, 2 wasps | 30 pollen, 2 wasps | 10 flowers, dodge 2 dives | 16 aphids, dodge 2 dives | Wasps, swallow, webs |
-| Moonlit Garden | 12 midges, dodge 2 bats | 14 pollen, dodge 2 bats | 8 flowers, dodge 2 bats | 14 aphids, dodge 2 bats | Bats, webs |
-| Bramble Hedgerow | 12 gnats, 2 wasps | 20 pollen, 2 wasps | 8 flowers, dodge 2 dives | 20 aphids, dodge 2 dives | Wasps, swallow, webs |
+| Mount | Stage 1 | Stage 2 | Stage 3 |
+| --- | --- | --- | --- |
+| Emperor Dragonfly | Catch 12 flying prey | Pond: skim 4 + catch 10. Meadow/hedgerow: drive off 3 wasps + catch 10. Garden: catch 12 + dodge 2 bats | The swarm: catch 18 from a swarm + dodge 1 dive |
+| Honeybee | Deliver 16 pollen | Deliver 16 + drive off 3 wasps, or deliver 18 + dodge 2 dives | Wasp raid on the hive (4 wasps + 14 pollen), or deliver 24 + dodge 1 |
+| Privet Hawk-moth | Sip from 6 flowers | 6 more + dodge 2 dives | 9 more + dodge 1 |
+| Seven-spot Ladybird | Eat 12 aphids | 12 more + dodge 2 dives | Aphid boom: 20 from a new colony + dodge 1 |
 
-Each run lasts four minutes. A gold arrow always points to your next goal, and the first run walks you through
-the controls. Birds sound an alarm before diving: drop into the grass or turn hard, and each dive you escape
-counts as a dodge. Stars: finish every objective, finish with at least half health, finish with a minute to spare.
+Threats: birds circle and sound an alarm before diving. They track you until the last moment, then commit, so
+drop into the grass or turn hard just before they arrive. Frogs puff and glow their throat for a second (with a
+"Frog!" marker) before the tongue lashes at where you were. Wasps chase, webs snag.
+
+Stars: clear all three stages, finish with at least half your wings intact, and beat the score for your insect
+(dragonfly 12,000, honeybee 7,800, hawk-moth 9,500, ladybird 12,000).
 
 ## How it is built
 
@@ -59,8 +61,9 @@ synthesized with the Web Audio API, including a generative soundtrack that picks
 
 ## Tests
 
-`tests/gameplay.test.cjs` drives the game in headless Chromium with Playwright (hover and flight, lock-on swoops for each mount,
-skimming, pollen, nectar, wasps, dodging, win flow). It routes the jsDelivr request to a local copy of three.js:
+`tests/gameplay.test.cjs` drives the game in headless Chromium on a fixed timestep (29 checks, including the one-thumb
+touch control in phone emulation). `tests/playtest.cjs` runs the bot playtest across every mount and habitat; see
+`PLAYTEST_REPORT.md`. Both route the jsDelivr request to a local copy of three.js:
 
 ```sh
 npm i three@0.170.0   # somewhere, e.g. a scratch folder

@@ -14,7 +14,7 @@ function installBot([kind, seed]) {
   let r = seed * 9301 + 49297; const rnd = () => ((r = (r * 9301 + 49297) % 233280) / 233280);
   const skilled = kind === 'skilled';
   const cfg = skilled ? { rate: 5.0, react: 0.15, noise: 0.03, strikeDelay: 0.1 } : { rate: 2.2, react: 0.45, noise: 0.12, strikeDelay: 0.5 };
-  const st = { t: 0, nextThink: 0, dYaw: 0, dPitch: 0, thrust: true, boost: false, lockedFor: 0, wander: null, hideT: 0 };
+  const st = { stuckT: 0, unstick: 0, t: 0, nextThink: 0, dYaw: 0, dPitch: 0, thrust: true, boost: false, lockedFor: 0, wander: null, hideT: 0 };
   const wrap = (a) => Math.atan2(Math.sin(a), Math.cos(a));
   x.game.bot = (dt) => {
     const inp = x.input, M = P.mount, w = x.world;
@@ -34,13 +34,16 @@ function installBot([kind, seed]) {
         const f = new V(Math.sin(P.yaw), 0, Math.cos(P.yaw)); target = P.pos.clone().addScaledVector(f, 25); target.y = w.height(target.x, target.z) + 2.5;
         if (w.water !== null && w.height(target.x, target.z) < w.water) { target.copy(P.pos).addScaledVector(new V(-f.z, 0, f.x), 30); target.y = P.pos.y; }
       } else if (skilled && wasp && !M.fights) { target = P.pos.clone().add(P.pos.clone().sub(wasp.pos).setY(0).normalize().multiplyScalar(40)); target.y = P.pos.y + 4; }
-      else if (skilled && P.lock && P.lock.d < 45) { target = P.lock.pos.clone(); stopNear = P.lock.type === 'flower' || P.lock.type === 'nest' ? 1.2 : 0; }
+      else if (skilled && P.lock && P.lock.wanted && P.lock.d < 45) { target = P.lock.pos.clone(); stopNear = P.lock.type === 'flower' || P.lock.type === 'nest' ? 1.2 : 0; }
+      else if (o && o.type === 'skim' && P.overWater) { const f = new V(Math.sin(P.yaw), 0, Math.cos(P.yaw)); target = P.pos.clone().addScaledVector(f, 30); target.y = w.water + 0.9; if (w.height(target.x, target.z) > w.water - 0.5) target.set(-P.pos.x * 0.3, w.water + 0.9, -P.pos.z * 0.3); }
       else if (G && G.pos) { target = G.pos.clone(); stopNear = (o && (o.type === 'deliver' || o.type === 'nectar')) ? 1.2 : 0; if (o && o.type === 'skim') { target.y = w.water + 0.8; } }
       else { // nothing to chase (e.g. dodge objective): patrol a loop near the middle
         if (!st.wander || st.wander.distanceTo(P.pos) < 10) { const a = rnd() * 6.28, rr = 40 + rnd() * 100; st.wander = new V(Math.cos(a) * rr, 0, Math.sin(a) * rr); st.wander.y = w.height(st.wander.x, st.wander.z) + 14; }
         target = st.wander;
       }
       if (o && o.type === 'skim' && !skilled && G && G.pos === null) target = null;
+      // a person who is pinned against something steers away for a moment
+      if (st.unstick > 0) { target = P.pos.clone().add(new V(Math.cos(st.unAng) * 20, 8, Math.sin(st.unAng) * 20)); }
       const to = target.clone().sub(P.pos), d = to.length();
       st.dYaw = Math.atan2(to.x, to.z) + (rnd() - 0.5) * cfg.noise * 2;
       st.dPitch = Math.atan2(to.y, Math.hypot(to.x, to.z)) + (rnd() - 0.5) * cfg.noise * 2;
@@ -51,6 +54,9 @@ function installBot([kind, seed]) {
       st.boost = skilled && d > 70 && P.stamina > 45 && !birdThreat;
       st.dist = d;
     }
+    if (inp.thrust && P.speed < 3 && P.swoopT <= 0) st.stuckT += dt; else st.stuckT = 0;
+    if (st.stuckT > (skilled ? 1 : 2.5)) { st.unstick = 1.2; st.unAng = rnd() * 6.28; st.stuckT = 0; st.nextThink = 0; }
+    if (st.unstick > 0) st.unstick -= dt;
     // move the "mouse" toward the desired aim at a human turn rate
     const sens = 0.0022 * x.settings.sens;
     const ey = Math.max(-cfg.rate * dt, Math.min(cfg.rate * dt, wrap(st.dYaw - P.aimYaw)));
