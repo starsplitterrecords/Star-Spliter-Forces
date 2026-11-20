@@ -973,6 +973,314 @@
    "status": "draft",
    "use": "EXCLUDED: 0-byte file",
    "outputs": []
+  },
+  {
+   "id": "portrait_bjorn",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/series/vikings-2026/character-lineup.png",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Guest explorer portrait cropped from released Vikings 2026! art (owner direction 2026-11-20: Visions art is canonical)",
+   "outputs": [
+    {
+     "out": "assets/characters/bjorn_256.png",
+     "size": [
+      256,
+      256
+     ],
+     "crop": [
+      0.4,
+      0.02,
+      0.53,
+      0.25
+     ],
+     "display": [
+      96,
+      96
+     ]
+    },
+    {
+     "out": "assets/characters/bjorn_96.png",
+     "size": [
+      96,
+      96
+     ],
+     "crop": [
+      0.4,
+      0.02,
+      0.53,
+      0.25
+     ],
+     "display": [
+      48,
+      48
+     ]
+    }
+   ]
+  },
+  {
+   "id": "portrait_gunnar",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/series/vikings-2026/character-lineup.png",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Guest explorer portrait cropped from released Vikings 2026! art (owner direction 2026-11-20: Visions art is canonical)",
+   "outputs": [
+    {
+     "out": "assets/characters/gunnar_256.png",
+     "size": [
+      256,
+      256
+     ],
+     "crop": [
+      0.6,
+      0.1,
+      0.73,
+      0.33
+     ],
+     "display": [
+      96,
+      96
+     ]
+    },
+    {
+     "out": "assets/characters/gunnar_96.png",
+     "size": [
+      96,
+      96
+     ],
+     "crop": [
+      0.6,
+      0.1,
+      0.73,
+      0.33
+     ],
+     "display": [
+      48,
+      48
+     ]
+    }
+   ]
+  },
+  {
+   "id": "portrait_jax_orien",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Guest explorer portrait cropped from released Stardust Station art (owner direction 2026-11-20: Visions art is canonical)",
+   "outputs": [
+    {
+     "out": "assets/characters/jax_orien_256.png",
+     "size": [
+      256,
+      256
+     ],
+     "crop": [
+      0.655,
+      0.4,
+      0.855,
+      0.54
+     ],
+     "display": [
+      96,
+      96
+     ]
+    },
+    {
+     "out": "assets/characters/jax_orien_96.png",
+     "size": [
+      96,
+      96
+     ],
+     "crop": [
+      0.655,
+      0.4,
+      0.855,
+      0.54
+     ],
+     "display": [
+      48,
+      48
+     ]
+    }
+   ]
+  },
+  {
+   "id": "portrait_lucia",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/covers/backyard-rockets-issue-02.jpg",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Guest explorer portrait cropped from released Backyard Rockets art (owner direction 2026-11-20: Visions art is canonical)",
+   "outputs": [
+    {
+     "out": "assets/characters/lucia_256.png",
+     "size": [
+      256,
+      256
+     ],
+     "crop": [
+      0.63,
+      0.545,
+      0.84,
+      0.685
+     ],
+     "display": [
+      96,
+      96
+     ]
+    },
+    {
+     "out": "assets/characters/lucia_96.png",
+     "size": [
+      96,
+      96
+     ],
+     "crop": [
+      0.63,
+      0.545,
+      0.84,
+      0.685
+     ],
+     "display": [
+      48,
+      48
+     ]
+    }
+   ]
+  },
+  {
+   "id": "portrait_brandon_mack",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/covers/sunforge-outlaw-issue-01.png",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Guest explorer portrait cropped from released Sunforge Outlaw art (owner direction 2026-11-20: Visions art is canonical)",
+   "outputs": [
+    {
+     "out": "assets/characters/brandon_mack_256.png",
+     "size": [
+      256,
+      256
+     ],
+     "crop": [
+      0.375,
+      0.29,
+      0.545,
+      0.403
+     ],
+     "display": [
+      96,
+      96
+     ]
+    },
+    {
+     "out": "assets/characters/brandon_mack_96.png",
+     "size": [
+      96,
+      96
+     ],
+     "crop": [
+      0.375,
+      0.29,
+      0.545,
+      0.403
+     ],
+     "display": [
+      48,
+      48
+     ]
+    }
+   ]
+  },
+  {
+   "id": "vikings_2026_cover",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/covers/vikings-2026-issue-01.jpg",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Archive Star Splitter Visions page (Vikings 2026!)",
+   "outputs": [
+    {
+     "out": "assets/universe/vikings_2026_cover.png",
+     "size": [
+      300,
+      450
+     ],
+     "fit": "contain",
+     "display": [
+      150,
+      225
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stardust_station_cover",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Archive Star Splitter Visions page (Stardust Station)",
+   "outputs": [
+    {
+     "out": "assets/universe/stardust_station_cover.png",
+     "size": [
+      300,
+      450
+     ],
+     "fit": "contain",
+     "display": [
+      150,
+      225
+     ]
+    }
+   ]
+  },
+  {
+   "id": "backyard_rockets_cover",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/covers/backyard-rockets-issue-01.jpg",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Archive Star Splitter Visions page (Backyard Rockets)",
+   "outputs": [
+    {
+     "out": "assets/universe/backyard_rockets_cover.png",
+     "size": [
+      300,
+      450
+     ],
+     "fit": "contain",
+     "display": [
+      150,
+      225
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sunforge_outlaw_cover",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/covers/sunforge-outlaw-issue-01.png",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Archive Star Splitter Visions page (Sunforge Outlaw)",
+   "outputs": [
+    {
+     "out": "assets/universe/sunforge_outlaw_cover.png",
+     "size": [
+      300,
+      450
+     ],
+     "fit": "contain",
+     "display": [
+      150,
+      225
+     ]
+    }
+   ]
   }
  ]
 }

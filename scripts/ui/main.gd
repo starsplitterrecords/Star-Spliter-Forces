@@ -443,6 +443,7 @@ func show_archive() -> void:
 	tabs.add_child(_archive_explorers())
 	tabs.add_child(_archive_mystery())
 	tabs.add_child(_archive_log())
+	tabs.add_child(_archive_visions())
 	var fg: Array = _scroll("Field Guide")
 	FieldGuide.fill(fg[1], 1080.0)
 	tabs.add_child(fg[0])
@@ -604,6 +605,56 @@ func _archive_explorers() -> Control:
 		for i in perks.size():
 			lines.append(("✓ " if i < int(m["level"]) else "· ") + String(perks[i]))
 		inner.add_child(UiTheme.label("Mastery %d — expeditions %d, completions %d\n%s" % [int(m["level"]), int(m["expeditions"]), int(m["completions"]), "\n".join(lines)], 13, UiTheme.DIM))
+	return s[0]
+
+## Other Star Splitter Visions series that reached the Reach through Signal
+## Space. A series page opens when its crossover landmark is found.
+func _archive_visions() -> Control:
+	var s: Array = _scroll("Visions")
+	var inner: VBoxContainer = s[1]
+	inner.add_child(UiTheme.label("STAR SPLITTER VISIONS — SIGNAL SPACE GUESTS", 20, UiTheme.GOLD, "display"))
+	inner.add_child(UiTheme.label("Other Star Splitter Visions series, as published. Their appearance here is a Signal Space crossover: a game-only meeting point, not canon for any series.", 13, UiTheme.DIM))
+	for sid: String in GameData.VISIONS_SERIES.keys():
+		var v: Dictionary = GameData.VISIONS_SERIES[sid]
+		var found: bool = Profile.is_discovered(String(v["discovery"]))
+		var panel: PanelContainer = PanelContainer.new()
+		panel.add_theme_stylebox_override("panel", UiTheme.box(UiTheme.PANEL, Color(v["accent"], 0.6 if found else 0.2), 1, 10, 14))
+		inner.add_child(panel)
+		var h: HBoxContainer = HBoxContainer.new()
+		h.add_theme_constant_override("separation", 16)
+		panel.add_child(h)
+		var cover: TextureRect = _art("res://assets/universe/%s_cover.png" % String(v["cover"]), Vector2(120, 180))
+		if cover:
+			if not found:
+				cover.modulate = Color(0.25, 0.25, 0.3, 1.0)
+			h.add_child(cover)
+		var col: VBoxContainer = VBoxContainer.new()
+		col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		col.add_theme_constant_override("separation", 4)
+		h.add_child(col)
+		col.add_child(UiTheme.label(String(v["title"]).to_upper(), 20, v["accent"] if found else UiTheme.DIM, "display"))
+		col.add_child(UiTheme.label("%s   •   %s" % [String(v["label"]), String(v["release"])], 12, UiTheme.DIM))
+		if not found:
+			var where: String = String(GameData.DISCOVERIES[String(v["discovery"])]["title"])
+			col.add_child(UiTheme.label("Signal not yet found. Look for the %s." % where, 14, UiTheme.DIM))
+			continue
+		col.add_child(UiTheme.label("\"%s\"" % String(v["tagline"]), 15, Color.WHITE, "bold"))
+		col.add_child(UiTheme.label(String(v["description"]), 13, UiTheme.TEXT))
+		col.add_child(UiTheme.label("IN SIGNAL SPACE: " + String(v["signal_space"]), 13, UiTheme.GOLD))
+		var guests: HBoxContainer = HBoxContainer.new()
+		guests.add_theme_constant_override("separation", 8)
+		col.add_child(guests)
+		var faces: Array = [String(v["explorer"])]
+		if sid == "vikings_2026":
+			faces.append("gunnar")
+		for f: String in faces:
+			var pr: TextureRect = _art("res://assets/characters/%s_96.png" % String(GameData.CHARACTERS.get(f, {}).get("portrait", f)), Vector2(56, 56))
+			if pr:
+				guests.add_child(pr)
+			var gl: Label = UiTheme.label(String(GameData.CHARACTERS[f]["name"]) if GameData.CHARACTERS.has(f) else f.capitalize(), 14, UiTheme.TEXT, "bold")
+			gl.autowrap_mode = TextServer.AUTOWRAP_OFF
+			gl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			guests.add_child(gl)
 	return s[0]
 
 func _archive_mystery() -> Control:

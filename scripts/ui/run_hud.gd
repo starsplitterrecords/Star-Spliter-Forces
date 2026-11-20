@@ -345,7 +345,8 @@ func discovery_card(title: String, text: String, color: Color, first_time: bool,
 	var h: HBoxContainer = HBoxContainer.new()
 	h.add_theme_constant_override("separation", 14)
 	card.add_child(h)
-	var cat: String = GameData.poi_category(kind)
+	# Callers pass a category id; older call sites pass a POI kind.
+	var cat: String = kind if GameData.CATEGORIES.has(kind) else GameData.poi_category(kind)
 	var cdef: Dictionary = GameData.CATEGORIES.get(cat, {})
 	var icon: CategoryIcon = CategoryIcon.new(cat if cat != "" else "signal", 64.0)
 	icon.size_flags_vertical = Control.SIZE_SHRINK_BEGIN

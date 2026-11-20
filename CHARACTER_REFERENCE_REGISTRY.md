@@ -63,6 +63,15 @@ Chronology for all: Rex Fleet Season One, around Issue 01 (Reach and Resolve era
 
 ---
 
+## Star Splitter Visions guests (Signal Space; owner direction 2026-11-20)
+
+| Explorer | Series | Visual authority | Portrait source (SSV `sites/visions/public/images/…` @ b35d7d8f298c) |
+|---|---|---|---|
+| Bjorn (+ Gunnar, escort) | Vikings 2026! | Released Issue 01 cover + series character lineup | `series/vikings-2026/character-lineup.png` |
+| Jax Orien | Stardust Station | Released Issue 01 cover (technician, prosthetic forearm) | `covers/stardust-station-issue-01.jpg` (source face is small — 140 px) |
+| Lucia | Backyard Rockets | Released Issue 02 cover (razor-cut black hair, tactical jacket with cyan piping) | `covers/backyard-rockets-issue-02.jpg` |
+| Brandon Mack | Sunforge Outlaw | Released preview cover (raven hair, dark duster) | `covers/sunforge-outlaw-issue-01.png`; name from RP `data/shows/sunforge-outlaw-s1/characters.json` (working data) |
+
 ## Supporting characters (portraits imported; not playable)
 
 | Character | Faction / role (RP) | Seen | Possible game use |

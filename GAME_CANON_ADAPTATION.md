@@ -44,6 +44,28 @@ Nothing in the signal layer may be used as evidence about Rex Fleet canon.
 | Veil Flicker | Adaptation of the canon Phase anomaly family (Veil Auroras) | Behaves as a measurable hazard that relocates, not a creature with intent |
 | Supersonic Being, Night Motion Archives, Robots Sing Love Songs, Before the Reboot Forces | Adaptation of documented project language | Taglines verbatim; Before the Reboot has no transmission because it has no releases |
 
+## Star Splitter Visions guests (2026-11-20)
+
+Owner direction: bring Vikings 2026!, Stardust Station, Backyard Rockets and
+Sunforge Outlaw in as guest explorers, places and Archive pages, "adapted for the
+series and their setting". Rules applied:
+
+- **Each guest arrives the way their own series would explain it**, inside Signal
+  Space: Bjorn by a second time slip (the DTI premise); Stardust Station slips
+  mid-inspection with the crew still in the West Corridor; OCHRE-9 is a Launch-Shop
+  relay rocket that came down in the wrong sky; the Sunforge drifter is simply
+  standing in a star's light (no plot revealed — the series is in development).
+- **Abilities express the series' engine**, not generic power: Shield Wall + Gunnar
+  (kin, provision); All-Hands Meeting (mandatory proximity); Build Another Way
+  (community relays, no Tethergrid fee); Quick Draw (frontier pursuit).
+- **Tone kept**: Vikings humour comes from mismatch, never caricature (no jokes about
+  literacy); Stardust stays warm/absurd; Backyard stays practical and optimistic.
+- **Visuals from released art only**: portraits and covers imported from SSV through
+  the asset pipeline; ships are vector interpretations in each series' palette.
+- **Nothing is canon for those series.** The Archive says so on its Visions page.
+- Sunforge Outlaw: the published site gives no character names. "Brandon Mack" comes
+  from RexPrompt working data — owner direction treats it as usable; flagged for review.
+
 ## Canon quality gate (applied to every new element)
 
 Before an element ships: source identified (path + revision) · approval status

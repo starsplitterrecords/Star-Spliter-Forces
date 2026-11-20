@@ -87,7 +87,11 @@ var ability_charges: int = 1
 var ability_active: float = 0.0
 var damage_boost: float = 0.0
 var mastery_level: int = 0
-var allies: Array = [] # Abby's answering captains: {angle, clock}
+var allies: Array = [] # Abby's answering captains / Gunnar: {angle, clock, kind?}
+var relay_pos: Vector2 = Vector2.ZERO
+var relay_time: float = 0.0
+var relay_clock: float = 0.0
+var since_hurt: float = 0.0
 var ally_time: float = 0.0
 var debug_enabled: bool = true
 var scripted_input: bool = false # tests/bots drive player.move_input directly
@@ -183,8 +187,8 @@ func _apply_start_bonuses() -> void:
 	var b: Dictionary = {
 		"max_hp": float(def["max_hp"]) + 10.0 * Profile.workshop_rank("plating") + (20.0 if character_id == "ella_venn" and mastery_level >= 3 else 0.0),
 		"speed_mult": 1.0 + 0.04 * Profile.workshop_rank("thrust") + (0.06 if character_id == "naomi_sol" and mastery_level >= 3 else 0.0),
-		"pickup": float(def["pickup"]) * (1.0 + 0.12 * Profile.workshop_rank("magnet")),
-		"armor": float(def.get("armor", 0.0)) + (0.5 if character_id == "tessa_banks" and mastery_level >= 3 else 0.0),
+		"pickup": float(def["pickup"]) * (1.0 + 0.12 * Profile.workshop_rank("magnet")) * (1.15 if character_id == "jax_orien" and mastery_level >= 3 else 1.0),
+		"armor": float(def.get("armor", 0.0)) + (0.5 if character_id in ["tessa_banks", "bjorn", "brandon_mack"] and mastery_level >= 3 else 0.0),
 		"head_start": Profile.workshop_rank("head_start") > 0 or (character_id == "jex_marrin" and mastery_level >= 4),
 	}
 	start_bonuses = b
@@ -307,13 +311,14 @@ func step(delta: float) -> void:
 	if checkpoint_due or elapsed - last_checkpoint > 45.0:
 		checkpoint_due = false
 		checkpoint()
-	_update_state(delta)
-	_update_ability(delta)
-	# Broad-phase rebuild once per frame.
+	# Broad-phase rebuild once per frame, before anything queries it
+	# (abilities included), so no query can return an enemy freed since.
 	enemy_hash.clear()
 	for e: ForceEnemy in enemies:
 		if is_instance_valid(e) and not e.dead:
 			enemy_hash.insert(e, e.position, e.radius)
+	_update_state(delta)
+	_update_ability(delta)
 	_step_enemies(delta)
 	for b: int in pending_beats:
 		beat_index = b
@@ -416,7 +421,7 @@ func _scan_categories(delta: float) -> void:
 			_teach("xp" if String(it.kind) == "mote" else "supply")
 	for p: Dictionary in pois.items:
 		if bool(p.known) and not bool(p.claimed) and String(p.get("hidden", "")) in ["", force_state] and Vector2(p.pos).distance_squared_to(pp) < 720.0 * 720.0:
-			var cat: String = GameData.poi_category(String(p.kind))
+			var cat: String = GameData.poi_category(String(p.kind), p.get("data", {}))
 			if cat != "":
 				_teach(cat)
 	if left_gate and at_gate():
@@ -441,6 +446,8 @@ func scanner_range() -> float:
 	var r: float = 620.0 * (1.0 + 0.3 * int(weapons.passives.get("scanner", 0)) if weapons else 1.0)
 	if force_state == "DRIFT":
 		r *= 1.5
+	if character_id == "bjorn":
+		r *= 0.7
 	return r
 
 func current_region_def() -> Dictionary:
@@ -582,7 +589,7 @@ func _spawn_director(delta: float) -> void:
 			_spawn_near_player("", engaged)
 	patrol_clock -= delta
 	if patrol_clock <= 0.0:
-		patrol_clock = rng.randf_range(42.0, 66.0) * (0.4 if quick_test else 1.0) * (1.25 if force_state == "RESONANCE" else 1.0)
+		patrol_clock = rng.randf_range(42.0, 66.0) * (0.4 if quick_test else 1.0) * (1.25 if force_state == "RESONANCE" else 1.0) * (0.7 if character_id == "brandon_mack" else 1.0)
 		spawn_patrol()
 	if not elite_times.is_empty() and elapsed >= float(elite_times[0]) * (0.25 if quick_test else 1.0):
 		elite_times.pop_front()
@@ -838,6 +845,7 @@ func player_hit(amount: float, from: Vector2) -> bool:
 	if not player.hurt(amount):
 		return false
 	add_resonance(-6.0)
+	since_hurt = 0.0
 	weapons.on_player_hurt()
 	shake(7.0)
 	fx.burst(player.position, Color("ff6f8f"), 10, 240.0)
@@ -937,9 +945,12 @@ func ability_def() -> Dictionary:
 func ability_cooldown() -> float:
 	var cd: float = float(ability_def()["cooldown"])
 	match character_id:
-		"ella_venn":
+		"ella_venn", "bjorn", "lucia", "brandon_mack":
 			if mastery_level >= 4:
 				cd -= 4.0
+		"jax_orien":
+			if mastery_level >= 4:
+				cd -= 5.0
 		"tessa_banks":
 			if mastery_level >= 4:
 				cd -= 6.0
@@ -1010,6 +1021,52 @@ func use_ability() -> bool:
 			fx.ring(player.position, 20.0, 160.0, Color("d8323a"), 0.6, 6.0)
 			if hud:
 				hud.toast("SHARD CAPTAINS ANSWER THE CALL")
+		"shield_wall":
+			ability_active = 6.0 + (2.0 if mastery_level >= 1 else 0.0)
+			allies.clear()
+			allies.append({"angle": 0.0, "clock": 0.1, "kind": "gunnar"})
+			ally_time = ability_active
+			fx.ring(player.position, 20.0, 170.0, Color("c9a46a"), 0.5, 8.0)
+			if hud:
+				hud.toast("SHIELD WALL — GUNNAR COMES ALONGSIDE")
+		"all_hands":
+			# Mandatory proximity: everyone into one corridor.
+			var knot: Vector2 = player.position + Vector2.from_angle(player.facing) * 160.0
+			var reach: float = 360.0 + (140.0 if mastery_level >= 1 else 0.0)
+			for e: ForceEnemy in enemy_hash.query(player.position, reach).duplicate():
+				if e.dead or e.boss:
+					continue
+				if e.position.distance_to(player.position) < reach + e.radius:
+					e.knock += (knot - e.position) * 3.2
+					e.slow = maxf(e.slow, 1.2)
+					e.harmony_mark = true
+					e.meeting_mark = 5.0
+			player.heal(20.0 + (20.0 if mastery_level >= 2 else 0.0))
+			fx.ring(knot, reach, 30.0, Color("ffce5c"), 0.45, 6.0)
+			fx.label(player.position + Vector2(0, -44), "ZIB: PATCHED", Color("ffce5c"), 18, 1.0)
+			if hud:
+				hud.toast("ALL-HANDS MEETING — ATTENDANCE MANDATORY")
+		"build_another_way":
+			relay_pos = player.position
+			relay_time = 10.0 + (4.0 if mastery_level >= 1 else 0.0)
+			relay_clock = 0.2
+			fx.ring(relay_pos, 20.0, 120.0, Color("e58a2b"), 0.5, 6.0)
+			if hud:
+				hud.toast("LAUNCH-SHOP RELAY UP — NO TETHERGRID FEE")
+		"high_noon":
+			var cap: int = 18 if mastery_level >= 1 else 12
+			var dmg: float = 70.0 * (1.5 if mastery_level >= 2 else 1.0) * player.damage_mult
+			var targets: Array = []
+			for e: ForceEnemy in enemies:
+				if is_instance_valid(e) and not e.dead and not e.disguised and e.position.distance_to(player.position) < 760.0:
+					targets.append(e)
+			targets.sort_custom(func(a: ForceEnemy, b: ForceEnemy) -> bool: return a.position.distance_squared_to(player.position) < b.position.distance_squared_to(player.position))
+			for e: ForceEnemy in targets.slice(0, cap):
+				e.slow = maxf(e.slow, 1.5)
+				fx.beam(player.position, e.position, Color("ffcf8a"), 0.22, 3.0)
+				damage_enemy(e, dmg * (2.0 if e.elite or e.boss else 1.0), player.position.direction_to(e.position), 180.0, "ability")
+			fx.flash(player.position, 120.0, Color("ff9b3d"), 0.15)
+			shake(6.0)
 		"veil_step":
 			player_veiled = 4.0 + (2.0 if mastery_level >= 3 else 0.0)
 			for e: ForceEnemy in enemies:
@@ -1019,7 +1076,30 @@ func use_ability() -> bool:
 			fx.ring(player.position, 20.0, 160.0, Color("ffcf7a"), 0.5, 4.0)
 	return true
 
+## Lucia's Launch-Shop relay: a planted station that fires homemade rockets
+## and pulls shards in.
+func _step_relay(delta: float) -> void:
+	if relay_time <= 0.0:
+		return
+	relay_time -= delta
+	relay_clock -= delta
+	for it: Dictionary in pickups.items:
+		var d: float = Vector2(it.pos).distance_to(relay_pos)
+		if d < 420.0:
+			it.pos = Vector2(it.pos).move_toward(player.position, 520.0 * delta)
+	if relay_clock <= 0.0:
+		relay_clock = 0.55
+		var shots: int = 2 if mastery_level >= 2 else 1
+		for k in shots:
+			var t: ForceEnemy = nearest_enemy(relay_pos, 520.0)
+			if t:
+				var dir: Vector2 = relay_pos.direction_to(t.position).rotated((k - 0.5) * 0.3 if shots > 1 else 0.0)
+				projectiles.spawn(relay_pos + Vector2(0, -26), dir * 520.0, 34.0 * player.damage_mult, 1.2, 7.0, Color("e58a2b"), {"weapon": "", "knock": 140.0})
+
 func ally_position(a: Dictionary) -> Vector2:
+	if String(a.get("kind", "")) == "gunnar":
+		# Gunnar keeps station at Bjorn's shoulder.
+		return player.position + Vector2.from_angle(player.facing + PI / 2.0) * 58.0 - Vector2.from_angle(player.facing) * 14.0
 	return player.position + Vector2.from_angle(float(a.angle) + elapsed * 1.4) * 115.0
 
 func _step_allies(delta: float) -> void:
@@ -1031,11 +1111,12 @@ func _step_allies(delta: float) -> void:
 	for a: Dictionary in allies:
 		a.clock = float(a.clock) - delta
 		if float(a.clock) <= 0.0:
-			a.clock = 0.45
+			var gunnar: bool = String(a.get("kind", "")) == "gunnar"
+			a.clock = (0.22 if mastery_level >= 2 else 0.4) if gunnar else 0.45
 			var p: Vector2 = ally_position(a)
 			var t: ForceEnemy = nearest_enemy(p, 480.0)
 			if t:
-				projectiles.spawn(p, p.direction_to(t.position) * 600.0, 16.0 * player.damage_mult, 1.0, 6.0, Color("ff5a5f"), {"weapon": "", "knock": 60.0})
+				projectiles.spawn(p, p.direction_to(t.position) * 600.0, (20.0 if gunnar else 16.0) * player.damage_mult, 1.0, 6.0, Color("c9a46a") if gunnar else Color("ff5a5f"), {"weapon": "", "knock": 80.0 if gunnar else 60.0})
 
 func _update_ability(delta: float) -> void:
 	_step_allies(delta)
@@ -1065,6 +1146,24 @@ func _update_ability(delta: float) -> void:
 				if ability_active <= 0.0:
 					player.max_shield = 0.0
 					player.shield = 0.0
+			"bjorn":
+				# Shield wall: a forward half-circle that stops shots and shoves.
+				var fwd: Vector2 = Vector2.from_angle(player.facing)
+				var r2: float = 170.0
+				clear_hostile_shots_near(player.position + fwd * 60.0, 120.0)
+				for e: ForceEnemy in enemy_hash.query(player.position, r2).duplicate():
+					if e.dead:
+						continue
+					var rel: Vector2 = e.position - player.position
+					if rel.length() < r2 + e.radius and rel.dot(fwd) > 0.0:
+						e.slow = maxf(e.slow, 0.4)
+						if not e.boss:
+							e.knock += rel.normalized() * 1100.0 * delta
+	_step_relay(delta)
+	if character_id == "lucia":
+		since_hurt += delta
+		if since_hurt > (2.5 if mastery_level >= 3 else 4.0) and player.hp < player.max_hp:
+			player.heal(2.0 * delta)
 	if Input.is_action_just_pressed("ability"):
 		use_ability()
 
@@ -1081,6 +1180,8 @@ func on_poi_claimed(p: Dictionary) -> void:
 	match kind:
 		"cache":
 			pickups.drop("repair", p.pos)
+			if character_id == "bjorn":
+				pickups.drop("repair", Vector2(p.pos) + Vector2(24, 0))
 			for i in 5:
 				pickups.drop("mote", Vector2(p.pos) + Vector2.from_angle(TAU * i / 5.0) * 20.0, 2 + int(elapsed / 240.0))
 			if rng.randf() < 0.35 or (character_id == "jex_marrin" and mastery_level >= 1):
@@ -1116,7 +1217,7 @@ func on_poi_claimed(p: Dictionary) -> void:
 					note += "\nIt carries a log fragment: " + String(GameData.DISCOVERIES[fid2]["text"])
 					break
 			if hud:
-				hud.discovery_card("ECHO TRANSMISSION", note, p.color, false, "signal")
+				hud.discovery_card("ECHO TRANSMISSION", note, p.color, false, "echo")
 		"relay":
 			fx.ring(p.pos, 10.0, 160.0, p.color, 0.5, 5.0)
 			Audio.play_sfx("choose", 1.2, -4.0)
@@ -1167,6 +1268,8 @@ func _claim_discovery(p: Dictionary) -> void:
 			var cid: String = String(d.get("unlock_character", ""))
 			if cid != "" and not Profile.has_character(cid):
 				gains.append("NEW EXPLORER: %s — playable from your next expedition." % GameData.CHARACTERS[cid]["name"])
+			if d.has("crossover"):
+				gains.append("ARCHIVE: %s opens in Star Splitter Visions." % String(GameData.VISIONS_SERIES[String(d["crossover"])]["title"]))
 			gains.append("FREE UPGRADE: pick one now.")
 			pending_levels += 1
 		"artifact":
@@ -1190,7 +1293,7 @@ func _claim_discovery(p: Dictionary) -> void:
 	if att != "":
 		gains.push_front(att.strip_edges())
 	if hud:
-		hud.discovery_card(heading, detail, p.color, first_time, String(p.kind), gains)
+		hud.discovery_card(heading, detail, p.color, first_time, GameData.poi_category(String(p.kind), d), gains)
 	_update_music(false)
 
 ## Broadcasting a signal draws attention: a raider pack homes in while you tune.

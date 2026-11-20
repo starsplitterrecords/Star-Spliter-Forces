@@ -123,6 +123,101 @@ const CHARACTERS: Dictionary = {
 		"weakness": "Fragile — and The Silence hunts him harder (+15% damage taken).",
 		"unlock": "Find the Veil route token hidden in the Fracture Bloom.",
 	},
+	# --- Star Splitter Visions guests (owner direction 2026-11-20). They reach the
+	# Reach through Signal Space, the game's noncanonical crossover layer; each
+	# keeps the identity and setting of their own series (see GAME_CANON_ADAPTATION).
+	"bjorn": {
+		"name": "Bjorn",
+		"short": "BJORN",
+		"origin": "Star Splitter Visions — Vikings 2026!",
+		"faction": "visions",
+		"series": "vikings_2026",
+		"vessel": "DTI temporary transit vessel (a longship, as far as Bjorn is concerned)",
+		"tagline": "Serious, responsible, physically capable; used to decisions that affect his people.",
+		"bio": "A ninth-century Norse raid leader the Department of Temporal Integration already processed once, in New York. A second time slip dropped him into the Reach, still holding ticket G-53. Gunnar came too.",
+		"style": "longship",
+		"accent": Color("baff00"),
+		"hull": Color("6b4a2e"),
+		"trim": Color("c9a46a"),
+		"portrait": "bjorn",
+		"speed": 236.0,
+		"max_hp": 150.0,
+		"armor": 1.0,
+		"pickup": 110.0,
+		"ability": "shield_wall",
+		"trait": "Provider: supply caches give an extra repair cell, and repair cells restore 25% more.",
+		"weakness": "Systems he never agreed to: scanner range -30%.",
+		"unlock": "Answer the DTI intake beacon calling numbers in the Quiet Basin.",
+	},
+	"jax_orien": {
+		"name": "Jax Orien",
+		"short": "ORIEN",
+		"origin": "Star Splitter Visions — Stardust Station",
+		"faction": "visions",
+		"series": "stardust_station",
+		"vessel": "Stardust Station maintenance shuttle",
+		"tagline": "Hands-on station technician; the prosthetic forearm does the fine work.",
+		"bio": "Stardust Station's technician, out on a routine inspection when the whole station slipped into Signal Space. The crew is still aboard, still in the West Corridor, still talking. They answer when he calls a meeting.",
+		"style": "shuttle",
+		"accent": Color("ffce5c"),
+		"hull": Color("2a4f9a"),
+		"trim": Color("ffce5c"),
+		"portrait": "jax_orien",
+		"speed": 256.0,
+		"max_hp": 104.0,
+		"armor": 0.5,
+		"pickup": 100.0,
+		"ability": "all_hands",
+		"trait": "Station Tech: repair cells also give a 25-point shield.",
+		"weakness": "Mandatory Proximity: shorter pickup reach than other explorers.",
+		"unlock": "Dock at Stardust Station, adrift in the Silver Wrecks.",
+	},
+	"lucia": {
+		"name": "Lucia",
+		"short": "LUCIA",
+		"origin": "Star Splitter Visions — Backyard Rockets",
+		"faction": "visions",
+		"series": "backyard_rockets",
+		"vessel": "OCHRE-9, a Launch-Shop homemade rocket",
+		"tagline": "Skeptical, athletic desert tactician; builds another way.",
+		"bio": "Launch-Shop's tactician. OCHRE-9 was meant to lift a water-and-comms relay over the Mojave, outside Tethergrid's network. It came down in the Reach instead, and Lucia is still building the network, one relay at a time.",
+		"style": "rocket",
+		"accent": Color("e58a2b"),
+		"hull": Color("e9e0cc"),
+		"trim": Color("2f6fb0"),
+		"portrait": "lucia",
+		"speed": 272.0,
+		"max_hp": 92.0,
+		"armor": 0.0,
+		"pickup": 120.0,
+		"ability": "build_another_way",
+		"trait": "Repairable: after 4s without taking a hit, repair 2 hull per second.",
+		"weakness": "Homemade hull: no armour, and the lightest hull of the guests.",
+		"unlock": "Recover the OCHRE-9 relay rocket on the Thunderbreak Shelf.",
+	},
+	"brandon_mack": {
+		"name": "Brandon Mack",
+		"short": "MACK",
+		"origin": "Star Splitter Visions — Sunforge Outlaw (in development)",
+		"faction": "visions",
+		"series": "sunforge_outlaw",
+		"vessel": "Sun-scorched frontier runner",
+		"tagline": "A drifter other people keep assigning a past to.",
+		"bio": "A drifter from under a relentless sun. Every relay that logs his transponder files him under a different name. He does not argue with any of them; he just keeps moving.",
+		"style": "runner",
+		"accent": Color("ff9b3d"),
+		"hull": Color("4a3626"),
+		"trim": Color("ff9b3d"),
+		"portrait": "brandon_mack",
+		"speed": 258.0,
+		"max_hp": 108.0,
+		"armor": 0.5,
+		"pickup": 115.0,
+		"ability": "high_noon",
+		"trait": "Sunforged: +15% weapon damage while in Fracture.",
+		"weakness": "Pursued: raider patrols find you 30% more often.",
+		"unlock": "Wake the Sunforge burning in the Fracture Bloom.",
+	},
 }
 
 const ABILITIES: Dictionary = {
@@ -130,6 +225,10 @@ const ABILITIES: Dictionary = {
 	"corridor_run": {"name": "Corridor Run", "cooldown": 6.0, "desc": "Burst forward, untouchable, leaving a slipstream that damages everything it crosses."},
 	"seal_the_breach": {"name": "Seal the Breach", "cooldown": 20.0, "desc": "Emergency repair: restore 35% hull and raise a shield for 4s."},
 	"call_the_captains": {"name": "Call the Captains", "cooldown": 18.0, "desc": "Allied Shard cutters answer for 8s, holding a defensive ring around you and firing on anything that comes close."},
+	"shield_wall": {"name": "Shield Wall", "cooldown": 17.0, "desc": "Bjorn raises the shield wall and Gunnar comes alongside for 6s: shots from ahead are stopped, enemies in front are shoved back and staggered, and Gunnar fires on anything close."},
+	"all_hands": {"name": "All-Hands Meeting", "cooldown": 20.0, "desc": "Mandatory proximity: every nearby hostile is pulled into one knot ahead of you and marked (+50% damage taken for 5s). Zib patches 20 hull."},
+	"build_another_way": {"name": "Build Another Way", "cooldown": 16.0, "desc": "Plant a Launch-Shop relay for 10s: it fires homemade rockets at hostiles and pulls in every shard around it."},
+	"high_noon": {"name": "Quick Draw", "cooldown": 14.0, "desc": "Time slows; one heavy shot at each of up to 12 hostiles in range."},
 	"veil_step": {"name": "Veil Step", "cooldown": 15.0, "desc": "Anomaly-glass distortion: for 4s enemies lose your track and you move 35% faster."},
 }
 
@@ -139,6 +238,10 @@ const MASTERY: Dictionary = {
 	"naomi_sol": ["Corridor Run gains a second charge.", "Slipstream damage doubled.", "+6% base speed.", "Corridor Run grants 1.5s of +40% damage."],
 	"tessa_banks": ["Field Repair every 30 motes.", "Seal the Breach also restores 20 Resonance.", "+0.5 armour.", "Seal the Breach cooldown -6s."],
 	"abby_saville": ["Captains hold 2s longer.", "Four captains answer instead of three.", "+0.5 armour.", "Call the Captains cooldown -4s."],
+	"bjorn": ["Shield Wall lasts 2s longer.", "Gunnar fires twice as fast.", "+0.5 armour.", "Shield Wall cooldown -4s."],
+	"jax_orien": ["All-Hands pulls from further away.", "Zib patches 20 more hull.", "+15% pickup reach.", "All-Hands cooldown -5s."],
+	"lucia": ["Relay stands 4s longer.", "Relay fires two rockets per salvo.", "Repairable starts after 2.5s.", "Build Another Way cooldown -4s."],
+	"brandon_mack": ["Quick Draw reaches up to 18 targets.", "Quick Draw shots deal +50% damage.", "+0.5 armour.", "Quick Draw cooldown -4s."],
 	"jex_marrin": ["Caches drop an extra magnet core.", "+15% Signal earned (stacks).", "Veil Step lasts 2s longer.", "Start with one extra upgrade choice."],
 }
 
@@ -537,6 +640,19 @@ const DISCOVERIES: Dictionary = {
 		"text": "Lattice Research shear maps of the Reach. Future expeditions start with the full map charted.", "perk": "full_map"},
 	"art_beacon_core": {"kind": "artifact", "region": "quiet_basin", "offset": Vector2(330, -280), "title": "BHA BEACON CORE",
 		"text": "A High Era harmonization beacon core, from before the Shattering — still warm. Future expeditions begin with +15 Resonance.", "perk": "resonance_start"},
+	# Star Splitter Visions crossovers (Signal Space; noncanonical for every series).
+	"vis_dti_beacon": {"kind": "character", "region": "quiet_basin", "offset": Vector2(-300, -260), "title": "DTI INTAKE BEACON",
+		"crossover": "vikings_2026", "landmark": "dti", "color": Color("baff00"), "unlock_character": "bjorn",
+		"text": "A Department of Temporal Integration intake beacon, drifting and still calling numbers: \"Now serving G-53.\" Two men in furs have been waiting beside it with a ticket and a round shield. The city had a process for them. The Reach does not."},
+	"vis_stardust_dock": {"kind": "character", "region": "silver_wrecks", "offset": Vector2(420, 260), "title": "STARDUST STATION",
+		"crossover": "stardust_station", "landmark": "station", "color": Color("ffce5c"), "unlock_character": "jax_orien",
+		"text": "An orbital workplace that is on nobody's chart. The routine inspection is still running; the crew is still in the West Corridor, still saying things they would rather not. Jax Orien undocks the maintenance shuttle to see where they are."},
+	"vis_ochre_relay": {"kind": "character", "region": "thunderbreak_shelf", "offset": Vector2(300, 240), "title": "OCHRE-9 RELAY ROCKET",
+		"crossover": "backyard_rockets", "landmark": "rocket", "color": Color("e58a2b"), "unlock_character": "lucia",
+		"text": "A homemade rocket stencilled OCHRE-9, built from salvaged aerospace parts in a Mojave workshop. Its relay is still trying to reach desert towns that were meant to have water and a signal without paying Tethergrid. Lucia climbs out, already rewiring it."},
+	"vis_sunforge": {"kind": "character", "region": "fracture_bloom", "offset": Vector2(300, -200), "title": "THE SUNFORGE",
+		"crossover": "sunforge_outlaw", "landmark": "sunforge", "color": Color("ff9b3d"), "unlock_character": "brandon_mack",
+		"text": "A star burning far too close, hot enough to forge. A drifter in a dark duster is standing in its light like he has seen worse. The relay logs three different names for him. He answers to none of them, and he takes the job anyway."},
 	# Mystery fragments [PROVISIONAL game lore]
 	"frag_gate": {"kind": "fragment", "region": "array_gate", "offset": Vector2(-300, 210), "title": "GATE LOG", "fragment": "frag_01", "text": "Gate log, partial: \"...the beacons don't fail. They go quiet. Like something is listening for them.\""},
 	"frag_wrecks": {"kind": "fragment", "region": "silver_wrecks", "offset": Vector2(80, -420), "title": "FLIGHT RECORDER", "fragment": "frag_03", "hidden": "SCAN", "text": "Flight recorder: \"Comms are clear but empty. Not static. Empty.\""},
@@ -641,11 +757,43 @@ const SFX_NAMES: Array[String] = [
 	"victory", "defeat", "ping", "evolve",
 ]
 
+# ============================================================== star splitter visions
+## Other Star Splitter Visions series, as published on the Visions site (SSV
+## sites/visions/src/content/series/*.json @ b35d7d8f298c). Tagline, label and
+## description are verbatim. "signal_space" describes the game's adaptation,
+## which is noncanonical for the series.
+const VISIONS_SERIES: Dictionary = {
+	"vikings_2026": {"title": "Vikings 2026!", "label": "Temporal Comedy", "accent": Color("baff00"), "cover": "vikings_2026",
+		"tagline": "Actual Vikings. Modern New York. A city full of systems they never agreed to.",
+		"description": "When ninth-century Vikings arrive in present-day New York, the city's underfunded Department of Temporal Integration has a process for them. It is less prepared for their opinions. Housing, work, money, and new friendships become a fight to build an ordinary life without surrendering who they are.",
+		"release": "Issue 01 · released August 22, 2026",
+		"explorer": "bjorn", "discovery": "vis_dti_beacon",
+		"signal_space": "A second time slip carries Bjorn and Gunnar out of New York and into the Reach, ticket G-53 still in hand. Bjorn flies; Gunnar comes alongside when the shield wall goes up."},
+	"stardust_station": {"title": "Stardust Station", "label": "Orbital Workplace Sitcom", "accent": Color("ffce5c"), "cover": "stardust_station",
+		"tagline": "The coworkers are the reactor.",
+		"description": "A routine inspection traps the crew of Stardust Station in the West Corridor. Nobody can leave, everybody has something to say, and a supposedly ordinary workday turns into a test of how well these coworkers really know one another.",
+		"release": "Issue 01: Mandatory Proximity · released August 29, 2026",
+		"explorer": "jax_orien", "discovery": "vis_stardust_dock",
+		"signal_space": "The whole station slips into the Silver Wrecks mid-inspection. Jax Orien takes the maintenance shuttle out; the crew answers when he calls an all-hands meeting."},
+	"backyard_rockets": {"title": "Backyard Rockets", "label": "Desert Science Fiction", "accent": Color("e58a2b"), "cover": "backyard_rockets",
+		"tagline": "Build another way.",
+		"description": "Arvin, Lucia, and Milo run Launch-Shop, a mobile workshop in the Mojave where salvaged aerospace parts become homemade rockets and working relays. Every launch helps desert communities move water and information without Tethergrid—and makes the crew harder for the company to ignore.",
+		"release": "Issues 01–02: Combined Edition · released August 29, 2026",
+		"explorer": "lucia", "discovery": "vis_ochre_relay",
+		"signal_space": "OCHRE-9 lifts off from the Mojave and comes down on the Thunderbreak Shelf. Lucia flies it and keeps building the network: relays nobody can switch off."},
+	"sunforge_outlaw": {"title": "Sunforge Outlaw", "label": "Speculative Frontier", "accent": Color("ff9b3d"), "cover": "sunforge_outlaw",
+		"tagline": "Heat. Pursuit. A life outside the law.",
+		"description": "A frontier story of pursuit, defiance, and survival under a relentless sun. The first story is in development.",
+		"release": "Issue 01 preview · in development",
+		"explorer": "brandon_mack", "discovery": "vis_sunforge",
+		"signal_space": "A star burning close enough to forge, and a drifter standing in its light. The game reveals nothing of his story beyond the published cover."},
+}
+
 # ============================================================== field guide
 ## Visual classification: every thing you meet belongs to one category with a
 ## fixed colour family and icon. Enemies are always warm with a red threat rim;
 ## pickups are small, bright and cool; discoveries are tall landmarks.
-const CATEGORY_ORDER: Array[String] = ["hostile", "elite", "xp", "supply", "cache", "signal", "explorer", "artifact", "fragment", "anomaly", "echo", "resonator", "rift", "camp", "gate"]
+const CATEGORY_ORDER: Array[String] = ["hostile", "elite", "xp", "supply", "cache", "signal", "explorer", "visions", "artifact", "fragment", "anomaly", "echo", "resonator", "rift", "camp", "gate"]
 const CATEGORIES: Dictionary = {
 	"hostile": {"name": "HOSTILE", "group": "THREATS", "color": Color("ff4a4a"),
 		"what": "Raider ships and things of the hush. Always ringed in red.",
@@ -674,6 +822,9 @@ const CATEGORIES: Dictionary = {
 	"fragment": {"name": "LOG FRAGMENT", "group": "DISCOVERIES", "color": Color("c9d3e6"),
 		"what": "Logs, recorders and buoys.",
 		"why": "Quick to read. Pieces of the mystery of the hush, kept in the Archive."},
+	"visions": {"name": "VISIONS CROSSOVER", "group": "DISCOVERIES", "color": Color("ffce5c"),
+		"what": "Landmarks from other Star Splitter Visions series that slipped into Signal Space: an intake beacon, an orbital station, a homemade rocket, a burning star.",
+		"why": "Each one brings a guest explorer from that series, playable from your next expedition, and opens their page in the Archive."},
 	"anomaly": {"name": "ANOMALY", "group": "DISCOVERIES", "color": Color("4fe0d0"),
 		"what": "Strange space: wells and folds.",
 		"why": "Unusual effects for this run — a free choice, or a shortcut across the map."},
@@ -694,8 +845,11 @@ const CATEGORIES: Dictionary = {
 		"why": "Your way home (keep everything) — and where you choose to face The Silence."},
 }
 
-## Category for a point of interest kind.
-static func poi_category(kind: String) -> String:
+## Category for a point of interest kind (pass the POI's data to tell
+## Visions crossovers apart from Rex Fleet contacts).
+static func poi_category(kind: String, data: Dictionary = {}) -> String:
+	if data.has("crossover"):
+		return "visions"
 	match kind:
 		"signal":
 			return "signal"

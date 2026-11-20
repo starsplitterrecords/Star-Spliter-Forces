@@ -32,7 +32,9 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 		if not GameData.discovery_in_destination(id, world.destination_id):
 			continue
 		var col: Color = Color("cfe9ff")
-		if d.has("force"):
+		if d.has("color"):
+			col = d["color"]
+		elif d.has("force"):
 			col = GameData.FORCES[String(d["force"])]["color"]
 		elif String(d["kind"]) == "character":
 			col = Color("8fffc1")
@@ -285,6 +287,8 @@ func _draw() -> void:
 		var r: float = float(p.radius)
 		match String(p.kind):
 			"signal", "character", "echo":
+				if p.has("data") and (p.data as Dictionary).has("landmark"):
+					_draw_landmark(String(p.data["landmark"]), pos, c)
 				# A tall broadcast beam visible from far away.
 				for k in 6:
 					var h: float = 140.0 + k * 50.0
@@ -362,7 +366,7 @@ func _draw() -> void:
 				draw_circle(pos, r * 0.25, Color(0.05, 0.0, 0.05, 0.9))
 		if bool(p.known) and String(p.kind) in LABELLED and String(p.title) != "":
 			# Two-line label: category tag (Field Guide colour) over the name.
-			var cat: String = GameData.poi_category(String(p.kind))
+			var cat: String = GameData.poi_category(String(p.kind), p.get("data", {}))
 			var cdef: Dictionary = GameData.CATEGORIES.get(cat, {})
 			var label: String = String(p.title)
 			var y0: float = r + 28.0
@@ -375,6 +379,61 @@ func _draw() -> void:
 			var w: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 22).x
 			draw_string_outline(font, pos + Vector2(-w / 2.0, y0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 22, 5, Color(0, 0, 0, 0.7))
 			draw_string(font, pos + Vector2(-w / 2.0, y0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(c, 0.95))
+
+## Visions crossover landmarks, each in its own series' visual language.
+func _draw_landmark(kind: String, pos: Vector2, c: Color) -> void:
+	match kind:
+		"dti":
+			# A municipal intake kiosk adrift: grey panel, hourglass seal,
+			# a green "Now Serving" display.
+			var o: Vector2 = pos + Vector2(-150, -70)
+			draw_rect(Rect2(o, Vector2(84, 120)), Color("3a3f48"))
+			draw_rect(Rect2(o, Vector2(84, 120)), Color("9aa3ad"), false, 2.0)
+			draw_rect(Rect2(o + Vector2(8, 10), Vector2(68, 22)), Color("0c1a12"))
+			draw_string(font, o + Vector2(12, 26), "NOW SERVING", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, c)
+			draw_string(font, o + Vector2(24, 60), "G-53", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, c)
+			draw_arc(o + Vector2(42, 92), 14.0, 0.0, TAU, 20, Color("c8ccd6"), 2.0)
+			draw_colored_polygon(PackedVector2Array([o + Vector2(36, 84), o + Vector2(48, 84), o + Vector2(42, 92)]), Color("c8ccd6"))
+			draw_colored_polygon(PackedVector2Array([o + Vector2(36, 100), o + Vector2(48, 100), o + Vector2(42, 92)]), Color("c8ccd6"))
+			# A round shield left leaning on it.
+			draw_circle(o + Vector2(98, 96), 18.0, Color("6b4a2e"))
+			draw_circle(o + Vector2(98, 96), 6.0, Color("9aa3ad"))
+		"station":
+			# Stardust Station: a ring with spokes; the West Corridor lit.
+			var sc: Vector2 = pos + Vector2(250, -40)
+			draw_arc(sc, 110.0, 0.0, TAU, 48, Color("6f86c8"), 14.0)
+			draw_arc(sc, 110.0, PI * 0.85, PI * 1.15, 10, c, 16.0)
+			for k in 6:
+				var a: float = TAU * k / 6.0 + anim * 0.05
+				draw_line(sc + Vector2.from_angle(a) * 34.0, sc + Vector2.from_angle(a) * 104.0, Color("6f86c8"), 4.0)
+			draw_circle(sc, 34.0, Color("2a4f9a"))
+			draw_circle(sc, 14.0, Color("bfe9ff", 0.8))
+			draw_string(font, sc + Vector2(-140, -20), "WEST CORRIDOR", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, c)
+		"rocket":
+			# OCHRE-9 on its homemade launch frame.
+			var b: Vector2 = pos + Vector2(140, 20)
+			draw_line(b + Vector2(-34, 0), b + Vector2(-12, -150), Color("8a8f98"), 4.0)
+			draw_line(b + Vector2(34, 0), b + Vector2(12, -150), Color("8a8f98"), 4.0)
+			draw_rect(Rect2(b + Vector2(-12, -150), Vector2(24, 140)), Color("e9e0cc"))
+			draw_colored_polygon(PackedVector2Array([b + Vector2(-12, -150), b + Vector2(12, -150), b + Vector2(0, -180)]), Color("e9e0cc"))
+			draw_rect(Rect2(b + Vector2(-12, -120), Vector2(24, 6)), Color("2f6fb0"))
+			draw_rect(Rect2(b + Vector2(-12, -40), Vector2(24, 6)), Color("2f6fb0"))
+			draw_colored_polygon(PackedVector2Array([b + Vector2(-12, -30), b + Vector2(-26, -4), b + Vector2(-12, -10)]), c)
+			draw_colored_polygon(PackedVector2Array([b + Vector2(12, -30), b + Vector2(26, -4), b + Vector2(12, -10)]), c)
+			draw_string(font, b + Vector2(-9, -60), "O", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("2f6fb0"))
+			draw_string(font, b + Vector2(-9, -76), "9", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("2f6fb0"))
+		"sunforge":
+			# A star burning close enough to forge.
+			var fc: Vector2 = pos + Vector2(-250, -50)
+			draw_circle(fc, 120.0, Color(c, 0.08))
+			draw_circle(fc, 80.0, Color(c, 0.16))
+			for k in 12:
+				var a2: float = TAU * k / 12.0 + anim * 0.2
+				draw_line(fc + Vector2.from_angle(a2) * 58.0, fc + Vector2.from_angle(a2) * (96.0 + 10.0 * sin(anim * 3.0 + k)), Color("ffcf8a", 0.6), 3.0)
+			draw_circle(fc, 52.0, Color("ffb347"))
+			draw_circle(fc, 36.0, Color("fff1c8"))
+			draw_rect(Rect2(fc + Vector2(-22, 8), Vector2(44, 10)), Color("3a2a1c"))
+			draw_rect(Rect2(fc + Vector2(-10, 18), Vector2(20, 14)), Color("3a2a1c"))
 
 func _draw_progress(p: Dictionary, pos: Vector2, r: float, c: Color) -> void:
 	var tune: float = float(TUNE_TIME.get(String(p.kind), 0.0))

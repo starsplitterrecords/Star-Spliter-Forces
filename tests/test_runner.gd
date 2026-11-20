@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries", "test_checkpoint_recovery",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_new_content", "test_review_regressions", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_new_content", "test_visions_guests", "test_review_regressions", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	for t: String in tests:
 		current = t
@@ -46,6 +46,8 @@ func _dispatch(t: String) -> void:
 			await test_second_destination()
 		"test_review_regressions":
 			await test_review_regressions()
+		"test_visions_guests":
+			await test_visions_guests()
 		"test_new_content":
 			await test_new_content()
 		"test_signal_locks":
@@ -662,6 +664,76 @@ func test_abilities() -> void:
 		check(run.ability_cd > 0.0 or cid == "naomi_sol", "%s ability has no cooldown" % cid)
 		_cleanup_runs()
 		await get_tree().process_frame
+
+## Star Splitter Visions guests: each ability does its job, each crossover
+## landmark unlocks its explorer and opens its Archive page.
+func test_visions_guests() -> void:
+	for sid: String in GameData.VISIONS_SERIES.keys():
+		var v: Dictionary = GameData.VISIONS_SERIES[sid]
+		var cid: String = String(v["explorer"])
+		var disc: Dictionary = GameData.DISCOVERIES[String(v["discovery"])]
+		check(String(disc["unlock_character"]) == cid, "%s crossover does not unlock %s" % [sid, cid])
+		check(ResourceLoader.exists("res://assets/characters/%s_256.png" % cid), "%s portrait missing" % cid)
+		check(ResourceLoader.exists("res://assets/universe/%s_cover.png" % String(v["cover"])), "%s cover missing" % sid)
+		check(GameData.poi_category("character", disc) == "visions", "%s landmark not classified as a Visions crossover" % sid)
+	# Shield Wall: Gunnar flies escort and enemies ahead are pushed away.
+	var run: GameRun = _make_run({"character": "bjorn"})
+	await get_tree().process_frame
+	run.player.god_mode = true
+	run.player.facing = 0.0
+	var e: ForceEnemy = run.spawn_enemy("ram_cutter", run.player.position + Vector2(90, 0), true)
+	run.use_ability()
+	check(run.allies.size() == 1 and String(run.allies[0].get("kind", "")) == "gunnar", "Gunnar did not come alongside")
+	_sim(run, 0.6, func(r: GameRun) -> void: r.player.facing = 0.0)
+	check(not is_instance_valid(e) or e.dead or e.position.x > run.player.position.x + 120.0, "shield wall did not shove the enemy ahead")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# All-Hands: marked enemies take +50% damage.
+	run = _make_run({"character": "jax_orien"})
+	await get_tree().process_frame
+	run.player.god_mode = true
+	var m: ForceEnemy = run.spawn_enemy("splinter_captain", run.player.position + Vector2(200, 0), true)
+	_sim(run, 0.05)
+	run.use_ability()
+	check(m.meeting_mark > 0.0, "All-Hands did not mark the enemy")
+	var before: float = m.hp
+	var dealt: float = m.take_damage(10.0)
+	check(is_equal_approx(dealt, 15.0 * m.damage_taken_mult) or dealt > 10.0, "meeting mark did not raise damage taken (%s)" % dealt)
+	check(m.hp < before, "marked enemy took no damage")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# Build Another Way: the relay fires on its own.
+	run = _make_run({"character": "lucia"})
+	await get_tree().process_frame
+	run.player.god_mode = true
+	run.use_ability()
+	check(run.relay_time > 0.0, "Launch-Shop relay did not deploy")
+	var shots_before: int = run.projectiles.shots.size()
+	run.spawn_enemy("skiff", run.relay_pos + Vector2(250, 0), true)
+	_sim(run, 1.2)
+	check(run.projectiles.shots.size() > shots_before or run.kills > 0, "relay did not fire")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# Quick Draw: hits every hostile in range.
+	run = _make_run({"character": "brandon_mack"})
+	await get_tree().process_frame
+	run.player.god_mode = true
+	var targets: Array = []
+	for i in 6:
+		targets.append(run.spawn_enemy("rail_picket", run.player.position + Vector2.from_angle(TAU * i / 6.0) * 300.0, true))
+	run.use_ability()
+	var hit: int = 0
+	for t: ForceEnemy in targets:
+		if not is_instance_valid(t) or t.dead or t.hp < t.max_hp:
+			hit += 1
+	check(hit == 6, "Quick Draw hit %d of 6 targets" % hit)
+	_cleanup_runs()
+	await get_tree().process_frame
+	# Claiming a crossover unlocks the guest on return.
+	_reset_profile()
+	Profile.record_expedition({"outcome": "extracted", "time": 60.0, "discoveries": ["vis_sunforge"], "character": "ella_venn", "destination": "black_drift_reach", "currency": 0, "mastery_xp": 0})
+	check(Profile.has_character("brandon_mack"), "Sunforge did not unlock Brandon Mack")
+	_reset_profile()
 
 ## Force mechanics, upgrades and enemies added 2026-11-20.
 func test_new_content() -> void:

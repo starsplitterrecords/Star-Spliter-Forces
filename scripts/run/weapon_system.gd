@@ -258,6 +258,8 @@ func damage_for(id: String, base: float) -> float:
 		dmg *= 1.2
 	if run.character_id == "naomi_sol" and player.movement_ratio() > 0.9:
 		dmg *= 1.15
+	if run.character_id == "brandon_mack" and run.force_state == "FRACTURE":
+		dmg *= 1.15
 	dmg *= run.ability_damage_mult()
 	return dmg
 
@@ -919,10 +921,27 @@ func _draw() -> void:
 	# Abby's answering Shard captains: pale hulls, red seams.
 	for a: Dictionary in run.allies:
 		var ap: Vector2 = run.ally_position(a)
+		if String(a.get("kind", "")) == "gunnar":
+			# Gunnar's smaller longship, round shield on the gunwale.
+			var gf: Vector2 = Vector2.from_angle(player.facing)
+			var gs: Vector2 = gf.orthogonal()
+			draw_colored_polygon(PackedVector2Array([ap + gf * 16.0, ap + gs * 6.0, ap - gf * 12.0, ap - gs * 6.0]), Color("6b4a2e"))
+			draw_circle(ap + gs * 5.0, 4.5, Color("c9a46a"))
+			continue
 		var fwd: Vector2 = Vector2.from_angle(float(a.angle) + run.elapsed * 1.4 + PI / 2.0)
 		var sd: Vector2 = fwd.orthogonal()
 		draw_colored_polygon(PackedVector2Array([ap + fwd * 12.0, ap - fwd * 8.0 + sd * 8.0, ap - fwd * 8.0 - sd * 8.0]), Color("e6e3dc"))
 		draw_line(ap - fwd * 6.0, ap + fwd * 8.0, Color("d8323a"), 2.0)
+	if run.relay_time > 0.0:
+		# Launch-Shop relay: a short tripod mast with a dish and a blinking lamp.
+		var rp: Vector2 = run.relay_pos
+		var oc: Color = Color("e58a2b")
+		draw_line(rp + Vector2(-14, 12), rp + Vector2(0, -24), Color("e9e0cc"), 3.0)
+		draw_line(rp + Vector2(14, 12), rp + Vector2(0, -24), Color("e9e0cc"), 3.0)
+		draw_line(rp + Vector2(0, 14), rp + Vector2(0, -24), Color("2f6fb0"), 3.0)
+		draw_arc(rp + Vector2(0, -28), 10.0, PI * 1.1, PI * 1.9, 8, oc, 3.0)
+		draw_circle(rp + Vector2(0, -24), 3.0, Color(oc, 0.5 + 0.5 * sin(run.elapsed * 8.0)))
+		draw_arc(rp, 420.0, 0.0, TAU, 48, Color(oc, 0.18), 2.0)
 	for id: String in weapon_order:
 		var b: String = base_id(id)
 		if b == "riff_blades":

@@ -62,6 +62,13 @@ static func draw(ci: CanvasItem, cat: String, c: Vector2, r: float, t: float) ->
 			for k in 10:
 				pts3.append(c + Vector2.from_angle(-PI / 2.0 + TAU * k / 10.0) * r * (0.8 if k % 2 == 0 else 0.36))
 			ci.draw_colored_polygon(pts3, col)
+		"visions":
+			# Four-point star from the Star Splitter Visions mark.
+			var st: PackedVector2Array = PackedVector2Array()
+			for k in 8:
+				st.append(c + Vector2.from_angle(-PI / 2.0 + TAU * k / 8.0) * r * (0.85 if k % 2 == 0 else 0.22))
+			ci.draw_colored_polygon(st, col)
+			ci.draw_arc(c, r * 0.55, t, t + PI * 1.2, 16, Color(col, 0.6), 2.0)
 		"artifact":
 			var pts4: PackedVector2Array = PackedVector2Array()
 			for k in 6:

@@ -218,6 +218,57 @@ func _draw_hull(c: Color) -> void:
 			draw_colored_polygon(PackedVector2Array([Vector2(4, -30), Vector2(14, -6), Vector2(20, 10), Vector2(2, 16)]), c)
 			for k in 3:
 				draw_circle(Vector2(sin(anim * 2.0 + k * 2.1) * 6.0, -10.0 + k * 9.0), 1.8, Color(t, 0.6 + 0.3 * sin(anim * 4.0 + k)))
+		"longship":
+			# Bjorn: a DTI transit hull he insists is a longship — clinker
+			# planks, a dragon-curl prow, round shields along the gunwales.
+			draw_circle(Vector2(0, 24), 5.0 * engine, Color(Color("baff00"), 0.55))
+			pts = PackedVector2Array([Vector2(0, -34), Vector2(9, -20), Vector2(13, 0), Vector2(11, 18), Vector2(0, 26), Vector2(-11, 18), Vector2(-13, 0), Vector2(-9, -20)])
+			draw_colored_polygon(pts, c)
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color("2a1c10"), 1.5)
+			for k in 3:
+				draw_line(Vector2(-10 + k, -12 + k * 10), Vector2(10 - k, -12 + k * 10), Color("8a6440"), 1.5)
+			for k in 3:
+				var sy: float = -8.0 + k * 10.0
+				draw_circle(Vector2(-13, sy), 4.2, t)
+				draw_circle(Vector2(13, sy), 4.2, Color("8a2f2a") if k == 1 else t)
+			draw_arc(Vector2(3, -34), 5.0, PI * 0.5, PI * 1.6, 8, t, 2.5)
+			draw_line(Vector2(0, -14), Vector2(0, 8), Color("e8dcc0"), 2.0)
+		"shuttle":
+			# Jax Orien: Stardust Station maintenance shuttle — rounded cab,
+			# porthole windows, a work arm folded along the hull.
+			draw_circle(Vector2(-9, 22), 4.5 * engine, Color(engine_c, 0.6))
+			draw_circle(Vector2(9, 22), 4.5 * engine, Color(engine_c, 0.6))
+			draw_rect(Rect2(-15, -14, 30, 34), c)
+			draw_circle(Vector2(0, -14), 15.0, c)
+			draw_rect(Rect2(-15, 4, 30, 4), t)
+			draw_circle(Vector2(0, -16), 6.5, Color("bfe9ff"))
+			draw_circle(Vector2(-8, -2), 3.0, Color("bfe9ff"))
+			draw_circle(Vector2(8, -2), 3.0, Color("bfe9ff"))
+			draw_line(Vector2(15, -6), Vector2(22, 10), Color("c8ccd6"), 3.0)
+			draw_line(Vector2(22, 10), Vector2(18, 18), Color("c8ccd6"), 2.5)
+		"rocket":
+			# Lucia: OCHRE-9, a Launch-Shop homemade rocket — cream body, blue
+			# bands, riveted fins, an orange flame you can feel.
+			var fl: float = 9.0 + 10.0 * movement_ratio() + sin(anim * 40.0) * 2.0
+			draw_colored_polygon(PackedVector2Array([Vector2(-5, 22), Vector2(5, 22), Vector2(0, 22 + fl)]), Color("ffb347", 0.9))
+			draw_rect(Rect2(-8, -18, 16, 40), c)
+			draw_colored_polygon(PackedVector2Array([Vector2(-8, -18), Vector2(8, -18), Vector2(0, -34)]), c)
+			draw_rect(Rect2(-8, -10, 16, 4), t)
+			draw_rect(Rect2(-8, 8, 16, 4), t)
+			draw_colored_polygon(PackedVector2Array([Vector2(-8, 8), Vector2(-17, 24), Vector2(-8, 20)]), accent)
+			draw_colored_polygon(PackedVector2Array([Vector2(8, 8), Vector2(17, 24), Vector2(8, 20)]), accent)
+			draw_circle(Vector2(0, -2), 2.5, Color("2a2a2a"))
+		"runner":
+			# Brandon Mack: sun-scorched frontier runner — swept duster-like
+			# wings, rust plating, brass fittings, heat shimmer at the vents.
+			draw_circle(Vector2(-6, 22), 4.5 * engine, Color("ff9b3d", 0.7))
+			draw_circle(Vector2(6, 22), 4.5 * engine, Color("ff9b3d", 0.7))
+			pts = PackedVector2Array([Vector2(0, -30), Vector2(6, -12), Vector2(24, 14), Vector2(10, 10), Vector2(6, 22), Vector2(-6, 22), Vector2(-10, 10), Vector2(-24, 14), Vector2(-6, -12)])
+			draw_colored_polygon(pts, c)
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color(t, 0.8), 1.5)
+			draw_line(Vector2(-18, 10), Vector2(-4, -4), t, 2.0)
+			draw_line(Vector2(18, 10), Vector2(4, -4), t, 2.0)
+			draw_rect(Rect2(-3, -14, 6, 8), Color("d9b36a"))
 		_:
 			draw_colored_polygon(PackedVector2Array([Vector2(0, -24), Vector2(18, 16), Vector2(0, 9), Vector2(-18, 16)]), c)
 	draw_circle(Vector2(0, -2), 3.0, Color("f7fbff"))

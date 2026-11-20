@@ -26,6 +26,7 @@ var region_id: String = ""
 var last_hit_dir: Vector2 = Vector2.ZERO
 var last_number_time: float = -1.0
 var harmony_mark: bool = false
+var meeting_mark: float = 0.0 # Jax Orien's All-Hands: +50% damage taken
 var latched: float = 0.0       # leech: seconds attached to the player
 var blink_target: Vector2 = Vector2.ZERO
 var camp: int = -1
@@ -82,6 +83,7 @@ func step(delta: float, player_pos: Vector2) -> void:
 	age += delta
 	clock -= delta
 	hit_flash = maxf(0.0, hit_flash - delta)
+	meeting_mark = maxf(0.0, meeting_mark - delta)
 	contact_clock = maxf(0.0, contact_clock - delta)
 	slow = maxf(0.0, slow - delta)
 	shielded = maxf(0.0, shielded - delta)
@@ -305,7 +307,7 @@ func take_damage(amount: float, knock_dir: Vector2 = Vector2.ZERO, knock_force: 
 	if disguised:
 		disguised = false
 		engaged = true
-	var dmg: float = amount * damage_taken_mult * (0.5 if shielded > 0.0 else 1.0)
+	var dmg: float = amount * damage_taken_mult * (0.5 if shielded > 0.0 else 1.0) * (1.5 if meeting_mark > 0.0 else 1.0)
 	hp -= dmg
 	hit_flash = 0.09
 	engaged = true
