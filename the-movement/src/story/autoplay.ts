@@ -1,5 +1,5 @@
 // Automated players for stress tests: each policy is a different leadership style.
-import { CARD_BY_ID, callMeeting, choose, currentCard, advanceDays } from './engine';
+import { CARD_BY_ID, callMeeting, choose, currentCard, advanceDays, eligibleCards } from './engine';
 import { Rng } from './rng-shim';
 import { CHAR_BY_ID } from './engine';
 import type { StoryState } from './types';
@@ -35,7 +35,7 @@ export function pickChoice(s: StoryState, policy: Policy, rng: Rng): 0 | 1 {
 }
 
 /** Play for `days` of game time: decide everything that arrives, call meetings when the desk is empty. */
-export function playFor(s: StoryState, days: number, policy: Policy, rng: Rng, idleShare = 0.3, track?: { emptyDays: number }) {
+export function playFor(s: StoryState, days: number, policy: Policy, rng: Rng, idleShare = 0.3, track?: { emptyDays: number; starvedDays?: number }) {
   const end = s.day + days;
   let guard = 0;
   while (s.day < end && !s.ended && guard++ < 20000) {
@@ -47,10 +47,16 @@ export function playFor(s: StoryState, days: number, policy: Policy, rng: Rng, i
       choose(s, inst.uid, i, input);
     } else if (rng.chance(idleShare)) {
       advanceDays(s, 1);
-      if (track && !currentCard(s)) track.emptyDays += 1;
+      if (track && !currentCard(s)) {
+        track.emptyDays += 1;
+        if (!eligibleCards(s).length) track.starvedDays = (track.starvedDays ?? 0) + 1;
+      }
     } else {
       const waited = callMeeting(s);
-      if (track && !currentCard(s)) track.emptyDays += waited;
+      if (track && !currentCard(s)) {
+        track.emptyDays += waited;
+        if (!eligibleCards(s).length) track.starvedDays = (track.starvedDays ?? 0) + waited;
+      }
     }
   }
 }

@@ -104,6 +104,8 @@ export interface Effects {
   era?: Era;
   followUps?: { card: string; delay: number; chance?: number }[];
   memory?: string; // chronicle entry
+  speakerLoyalty?: number; // loyalty change for whoever presented the card
+  speakerInfluence?: number;
   movementName?: string; // set name directly
   founderTitle?: string;
 }
@@ -118,6 +120,7 @@ export interface ChoiceDef {
   effects: Effects;
 }
 
+// speaker strings: 'martin', 'any', 'agenda:x', 'role:x', 'champion:<bindKey>', 'unhappy' (a resentful co-leader), 'devoted' (a devoted one)
 export type SpeakerRef = string | { anon: { name: string; role: string; portrait?: Partial<PortraitSpec> } };
 
 export interface CardDef {
@@ -127,6 +130,7 @@ export interface CardDef {
   requires?: Requires;
   bind?: Record<string, string>; // ctx binders: { city: 'nextCity', item1: 'attire' }
   text: string;
+  variants?: string[]; // alternative texts for recurring cards; one is picked when the card is drawn
   choices: [ChoiceDef, ChoiceDef];
   weight?: number;
   cooldown?: number; // game days
@@ -227,7 +231,7 @@ export interface StoryState {
   history: Resolved[];
   chronicle: { day: number; text: string }[];
   stats: { recruited: number; churned: number; peak: number; growthPerDay: number };
-  crisis: { gauge: Gauge; high: boolean; day: number } | null;
+  crisis: { gauge: Gauge; high: boolean; day: number; decision?: number } | null;
   ended: { title: string; text: string; day: number } | null;
   nextUid: number;
   nextCardAt: number;

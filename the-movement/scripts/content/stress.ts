@@ -20,6 +20,7 @@ const decisionsToGrassroots: number[] = [];
 const followersAt: number[] = [];
 let backToBack = 0;
 const emptyDays: number[] = [];
+const starvedDays: number[] = [];
 let totalDecisions = 0;
 const customsSets = new Set<string>();
 
@@ -30,7 +31,7 @@ for (let i = 0; i < runs; i++) {
   const rng = new Rng(77 + i);
   let lastCard = '';
   let grassAt = -1;
-  const track = { emptyDays: 0 };
+  const track = { emptyDays: 0, starvedDays: 0 };
   for (let d = 0; d < days && !s.ended; d += 5) {
     playFor(s, 5, policy, rng, 0.3, track);
     if (grassAt < 0 && s.era !== 'founding') {
@@ -45,6 +46,7 @@ for (let i = 0; i < runs; i++) {
   }
   totalDecisions += s.decisions;
   emptyDays.push(track.emptyDays);
+  starvedDays.push(track.starvedDays);
   const end = s.ended?.title ?? `alive (${s.era})`;
   endings[end] = (endings[end] ?? 0) + 1;
   names[s.movementName ?? '(unnamed)'] = (names[s.movementName ?? '(unnamed)'] ?? 0) + 1;
@@ -56,7 +58,7 @@ for (let i = 0; i < runs; i++) {
     (fates[id] ??= {})[fate] = (fates[id][fate] ?? 0) + 1;
   }
   followersAt.push(followers(s));
-  console.log(JSON.stringify({ run: i, policy, era: s.era, day: Math.round(s.day), decisions: s.decisions, followers: followers(s), name: s.movementName, belief: b, ended: s.ended?.title ?? null, inbox: s.inbox.length, current: currentCard(s)?.cardId ?? null }));
+  console.log(JSON.stringify({ run: i, policy, era: s.era, day: Math.round(s.day), decisions: s.decisions, followers: followers(s), name: s.movementName, belief: b, ended: s.ended?.title ?? null, emptyDays: Math.round(track.emptyDays), inbox: s.inbox.length, current: currentCard(s)?.cardId ?? null }));
 }
 
 // idle compounding check: same decisions, then 30 days idle vs. 30 days of active play
@@ -71,7 +73,8 @@ console.log('\n=== STRESS REPORT ===');
 console.log(`runs ${runs} × ${days} days · decisions/run ${(totalDecisions / runs).toFixed(0)}`);
 console.log(`coverage: ${LIBRARY.cards.length - never.length}/${LIBRARY.cards.length} cards seen; never seen: ${never.join(', ') || 'none'}`);
 console.log(`back-to-back repeats: ${backToBack}`);
-console.log(`empty-desk days per run (nobody needed you): median ${emptyDays.sort((a, b) => a - b)[Math.floor(emptyDays.length / 2)].toFixed(0)}, max ${Math.max(...emptyDays).toFixed(0)} of ${days}`);
+console.log(`starved days per run (nothing left to draw — the stall bug): median ${starvedDays.sort((a, b) => a - b)[Math.floor(starvedDays.length / 2)].toFixed(0)}, max ${Math.max(...starvedDays).toFixed(0)} of ${days} (includes time after the written story ends)`);
+console.log(`quiet days per run (nobody at the door, incl. normal gaps between arrivals): median ${emptyDays.sort((a, b) => a - b)[Math.floor(emptyDays.length / 2)].toFixed(0)}, max ${Math.max(...emptyDays).toFixed(0)} of ${days}`);
 console.log(`decisions to grassroots era: median ${decisionsToGrassroots.sort((a, b) => a - b)[Math.floor(decisionsToGrassroots.length / 2)] ?? 'n/a'} (spec target 15–25 founding decisions)`);
 console.log(`final followers: min ${Math.min(...followersAt)}, median ${followersAt.sort((a, b) => a - b)[Math.floor(followersAt.length / 2)]}, max ${Math.max(...followersAt)}`);
 console.log(`idle 14 days after 60 active days: +${idleGain} followers (from ${f0})`);

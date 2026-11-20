@@ -5,7 +5,7 @@ import { randomSeed } from '@/engine/rng';
 import { fmt } from '@/engine/text';
 import { play } from '@/lib/audio';
 import { clearStory, loadSavedStory, saveStory } from '@/lib/storyStorage';
-import { CARD_BY_ID, CHAR_BY_ID, TIME, callMeeting, deskStatus, charName, choose, currentCard, followers, growthPerRealHour, newStory, render, tickRealTime } from '@/story/engine';
+import { CARD_BY_ID, CHAR_BY_ID, TIME, callMeeting, cardText, deskStatus, charName, choose, currentCard, followers, growthPerRealHour, newStory, render, tickRealTime } from '@/story/engine';
 import { type ChoiceOutcome, type Gauge, GAUGES, type StoryState } from '@/story/types';
 import { useReducedMotion } from '../ui';
 import { Portrait, anonSpec } from './Portrait';
@@ -17,7 +17,7 @@ const GAUGE_INFO: Record<Gauge, { label: string; short: string; blurb: string }>
   attention: { label: 'Public Attention', short: 'Attention', blurb: 'How much the outside world notices you.' },
   resources: { label: 'Resources', short: 'Means', blurb: 'How much organisational capacity you can sustain.' },
 };
-const ERA_LABEL: Record<string, string> = { founding: 'Founding Era', grassroots: 'Grassroots Era', regional: 'Regional Era' };
+const ERA_LABEL: Record<string, string> = { founding: 'Founding Era', grassroots: 'Grassroots Era', regional: 'Regional Era', national: 'National Era' };
 const HOMETOWNS = CITIES.filter((c) => c.pop > 80_000 && c.pop < 900_000);
 
 function GaugeBar({ g, value, preview, delta }: { g: Gauge; value: number; preview?: number; delta?: number }) {
@@ -199,7 +199,7 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
   const anon = inst?.anon;
   const portrait = def?.portrait ?? anonSpec(anon?.seed ?? 7);
   const speakerName = def ? def.name : anon?.name ?? 'Someone';
-  const speakerRole = def ? s.chars[def.id].role : anon?.role ?? '';
+  const speakerRole = def ? s.chars[def.id].role : anon ? render(s, anon.role, inst?.ctx ?? {}) : '';
   const preview = hover != null && card ? card.choices[hover].effects.gauges ?? {} : {};
   const waiting = s.inbox.length;
   const f = followers(s);
@@ -262,7 +262,7 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
                 )}
               </div>
             </div>
-            <blockquote className="mt-4 font-serif text-lg leading-snug sm:text-xl">“{render(s, card.text, inst.ctx, inst.speaker)}”</blockquote>
+            <blockquote className="mt-4 font-serif text-lg leading-snug sm:text-xl">“{render(s, cardText(card, inst), inst.ctx, inst.speaker)}”</blockquote>
             <div className="mt-5 grid gap-3">
               {card.choices.map((ch, i) => (
                 <div key={i}>
@@ -295,9 +295,9 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
             <p className="font-serif text-xl">Nobody needs you right now.</p>
             {deskStatus(s).exhausted && (
               <p className="mt-2 rounded-md border border-brass-500/50 bg-brass-400/10 p-3 text-sm text-brass-300">
-                {s.era === 'regional'
-                  ? 'You have reached the end of this vertical slice. The Regional era has not been written yet; the movement will keep growing on its own.'
-                  : `You have reached the edge of the written story for the ${s.era} era. The next chapter opens at ${fmt(TIME.regionalFollowers)} followers (you have ${fmt(f)}). The movement keeps growing while you wait.`}
+                {s.era === 'national' || s.era === 'international' || s.era === 'world'
+                  ? 'You have reached the end of the written story so far. The National era has not been written yet; the movement will keep growing on its own.'
+                  : `You have reached the edge of the written story for the ${s.era} era. The next chapter opens at ${fmt(s.era === 'regional' ? TIME.nationalFollowers : TIME.regionalFollowers)} followers (you have ${fmt(f)}). The movement keeps growing while you wait.`}
               </p>
             )}
             <p className="mt-2 text-sm text-ink-300">{s.movementName ?? 'The group'} carries on without you: {fmt(f)} people, {growth >= 0 ? 'growing' : 'shrinking'} by about {fmt(Math.abs(growth))} an hour. Someone will turn up with a problem soon.</p>

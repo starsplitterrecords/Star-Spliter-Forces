@@ -1,0 +1,1181 @@
+[
+ {
+  "id": "rec.grumble",
+  "type": "character",
+  "speaker": "unhappy",
+  "cooldown": 8,
+  "spacing": 10,
+  "weight": 1.6,
+  "requires": {
+   "decisions": ">=10",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "I’ve been thinking about how things are going. Honestly? I don’t feel listened to.",
+  "variants": [
+   "I’ve been thinking about how things are going. Honestly? I don’t feel listened to.",
+   "Can I be blunt, {title}? Every time it matters, you go the other way. People notice. I notice.",
+   "I made a list of the times you overruled me. It started as a short list."
+  ],
+  "choices": [
+   {
+    "label": "Tell me what you’d change.",
+    "hint": "Repair · Costs some momentum",
+    "reaction": "{speaker} talks for forty minutes. You listen for all of them. It helps more than either of you expected.",
+    "effects": {
+     "speakerLoyalty": 12,
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "Things are fine.",
+    "hint": "Authority · The grudge grows",
+    "reaction": "{speaker} says “fine” back, in a tone that suggests the list will get longer.",
+    "effects": {
+     "speakerLoyalty": -6,
+     "gauges": {
+      "enthusiasm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.devoted",
+  "type": "character",
+  "speaker": "devoted",
+  "cooldown": 10,
+  "spacing": 12,
+  "weight": 1.2,
+  "requires": {
+   "decisions": ">=12",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "I’d like to take on more. Give me something to run.",
+  "variants": [
+   "I’d like to take on more. Give me something to run.",
+   "You can rely on me, {title}. Put me in charge of something. Anything. Ideally something with a clipboard.",
+   "I’ve been doing extra on the side anyway. I may as well do it officially."
+  ],
+  "choices": [
+   {
+    "label": "Run a new initiative.",
+    "hint": "Their influence grows · An organizer",
+    "reaction": "{speaker} starts that afternoon. By evening there is a sign-up sheet and a sub-initiative.",
+    "effects": {
+     "speakerInfluence": 10,
+     "speakerLoyalty": 5,
+     "organizers": 1,
+     "gauges": {
+      "resources": -3,
+      "enthusiasm": 2
+     }
+    }
+   },
+   {
+    "label": "You’re doing plenty already.",
+    "hint": "Keep power where it is",
+    "reaction": "{speaker} nods, slightly deflated, and does it unofficially anyway.",
+    "effects": {
+     "speakerLoyalty": -3,
+     "gauges": {
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.reopen",
+  "type": "character",
+  "speaker": "any",
+  "cooldown": 10,
+  "spacing": 14,
+  "requires": {
+   "decisions": ">=20",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "bind": {
+   "past": "pastDecision"
+  },
+  "text": "On day {pastDay}, when {pastWho} raised it, you decided: “{pastText}”. Not everyone has made peace with that.",
+  "variants": [
+   "On day {pastDay}, when {pastWho} raised it, you decided: “{pastText}”. Not everyone has made peace with that.",
+   "People are still talking about day {pastDay}. You said “{pastText}”. Some of them have started quoting it back at each other.",
+   "A member asked me whether “{pastText}” is still the rule, or whether it was more of a mood. I didn’t know what to tell her."
+  ],
+  "choices": [
+   {
+    "label": "I stand by it.",
+    "hint": "Consistency · Traditionalists",
+    "reaction": "It is reaffirmed. Someone writes it on the wall, slightly bigger than before.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -2
+     },
+     "groups": {
+      "traditionalists": 0.01
+     }
+    }
+   },
+   {
+    "label": "Maybe it’s time to revisit it.",
+    "hint": "Flexibility · Reformers",
+    "reaction": "A working group is formed to revisit it. It meets once, has snacks and agrees to meet again.",
+    "effects": {
+     "serves": [
+      "-purity"
+     ],
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": 3
+     },
+     "groups": {
+      "reformers": 0.015
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.member_request",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "A member",
+    "role": "Member"
+   }
+  },
+  "bind": {
+   "anon": "anonName"
+  },
+  "cooldown": 4,
+  "spacing": 7,
+  "weight": 1.3,
+  "requires": {
+   "followers": ">=20",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "Could I have a pin for perfect attendance? I’ve not missed a {meeting} since spring.",
+  "variants": [
+   "Could I have a pin for perfect attendance? I’ve not missed a {meeting} since spring.",
+   "Would it be all right if I brought my mother to the next {meeting}? She has questions. She has a lot of questions.",
+   "Some of us work nights. Could there be a second {meeting}, maybe at six in the morning? We’d bring the {beliefNoun}.",
+   "I’d like to start a small reading group within the group. It would just be about {belief}. And possibly whales."
+  ],
+  "choices": [
+   {
+    "label": "Of course.",
+    "hint": "Goodwill · Costs a little",
+    "reaction": "{ctx.anon} is delighted and tells everyone. Three more people ask for the same thing by Friday.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3,
+      "resources": -3
+     },
+     "groups": {
+      "enthusiasts": 0.01
+     }
+    }
+   },
+   {
+    "label": "Not right now.",
+    "hint": "Restraint",
+    "reaction": "{ctx.anon} takes it well, in the sense that they only mention it twice afterwards.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": -2,
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.newcomer",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "A newcomer",
+    "role": "Joined last week"
+   }
+  },
+  "bind": {
+   "anon": "anonName"
+  },
+  "cooldown": 5,
+  "spacing": 9,
+  "requires": {
+   "followers": ">=40",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "I joined last week. Where’s the handbook? Who do I ask things? Is the {beliefNoun} mandatory? Nobody will give me a straight answer.",
+  "variants": [
+   "I joined last week. Where’s the handbook? Who do I ask things? Is the {beliefNoun} mandatory? Nobody will give me a straight answer.",
+   "Everyone keeps referring to “the garage” as if I should know what happened there. What happened there?",
+   "I’ve been told three different things about {day}s by three different people. One of them was Gary."
+  ],
+  "choices": [
+   {
+    "label": "Assign them a mentor.",
+    "hint": "Retention · Takes organizers’ time",
+    "reaction": "The mentor scheme is born. Its first mentee becomes its most enthusiastic mentor within a month.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "resources": -2,
+      "enthusiasm": 2
+     },
+     "groups": {
+      "enthusiasts": 0.01
+     },
+     "modifiers": [
+      {
+       "stat": "retention",
+       "mult": 1.08,
+       "days": 14,
+       "label": "Mentoring newcomers"
+      }
+     ]
+    }
+   },
+   {
+    "label": "Figure it out like we did.",
+    "hint": "Cheap · A little sink-or-swim",
+    "reaction": "{ctx.anon} figures it out, mostly by watching what Gary does and doing the opposite.",
+    "effects": {
+     "serves": [
+      "-order"
+     ],
+     "gauges": {
+      "unity": -1,
+      "enthusiasm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.outsider_complaint",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "A resident",
+    "role": "Lives near a {meeting} venue"
+   }
+  },
+  "bind": {
+   "anon": "anonName",
+   "city": "activeCity"
+  },
+  "cooldown": 6,
+  "spacing": 10,
+  "requires": {
+   "followers": ">=60",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "I live near where your people meet in {city}. The parking is impossible, the singing is constant and someone keeps leaving {beliefNoun} on my wall.",
+  "variants": [
+   "I live near where your people meet in {city}. The parking is impossible, the singing is constant and someone keeps leaving {beliefNoun} on my wall.",
+   "Your members in {city} keep complimenting my hedge. I don’t want it complimented. I want it left alone.",
+   "My children have started {belief} at breakfast. I did not raise them to do that. Who is responsible for this?"
+  ],
+  "choices": [
+   {
+    "label": "Apologise and fix it.",
+    "hint": "Reputation · Costs a little",
+    "reaction": "A sincere apology and a small gift. {ctx.anon} is unconvinced but noticeably softer.",
+    "effects": {
+     "gauges": {
+      "attention": -2,
+      "resources": -2
+     },
+     "modifiers": [
+      {
+       "stat": "reputation",
+       "mult": 1.08,
+       "days": 14,
+       "label": "Good neighbours in {city}"
+      }
+     ]
+    }
+   },
+   {
+    "label": "We have every right to be here.",
+    "hint": "Members proud · Outsiders less so",
+    "reaction": "Members cheer. {ctx.anon} writes to the local paper, which prints it under a photograph of the hedge.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3,
+      "attention": 3
+     },
+     "modifiers": [
+      {
+       "stat": "reputation",
+       "mult": 0.92,
+       "days": 14,
+       "label": "Friction in {city}"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.press",
+  "type": "rivalry",
+  "speaker": {
+   "anon": {
+    "name": "A reporter",
+    "role": "Local press"
+   }
+  },
+  "bind": {
+   "anon": "anonName"
+  },
+  "cooldown": 8,
+  "spacing": 12,
+  "requires": {
+   "followers": ">=100",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "I’m doing a piece on {movement}. My editor wants to know if it’s true that your members spend their evenings {belief}. Is it?",
+  "variants": [
+   "I’m doing a piece on {movement}. My editor wants to know if it’s true that your members spend their evenings {belief}. Is it?",
+   "We’re running a feature: “Who Are the {Members}?” I have two hundred words and one photograph of a pebble. Help me out.",
+   "Quick one. A reader says your organisation has more committees than members. Comment?"
+  ],
+  "choices": [
+   {
+    "label": "Give them the full story.",
+    "hint": "Attention · Some misquotes",
+    "reaction": "The piece runs with a headline that is almost, but not quite, what you said.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "unity": -1
+     },
+     "awareness": {
+      "scope": "known",
+      "amount": 0.04
+     }
+    }
+   },
+   {
+    "label": "No comment.",
+    "hint": "Mystery",
+    "reaction": "The piece runs anyway, under the headline “Group Declines to Comment”. Enquiries rise.",
+    "effects": {
+     "gauges": {
+      "attention": 2,
+      "enthusiasm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.order_push",
+  "type": "organization",
+  "speaker": "agenda:order",
+  "cooldown": 6,
+  "spacing": 10,
+  "requires": {
+   "decisions": ">=12",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "We need a sign-in sheet. Not for any sinister reason. Just so we know who was here, when, and why.",
+  "variants": [
+   "We need a sign-in sheet. Not for any sinister reason. Just so we know who was here, when, and why.",
+   "I’ve drafted a rota. It covers chairs, cups, keys and the emotional support of whoever is doing the cups.",
+   "Can we agree, formally, on who is allowed to change the thermostat? It has become a matter of faith for some people."
+  ],
+  "choices": [
+   {
+    "label": "Make it official.",
+    "hint": "Order · A little less fun",
+    "reaction": "It is laminated by sundown. {speaker} looks more relaxed than anyone has seen them in weeks.",
+    "effects": {
+     "serves": [
+      "order",
+      "-joy"
+     ],
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "Let people sort it out.",
+    "hint": "Freedom · Mild chaos",
+    "reaction": "People sort it out, after a fashion. The thermostat changes eleven times on {day}.",
+    "effects": {
+     "serves": [
+      "-order",
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 2,
+      "unity": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.joy_push",
+  "type": "character",
+  "speaker": "agenda:joy",
+  "cooldown": 6,
+  "spacing": 10,
+  "requires": {
+   "decisions": ">=10",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "Everyone’s working so hard. Can we just have a party? A small one. With food. Possibly a large one.",
+  "variants": [
+   "Everyone’s working so hard. Can we just have a party? A small one. With food. Possibly a large one.",
+   "What if this {day} we didn’t do any business at all, and just enjoyed each other’s company? Like at the start.",
+   "I’ve booked a coach for a day out to the seaside. I haven’t told anyone it costs money yet."
+  ],
+  "choices": [
+   {
+    "label": "Yes. We’ve earned it.",
+    "hint": "Joy · Costs resources",
+    "reaction": "It is, by common agreement, the best evening anyone can remember. Martin takes minutes anyway.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 5,
+      "unity": 3,
+      "resources": -6
+     }
+    }
+   },
+   {
+    "label": "After the next milestone.",
+    "hint": "Focus · Disappointment",
+    "reaction": "The party is postponed. The bunting stays in a box, glaring at people.",
+    "effects": {
+     "serves": [
+      "-joy"
+     ],
+     "gauges": {
+      "resources": 2,
+      "enthusiasm": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.purity_push",
+  "type": "doctrine",
+  "speaker": "agenda:purity",
+  "cooldown": 7,
+  "spacing": 11,
+  "requires": {
+   "decisions": ">=14",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "bind": {
+   "tradition": "tradition"
+  },
+  "text": "Members have been treating “{tradition}” rather casually. If we don’t hold the line, it will mean nothing.",
+  "variants": [
+   "Members have been treating “{tradition}” rather casually. If we don’t hold the line, it will mean nothing.",
+   "Newcomers think “{tradition}” is optional. I have explained that it is not. They need to hear it from you.",
+   "I found someone doing “{tradition}” wrong. On purpose. And laughing."
+  ],
+  "choices": [
+   {
+    "label": "Hold the line.",
+    "hint": "Purity · Traditionalists",
+    "reaction": "A reminder goes out. It is polite, firm and unexpectedly long.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": -2
+     },
+     "groups": {
+      "traditionalists": 0.015
+     }
+    }
+   },
+   {
+    "label": "It’s all right to relax a little.",
+    "hint": "Openness · Reformers",
+    "reaction": "Relaxing a little turns out to be very popular, which some people find worrying.",
+    "effects": {
+     "serves": [
+      "-purity",
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 3
+     },
+     "groups": {
+      "reformers": 0.015
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.money_push",
+  "type": "organization",
+  "speaker": "agenda:money",
+  "cooldown": 7,
+  "spacing": 11,
+  "requires": {
+   "decisions": ">=14",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "bind": {
+   "tradition": "tradition"
+  },
+  "text": "Hear me out. “{tradition}” is beloved. Beloved things can be sold. Tastefully.",
+  "variants": [
+   "Hear me out. “{tradition}” is beloved. Beloved things can be sold. Tastefully.",
+   "We could charge a small fee for “{tradition}”. A suggested donation. A strongly suggested donation.",
+   "A company has offered to sponsor “{tradition}”. Their logo would be very small. Initially."
+  ],
+  "choices": [
+   {
+    "label": "Tastefully, then.",
+    "hint": "Resources · Purists wince",
+    "reaction": "It sells well. A purist is seen buying one, then hiding it.",
+    "effects": {
+     "serves": [
+      "money",
+      "-purity"
+     ],
+     "gauges": {
+      "resources": 8,
+      "unity": -3
+     },
+     "groups": {
+      "opportunists": 0.015
+     }
+    }
+   },
+   {
+    "label": "Some things aren’t for sale.",
+    "hint": "Integrity",
+    "reaction": "{speaker} accepts this with the expression of someone filing it under “not yet”.",
+    "effects": {
+     "serves": [
+      "-money",
+      "purity"
+     ],
+     "gauges": {
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.comfort_push",
+  "type": "character",
+  "speaker": "agenda:comfort",
+  "cooldown": 8,
+  "spacing": 12,
+  "requires": {
+   "decisions": ">=10",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "Could we have a quiet week? Everyone looks tired. I look tired. I’ve been told I always look tired, but this is different.",
+  "variants": [
+   "Could we have a quiet week? Everyone looks tired. I look tired. I’ve been told I always look tired, but this is different.",
+   "I miss when it was just a few of us and the folding chairs. Can we do one {meeting} like that again?",
+   "People keep asking me what the plan is. I don’t know the plan. Is there a plan? Should there be a nap first?"
+  ],
+  "choices": [
+   {
+    "label": "A quiet week it is.",
+    "hint": "Rest · Slower recruitment",
+    "reaction": "The quiet week is the most attended quiet week in history. Nobody recruits anybody. Everyone feels better.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -3
+     },
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 0.9,
+       "days": 7,
+       "label": "A quiet week"
+      }
+     ]
+    }
+   },
+   {
+    "label": "We keep going.",
+    "hint": "Momentum · Tiredness",
+    "reaction": "Everyone keeps going. Several people keep going in their sleep.",
+    "effects": {
+     "serves": [
+      "-comfort"
+     ],
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.visit_town",
+  "type": "regional",
+  "speaker": "any",
+  "cooldown": 6,
+  "spacing": 10,
+  "requires": {
+   "known": ">=2",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "bind": {
+   "city": "activeCity"
+  },
+  "text": "The members in {city} feel forgotten. They say {hometown} gets all the attention and they get the leftover leaflets.",
+  "variants": [
+   "The members in {city} feel forgotten. They say {hometown} gets all the attention and they get the leftover leaflets.",
+   "{city} has started doing things its own way. Nothing bad. Just different. They put the {beliefNoun} at the end instead of the start.",
+   "The {city} group has asked whether {title} might visit. They’ve already baked something. It is shaped like you."
+  ],
+  "choices": [
+   {
+    "label": "Visit {city} in person.",
+    "hint": "Local growth · Costs resources",
+    "reaction": "You visit. They have baked something. It is, uncannily, shaped like you.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "awareness": {
+      "scope": "ctx",
+      "amount": 0.12
+     },
+     "followers": 4,
+     "gauges": {
+      "enthusiasm": 3,
+      "resources": -3
+     }
+    }
+   },
+   {
+    "label": "Send a warm letter.",
+    "hint": "Cheap · A little distant",
+    "reaction": "The letter is read aloud at the {city} {meeting}, twice, and framed.",
+    "effects": {
+     "gauges": {
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.money_tight",
+  "type": "organization",
+  "speaker": "any",
+  "cooldown": 8,
+  "spacing": 12,
+  "requires": {
+   "gauges": {
+    "resources": "<30"
+   },
+   "decisions": ">=10",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "Money’s tight. The {meeting} costs more than it brings in, the urn needs replacing and somebody has been buying very expensive biscuits.",
+  "variants": [
+   "Money’s tight. The {meeting} costs more than it brings in, the urn needs replacing and somebody has been buying very expensive biscuits.",
+   "We can either cut costs or raise money. Those are the options. I checked twice."
+  ],
+  "choices": [
+   {
+    "label": "Cut costs.",
+    "hint": "Resources · Morale dips",
+    "reaction": "Cheaper biscuits are introduced. They are noticed immediately.",
+    "effects": {
+     "gauges": {
+      "resources": 7,
+      "enthusiasm": -3
+     }
+    }
+   },
+   {
+    "label": "Hold a fundraiser.",
+    "hint": "Attention · Effort",
+    "reaction": "The fundraiser involves a raffle, a bake sale and, inexplicably, a tug of war. It works.",
+    "effects": {
+     "gauges": {
+      "resources": 5,
+      "attention": 3,
+      "enthusiasm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.windfall",
+  "type": "organization",
+  "speaker": "any",
+  "cooldown": 10,
+  "spacing": 12,
+  "requires": {
+   "gauges": {
+    "resources": ">65"
+   },
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "We have money left over this month. Actual money. Nobody knows what to do with it, and everyone has a suggestion.",
+  "variants": [
+   "We have money left over this month. Actual money. Nobody knows what to do with it, and everyone has a suggestion.",
+   "An anonymous donor has given us a cheque and a note that just says “Keep going”. What do we do with it?"
+  ],
+  "choices": [
+   {
+    "label": "Spend it on the members.",
+    "hint": "Enthusiasm",
+    "reaction": "New chairs, a better urn and a banner that does not sag. Morale soars.",
+    "effects": {
+     "gauges": {
+      "resources": -10,
+      "enthusiasm": 5,
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "Train organizers with it.",
+    "hint": "Growth",
+    "reaction": "Two members become organizers. They are given lanyards, which they wear everywhere.",
+    "effects": {
+     "gauges": {
+      "resources": -10
+     },
+     "organizers": 2,
+     "groups": {
+      "organizers": 0.01
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.faction_murmur",
+  "type": "doctrine",
+  "speaker": "any",
+  "cooldown": 10,
+  "spacing": 14,
+  "requires": {
+   "anyFlags": [
+    "manifesto",
+    "open_doctrine",
+    "dues",
+    "sponsored",
+    "board",
+    "local_autonomy",
+    "rulebook_shelved",
+    "spontaneity"
+   ],
+   "decisions": ">=25",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "The traditionalists and the reformers have started sitting on opposite sides of the room. Nobody planned it. Now everyone knows which side is which.",
+  "variants": [
+   "The traditionalists and the reformers have started sitting on opposite sides of the room. Nobody planned it. Now everyone knows which side is which.",
+   "There are now two newsletters. One says we’ve changed too much. The other says we haven’t changed enough. Both are quite good."
+  ],
+  "choices": [
+   {
+    "label": "Bring them together.",
+    "hint": "Unity · Costs resources",
+    "reaction": "A joint {meeting} is held. Everyone sits in the middle, awkwardly, and it works.",
+    "effects": {
+     "gauges": {
+      "unity": 5,
+      "resources": -4
+     }
+    }
+   },
+   {
+    "label": "A little tension is healthy.",
+    "hint": "Lets it simmer",
+    "reaction": "The tension stays healthy, in the way a slowly leaking pipe is healthy.",
+    "effects": {
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.celebrate",
+  "type": "plot",
+  "speaker": "any",
+  "cooldown": 20,
+  "spacing": 18,
+  "requires": {
+   "followers": ">=150",
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "text": "There are {count} of us now. That number was seven not long ago. Should we mark it?",
+  "choices": [
+   {
+    "label": "Celebrate.",
+    "hint": "Enthusiasm · Attention · Cost",
+    "reaction": "There is cake, a slightly too long speech, and a photograph everyone will remember.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 5,
+      "attention": 3,
+      "resources": -6
+     },
+     "memory": "{Movement} celebrated reaching {count} members."
+    }
+   },
+   {
+    "label": "Back to work.",
+    "hint": "Focus",
+    "reaction": "Back to work. Someone puts the number on the noticeboard anyway.",
+    "effects": {
+     "gauges": {
+      "resources": 2,
+      "enthusiasm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.branch_leader",
+  "type": "regional",
+  "speaker": {
+   "anon": {
+    "name": "A branch leader",
+    "role": "Branch leader, {city}"
+   }
+  },
+  "bind": {
+   "anon": "anonName",
+   "city": "activeCity"
+  },
+  "cooldown": 5,
+  "spacing": 8,
+  "weight": 1.3,
+  "requires": {
+   "era": [
+    "regional",
+    "national"
+   ]
+  },
+  "text": "The {city} branch has outgrown its room. We could rent a proper hall, or split into two smaller groups. The members can’t agree, so they sent me.",
+  "variants": [
+   "The {city} branch has outgrown its room. We could rent a proper hall, or split into two smaller groups. The members can’t agree, so they sent me.",
+   "Our {city} branch wants a budget of its own. Not much. Enough for chairs, {beliefNoun} and a banner that isn’t hand-me-down from {hometown}.",
+   "People in {city} keep asking for {title}’s opinion on local matters, such as parking. What do I tell them?"
+  ],
+  "choices": [
+   {
+    "label": "Give {city} what it needs.",
+    "hint": "Local growth · Costs resources",
+    "reaction": "The {city} branch thrives. Its newsletter thanks you by name, twice, in bold.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "gauges": {
+      "resources": -5,
+      "enthusiasm": 3
+     },
+     "awareness": {
+      "scope": "ctx",
+      "amount": 0.08
+     }
+    }
+   },
+   {
+    "label": "{city} must make do for now.",
+    "hint": "Save resources · Local grumbling",
+    "reaction": "{city} makes do. Its {meeting} becomes famous for being cosy, which is a polite word for cramped.",
+    "effects": {
+     "serves": [
+      "-expansion"
+     ],
+     "gauges": {
+      "resources": 2,
+      "unity": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.organizer_tired",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "An organizer",
+    "role": "Organizer"
+   }
+  },
+  "bind": {
+   "anon": "anonName"
+  },
+  "cooldown": 7,
+  "spacing": 10,
+  "requires": {
+   "era": [
+    "regional",
+    "national"
+   ]
+  },
+  "text": "I’ve run four {meetings} this week in three towns. I love this movement. I also haven’t seen my own kitchen since Tuesday.",
+  "variants": [
+   "I’ve run four {meetings} this week in three towns. I love this movement. I also haven’t seen my own kitchen since Tuesday.",
+   "The organizers would like one evening a week off. We’ve made a proposal. It has a chart."
+  ],
+  "choices": [
+   {
+    "label": "Give the organizers proper support.",
+    "hint": "Retention · Costs resources",
+    "reaction": "Organizers get a rota, an expenses form and, crucially, an evening off. Burnout drops noticeably.",
+    "effects": {
+     "serves": [
+      "order",
+      "joy"
+     ],
+     "gauges": {
+      "resources": -5,
+      "unity": 3
+     },
+     "modifiers": [
+      {
+       "stat": "retention",
+       "mult": 1.08,
+       "days": 20,
+       "label": "Supported organizers"
+      }
+     ]
+    }
+   },
+   {
+    "label": "This is what commitment looks like.",
+    "hint": "Momentum · Exhaustion",
+    "reaction": "The organizers keep going. One falls asleep mid-sentence and is, for once, not Gary.",
+    "effects": {
+     "serves": [
+      "-joy"
+     ],
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.rival_town",
+  "type": "rivalry",
+  "speaker": "any",
+  "cooldown": 8,
+  "spacing": 12,
+  "requires": {
+   "era": [
+    "regional",
+    "national"
+   ],
+   "known": ">=4"
+  },
+  "bind": {
+   "city": "activeCity",
+   "otherCity": "nextCity"
+  },
+  "text": "The {city} branch and the {otherCity} group are feuding about whose {meeting} is more authentic. It started with a casserole.",
+  "variants": [
+   "The {city} branch and the {otherCity} group are feuding about whose {meeting} is more authentic. It started with a casserole.",
+   "{city} has accused {otherCity} of copying their banner. {otherCity} says {city} copied {hometown}. {hometown} is staying out of it."
+  ],
+  "choices": [
+   {
+    "label": "Hold a joint {meeting}.",
+    "hint": "Unity · Cost",
+    "reaction": "The joint {meeting} ends with both towns agreeing that the casserole was, in fact, excellent.",
+    "effects": {
+     "gauges": {
+      "unity": 4,
+      "resources": -4
+     }
+    }
+   },
+   {
+    "label": "Let them compete.",
+    "hint": "Energy · Friction",
+    "reaction": "Both branches recruit furiously to prove a point. Neither can remember what the point was.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -3
+     },
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 1.08,
+       "days": 10,
+       "label": "Friendly rivalry between towns"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "rec.local_news",
+  "type": "regional",
+  "speaker": {
+   "anon": {
+    "name": "A local journalist",
+    "role": "Regional news"
+   }
+  },
+  "bind": {
+   "anon": "anonName",
+   "city": "activeCity"
+  },
+  "cooldown": 7,
+  "spacing": 10,
+  "requires": {
+   "era": [
+    "regional",
+    "national"
+   ]
+  },
+  "text": "Our readers in {city} want to know what {members} actually do on a {day}. Can we send a photographer?",
+  "variants": [
+   "Our readers in {city} want to know what {members} actually do on a {day}. Can we send a photographer?",
+   "We’re ranking the region’s most unusual organisations. You’re currently third, behind a choir for dogs and a man who collects traffic cones."
+  ],
+  "choices": [
+   {
+    "label": "Send the photographer.",
+    "hint": "Attention · Some awkward photos",
+    "reaction": "The photographs are mostly of Gary. Membership enquiries from {city} double.",
+    "effects": {
+     "gauges": {
+      "attention": 5
+     },
+     "awareness": {
+      "scope": "ctx",
+      "amount": 0.06
+     }
+    }
+   },
+   {
+    "label": "Politely decline.",
+    "hint": "Privacy",
+    "reaction": "The paper runs a photograph of the outside of the building instead. It looks oddly mysterious.",
+    "effects": {
+     "gauges": {
+      "attention": 1,
+      "unity": 1
+     }
+    }
+   }
+  ]
+ }
+]

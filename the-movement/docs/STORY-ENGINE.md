@@ -93,19 +93,49 @@ The shipped game reads only the bundled JSON. Generative AI is a **development t
 
 ## 8. Vertical slice: what exists now
 
-- 6 characters: 4 at the start, Agnes and Rolf joining later.
-- 26 customs, 15 of them practices.
-- 74 cards: 30 founding, 36 grassroots and regional-threshold, and 8 crises. They include multi-step arcs: Rolf's commercialisation, Agnes's minutes leading to a schism, Priya's burnout, the Knitting Circle feud, Kevin's memoir, soup in the boot of a car, and the Tuesday that becomes sacred.
-- The founding and grassroots eras in full, ending at the regional threshold.
-- Continuous idle simulation with bounded offline progress and a report on return.
+- **8 characters.** Four at the start. Agnes and Rolf join in the grassroots era, Ophelia Stroud (ambitious branch leader, agenda expansion) and Lionel Fitch (consultant who speaks in departments, agenda order) in the regional era.
+- **26 customs**, 14 of them practices.
+- **118 cards:**
+  - 30 founding
+  - 36 grassroots
+  - 23 regional
+  - 21 recurring
+  - 8 crises
+- **Arcs:**
+  - Grassroots: Rolf's commercialisation, Agnes's minutes leading to a schism, Priya's burnout, the Knitting Circle feud, Kevin's memoir, soup in the boot of a car, and the Tuesday that becomes sacred.
+  - Regional: Martin versus Lionel, Ophelia's rise (shared leadership or a breakaway), pilgrimages to Gary's garage, and payoffs for characters who left earlier (Agnes's *Original* movement, Rolf's subscription-box company).
+- **The recurring layer** (`cards.recurring.json`) keeps the desk busy between authored beats. These are templated situations with several text variants, drawn again whenever their cooldowns allow:
+  - whoever is influential pushing their agenda;
+  - an *unhappy* co-leader airing grievances, or a *devoted* one asking for more responsibility;
+  - someone reopening a decision you made earlier, quoted back to you;
+  - newcomers and members with requests;
+  - neighbours complaining;
+  - the press;
+  - towns feeling forgotten, branch leaders, rival towns;
+  - money running tight, or a windfall.
+- **Eras:** founding, grassroots and regional are written. The **National** era opens with a documentary card at 20,000 followers (or four towns at 85%), and the written story currently stops there. Entering the Regional era widens the map from 40 to about 110 towns.
+- **Continuous idle simulation** with bounded offline progress and a report when you return.
 
-**Stress-test results** (15 runs × 200 days): 0 back-to-back repeats; 67 of 74 cards seen (the misses are rare crises and deep branches such as Agnes's schism and Rolf's ultimatum); about 26 decisions to leave the founding era (measured in 5-day steps, so slightly high); 14 of 15 runs ending with a different set of customs, and about 8 different movement names and several different central beliefs across runs.
+**Stress-test results** (15 runs × 300 days, five leadership styles):
+
+- **Starved days** (nothing left that could be drawn, the stall reported in playtest) are a median of 0 and a maximum of 7. Before the recurring layer it was about 196 of 200.
+- **Quiet days** (nobody at the door, including ordinary gaps between arrivals that *Call a meeting* skips) run 25–45 of 300, mostly in the Regional era.
+- 110 of 118 cards were seen, with 0 back-to-back repeats.
+- Leaving the founding era takes about 25 decisions.
+- Most careful playthroughs reach the National era in 100–260 game days (130–330 decisions).
+- Leadership endings follow play style:
+  - careful styles almost never lose their leader;
+  - random play rarely does;
+  - reckless expansion often goes bankrupt;
+  - always picking the first option gets you out-believed early.
 
 ## 9. Known gaps (next steps)
 
-- **The desk goes quiet around decision 50 (≈500–700 followers).** Almost all slice cards are one-off. Once they are used, or locked out by earlier choices, only a few repeatable cards remain, and those have long cooldowns. Growth continues, but nobody asks you anything for 20–150 game days before the Regional threshold (now 1,500 followers). The stress report tracks this as *empty-desk days*, and the game says so honestly when the written story runs out. The fix is content: a layer of repeatable, templated "recurring situation" cards between the authored beats.
-
-- Succession: the movement continuing under a new leader.
-- The Regional era and beyond have no authored content yet; the slice stops at the threshold.
-- Rival movements founded by characters who leave (the `rolf_rival` and `agnes_faction` flags are set and waiting for content).
-- Character loyalty in automated play tends to drift positive. Real players should be watched for this.
+- **The National era** is not written; the story ends at the documentary. Players are told so on screen.
+- **Succession:** the movement continuing under a new leader.
+- **Quiet stretches in the Regional era** could be cut further with more regional recurring cards.
+- **Loyalty patterns from automated play:**
+  - Priya leaves in about 40% of runs, because many choices oppose her joy agenda;
+  - Dez and Martin are usually devoted.
+  - Real playtests should confirm whether this feels right.
+- **Rare content:** a few arcs (Agnes's schism and its regional payoff, Rolf's company) appear in under 10% of runs. That's fine for surprise, but worth watching.

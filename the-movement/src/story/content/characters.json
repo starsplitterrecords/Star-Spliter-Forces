@@ -1,38 +1,173 @@
 [
-  {
-    "id": "martin", "name": "Martin Pell", "short": "Martin", "role": "Co-founder", "agenda": "order", "ally": "organizers",
-    "bio": "Former assistant manager at a laminating shop. Believes most problems are scheduling problems, and most scheduling problems can be laminated. Your oldest friend. Wants the movement to function.",
-    "competence": 72, "startsPresent": true, "startLoyalty": 25, "startInfluence": 30,
-    "portrait": { "skin": "#e8c0a0", "hair": "#4a3a2a", "coat": "#3d5a80", "glasses": true, "mood": "worried", "prop": "📋" }
-  },
-  {
-    "id": "priya", "name": "Priya Moss", "short": "Priya", "role": "Co-founder", "agenda": "joy", "ally": "casuals",
-    "bio": "Brings soup to things. Has never once been asked to. Thinks the point of all this is for people to have a nice time together, and is the only person who has said so out loud.",
-    "competence": 60, "startsPresent": true, "startLoyalty": 25, "startInfluence": 25,
-    "portrait": { "skin": "#a8704a", "hair": "#1a1a1a", "coat": "#e67e22", "hat": "bun", "mood": "smile", "prop": "🍲" }
-  },
-  {
-    "id": "dez", "name": "Desmond “Dez” Ferrante", "short": "Dez", "role": "Co-founder", "agenda": "expansion", "ally": "enthusiasts",
-    "bio": "Has a megaphone. Nobody knows where he got it. Wants everyone in the world to join, ideally by Friday. Makes promises the way other people breathe.",
-    "competence": 45, "startsPresent": true, "startLoyalty": 25, "startInfluence": 25,
-    "portrait": { "skin": "#d8a070", "hair": "#2a1a10", "coat": "#c0392b", "hat": "cap", "mood": "smug", "prop": "📣" }
-  },
-  {
-    "id": "gary", "name": "Gary Bonk", "short": "Gary", "role": "Founding member (garage)", "agenda": "comfort", "ally": "founders",
-    "bio": "Owns the garage. Thought this was a book club. Still brings the book. Kind, loyal, frequently asleep, and the only person who has never asked what the movement is for.",
-    "competence": 15, "startsPresent": true, "startLoyalty": 35, "startInfluence": 15,
-    "portrait": { "skin": "#f0c8a8", "hair": "#a87a4a", "coat": "#7a8a3a", "mustache": true, "mood": "flat", "prop": "📖" }
-  },
-  {
-    "id": "agnes", "name": "Agnes Thimble", "short": "Agnes", "role": "Member", "agenda": "purity", "ally": "traditionalists",
-    "bio": "Takes minutes at meetings she was not invited to. Remembers exactly what everyone said, and exactly when they stopped meaning it. Wants the movement to be what it said it was.",
-    "competence": 80, "startsPresent": false, "startLoyalty": 0, "startInfluence": 20,
-    "portrait": { "skin": "#f2d0b8", "hair": "#b8b8c0", "coat": "#8e44ad", "glasses": true, "hat": "bun", "mood": "flat", "prop": "📓" }
-  },
-  {
-    "id": "rolf", "name": "Rolf Ledger", "short": "Rolf", "role": "Member", "agenda": "money", "ally": "opportunists",
-    "bio": "Accountant. Genuinely helpful, genuinely good with numbers, and genuinely unable to look at a tradition without seeing an untapped revenue stream.",
-    "competence": 85, "startsPresent": false, "startLoyalty": 5, "startInfluence": 20,
-    "portrait": { "skin": "#c89878", "hair": "#2a2a2a", "coat": "#2c3e50", "hat": "none", "glasses": true, "mood": "smug", "prop": "🧮" }
+ {
+  "id": "martin",
+  "name": "Martin Pell",
+  "short": "Martin",
+  "role": "Co-founder",
+  "agenda": "order",
+  "ally": "organizers",
+  "bio": "Former assistant manager at a laminating shop. Believes most problems are scheduling problems, and most scheduling problems can be laminated. Your oldest friend. Wants the movement to function.",
+  "competence": 72,
+  "startsPresent": true,
+  "startLoyalty": 25,
+  "startInfluence": 30,
+  "portrait": {
+   "skin": "#e8c0a0",
+   "hair": "#4a3a2a",
+   "coat": "#3d5a80",
+   "glasses": true,
+   "mood": "worried",
+   "prop": "📋"
   }
+ },
+ {
+  "id": "priya",
+  "name": "Priya Moss",
+  "short": "Priya",
+  "role": "Co-founder",
+  "agenda": "joy",
+  "ally": "casuals",
+  "bio": "Brings soup to things. Has never once been asked to. Thinks the point of all this is for people to have a nice time together, and is the only person who has said so out loud.",
+  "competence": 60,
+  "startsPresent": true,
+  "startLoyalty": 25,
+  "startInfluence": 25,
+  "portrait": {
+   "skin": "#a8704a",
+   "hair": "#1a1a1a",
+   "coat": "#e67e22",
+   "hat": "bun",
+   "mood": "smile",
+   "prop": "🍲"
+  }
+ },
+ {
+  "id": "dez",
+  "name": "Desmond “Dez” Ferrante",
+  "short": "Dez",
+  "role": "Co-founder",
+  "agenda": "expansion",
+  "ally": "enthusiasts",
+  "bio": "Has a megaphone. Nobody knows where he got it. Wants everyone in the world to join, ideally by Friday. Makes promises the way other people breathe.",
+  "competence": 45,
+  "startsPresent": true,
+  "startLoyalty": 25,
+  "startInfluence": 25,
+  "portrait": {
+   "skin": "#d8a070",
+   "hair": "#2a1a10",
+   "coat": "#c0392b",
+   "hat": "cap",
+   "mood": "smug",
+   "prop": "📣"
+  }
+ },
+ {
+  "id": "gary",
+  "name": "Gary Bonk",
+  "short": "Gary",
+  "role": "Founding member (garage)",
+  "agenda": "comfort",
+  "ally": "founders",
+  "bio": "Owns the garage. Thought this was a book club. Still brings the book. Kind, loyal, frequently asleep, and the only person who has never asked what the movement is for.",
+  "competence": 15,
+  "startsPresent": true,
+  "startLoyalty": 35,
+  "startInfluence": 15,
+  "portrait": {
+   "skin": "#f0c8a8",
+   "hair": "#a87a4a",
+   "coat": "#7a8a3a",
+   "mustache": true,
+   "mood": "flat",
+   "prop": "📖"
+  }
+ },
+ {
+  "id": "agnes",
+  "name": "Agnes Thimble",
+  "short": "Agnes",
+  "role": "Member",
+  "agenda": "purity",
+  "ally": "traditionalists",
+  "bio": "Takes minutes at meetings she was not invited to. Remembers exactly what everyone said, and exactly when they stopped meaning it. Wants the movement to be what it said it was.",
+  "competence": 80,
+  "startsPresent": false,
+  "startLoyalty": 0,
+  "startInfluence": 20,
+  "portrait": {
+   "skin": "#f2d0b8",
+   "hair": "#b8b8c0",
+   "coat": "#8e44ad",
+   "glasses": true,
+   "hat": "bun",
+   "mood": "flat",
+   "prop": "📓"
+  }
+ },
+ {
+  "id": "rolf",
+  "name": "Rolf Ledger",
+  "short": "Rolf",
+  "role": "Member",
+  "agenda": "money",
+  "ally": "opportunists",
+  "bio": "Accountant. Genuinely helpful, genuinely good with numbers, and genuinely unable to look at a tradition without seeing an untapped revenue stream.",
+  "competence": 85,
+  "startsPresent": false,
+  "startLoyalty": 5,
+  "startInfluence": 20,
+  "portrait": {
+   "skin": "#c89878",
+   "hair": "#2a2a2a",
+   "coat": "#2c3e50",
+   "hat": "none",
+   "glasses": true,
+   "mood": "smug",
+   "prop": "🧮"
+  }
+ },
+ {
+  "id": "ophelia",
+  "name": "Ophelia Stroud",
+  "short": "Ophelia",
+  "role": "Member",
+  "agenda": "expansion",
+  "ally": "reformers",
+  "bio": "Started a branch in a town nobody had heard of and tripled it before anyone noticed. Ambitious, warm in public, precise in private. Believes the movement belongs to the people who are growing it, not the people who started it.",
+  "competence": 82,
+  "startsPresent": false,
+  "startLoyalty": 0,
+  "startInfluence": 25,
+  "portrait": {
+   "skin": "#9a6a4a",
+   "hair": "#2a1a10",
+   "coat": "#16a085",
+   "hat": "none",
+   "mood": "smug",
+   "prop": "🗺️"
+  }
+ },
+ {
+  "id": "lionel",
+  "name": "Lionel Fitch",
+  "short": "Lionel",
+  "role": "Member",
+  "agenda": "order",
+  "ally": "organizers",
+  "bio": "A management consultant who came to one meeting to observe and stayed to restructure. Speaks fluently in departments. Martin’s natural ally, and therefore his greatest threat.",
+  "competence": 70,
+  "startsPresent": false,
+  "startLoyalty": 5,
+  "startInfluence": 20,
+  "portrait": {
+   "skin": "#f0d0b8",
+   "hair": "#a8afc0",
+   "coat": "#4b5468",
+   "hat": "none",
+   "glasses": true,
+   "mood": "flat",
+   "prop": "🗂️"
+  }
+ }
 ]

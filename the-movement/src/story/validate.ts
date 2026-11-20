@@ -11,7 +11,7 @@ export interface ValidationReport {
 
 const LIMITS = { text: 420, label: 80, reaction: 260, hint: 70, gauge: 40, loyalty: 30, group: 0.1 };
 const STATS = ['recruitment', 'retention', 'awareness', 'campaign', 'income', 'reputation'];
-const ENGINE_FLAGS = ['regional_ready'];
+const ENGINE_FLAGS = ['regional_ready', 'national_ready'];
 const CHAR_FLAG_SUFFIXES = ['_disgruntled', '_devoted', '_left', '_rival', '_retired'];
 const CMP = /^(>=|<=|>|<|=)?\s*-?[\d.]+$/;
 
@@ -87,7 +87,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
         if (!AGENDAS.includes(sp.slice(7) as never)) errors.push(`${where}: unknown agenda speaker ${sp}`);
       } else if (sp.startsWith('champion:')) {
         if (!card.bind?.[sp.slice(9)]) errors.push(`${where}: champion speaker needs bind.${sp.slice(9)}`);
-      } else if (!sp.startsWith('role:') && sp !== 'any' && !charIds.has(sp)) errors.push(`${where}: unknown speaker ${sp}`);
+      } else if (!sp.startsWith('role:') && !['any', 'unhappy', 'devoted'].includes(sp) && !charIds.has(sp)) errors.push(`${where}: unknown speaker ${sp}`);
     } else if (!card.speaker.anon?.name || !card.speaker.anon?.role) errors.push(`${where}: anonymous speaker needs name and role`);
     // binds
     const ctxKeys = new Set<string>();
@@ -96,6 +96,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
       ctxKeys.add(k);
       ctxKeys.add(`ctx.${k}`);
       if (k.startsWith('practice')) ctxKeys.add(`${k}Noun`);
+      if (k === 'past') ['pastText', 'pastDay', 'pastWho'].forEach((x) => ctxKeys.add(x));
     }
     // requires
     const r = card.requires ?? {};
@@ -130,6 +131,11 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
     };
     if (!card.text || card.text.length > LIMITS.text) errors.push(`${where}: text missing or longer than ${LIMITS.text}`);
     checkTokens(card.text, 'text');
+    for (const [vi, v] of (card.variants ?? []).entries()) {
+      if (v.length > LIMITS.text) errors.push(`${where}: variant ${vi} longer than ${LIMITS.text}`);
+      checkTokens(v, `variant ${vi}`);
+    }
+    if (card.variants && (card.speaker === 'unhappy' || card.speaker === 'devoted') && card.once) warnings.push(`${where}: recurring speakers usually should not be once-only`);
     const norm = card.text.toLowerCase().replace(/\{[\w.]+\}/g, '').replace(/[^a-z ]/g, '');
     if (texts.has(norm)) errors.push(`${where}: duplicate text of ${texts.get(norm)}`);
     texts.set(norm, card.id);

@@ -932,6 +932,9 @@
        "delay": 15,
        "chance": 0.6
       }
+     ],
+     "flags": [
+      "rulebook_shelved"
      ]
     }
    }

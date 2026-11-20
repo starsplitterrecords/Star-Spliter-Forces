@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { CITIES, city } from '../src/engine/geo';
 import { Rng } from '../src/engine/rng';
 import { playFor } from '../src/story/autoplay';
-import { CARD_BY_ID, advanceDays, callMeeting, choose, currentCard, followers, loadStory, newStory, render, serializeStory, tickRealTime } from '../src/story/engine';
+import { CARD_BY_ID, cardText, advanceDays, callMeeting, choose, currentCard, followers, loadStory, newStory, render, serializeStory, tickRealTime } from '../src/story/engine';
 import { LIBRARY } from '../src/story/library';
 import { validateLibrary } from '../src/story/validate';
 import { GROUPS, type StoryState } from '../src/story/types';
@@ -159,7 +159,7 @@ describe('simulation', () => {
         playFor(s, 4, p, rng);
         for (const inst of s.inbox) {
           const card = CARD_BY_ID.get(inst.cardId)!;
-          for (const t of [card.text, ...card.choices.map((c) => c.label), ...card.choices.map((c) => c.reaction)]) {
+          for (const t of [cardText(card, inst), ...card.choices.map((c) => c.label), ...card.choices.map((c) => c.reaction)]) {
             expect(render(s, t, inst.ctx, inst.speaker), `${card.id}`).not.toMatch(/\{[\w.]+\}/);
           }
         }
@@ -177,5 +177,31 @@ describe('simulation', () => {
       identities.add(Object.keys(s.customs).filter((k) => s.customs[k].status !== 'none').sort().join(','));
     }
     expect(identities.size).toBeGreaterThanOrEqual(4);
+  });
+
+  it('never leaves the desk empty for long before the written story ends (regression: the 560-follower stall)', () => {
+    for (const [seed, p] of [[11, 'pleaser'], [12, 'random'], [13, 'order']] as const) {
+      const s = newStory('Jeff', LEEDS, seed, 0);
+      const rng = new Rng(seed);
+      const track = { emptyDays: 0, starvedDays: 0 };
+      const start = s.day;
+      while (s.era !== 'national' && s.day < 400 && !s.ended) playFor(s, 2, p, rng, 0.3, track);
+      expect(s.ended).toBeNull();
+      expect(s.era).toBe('national');
+      // starved = nothing left that could be drawn (the original bug); quiet = ordinary gaps between arrivals
+      expect(track.starvedDays / (s.day - start)).toBeLessThan(0.04);
+      expect(track.emptyDays / (s.day - start)).toBeLessThan(0.25);
+    }
+  });
+
+  it('the Regional era widens the map and brings new people', () => {
+    const s = newStory('Jeff', LEEDS, 21, 0);
+    const before = s.region.length;
+    const rng = new Rng(21);
+    while (s.era !== 'regional' && s.day < 300) playFor(s, 2, 'pleaser', rng);
+    expect(s.era).toBe('regional');
+    expect(s.region.length).toBeGreaterThan(before);
+    while (s.era === 'regional' && s.day < 400) playFor(s, 2, 'pleaser', rng);
+    expect(s.chars.ophelia.status === 'absent' && s.chars.lionel.status === 'absent').toBe(false);
   });
 });

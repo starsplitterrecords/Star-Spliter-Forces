@@ -36,8 +36,12 @@ export const TIME = {
   inboxMax: 5,
   cardsPerDay: { founding: 2.4, grassroots: 1.5, regional: 1.1, national: 1, international: 1, world: 1 } as Record<Era, number>,
   crisisWindowDays: 14,
+  crisisWindowDecisions: 15,
   regionRadiusKm: 260,
-  regionalFollowers: 1500, // the slice's closing card unlocks here (or two towns at 85%)
+  regionalFollowers: 1500, // the grassroots closing card unlocks here (or two towns at 85%)
+  nationalFollowers: 20000, // the regional closing card unlocks here (or four towns at 85%)
+  regionalRadiusKm: 650,
+  regionalMaxCities: 110,
   regionMaxCities: 40,
 };
 
@@ -177,6 +181,7 @@ export function render(s: StoryState, text: string, ctx: Record<string, string> 
   for (const [k, v] of Object.entries(ctx)) {
     base[`ctx.${k}`] = v;
     if (k === 'city' || k.endsWith('City')) base[k] = city(Number(v)).name;
+    else if (k.startsWith('tradition')) base[k] = renderCustomLabel(s, v).replace(/^\w/, (c) => c.toLowerCase());
     else if (k.startsWith('practice')) {
       const p = CUSTOM_BY_ID.get(v);
       base[k] = p?.phrase ?? v;
@@ -196,7 +201,7 @@ export function render(s: StoryState, text: string, ctx: Record<string, string> 
   });
 }
 
-export const RENDER_TOKENS = ['towns', 'title', 'founder', 'initial', 'movement', 'Movement', 'members', 'member', 'Members', 'meeting', 'meetings', 'day', 'hq', 'hometown', 'count', 'belief', 'beliefNoun', 'item', 'speaker'];
+export const RENDER_TOKENS = ['pastText', 'pastDay', 'pastWho', 'towns', 'title', 'founder', 'initial', 'movement', 'Movement', 'members', 'member', 'Members', 'meeting', 'meetings', 'day', 'hq', 'hometown', 'count', 'belief', 'beliefNoun', 'item', 'speaker'];
 
 // ------------------------------------------------------------------ binders (fill card context at draw time)
 
@@ -239,6 +244,17 @@ export const BINDERS: Record<string, Binder> = {
   },
   anonName: (_s, rng) => `${rng.pick(FIRST_NAMES)} ${rng.pick(LAST_NAMES)}`,
   symbolThing: (_s, rng) => rng.pick(['capybara', 'lamp', 'heron', 'very confident pear', 'spoon with a face', 'sun, or possibly an egg']),
+  pastDecision: (s, rng) => {
+    const idx = s.history
+      .map((h, i) => ({ h, i }))
+      .filter(({ h }) => s.decisions - s.history.length + 0 >= 0 && !h.cardId.startsWith('crisis.') && h.speaker !== 'anon' && s.chars[h.speaker]?.present && s.day - h.day > 8)
+      .map(({ i }) => i);
+    return idx.length ? String(rng.pick(idx)) : null;
+  },
+  tradition: (s, rng) => {
+    const list = Object.entries(s.customs).filter(([, c]) => STATUS_WEIGHT[c.status] >= 0.5).map(([id]) => id);
+    return list.length ? rng.pick(list) : null;
+  },
   rivalName: (_s, rng) => rng.pick(['the Thursday Knitting Circle', 'the Hometown Chess & Grievance Club', 'the Society for Ordinary Evenings']),
 };
 
@@ -296,7 +312,7 @@ export function newStory(founderName: string, hometown: number, seed: number, no
     movementName: null,
     founderTitle: null,
     era: 'founding',
-    gauges: { enthusiasm: 55, unity: 60, attention: 22, resources: 30 },
+    gauges: { enthusiasm: 55, unity: 60, attention: 22, resources: 45 },
     chars: {},
     groups: { founders: 5, casuals: 0, enthusiasts: 0, organizers: 0, traditionalists: 0, reformers: 0, opportunists: 0 },
     customs: {},
@@ -338,6 +354,8 @@ function resolveSpeaker(s: StoryState, card: CardDef, rng: Rng): { speaker: stri
   const present = Object.entries(s.chars).filter(([, c]) => c.present && c.status === 'active');
   const pickWeighted = (ids: [string, CharState][]) => rng.weighted(ids, ([, c]) => 0.5 + c.influence / 20)?.[0] ?? null;
   if (sp === 'any') return wrap(pickWeighted(present));
+  if (sp === 'unhappy') return wrap(rng.weighted(present.filter(([, c]) => c.loyalty <= -20), ([, c]) => -c.loyalty)?.[0] ?? null);
+  if (sp === 'devoted') return wrap(rng.weighted(present.filter(([, c]) => c.loyalty >= 40), ([, c]) => c.loyalty)?.[0] ?? null);
   if (sp.startsWith('agenda:')) return wrap(pickWeighted(present.filter(([id]) => CHAR_BY_ID.get(id)?.agenda === sp.slice(7))));
   if (sp.startsWith('role:')) return wrap(pickWeighted(present.filter(([, c]) => c.role.toLowerCase().includes(sp.slice(5).toLowerCase()))));
   if (sp.startsWith('champion:')) {
@@ -361,6 +379,14 @@ function bindCard(s: StoryState, card: CardDef, rng: Rng, preset: Record<string,
     ctx[k] = v;
   }
   if (card.bind?.anon && !ctx.anon) ctx.anon = BINDERS.anonName(s, rng)!;
+  if (ctx.past != null && ctx.pastText == null) {
+    const h = s.history[Number(ctx.past)];
+    if (!h) return null;
+    ctx.pastText = h.summary.replace(/^[“"]|[”"]$/g, '').replace(/\.$/, '');
+    ctx.pastDay = String(Math.floor(h.day) + 1);
+    ctx.pastWho = h.speaker === 'anon' ? 'a member' : charName(s, h.speaker);
+  }
+  if (card.variants?.length && ctx.v == null) ctx.v = String(rng.int(0, card.variants.length - 1));
   return ctx;
 }
 
@@ -392,7 +418,9 @@ export function eligibleCards(s: StoryState): CardDef[] {
     if (c.followUpOnly || c.type === 'crisis' || inInbox.has(c.id)) return false;
     if (c.once && s.lastSeen[c.id] != null) return false;
     if (s.lastSeen[c.id] != null && s.day - s.lastSeen[c.id] < (c.cooldown ?? 30)) return false;
-    if (s.lastSeenAt[c.id] != null && s.decisions - s.lastSeenAt[c.id] < (c.spacing ?? 12)) return false;
+    // spacing is measured in decisions, but quiet stretches count too (otherwise an empty desk could never refill)
+    const spacing = c.spacing ?? 12;
+    if (s.lastSeenAt[c.id] != null && s.decisions - s.lastSeenAt[c.id] < spacing && s.day - s.lastSeen[c.id] < spacing) return false;
     return requirementsMet(s, c.requires);
   });
 }
@@ -589,7 +617,7 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
   drift(s, 'enthusiasm', 42 + agg.commitment * 0.2 + groupShare(s, 'enthusiasts') * 35 - groupShare(s, 'casuals') * 12, 0.03, dt);
   drift(s, 'unity', 66 - agg.ambiguity * 0.06 - factional * 40 - disgruntled * 7 + groupShare(s, 'founders') * 15 - groupShare(s, 'opportunists') * 20, 0.025, dt);
   drift(s, 'attention', 14 + Math.log10(f2 + 1) * 9 + agg.visibility * 0.06 + campaigns * 2, 0.04, dt);
-  drift(s, 'resources', 28 + groupShare(s, 'opportunists') * 50 + agg.commerce * 0.05 + (s.flags.dues ? 12 : 0) * mod(s, 'income') - campaigns * 1.5 - (s.flags.departments ?? 0) * 0, 0.03, dt);
+  drift(s, 'resources', 36 + groupShare(s, 'opportunists') * 50 + agg.commerce * 0.05 + (s.flags.dues ? 12 : 0) * mod(s, 'income') - campaigns * 1.5 - (s.flags.departments ?? 0) * 0, 0.03, dt);
 
   // people: influence follows their base of support and their role
   for (const [id, c] of Object.entries(s.chars)) {
@@ -604,9 +632,12 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
   if (s.era === 'grassroots' && (f2 >= TIME.regionalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 2) && s.flags.regional_ready == null) {
     s.flags.regional_ready = s.day;
   }
+  if (s.era === 'regional' && (f2 >= TIME.nationalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 4) && s.flags.national_ready == null) {
+    s.flags.national_ready = s.day;
+  }
 
   // follow-ups and new arrivals
-  if (s.crisis && s.day - s.crisis.day > TIME.crisisWindowDays) s.crisis = null;
+  if (s.crisis && (s.day - s.crisis.day > TIME.crisisWindowDays || s.decisions - (s.crisis.decision ?? s.decisions) > TIME.crisisWindowDecisions)) s.crisis = null;
   const due = s.scheduled.filter((x) => x.day <= s.day);
   if (due.length) {
     s.scheduled = s.scheduled.filter((x) => x.day > s.day);
@@ -634,6 +665,17 @@ function revealNext(s: StoryState, n: number, quiet = false) {
 function setEra(s: StoryState, e: Era) {
   if (ERAS.indexOf(e) <= ERAS.indexOf(s.era)) return;
   s.era = e;
+  if (e === 'regional') {
+    // the arena widens: towns further from home come into play
+    const h = city(s.hometown);
+    const wider = CITIES.filter((c) => !s.cities[c.id] && distanceKm(h, c) <= TIME.regionalRadiusKm)
+      .sort((a, b) => distanceKm(h, a) - distanceKm(h, b))
+      .slice(0, TIME.regionalMaxCities - s.region.length);
+    for (const c of wider) {
+      s.region.push(c.id);
+      s.cities[c.id] = { id: c.id, known: false, followers: 0, awareness: 0, reputation: 0.1, organizers: 0, milestone: false, frac: 0 };
+    }
+  }
   const label: Record<Era, string> = { founding: 'Founding', grassroots: 'Grassroots', regional: 'Regional', national: 'National', international: 'International', world: 'World Order' };
   s.chronicle.push({ day: s.day, text: `The ${label[e]} era began.` });
 }
@@ -709,6 +751,8 @@ export function applyEffects(s: StoryState, e: Effects, inst: CardInstance, rng:
     }
   }
   for (const [id, v] of Object.entries(e.loyalty ?? {})) loyaltyDelta[id] = (loyaltyDelta[id] ?? 0) + v;
+  if (e.speakerLoyalty && s.chars[inst.speaker]) loyaltyDelta[inst.speaker] = (loyaltyDelta[inst.speaker] ?? 0) + e.speakerLoyalty;
+  if (e.speakerInfluence && s.chars[inst.speaker]) s.chars[inst.speaker].influence = clamp(s.chars[inst.speaker].influence + e.speakerInfluence, 0, 100);
   for (const [id, v] of Object.entries(loyaltyDelta)) {
     const c = s.chars[id];
     if (!c || !c.present) continue;
@@ -843,12 +887,13 @@ function checkCrisis(s: StoryState, rng: Rng) {
     const v = s.gauges[g];
     if (v > 0 && v < 100) continue;
     const high = v >= 100;
-    if (s.crisis && s.day - s.crisis.day <= TIME.crisisWindowDays) {
+    // a second extreme soon after a crisis (within the day window and the decision window) ends your leadership
+    if (s.crisis && s.day - s.crisis.day <= TIME.crisisWindowDays && s.decisions - (s.crisis.decision ?? s.decisions) <= TIME.crisisWindowDecisions) {
       s.ended = endingFor(s, g, high);
       s.chronicle.push({ day: s.day, text: `${address(s)}’s leadership ended: ${s.ended.title}.` });
       return;
     }
-    s.crisis = { gauge: g, high, day: s.day };
+    s.crisis = { gauge: g, high, day: s.day, decision: s.decisions };
     const id = `crisis.${g}.${high ? 'high' : 'low'}`;
     const inst = enqueue(s, id, rng, {}, CRISIS_SPEAKER[id]);
     if (inst) inst.priority = 100;
@@ -968,4 +1013,9 @@ export function deskStatus(s: StoryState) {
   const eligible = eligibleCards(s).length;
   const scheduled = s.scheduled.length;
   return { eligible, scheduled, exhausted: eligible === 0 && scheduled === 0 && s.inbox.length === 0 };
+}
+
+/** The text of a card as drawn (recurring cards pick one of several variants). */
+export function cardText(card: CardDef, inst: { ctx: Record<string, string> }): string {
+  return card.variants?.length ? card.variants[Number(inst.ctx.v ?? 0)] ?? card.text : card.text;
 }
