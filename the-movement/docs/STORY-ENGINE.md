@@ -2,7 +2,56 @@
 
 This document locks down the systems that content is written against (section 11 of the v2 direction). The code is in `src/story/` and the authored content in `src/story/content/`.
 
-## 1. Loop
+## 0. The weekly dispatch game (the main game since the first human playtest)
+
+The first human playtest found the game got less fun as it grew. The verdict was that it "turns into approvals and disapprovals":
+
+- *Call a meeting* had become the obvious thing to click.
+- The map and the dispatching of people had been lost in a menu.
+- Tobias came from "the North", a place that wasn't on any map.
+
+The core loop is now **weekly dispatch** (`src/story/campaign.ts`, `src/components/story/WeeklyGame.tsx`):
+
+1. **The meeting day is the turn.** Each week, you send your people to real towns on the map: Martin, Priya, Dez, Gary, whoever has joined, plus any organizers. Pick someone, tap a town.
+2. **They grow the movement in their own image.** A person in a town recruits there, scaled by their competence. **Customs mutate by place**: the town starts doing the central belief their way, for example:
+
+   | Who you sent | How the town now does it |
+   |---|---|
+   | Priya | with soup |
+   | Gary | lying down |
+   | Dez | loudly, with promises |
+   | Martin | with a sign-in sheet |
+   | Agnes | strictly according to the minutes |
+   | Rolf | for a small fee |
+
+   Local versions spread to the next town along. When two of them each hold ground, the towns quarrel (`terr.variant_clash`): make one official everywhere, or live with both. The map's rings and legend show who does what, and how.
+3. **Problems turn up where your people are**, pinned to towns on the map.
+   - **Road incidents** (`cards.road.json`) are written for each character in the town you sent them to. Gary falls asleep in the library, Dez promises a sea lion, Priya is fined for soup without a licence, Martin laminates a town.
+   - The written story still arrives: about 3 cards a week, pinned to wherever the speaker is.
+   - A problem left unanswered for a whole week goes away badly. Whoever raised it remembers being ignored (memory kind `ignored`) and loses loyalty.
+4. **Rivals hold real towns.**
+   - The Knitting Circle digs in with the grassroots era.
+   - **Tobias's Northern Fellowship** is the most northerly towns of the region, named on the map. His envoy card offers a merger on northern terms, or a turf war. If he joins, those towns stay "Tobias's North".
+   - Agnes's Original Movement and Ophelia's breakaway take towns if those storylines happen.
+   - Rivals push into towns you leave alone. Your people win towns back by working there for three weeks, or by building enough members.
+5. **End the week.** A week of simulation runs, and a week report lists where everyone was, what they recruited, how customs changed, and what rivals did. There is no *Call a meeting* and no real-time clock: nothing happens while you are away.
+
+**Tuning (weekly mode).** Growth per simulated day is scaled to 0.32, and campaigns' effect on attention and resources to 0.25, so a week is a walking pace. The founding era lasts until at least 20 decisions. One-off written cards are favoured ×2.5 over recurring filler.
+
+`npm run content:weekly` plays automated weekly games. Its current numbers within the written story (70 weeks):
+
+- the eras start at weeks 5, 14, 33 and 60;
+- about 4 decisions a week;
+- road incidents are 28% of decisions, and no road card is seen more than about 7 times;
+- each game wins about 4 towns from rivals and loses about 2;
+- about 8 local versions of the belief exist;
+- 174 of 184 drawable cards are seen.
+
+**Bureaucracy shelved.** Memo, lanyard, charter, mission-statement, delegate-motion and similar cards are marked `shelved` (kept, never drawn) until they are rewritten to be physical and local.
+
+Older saves continue in the original continuous mode, described below.
+
+## 1. Loop (continuous mode, older saves)
 
 1. **Someone needs your attention.** The next card in your inbox comes from a co-founder, a member or an outsider.
 2. **You decide.** Two choices, each shown with a hint of its consequences. Dots on the gauges show which gauges a choice will move, not in which direction.

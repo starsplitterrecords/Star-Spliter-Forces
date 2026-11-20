@@ -123,7 +123,7 @@ export function CustomsSheet({ s }: { s: StoryState }) {
 
 type Feat = { id: string };
 const topo = worldTopo as unknown as Topology;
-const land = (feature(topo, topo.objects.countries) as unknown as { features: Feat[] }).features;
+export const land = (feature(topo, topo.objects.countries) as unknown as { features: Feat[] }).features;
 
 export function MapSheet({ s, onChange }: { s: StoryState; onChange: () => void }) {
   const { paths, pts } = useMemo(() => {

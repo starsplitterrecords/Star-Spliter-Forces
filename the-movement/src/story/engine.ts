@@ -108,7 +108,7 @@ function mod(s: StoryState, stat: Stat): number {
   return m;
 }
 
-function rngOf(s: StoryState) {
+export function rngOf(s: StoryState) {
   return new Rng(s.rng);
 }
 
@@ -192,6 +192,7 @@ export function render(s: StoryState, text: string, ctx: Record<string, string> 
     base.speaker = charName(s, speaker);
     base.speakerId = speaker;
     base.exit = CHAR_BY_ID.get(speaker)!.exit;
+    base.flavour = CHAR_BY_ID.get(speaker)!.flavour;
     base.habit = CHAR_BY_ID.get(speaker)!.habit;
   }
   for (const [k, v] of Object.entries(ctx)) {
@@ -228,7 +229,7 @@ export function render(s: StoryState, text: string, ctx: Record<string, string> 
 }
 
 export const RECALL_TOKENS = ['mQuote', 'mAgo', 'mWhen', 'mWhere', 'mOther', 'mWho', 'mTopic', 'mDay'];
-export const RENDER_TOKENS = ['speakerId', 'exit', 'habit', 'meetingNo', 'pastText', 'pastDay', 'pastWho', 'towns', 'title', 'founder', 'initial', 'movement', 'Movement', 'members', 'member', 'Members', 'meeting', 'meetings', 'day', 'hq', 'hometown', 'count', 'belief', 'beliefNoun', 'item', 'speaker'];
+export const RENDER_TOKENS = ['flavour', 'speakerId', 'exit', 'habit', 'meetingNo', 'pastText', 'pastDay', 'pastWho', 'towns', 'title', 'founder', 'initial', 'movement', 'Movement', 'members', 'member', 'Members', 'meeting', 'meetings', 'day', 'hq', 'hometown', 'count', 'belief', 'beliefNoun', 'item', 'speaker'];
 
 // ------------------------------------------------------------------ binders (fill card context at draw time)
 
@@ -287,6 +288,15 @@ export const BINDERS: Record<string, Binder> = {
     return list.length ? rng.pick(list) : null;
   },
   rivalName: (_s, rng) => rng.pick(['the Thursday Knitting Circle', 'the Hometown Chess & Grievance Club', 'the Society for Ordinary Evenings']),
+  // rivalTowns:<rival>[:one]: the real towns a rival holds (names), or one of them (a city id)
+  rivalTowns: (s, rng, arg = '') => {
+    const [id, one] = arg.split(':');
+    const towns = s.rivals?.[id]?.towns ?? [];
+    if (!towns.length) return null;
+    if (one) return String(rng.pick(towns));
+    const names = towns.map((t) => city(t).name);
+    return names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}` : names[0];
+  },
   // someone who walked out (not a rival or retiree) a while ago and might be missed
   departed: (s, rng) => {
     const list = Object.entries(s.chars).filter(([id, c]) => c.status === 'left' && s.flags[`${id}_left`] != null && s.day - s.flags[`${id}_left`] >= 8 && s.flags[`${id}_gone_for_good`] == null);
@@ -358,7 +368,7 @@ export function regionAround(hometown: number): number[] {
   return [hometown, ...near];
 }
 
-export function newStory(founderName: string, hometown: number, seed: number, now = Date.now()): StoryState {
+export function newStory(founderName: string, hometown: number, seed: number, now = Date.now(), opts: { weekly?: boolean } = {}): StoryState {
   const name = founderName.trim() || 'Jeff';
   const region = regionAround(hometown);
   const s: StoryState = {
@@ -383,6 +393,10 @@ export function newStory(founderName: string, hometown: number, seed: number, no
     modifiers: [],
     inbox: [],
     scheduled: [],
+    weekly: opts.weekly ?? false,
+    week: 1,
+    assign: {},
+    rivals: {},
     memory: [],
     nextMemoryId: 1,
     provenance: { flags: {}, customs: {} },
@@ -400,11 +414,19 @@ export function newStory(founderName: string, hometown: number, seed: number, no
     nextCardAt: 0,
   };
   for (const c of LIBRARY.characters) {
-    s.chars[c.id] = { present: c.startsPresent, status: c.startsPresent ? 'active' : 'absent', loyalty: c.startLoyalty, influence: c.startInfluence, role: c.role, joinedDay: c.startsPresent ? 0 : undefined, memories: [] };
+    s.chars[c.id] = { present: c.startsPresent, status: c.startsPresent ? 'active' : 'absent', loyalty: c.startLoyalty, influence: c.startInfluence, role: c.role, ...(c.startsPresent ? { joinedDay: 0 } : {}), memories: [] };
   }
   const rng = rngOf(s);
+  if (s.weekly) {
+    // the towns down the road: somewhere to send people in week one
+    const near = s.region.slice(1, 4);
+    const big = s.region.slice(4).filter((id) => distanceKm(city(hometown), city(id)) <= 90).sort((a, b) => city(b).pop - city(a).pop).slice(0, 2);
+    for (const id of [...near, ...big]) s.cities[id].known = true;
+  }
   // the opening card is always the garage
   enqueue(s, 'found.garage', rng, {});
+  if (s.weekly) for (let k = 0; k < 2; k++) drawRandomCard(s, rng); // a full first week
+  if (s.weekly) for (const i of s.inbox) i.week = 1;
   s.nextCardAt = 0.8; // Martin's question about meetings comes first
   s.rng = rng.state;
   return s;
@@ -524,7 +546,7 @@ function creditSources(s: StoryState, card: CardDef, inst: CardInstance, fromDec
   }
 }
 
-function enqueue(s: StoryState, cardId: string, rng: Rng, preset: Record<string, string>, speakerOverride?: string, fromDecision?: number): CardInstance | null {
+export function enqueue(s: StoryState, cardId: string, rng: Rng, preset: Record<string, string>, speakerOverride?: string, fromDecision?: number): CardInstance | null {
   const card = CARD_BY_ID.get(cardId);
   if (!card) return null;
   const ctx = bindCard(s, card, rng, preset);
@@ -561,7 +583,7 @@ function enqueue(s: StoryState, cardId: string, rng: Rng, preset: Record<string,
 export function eligibleCards(s: StoryState): CardDef[] {
   const inInbox = new Set(s.inbox.map((i) => i.cardId));
   return LIBRARY.cards.filter((c) => {
-    if (c.followUpOnly || c.type === 'crisis' || inInbox.has(c.id)) return false;
+    if (c.followUpOnly || c.shelved || c.road || c.type === 'crisis' || inInbox.has(c.id)) return false;
     if (c.once && s.lastSeen[c.id] != null) return false;
     if (s.lastSeen[c.id] != null && s.day - s.lastSeen[c.id] < (c.cooldown ?? 30)) return false;
     // spacing is measured in decisions, but quiet stretches count too (otherwise an empty desk could never refill)
@@ -573,15 +595,16 @@ export function eligibleCards(s: StoryState): CardDef[] {
   });
 }
 
-function drawRandomCard(s: StoryState, rng: Rng): CardInstance | null {
+export function drawRandomCard(s: StoryState, rng: Rng, filter?: (c: CardDef) => boolean): CardInstance | null {
   const recentSpeakers = s.history.slice(-2).map((h) => h.speaker);
   // vary the comic structure: the same kind of joke twice running is the fastest way to make 1,000 cards feel like 10
   const recentShapes = s.history.slice(-2).map((h) => CARD_BY_ID.get(h.cardId)?.shape);
-  const pool = eligibleCards(s);
+  const pool = filter ? eligibleCards(s).filter(filter) : eligibleCards(s);
   for (let attempt = 0; attempt < 6 && pool.length; attempt++) {
     const card = rng.weighted(pool, (c) => {
       let w = c.weight ?? 1;
       if (c.priority) w *= 1 + c.priority / 2;
+      if (s.weekly && c.once) w *= 2.5; // fewer draws per week: favour the written story over recurring filler
       if (c.shape && c.shape === recentShapes[1]) w *= 0.35;
       else if (c.shape && c.shape === recentShapes[0]) w *= 0.7;
       if (typeof c.speaker === 'string' && s.chars[c.speaker]) {
@@ -722,6 +745,8 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
     let add = c.followers * baseR * repF * (1 - conv) * dt;
     add += c.awareness * pop * 0.00004 * appealMult * repF * (1 - conv) * dt;
     if (c.organizers > 0) add += Math.pow(c.organizers, 0.8) * 5 * enthF * repF * (1 - conv) * mod(s, 'campaign') * dt;
+    // weekly dispatch: a turn is a whole week, so the world moves at a walking pace between your decisions
+    if (s.weekly) add *= 0.32;
     const churn = c.followers * churnRate * dt;
     const delta = add - churn + c.frac;
     let whole = delta >= 0 ? Math.floor(delta) : Math.ceil(delta);
@@ -770,7 +795,8 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
   // gauges drift toward what the membership actually is
   const disgruntled = Object.values(s.chars).filter((c) => c.present && c.status === 'active' && c.loyalty <= -40).length;
   const factional = Math.abs(groupShare(s, 'traditionalists') - groupShare(s, 'reformers'));
-  const campaigns = s.region.reduce((a, id) => a + s.cities[id].organizers, 0);
+  // in weekly mode everyone you send out counts as a campaign; there are many more of them, each one quieter
+  const campaigns = s.region.reduce((a, id) => a + s.cities[id].organizers, 0) * (s.weekly ? 0.25 : 1);
   drift(s, 'enthusiasm', 42 + agg.commitment * 0.2 + groupShare(s, 'enthusiasts') * 35 - groupShare(s, 'casuals') * 12, 0.03, dt);
   drift(s, 'unity', 66 - agg.ambiguity * 0.06 - factional * 40 - disgruntled * 7 + groupShare(s, 'founders') * 15 - groupShare(s, 'opportunists') * 20, 0.025, dt);
   drift(s, 'attention', 14 + Math.log10(f2 + 1) * 9 + agg.visibility * 0.06 + campaigns * 2, 0.04, dt);
@@ -792,7 +818,7 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
   }
 
   // era progression safety nets (cards normally move eras)
-  if (s.era === 'founding' && s.movementName && f2 >= 80) setEra(s, 'grassroots');
+  if (s.era === 'founding' && s.movementName && f2 >= 80 && (!s.weekly || s.decisions >= 20)) setEra(s, 'grassroots');
   if (s.era === 'grassroots' && (f2 >= TIME.regionalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 2) && s.flags.regional_ready == null) {
     s.flags.regional_ready = s.day;
   }
@@ -807,7 +833,7 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
   if (s.crisis && (s.day - s.crisis.day > TIME.crisisWindowDays || s.decisions - (s.crisis.decision ?? s.decisions) > TIME.crisisWindowDecisions)) s.crisis = null;
   processChains(s, rng, report);
   emergeCustoms(s, dt, rng, report);
-  if (s.day >= s.nextCardAt) {
+  if (!s.weekly && s.day >= s.nextCardAt) {
     s.nextCardAt = s.day + (1 / TIME.cardsPerDay[s.era]) * rng.range(0.6, 1.4);
     if (s.inbox.length < TIME.inboxMax && drawRandomCard(s, rng) && report) report.arrivals++;
   }
@@ -921,7 +947,7 @@ function applyStance(s: StoryState, id: string, stance: Stance, inst: CardInstan
   }
 }
 
-function revealNext(s: StoryState, n: number, quiet = false) {
+export function revealNext(s: StoryState, n: number, quiet = false) {
   let k = 0;
   for (const id of s.region) {
     if (k >= n) break;
@@ -994,12 +1020,12 @@ export function choose(s: StoryState, uid: string, choiceIdx: 0 | 1, input?: str
   if (card.type === 'crisis') s.flags[`survived_${card.id}`] = s.day;
   checkCrisis(s, rng);
   // keep the desk from going quiet during the founding era
-  if (!s.inbox.length && s.era === 'founding' && !s.scheduled.some((x) => x.day - s.day <= 1)) drawRandomCard(s, rng);
+  if (!s.weekly && !s.inbox.length && s.era === 'founding' && !s.scheduled.some((x) => x.day - s.day <= 1)) drawRandomCard(s, rng);
   s.rng = rng.state;
   return { ok: true, outcome };
 }
 
-function setCustom(s: StoryState, id: string, status: CustomStatus | undefined, values?: Record<string, string>, prominence = 0) {
+export function setCustom(s: StoryState, id: string, status: CustomStatus | undefined, values?: Record<string, string>, prominence = 0) {
   const cur = s.customs[id] ?? { status: 'none' as CustomStatus, values: {}, prominence: 0, since: s.day, history: [] };
   if (status && status !== cur.status) {
     cur.status = status;
@@ -1145,6 +1171,12 @@ export function applyEffects(s: StoryState, e: Effects, inst: CardInstance, rng:
       out.notes.push(`${charName(s, lid)} has ${l.as === 'retired' ? 'retired' : 'left'}`);
     }
   }
+  if (e.officialVariant) {
+    const v = e.officialVariant === 'none' ? undefined : inst.ctx[e.officialVariant];
+    for (const id of s.region) if (s.cities[id].followers > 0) s.cities[id].variant = v;
+    s.provenance.customs.__variant = s.decisions;
+    out.notes.push(v ? `Official everywhere: ${centralBelief(s)?.phrase ?? 'it'}, ${v}` : 'One official version, everywhere');
+  }
   if (e.rejoin && inst.ctx.departed) {
     const id = inst.ctx.departed;
     const c = s.chars[id];
@@ -1222,7 +1254,7 @@ function writeMemories(s: StoryState, e: Effects, inst: CardInstance, delta: Rec
   }
 }
 
-const GRIEVANCES: MemoryKind[] = ['overruled', 'passed_over', 'blamed', 'embarrassed', 'broken_promise'];
+const GRIEVANCES: MemoryKind[] = ['overruled', 'passed_over', 'blamed', 'embarrassed', 'broken_promise', 'ignored'];
 
 /** The breaking point is a scene, not a number: they tell you why, quoting you, and you get one chance. */
 function exitScene(s: StoryState, id: string, rng: Rng): boolean {
@@ -1364,6 +1396,9 @@ export function loadStory(json: string): StoryState {
   s.lastSeenAt ??= {};
   s.memory ??= [];
   s.provenance ??= { flags: {}, customs: {} };
+  s.week ??= 1;
+  s.assign ??= {};
+  s.rivals ??= {};
   s.echoes ??= {};
   s.nextMemoryId ??= 1;
   s.chains ??= { delivered: 0, expired: 0, cancelled: 0, log: [] };

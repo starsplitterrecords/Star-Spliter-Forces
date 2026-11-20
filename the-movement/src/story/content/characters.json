@@ -20,7 +20,10 @@
    "prop": "📋"
   },
   "exit": "I’ve laminated my resignation. It’s in the orange pouch. I’d like the pouch back eventually.",
-  "habit": "laminates the agenda"
+  "habit": "laminates the agenda",
+  "emoji": "📋",
+  "flavour": "with a sign-in sheet",
+  "travel": -1
  },
  {
   "id": "priya",
@@ -43,7 +46,10 @@
    "prop": "🍲"
   },
   "exit": "I’m taking the big pot. The small pot is yours. Make soup for someone, sometime.",
-  "habit": "brings soup nobody asked for"
+  "habit": "brings soup nobody asked for",
+  "emoji": "🍲",
+  "flavour": "with soup",
+  "travel": 0
  },
  {
   "id": "dez",
@@ -66,7 +72,10 @@
    "prop": "📣"
   },
   "exit": "I’m going to start something. Something small, at first. I’ve already told the radio.",
-  "habit": "makes promises the rest of us have to keep"
+  "habit": "makes promises the rest of us have to keep",
+  "emoji": "📣",
+  "flavour": "loudly, with promises",
+  "travel": 2
  },
  {
   "id": "gary",
@@ -89,7 +98,10 @@
    "prop": "📖"
   },
   "exit": "I’m going to have a lie down. A long one. In the garage. It’s still my garage.",
-  "habit": "falls asleep in the second row"
+  "habit": "falls asleep in the second row",
+  "emoji": "💤",
+  "flavour": "lying down",
+  "travel": -2
  },
  {
   "id": "agnes",
@@ -113,7 +125,10 @@
    "prop": "📓"
   },
   "exit": "I am resigning. The minutes will show that I resigned with dignity. I am writing them now.",
-  "habit": "minutes the things nobody else was listening to"
+  "habit": "minutes the things nobody else was listening to",
+  "emoji": "🖋",
+  "flavour": "strictly according to the minutes",
+  "travel": 0
  },
  {
   "id": "rolf",
@@ -137,7 +152,10 @@
    "prop": "🧮"
   },
   "exit": "I’ve closed my ledger. The figures are in order. You are not.",
-  "habit": "finds money where nobody thought to look"
+  "habit": "finds money where nobody thought to look",
+  "emoji": "💷",
+  "flavour": "for a small fee",
+  "travel": 1
  },
  {
   "id": "ophelia",
@@ -160,7 +178,10 @@
    "prop": "🗺️"
   },
   "exit": "The branches know where to find me. So, I suspect, will you.",
-  "habit": "grows a branch while nobody is watching"
+  "habit": "grows a branch while nobody is watching",
+  "emoji": "🌱",
+  "flavour": "in brand-new branches",
+  "travel": 2
  },
  {
   "id": "lionel",
@@ -184,7 +205,10 @@
    "prop": "🗂️"
   },
   "exit": "I’m restructuring myself out of the organisation. It’s the most efficient decision I’ve ever made.",
-  "habit": "turns arguments into departments"
+  "habit": "turns arguments into departments",
+  "emoji": "🗂",
+  "flavour": "by department",
+  "travel": 0
  },
  {
   "id": "constance",
@@ -208,7 +232,10 @@
    "prop": "🗂️"
   },
   "exit": "Further to my last memo: this is my last memo.",
-  "habit": "sends a memo before anything can happen"
+  "habit": "sends a memo before anything can happen",
+  "emoji": "📎",
+  "flavour": "with a memo in triplicate",
+  "travel": -2
  },
  {
   "id": "tobias",
@@ -232,7 +259,10 @@
    "prop": "📜"
   },
   "exit": "The North will remember this. The North remembers everything. It’s cold up there; there’s not much else to do.",
-  "habit": "issues edicts nobody asked him to issue"
+  "habit": "issues edicts nobody asked him to issue",
+  "emoji": "🧭",
+  "flavour": "the northern way",
+  "travel": 1
  },
  {
   "id": "juniper",
@@ -255,6 +285,9 @@
    "prop": "📖"
   },
   "exit": "I’ll always love what this was. I just think I loved the version in the book.",
-  "habit": "knows the words to all the songs"
+  "habit": "knows the words to all the songs",
+  "emoji": "🎶",
+  "flavour": "set to a song everyone knows",
+  "travel": 1
  }
 ]

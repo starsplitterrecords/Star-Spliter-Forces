@@ -3,7 +3,7 @@
 import { BINDERS, ENDINGS, RECALL_TOKENS, RENDER_TOKENS } from './engine';
 import { AGENDAS, type CardDef, type ContentLibrary, type Effects, ERAS, GAUGES, GROUPS, type RecallQuery, type Requires, SHAPES, STATUS_ORDER } from './types';
 
-const MEMORY_KINDS = ['overruled', 'backed', 'passed_over', 'favoured', 'promise', 'broken_promise', 'credited', 'blamed', 'vindicated', 'embarrassed'];
+const MEMORY_KINDS = ['overruled', 'backed', 'passed_over', 'favoured', 'promise', 'broken_promise', 'credited', 'blamed', 'vindicated', 'embarrassed', 'ignored'];
 const SETTINGS = ['private', 'meeting', 'public'];
 const STANCES = ['none', 'endorsed', 'tolerated', 'reformed', 'condemned'];
 const EMERGENT_ARGS = /^(none|endorsed|tolerated|reformed|condemned|underground)(:(starter|grown))?$/;
@@ -16,7 +16,7 @@ export interface ValidationReport {
 
 const LIMITS = { text: 420, label: 80, reaction: 260, hint: 70, gauge: 40, loyalty: 30, group: 0.1 };
 const STATS = ['recruitment', 'retention', 'awareness', 'campaign', 'income', 'reputation'];
-const ENGINE_FLAGS = ['regional_ready', 'national_ready', 'international_ready'];
+const ENGINE_FLAGS = ['regional_ready', 'national_ready', 'international_ready', 'north_exists', 'north_joined', ...['knitters', 'north', 'original', 'ophelia'].flatMap((r) => [`${r}_rival_active`, `won_from_${r}`, `lost_to_${r}`])];
 const CHAR_FLAG_SUFFIXES = ['_disgruntled', '_devoted', '_left', '_rival', '_retired'];
 const CMP = /^(>=|<=|>|<|=)?\s*-?[\d.]+$/;
 
@@ -77,11 +77,12 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
     }
   }
   followTargets.add('found.garage'); // the engine opens with it
-  for (const id of ['people.last_straw', 'people.last_straw_plain']) followTargets.add(id); // the engine stages exit scenes
+  for (const id of ['people.last_straw', 'people.last_straw_plain', 'terr.variant_clash']) followTargets.add(id); // staged by the engine and the weekly campaign
 
   // pass 2: each card
   const texts = new Map<string, string>();
   for (const card of lib.cards) {
+    if (card.shelved) continue;
     const where = `card ${card.id}`;
     perType[card.type] = (perType[card.type] ?? 0) + 1;
     const spk = typeof card.speaker === 'string' ? card.speaker : 'anon';
@@ -100,6 +101,8 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
         if (!card.bind?.[sp.slice(9)]) errors.push(`${where}: champion speaker needs bind.${sp.slice(9)}`);
       } else if (sp === 'departed') {
         if (!card.bind?.departed && !card.followUpOnly) errors.push(`${where}: speaker “departed” needs bind.departed`);
+      } else if (sp === 'dispatched') {
+        if (!card.road) errors.push(`${where}: speaker “dispatched” is only for road cards`);
       } else if (sp === 'recall') {
         if (!card.recall) errors.push(`${where}: speaker “recall” needs a recall query`);
       } else if (!sp.startsWith('role:') && !['any', 'unhappy', 'devoted'].includes(sp) && !charIds.has(sp)) errors.push(`${where}: unknown speaker ${sp}`);
@@ -114,11 +117,17 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
       if (name === 'emergent' && rest.length && !EMERGENT_ARGS.test(rest.join(':'))) errors.push(`${where}: bad emergent binder ${b}`);
       if (name === 'emergent') ['emergentBy', 'ctx.emergentBy'].forEach((x) => ctxKeys.add(x));
       if (name === 'departed') ctxKeys.add('departedHabit');
+      if (name === 'rivalTowns' && !/^(knitters|north|original|ophelia)(:one)?$/.test(rest.join(':'))) errors.push(`${where}: bad rivalTowns binder ${b}`);
       ctxKeys.add(k);
       ctxKeys.add(`ctx.${k}`);
       if (k.startsWith('practice')) ctxKeys.add(`${k}Noun`);
       if (k === 'past') ['pastText', 'pastDay', 'pastWho'].forEach((x) => ctxKeys.add(x));
     }
+    if (card.road) {
+      ['city', 'ctx.city'].forEach((x) => ctxKeys.add(x));
+      if (typeof card.speaker !== 'string' || (!charIds.has(card.speaker) && card.speaker !== 'dispatched')) errors.push(`${where}: road cards need a named or “dispatched” speaker`);
+    }
+    if (card.id === 'terr.variant_clash') ['aCity', 'bCity', 'variantA', 'variantB', 'city'].forEach((x) => ctxKeys.add(x));
     // memory, setting, shape
     if (card.recall) {
       RECALL_TOKENS.forEach((x) => ctxKeys.add(x));
@@ -219,6 +228,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
       if (e.stance && !STANCES.includes(e.stance)) errors.push(`${w}: unknown stance ${e.stance}`);
       for (const id of e.join ?? []) if (!charIds.has(id)) errors.push(`${w}: join unknown character ${id}`);
       for (const l of e.leave ?? []) if (!charIds.has(l.id) && l.id !== 'speaker') errors.push(`${w}: leave unknown character ${l.id}`);
+      if (e.officialVariant && e.officialVariant !== 'none' && !ctxKeys.has(e.officialVariant)) errors.push(`${w}: officialVariant ${e.officialVariant} is not in the card context`);
       if (e.rejoin && !card.bind?.departed && card.speaker !== 'departed') errors.push(`${w}: rejoin needs a departed character`);
       for (const id of Object.keys(e.role ?? {})) if (!charIds.has(id)) errors.push(`${w}: role for unknown character ${id}`);
       for (const m of e.modifiers ?? []) {
@@ -249,7 +259,8 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
   // balance of speakers
   const named = Object.entries(perSpeaker).filter(([k]) => charIds.has(k));
   const max = Math.max(...named.map(([, v]) => v));
-  for (const [k, v] of named) if (v < max / 4) warnings.push(`speaker ${k} has only ${v} cards (max ${max}); consider more`);
+  // characters who join late naturally have fewer cards; flag only the truly neglected
+  for (const [k, v] of named) if (v < max / 5) warnings.push(`speaker ${k} has only ${v} cards (max ${max}); consider more`);
 
   return {
     errors,

@@ -1,6 +1,7 @@
 // Automated players for stress tests: each policy is a different leadership style.
 import { CARD_BY_ID, callMeeting, choose, currentCard, advanceDays, eligibleCards } from './engine';
 import { Rng } from './rng-shim';
+import * as camp from './campaign';
 import { CHAR_BY_ID } from './engine';
 import type { StoryState } from './types';
 
@@ -82,6 +83,11 @@ export function fastForwardTo(s: StoryState, era: StoryState['era'], seed = 1): 
   const order = ['founding', 'grassroots', 'regional', 'national', 'international', 'world'];
   const rng = new Rng(seed);
   let guard = 0;
+  if (s.weekly) {
+    while (order.indexOf(s.era) < order.indexOf(era) && !s.ended && guard++ < 400) playWeeks(s, 1, 'pleaser', rng);
+    s.chronicle.push({ day: s.day, text: `(Playtest: the story so far was played automatically, to reach the ${era} era.)` });
+    return s.era === era && !s.ended;
+  }
   while (order.indexOf(s.era) < order.indexOf(era) && !s.ended && guard++ < 6000) {
     const inst = currentCard(s);
     if (!inst) {
@@ -95,4 +101,26 @@ export function fastForwardTo(s: StoryState, era: StoryState['era'], seed = 1): 
   }
   s.chronicle.push({ day: s.day, text: `(Playtest: the story so far was played automatically, to reach the ${era} era.)` });
   return s.era === era && !s.ended;
+}
+
+/** Weekly mode: send everyone somewhere sensible, answer the problems on the map, end the week. */
+export function playWeeks(s: StoryState, weeks: number, policy: Policy, rng: Rng, answerShare = 1): void {
+  for (let w = 0; w < weeks && !s.ended; w++) {
+    const towns = camp.reachable(s).filter((id) => id !== s.hometown);
+    for (const u of camp.units(s)) {
+      if (!towns.length) break;
+      // prefer contested and growing towns; keep some people at home
+      if (rng.chance(0.25)) camp.assignUnit(s, u.id, s.hometown);
+      else camp.assignUnit(s, u.id, rng.weighted(towns, (id) => 1 + (s.cities[id].rival ? 2 : 0) + s.cities[id].followers / 500)!);
+    }
+    let guard = 0;
+    while (s.inbox.length && !s.ended && guard++ < 30) {
+      if (!rng.chance(answerShare) && currentCard(s)?.priority! < 50) break;
+      const inst = currentCard(s)!;
+      const card = CARD_BY_ID.get(inst.cardId)!;
+      const i = pickChoice(s, policy, rng);
+      choose(s, inst.uid, i, card.choices[i].input ? 'The Lentil Fellowship' : undefined);
+    }
+    if (!s.ended) camp.endWeek(s);
+  }
 }

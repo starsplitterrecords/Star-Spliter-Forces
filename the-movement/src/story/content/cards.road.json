@@ -1,0 +1,1398 @@
+[
+ {
+  "id": "road.martin_signin",
+  "type": "character",
+  "speaker": "martin",
+  "road": true,
+  "shape": "literalism",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the sign-in sheet",
+  "text": "{city} has never had a sign-in sheet. I’ve introduced one. Forty people signed in. Thirty-one of them were waiting for a bus. Technically, they are members now.",
+  "choices": [
+   {
+    "label": "Keep them. They signed.",
+    "hint": "Growth · Bewildered members",
+    "reaction": "The bus people are welcomed. Several attend the next meeting out of politeness and stay out of habit.",
+    "effects": {
+     "followers": 30,
+     "gauges": {
+      "attention": 2,
+      "unity": -2
+     },
+     "serves": [
+      "order"
+     ]
+    }
+   },
+   {
+    "label": "Strike the bus people off.",
+    "hint": "Honesty · Martin is crushed",
+    "reaction": "Martin crosses out thirty-one names with a ruler. He keeps the sheet. He says it is the first sheet he has had to correct.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "martin": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.martin_clerk",
+  "type": "character",
+  "speaker": "martin",
+  "road": true,
+  "shape": "procedure",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the Clerk",
+  "text": "The {city} council has a complaints procedure. I followed it to the letter. Nobody has ever followed it to the letter. The Clerk wept. He’d like to join.",
+  "choices": [
+   {
+    "label": "Welcome the Clerk.",
+    "hint": "A friend in the council",
+    "reaction": "The Clerk joins and brings a filing cabinet. In {city}, the movement now has the most efficient paperwork in the country and nothing to put in it.",
+    "effects": {
+     "followers": 12,
+     "gauges": {
+      "unity": 3
+     },
+     "flags": [
+      "clerk_friend"
+     ]
+    }
+   },
+   {
+    "label": "Ask the Clerk for the town hall instead.",
+    "hint": "Leverage · A little cold",
+    "reaction": "The Clerk, still damp-eyed, books you the town hall for a year. Martin says he feels he has used a man’s tears.",
+    "effects": {
+     "gauges": {
+      "resources": 6,
+      "attention": 3
+     },
+     "loyalty": {
+      "martin": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.martin_laminated",
+  "type": "character",
+  "speaker": "martin",
+  "road": true,
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the laminating",
+  "text": "I may have laminated {city}. Not all of it. The bus timetables, the café menus, one dog’s name tag. The dog seemed pleased. The café is less pleased.",
+  "choices": [
+   {
+    "label": "Apologise to the café.",
+    "hint": "Repair",
+    "reaction": "You buy the café new menus. They keep one laminated one behind the till, as a curiosity. Tourists ask about it.",
+    "effects": {
+     "gauges": {
+      "resources": -3,
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "Laminate the rest of it.",
+    "hint": "Commit · Notoriety",
+    "reaction": "{city} becomes the most durable town in the country. A local paper calls it “wipe-clean”. Membership enquiries rise among the very tidy.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "unity": -2
+     },
+     "followers": 25,
+     "flags": [
+      "laminated_town"
+     ],
+     "serves": [
+      "order"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.priya_market",
+  "type": "character",
+  "speaker": "priya",
+  "road": true,
+  "shape": "logistics",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the soup stall",
+  "text": "I set up one pot in the {city} market, just to say hello. There’s now a queue round the square and a man from the council asking for my licence. I have a ladle. Is a ladle a licence?",
+  "choices": [
+   {
+    "label": "Pay for a proper licence.",
+    "hint": "Legit · Costs money",
+    "reaction": "The licence is laminated (Martin insisted, by post). The soup stall becomes a fixture. Nobody in {city} remembers the market before it.",
+    "effects": {
+     "gauges": {
+      "resources": -5
+     },
+     "followers": 40,
+     "serves": [
+      "order"
+     ]
+    }
+   },
+   {
+    "label": "Keep ladling. Let them fine us.",
+    "hint": "Outlaw soup · Fame",
+    "reaction": "Priya is fined, then fined again, then given a small award by the same council. {city} calls her the Soup Bandit, affectionately, mostly.",
+    "effects": {
+     "followers": 60,
+     "gauges": {
+      "attention": 6,
+      "resources": -2
+     },
+     "flags": [
+      "soup_bandit"
+     ],
+     "serves": [
+      "joy"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.priya_maureen",
+  "type": "character",
+  "speaker": "priya",
+  "road": true,
+  "shape": "feud",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "Maureen",
+  "text": "{city} already has a soup person. Her name is Maureen. Her soup is, and I need you to hear me say this, very good. She doesn’t want to join. She wants a soup-off.",
+  "choices": [
+   {
+    "label": "Accept the soup-off.",
+    "hint": "Spectacle · Priya might lose",
+    "reaction": "Priya loses by one vote, which she says was the judge’s cousin. Maureen joins anyway, out of respect, and the two of them now run the best soup in the movement.",
+    "effects": {
+     "followers": 35,
+     "gauges": {
+      "enthusiasm": 6,
+      "attention": 4
+     },
+     "loyalty": {
+      "priya": 3
+     }
+    }
+   },
+   {
+    "label": "We don’t do soup-offs.",
+    "hint": "Dignity · Priya is relieved and annoyed",
+    "reaction": "Maureen calls this cowardice, publicly, in the market. Priya agrees with her, privately, at length.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "priya": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.priya_adopted",
+  "type": "character",
+  "speaker": "priya",
+  "road": true,
+  "shape": "drift",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "Priya’s town",
+  "text": "The people of {city} have adopted me. Not the movement: me. They bring me things. Yesterday, a chair. Today, a cousin. I think I might live here now?",
+  "choices": [
+   {
+    "label": "Then {city} is your branch.",
+    "hint": "Priya puts down roots",
+    "reaction": "Priya stays. {city} becomes the warmest branch in the movement, and the only one where the soup is served before anyone has said anything.",
+    "effects": {
+     "followers": 30,
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": -1
+     },
+     "speakerInfluence": 5
+    }
+   },
+   {
+    "label": "We need you back home.",
+    "hint": "Duty · She misses them",
+    "reaction": "Priya comes home with the chair, and without the cousin, who stayed. She visits {city} every month and comes back quieter.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "priya": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.dez_sea_lion",
+  "type": "character",
+  "speaker": "dez",
+  "road": true,
+  "shape": "overpromise",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the sea lion",
+  "text": "I promised {city} a festival. A big one, with a parade and a sea lion. I don’t have a sea lion. I have a very good feeling about it.",
+  "choices": [
+   {
+    "label": "Find a sea lion.",
+    "hint": "Spectacle · Expensive",
+    "reaction": "A sea lion is hired from a seaside zoo. It leads the parade. It is the most beloved thing that has ever happened in {city}, and it would like to join.",
+    "effects": {
+     "gauges": {
+      "resources": -10,
+      "attention": 10,
+      "enthusiasm": 4
+     },
+     "followers": 80,
+     "serves": [
+      "expansion"
+     ]
+    }
+   },
+   {
+    "label": "Tell {city} the truth.",
+    "hint": "Honesty · Disappointment",
+    "reaction": "The parade goes ahead without a sea lion. A child dresses as one. Dez says it is better, and cries a little, and nobody is sure which way.",
+    "effects": {
+     "gauges": {
+      "attention": -2,
+      "unity": 2
+     },
+     "loyalty": {
+      "dez": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.dez_mayor",
+  "type": "character",
+  "speaker": "dez",
+  "road": true,
+  "shape": "literalism",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the mayor",
+  "text": "The mayor of {city} asked what we stand for. I said “yes”. He said “yes to what?” I said “exactly”. He’s joined. I don’t know what he thinks he’s joined.",
+  "choices": [
+   {
+    "label": "Make him an honorary something.",
+    "hint": "Influence · Confusion",
+    "reaction": "The mayor is made Honorary Something. He wears it on his chain of office. {city} follows his lead without asking what it means.",
+    "effects": {
+     "followers": 40,
+     "gauges": {
+      "attention": 5,
+      "unity": -3
+     }
+    }
+   },
+   {
+    "label": "Explain to him what we actually stand for.",
+    "hint": "Clarity · He may leave",
+    "reaction": "You explain. The mayor listens carefully, says “oh”, and leaves. He comes back a week later and says he’s thought about it, and “yes”.",
+    "effects": {
+     "followers": 8,
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.dez_ordinance",
+  "type": "character",
+  "speaker": "dez",
+  "road": true,
+  "shape": "backfire",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the Dez Ordinance",
+  "text": "Small issue. {city} has a noise ordinance. I’ve broken it eleven times. It’s now known locally as “the Dez Ordinance”. People are weirdly proud of it.",
+  "choices": [
+   {
+    "label": "Pay the fines.",
+    "hint": "Responsible",
+    "reaction": "The fines are paid. Dez frames the receipts. The ordinance keeps his name.",
+    "effects": {
+     "gauges": {
+      "resources": -6,
+      "attention": 3
+     }
+    }
+   },
+   {
+    "label": "Make it a {city} tradition.",
+    "hint": "Loud · Locals split",
+    "reaction": "Once a week, at noon, {city} breaks the Dez Ordinance together. Half the town hates it. The other half has joined.",
+    "effects": {
+     "followers": 45,
+     "gauges": {
+      "attention": 7,
+      "unity": -3
+     },
+     "flags": [
+      "dez_ordinance"
+     ],
+     "serves": [
+      "expansion"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.gary_library",
+  "type": "character",
+  "speaker": "gary",
+  "road": true,
+  "shape": "drift",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the library nap",
+  "text": "I fell asleep in the {city} library. When I woke up, forty people were asleep around me. The librarian says it’s the most peaceful the library has ever been. She’d like it to happen every week.",
+  "choices": [
+   {
+    "label": "Every week, then.",
+    "hint": "Calm · A branch nobody expected",
+    "reaction": "The Library Nap becomes the {city} branch. It never holds a meeting. Membership grows anyway, in silence.",
+    "effects": {
+     "followers": 40,
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -2
+     },
+     "flags": [
+      "nap_library"
+     ],
+     "serves": [
+      "comfort"
+     ]
+    }
+   },
+   {
+    "label": "Gary, you’re there to recruit.",
+    "hint": "Focus · Gary is hurt",
+    "reaction": "Gary stays awake for a whole week. He recruits nine people, all of whom say he looks very tired.",
+    "effects": {
+     "followers": 9,
+     "gauges": {
+      "enthusiasm": 2
+     },
+     "loyalty": {
+      "gary": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.gary_whale",
+  "type": "character",
+  "speaker": "gary",
+  "road": true,
+  "shape": "literalism",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the whale skeleton",
+  "text": "{city} has a museum with a whale skeleton. I’ve been visiting it every day. The staff know me now. I’ve been giving tours, unofficially. They’re mostly about whales. Nobody has asked about {movement} yet.",
+  "choices": [
+   {
+    "label": "That’s fine, Gary.",
+    "hint": "Let Gary be Gary",
+    "reaction": "Gary’s tours become the most popular thing at the museum. People who come for the whale stay for Gary. Some of them, eventually, ask about {movement}.",
+    "effects": {
+     "followers": 15,
+     "gauges": {
+      "attention": 3,
+      "unity": 2
+     },
+     "loyalty": {
+      "gary": 6
+     }
+    }
+   },
+   {
+    "label": "Mention {movement} at least once.",
+    "hint": "Recruit · Gary tries",
+    "reaction": "Gary adds one sentence about {movement} to the end of the tour. It is about whales.",
+    "effects": {
+     "followers": 20,
+     "gauges": {
+      "enthusiasm": 2
+     },
+     "loyalty": {
+      "gary": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.gary_depot",
+  "type": "character",
+  "speaker": "gary",
+  "road": true,
+  "shape": "logistics",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the depot",
+  "text": "I think I’m in {city}? I got on the wrong bus and fell asleep, and I’ve made some friends at the depot. They’d like to start a branch. It would meet at the depot, at night, lying down.",
+  "choices": [
+   {
+    "label": "A depot branch. Why not.",
+    "hint": "Growth · Unusual",
+    "reaction": "The Depot Branch meets nightly between the last bus and the first. It is the only branch with its own buses.",
+    "effects": {
+     "followers": 25,
+     "gauges": {
+      "enthusiasm": 3
+     },
+     "flags": [
+      "depot_branch"
+     ]
+    }
+   },
+   {
+    "label": "Come home, Gary.",
+    "hint": "Gary is relieved",
+    "reaction": "Gary comes home on the right bus, eventually, via two wrong ones. The depot sends a card.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "gary": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.agnes_town_minutes",
+  "type": "character",
+  "speaker": "agnes",
+  "road": true,
+  "shape": "callback",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the town minutes",
+  "text": "I have taken the minutes of {city}. Not of a meeting: of the town. Everything said on the high street on Thursday. It is very revealing. The butcher has been contradicting himself for years.",
+  "choices": [
+   {
+    "label": "Publish them.",
+    "hint": "Sensation · Some enemies",
+    "reaction": "The {city} Minutes sell out. The butcher holds a press conference. Membership rises among people who enjoy watching the butcher hold a press conference.",
+    "effects": {
+     "followers": 30,
+     "gauges": {
+      "attention": 8,
+      "unity": -3
+     },
+     "serves": [
+      "purity"
+     ]
+    }
+   },
+   {
+    "label": "Burn them.",
+    "hint": "Discretion · Agnes is wounded",
+    "reaction": "The minutes are burned. Agnes takes minutes of the burning.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "agnes": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.agnes_corrects",
+  "type": "character",
+  "speaker": "agnes",
+  "road": true,
+  "shape": "procedure",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "doing it right",
+  "text": "The {city} branch has been doing {belief} incorrectly for six weeks. I have corrected them. Individually. Several have left. The ones who remain are doing it correctly, and they look terrified.",
+  "choices": [
+   {
+    "label": "Correct is correct.",
+    "hint": "Purity · Fewer members",
+    "reaction": "The {city} branch is now the smallest and most correct in the movement. Visitors watch it the way people watch a very good orchestra.",
+    "effects": {
+     "followers": -25,
+     "gauges": {
+      "unity": 4
+     },
+     "serves": [
+      "purity"
+     ]
+    }
+   },
+   {
+    "label": "Let them do it wrong. Happily.",
+    "hint": "Warmth · Agnes objects",
+    "reaction": "The {city} branch goes back to doing it wrong. Membership recovers. Agnes visits once a month to watch, and makes notes, and says nothing, which is worse.",
+    "effects": {
+     "followers": 15,
+     "gauges": {
+      "enthusiasm": 3
+     },
+     "loyalty": {
+      "agnes": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.rolf_bridge",
+  "type": "character",
+  "speaker": "rolf",
+  "road": true,
+  "shape": "commerce",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the bridge",
+  "text": "I’ve been in {city} three days and found four revenue streams, one of which is a bridge. We don’t own the bridge. But nobody else seems to be charging for it.",
+  "choices": [
+   {
+    "label": "We are not charging for a bridge.",
+    "hint": "Integrity · Rolf sulks",
+    "reaction": "Rolf agrees, slowly, and then spends an afternoon on the bridge just looking at it.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "rolf": -3
+     }
+    }
+   },
+   {
+    "label": "Charge for the bridge.",
+    "hint": "Money · Trouble",
+    "reaction": "The toll raises a remarkable sum in nine days, at which point the actual owner of the bridge, the county, writes. Rolf calls it “a learning experience” and frames the letter.",
+    "effects": {
+     "gauges": {
+      "resources": 10,
+      "attention": 5,
+      "unity": -3
+     },
+     "flags": [
+      "bridge_toll"
+     ],
+     "serves": [
+      "money"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.ophelia_three",
+  "type": "character",
+  "speaker": "ophelia",
+  "road": true,
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the three branches",
+  "text": "{city} now has three branches. I started one. They started two more out of competitiveness. None of them speak to each other. Membership has tripled.",
+  "choices": [
+   {
+    "label": "Merge them into one.",
+    "hint": "Order · Some sulking",
+    "reaction": "The three branches merge into one, which immediately splits into two, which Ophelia says is “a much more stable number”.",
+    "effects": {
+     "gauges": {
+      "unity": 3
+     },
+     "followers": 10
+    }
+   },
+   {
+    "label": "Let them compete.",
+    "hint": "Growth · Chaos",
+    "reaction": "The three branches compete for members so hard that half of {city} joins one of them to make the others stop asking.",
+    "effects": {
+     "followers": 70,
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": 4
+     },
+     "serves": [
+      "expansion"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.lionel_department",
+  "type": "character",
+  "speaker": "lionel",
+  "road": true,
+  "shape": "procedure",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the Department of {city}",
+  "text": "I’ve set up a Department of {city}. It has a head, a deputy, a strategy and a mission. The town has not been informed. Should we inform the town?",
+  "choices": [
+   {
+    "label": "Inform the town.",
+    "hint": "Transparency",
+    "reaction": "{city} is informed. The town council asks if it can also have a department. Lionel gives it one, and an org chart, which it hangs in the library.",
+    "effects": {
+     "gauges": {
+      "attention": 4,
+      "unity": 2
+     },
+     "followers": 15
+    }
+   },
+   {
+    "label": "Let the town find out naturally.",
+    "hint": "Mystery",
+    "reaction": "The town finds out from its own bins, which now have a colour code. Nobody complains, because the colour code is very good.",
+    "effects": {
+     "gauges": {
+      "unity": -1,
+      "enthusiasm": 2
+     },
+     "followers": 10,
+     "flags": [
+      "department_of_town"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.constance_outside",
+  "type": "character",
+  "speaker": "constance",
+  "road": true,
+  "shape": "vindication",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "weather",
+  "text": "I have never left the national office. I am now in {city}. There is weather here. People speak to me without memos. I find that I am enjoying it, and I would like that minuted.",
+  "choices": [
+   {
+    "label": "Minuted.",
+    "hint": "Let her enjoy it",
+    "reaction": "Constance sends a short memo from {city}. It says, in full, “Weather.” Martin keeps it.",
+    "effects": {
+     "loyalty": {
+      "constance": 8
+     },
+     "gauges": {
+      "enthusiasm": 3
+     }
+    }
+   },
+   {
+    "label": "We need you back in the office.",
+    "hint": "The office · She’s relieved, a bit",
+    "reaction": "Constance returns and processes a fortnight of memos in an afternoon. She keeps a pebble from {city} on her desk, and does not explain it.",
+    "effects": {
+     "loyalty": {
+      "constance": -2
+     },
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.tobias_northern_way",
+  "type": "character",
+  "speaker": "tobias",
+  "road": true,
+  "shape": "drift",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the northern way",
+  "text": "I have been in {city} for a week. They do {belief} terribly. I have shown them the northern way. They now do it terribly, but northernly. I consider this progress.",
+  "choices": [
+   {
+    "label": "Progress it is.",
+    "hint": "The North spreads",
+    "reaction": "{city} adopts the northern way. Visitors from the south find it colder, longer and, by their own admission, more correct.",
+    "effects": {
+     "followers": 20,
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": 3
+     },
+     "serves": [
+      "purity"
+     ]
+    }
+   },
+   {
+    "label": "Let {city} do it their way.",
+    "hint": "Local pride · Tobias bristles",
+    "reaction": "Tobias leaves {city} with a short speech about regret. {city} carries on, cheerfully wrong.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "tobias": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.juniper_verse",
+  "type": "character",
+  "speaker": "juniper",
+  "road": true,
+  "shape": "backfire",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the verse",
+  "text": "I taught {city} the songs. All of them. They’ve written a new verse. It’s about you. It rhymes “{title}” with something I can’t repeat. They sing it with such love, though.",
+  "choices": [
+   {
+    "label": "Let them sing it.",
+    "hint": "Affection · Undignified",
+    "reaction": "The {city} verse spreads to every branch within a month. You hear it sung at a bus stop, with love.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 6,
+      "unity": -2
+     },
+     "followers": 20,
+     "serves": [
+      "joy"
+     ]
+    }
+   },
+   {
+    "label": "Gently ask for a different rhyme.",
+    "hint": "Dignity",
+    "reaction": "{city} writes a new rhyme. It is worse. They sing both.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "juniper": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.any_their_way",
+  "type": "character",
+  "speaker": "dispatched",
+  "road": true,
+  "shape": "drift",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 70,
+  "weight": 1.3,
+  "topic": "the local way",
+  "text": "{city} has taken to {belief}, but they’ve made it their own: they do it {flavour}. I may have shown them that. Visitors from {hometown} are confused. Visitors from {city} are smug about it.",
+  "choices": [
+   {
+    "label": "That’s {city}’s way now.",
+    "hint": "Local pride · Drift",
+    "reaction": "{city} keeps its version. A delegation from {hometown} visits and comes back doing it the {city} way, which nobody mentions.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -2
+     },
+     "followers": 15
+    }
+   },
+   {
+    "label": "Teach them the original.",
+    "hint": "One movement · Some grumbling",
+    "reaction": "The original is taught. {city} does it properly at meetings and their own way at home, like everybody’s grandmother’s recipe.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.any_ballroom",
+  "type": "character",
+  "speaker": "dispatched",
+  "road": true,
+  "shape": "logistics",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 70,
+  "topic": "the ballroom",
+  "text": "The only hall in {city} is booked every night by a ballroom dancing club. I could share with them. Or I could learn to ballroom dance. I’m leaning towards learning to ballroom dance.",
+  "choices": [
+   {
+    "label": "Learn to ballroom dance.",
+    "hint": "Charm · Unusual",
+    "reaction": "Within a month the {city} branch and the ballroom club are indistinguishable. {belief} is now done in formal wear, in three-four time.",
+    "effects": {
+     "followers": 25,
+     "gauges": {
+      "enthusiasm": 4,
+      "resources": -2
+     }
+    }
+   },
+   {
+    "label": "Find another hall.",
+    "hint": "Practical",
+    "reaction": "Another hall is found, above a launderette. It is warm and smells of clean shirts, and everyone agrees it is better.",
+    "effects": {
+     "gauges": {
+      "resources": -5,
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.any_original_founder",
+  "type": "character",
+  "speaker": "dispatched",
+  "road": true,
+  "shape": "feud",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 70,
+  "topic": "the man with the photographs",
+  "text": "There’s a man in {city} who says he’s been doing {belief} for thirty years, alone, before anyone had heard of us. He says we copied him. He has photographs. They are quite convincing.",
+  "choices": [
+   {
+    "label": "Make him an honorary founder.",
+    "hint": "Generous · Confusing",
+    "reaction": "He accepts, and gives a speech at the next {meeting} about the lonely years. People weep. You find yourself weeping. He may be lying. It doesn’t matter.",
+    "effects": {
+     "followers": 25,
+     "gauges": {
+      "attention": 5,
+      "unity": -2
+     }
+    }
+   },
+   {
+    "label": "Politely, no.",
+    "hint": "Firm",
+    "reaction": "He starts a small rival group in {city} called the Real Ones. It has eleven members and better photographs.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "attention": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.any_gazette",
+  "type": "character",
+  "speaker": "dispatched",
+  "road": true,
+  "shape": "outsider",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 70,
+  "topic": "the Gazette",
+  "text": "The {city} Gazette has put me on the front page. The headline is “WHO IS THIS”. There’s a photograph. I look surprised in it. I was surprised.",
+  "choices": [
+   {
+    "label": "Give them an interview.",
+    "hint": "Attention",
+    "reaction": "The interview runs under “OH, IT’S THEM”. {city} reads it over breakfast and several hundred people come to see what the fuss is.",
+    "effects": {
+     "followers": 40,
+     "gauges": {
+      "attention": 6,
+      "unity": -1
+     }
+    }
+   },
+   {
+    "label": "Lie low.",
+    "hint": "Mystery",
+    "reaction": "Nobody says anything. The Gazette runs a follow-up: “STILL WHO”. Interest, if anything, doubles.",
+    "effects": {
+     "followers": 20,
+     "gauges": {
+      "attention": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.any_homesick",
+  "type": "character",
+  "speaker": "dispatched",
+  "road": true,
+  "shape": "callback",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 70,
+  "topic": "home",
+  "text": "Can I be honest? {city} is lovely, and the members here are lovely, and I would give anything to be back in {hometown} on {day}.",
+  "choices": [
+   {
+    "label": "Come home next week.",
+    "hint": "Kind",
+    "reaction": "They thank you, a bit too quickly. Next week you can bring them home, or not; they will notice either way.",
+    "effects": {
+     "speakerLoyalty": 5,
+     "gauges": {
+      "unity": 1
+     }
+    }
+   },
+   {
+    "label": "One more week. {city} needs you.",
+    "hint": "Duty",
+    "reaction": "They nod and go back out. {city} grows. So does something else, quietly.",
+    "effects": {
+     "speakerLoyalty": -6,
+     "followers": 20,
+     "gauges": {
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "terr.variant_clash",
+  "type": "doctrine",
+  "speaker": "any",
+  "shape": "feud",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 40,
+  "followUpOnly": true,
+  "topic": "whose version",
+  "text": "In {aCity} they do {belief} {variantA}. In {bCity} they do it {variantB}. Both towns have sent a delegation to {hometown}. They have been asked to sit at opposite ends of the room and have each moved the room.",
+  "choices": [
+   {
+    "label": "{variantA}, everywhere.",
+    "hint": "One version · {bCity} sulks",
+    "reaction": "It is announced: {belief}, {variantA}, everywhere. {bCity} complies with the air of a town that will be writing to the newspapers.",
+    "effects": {
+     "officialVariant": "variantA",
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -3
+     }
+    }
+   },
+   {
+    "label": "Both of them are {belief}.",
+    "hint": "Live and let live · Drift",
+    "reaction": "Both delegations go home declaring victory. The map of who does what, and how, becomes a popular poster.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "terr.north_envoy",
+  "type": "rivalry",
+  "speaker": {
+   "anon": {
+    "name": "Tobias Wren",
+    "role": "Leader, the Northern Fellowship"
+   }
+  },
+  "shape": "feud",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "regional",
+    "national"
+   ],
+   "flags": [
+    "north_exists"
+   ],
+   "notFlags": [
+    "north_joined"
+   ],
+   "chars": {
+    "tobias": {
+     "present": false
+    }
+   }
+  },
+  "once": true,
+  "priority": 2,
+  "weight": 3,
+  "bind": {
+   "northTowns": "rivalTowns:north",
+   "northCity": "rivalTowns:north:one"
+  },
+  "topic": "the North",
+  "text": "Tobias Wren, of the Northern Fellowship. You’ll have seen us on the map: {northTowns}. We do {belief} properly up here, colder and longer. I’d consider joining forces. On northern terms.",
+  "choices": [
+   {
+    "label": "Northern terms are fine.",
+    "hint": "Merge · The North keeps its ways",
+    "reaction": "Tobias shakes your hand for a long time. The Northern Fellowship joins the movement, and every town in it keeps doing things the northern way.",
+    "effects": {
+     "join": [
+      "tobias"
+     ],
+     "flags": [
+      "north_merged"
+     ],
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": 4
+     },
+     "serves": [
+      "purity"
+     ],
+     "groups": {
+      "traditionalists": 0.03
+     }
+    }
+   },
+   {
+    "label": "Your towns or ours, Tobias.",
+    "hint": "Turf war",
+    "reaction": "Tobias says he expected nothing less of the south, and drives home in the Northern Fleet without honking.",
+    "effects": {
+     "gauges": {
+      "attention": 4,
+      "enthusiasm": 3,
+      "unity": 2
+     },
+     "flags": [
+      "north_war"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "terr.knitters_banner",
+  "type": "rivalry",
+  "speaker": "any",
+  "shape": "feud",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "flags": [
+    "knitters_rival_active"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "bind": {
+   "rivalCity": "rivalTowns:knitters:one"
+  },
+  "topic": "the Knitting Circle",
+  "text": "The Knitting Circle has knitted a banner across the main road in {rivalCity}. It says KNITTERS WERE HERE FIRST. It is eleven metres long and frankly beautiful. Our members there want to knit a reply.",
+  "choices": [
+   {
+    "label": "Knit a reply.",
+    "hint": "Turf war · Very slow",
+    "reaction": "The reply takes four months. It says WE KNOW. The town comes out to watch it unrolled and talks of nothing else.",
+    "effects": {
+     "gauges": {
+      "attention": 5,
+      "enthusiasm": 4,
+      "resources": -3
+     },
+     "flags": [
+      "knit_war"
+     ]
+    }
+   },
+   {
+    "label": "Admire their banner.",
+    "hint": "Grace",
+    "reaction": "You send a note admiring the banner. The Knitting Circle is so disarmed that it cancels a planned second banner.",
+    "effects": {
+     "gauges": {
+      "unity": 3
+     },
+     "flags": [
+      "knitters_softened"
+     ]
+    }
+   }
+  ]
+ }
+]

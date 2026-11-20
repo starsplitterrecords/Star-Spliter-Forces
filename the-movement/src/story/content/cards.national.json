@@ -80,7 +80,10 @@
      "present": false
     }
    },
-   "decisions": ">=3"
+   "decisions": ">=3",
+   "notFlags": [
+    "north_exists"
+   ]
   },
   "once": true,
   "priority": 2,
@@ -521,7 +524,8 @@
      "speakerLoyalty": -6
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.not_consulted",
@@ -598,7 +602,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.statue",
@@ -609,9 +614,13 @@
   "requires": {
    "era": [
     "national"
-   ]
+   ],
+   "chars": {
+    "martin": {
+     "present": true
+    }
+   }
   },
-  "followUpOnly": true,
   "topic": "the statue",
   "text": "There is a statue of you in {hometown}. It is bronze, nine feet tall, and has {c.martin}’s face, because the sculptor worked from the only photograph of the founding, which {c.martin} took and is in. The unveiling is Saturday.",
   "choices": [
@@ -660,7 +669,9 @@
   ],
   "notSpeaker": [
    "martin"
-  ]
+  ],
+  "once": true,
+  "weight": 1.3
  },
  {
   "id": "nat.emeritus_rumour",
@@ -710,7 +721,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.memo_reply",
@@ -1795,7 +1807,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.app_password",
@@ -1963,7 +1976,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.custom_lobby",
@@ -2037,7 +2051,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.charter",
@@ -2096,7 +2111,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.soup_contract",
@@ -2758,7 +2774,8 @@
      "speakerLoyalty": -6
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.tobias_standard",
@@ -3649,7 +3666,8 @@
      }
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.rec_region_decided",
@@ -3709,7 +3727,8 @@
      }
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.rec_delegate",
@@ -3777,7 +3796,8 @@
      }
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.international",
@@ -3954,6 +3974,67 @@
      },
      "flags": [
       "juniper_myth_kept"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.constance_visit",
+  "type": "character",
+  "speaker": "constance",
+  "shape": "callback",
+  "setting": "private",
+  "topic": "meeting Constance",
+  "requires": {
+   "era": [
+    "national",
+    "international"
+   ],
+   "chars": {
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.4,
+  "text": "I am outside {hq}. In person. I have never seen it. I have a clipboard, a flask and a list of questions, and I find I am unable to come in. Could you come out? It is, I think, a lot.",
+  "choices": [
+   {
+    "label": "Go out and walk her in.",
+    "hint": "Kindness",
+    "reaction": "You walk Constance in. She looks at the folding chairs for a long time and then straightens one. Nobody has straightened a chair in {hq} in years. It stays straight.",
+    "effects": {
+     "loyalty": {
+      "constance": 10
+     },
+     "gauges": {
+      "unity": 4
+     },
+     "remember": [
+      {
+       "who": "constance",
+       "kind": "backed",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "Send Martin out instead.",
+    "hint": "Romance, possibly",
+    "reaction": "Martin goes out. They stand on the pavement, about a metre apart, and talk about the agenda for forty minutes. Neither of them comes in. Both of them describe it, separately, as the best meeting they have ever attended.",
+    "effects": {
+     "loyalty": {
+      "constance": 6,
+      "martin": 6
+     },
+     "gauges": {
+      "enthusiasm": 3
+     },
+     "flags": [
+      "memo_love"
      ]
     }
    }

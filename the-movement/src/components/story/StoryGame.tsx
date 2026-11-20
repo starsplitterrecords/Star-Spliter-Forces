@@ -11,6 +11,7 @@ import { useReducedMotion } from '../ui';
 import { Portrait, anonSpec } from './Portrait';
 import { CustomsSheet, HistorySheet, MapSheet, PeopleSheet } from './StorySheets';
 import { fastForwardTo } from '@/story/autoplay';
+import WeeklyGame from './WeeklyGame';
 
 const GAUGE_INFO: Record<Gauge, { label: string; short: string; blurb: string }> = {
   enthusiasm: { label: 'Enthusiasm', short: 'Zeal', blurb: 'How intensely members participate and recruit.' },
@@ -65,7 +66,7 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
 
   useEffect(() => {
     void loadSavedStory().then((saved) => {
-      if (saved) tickRealTime(saved, Date.now());
+      if (saved && !saved.weekly) tickRealTime(saved, Date.now());
       setS(saved);
       setLoading(false);
     });
@@ -73,7 +74,7 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
 
   // the movement keeps living while you watch
   useEffect(() => {
-    if (!s) return;
+    if (!s || s.weekly) return;
     const id = setInterval(() => {
       tickRealTime(s, Date.now());
       sinceSave.current += 1;
@@ -132,7 +133,7 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (sheet || (e.target as HTMLElement)?.tagName === 'INPUT') return;
+      if (s?.weekly || sheet || (e.target as HTMLElement)?.tagName === 'INPUT') return;
       if (outcome && (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight')) {
         e.preventDefault();
         next();
@@ -143,7 +144,7 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [sheet, outcome, card, decide, next]);
+  }, [s, sheet, outcome, card, decide, next]);
 
   const townResults = useMemo(() => {
     const q = townQuery.trim().toLowerCase();
@@ -165,12 +166,12 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
             onSubmit={(e) => {
               e.preventDefault();
               const home = town ?? HOMETOWNS[Math.floor(Math.random() * HOMETOWNS.length)].id;
-              let ns = newStory(name || 'Jeff', home, randomSeed());
+              let ns = newStory(name || 'Jeff', home, randomSeed(), Date.now(), { weekly: true });
               if (jump !== 'founding') {
                 // playtesting: try a few seeds until the automated leader survives to the chosen era
                 for (let t = 0; t < 6; t++) {
                   if (fastForwardTo(ns, jump, t + 1)) break;
-                  ns = newStory(name || 'Jeff', home, randomSeed());
+                  ns = newStory(name || 'Jeff', home, randomSeed(), Date.now(), { weekly: true });
                 }
                 ns.lastRealTime = Date.now();
                 ns.report = undefined;
@@ -213,6 +214,19 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
           </details>
         </div>
       </div>
+    );
+  }
+
+  if (s.weekly) {
+    return (
+      <WeeklyGame
+        s={s}
+        onExit={onExit}
+        onAbandon={async () => {
+          await clearStory();
+          setS(null);
+        }}
+      />
     );
   }
 

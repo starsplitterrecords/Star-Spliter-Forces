@@ -17,7 +17,8 @@
     "content:validate": "tsx scripts/content/validate.ts",
     "content:stress": "tsx scripts/content/stress.ts",
     "content:draft": "tsx scripts/content/draft-batch.ts",
-    "content:relationships": "tsx scripts/content/relationships.ts"
+    "content:relationships": "tsx scripts/content/relationships.ts",
+    "content:weekly": "tsx scripts/content/weekly.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.11.0",

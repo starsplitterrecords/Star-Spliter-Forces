@@ -4,6 +4,22 @@ This is the working document for the creative production of THE MOVEMENT. The wr
 
 **The target isn't a thousand cards. It's a thousand reasons to want to see who's at the door next.**
 
+## 0. What the first human playtest taught us
+
+> "It sure gets less fun as it goes… it starts with soup and naps and turns into approvals and disapprovals… we've lost the geography and territoriality… the comedy just isn't there."
+
+**The diagnosis.** The early game is funny because it is concrete and physical: soup, naps, a garage, a lawnmower. As the movement grew, the writing became administrative: memos, motions, charters, approvals. Scale made it abstract when it should have made it bigger and stranger in more places.
+
+**The rules from now on:**
+
+1. **Every card happens somewhere.** It is about a real town, a real room, a real object. A national-era card is still about one hall, one bridge, one sea lion.
+2. **Write the person on the road, not the policy.** The best comedy comes from *who you sent where*: Gary in a cathedral, Dez in a town with a noise ordinance, Agnes taking the minutes of a whole high street.
+3. **Customs mutate, they don't get ruled on.** Let towns warp the belief ("they do it lying down"), and let the quarrels between versions be the jokes.
+4. **No bureaucracy without a body.** A memo is only funny if Constance is standing outside the garage, unable to come in. The shelved cards (`"shelved": true`) are waiting for rewrites that obey this.
+5. **Rivals are neighbours with grudges and addresses.** The Knitting Circle has a banner across the main road in Bingley; the North is Sunderland and Carlisle.
+
+**The next writing priority** is *more road incidents*: per character, per era, and some per kind of town (rival turf, a big city, somewhere that does it differently). They carry the weekly loop. Today each character has 1–3; the target is 8–10 for the core cast.
+
 ## 1. The standard
 
 - **Surprise without inconsistency.** We don't want Martin laminating something for the thousandth time. We want Martin doing something unexpected that makes perfect sense once you remember who he is: falling in love with the General Secretary through procedure; being the only person who knew where the fire exits were.

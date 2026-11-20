@@ -100,6 +100,7 @@ export function describeMemory(m: MemoryRecord, name: (id: string) => string): s
     blamed: `Blamed${where}`,
     vindicated: `Proven right`,
     embarrassed: `Embarrassed${where}`,
+    ignored: `Waited for an answer that never came`,
   };
   return `${lead[m.kind]}: “${m.quote}” (day ${Math.floor(m.day) + 1}${m.resolved ? ', settled' : ''})`;
 }

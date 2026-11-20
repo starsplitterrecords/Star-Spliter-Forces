@@ -37,6 +37,9 @@ export interface CharacterDef {
   agenda: Agenda;
   ally: Group; // member group they draw support from
   bio: string;
+  emoji: string; // their token on the map
+  flavour: string; // how they do things, appended to whatever they spread ("with soup", "lying down")
+  travel: number; // how they feel about being sent away from home each week: + likes it, − misses home
   exit: string; // first-person goodbye, used in their exit scene ({exit})
   habit: string; // what they always do, in the third person ("brings soup nobody asked for"): missed when they go ({habit}, {departedHabit})
   competence: number; // 0..100
@@ -83,7 +86,8 @@ export type MemoryKind =
   | 'credited' // you gave them public credit
   | 'blamed' // you blamed them
   | 'vindicated' // they turned out to be right
-  | 'embarrassed'; // they were made to look foolish
+  | 'embarrassed' // they were made to look foolish
+  | 'ignored'; // they brought you a problem and you never answered
 
 export type Setting = 'private' | 'meeting' | 'public'; // where the conversation on a card takes place
 
@@ -191,6 +195,7 @@ export interface Effects {
   join?: string[]; // characters who join
   leave?: { id: string; as: 'left' | 'retired' | 'rival' }[]; // id may be 'speaker'
   rejoin?: boolean; // the character bound as ctx.departed comes back
+  officialVariant?: string; // weekly mode: ctx key holding a local version of the belief to make official everywhere ('none' = the original)
   role?: Record<string, string>;
   era?: Era;
   followUps?: FollowUp[];
@@ -240,6 +245,8 @@ export interface CardDef {
   once?: boolean;
   priority?: number; // higher jumps the queue
   followUpOnly?: boolean; // only arrives via a follow-up
+  road?: boolean; // weekly mode: drawn only when the speaker has been sent to a town; {city} is that town
+  shelved?: boolean; // kept for rewriting, never drawn
 }
 
 /** Comic structures. Stress testing reports how often each one appears in a playthrough. */
@@ -293,6 +300,22 @@ export interface CustomState {
   underground?: boolean; // condemned, but still practised quietly
 }
 
+export interface RivalState {
+  id: string;
+  name: string;
+  color: string;
+  leader?: string; // a character who leads it, if any
+  towns: number[];
+  since: number; // week
+}
+
+export interface WeekReport {
+  week: number;
+  lines: { icon: string; text: string }[];
+  joined: number;
+  lost: number;
+}
+
 export interface CityState {
   id: number;
   known: boolean;
@@ -302,6 +325,11 @@ export interface CityState {
   organizers: number; // assigned campaign organizers
   milestone: boolean; // reached 85% once
   frac: number;
+  variant?: string; // the local twist on the central belief ("with soup", "lying down", "twice")
+  variantBy?: string; // character whose flavour it came from
+  rival?: string; // rival group holding this town
+  bloc?: string; // a named part of the map that keeps its identity ('north')
+  contest?: number; // weeks your people have spent contesting a rival town
 }
 
 export interface CardInstance {
@@ -312,6 +340,8 @@ export interface CardInstance {
   ctx: Record<string, string>;
   arrivedDay: number;
   priority: number;
+  city?: number; // weekly mode: where this problem is (pinned on the map)
+  week?: number; // weekly mode: the week it turned up
 }
 
 export interface Modifier {
@@ -353,6 +383,12 @@ export interface StoryState {
   modifiers: Modifier[];
   inbox: CardInstance[];
   scheduled: ScheduledCard[];
+  // weekly dispatch mode
+  weekly?: boolean;
+  week: number;
+  assign: Record<string, number>; // unit (character id, or org:N) -> city id
+  rivals: Record<string, RivalState>;
+  lastWeek?: WeekReport;
   memory: MemoryRecord[]; // what characters remember about you, newest last
   // which decision last wrote each piece of state, so later cards that read it can credit that decision
   provenance: { flags: Record<string, number>; customs: Record<string, number> };
