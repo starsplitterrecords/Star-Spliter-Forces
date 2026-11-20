@@ -18,3 +18,7 @@ The initial character is **Pulse Width Codex**. Winning a run unlocks **Ghost Dr
 ## Music assets
 
 No third-party music is embedded. Add licensed Star Splitter masters/stems under `audio/` and connect them through `AudioDirector`. See `audio/README.md`.
+
+## Also in this repository
+
+- [`the-movement/`](the-movement/README.md) — **THE MOVEMENT**, a separate Next.js/TypeScript absurdist movement-building strategy game (independent of the Godot project above).
