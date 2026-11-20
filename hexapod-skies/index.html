@@ -146,6 +146,51 @@ kbd{font-family:inherit;font-size:.78rem;border:1px solid var(--line);border-bot
 .pop.red{color:var(--danger)}
 @keyframes rise{from{opacity:1;transform:translate(-50%,-50%)}to{opacity:0;transform:translate(-50%,-160%)}}
 
+/* replayability UI */
+.progress{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted);align-items:baseline}
+.progress b{color:var(--text);font-variant-numeric:tabular-nums}
+.progress .next{color:var(--teal)}
+.modes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:4px}
+.mode{border:0;background:transparent;border-radius:9px;padding:9px 6px;font-weight:700;font-size:.82rem;cursor:pointer;color:var(--muted)}
+.mode[aria-pressed="true"]{background:var(--pollen);color:#1d1404}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:5px 11px;font-size:.76rem;cursor:pointer;color:var(--text);display:inline-flex;align-items:center;gap:6px}
+.chip.on{border-color:var(--pollen);background:rgba(245,184,33,.16)}
+.chip.locked{opacity:.55;cursor:not-allowed}
+.chip .sw{width:12px;height:12px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.4)}
+.chips.risks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.chip.risk{border-radius:12px;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:8px 11px}
+.chip.risk small{color:var(--muted);font-size:.72rem}
+.card.dim{opacity:.45}
+.card.daily{cursor:default}
+.card.daily:hover{transform:none}
+.medals{display:inline-flex;gap:3px}
+.medal{width:10px;height:11px;background:rgba(255,255,255,.14);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.medal.on{background:var(--teal)}
+.board{display:grid;gap:3px;font-size:.78rem;font-variant-numeric:tabular-nums}
+.board .row{display:grid;grid-template-columns:1.6em 1fr auto;gap:8px}
+.board .me{color:var(--pollen);font-weight:700}
+.sheetwrap{z-index:30;align-items:start;overflow-y:auto}
+.sheetwrap.side{place-items:center end}
+.sheet.wide{width:min(860px,100%)}
+.jcat{margin:6px 0 2px;font-family:var(--display);font-size:1rem}
+.jgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.jcard{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:4px;font-size:.82rem}
+.jcard h4{margin:0;font-family:var(--display);font-size:.95rem}
+.jcard p{margin:0;line-height:1.4;color:#d5dfcf}
+.jcard small{color:var(--muted)}
+.jcard.unknown{opacity:.55}
+.upcards{display:grid;gap:8px}
+.card.upg h3{color:var(--pollen)}
+.notes{list-style:none;margin:0;padding:10px 12px;border:1px solid var(--teal);border-radius:12px;display:grid;gap:4px;font-size:.88rem;color:var(--teal);font-weight:700}
+#hudTwist{font-size:.72rem;color:var(--muted);margin-top:2px;letter-spacing:.04em}
+#windArrow{display:block;margin:4px auto 0;width:16px;height:20px;background:#cfe8ff;clip-path:polygon(50% 0,100% 100%,50% 75%,0 100%);opacity:.85}
+#rareMark{position:absolute;left:0;top:0;pointer-events:none}
+#rareMark::before{content:"";position:absolute;left:-9px;top:-10px;width:18px;height:20px;background:#b98cff;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);animation:pulse .5s infinite alternate}
+#rareMark span{position:absolute;left:0;top:0;transform:translate(-50%,16px);font-size:.75rem;font-weight:700;color:#1a0d2e;background:#c9a2ff;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.pop.journal{color:#c9a2ff}
+@media (max-width:460px){ .modes{grid-template-columns:repeat(2,minmax(0,1fr))} .chips.risks{grid-template-columns:1fr} .sheetwrap.side{place-items:end center} }
+
 /* touch: one thumb */
 #touchUI{z-index:2}
 #thumbZone{position:absolute;inset:0;pointer-events:auto;touch-action:none}
@@ -215,7 +260,7 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 
 <div id="hud" hidden>
   <div class="hud-tl panel"><p class="hud-hab" id="hudHab"></p><p class="hud-stage" id="hudStage"></p><ul id="objList"></ul></div>
-  <div class="hud-tc"><div id="hudTime">4:00</div><div id="hudScore">0</div><div id="hudCombo"></div></div>
+  <div class="hud-tc"><div id="hudTime">4:00</div><div id="hudScore">0</div><div id="hudCombo"></div><div id="hudTwist"></div><i id="windArrow" hidden></i></div>
   <div class="hud-tr"><canvas id="minimap" width="336" height="336"></canvas><div id="hudSpeed">0 km/h</div></div>
   <div class="hud-bl panel">
     <div class="meter" id="mHealth"><span>Wings</span><div class="bar"><i id="barHealth"></i></div><b id="healthTxt">100</b></div>
@@ -232,6 +277,7 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
   <div id="alert" hidden></div>
   <button id="pauseBtn" aria-label="Pause">❚❚</button>
   <div id="frogWarn" hidden>Frog!</div>
+  <div id="rareMark" hidden><span></span></div>
   <div id="touchUI" hidden>
     <div id="thumbZone"></div>
     <div id="thumbBase" hidden><div id="thumbKnob"></div></div>
@@ -246,12 +292,18 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
       <h1>Hexapod<br><em>Skies</em></h1>
       <p class="lede">Saddle up a dragonfly, honeybee, hawk-moth or ladybird. Hunt prey on the wing, haul pollen home to the nest, and keep clear of everything that eats insects.</p>
     </header>
+    <div class="progress" id="progress"></div>
+    <div class="modes" id="modes" role="group" aria-label="Game mode"></div>
     <h2 class="step">Choose a mount <small>each flies differently</small></h2>
     <div id="mounts" class="cards"></div>
-    <h2 class="step">Choose a habitat <small>jobs depend on your mount</small></h2>
-    <div id="habitats" class="cards"></div>
+    <div id="habBlock"><h2 class="step">Choose a habitat <small id="habStepNote">jobs depend on your mount</small></h2><div id="habitats" class="cards"></div></div>
+    <div id="dailyBlock" hidden></div>
+    <div id="migBlock" hidden></div>
+    <div id="riskBlock"><h2 class="step">Risk <small>optional · <span id="riskMult">Score ×1.00</span></small></h2><div id="risks" class="chips risks"></div></div>
     <div class="go-row">
       <button id="startBtn" class="btn-primary">Take flight</button>
+      <button id="journalBtn" class="btn-ghost">Journal</button>
+      <button id="riderBtn" class="btn-ghost">Rider</button>
       <button id="helpBtn" class="btn-ghost" aria-expanded="false">Controls</button>
       <span class="sel" id="selSummary"></span>
     </div>
@@ -266,7 +318,7 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
         <dt>Touch</dt><dd>One thumb: touch and drag to fly and steer, lift to hover, tap to strike, push past the ring to boost</dd>
       </dl>
     </div>
-    <p class="credit">Each insect has its own job in every habitat. Birds dive when their shadow grows; drop into the grass to lose them.</p>
+    <p class="credit">Every habitat run grows a fresh layout and rolls a weather twist. Birds dive when their shadow grows; drop into the grass to lose them.</p>
   </div>
 </section>
 
@@ -283,7 +335,8 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
     <div class="row">
       <button id="resumeBtn" class="btn-primary">Resume</button>
       <button id="restartBtn" class="btn-ghost">Restart</button>
-      <button id="quitBtn" class="btn-ghost">Change mount</button>
+      <button id="finishBtn" class="btn-ghost" hidden>Finish run</button>
+      <button id="quitBtn" class="btn-ghost">Back to menu</button>
     </div>
   </div>
 </section>
@@ -295,10 +348,38 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
     <div class="stars" id="resStars"><div class="star">1</div><div class="star">2</div><div class="star">3</div></div>
     <ul class="crit" id="resCrit"></ul>
     <dl class="tally" id="resTally"></dl>
+    <ul class="notes" id="resNotes" hidden></ul>
     <div class="row">
       <button id="againBtn" class="btn-primary">Fly again</button>
-      <button id="menuBtn" class="btn-ghost">Change mount or habitat</button>
+      <button id="menuBtn" class="btn-ghost">Back to menu</button>
     </div>
+  </div>
+</section>
+
+<section id="upgrades" class="screen modal" hidden>
+  <div class="sheet">
+    <h2 id="upTitle">Leg complete</h2>
+    <p class="sub" id="upSub"></p>
+    <div id="upCards" class="upcards"></div>
+    <p class="sub" id="upChosen"></p>
+  </div>
+</section>
+
+<section id="journal" class="screen modal sheetwrap" hidden>
+  <div class="sheet wide">
+    <h2>Field journal</h2>
+    <p class="sub" id="jSub"></p>
+    <div id="jList"></div>
+    <div class="row"><button id="jClose" class="btn-primary">Close</button></div>
+  </div>
+</section>
+
+<section id="rider" class="screen modal sheetwrap side" hidden>
+  <div class="sheet">
+    <h2>Rider</h2>
+    <p class="sub" id="rSub"></p>
+    <div id="rOpts"></div>
+    <div class="row"><button id="rClose" class="btn-primary">Done</button></div>
   </div>
 </section>
 
@@ -366,16 +447,33 @@ const MOUNTS = {
     stats: { Speed: 2, Agility: 3, Armour: 5, Stamina: 3 }, buzz: { type: 'sawtooth', f: 85, lp: 700, vol: 0.45 } },
 };
 const MOUNT_ORDER = ['dragonfly', 'honeybee', 'hawkmoth', 'ladybird'];
+// unlockable cousins: same job as their base insect, different handling
+const VARIANTS = {
+  darter: { base: 'dragonfly', name: 'Red-veined Darter', short: 'darter', latin: 'Sympetrum fonscolombii', hz: 32, role: 'Agile hunter', unlock: 3,
+    desc: "A scarlet cousin that turns on a pin. A little slower and frailer, but it can cut inside a swallow's dive.",
+    over: { cruise: 20, boost: 37, turnResp: 8.5, grip: 6.5, armor: 0.85, stats: { Speed: 4, Agility: 5, Armour: 1, Stamina: 3 } } },
+  elephant: { base: 'hawkmoth', name: 'Elephant Hawk-moth', short: 'elephant hawk-moth', latin: 'Deilephila elpenor', hz: 40, role: 'Nectar sprinter', unlock: 6,
+    desc: 'Olive and shocking pink. Turns tighter and sips in about half the time, but tires sooner.',
+    over: { turnResp: 4.8, grip: 4, stamina: 120, sipTime: 0.32, stats: { Speed: 4, Agility: 3, Armour: 2, Stamina: 4 } } },
+  bumblebee: { base: 'honeybee', name: 'Buff-tailed Bumblebee', short: 'bumblebee', latin: 'Bombus terrestris', hz: 130, role: 'Heavy forager', unlock: 9,
+    desc: 'Big, furry and warm-blooded. Carries 30 pollen and flies through rain without slowing, but it is slow to turn.',
+    over: { cruise: 13.5, boost: 25, turnResp: 4.6, cargo: 30, armor: 1.5, stamina: 130, rainProof: true, camDist: 6.6, stats: { Speed: 2, Agility: 3, Armour: 4, Stamina: 4 }, buzz: { type: 'sawtooth', f: 130, lp: 900, vol: 0.42 } } },
+  spot22: { base: 'ladybird', name: '22-spot Ladybird', short: '22-spot', latin: 'Psyllobora vigintiduopunctata', hz: 90, role: 'Mildew grazer', unlock: 12, diet: 'Eats mildew',
+    desc: 'Bright yellow with 22 black spots. It ignores aphids and grazes the white mildew on stems, and it is a little quicker than its cousin.',
+    over: { eats: ['mildew'], cruise: 15, boost: 27, aphidBonus: 0, stats: { Speed: 3, Agility: 3, Armour: 4, Stamina: 3 } } },
+};
+for (const [k, v] of Object.entries(VARIANTS)) MOUNTS[k] = { ...MOUNTS[v.base], ...v.over, key: k, base: v.base, name: v.name, short: v.short, latin: v.latin, hz: v.hz, role: v.role, desc: v.desc, diet: v.diet || MOUNTS[v.base].diet, unlock: v.unlock };
 
 const PREY = {
   mosquito: { label: 'mosquito', plural: 'Mosquitoes', pts: 50, speed: 5, flee: 10, wander: 12, glint: '#ffffff' },
   gnat: { label: 'gnat', plural: 'Gnats', pts: 30, speed: 4.5, flee: 8, wander: 6, glint: '#fff0a0' },
   midge: { label: 'midge', plural: 'Midges', pts: 40, speed: 5, flee: 9, wander: 9, glint: '#b8ffcf' },
+  mildew: { label: 'mildew', plural: 'Mildew', pts: 30, speed: 0, flee: 0, wander: 0, glint: '#e8ecff', sits: true },
   aphid: { label: 'aphid', plural: 'Aphids', pts: 25, speed: 0, flee: 0, wander: 0, glint: '#a6ff5e', sits: true },
 };
 
 const J = {
-  catch: (kind, n) => ({ type: 'catch', kind, target: n, label: kind === 'aphid' ? 'Eat aphids' : `Catch ${PREY[kind].plural.toLowerCase()}` }),
+  catch: (kind, n) => ({ type: 'catch', kind, target: n, label: kind === 'aphid' ? 'Eat aphids' : kind === 'mildew' ? 'Graze mildew' : `Catch ${PREY[kind].plural.toLowerCase()}` }),
   skim: (n) => ({ type: 'skim', target: n, label: 'Skim the water' }),
   deliver: (n) => ({ type: 'deliver', target: n, label: 'Bring pollen to the nest' }),
   nectar: (n) => ({ type: 'nectar', target: n, label: 'Sip nectar from different flowers' }),
@@ -427,8 +525,9 @@ const HABITATS = {
 };
 const HAB_ORDER = ['pond', 'meadow', 'garden', 'hedgerow'];
 // Each run is three stages that ramp up. Jobs follow what each insect does in nature.
-function buildStages(hab, mount) {
+function buildStages(hab, mountKey) {
   const H = HABITATS[hab], fly = H.flyer, wasps = H.wasps > 0, who = H.birds[0] === 'bat' ? 'bat' : 'swallow';
+  const MM = MOUNTS[mountKey] || MOUNTS.dragonfly, mount = MM.base || mountKey, food = MM.eats[0] || 'aphid';
   if (mount === 'dragonfly') return [
     { name: 'Warm-up hunt', obj: [J.catch(fly, 12)] },
     hab === 'pond' ? { name: 'Skim and strike', obj: [J.skim(4), J.catch(fly, 10)] } : wasps ? { name: 'Hold the territory', obj: [J.defeat(3), J.catch(fly, 10)] } : { name: 'Night hunt', obj: [J.catch(fly, 12), J.dodge(2, who)] },
@@ -445,9 +544,9 @@ function buildStages(hab, mount) {
     { name: H.night ? 'Before dawn' : 'Nectar run', obj: [J.nectar(9), J.dodge(1, who)] },
   ];
   return [
-    { name: 'Grazing', obj: [J.catch('aphid', 12)] },
-    { name: 'Mind the sky', obj: [J.catch('aphid', 12), J.dodge(2, who)] },
-    { name: 'Aphid boom', obj: [J.catch('aphid', 20), J.dodge(1, who)], swarm: 'aphid' },
+    { name: 'Grazing', obj: [J.catch(food, 12)] },
+    { name: 'Mind the sky', obj: [J.catch(food, 12), J.dodge(2, who)] },
+    { name: food === 'mildew' ? 'Mildew bloom' : 'Aphid boom', obj: [J.catch(food, 20), J.dodge(1, who)], swarm: food },
   ];
 }
 // three-star score for each mount, set from automated playtests
@@ -483,6 +582,8 @@ const Sound = {
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     s.connect(f).connect(g).connect(this.master); s.start(t, Math.random() * 1.5); s.stop(t + dur + 0.05);
   },
+  startRain() { if (!this.ctx || this.rainN || this.muted) return; const c = this.ctx, n = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain(); n.buffer = this.noiseBuf; n.loop = true; f.type = 'lowpass'; f.frequency.value = 2600; g.gain.value = 0.07; n.connect(f).connect(g).connect(this.master); n.start(); this.rainN = { n, g }; },
+  stopRain() { const r = this.rainN; if (!r) return; this.rainN = null; r.g.gain.setTargetAtTime(0, this.ctx.currentTime, 0.1); try { r.n.stop(this.ctx.currentTime + 0.5); } catch (e) { /* stopped */ } },
   startEngine(m) {
     this.stopEngine(); if (!this.ctx) return;
     const c = this.ctx, b = m.buzz;
@@ -497,6 +598,7 @@ const Sound = {
     const ng = c.createGain(); ng.gain.value = 0; n.connect(nf).connect(ng).connect(this.master);
     o.start(); o2.start(); n.start();
     this.engine = { o, o2, f, g, n, nf, ng, b };
+    if (run.twist === 'rain' && run.mode !== 'race') this.startRain();
   },
   updateEngine(s01, boost) {
     const e = this.engine; if (!e) return; const t = this.ctx.currentTime;
@@ -507,6 +609,7 @@ const Sound = {
     e.ng.gain.setTargetAtTime(0.015 + 0.09 * s01 * s01, t, 0.2); e.nf.frequency.setTargetAtTime(400 + 900 * s01, t, 0.2);
   },
   stopEngine() {
+    this.stopRain();
     const e = this.engine; if (!e) return; const t = this.ctx.currentTime;
     e.g.gain.setTargetAtTime(0, t, 0.05); e.ng.gain.setTargetAtTime(0, t, 0.05);
     [e.o, e.o2, e.n].forEach((x) => { try { x.stop(t + 0.3); } catch (er) { /* already stopped */ } });
@@ -711,6 +814,14 @@ const TEX = {
   shadow: canvasTex(64, 64, (g) => { const r = g.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, 'rgba(0,0,0,.6)'); r.addColorStop(0.6, 'rgba(0,0,0,.25)'); r.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = r; g.fillRect(0, 0, 64, 64); }),
 };
 
+Object.assign(TEX, {
+  bumble: canvasTex(64, 128, (g, w, h) => { const b = ['#f2f0e6', '#f2f0e6', '#1c1814', '#e8c23a', '#1c1814', '#1c1814', '#e8c23a', '#1c1814']; b.forEach((c, i) => { g.fillStyle = c; g.fillRect(0, i * h / 8, w, h / 8 + 1); }); fuzz(g, w, h, 900, 'rgba(255,255,255,.18)'); }),
+  eleBody: canvasTex(64, 128, (g, w, h) => { const b = ['#d8577e', '#6f7a3a', '#d8577e', '#6f7a3a', '#d8577e', '#6f7a3a', '#d8577e', '#6f7a3a', '#d8577e']; b.forEach((c, i) => { g.fillStyle = c; g.fillRect(0, i * h / 9, w, h / 9 + 1); }); fuzz(g, w, h, 500, 'rgba(255,255,255,.15)'); }),
+  eleFore: canvasTex(128, 64, (g, w, h) => { g.fillStyle = '#6f7a3a'; g.fillRect(0, 0, w, h); g.fillStyle = '#e0628a'; g.fillRect(0, h * 0.35, w, h * 0.12); g.fillRect(w * 0.2, h * 0.65, w * 0.8, h * 0.1); g.fillRect(w * 0.85, 0, w * 0.15, h); fuzz(g, w, h, 600, 'rgba(255,230,230,.15)'); }),
+  eleHind: canvasTex(128, 64, (g, w, h) => { g.fillStyle = '#e0628a'; g.fillRect(0, 0, w, h); g.fillStyle = '#2a1a1a'; g.fillRect(0, 0, w * 0.3, h); }),
+  spot22: canvasTex(128, 64, (g, w, h) => { g.fillStyle = '#f2cf1a'; g.fillRect(0, 0, w, h); g.fillStyle = '#141414'; for (let i = 0; i < 11; i++) { g.beginPath(); g.arc(w * (0.1 + (i % 4) * 0.25 + (Math.floor(i / 4) % 2) * 0.1), h * (0.18 + Math.floor(i / 4) * 0.3), 4.5, 0, TAU); g.fill(); } }),
+});
+
 /* ============================================================
    Points (glows, particles, motes)
    ============================================================ */
@@ -834,13 +945,18 @@ function flapWings(model, t, rate, amp, base = 0) {
   for (const w of model.wings) w.p.rotation.z = w.side * (base + w.dih + Math.sin(t * rate + w.ph) * amp);
 }
 
-function makeRider() {
+function makeRider(gear = Prog.gear()) {
+  const pickG = (slot) => GEAR[slot].find((x) => x.id === gear[slot]) || GEAR[slot][0];
   const g = new THREE.Group();
   const suit = stdMat('#c7792b'), skin = stdMat('#efc39b'), helm = stdMat('#5a3b22', { r: 0.45 }), boots = stdMat('#3a2a1c');
-  const gog = stdMat('#41d8c6', { m: 0.6, r: 0.2, e: '#0e5c55', ei: 0.7 }), scarfM = stdMat('#e2463a', { side: THREE.DoubleSide });
+  const gc = pickG('goggles').c, gog = stdMat(gc, { m: 0.6, r: 0.2, e: gc, ei: 0.25 }), scarfM = stdMat(pickG('scarf').c, { side: THREE.DoubleSide });
   const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.1, 0.17, 4, 8), suit); torso.position.set(0, 0.2, -0.02); torso.rotation.x = 0.45; g.add(torso);
   P(g, GEO.sph, skin, 0, 0.43, 0.08, 0.1);
-  P(g, GEO.hemi, helm, 0, 0.445, 0.07, 0.115, 0.1, 0.12, -0.2);
+  const hs = gear.helmet;
+  if (hs === 'acorn') { P(g, GEO.hemi, stdMat('#a87a42', { r: 0.9, flat: true }), 0, 0.44, 0.07, 0.13, 0.11, 0.135, -0.2); P(g, GEO.torus, stdMat('#7a5428', { r: 0.9 }), 0, 0.445, 0.07, 0.125, 0.125, 0.06, Math.PI / 2 - 0.2); P(g, GEO.cylLo, stdMat('#5a3a1e'), 0, 0.56, 0.05, 0.012, 0.06, 0.012); }
+  else if (hs === 'petal') { const pm = stdMat('#f08ab8', { side: THREE.DoubleSide, r: 0.7 }); for (let i = 0; i < 6; i++) { const a = (i / 6) * TAU; P(g, GEO.sphLo, pm, Math.cos(a) * 0.08, 0.5, 0.07 + Math.sin(a) * 0.08, 0.07, 0.02, 0.05, 0.5, -a + Math.PI / 2, 0); } P(g, GEO.sphLo, stdMat('#f5c430'), 0, 0.54, 0.07, 0.04); }
+  else if (hs === 'shell') P(g, GEO.hemi, stdMat('#ffffff', { map: TEX.ladybird, r: 0.3 }), 0, 0.445, 0.07, 0.125, 0.11, 0.13, -0.2);
+  else P(g, GEO.hemi, helm, 0, 0.445, 0.07, 0.115, 0.1, 0.12, -0.2);
   P(g, GEO.sph, gog, 0.042, 0.45, 0.165, 0.032); P(g, GEO.sph, gog, -0.042, 0.45, 0.165, 0.032);
   for (const s of [-1, 1]) {
     limb(g, suit, new V3(s * 0.09, 0.28, 0.04), new V3(s * 0.1, 0.18, 0.2), 0.03);
@@ -853,10 +969,10 @@ function makeRider() {
   return { root: g, scarf, sm };
 }
 
-function modelDragonfly() {
-  const g = new THREE.Group(), wings = [];
-  const blue = stdMat('#2d7fe6', { r: 0.3, m: 0.3 }), black = stdMat('#151a1e', { r: 0.5 }), green = stdMat('#4c9a46', { r: 0.35, m: 0.2 });
-  const eye = stdMat('#22b9cc', { r: 0.15, m: 0.4, e: '#0b4a55', ei: 0.5 });
+function modelDragonfly(v) {
+  const g = new THREE.Group(), wings = [], rd = v === 'darter';
+  const blue = stdMat(rd ? '#c8322a' : '#2d7fe6', { r: 0.3, m: 0.3 }), black = stdMat('#151a1e', { r: 0.5 }), green = stdMat(rd ? '#8a4a32' : '#4c9a46', { r: 0.35, m: 0.2 });
+  const eye = stdMat(rd ? '#b23a2a' : '#22b9cc', { r: 0.15, m: 0.4, e: rd ? '#4a0e08' : '#0b4a55', ei: 0.5 });
   P(g, GEO.sph, green, 0, 0, 0.55, 0.34, 0.36, 0.5);
   P(g, GEO.sph, black, 0, 0.0, 0.98, 0.25, 0.22, 0.2);
   P(g, GEO.sph, eye, 0.16, 0.08, 1.06, 0.2, 0.21, 0.2); P(g, GEO.sph, eye, -0.16, 0.08, 1.06, 0.2, 0.21, 0.2);
@@ -874,9 +990,10 @@ function modelDragonfly() {
   for (const s of [1, -1]) { addWing(g, fw, wingClear, s * 0.12, 0.22, 0.72, s, 0.05, 0, wings); addWing(g, hw, wingClear, s * 0.12, 0.2, 0.42, s, 0.2, Math.PI * 0.55, wings); }
   return { root: g, wings, riderAt: new V3(0, 0.3, 0.45), riderScale: 1.05, flapRate: 30, flapAmp: 0.55, legs: null };
 }
-function modelHoneybee() {
-  const g = new THREE.Group(), wings = [];
-  const fuzzM = stdMat('#b0742c', { r: 0.95 }), dark = stdMat('#241a12', { r: 0.6 }), stripe = stdMat('#ffffff', { map: TEX.bee, r: 0.85 });
+function modelHoneybee(v) {
+  const g = new THREE.Group(), wings = [], bb = v === 'bumblebee';
+  const fuzzM = stdMat(bb ? '#1f1a16' : '#b0742c', { r: 0.95 }), dark = stdMat('#241a12', { r: 0.6 }), stripe = stdMat('#ffffff', { map: bb ? TEX.bumble : TEX.bee, r: 0.85 });
+  if (bb) P(g, GEO.sph, stdMat('#e8c23a', { r: 1 }), 0, 0.12, 0.66, 0.4, 0.32, 0.16);
   const eye = stdMat('#15100c', { r: 0.2, m: 0.3 }), pollenM = stdMat('#f5b821', { r: 0.8, e: '#6b4300', ei: 0.4 });
   P(g, GEO.sph, fuzzM, 0, 0.05, 0.35, 0.42, 0.4, 0.45);
   P(g, GEO.sph, dark, 0, 0, 0.84, 0.27, 0.3, 0.23);
@@ -891,12 +1008,13 @@ function modelHoneybee() {
   }
   const fw = wingGeo(1.25, 0.4, 0.2), hw = wingGeo(0.85, 0.3, 0.4);
   for (const s of [1, -1]) { addWing(g, fw, wingClear, s * 0.16, 0.3, 0.45, s, 0.35, 0, wings, 0.15); addWing(g, hw, wingClear, s * 0.16, 0.28, 0.24, s, 0.55, 0.3, wings, 0.15); }
-  return { root: g, wings, baskets, riderAt: new V3(0, 0.38, 0.38), riderScale: 0.95, flapRate: 62, flapAmp: 0.95 };
+  if (bb) g.scale.setScalar(1.15);
+  return { root: g, wings, baskets, riderAt: new V3(0, 0.38, 0.38), riderScale: bb ? 0.85 : 0.95, flapRate: bb ? 50 : 62, flapAmp: 0.95 };
 }
-function modelHawkmoth() {
-  const g = new THREE.Group(), wings = [];
-  const fur = stdMat('#6b5a4c', { r: 1 }), body = stdMat('#ffffff', { map: TEX.mothBody, r: 0.9 }), eye = stdMat('#3a1c14', { r: 0.2, m: 0.3, e: '#2a0d06', ei: 0.4 });
-  const fore = stdMat('#ffffff', { map: TEX.mothFore, side: THREE.DoubleSide, r: 0.95 }), hind = stdMat('#ffffff', { map: TEX.mothHind, side: THREE.DoubleSide, r: 0.95 });
+function modelHawkmoth(v) {
+  const g = new THREE.Group(), wings = [], el = v === 'elephant';
+  const fur = stdMat(el ? '#7a7a3e' : '#6b5a4c', { r: 1 }), body = stdMat('#ffffff', { map: el ? TEX.eleBody : TEX.mothBody, r: 0.9 }), eye = stdMat('#3a1c14', { r: 0.2, m: 0.3, e: '#2a0d06', ei: 0.4 });
+  const fore = stdMat('#ffffff', { map: el ? TEX.eleFore : TEX.mothFore, side: THREE.DoubleSide, r: 0.95 }), hind = stdMat('#ffffff', { map: el ? TEX.eleHind : TEX.mothHind, side: THREE.DoubleSide, r: 0.95 });
   P(g, GEO.sph, fur, 0, 0.02, 0.3, 0.46, 0.43, 0.52);
   P(g, GEO.sph, fur, 0, -0.02, 0.84, 0.3, 0.28, 0.26);
   P(g, GEO.sph, eye, 0.2, 0.02, 0.92, 0.14); P(g, GEO.sph, eye, -0.2, 0.02, 0.92, 0.14);
@@ -907,9 +1025,9 @@ function modelHawkmoth() {
   for (const s of [1, -1]) { addWing(g, hw, hind, s * 0.2, 0.2, 0.15, s, 0.6, 0.25, wings, 0.05); addWing(g, fw, fore, s * 0.2, 0.25, 0.45, s, 0.4, 0, wings, 0.05); }
   return { root: g, wings, riderAt: new V3(0, 0.38, 0.32), riderScale: 1.05, flapRate: 26, flapAmp: 0.7 };
 }
-function modelLadybird() {
-  const g = new THREE.Group(), wings = [];
-  const black = stdMat('#121212', { r: 0.35, m: 0.2 }), white = stdMat('#f2f0e8', { r: 0.4 }), red = stdMat('#ffffff', { map: TEX.ladybird, r: 0.25, m: 0.1, side: THREE.DoubleSide });
+function modelLadybird(v) {
+  const g = new THREE.Group(), wings = [], yl = v === 'spot22';
+  const black = stdMat('#121212', { r: 0.35, m: 0.2 }), white = stdMat('#f2f0e8', { r: 0.4 }), red = stdMat('#ffffff', { map: yl ? TEX.spot22 : TEX.ladybird, r: 0.25, m: 0.1, side: THREE.DoubleSide });
   P(g, GEO.sph, black, 0, -0.08, 0, 0.6, 0.4, 0.8);
   P(g, GEO.sph, black, 0, 0.1, 0.58, 0.44, 0.3, 0.32);
   P(g, GEO.sph, white, 0.24, 0.18, 0.7, 0.1, 0.07, 0.08); P(g, GEO.sph, white, -0.24, 0.18, 0.7, 0.1, 0.07, 0.08);
@@ -940,6 +1058,7 @@ const PM = {
   frog: stdMat('#5f9a3a', { r: 0.45, flat: true }), frogDark: stdMat('#3d6a26', { r: 0.5, flat: true }), frogBelly: stdMat('#e3e2b4', { r: 0.6 }),
   frogEye: stdMat('#d9a628', { r: 0.2, m: 0.2 }), pupil: stdMat('#0b0b0b', { r: 0.1 }), tongue: stdMat('#e0707e', { r: 0.4 }),
   spider: stdMat('#3a2a1e', { r: 0.6 }),
+  mildew: stdMat('#f4f6ff', { r: 1, e: '#8a94b8', ei: 0.3 }),
 };
 function modelPrey(kind) {
   const g = new THREE.Group(), wings = [];
@@ -954,6 +1073,9 @@ function modelPrey(kind) {
     P(g, GEO.sphLo, m, 0, 0, 0, 0.12, 0.11, 0.2); P(g, GEO.sphLo, m, 0, 0, -0.22, 0.08, 0.08, 0.18); P(g, GEO.sphLo, m, 0, 0.02, 0.16, 0.07);
     const w = wingGeo(0.28, 0.1, 0.3); for (const s of [1, -1]) addWing(g, w, wingClear, s * 0.04, 0.08, 0.02, s, 0.6, 0, wings);
     g.scale.setScalar(1.7);
+  } else if (kind === 'mildew') {
+    for (let i = 0; i < 5; i++) P(g, GEO.sphLo, PM.mildew, MR(-0.18, 0.18), MR(-0.02, 0.1), MR(-0.18, 0.18), MR(0.09, 0.17));
+    g.scale.setScalar(2.1);
   } else if (kind === 'aphid') {
     P(g, GEO.sphLo, PM.aphid, 0, 0, -0.03, 0.17, 0.15, 0.25); P(g, GEO.sphLo, PM.aphid, 0, 0.01, 0.2, 0.08);
     for (const s of [-1, 1]) limb(g, PM.aphid, new V3(s * 0.08, 0.06, -0.2), new V3(s * 0.1, 0.16, -0.3), 0.015);
@@ -1409,12 +1531,13 @@ function buildWeb(x, z, y, r, yaw, anchorDist, gy) {
   return { grp, r, alive: true, respawn: 0, inv: new THREE.Matrix4().copy(grp.matrixWorld).invert() };
 }
 
-function loadHabitat(key) {
+function loadHabitat(key, seed = HABITATS[key].seed) {
   if (world) { scene.remove(world.group); disposeTree(world.group); }
   const H = HABITATS[key];
-  rng = mulberry32(H.seed); noiseSeed = H.seed;
+  rng = mulberry32(seed); noiseSeed = seed;
   const group = new THREE.Group(); scene.add(group);
   world = { key, H, group, flowers: [], cyl: [], sph: [], pads: [], reeds: [], aphidSpots: [], prey: [], wasps: [], birds: [], frogs: [], webs: [], water: H.water ?? null, flat: null, nestPos: new V3(H.nestAt[0], 0, H.nestAt[1]) };
+  world.seed = seed;
   world.height = makeHeight(H);
   world.flat = [{ x: H.nestAt[0], z: H.nestAt[1], r: 12, y: world.height(H.nestAt[0], H.nestAt[1]) }];
   if (H.pond) world.flat[0].y = Math.max(world.flat[0].y, 2.5);
@@ -1464,7 +1587,7 @@ function preyHome(kind) {
     for (let i = 0; i < 25; i++) { const [x, z] = pondPoint(0.2); if (!world.frogs.some((f) => Math.hypot(f.pos.x - x, f.pos.z - z) < 17)) return new V3(x, world.water + R(2.5, 9), z); }
     const [x, z] = pondPoint(0.2); return new V3(x, world.water + R(4, 9), z);
   }
-  if (kind === 'aphid') return pick(world.aphidSpots).clone();
+  if (PREY[kind].sits) return pick(world.aphidSpots).clone();
   const pool = world.flowers.filter((f) => (kind === 'midge' ? f.kind !== 'lavender' : true));
   const f = pick(pool.length ? pool : world.flowers);
   return f.head.clone().add(new V3(R(-4, 4), R(1, 6), R(-4, 4)));
@@ -1477,17 +1600,17 @@ function buildEntities() {
     m.root.position.set(p.x, world.water + 0.1, p.z); m.root.rotation.y = Math.atan2(-p.x, -p.z); m.root.scale.setScalar(0.85);
     world.frogs.push({ m, pos: m.root.position.clone(), state: 'idle', t: 0, cd: R(0, 2), target: new V3(), len: 0, hit: false });
   }
-  const reserves = [[H.flyer, 16], ['aphid', 20]];
+  const reserves = [[H.flyer, 16], ['aphid', 20], ['mildew', 20]];
   for (const [kind, n] of reserves) for (let i = 0; i < n; i++) {
     const m = modelPrey(kind); m.root.visible = false; world.group.add(m.root);
     world.prey.push({ kind, m, reserve: true, home: new V3(), pos: new V3(0, -99, 0), vel: new V3(), target: new V3(), timer: 0, alive: false, respawn: Infinity, ph: R(0, TAU) });
   }
-  for (const [kind, n] of H.prey) {
+  for (const [kind, n] of [...H.prey, ['mildew', 16]]) {
     let home = null;
     for (let i = 0; i < n; i++) {
-      if (kind !== 'aphid' && (i % 4 === 0 || !home)) home = preyHome(kind);
+      if (!PREY[kind].sits && (i % 4 === 0 || !home)) home = preyHome(kind);
       const m = modelPrey(kind); world.group.add(m.root);
-      world.prey.push({ kind, m, home: kind === 'aphid' ? preyHome(kind) : home.clone(), pos: new V3(), vel: new V3(), target: new V3(), timer: 0, alive: true, respawn: 0, ph: R(0, TAU) });
+      world.prey.push({ kind, m, home: PREY[kind].sits ? preyHome(kind) : home.clone(), pos: new V3(), vel: new V3(), target: new V3(), timer: 0, alive: true, respawn: 0, ph: R(0, TAU) });
     }
   }
   for (let i = 0; i < H.wasps; i++) {
@@ -1511,7 +1634,7 @@ function buildEntities() {
 function spawnSwarm(kind) {
   const pool = world.prey.filter((p) => p.reserve && p.kind === kind);
   let center;
-  if (kind === 'aphid') {
+  if (PREY[kind].sits) {
     const far = world.aphidSpots.filter((a) => a.distanceTo(player.pos) > 50 && a.distanceTo(player.pos) < 140);
     center = (far.length ? pick(far) : pick(world.aphidSpots)).clone();
     const spots = world.aphidSpots.slice().sort((a, b) => a.distanceTo(center) - b.distanceTo(center));
@@ -1520,8 +1643,8 @@ function spawnSwarm(kind) {
     center = preyHome(kind); for (let i = 0; i < 8 && center.distanceTo(player.pos) < 50; i++) center = preyHome(kind);
     pool.forEach((p) => { p.home.copy(center); p.pos.copy(center).add(new V3(MR(-4, 4), MR(-1, 3), MR(-4, 4))); });
   }
-  for (const p of pool) { p.alive = true; p.respawn = Infinity; p.vel.set(0, 0, 0); p.target.copy(p.pos); p.m.root.visible = true; p.m.root.position.copy(p.pos); p.m.root.scale.setScalar(kind === 'aphid' ? 2.1 : 1.7); }
-  FX.burst(center, '#ffffff', 30, 6, 1.2, 0.7);
+  for (const p of pool) { p.alive = true; p.respawn = Infinity; p.vel.set(0, 0, 0); p.target.copy(p.pos); p.m.root.visible = true; p.m.root.position.copy(p.pos); p.m.root.scale.setScalar(PREY[kind].sits ? 2.1 : 1.7); }
+  if (game.state === 'play') FX.burst(center, '#ffffff', 30, 6, 1.2, 0.7);
   return center;
 }
 function startRaid() {
@@ -1532,10 +1655,10 @@ function startRaid() {
   });
 }
 function placePrey(p, fresh) {
-  if (!fresh && p.kind !== 'aphid' && Math.random() < 0.5) p.home = preyHome(p.kind);
-  if (p.kind === 'aphid') { p.home = preyHome('aphid'); p.pos.copy(p.home); p.m.root.rotation.set(0, MR(0, TAU), 0); }
+  if (!fresh && !PREY[p.kind].sits && Math.random() < 0.5) p.home = preyHome(p.kind);
+  if (PREY[p.kind].sits) { p.home = preyHome('aphid'); p.pos.copy(p.home); p.m.root.rotation.set(0, MR(0, TAU), 0); }
   else p.pos.copy(p.home).add(new V3(MR(-3, 3), MR(-1, 2), MR(-3, 3)));
-  p.vel.set(0, 0, 0); p.target.copy(p.pos); p.alive = true; p.m.root.visible = true; p.m.root.position.copy(p.pos); p.m.root.scale.setScalar(p.kind === 'aphid' ? 2.1 : 1.7);
+  p.vel.set(0, 0, 0); p.target.copy(p.pos); p.alive = true; p.m.root.visible = true; p.m.root.position.copy(p.pos); p.m.root.scale.setScalar(PREY[p.kind].sits ? 2.1 : 1.7);
 }
 function resetEntities() {
   for (const p of world.prey) { p.noLockUntil = 0; if (p.reserve) { p.alive = false; p.respawn = Infinity; p.m.root.visible = false; p.pos.set(0, -99, 0); } else placePrey(p, true); }
@@ -1563,7 +1686,7 @@ scene.add(player.shadow);
 function setMount(key) {
   const m = MOUNTS[key]; player.mount = m;
   if (player.model) player.group.remove(player.model.root);
-  player.model = MOUNT_MODEL[key]();
+  player.model = MOUNT_MODEL[m.base || key](key);
   player.rider = makeRider();
   player.rider.root.position.copy(player.model.riderAt); player.rider.root.scale.setScalar(player.model.riderScale);
   player.model.root.add(player.rider.root);
@@ -1686,6 +1809,7 @@ const HOW = {
   nectar: () => 'Hover inside a glowing flower until the ring fills',
   defeat: () => `Lock on and ${isTouch ? 'tap' : 'press Space'} to drive them off`,
   dodge: () => 'When the alarm sounds, drop into the grass, or turn hard just before it reaches you',
+  ring: () => 'Fly through each gold hex ring in order. Dive between rings to keep your speed up',
 };
 
 function addScore(pts, at, cls = '') { const v = Math.round(pts); game.score += v; popAt(at, `+${v}`, cls); }
@@ -1702,7 +1826,7 @@ function toast(text, sub = '', dur = 2.2) { toastEl.innerHTML = ''; toastEl.appe
 const alertEl = $('#alert');
 function alertMsg(text, dur = 1.8) { alertEl.textContent = text; alertEl.hidden = false; game.alertT = dur; }
 function hitStop(t) { game.hitStop = Math.max(game.hitStop, t); }
-function bumpCombo() { game.combo = Math.min(5, game.comboT > 0 ? game.combo + 1 : 1); game.comboT = 4; }
+function bumpCombo() { game.combo = Math.min(5, game.comboT > 0 ? game.combo + 1 : 1); game.comboT = 4; game.maxCombo = Math.max(game.maxCombo || 1, game.combo); }
 
 function onEvent(type, kind, n = 1) {
   let finishedNow = false;
@@ -1717,10 +1841,13 @@ function onEvent(type, kind, n = 1) {
     }
   }
   renderObjectives();
-  if (finishedNow && game.obj.every((x) => x.done) && !game.ending && game.stageT <= 0) {
+  if (finishedNow && game.obj.every((x) => x.done) && !game.ending && game.stageT <= 0 && !(game.otT > 0)) {
     game.tele.stageAt.push(Math.round(game.tele.playT));
-    if (game.stage < game.stages.length - 1) { game.stageT = 1.6; toast(`Stage ${game.stage + 1} clear!`, '+20 seconds', 1.6); FX.burst(player.pos, '#ffd34a', 30, 10, 1, 0.7); }
-    else { game.ending = 2.6; Sound.sfx.win(); toast('Habitat mastered!', `${Math.ceil(game.time)} seconds to spare`, 2.6); FX.burst(player.pos, '#ffd34a', 40, 12, 1.2, 0.8); FX.burst(player.pos, '#41d8c6', 30, 10, 1.2, 0.7); }
+    if (game.overtime) { const w = game.overtime.wave; game.overtime.cleared = w; addScore(300 * w, player.pos.clone().add(new V3(0, 2, 0))); toast(`Wave ${w} clear!`, 'Next wave incoming', 1.6); game.otT = 1.6; FX.burst(player.pos, '#ffd34a', 30, 10, 1, 0.7); }
+    else if (game.stage < game.stages.length - 1) { game.stageT = 1.6; toast(`Stage ${game.stage + 1} clear!`, '+20 seconds', 1.6); FX.burst(player.pos, '#ffd34a', 30, 10, 1, 0.7); }
+    else if (run.mode === 'race') finishRace();
+    else if (run.campaign) { bankWin(); game.ending = 2.6; Sound.sfx.win(); toast(`Leg ${run.campaign.i + 1} complete!`, run.campaign.i < 3 ? 'Choose an upgrade for the next leg' : 'The migration is complete!', 2.6); FX.burst(player.pos, '#ffd34a', 40, 12, 1.2, 0.8); }
+    else startOvertime();
   }
 }
 function setStage(i) {
@@ -1732,7 +1859,7 @@ function setStage(i) {
   if (st.raid) startRaid();
   if (i > 0) { for (const b of world.birds) b.attackT = Math.min(b.attackT, MR(5, 9)); game.time += 20; Sound.sfx.objective(); }
   const sub = st.raid ? 'Wasps are raiding the hive!' : st.swarm ? `A ${st.swarm === 'aphid' ? 'colony of aphids' : 'swarm'} has appeared. Follow the arrow` : game.obj.map((o) => `${o.label} ×${o.target}`).join(' · ');
-  toast(`Stage ${i + 1}: ${st.name}`, sub, 3);
+  if (run.mode !== 'race') toast(`Stage ${i + 1}: ${st.name}`, sub, 3);
   return where;
 }
 function hurt(amount, from, label) {
@@ -1760,6 +1887,7 @@ function objectiveWants() {
 function updateTargeting() {
   const M = player.mount, aim = player.aim, now = uTime.value, W = objectiveWants();
   if (player.swoopT > 0 && player.swoop) return;
+  if (run.risk.nolock || run.mode === 'race') { player.lock = null; return; }
   let best = null, bestS = Infinity;
   const consider = (type, ref, p, wanted) => {
     if (ref && ref.noLockUntil > now) return;
@@ -1866,7 +1994,7 @@ function updatePlayer(dt) {
   const thrusting = input.thrust && player.stunT <= 0;
   player.thr = damp(player.thr, thrusting ? 1 : 0, thrusting ? 3.2 : 2.2, dt);
   player.boosting = input.boost && thrusting && player.stamina > 1;
-  if (player.boosting) player.stamina -= M.drain * dt; else player.stamina = Math.min(M.stamina, player.stamina + (thrusting ? 8 : 18) * dt);
+  if (player.boosting) player.stamina -= M.drain * run.fx.drain * dt; else player.stamina = Math.min(M.stamina, player.stamina + (thrusting ? 8 : 18) * run.fx.regen * dt);
   player.strikeCD -= dt; player.strikeT -= dt;
   if (input.strike) { input.strike = false; tryStrike(); }
   const f = player.fwd;
@@ -1874,7 +2002,7 @@ function updatePlayer(dt) {
     player.swoopT -= dt;
     const to = _v.subVectors(sw, player.pos), d = to.length(), spd = Math.max(M.boost * 1.15, 34), S = player.swoop;
     player.vel.lerp(to.multiplyScalar(spd / Math.max(d, 0.001)), 1 - Math.exp(-14 * dt));
-    if (S.type === 'prey' && S.ref.kind !== 'aphid' && !S.juked && d < 6) {
+    if (S.type === 'prey' && !PREY[S.ref.kind].sits && !S.juked && d < 6) {
       S.juked = true;
       if (S.startD > 18 && Math.random() < [0.35, 0.5, 0.65][game.stage]) {
         const p = S.ref, side = new V3(-player.vel.z, MR(-0.3, 0.6), player.vel.x).normalize().multiplyScalar(Math.random() < 0.5 ? 16 : -16);
@@ -1884,7 +2012,7 @@ function updatePlayer(dt) {
     }
     if (player.swoop) { if (d < 2.2) arriveSwoop(true); else if (player.swoopT <= 0) arriveSwoop(d < 3.2); }
   } else {
-    let tgt = (player.boosting ? M.boost : M.cruise) * player.thr;
+    let tgt = (player.boosting ? M.boost : M.cruise) * player.thr * run.fx.speed;
     tgt += (M.cruise * 0.8 * Math.max(0, -f.y) - M.cruise * 0.3 * Math.max(0, f.y)) * player.thr;
     const desired = _v2.copy(f).multiplyScalar(tgt);
     if (input.back) desired.copy(f).multiplyScalar(-6);
@@ -1895,6 +2023,7 @@ function updatePlayer(dt) {
   }
   player.pos.addScaledVector(player.vel, dt).addScaledVector(player.knock, dt);
   player.knock.multiplyScalar(Math.exp(-3 * dt));
+  if (run.twist === 'breezy') player.pos.addScaledVector(run.windV, dt * (player.clinging ? 0.25 : 1));
   player.speed = player.vel.length();
   // ground & water: a soft, bouncy floor
   const gy = world.height(player.pos.x, player.pos.z);
@@ -2019,9 +2148,9 @@ function updateWasps(dt, playing) {
     if (w.state === 'patrol') {
       if (w.t <= 0 || w.pos.distanceToSquared(w.target) < 4) { w.target.copy(w.home).add(new V3(MR(-25, 25), MR(3, 14), MR(-25, 25))); w.t = MR(2, 4); }
       des.subVectors(w.target, w.pos).normalize().multiplyScalar(8);
-      if (playing && !player.dead && d < 38 && w.aggroCD <= 0) { w.state = 'chase'; w.t = 8; if (game.alertT <= 0) alertMsg(M.fights ? 'Wasp incoming! Lock on and strike' : 'Wasp incoming! Fly away', 1.6); Sound.tone(180, 240, 0.4, 'sawtooth', 0.05); }
+      if (playing && !player.dead && d < 38 * run.fx.waspRange && w.aggroCD <= 0) { w.state = 'chase'; w.t = 8; if (game.alertT <= 0) alertMsg(M.fights ? 'Wasp incoming! Lock on and strike' : 'Wasp incoming! Fly away', 1.6); Sound.tone(180, 240, 0.4, 'sawtooth', 0.05); }
     } else {
-      des.copy(toP).normalize().multiplyScalar(13 + game.stage);
+      des.copy(toP).normalize().multiplyScalar(13 + game.stage + run.fx.waspSpeed);
       if (w.t <= 0 || d > 70 || player.dead) { w.state = 'patrol'; w.aggroCD = 5; w.t = 0; }
     }
     if (w.stun > 0) des.set(0, 0, 0);
@@ -2057,7 +2186,7 @@ function updateBirds(dt, playing) {
         if (b.attackT <= 0) { b.state = 'warn'; b.t = 1.8; if (bat) Sound.sfx.batWarn(); else Sound.sfx.warn(); alertMsg(bat ? 'Bat swooping! Drop into the grass or turn hard' : 'Swallow diving! Drop into the grass or turn hard', 2.4); }
       } else if (b.t <= 0) { b.state = 'dive'; b.t = 3.6; b.hitDone = false; b.targeting = true; b.committed = false; b.minD = Infinity; b.vel.subVectors(player.pos, b.pos).normalize().multiplyScalar(bat ? 42 : 50); b.lost = false; }
     } else if (b.state === 'dive') {
-      const speed = bat ? 42 : 50;
+      const speed = (bat ? 42 : 50) * run.fx.birdSpeed;
       const dNow = b.pos.distanceTo(player.pos);
       if (dNow < 24) b.committed = true;
       if (!b.committed) { const des = _v.copy(player.pos).addScaledVector(player.vel, dNow / speed * 0.8).sub(b.pos).normalize().multiplyScalar(speed); b.vel.lerp(des, 1 - Math.exp(-(bat ? 3.2 : 2.6) * dt)).setLength(speed); }
@@ -2071,7 +2200,7 @@ function updateBirds(dt, playing) {
     } else if (b.state === 'climb') {
       const tgt = _v.set(b.center.x + Math.cos(b.ang) * b.rad, b.alt, b.center.z + Math.sin(b.ang) * b.rad);
       b.vel.lerp(_v2.subVectors(tgt, b.pos).normalize().multiplyScalar(30), 1 - Math.exp(-2 * dt)); b.pos.addScaledVector(b.vel, dt);
-      if (b.pos.y > b.alt - 4 || b.t <= 0) { b.state = 'circle'; b.ang = Math.atan2(b.pos.z - b.center.z, b.pos.x - b.center.x); b.attackT = (bat ? MR(10, 16) : MR(14, 22)) * [1, 0.75, 0.55][game.stage]; }
+      if (b.pos.y > b.alt - 4 || b.t <= 0) { b.state = 'circle'; b.ang = Math.atan2(b.pos.z - b.center.z, b.pos.x - b.center.x); b.attackT = (bat ? MR(10, 16) : MR(14, 22)) * [1, 0.75, 0.55][game.stage] * run.fx.birdFreq * Math.pow(0.88, game.overtime ? game.overtime.wave : 0); }
     }
     b.m.root.position.copy(b.pos);
     if (b.vel.lengthSq() > 1) { b.m.root.lookAt(_v.copy(b.pos).add(b.vel)); if (b.state === 'circle' || b.state === 'warn') b.m.root.rotateZ(-0.5); }
@@ -2116,8 +2245,8 @@ function updateWebs(dt, playing) {
     if (Math.abs(player.pos.x - w.grp.position.x) > w.r + 1 || Math.abs(player.pos.z - w.grp.position.z) > w.r + 1) continue;
     const l = _v.copy(player.pos).applyMatrix4(w.inv);
     if (Math.abs(l.z) < 0.8 && Math.hypot(l.x, l.y) < w.r) {
-      w.alive = false; w.grp.visible = false; w.respawn = 30; player.stunT = 0.8;
-      hurt(6, null, 'Webbed!'); Sound.sfx.web(); FX.burst(player.pos, '#f4f8ff', 20, 5, 0.9, 0.35, 3);
+      w.alive = false; w.grp.visible = false; w.respawn = run.fx.webRespawn; player.stunT = run.fx.webStun;
+      hurt(6 * run.fx.webDmg, null, 'Webbed!'); Sound.sfx.web(); FX.burst(player.pos, '#f4f8ff', 20, 5, 0.9, 0.35, 3);
     }
   }
 }
@@ -2126,7 +2255,7 @@ const SIP_TIME = 0.55;
 function updateFlowers(dt, playing) {
   const M = player.mount, mode = M.flowers, pc = world.pollenPC;
   const gold = new THREE.Color('#ffc93a'), moon = new THREE.Color('#cfe0ff'), dim = new THREE.Color('#6b6b5a');
-  player.collectT -= dt;
+  player.collectT -= dt; player.clinging = false;
   for (const f of world.flowers) {
     if (f.stock < f.max) { f.regen += dt; if (f.regen > 6) { f.regen = 0; f.stock++; } }
     f.visitT -= dt;
@@ -2138,6 +2267,7 @@ function updateFlowers(dt, playing) {
     const dx = player.pos.x - f.head.x, dy = player.pos.y - f.head.y, dzz = player.pos.z - f.head.z;
     const inside = Math.abs(dx) <= f.r + 1 && Math.abs(dzz) <= f.r + 1 && Math.abs(dy) <= f.r + 1.5 && Math.hypot(dx, dy * 0.8, dzz) <= f.r + 0.8;
     if (!inside) { f.sipT = Math.max(0, (f.sipT || 0) - dt * 0.5); continue; }
+    player.clinging = true;
     if (mode === 'pollen') {
       if (f.visitT <= 0) { f.visitT = 8; player.stamina = Math.min(M.stamina, player.stamina + 15); }
       if (has && player.cargo < M.cargo && player.collectT <= 0) {
@@ -2150,9 +2280,9 @@ function updateFlowers(dt, playing) {
       if (!seen) {
         if (player.speed < 11) f.sipT = (f.sipT || 0) + dt;
         if (Math.random() < 0.4) FX.spawn(f.head, new V3(MR(-1, 1), MR(0, 1.5), MR(-1, 1)), '#cfe0ff', 0.5, 0.35);
-        if (f.sipT >= SIP_TIME) {
+        if (f.sipT >= (M.sipTime || SIP_TIME)) {
           game.nectarSeen.add(f.idx); f.sipT = 0; Sound.sfx.nectar(); hitStop(0.04);
-          FX.burst(f.head, '#cfe0ff', 24, 5, 0.9, 0.55); bumpCombo(); game.lastCatchT = uTime.value; addScore((f.nectar ? 110 : 80) * game.combo, f.head.clone(), 'teal');
+          FX.burst(f.head, '#cfe0ff', 24, 5, 0.9, 0.55); bumpCombo(); game.lastCatchT = uTime.value; addScore((f.nectar ? 110 : 80) * game.combo * run.fx.flower, f.head.clone(), 'teal');
           player.stamina = M.stamina; player.health = Math.min(100, player.health + 8); onEvent('nectar');
         }
       }
@@ -2171,7 +2301,7 @@ function updateNest(dt, playing) {
   if (carrying && player.pos.distanceTo(world.nestEntrance) < 7) {
     if (player.deliverT <= 0) {
       player.deliverT = 0.06; player.cargo--; player.deliverN++;
-      game.score += 30 * game.combo; Sound.sfx.deliver(player.deliverN); onEvent('deliver');
+      game.score += 30 * game.combo * run.fx.flower; Sound.sfx.deliver(player.deliverN); onEvent('deliver');
       FX.spawn(player.pos, _v.subVectors(world.nestEntrance, player.pos).multiplyScalar(3), '#ffd34a', 0.4, 0.5);
       if (player.cargo === 0) { FX.burst(world.nestEntrance, '#ffd34a', 30, 8, 0.8, 0.6); hitStop(0.05); game.score += player.deliverN * 15; popAt(world.nestEntrance, `Delivered ${player.deliverN}! +${player.deliverN * 15}`, ''); player.deliverN = 0; player.stamina = M.stamina; bumpCombo(); }
     }
@@ -2249,12 +2379,12 @@ function updateCamera(dt, snap = false) {
 /* ============================================================
    HUD
    ============================================================ */
-const hud = { time: $('#hudTime'), score: $('#hudScore'), combo: $('#hudCombo'), speed: $('#hudSpeed'), health: $('#barHealth'), stam: $('#barStam'), cargo: $('#barCargo'), cargoTxt: $('#cargoTxt'), healthTxt: $('#healthTxt'), stamTxt: $('#stamTxt'), mHealth: $('#mHealth'), mCargo: $('#mCargo'), ring: $('#strikeRing'), reticle: $('#reticle'), lock: $('#lock'), lockLabel: $('#lock span'), lockFill: $('#lockFill'), goalArrow: $('#goalArrow'), goalLabel: $('#goalLabel'), goalMark: $('#goalMark'), coach: $('#coach'), lockHint: $('#lockHint'), frogWarn: $('#frogWarn'), stage: $('#hudStage') };
+const hud = { time: $('#hudTime'), score: $('#hudScore'), combo: $('#hudCombo'), speed: $('#hudSpeed'), health: $('#barHealth'), stam: $('#barStam'), cargo: $('#barCargo'), cargoTxt: $('#cargoTxt'), healthTxt: $('#healthTxt'), stamTxt: $('#stamTxt'), mHealth: $('#mHealth'), mCargo: $('#mCargo'), ring: $('#strikeRing'), reticle: $('#reticle'), lock: $('#lock'), lockLabel: $('#lock span'), lockFill: $('#lockFill'), goalArrow: $('#goalArrow'), goalLabel: $('#goalLabel'), goalMark: $('#goalMark'), coach: $('#coach'), lockHint: $('#lockHint'), frogWarn: $('#frogWarn'), stage: $('#hudStage'), wind: $('#windArrow'), rareMark: $('#rareMark') };
 const cache = {};
 function setText(el, key, v) { if (cache[key] !== v) { cache[key] = v; el.textContent = v; } }
 function renderObjectives() {
   const ul = $('#objList'); ul.innerHTML = '';
-  if (game.stages.length) hud.stage.textContent = `Stage ${game.stage + 1} of ${game.stages.length} · ${game.stages[game.stage].name}`;
+  if (game.stages.length) hud.stage.textContent = game.overtime ? `Overtime · wave ${game.overtime.wave}` : run.mode === 'race' ? 'Ring race' : `Stage ${game.stage + 1} of ${game.stages.length} · ${game.stages[game.stage].name}`;
   const focus = game.obj.find((o) => !o.done);
   for (const o of game.obj) {
     const li = document.createElement('li'); if (o.done) li.className = 'done'; if (o === focus) li.classList.add('focus');
@@ -2277,14 +2407,16 @@ function goalTarget() {
     case 'nectar': return { pos: nearest(world.flowers, (f) => !game.nectarSeen.has(f.idx), (f) => f.head), label: 'Nectar' };
     case 'defeat': return { pos: nearest(world.wasps, (w) => w.alive, (w) => w.pos), label: 'Wasps' };
     case 'skim': return player.overWater ? null : { pos: nearestWater(), label: 'Water' };
+    case 'ring': return run.race && run.race.rings[run.race.next] ? { pos: run.race.rings[run.race.next].c, label: `Ring ${run.race.next + 1}` } : null;
     default: return null;
   }
 }
 const LOCK_LABEL = { flower: { pollen: 'pollen', nectar: 'nectar' }, nest: 'nest', wasp: 'wasp' };
 function updateHUD(dt) {
   const M = player.mount;
-  const t = Math.max(0, Math.ceil(game.time)); setText(hud.time, 'time', `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`);
-  hud.time.classList.toggle('low', t <= 30);
+  const t = Math.max(0, Math.ceil(game.time));
+  if (run.race) setText(hud.time, 'time', fmtTime(run.race.t)); else setText(hud.time, 'time', `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`);
+  hud.time.classList.toggle('low', !run.race && t <= 30);
   setText(hud.score, 'score', game.score.toLocaleString());
   setText(hud.combo, 'combo', game.combo > 1 ? `Combo ×${game.combo}` : '');
   setText(hud.speed, 'speed', player.speed < 1.5 ? 'Hovering' : `${Math.round(player.speed * 1.25)} km/h`);
@@ -2311,7 +2443,7 @@ function updateHUD(dt) {
       hud.lock.classList.toggle('inrange', d <= SWOOP_RANGE || player.swoopT > 0); hud.lock.classList.toggle('side', L.wanted === false);
       const label = L.type === 'prey' ? PREY[L.ref.kind].label : L.type === 'flower' ? LOCK_LABEL.flower[M.flowers] : LOCK_LABEL[L.type];
       setText(hud.lockLabel, 'lockl', d <= SWOOP_RANGE ? `${label} · ${isTouch ? 'tap' : 'Space'}` : label);
-      const fill = L.type === 'flower' && M.flowers === 'nectar' ? (L.ref.sipT || 0) / SIP_TIME : 0;
+      const fill = L.type === 'flower' && M.flowers === 'nectar' ? (L.ref.sipT || 0) / (M.sipTime || SIP_TIME) : 0;
       hud.lockFill.style.strokeDashoffset = String(126 * (1 - clamp(fill, 0, 1)));
     } else hud.lock.hidden = true;
   } else hud.lock.hidden = true;
@@ -2336,6 +2468,14 @@ function updateHUD(dt) {
   let fw = null; for (const f of world.frogs) if (f.state === 'wind') { fw = f; break; }
   hud.frogWarn.hidden = !fw;
   if (fw) { const p = _v2.copy(fw.pos).add(_v3.set(0, 4, 0)).project(camera); const px = clamp((p.z > 1 ? -p.x : p.x), -0.92, 0.92), py = clamp((p.z > 1 ? -p.y : p.y), -0.85, 0.85); hud.frogWarn.style.transform = `translate(${clamp((px + 1) / 2 * innerWidth, 40, innerWidth - 40)}px, ${clamp((1 - py) / 2 * innerHeight, 120, innerHeight - 60)}px)`; }
+  if (run.twist === 'breezy') { const wx = run.windV.x, wz = run.windV.z, y = player.aimYaw; hud.wind.style.transform = `rotate(${Math.atan2(-(Math.cos(y) * wx - Math.sin(y) * wz), Math.sin(y) * wx + Math.cos(y) * wz)}rad) scale(${0.7 + run.windV.length() / 8})`; }
+  const rr = game.rare, showR = rr && !rr.seen && !rr.leaving; hud.rareMark.hidden = !showR;
+  if (showR) {
+    const q = _v2.copy(rr.pos).project(camera); let px = q.x, py = q.y; if (q.z > 1) { px = -px || 0.01; py = -py; }
+    const edge = Math.max(Math.abs(px) / 0.88, Math.abs(py) / 0.8); if (q.z > 1 || edge > 1) { px /= edge; py /= edge; }
+    hud.rareMark.style.transform = `translate(${(px + 1) / 2 * innerWidth}px, ${(1 - py) / 2 * innerHeight}px)`;
+    setText(hud.rareMark.firstElementChild, 'rare', `${JOURNAL.find((e) => e.id === rr.id).name} ${Math.round(rr.pos.distanceTo(player.pos))}`);
+  }
   hud.lockHint.hidden = !(settings.mouse && !isTouch && !mouse.locked && !mouse.lockFailed);
   if (game.toastT > 0) { game.toastT -= dt; if (game.toastT <= 0) toastEl.classList.remove('show'); }
   if (game.alertT > 0) { game.alertT -= dt; if (game.alertT <= 0) alertEl.hidden = true; }
@@ -2393,28 +2533,22 @@ function drawMinimap() {
 /* ============================================================
    Flow: title, play, pause, results
    ============================================================ */
-const screens = { title: $('#title'), pause: $('#pause'), results: $('#results'), hud: $('#hud') };
+const screens = { title: $('#title'), pause: $('#pause'), results: $('#results'), hud: $('#hud'), upgrades: $('#upgrades') };
 function show(name) { for (const [k, el] of Object.entries(screens)) el.hidden = k !== name && !(name === 'pause' && k === 'hud'); document.body.classList.toggle('flying', name === 'hud'); }
 
 function buildTitleCards() {
-  const mc = $('#mounts'); mc.innerHTML = '';
-  for (const k of MOUNT_ORDER) {
-    const m = MOUNTS[k], b = document.createElement('button'); b.className = 'card'; b.type = 'button'; b.setAttribute('aria-pressed', String(sel.mount === k));
-    const stats = Object.entries(m.stats).map(([n, v]) => `<span>${n}</span><span class="pips">${[1, 2, 3, 4, 5].map((i) => `<i class="pip${i <= v ? ' on' : ''}"></i>`).join('')}</span>`).join('');
-    b.innerHTML = `<span class="role">${m.role}</span><h3>${m.name}</h3><span class="latin">${m.latin}</span><p>${m.desc}</p><div class="stats">${stats}</div><div class="foot"><span>Wingbeat ${m.hz} Hz</span><span>${m.diet}</span></div>`;
-    b.addEventListener('click', () => { sel.mount = k; store.set('hexapod-sel', sel); buildTitleCards(); setMount(k); setAtmosphere(world.H, player.mount); });
-    mc.append(b);
-  }
-  $('#selSummary').textContent = `${MOUNTS[sel.mount].name} · ${HABITATS[sel.hab].name}`;
-  const hc = $('#habitats'); hc.innerHTML = '';
-  const best = store.get('hexapod-best', {});
-  for (const k of HAB_ORDER) {
-    const h = HABITATS[k], b = document.createElement('button'); b.className = 'card'; b.type = 'button'; b.setAttribute('aria-pressed', String(sel.hab === k));
-    const bs = best[k + ':' + sel.mount];
-    b.innerHTML = `<span class="role">${h.sub}</span><h3>${h.name}</h3><p>${h.blurb}</p><p class="jobs-for">As a ${MOUNTS[sel.mount].short}, in three stages:</p><ol class="goals">${buildStages(k, sel.mount).map((st) => `<li><b>${st.name}</b> ${st.obj.map((o) => `${o.label.toLowerCase()} ×${o.target}`).join(', ')}</li>`).join('')}</ol><div class="foot"><span>${h.time / 60} minutes</span><span>${bs ? `Best ${'★'.repeat(bs.stars)}${'☆'.repeat(3 - bs.stars)} ${bs.score.toLocaleString()}` : 'Not flown yet'}</span></div>`;
-    b.addEventListener('click', () => { if (sel.hab === k) return; sel.hab = k; store.set('hexapod-sel', sel); buildTitleCards(); switchHabitat(k); });
-    hc.append(b);
-  }
+  if (!sel.mode) sel.mode = 'run'; if (!sel.risk) sel.risk = {};
+  if (!isUnlocked(sel.mount)) sel.mount = MOUNTS[sel.mount].base || 'dragonfly';
+  renderProgress(); renderModes(); renderMounts();
+  const m = sel.mode;
+  $('#habBlock').hidden = !(m === 'run' || m === 'race'); if (!$('#habBlock').hidden) renderHabitats();
+  $('#dailyBlock').hidden = m !== 'daily'; if (m === 'daily') renderDaily();
+  $('#migBlock').hidden = m !== 'migration'; if (m === 'migration') renderMigration();
+  $('#riskBlock').hidden = !(m === 'run' || m === 'migration'); if (!$('#riskBlock').hidden) renderRisk();
+  $('#startBtn').textContent = MODES.find((x) => x.id === m).go;
+  $('#habStepNote').textContent = m === 'race' ? 'each habitat has its own course' : 'jobs depend on your mount';
+  const d = m === 'daily' ? dailySpec() : null;
+  $('#selSummary').textContent = d ? `${MOUNTS[d.mount].name} · ${HABITATS[d.hab].name}` : m === 'migration' ? `${MOUNTS[sel.mount].name} · four habitats` : `${MOUNTS[sel.mount].name} · ${HABITATS[sel.hab].name}`;
 }
 function switchHabitat(k) {
   $('#loading').hidden = false; $('#loadMsg').textContent = `Growing the ${HABITATS[k].name.toLowerCase()}.`;
@@ -2427,51 +2561,13 @@ function afterLoad() {
 }
 function goTitle() {
   releaseLock(); game.state = 'title'; Sound.stopEngine(); Sound.stopMusic(); show('title'); buildTitleCards();
+  run.race = null; run.twist = 'fair'; run.mode = 'title'; Rain.reset(false);
   if (!player.model || player.mount.key !== sel.mount) setMount(sel.mount);
   if (world) { resetEntities(); setAtmosphere(world.H, player.mount); spawnPlayer(); }
+  previewForMode();
 }
-function startRun() {
-  Sound.init(); Sound.resume(); Sound.setMuted(!settings.sound);
-  if (!world || world.key !== sel.hab) { loadHabitat(sel.hab); afterLoad(); }
-  setMount(sel.mount); setAtmosphere(world.H, player.mount);
-  resetEntities(); spawnPlayer(); FX.clear();
-  const H = world.H;
-  Object.assign(game, { tele: newTele(), stage: 0, stages: buildStages(H.key, player.mount.key), stageT: 0, chain: 0, lastCatchT: -9, state: 'play', time: H.time, score: 0, combo: 1, comboT: 0, obj: [], nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, shake: 0, hitStop: 0, camKick: 0 });
-  $('#hudHab').textContent = `${H.name} · ${player.mount.name}`;
-  setStage(0); alertEl.hidden = true; camAllow = 1;
-  thumb.id = null; thumbBase.hidden = true; $('#thumbHint').hidden = true;
-  show('hud'); $('#touchUI').hidden = !isTouch; document.body.classList.toggle('touch', isTouch);
-  onResize(); input.lookX = input.lookY = 0; input.strike = false; mouse.left = false;
-  updateCamera(0, true);
-  Sound.startEngine(player.mount); Sound.startMusic(world.key);
-  startCoach(); canvas.focus();
-}
-function pauseGame() { if (game.state !== 'play') return; game.state = 'pause'; show('pause'); Sound.stopEngine(); Sound.stopMusic(); releaseLock(); mouse.left = false; syncSettingsUI(); }
+function pauseGame() { if (game.state !== 'play') return; game.state = 'pause'; show('pause'); $('#finishBtn').hidden = !game.overtime; Sound.stopEngine(); Sound.stopMusic(); releaseLock(); mouse.left = false; syncSettingsUI(); }
 function resumeGame() { if (game.state !== 'pause') return; game.state = 'play'; show('hud'); Sound.resume(); Sound.startEngine(player.mount); Sound.startMusic(world.key); input.strike = false; requestLock(); canvas.focus(); }
-function endRun(reason) {
-  if (game.state !== 'play') return;
-  game.state = 'end'; game.endReason = reason; Sound.stopEngine(); Sound.stopMusic(); releaseLock(); mouse.left = false;
-  const H = world.H, complete = reason === 'win';
-  const bonus = complete ? Math.round(game.time) * 10 + Math.round(player.health) * 5 : 0;
-  game.score += bonus;
-  const crit = [
-    { t: 'Clear all three stages', ok: complete },
-    { t: 'Finish with at least half your wings intact', ok: complete && player.health >= 50 },
-    { t: `Score ${PAR[player.mount.key].toLocaleString()} or more`, ok: complete && game.score >= PAR[player.mount.key] },
-  ];
-  const stars = crit.filter((c) => c.ok).length;
-  const best = store.get('hexapod-best', {}), key = H.key + ':' + player.mount.key, prev = best[key];
-  const isBest = !prev || game.score > prev.score;
-  best[key] = { score: Math.max(game.score, prev?.score || 0), stars: Math.max(stars, prev?.stars || 0) }; store.set('hexapod-best', best);
-  $('#resTitle').textContent = complete ? 'Habitat mastered' : reason === 'downed' ? 'Downed' : H.night ? 'Dawn broke' : 'Out of daylight';
-  $('#resSub').textContent = `${H.name} on a ${player.mount.name}`;
-  [...$('#resStars').children].forEach((el, i) => el.classList.toggle('on', i < stars));
-  $('#resCrit').innerHTML = crit.map((c) => `<li class="${c.ok ? 'ok' : ''}">${c.t}</li>`).join('');
-  const rows = [['Score', game.score.toLocaleString(), 'big'], ['Stages cleared', `${complete ? game.stages.length : game.stage}/${game.stages.length}`], ...(complete ? [] : game.obj.map((o) => [o.label, `${o.count}/${o.target}`])), ['Clean catches', String(game.tele.clean)], ['Best chain', String(game.tele.chains)], ['Finish bonus', bonus ? `+${bonus.toLocaleString()}` : '—'], ['Best', isBest ? 'New best!' : prev.score.toLocaleString()]];
-  $('#resTally').innerHTML = rows.map(([a, b, c]) => `<dt>${a}</dt><dd class="${c || ''}">${b}</dd>`).join('');
-  hud.coach.hidden = true;
-  setTimeout(() => { if (game.state === 'end') show('results'); }, 400);
-}
 function syncSettingsUI() { $('#optMouse').checked = settings.mouse; $('#optInvert').checked = settings.invert; $('#optSound').checked = settings.sound; $('#optMusic').checked = settings.music; $('#optSens').value = settings.sens; }
 function applySettings() { store.set('hexapod-settings', settings); Sound.setMuted(!settings.sound); Sound.setMusic(settings.music); syncSettingsUI(); }
 $('#optMouse').addEventListener('change', (e) => { settings.mouse = e.target.checked; mouse.lockFailed = false; applySettings(); });
@@ -2479,13 +2575,14 @@ $('#optInvert').addEventListener('change', (e) => { settings.invert = e.target.c
 $('#optSound').addEventListener('change', (e) => { settings.sound = e.target.checked; Sound.init(); applySettings(); });
 $('#optMusic').addEventListener('change', (e) => { settings.music = e.target.checked; applySettings(); });
 $('#optSens').addEventListener('input', (e) => { settings.sens = +e.target.value; applySettings(); });
-$('#startBtn').addEventListener('click', startRun);
+$('#startBtn').addEventListener('click', () => startRunUI(true));
+$('#finishBtn').addEventListener('click', () => { game.state = 'play'; show('hud'); endRun('finish'); });
 $('#helpBtn').addEventListener('click', (e) => { const h = $('#controlsHelp'); h.hidden = !h.hidden; e.currentTarget.setAttribute('aria-expanded', String(!h.hidden)); });
 $('#pauseBtn').addEventListener('click', pauseGame);
 $('#resumeBtn').addEventListener('click', resumeGame);
-$('#restartBtn').addEventListener('click', () => { game.state = 'play'; startRun(); requestLock(); });
+$('#restartBtn').addEventListener('click', () => startRunUI(!run.campaign));
 $('#quitBtn').addEventListener('click', goTitle);
-$('#againBtn').addEventListener('click', () => { startRun(); requestLock(); });
+$('#againBtn').addEventListener('click', () => startRunUI(true));
 $('#menuBtn').addEventListener('click', goTitle);
 
 function recordTele(dt) {
@@ -2501,14 +2598,16 @@ function recordTele(dt) {
 }
 function simulatePlay(dt, rdt) {
     if (game.bot) game.bot(dt); else readInput();
+    if (run.race && run.race.cd > 0) { input.thrust = false; input.strike = false; }
     updatePlayer(dt);
     const playing = !game.ending;
     updatePrey(dt, playing); updateWasps(dt, playing); updateBirds(dt, playing); updateFrogs(dt, playing); updateWebs(dt, playing); updateFlowers(dt, playing); updateNest(dt, playing);
-    updateTargeting(); updateMarks();
+    updateTargeting(); updateMarks(); scanJournal(dt); updateRare(dt); updateTwist(dt); updateRace(dt);
     if (game.state === 'play') {
-      if (!game.ending && !player.dead) { game.time -= dt; if (game.time <= 0) { game.time = 0; endRun('time'); } }
+      if (!game.ending && !player.dead && !(run.race && run.race.cd > 0)) { game.time -= dt; if (game.time <= 0) { game.time = 0; endRun(game.overtime ? 'overtime' : 'time'); } }
       if (game.ending) { game.ending -= dt; if (game.ending <= 0) endRun('win'); }
-      if (game.stageT > 0) { game.stageT -= dt; if (game.stageT <= 0) setStage(game.stage + 1); }
+      if (game.stageT > 0) { game.stageT -= dt; if (game.stageT <= 0 && game.stage + 1 < game.stages.length) setStage(game.stage + 1); }
+      if (game.otT > 0) { game.otT -= dt; if (game.otT <= 0) startWave(); }
       if (game.comboT > 0) { game.comboT -= dt; if (game.comboT <= 0) game.combo = 1; }
       updateCamera(rdt); updateHUD(rdt); updateCoach(rdt);
       recordTele(dt);
@@ -2516,6 +2615,581 @@ function simulatePlay(dt, rdt) {
       Sound.ambience(dt, world.key); Sound.musicTick(clamp(player.speed / player.mount.cruise, 0, 1.5) * 0.6 + (game.combo - 1) * 0.15);
     }
     Motes.update(dt, player.pos);
+}
+
+/* ============================================================
+   Replayability: seeds, twists, risk, daily flight, progression
+   ============================================================ */
+const hashStr = (str) => { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
+const todayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const TWISTS = {
+  fair: { name: 'Fair weather', desc: 'Clear skies and still air.' },
+  breezy: { name: 'Breezy', desc: 'Gusts push you around. Cling to a flower and the wind matters less.' },
+  heatwave: { name: 'Heatwave', desc: 'Stamina drains faster, but flowers are worth double.' },
+  rain: { name: 'Rain shower', desc: 'Flight is heavier, but the birds shelter and dive less.' },
+  swarm: { name: 'Swarm day', desc: 'Extra swarms of prey, and the birds are out in force.' },
+  dusk: { name: 'Dusk', desc: 'The light fades as you fly.' },
+};
+const twistPool = (hab) => ['fair', 'breezy', 'heatwave', 'rain', 'swarm', ...(HABITATS[hab].night ? [] : ['dusk'])];
+const RISKS = {
+  birds: { name: 'Hungry birds', desc: 'Dive more often and faster', mult: 0.2 },
+  wasps: { name: 'Angry wasps', desc: 'Spot you from further, fly faster', mult: 0.15 },
+  webs: { name: 'Sticky webs', desc: 'Hold longer, sting more, regrow fast', mult: 0.1 },
+  nolock: { name: 'No lock-on', desc: 'No hex and no homing swoops', mult: 0.4 },
+};
+const run = { mode: 'run', seed: 0, twist: 'fair', risk: {}, mult: 1, fx: {}, windV: new V3(), windA: 0, base: null, daily: null, campaign: null, race: null };
+function computeFx() {
+  const r = run.risk, t = run.twist, M = player.mount;
+  run.fx = {
+    speed: t === 'rain' && !M.rainProof ? 0.86 : 1,
+    drain: t === 'heatwave' ? 1.5 : 1, regen: t === 'heatwave' ? 0.6 : 1, flower: t === 'heatwave' ? 2 : 1,
+    birdFreq: (t === 'rain' ? 1.6 : t === 'swarm' ? 0.6 : 1) * (r.birds ? 0.6 : 1), birdSpeed: r.birds ? 1.15 : 1,
+    waspRange: r.wasps ? 1.6 : 1, waspSpeed: r.wasps ? 3 : 0,
+    webDmg: r.webs ? 2 : 1, webStun: r.webs ? 1.6 : 0.8, webRespawn: r.webs ? 8 : 30,
+  };
+  run.mult = Math.round((1 + Object.keys(RISKS).reduce((a, k) => a + (r[k] ? RISKS[k].mult : 0), 0)) * 100) / 100;
+}
+function dailySpec(date = todayKey()) {
+  const h = hashStr('hexapod-daily-' + date), hab = HAB_ORDER[h % 4], mount = MOUNT_ORDER[(h >>> 3) % 4];
+  const pool = twistPool(hab).filter((t) => t !== 'fair');
+  return { date, seed: h % 1000000007, hab, mount, twist: pool[(h >>> 7) % pool.length] };
+}
+function dailyStreak() {
+  const d = store.get('hexapod-daily', {}); let n = 0; const day = new Date();
+  for (;;) { if (!d[todayKey(day)]) break; n++; day.setDate(day.getDate() - 1); }
+  return n;
+}
+
+/* atmosphere twists */
+function captureAtmos() {
+  run.base = { fog: scene.fog.density, fogC: scene.fog.color.clone(), hemi: hemi.intensity, sun: sun.intensity, top: skyMat.uniforms.top.value.clone(), hor: skyMat.uniforms.horizon.value.clone() };
+}
+function applyTwistAtmos(t) {
+  const b = run.base; if (!b) return;
+  const top = b.top.clone(), hor = b.hor.clone(), fogC = b.fogC.clone(); let fog = b.fog, hm = b.hemi, sn = b.sun;
+  if (run.twist === 'rain') { const g = new THREE.Color('#7d8a94'); top.lerp(g, 0.6); hor.lerp(g, 0.5); fogC.lerp(g, 0.5); fog *= 1.7; hm *= 0.8; sn *= 0.45; }
+  if (run.twist === 'heatwave') { hor.lerp(new THREE.Color('#ffcf8a'), 0.45); fogC.lerp(new THREE.Color('#f3d2a0'), 0.35); sn *= 1.15; }
+  if (run.twist === 'dusk') {
+    const k = clamp(t, 0, 1);
+    top.lerp(new THREE.Color('#1b2448'), k); hor.lerp(new THREE.Color('#f08a50'), Math.min(1, k * 1.8)).lerp(new THREE.Color('#3a2c4a'), Math.max(0, k * 1.6 - 0.6));
+    fogC.lerp(new THREE.Color('#5a4a5e'), k * 0.8); fog *= 1 + 1.3 * k; hm *= 1 - 0.55 * k; sn *= 1 - 0.7 * k;
+  }
+  skyMat.uniforms.top.value.copy(top); skyMat.uniforms.horizon.value.copy(hor); scene.fog.color.copy(fogC);
+  scene.fog.density = fog; hemi.intensity = hm; sun.intensity = sn;
+}
+const Rain = {
+  n: 600,
+  init() {
+    this.p = new Float32Array(this.n * 3); this.arr = new Float32Array(this.n * 6);
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(this.arr, 3).setUsage(THREE.DynamicDrawUsage)); this.geo = g;
+    this.obj = new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: 0xb8c6d6, transparent: true, opacity: 0.45, depthWrite: false }));
+    this.obj.frustumCulled = false; this.obj.visible = false; scene.add(this.obj);
+  },
+  reset(on) { this.obj.visible = on; const c = camera.position; for (let i = 0; i < this.n; i++) { this.p[i * 3] = c.x + MR(-35, 35); this.p[i * 3 + 1] = c.y + MR(-20, 30); this.p[i * 3 + 2] = c.z + MR(-35, 35); } },
+  update(dt) {
+    if (!this.obj.visible) return; const c = camera.position, P = this.p, A = this.arr;
+    for (let i = 0; i < this.n; i++) {
+      let x = P[i * 3], y = P[i * 3 + 1] - 75 * dt, z = P[i * 3 + 2];
+      if (y < c.y - 22) y += 50; if (x - c.x > 35) x -= 70; else if (x - c.x < -35) x += 70; if (z - c.z > 35) z -= 70; else if (z - c.z < -35) z += 70;
+      P[i * 3] = x; P[i * 3 + 1] = y; P[i * 3 + 2] = z;
+      A.set([x, y, z, x, y + 1.8, z], i * 6);
+    }
+    this.geo.attributes.position.needsUpdate = true;
+  },
+};
+Rain.init();
+function updateTwist(dt) {
+  if (run.twist === 'breezy') {
+    run.windA += dt * 0.05; const gust = 2.6 + 2.2 * Math.sin(uTime.value * 0.45) + 1.6 * Math.max(0, Math.sin(uTime.value * 1.7)) ** 3;
+    run.windV.set(Math.cos(run.windA) * gust, 0, Math.sin(run.windA) * gust);
+  }
+  if (run.twist === 'dusk') applyTwistAtmos(game.tele.playT / 220);
+  Rain.update(dt);
+}
+
+/* ---------- progression store ---------- */
+const Prog = {
+  best: () => store.get('hexapod-best', {}),
+  medals: () => store.get('hexapod-medals', {}),
+  journal: () => store.get('hexapod-journal', {}),
+  gear: () => Object.assign({ scarf: 'red', helmet: 'leather', goggles: 'teal' }, store.get('hexapod-gear', {})),
+  stars() { return Object.values(this.best()).reduce((a, b) => a + (b.stars || 0), 0); },
+  medalCount() { return Object.values(this.medals()).reduce((a, m) => a + Object.values(m).filter(Boolean).length, 0); },
+};
+const isUnlocked = (k) => !MOUNTS[k].unlock || Prog.stars() >= MOUNTS[k].unlock;
+const MEDALS = {
+  untouched: { name: 'Untouched', desc: 'Clear the stages without taking damage' },
+  swift: { name: 'Swift', desc: 'Clear the stages within 2 minutes' },
+  combo: { name: 'Combo ×5', desc: 'Reach a ×5 combo' },
+  freehand: { name: 'Freehand', desc: 'Clear the stages without a single swoop' },
+};
+const GEAR = {
+  scarf: [{ id: 'red', name: 'Poppy red', c: '#e2463a', need: 0 }, { id: 'teal', name: 'Damselfly teal', c: '#2fbfb0', need: 1 }, { id: 'gold', name: 'Pollen gold', c: '#f5b821', need: 3 }, { id: 'violet', name: 'Iris violet', c: '#7a55d6', need: 5 }, { id: 'white', name: 'Moonflower white', c: '#eef2ff', need: 8 }],
+  helmet: [{ id: 'leather', name: 'Leather cap', need: 0 }, { id: 'acorn', name: 'Acorn cup', need: 2 }, { id: 'petal', name: 'Petal bonnet', need: 6 }, { id: 'shell', name: 'Ladybird shell', need: 10 }],
+  goggles: [{ id: 'teal', name: 'Teal lenses', c: '#41d8c6', need: 0 }, { id: 'amber', name: 'Amber lenses', c: '#f2a23a', need: 4 }, { id: 'rose', name: 'Rose lenses', c: '#ff7aa8', need: 7 }],
+};
+
+/* ---------- field journal ---------- */
+const JOURNAL = [
+  { id: 'mosquito', cat: 'Prey', name: 'Common house mosquito', latin: 'Culex pipiens', where: 'Over the lily pond', fact: 'Only females bite: they need a blood meal to make eggs. Their larvae hang under the water surface, breathing through a snorkel.' },
+  { id: 'gnat', cat: 'Prey', name: 'Fungus gnat', latin: 'Sciaridae', where: 'Meadow and hedgerow flowers', fact: 'Tiny flies that dance in swarms over flowers and damp soil. Their larvae feed on fungi in the ground.' },
+  { id: 'midge', cat: 'Prey', name: 'Non-biting midge', latin: 'Chironomidae', where: 'The moonlit garden', fact: 'Males gather in humming clouds at dusk to attract females. Many adults live for only a few days.' },
+  { id: 'aphid', cat: 'Prey', name: 'Green peach aphid', latin: 'Myzus persicae', where: 'On stems everywhere', fact: 'In summer, aphids are born already pregnant. A colony can be all females, cloning themselves.' },
+  { id: 'mildew', cat: 'Prey', name: 'Powdery mildew', latin: 'Erysiphales', where: 'Dusting stems and leaves', fact: 'A fungus that coats leaves in white powder. The 22-spot ladybird grazes on it instead of hunting aphids.' },
+  { id: 'wasp', cat: 'Predators', name: 'Common wasp', latin: 'Vespula vulgaris', where: 'Meadow and hedgerow', fact: 'Raids bee nests for food in late summer. Workers chew wood into paper to build their nests.' },
+  { id: 'swallow', cat: 'Predators', name: 'Barn swallow', latin: 'Hirundo rustica', where: 'Circling high by day', fact: 'Catches insects on the wing in low, fast swoops, and can eat hundreds of flies a day.' },
+  { id: 'bat', cat: 'Predators', name: 'Common pipistrelle', latin: 'Pipistrellus pipistrellus', where: 'The garden at night', fact: 'Weighs about as much as a sugar cube and can eat thousands of midges in a night, hunting by echolocation.' },
+  { id: 'frog', cat: 'Predators', name: 'Bullfrog', latin: 'Lithobates catesbeianus', where: 'On the lily pads', fact: 'Sits perfectly still, then flicks out a sticky tongue in a fraction of a second. It eats almost anything that fits in its mouth.' },
+  { id: 'spider', cat: 'Predators', name: 'Garden orb-weaver', latin: 'Araneus diadematus', where: 'Webs between stems', fact: 'Spins a fresh wheel-shaped web most days and often eats the old one to recycle the silk.' },
+  { id: 'daisy', cat: 'Flowers', name: 'Daisy', latin: 'Bellis perennis', where: 'Pond banks and meadow', fact: "The name comes from “day's eye”: the flower closes at night and opens again in the morning." },
+  { id: 'poppy', cat: 'Flowers', name: 'Common poppy', latin: 'Papaver rhoeas', where: 'The meadow', fact: 'Each flower lasts about a day, but one plant makes hundreds, and the seeds can wait decades in the soil.' },
+  { id: 'cornflower', cat: 'Flowers', name: 'Cornflower', latin: 'Centaurea cyanus', where: 'The meadow', fact: 'Once a common cornfield weed, it has become rare in the wild across much of Europe.' },
+  { id: 'clover', cat: 'Flowers', name: 'Red clover', latin: 'Trifolium pratense', where: 'The meadow', fact: 'Its long flower tubes suit long-tongued bumblebees best.' },
+  { id: 'sunflower', cat: 'Flowers', name: 'Sunflower', latin: 'Helianthus annuus', where: 'The meadow', fact: 'Each head is hundreds of tiny flowers packed in interlocking spirals.' },
+  { id: 'waterlily', cat: 'Flowers', name: 'White water lily', latin: 'Nymphaea alba', where: 'Floating on the pond', fact: 'Its leaves float on long stems from the mud, and the flowers close up in the evening.' },
+  { id: 'iris', cat: 'Flowers', name: 'Purple flag iris', latin: 'Iris versicolor', where: 'The pond edge', fact: 'Bees push past the drooping petals to reach the nectar, brushing pollen onto their backs.' },
+  { id: 'moonflower', cat: 'Flowers', name: 'Moonflower', latin: 'Ipomoea alba', where: 'The moonlit garden', fact: 'Opens at dusk and is pollinated by hawk-moths, whose long tongues reach down its tube.' },
+  { id: 'rose', cat: 'Flowers', name: 'Dog rose', latin: 'Rosa canina', where: 'The moonlit garden', fact: 'Its red hips are rich in vitamin C and feed birds through the winter.' },
+  { id: 'lavender', cat: 'Flowers', name: 'Lavender', latin: 'Lavandula angustifolia', where: 'The moonlit garden', fact: 'A bee favourite. The scent comes from oils that put off many plant-eating insects.' },
+  { id: 'bramble', cat: 'Flowers', name: 'Bramble', latin: 'Rubus fruticosus', where: 'The hedgerow', fact: 'Blackberry flowers feed bees in midsummer, then become fruit for birds and mammals.' },
+  { id: 'foxglove', cat: 'Flowers', name: 'Foxglove', latin: 'Digitalis purpurea', where: 'The hedgerow', fact: 'The spots inside each bell guide bumblebees in, like a landing strip.' },
+  { id: 'mayfly', cat: 'Rare sightings', name: 'Golden mayfly', latin: 'Ephemera danica', where: 'Rare, over the lily pond', fact: "Adult mayflies live for about a day and don't eat at all. They hatch in huge numbers over clean water." },
+  { id: 'paintedlady', cat: 'Rare sightings', name: 'Painted lady', latin: 'Vanessa cardui', where: 'Rare, in the meadow', fact: 'Migrates thousands of kilometres between Africa and Europe over several generations.' },
+  { id: 'luna', cat: 'Rare sightings', name: 'Luna moth', latin: 'Actias luna', where: 'Rare, in the moonlit garden', fact: 'Its long tail streamers spin as it flies, confusing the sonar of hunting bats.' },
+  { id: 'jewel', cat: 'Rare sightings', name: 'Jewel beetle', latin: 'Buprestidae', where: 'Rare, in the hedgerow', fact: 'Its metallic shine comes from microscopic layers in the shell, not from pigment.' },
+];
+const RARE_BY_HAB = { pond: 'mayfly', meadow: 'paintedlady', garden: 'luna', hedgerow: 'jewel' };
+function discover(id) {
+  const j = Prog.journal(); if (j[id]) return false;
+  j[id] = todayKey(); store.set('hexapod-journal', j);
+  const e = JOURNAL.find((x) => x.id === id);
+  if (e && game.state === 'play') { game.newEntries = (game.newEntries || 0) + 1; popAt(player.pos.clone().add(new V3(0, 3, 0)), `Journal: ${e.name}`, 'journal'); Sound.tone(1320, 1760, 0.15, 'sine', 0.05); }
+  return true;
+}
+let journalT = 0;
+function scanJournal(dt) {
+  journalT -= dt; if (journalT > 0) return; journalT = 0.5;
+  const P = player.pos, near = (p, r) => Math.abs(p.x - P.x) < r && Math.abs(p.z - P.z) < r && p.distanceTo(P) < r;
+  for (const p of world.prey) if (p.alive && near(p.pos, 9)) discover(p.kind);
+  for (const w of world.wasps) if (w.alive && near(w.pos, 16)) discover('wasp');
+  for (const b of world.birds) if (near(b.pos, b.state === 'dive' ? 45 : 28)) discover(b.kind);
+  for (const f of world.frogs) if (near(f.pos, 26)) discover('frog');
+  for (const w of world.webs) if (w.alive && near(w.grp.position, 10)) discover('spider');
+  for (const f of world.flowers) if (near(f.head, f.r + 4)) discover(f.kind);
+}
+
+/* ---------- rare sightings ---------- */
+const RM = {
+  gold: stdMat('#e8b83a', { r: 0.3, m: 0.5, e: '#6a4a00', ei: 0.6 }), goldWing: new THREE.MeshPhongMaterial({ color: 0xffe9a0, transparent: true, opacity: 0.55, side: THREE.DoubleSide, depthWrite: false, emissive: 0x6a5010 }),
+  orange: stdMat('#ffffff', { map: null, side: THREE.DoubleSide, r: 0.8 }), dark: stdMat('#1a1410', { r: 0.6 }),
+  luna: stdMat('#bff2c4', { side: THREE.DoubleSide, r: 0.7, e: '#4fd07a', ei: 0.55 }), lunaBody: stdMat('#f4f8ee', { r: 1 }),
+  jewel: stdMat('#1fae6a', { r: 0.12, m: 0.9, e: '#06301c', ei: 0.4 }), jewelEdge: stdMat('#d8c23a', { r: 0.2, m: 0.9 }),
+};
+RM.orange.map = canvasTex(128, 64, (g, w, h) => { g.fillStyle = '#f08a2a'; g.fillRect(0, 0, w, h); g.fillStyle = '#1a1410'; g.fillRect(w * 0.7, 0, w * 0.3, h); g.fillStyle = '#fff'; for (let i = 0; i < 5; i++) { g.beginPath(); g.arc(w * (0.76 + (i % 2) * 0.1), h * (0.2 + i * 0.15), 4, 0, TAU); g.fill(); } g.fillStyle = '#1a1410'; for (let i = 0; i < 6; i++) { g.beginPath(); g.arc(w * MR(0.2, 0.6), h * MR(0.2, 0.8), 3, 0, TAU); g.fill(); } });
+function modelRare(id) {
+  const g = new THREE.Group(), wings = [];
+  if (id === 'mayfly') {
+    P(g, GEO.sphLo, RM.gold, 0, 0, 0, 0.12, 0.12, 0.7); P(g, GEO.sphLo, RM.gold, 0, 0.03, 0.75, 0.11);
+    for (const s of [-1, 0, 1]) limb(g, RM.gold, new V3(0, 0, -0.6), new V3(s * 0.25, 0.25, -2.0), 0.012);
+    const w = wingGeo(1.1, 0.5, 0.6); for (const s of [1, -1]) addWing(g, w, RM.goldWing, s * 0.05, 0.12, 0.25, s, 0.2, 0, wings, 0.9);
+    g.scale.setScalar(1.6);
+  } else if (id === 'paintedlady' || id === 'luna') {
+    const luna = id === 'luna', body = luna ? RM.lunaBody : RM.dark, wm = luna ? RM.luna : RM.orange;
+    P(g, GEO.sphLo, body, 0, 0, 0, 0.16, 0.16, 0.8);
+    const fw = wingGeo(1.6, 1.3, 0.9), hw = wingGeo(luna ? 1.9 : 1.2, luna ? 0.8 : 1.0, luna ? 0.2 : 0.8);
+    for (const s of [1, -1]) { addWing(g, fw, wm, s * 0.08, 0.05, 0.2, s, -0.2, 0, wings, 0.3); addWing(g, hw, wm, s * 0.08, 0.03, -0.2, s, luna ? 0.9 : 0.6, 0, wings, 0.3); }
+    g.scale.setScalar(luna ? 2.2 : 1.8);
+  } else {
+    P(g, GEO.sph, RM.jewel, 0, 0, 0, 0.42, 0.32, 0.9); P(g, GEO.sph, RM.jewelEdge, 0, -0.05, 0, 0.44, 0.22, 0.92); P(g, GEO.sph, RM.jewel, 0, 0.02, 0.85, 0.24, 0.2, 0.2);
+    const w = wingGeo(1.3, 0.45, 0.3); for (const s of [1, -1]) addWing(g, w, wingSmoke, s * 0.1, 0.2, 0.1, s, 0.5, 0, wings, 0.1);
+    g.scale.setScalar(1.4);
+  }
+  return { root: g, wings };
+}
+function spawnRare() {
+  const id = RARE_BY_HAB[world.key], m = modelRare(id); world.group.add(m.root);
+  let home = null;
+  for (let i = 0; i < 20; i++) { const a = MR(0, TAU), d = MR(55, 110), x = player.pos.x + Math.cos(a) * d, z = player.pos.z + Math.sin(a) * d; if (Math.hypot(x, z) > 210) continue; home = new V3(x, floorAt(x, z) + MR(6, 14), z); break; }
+  if (!home) home = new V3(MR(-60, 60), 0, MR(-60, 60)), home.y = floorAt(home.x, home.z) + 10;
+  game.rare = { id, m, home, pos: home.clone(), vel: new V3(), target: home.clone(), t: 0, life: 50, seen: false, leaving: false };
+  const e = JOURNAL.find((x) => x.id === id);
+  toast(`Rare sighting: ${e.name}!`, 'Fly close to it before it leaves. Follow the violet marker', 3);
+  Sound.tone(1568, 2093, 0.25, 'sine', 0.07); Sound.tone(2093, 2637, 0.3, 'sine', 0.06, 0.15);
+}
+function updateRare(dt) {
+  if (game.rareAt > 0 && game.tele.playT >= game.rareAt && !game.rare) { game.rareAt = -1; spawnRare(); }
+  const r = game.rare; if (!r) return;
+  r.t += dt; r.life -= dt;
+  if (!r.leaving && (r.life <= 0 || r.seen)) { r.leaving = true; r.life = 4; }
+  if (r.leaving) { r.vel.lerp(new V3(r.vel.x, 14, r.vel.z), 1 - Math.exp(-2 * dt)); if (r.life <= 0) { world.group.remove(r.m.root); game.rare = null; return; } }
+  else {
+    if (r.t % 2.5 < dt || r.pos.distanceToSquared(r.target) < 2) r.target.copy(r.home).add(new V3(MR(-12, 12), MR(-3, 5), MR(-12, 12)));
+    const des = _v2.subVectors(r.target, r.pos).normalize().multiplyScalar(6);
+    const d = r.pos.distanceTo(player.pos);
+    if (d < 14) des.addScaledVector(_v3.subVectors(r.pos, player.pos).normalize(), 3);
+    r.vel.lerp(des, 1 - Math.exp(-2 * dt));
+    if (d < 6 && !player.dead) {
+      r.seen = true; const e = JOURNAL.find((x) => x.id === r.id), fresh = discover(r.id);
+      addScore(600, r.pos.clone()); FX.burst(r.pos, '#c9a2ff', 30, 6, 1.2, 0.7); hitStop(0.06); game.rareSeen = (game.rareSeen || 0) + 1;
+      toast(`${e.name} spotted!`, fresh ? 'New journal entry' : '+600', 2.4);
+    }
+  }
+  r.pos.addScaledVector(r.vel, dt); const fl = floorAt(r.pos.x, r.pos.z) + 1; if (r.pos.y < fl) r.pos.y = fl;
+  r.m.root.position.copy(r.pos); if (r.vel.lengthSq() > 0.1) r.m.root.lookAt(_v.copy(r.pos).add(r.vel));
+  flapWings(r.m, r.t, r.id === 'mayfly' || r.id === 'jewel' ? 40 : 9, r.id === 'mayfly' || r.id === 'jewel' ? 0.6 : 0.9);
+}
+
+/* ---------- medals, overtime ---------- */
+function bankWin() {
+  const M = player.mount, base = M.base || M.key;
+  const finish = Math.round(game.time) * 10 + Math.round(player.health) * 5;
+  game.score += finish;
+  const dmg = Object.values(game.tele.dmg).reduce((a, b) => a + b, 0);
+  game.banked = { finish, score: game.score, hp: player.health, winT: game.tele.playT, base,
+    medals: { untouched: dmg === 0, swift: game.tele.playT <= 120, combo: (game.maxCombo || 1) >= 5, freehand: game.tele.swoops === 0 } };
+}
+function startOvertime() {
+  bankWin(); Sound.sfx.win();
+  FX.burst(player.pos, '#ffd34a', 40, 12, 1.2, 0.8); FX.burst(player.pos, '#41d8c6', 30, 10, 1.2, 0.7);
+  game.overtime = { wave: 0 }; game.otT = 3;
+  toast('All three stages clear!', 'Stars banked. Overtime: keep flying for score until a wave beats you', 3);
+}
+function startWave() {
+  const ot = game.overtime; ot.wave++; game.nectarSeen.clear();
+  const M = player.mount, base = M.base || M.key, H = world.H, n = ot.wave;
+  const obj = base === 'dragonfly' ? [J.catch(H.flyer, 6 + 2 * n)] : base === 'honeybee' ? [J.deliver(10 + 3 * n)] : base === 'hawkmoth' ? [J.nectar(4 + n)] : [J.catch(M.eats[0], 8 + 2 * n)];
+  if (n % 2 === 0 && H.wasps && M.fights) obj.push(J.defeat(1 + (n >> 1)));
+  game.obj = obj.map((o) => ({ ...o, count: 0, done: false }));
+  game.time = 60; for (const b of world.birds) b.attackT = Math.min(b.attackT, MR(4, 8));
+  if (n % 2 === 1) spawnSwarm(base === 'ladybird' ? M.eats[0] : H.flyer);
+  renderObjectives(); Sound.sfx.objective();
+  toast(`Overtime wave ${n}`, game.obj.map((o) => `${o.label} ×${o.target}`).join(' · ') + ' in 60 s', 2.6);
+}
+
+/* ---------- title: modes, mounts, habitats, risk, journal, rider ---------- */
+const MODES = [
+  { id: 'run', name: 'Habitat run', go: 'Take flight' },
+  { id: 'daily', name: 'Daily flight', go: "Fly today's flight" },
+  { id: 'race', name: 'Ring race', go: 'Start the race' },
+  { id: 'migration', name: 'Migration', go: 'Begin the migration' },
+];
+function medalIcons(m = {}) { return `<span class="medals">${Object.keys(MEDALS).map((k) => `<i class="medal${m[k] ? ' on' : ''}" title="${MEDALS[k].name}"></i>`).join('')}</span>`; }
+function renderProgress() {
+  const j = Prog.journal(), stars = Prog.stars(), medals = Prog.medalCount();
+  const next = Object.values(MOUNTS).filter((m) => m.unlock && stars < m.unlock).sort((a, b) => a.unlock - b.unlock)[0];
+  $('#progress').innerHTML = `<span><b>★ ${stars}</b> stars</span><span><b>${medals}</b> medals</span><span><b>${Object.keys(j).length}/${JOURNAL.length}</b> journal</span>${next ? `<span class="next">Next unlock: ${next.name} at ${next.unlock}★</span>` : ''}`;
+}
+function renderModes() {
+  const el = $('#modes'); el.innerHTML = '';
+  for (const m of MODES) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'mode'; b.textContent = m.name; b.setAttribute('aria-pressed', String(sel.mode === m.id));
+    b.addEventListener('click', () => { if (sel.mode === m.id) return; sel.mode = m.id; store.set('hexapod-sel', sel); buildTitleCards(); previewForMode(); });
+    el.append(b);
+  }
+}
+function previewForMode() {
+  const want = sel.mode === 'daily' ? dailySpec() : null;
+  const hab = want ? want.hab : sel.mode === 'migration' ? 'pond' : sel.hab;
+  const mk = want ? want.mount : sel.mount;
+  if (world.key !== hab) switchHabitat(hab);
+  if (player.mount.key !== mk) { setMount(mk); setAtmosphere(world.H, player.mount); }
+}
+function variantsOf(base) { return [base, ...Object.keys(MOUNTS).filter((k) => MOUNTS[k].base === base)]; }
+function renderMounts() {
+  const mc = $('#mounts'); mc.innerHTML = '';
+  const daily = sel.mode === 'daily' ? dailySpec() : null, stars = Prog.stars();
+  for (const base of MOUNT_ORDER) {
+    const chosen = variantsOf(base).includes(sel.mount) ? sel.mount : base;
+    const m = MOUNTS[daily ? base : chosen], b = document.createElement('div'); b.className = 'card'; b.setAttribute('role', 'button'); b.tabIndex = 0;
+    const on = daily ? daily.mount === base : variantsOf(base).includes(sel.mount);
+    b.setAttribute('aria-pressed', String(on)); if (daily && !on) b.classList.add('dim');
+    const stats = Object.entries(m.stats).map(([n, v]) => `<span>${n}</span><span class="pips">${[1, 2, 3, 4, 5].map((i) => `<i class="pip${i <= v ? ' on' : ''}"></i>`).join('')}</span>`).join('');
+    const chips = daily ? '' : `<div class="chips">${variantsOf(base).map((k) => { const v = MOUNTS[k], lock = v.unlock && stars < v.unlock; return `<button type="button" class="chip${k === chosen ? ' on' : ''}${lock ? ' locked' : ''}" data-k="${k}" ${lock ? 'aria-disabled="true"' : ''}>${lock ? `🔒 ${v.short} · ${v.unlock}★` : v.short}</button>`; }).join('')}</div>`;
+    b.innerHTML = `<span class="role">${m.role}</span><h3>${m.name}</h3><span class="latin">${m.latin}</span><p>${m.desc}</p><div class="stats">${stats}</div>${chips}<div class="foot"><span>Wingbeat ${m.hz} Hz</span><span>${m.diet}</span></div>`;
+    const pickK = (k) => { if (daily || !isUnlocked(k)) return; sel.mount = k; store.set('hexapod-sel', sel); buildTitleCards(); setMount(k); setAtmosphere(world.H, player.mount); };
+    b.addEventListener('click', (e) => { const c = e.target.closest('.chip'); pickK(c ? c.dataset.k : chosen); });
+    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickK(chosen); } });
+    mc.append(b);
+  }
+}
+function renderHabitats() {
+  const hc = $('#habitats'); hc.innerHTML = '';
+  const best = Prog.best(), medals = Prog.medals(), M = MOUNTS[sel.mount];
+  for (const k of HAB_ORDER) {
+    const h = HABITATS[k], b = document.createElement('button'); b.className = 'card'; b.type = 'button'; b.setAttribute('aria-pressed', String(sel.hab === k));
+    const key = k + ':' + sel.mount, bs = best[key];
+    let body;
+    if (sel.mode === 'race') { const rb = store.get('hexapod-race', {})[key]; body = `<p class="jobs-for">A ${raceCourseLength(k)}-ring course through the ${h.name.toLowerCase()}.</p><div class="foot"><span>No predators, just speed</span><span>${rb ? `Best ${fmtTime(rb.time)} ${rb.medal ? '· ' + rb.medal : ''}` : 'Not raced yet'}</span></div>`; }
+    else body = `<p class="jobs-for">As a ${M.short}, in three stages:</p><ol class="goals">${buildStages(k, sel.mount).map((st) => `<li><b>${st.name}</b> ${st.obj.map((o) => `${o.label.toLowerCase()} ×${o.target}`).join(', ')}</li>`).join('')}</ol><div class="foot">${medalIcons(medals[key])}<span>${bs ? `Best ${'★'.repeat(bs.stars)}${'☆'.repeat(3 - bs.stars)} ${bs.score.toLocaleString()}` : 'Not flown yet'}</span></div>`;
+    b.innerHTML = `<span class="role">${h.sub}</span><h3>${h.name}</h3><p>${h.blurb}</p>${body}`;
+    b.addEventListener('click', () => { if (sel.hab === k) return; sel.hab = k; store.set('hexapod-sel', sel); buildTitleCards(); switchHabitat(k); });
+    hc.append(b);
+  }
+}
+function renderDaily() {
+  const d = dailySpec(), rec = store.get('hexapod-daily', {})[d.date], H = HABITATS[d.hab], T = TWISTS[d.twist];
+  $('#dailyBlock').innerHTML = `<div class="card daily"><span class="role">${d.date} · the same flight for everyone today</span><h3>${H.name} on a ${MOUNTS[d.mount].name}</h3><p><b>Twist: ${T.name}.</b> ${T.desc}</p><p>A rare sighting is guaranteed. You can fly it as often as you like; your best counts.</p><div class="foot"><span>Streak: ${dailyStreak()} day${dailyStreak() === 1 ? '' : 's'}</span><span>${rec ? `Today's best ${rec.best.toLocaleString()} (${rec.tries} ${rec.tries === 1 ? 'try' : 'tries'})` : 'Not flown today'}</span></div><div id="board" class="board"></div></div>`;
+  if (typeof renderBoard === 'function') renderBoard(d.date);
+}
+function renderRisk() {
+  const el = $('#risks'); el.innerHTML = '';
+  for (const [k, r] of Object.entries(RISKS)) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip risk' + (sel.risk[k] ? ' on' : ''); b.setAttribute('aria-pressed', String(!!sel.risk[k]));
+    b.innerHTML = `<b>${r.name} +${Math.round(r.mult * 100)}%</b><small>${r.desc}</small>`;
+    b.addEventListener('click', () => { sel.risk[k] = !sel.risk[k]; store.set('hexapod-sel', sel); renderRisk(); });
+    el.append(b);
+  }
+  const mult = 1 + Object.keys(RISKS).reduce((a, k) => a + (sel.risk[k] ? RISKS[k].mult : 0), 0);
+  $('#riskMult').textContent = mult > 1 ? `Score ×${mult.toFixed(2)}` : 'Score ×1.00';
+}
+function openSheet(id) { $(id).hidden = false; }
+function renderJournal() {
+  const j = Prog.journal(), n = Object.keys(j).length;
+  $('#jSub').textContent = `${n} of ${JOURNAL.length} discovered. Fly close to creatures and flowers to add them.`;
+  const cats = [...new Set(JOURNAL.map((e) => e.cat))];
+  $('#jList').innerHTML = cats.map((c) => `<h3 class="jcat">${c}</h3><div class="jgrid">${JOURNAL.filter((e) => e.cat === c).map((e) => j[e.id]
+    ? `<article class="jcard"><h4>${e.name}</h4><span class="latin">${e.latin}</span><p>${e.fact}</p><small>${e.where} · found ${j[e.id]}</small></article>`
+    : `<article class="jcard unknown"><h4>???</h4><p>${e.where}</p></article>`).join('')}</div>`).join('');
+}
+function renderRider() {
+  const g = Prog.gear(), medals = Prog.medalCount();
+  $('#rSub').textContent = `Earn medals to unlock gear. You have ${medals}. Changes show on your rider behind this panel.`;
+  $('#rOpts').innerHTML = Object.entries(GEAR).map(([slot, list]) => `<h3 class="jcat">${slot === 'scarf' ? 'Scarf' : slot === 'helmet' ? 'Helmet' : 'Goggles'}</h3><div class="chips">${list.map((it) => { const lock = medals < it.need; return `<button type="button" class="chip${g[slot] === it.id ? ' on' : ''}${lock ? ' locked' : ''}" data-slot="${slot}" data-id="${it.id}">${it.c ? `<i class="sw" style="background:${it.c}"></i>` : ''}${lock ? `🔒 ${it.name} · ${it.need} medals` : it.name}</button>`; }).join('')}</div>`).join('');
+}
+$('#rOpts').addEventListener('click', (e) => {
+  const c = e.target.closest('.chip'); if (!c || c.classList.contains('locked')) return;
+  const g = Prog.gear(); g[c.dataset.slot] = c.dataset.id; store.set('hexapod-gear', g); renderRider(); setMount(player.mount.key); setAtmosphere(world.H, player.mount);
+});
+$('#journalBtn').addEventListener('click', () => { renderJournal(); openSheet('#journal'); });
+$('#riderBtn').addEventListener('click', () => { renderRider(); openSheet('#rider'); });
+$('#jClose').addEventListener('click', () => { $('#journal').hidden = true; });
+$('#rClose').addEventListener('click', () => { $('#rider').hidden = true; });
+
+/* ============================================================
+   Ring races (with ghosts) and the Migration campaign
+   ============================================================ */
+const RACE_RINGS = 14;
+const raceCourseLength = () => RACE_RINGS;
+const fmtTime = (t) => `${Math.floor(t / 60)}:${(t % 60).toFixed(2).padStart(5, '0')}`;
+const ghostMat = new THREE.MeshBasicMaterial({ color: 0xcfefff, transparent: true, opacity: 0.35, depthWrite: false });
+const ringBlocked = (c) => world.cyl.some((o) => c.y > o.y0 - 4 && c.y < o.y1 + 4 && Math.hypot(c.x - o.x, c.z - o.z) < o.r + 5)
+  || world.sph.some((o) => c.distanceTo(o) < o.r + 5) || world.flowers.some((f) => c.distanceTo(f.head) < f.r + 5);
+function buildCourse() {
+  // the same course every time for a habitat, so ghosts and best times compare fairly
+  const r0 = mulberry32(world.H.seed * 31 + 7), Rr = (a, b) => a + (b - a) * r0();
+  const f = world.nestFace, start = world.nestEntrance.clone().add(new V3(Math.sin(f) * 12, 2, Math.cos(f) * 12));
+  const rings = []; let p = start.clone(), heading = f, tries = 0;
+  while (rings.length < RACE_RINGS && tries < 600) {
+    tries++;
+    const relax = tries > 300 ? 1 : 0;
+    const h = heading + Rr(-1.1, 1.1), d = Rr(26, 40), x = p.x + Math.sin(h) * d, z = p.z + Math.cos(h) * d;
+    if (Math.hypot(x, z) > 195) { heading = Math.atan2(-p.x, -p.z) + Rr(-0.6, 0.6); continue; }
+    const c = new V3(x, floorAt(x, z) + Rr(3.5, 15), z);
+    if (!relax && ringBlocked(c)) continue;
+    rings.push(c); p = c; heading = h;
+  }
+  let L = start.distanceTo(rings[0]); for (let i = 1; i < rings.length; i++) L += rings[i - 1].distanceTo(rings[i]);
+  return { start, rings, L };
+}
+function raceThresholds(L = run.race.L, M = player.mount) { return { gold: L / (M.boost * 0.8), silver: L / (M.cruise * 1.1), bronze: L / (M.cruise * 0.8) }; }
+function setupRace() {
+  const C = buildCourse(), M = player.mount;
+  const rings = C.rings.map((c, i) => {
+    const mesh = new THREE.Mesh(new THREE.TorusGeometry(4.2, 0.35, 6, 6), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3, depthWrite: false }));
+    mesh.userData.ownMat = true; mesh.position.copy(c); mesh.lookAt(C.rings[i + 1] || C.rings[i - 1]); world.group.add(mesh);
+    return { c, mesh };
+  });
+  run.race = { rings, next: 0, t: 0, cd: 3.2, done: false, L: C.L, rec: [], recT: 0, ghost: null };
+  player.pos.copy(C.start); const to = rings[0].c.clone().sub(C.start);
+  player.yaw = player.aimYaw = Math.atan2(to.x, to.z); player.pitch = player.aimPitch = 0;
+  for (const b of world.birds) b.attackT = 1e9;
+  for (const w of world.wasps) { w.aggroCD = 1e9; }
+  for (const f of world.frogs) f.cd = 1e9;
+  for (const w of world.webs) { w.alive = false; w.grp.visible = false; w.respawn = 1e9; }
+  const key = world.key + ':' + M.key, g = store.get('hexapod-ghost:' + key, null);
+  if (g && g.f && g.f.length > 12) {
+    const gm = MOUNT_MODEL[MOUNTS[g.m].base || g.m](g.m);
+    gm.root.traverse((o) => { if (o.isMesh) o.material = ghostMat; }); world.group.add(gm.root);
+    run.race.ghost = { m: gm, f: g.f };
+  }
+}
+function updateRace(dt) {
+  const R = run.race; if (!R) return;
+  if (R.cd > 0) {
+    const prev = Math.ceil(R.cd); R.cd -= dt; const now = Math.ceil(R.cd);
+    if (now !== prev) { if (now > 0) { toast(String(now), 'Hold to fly when it says go', 0.9); Sound.tone(660, 660, 0.15, 'square', 0.05); } else { toast('Go!', '', 0.8); Sound.tone(1320, 1320, 0.3, 'square', 0.06); } }
+  } else if (!R.done) {
+    R.t += dt; R.recT -= dt;
+    if (R.recT <= 0) { R.recT += 0.1; const p = player.pos; R.rec.push(+p.x.toFixed(1), +p.y.toFixed(1), +p.z.toFixed(1), +player.yaw.toFixed(2), +player.pitch.toFixed(2), +player.roll.toFixed(2)); }
+    const ring = R.rings[R.next];
+    if (ring && player.pos.distanceTo(ring.c) < 4.8) {
+      ring.mesh.visible = false; R.next++; FX.burst(ring.c, '#ffd34a', 20, 6, 0.6, 0.5); Sound.sfx.deliver(R.next);
+      popAt(ring.c, fmtTime(R.t), ''); game.camKick = Math.max(game.camKick, 0.6); onEvent('ring');
+    }
+  }
+  R.rings.forEach((r, i) => {
+    if (i < R.next) return; const m = r.mesh.material, k = i - R.next;
+    m.color.set(k === 0 ? '#ffd34a' : '#ffffff'); m.opacity = k === 0 ? 0.8 + 0.2 * Math.sin(uTime.value * 6) : k === 1 ? 0.5 : 0.18;
+    r.mesh.scale.setScalar(k === 0 ? 1 + 0.06 * Math.sin(uTime.value * 6) : 1);
+  });
+  const G = R.ghost;
+  if (G) {
+    const f = G.f, n = f.length / 6, ft = Math.min(n - 1.001, Math.max(0, R.t / 0.1)), i = Math.floor(ft), k = ft - i, a = i * 6, b = Math.min(n - 1, i + 1) * 6;
+    G.m.root.position.set(lerp(f[a], f[b], k), lerp(f[a + 1], f[b + 1], k), lerp(f[a + 2], f[b + 2], k));
+    G.m.root.rotation.order = 'YXZ'; G.m.root.rotation.set(-lerp(f[a + 4], f[b + 4], k), f[a + 3] + wrapA(f[b + 3] - f[a + 3]) * k, lerp(f[a + 5], f[b + 5], k));
+    G.m.root.visible = R.t / 0.1 < n; flapWings(G.m, uTime.value, G.m.flapRate || 30, G.m.flapAmp || 0.6);
+  }
+}
+function finishRace() {
+  const R = run.race; R.done = true; game.ending = 1.4; Sound.sfx.win();
+  FX.burst(player.pos, '#ffd34a', 40, 12, 1.2, 0.8);
+  const th = raceThresholds(), t = R.t;
+  toast(`Finish! ${fmtTime(t)}`, t <= th.gold ? 'Gold time!' : t <= th.silver ? 'Silver time' : t <= th.bronze ? 'Bronze time' : `Bronze is ${fmtTime(th.bronze)}`, 1.6);
+}
+
+const UPGRADES = [
+  { id: 'wings', name: 'Stronger wings', desc: '+12% speed', apply: (M) => { M.cruise *= 1.12; M.boost *= 1.12; } },
+  { id: 'lungs', name: 'Deep breaths', desc: '+30% stamina', apply: (M) => { M.stamina *= 1.3; } },
+  { id: 'shell', name: 'Tough shell', desc: '+30% armour', apply: (M) => { M.armor *= 1.3; } },
+  { id: 'reach', name: 'Long reach', desc: '+35% catch reach', when: (M) => M.eats.length > 0, apply: (M) => { M.catchR *= 1.35; M.strikeR *= 1.2; } },
+  { id: 'agile', name: 'Quick turns', desc: '+25% turning', apply: (M) => { M.turnResp *= 1.25; M.grip *= 1.15; } },
+  { id: 'baskets', name: 'Bigger baskets', desc: '+8 pollen per trip', when: (M) => M.flowers === 'pollen', apply: (M) => { M.cargo += 8; } },
+  { id: 'tongue', name: 'Long tongue', desc: 'Sip nectar 40% faster', when: (M) => M.flowers === 'nectar', apply: (M) => { M.sipTime = (M.sipTime || SIP_TIME) * 0.6; } },
+  { id: 'tail', name: 'Tailwind', desc: '+30 seconds on every leg', apply: (M) => { M.legBonus = (M.legBonus || 0) + 30; } },
+  { id: 'mend', name: 'Rest and mend', desc: 'Heal your wings fully', instant: true },
+];
+function applyUpgrades(base, ids) { const M = { ...base, stats: { ...base.stats } }; for (const id of ids) { const u = UPGRADES.find((x) => x.id === id); if (u && u.apply) u.apply(M); } return M; }
+function showUpgrades() {
+  const C = run.campaign, M = MOUNTS[C.mount];
+  const pool = UPGRADES.filter((u) => !u.when || u.when(M)).sort(() => Math.random() - 0.5).slice(0, 3);
+  const healed = Math.min(100, C.health + 25);
+  $('#upTitle').textContent = `Leg ${C.i + 1} complete: ${HABITATS[C.legs[C.i]].name}`;
+  $('#upSub').textContent = `Score ${C.score.toLocaleString()}. You rest on the way (wings ${Math.ceil(C.health)} → ${Math.ceil(healed)}). Pick one upgrade for the flight to the ${HABITATS[C.legs[C.i + 1]].name}.`;
+  $('#upChosen').textContent = C.upgrades.length ? `So far: ${C.upgrades.map((id) => UPGRADES.find((u) => u.id === id).name).join(', ')}` : '';
+  const box = $('#upCards'); box.innerHTML = '';
+  for (const u of pool) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'card upg'; b.innerHTML = `<h3>${u.name}</h3><p>${u.desc}</p>`;
+    b.addEventListener('click', () => { C.health = u.instant ? 100 : healed; if (!u.instant) C.upgrades.push(u.id); C.i++; screens.upgrades.hidden = true; startRunUI(false); });
+    box.append(b);
+  }
+  show('upgrades');
+}
+function renderMigration() {
+  const best = store.get('hexapod-migration', {})[sel.mount];
+  $('#migBlock').innerHTML = `<div class="card daily"><span class="role">A campaign across all four habitats</span><h3>Lily Pond → Wildflower Meadow → Bramble Hedgerow → Moonlit Garden</h3><p>Two stages in each habitat with your ${MOUNTS[sel.mount].short}. Your wings carry over between legs, and after each leg you pick one upgrade: faster wings, a tougher shell, bigger baskets and more.</p><div class="foot"><span>About 10 minutes</span><span>${best ? `Best ${best.score.toLocaleString()}${best.done ? ' · completed' : ` · reached leg ${best.legs}`}` : 'Not flown yet'}</span></div></div>`;
+}
+
+/* ---------- starting and ending runs (all modes) ---------- */
+function startRunUI(fresh = true) {
+  if (fresh) run.campaign = null;
+  for (const el of [screens.results, screens.pause, screens.upgrades]) el.hidden = true;
+  game.state = 'loading'; $('#loading').hidden = false; $('#loadMsg').textContent = 'Growing a fresh habitat.';
+  setTimeout(() => { startRun(); $('#loading').hidden = true; requestLock(); }, 30);
+}
+function startRun() {
+  Sound.init(); Sound.resume(); Sound.setMuted(!settings.sound);
+  const mode = sel.mode || 'run'; run.mode = mode; run.daily = null; run.race = null;
+  let hab = sel.hab, mk = sel.mount;
+  if (mode !== 'migration') run.campaign = null;
+  if (mode === 'daily') { const d = dailySpec(); run.daily = d.date; hab = d.hab; mk = d.mount; run.seed = d.seed; run.twist = d.twist; run.risk = {}; }
+  else if (mode === 'race') { run.seed = HABITATS[hab].seed; run.twist = 'fair'; run.risk = {}; }
+  else {
+    if (mode === 'migration') { if (!run.campaign || run.campaign.done) run.campaign = { legs: ['pond', 'meadow', 'hedgerow', 'garden'], i: 0, upgrades: [], health: 100, score: 0, mount: mk }; hab = run.campaign.legs[run.campaign.i]; mk = run.campaign.mount; }
+    run.seed = (Math.random() * 1e9) | 0; const pool = twistPool(hab); run.twist = pool[Math.floor(Math.random() * pool.length)]; run.risk = { ...(sel.risk || {}) };
+  }
+  if (sel.twistOverride) run.twist = sel.twistOverride;
+  loadHabitat(hab, sel.seedOverride ?? run.seed); afterLoad();
+  setMount(mk);
+  if (run.campaign) player.mount = applyUpgrades(MOUNTS[mk], run.campaign.upgrades);
+  computeFx(); setAtmosphere(world.H, player.mount); captureAtmos(); applyTwistAtmos(0);
+  resetEntities(); spawnPlayer(); FX.clear();
+  const H = world.H, M = player.mount;
+  let stages = buildStages(H.key, mk), time = H.time;
+  if (run.campaign) { stages = stages.slice(0, 2); time = 180 + (M.legBonus || 0); }
+  if (mode === 'race') { stages = [{ name: 'Ring race', obj: [{ type: 'ring', target: RACE_RINGS, label: 'Fly through the rings' }] }]; time = 600; }
+  Object.assign(game, { tele: newTele(), stage: 0, stages, stageT: 0, chain: 0, lastCatchT: -9, state: 'play', time, score: run.campaign ? run.campaign.score : 0, combo: 1, comboT: 0, maxCombo: 1, obj: [], nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, shake: 0, hitStop: 0, camKick: 0, overtime: null, otT: 0, banked: null, rare: null, rareAt: -1, rareSeen: 0, newEntries: 0, before: { stars: Prog.stars(), medals: Prog.medalCount() } });
+  if (run.campaign) player.health = run.campaign.health;
+  if (mode !== 'race') game.rareAt = (mode === 'daily' || Math.random() < 0.45) ? MR(35, 110) : -1;
+  for (const b of world.birds) b.attackT *= run.fx.birdFreq;
+  if (run.twist === 'swarm') { spawnSwarm(H.flyer); spawnSwarm(M.eats[0] === 'mildew' ? 'mildew' : 'aphid'); }
+  if (mode === 'race') setupRace();
+  $('#hudHab').textContent = `${H.name} · ${M.name}`;
+  $('#hudTwist').textContent = [mode === 'race' ? '' : TWISTS[run.twist].name, run.mult > 1 ? `Risk ×${run.mult.toFixed(2)}` : '', run.campaign ? `Leg ${run.campaign.i + 1} of 4` : '', mode === 'daily' ? 'Daily flight' : ''].filter(Boolean).join(' · ');
+  $('#windArrow').hidden = run.twist !== 'breezy';
+  setStage(0); alertEl.hidden = true; camAllow = 1;
+  thumb.id = null; thumbBase.hidden = true; $('#thumbHint').hidden = true;
+  show('hud'); $('#touchUI').hidden = !isTouch; document.body.classList.toggle('touch', isTouch);
+  onResize(); input.lookX = input.lookY = 0; input.strike = false; mouse.left = false;
+  updateCamera(0, true); Rain.reset(run.twist === 'rain');
+  Sound.startEngine(player.mount); Sound.startMusic(world.key);
+  if (mode !== 'race' && run.twist !== 'fair') setTimeout(() => { if (game.state === 'play' && game.tele.playT < 6) toast(`Twist: ${TWISTS[run.twist].name}`, TWISTS[run.twist].desc, 3); }, 3300);
+  startCoach(); if (mode === 'race') { coach.step = 9; hud.coach.hidden = true; }
+  canvas.focus();
+}
+function endRun(reason) {
+  if (game.state !== 'play') return;
+  game.state = 'end'; game.endReason = reason; Sound.stopEngine(); Sound.stopMusic(); releaseLock(); mouse.left = false; Rain.reset(false);
+  if (game.rare) { world.group.remove(game.rare.m.root); game.rare = null; }
+  hud.coach.hidden = true; alertEl.hidden = true;
+  const H = world.H, M = player.mount, base = M.base || M.key, B = game.banked, complete = !!B, C = run.campaign;
+  const rows = [], crit = []; let title, sub = `${H.name} on a ${M.name}`, stars = null, notes = [];
+  if (run.mode === 'race') {
+    const R = run.race, ok = reason === 'win', th = raceThresholds(), t = R.t, key = H.key + ':' + M.key;
+    const medal = !ok ? null : t <= th.gold ? 'Gold' : t <= th.silver ? 'Silver' : t <= th.bronze ? 'Bronze' : null;
+    const rs = store.get('hexapod-race', {}), prev = rs[key], rank = (m) => ({ Gold: 3, Silver: 2, Bronze: 1 }[m] || 0), isBest = ok && (!prev || t < prev.time);
+    if (ok) { rs[key] = { time: isBest ? t : prev.time, medal: rank(medal) > rank(prev?.medal) ? medal : prev?.medal || null }; store.set('hexapod-race', rs); }
+    if (isBest) store.set('hexapod-ghost:' + key, { m: M.key, f: R.rec });
+    if (medal === 'Gold') { const md = Prog.medals(), k = 'race:' + key; if (!md[k]?.gold) { md[k] = { gold: true }; store.set('hexapod-medals', md); notes.push('Gold race medal'); } }
+    title = ok ? 'Race complete' : 'Race abandoned';
+    crit.push({ t: `Bronze: ${fmtTime(th.bronze)}`, ok: !!medal }, { t: `Silver: ${fmtTime(th.silver)}`, ok: rank(medal) >= 2 }, { t: `Gold: ${fmtTime(th.gold)}`, ok: rank(medal) >= 3 });
+    rows.push(['Time', ok ? fmtTime(t) : '—', 'big'], ['Rings', `${R.next}/${R.rings.length}`], ['Best', isBest ? 'New best! Ghost saved' : prev ? fmtTime(prev.time) : '—']);
+    stars = crit.filter((c) => c.ok).length;
+  } else {
+    const startScore = C ? C.score : 0, final = startScore + Math.round((game.score - startScore) * run.mult); game.score = final;
+    const bankedScore = B ? Math.round((B.score - startScore) * run.mult) + startScore : 0;
+    if (C) {
+      if (complete && C.i < C.legs.length - 1) { C.score = final; C.health = player.health; setTimeout(() => { if (game.state === 'end') showUpgrades(); }, 400); return; }
+      C.done = true; const legs = C.i + (complete ? 1 : 0);
+      const mb = store.get('hexapod-migration', {}), pb = mb[C.mount];
+      if (!pb || final > pb.score) { mb[C.mount] = { score: final, legs, done: legs === 4 }; store.set('hexapod-migration', mb); }
+      if (legs === 4) { const md = Prog.medals(), k = 'migration:' + C.mount; if (!md[k]?.complete) { md[k] = { complete: true }; store.set('hexapod-medals', md); notes.push('Migration medal'); } }
+      title = legs === 4 ? 'Migration complete' : 'Migration over'; sub = `${M.name} · ${legs} of 4 legs`;
+      C.legs.forEach((h, i) => crit.push({ t: HABITATS[h].name, ok: i < legs }));
+      rows.push(['Score', final.toLocaleString(), 'big'], ['Upgrades', C.upgrades.length ? C.upgrades.map((id) => UPGRADES.find((u) => u.id === id).name).join(', ') : '—']);
+    } else {
+      crit.push({ t: 'Clear all three stages', ok: complete }, { t: 'Finish the stages with half your wings or more', ok: complete && B.hp >= 50 }, { t: `Score ${PAR[base].toLocaleString()} by the end of stage 3`, ok: complete && bankedScore >= PAR[base] });
+      stars = crit.filter((c) => c.ok).length;
+      let isBest = false, prevBest = 0;
+      const key = H.key + ':' + M.key;
+      if (run.mode === 'run') {
+        const best = Prog.best(), prev = best[key]; prevBest = prev?.score || 0; isBest = final > prevBest;
+        best[key] = { score: Math.max(final, prevBest), stars: Math.max(stars, prev?.stars || 0) }; store.set('hexapod-best', best);
+      } else if (run.mode === 'daily') {
+        const dd = store.get('hexapod-daily', {}), rec = dd[run.daily] || { best: 0, tries: 0 }; prevBest = rec.best; isBest = final > rec.best;
+        rec.best = Math.max(rec.best, final); rec.tries++; dd[run.daily] = rec; store.set('hexapod-daily', dd);
+        if (typeof submitScore === 'function') submitScore(run.daily, final, M.name);
+      }
+      if (B && run.mode === 'run') { const md = Prog.medals(), cur = md[key] || {}; for (const [k, v] of Object.entries(B.medals)) if (v && !cur[k]) { cur[k] = true; notes.push(`${MEDALS[k].name} medal`); } md[key] = cur; store.set('hexapod-medals', md); }
+      title = complete ? 'Habitat mastered' : reason === 'downed' ? 'Downed' : H.night ? 'Dawn broke' : 'Out of daylight';
+      if (run.mode === 'daily') sub = `Daily flight ${run.daily} · ${H.name} on a ${M.name}`;
+      rows.push(['Score', final.toLocaleString() + (run.mult > 1 ? ` (risk ×${run.mult.toFixed(2)})` : ''), 'big'], ['Stages cleared', `${complete ? 3 : game.stage}/3`]);
+      if (game.overtime) rows.push(['Overtime waves', String(game.overtime.cleared || 0)]);
+      if (!complete) rows.push(...game.obj.map((o) => [o.label, `${o.count}/${o.target}`]));
+      rows.push(['Twist', TWISTS[run.twist].name], [run.mode === 'daily' ? "Today's best" : 'Best', isBest ? 'New best!' : prevBest.toLocaleString()]);
+    }
+  }
+  if (game.rareSeen) rows.push(['Rare sightings', String(game.rareSeen)]);
+  if (game.newEntries) rows.push(['New journal entries', String(game.newEntries)]);
+  const s1 = Prog.stars(), m1 = Prog.medalCount();
+  for (const m of Object.values(MOUNTS)) if (m.unlock && game.before.stars < m.unlock && s1 >= m.unlock) notes.push(`Unlocked: ${m.name}`);
+  for (const list of Object.values(GEAR)) for (const it of list) if (it.need && game.before.medals < it.need && m1 >= it.need) notes.push(`Rider gear: ${it.name}`);
+  $('#resTitle').textContent = title; $('#resSub').textContent = sub;
+  $('#resStars').hidden = stars === null; if (stars !== null) [...$('#resStars').children].forEach((el, i) => el.classList.toggle('on', i < stars));
+  $('#resCrit').innerHTML = crit.map((c) => `<li class="${c.ok ? 'ok' : ''}">${c.t}</li>`).join('');
+  $('#resTally').innerHTML = rows.map(([a, b, c]) => `<dt>${a}</dt><dd class="${c || ''}">${b}</dd>`).join('');
+  $('#resNotes').innerHTML = notes.map((n) => `<li>${n}</li>`).join(''); $('#resNotes').hidden = !notes.length;
+  $('#againBtn').textContent = run.mode === 'race' ? 'Race again' : run.campaign ? 'New migration' : run.mode === 'daily' ? 'Fly it again' : 'Fly again (new layout)';
+  setTimeout(() => { if (game.state === 'end') show('results'); }, 400);
 }
 
 /* ============================================================
@@ -2569,7 +3243,7 @@ function boot(data) {
 }
 window.claude?.hot?.snapshot?.(() => ({ sel: { ...sel } }));
 if (window.claude?.hot?.ready) window.claude.hot.ready(boot); else boot(window.claude?.hot?.data ?? {});
-window.__hexapod = { game, player, get world() { return world; }, startRun, endRun, setStage, thumb, MOUNTS, HABITATS, PREY, sel, input, settings, goalTarget, SWOOP_RANGE, LOCK_RANGE,
+window.__hexapod = { game, player, get world() { return world; }, startRun, endRun, setStage, thumb, run, Prog, dailySpec, spawnRare, computeFx, MOUNTS, HABITATS, PREY, sel, input, settings, goalTarget, SWOOP_RANGE, LOCK_RANGE,
   // fixed-timestep simulation for automated playtests (no rendering)
   sim(seconds, step = 1 / 30) { const n = Math.round(seconds / step); for (let i = 0; i < n && game.state === 'play'; i++) { let dt = step; if (game.hitStop > 0) { game.hitStop -= step; dt = step * 0.12; } uTime.value += dt; simulatePlay(dt, step); FX.update(dt); } },
   render() { renderer.render(scene, camera); } };

@@ -16,7 +16,7 @@ async function open(browser, ctxOpts) {
   const H = (fn, arg) => page.evaluate(fn, arg);
   // advance the simulation until cond is true (or the time budget runs out)
   const simUntil = (cond, seconds = 30) => page.evaluate(([c, s]) => { const f = new Function('return ' + c); for (let t = 0; t < s; t += 0.25) { if (f()) return true; __hexapod.sim(0.25); } return f(); }, [cond, seconds]);
-  const start = (hab, mount) => H(([h, m]) => { const x = __hexapod; x.sel.hab = h; x.sel.mount = m; x.startRun(); x.game.headless = true; x.player.invuln = 999; x.world.birds.forEach((b) => (b.attackT = 999)); }, [hab, mount]);
+  const start = (hab, mount) => H(([h, m]) => { const x = __hexapod; x.sel.hab = h; x.sel.mount = m; x.sel.mode = 'run'; x.sel.twistOverride = 'fair'; x.sel.risk = {}; x.startRun(); x.game.headless = true; x.player.invuln = 999; x.world.birds.forEach((b) => (b.attackT = 999)); }, [hab, mount]);
   return { page, errs, H, simUntil, start };
 }
 
@@ -33,14 +33,15 @@ async function open(browser, ctxOpts) {
   check('releasing W slows to a hover', await simUntil('__hexapod.player.speed < 2.5', 6));
 
   // lock-on swoop
-  await H(() => { const x = __hexapod, p = x.world.prey.find((p) => p.kind === 'mosquito' && p.alive); x.player.pos.set(0, 10, 0); x.player.vel.set(0, 0, 0); p.home.set(0, 10, 12); p.pos.set(0, 10, 12); p.vel.set(0, 0, 0); x.player.aimYaw = x.player.yaw = 0; x.player.aimPitch = x.player.pitch = 0; window.__t = p; });
-  check('hex locks onto prey ahead', await simUntil('__hexapod.player.lock && __hexapod.player.lock.type === "prey"', 2));
+  await H(() => { const x = __hexapod, p = x.world.prey.find((p) => p.kind === 'mosquito' && p.alive); x.player.pos.set(0, 10, 0); x.player.vel.set(0, 0, 0); p.home.set(0, 10, 12); p.pos.set(0, 10, 12); p.vel.set(0, 0, 0); x.player.aimYaw = x.player.yaw = 0; x.player.aimPitch = x.player.pitch = 0; window.__t = p; x.world.prey.forEach((q) => { if (q !== p && q.alive && q.kind === 'mosquito') { q.alive = false; q.respawn = 99; q.m.root.visible = false; } }); });
+  await simUntil('false', 0.25);
+  check('hex locks onto prey ahead', await simUntil('__hexapod.player.lock && __hexapod.player.lock.ref === window.__t', 2));
   await page.keyboard.press('Space');
-  check('close swoop catches it', await simUntil('!window.__t.alive', 3));
+  check('close swoop catches it', await simUntil('!window.__t.alive', 3), JSON.stringify(await H(() => { const x = __hexapod, t = x.game.tele; return { strikes: t.strikes, swoops: t.swoops, hit: t.swoopHit, miss: t.swoopMiss, cs: t.catchSwoop, ct: t.catchTouch, d: window.__t.pos.distanceTo(x.player.pos), pp: x.player.pos.toArray().map(Math.round), st: x.player.stamina, cd: x.player.strikeCD, state: x.game.state, ending: x.game.ending, stage: x.game.stage }; })));
   check('a run has three stages', await H(() => __hexapod.game.stages.length === 3));
 
   // lock-on prefers the current objective
-  await H(() => { const x = __hexapod; x.setStage(1); x.game.obj[1].count = x.game.obj[1].target; x.game.obj[1].done = true; const p = x.world.prey.find((p) => p.kind === 'mosquito' && p.alive); x.player.pos.set(0, 10, 0); x.player.aimYaw = x.player.yaw = 0; x.player.aimPitch = x.player.pitch = 0; p.home.set(0, 10, 14); p.pos.set(0, 10, 14); });
+  await H(() => { const x = __hexapod; x.setStage(1); x.game.obj[1].count = x.game.obj[1].target; x.game.obj[1].done = true; const p = x.world.prey.find((p) => p.kind === 'mosquito' && !p.reserve); p.alive = true; p.m.root.visible = true; x.player.pos.set(0, 10, 0); x.player.aimYaw = x.player.yaw = 0; x.player.aimPitch = x.player.pitch = 0; p.home.set(0, 10, 14); p.pos.set(0, 10, 14); });
   check('muted hex on prey once the catch job is done', await simUntil('__hexapod.player.lock && __hexapod.player.lock.type === "prey" && __hexapod.player.lock.wanted === false', 3));
 
   // skim
@@ -93,7 +94,9 @@ async function open(browser, ctxOpts) {
 
   // stages → win → results
   await H(() => { const x = __hexapod; x.setStage(2); x.game.obj.forEach((o) => { o.count = o.target - 1; }); x.game.obj[1].count = x.game.obj[1].target; x.game.obj[1].done = true; const f = x.world.flowers.find((f) => !x.game.nectarSeen.has(f.idx)); x.player.pos.copy(f.head); x.player.vel.set(0, 0, 0); });
-  check('clearing the last stage wins', await simUntil('__hexapod.game.state === "end"', 8));
+  check('clearing the last stage starts overtime', await simUntil('!!__hexapod.game.overtime', 8));
+  await H(() => __hexapod.endRun('finish'));
+  check('finishing from overtime ends the run', await H(() => __hexapod.game.state === 'end'));
   await H(() => { __hexapod.game.headless = false; });
   await page.waitForSelector('#results:not([hidden])', { timeout: 5000 });
   check('results screen shows', (await page.textContent('#resTitle')) === 'Habitat mastered');
