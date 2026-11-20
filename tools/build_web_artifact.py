@@ -14,6 +14,28 @@ SRC = os.path.join(ROOT, "export", "web")
 OUT = os.path.join(ROOT, "export", "web_artifact")
 CHUNK = 12 * 1024 * 1024  # characters per JS chunk
 
+# Emscripten hands out WebGL object names from one global counter and pads every
+# object table with nulls up to it, never reusing freed names. Godot's canvas
+# renderer creates and frees GL buffers for every redrawn circle/polygon/arc,
+# so those tables grew by ~16 MB of JS heap per minute and long sessions
+# crashed the tab. Reuse freed names per table, as native GL drivers do.
+GL_ID_ORIGINAL = "getNewId:table=>{var ret=GL.counter++;for(var i=table.length;i<ret;i++){table[i]=null}return ret}"
+GL_ID_PATCHED = ("getNewId:table=>{var n=table.length,s=table.__h||1,h;"
+    "for(h=s;h<n;h++){if(table[h]==null){table.__h=h+1;return h}}"
+    "for(h=1;h<s&&h<n;h++){if(table[h]==null){table.__h=h+1;return h}}"
+    "var ret=n>0?n:1;for(var i=n;i<ret;i++){table[i]=null}table.__h=ret+1;return ret}")
+
+
+def patch_gl_ids(path):
+    js = open(path).read()
+    if GL_ID_PATCHED in js:
+        return
+    if GL_ID_ORIGINAL not in js:
+        raise SystemExit("index.js: Emscripten getNewId changed; review the GL id reuse patch")
+    open(path, "w").write(js.replace(GL_ID_ORIGINAL, GL_ID_PATCHED, 1))
+    print("patched GL object id reuse in index.js")
+
+
 def main():
     shutil.rmtree(OUT, ignore_errors=True)
     os.makedirs(OUT)
@@ -32,6 +54,7 @@ def main():
     for f in ("index.js", "index.audio.worklet.js", "index.png", "index.icon.png", "index.apple-touch-icon.png"):
         if os.path.exists(os.path.join(SRC, f)):
             shutil.copy(os.path.join(SRC, f), OUT)
+    patch_gl_ids(os.path.join(OUT, "index.js"))
     html = open(os.path.join(SRC, "index.html")).read()
     html = html.replace('"ensureCrossOriginIsolationHeaders":true', '"ensureCrossOriginIsolationHeaders":false')
     loader = """<script>
