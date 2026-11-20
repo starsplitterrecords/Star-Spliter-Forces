@@ -67,11 +67,14 @@ var patrol_clock: float = 22.0
 var elite_times: Array = [180.0, 420.0, 660.0, 900.0]
 var strike_clock: float = 2.0
 var shake_amount: float = 0.0
+var punch_amount: float = 0.0
 var hitstop_clock: float = 0.0
 var music_clock: float = 0.0
 var beat_clock: float = 0.0
 var beat_index: int = 0
 var climax_warned: bool = false
+var dreadnought_spawned: bool = false
+var pending_beats: Array[int] = []
 var motes_collected: int = 0
 var second_wind_used: bool = false
 var player_veiled: float = 0.0
@@ -302,6 +305,12 @@ func step(delta: float) -> void:
 		if is_instance_valid(e) and not e.dead:
 			enemy_hash.insert(e, e.position, e.radius)
 	_step_enemies(delta)
+	for b: int in pending_beats:
+		beat_index = b
+		weapons.on_beat(b)
+		if hud:
+			hud.on_beat(b)
+	pending_beats.clear()
 	weapons.step(delta)
 	projectiles.step(delta, enemy_hash, player)
 	hazards.step(delta, player, enemy_hash)
@@ -350,9 +359,16 @@ func _update_camera(delta: float) -> void:
 	var shake_scale: float = float(Profile.setting("screen_shake"))
 	shake_amount = maxf(0.0, shake_amount - delta * 30.0)
 	camera.offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)) * shake_amount * shake_scale
+	# Zoom punch eases back to rest.
+	punch_amount = move_toward(punch_amount, 0.0, delta * 0.6)
+	camera.zoom = Vector2.ONE * (1.0 + punch_amount * shake_scale)
 
 func shake(amount: float) -> void:
 	shake_amount = minf(16.0, maxf(shake_amount, amount))
+
+## A brief camera zoom-in for heavy moments (Drops, elites, boss phases).
+func punch(amount: float) -> void:
+	punch_amount = minf(0.12, maxf(punch_amount, amount))
 
 func hitstop(t: float) -> void:
 	if not bool(Profile.setting("reduced_flashes")):
@@ -527,6 +543,14 @@ func _spawn_director(delta: float) -> void:
 	if not elite_times.is_empty() and elapsed >= float(elite_times[0]) * (0.25 if quick_test else 1.0):
 		elite_times.pop_front()
 		spawn_elite()
+	if not dreadnought_spawned and elapsed >= (480.0 if not quick_test else 40.0):
+		dreadnought_spawned = true
+		var dp: Vector2 = world.random_open_point_near(player.position, 700.0, 820.0, rng)
+		spawn_enemy("dreadnought", dp, true)
+		if hud:
+			hud.alert("SPLINTER DREADNOUGHT", dp)
+			hud.banner("SPLINTER DREADNOUGHT", "A salvage hulk has picked up your trail. Watch its broadsides.", Color("e0a060"), 2.6)
+		Audio.stinger("boss_phase", -2.0)
 	var climax_time: float = float(GameData.DESTINATIONS[destination_id]["climax_time"]) * (0.08 if quick_test else 1.0)
 	if not boss_spawned and not climax_warned and elapsed >= climax_time - 90.0 * (0.1 if quick_test else 1.0):
 		climax_warned = true
@@ -542,7 +566,13 @@ func _spawn_near_player(kind: String, engaged: bool) -> void:
 	spawn_enemy(k, pos, engaged)
 
 func _pick_kind(r: Dictionary) -> String:
-	var table: Dictionary = r.get("enemies", {"skiff": 1.0})
+	var table: Dictionary = r.get("enemies", {"skiff": 1.0}).duplicate()
+	# Newer threats join the mix only after the opening minutes.
+	for k0: String in table.keys():
+		if elapsed * (6.0 if quick_test else 1.0) < float(GameData.ENEMIES[k0].get("min_time", 0.0)):
+			table.erase(k0)
+	if table.is_empty():
+		table = {"skiff": 1.0}
 	var total: float = 0.0
 	for k: String in table.keys():
 		total += float(table[k])
@@ -621,21 +651,41 @@ func strongest_enemy(pos: Vector2, max_dist: float) -> ForceEnemy:
 func damage_enemy(e: ForceEnemy, amount: float, dir: Vector2, knock: float, weapon_id: String, quiet: bool = false) -> void:
 	if e.dead:
 		return
-	var mult: float = weapons.target_multiplier(e, weapon_id) if weapon_id != "environment" and weapon_id != "ability" else 1.0
+	var weapon_hit: bool = weapon_id != "environment" and weapon_id != "ability" and weapon_id != ""
+	var mult: float = weapons.target_multiplier(e, weapon_id) if weapon_hit else 1.0
+	var crit: bool = weapon_hit and not quiet and randf() < player.crit_chance
+	if crit:
+		mult *= 2.0
 	var dealt: float = e.take_damage(amount * mult, dir, knock)
+	if GameData.weapon_force(weapon_id) == "robots_sing_love_songs":
+		e.harmony_mark = true
+	if crit and not e.dead:
+		fx.label(e.position + Vector2(0, -e.radius - 18.0), "CRIT %d" % int(dealt), Color("ffe08a"), 20, 0.7)
+		fx.flash(e.position, e.radius * 1.4, Color("ffe08a"), 0.1)
 	damage_dealt += dealt
 	combat_heat = minf(1.0, combat_heat + 0.02)
 	if weapon_id != "environment" and weapon_id != "ability":
 		weapons.on_hit(weapon_id)
+	e.last_hit_dir = dir if dir != Vector2.ZERO else (e.position - player.position).normalized()
 	if not quiet:
 		var col: Color = GameData.FORCES.get(GameData.weapon_force(weapon_id), {}).get("color", Color.WHITE)
-		fx.number(e.position + Vector2(0, -e.radius), dealt, Color.WHITE.lerp(col, 0.35), dealt > 60.0)
-		fx.burst(e.position, col, 3, 160.0, 2.5, 0.3)
+		var heavy: bool = dealt > 60.0
+		# One number per enemy per quarter-second keeps area hits readable.
+		if elapsed - e.last_number_time > 0.25 or heavy and e.elite:
+			e.last_number_time = elapsed
+			fx.number(e.position + Vector2(0, -e.radius), dealt, Color.WHITE.lerp(col, 0.35), heavy)
+		fx.impact(e.position - e.last_hit_dir * e.radius * 0.6, e.last_hit_dir, col, heavy)
 		Audio.play_sfx("hit", randf_range(0.9, 1.15), -14.0, 0.05)
+	elif randf() < 0.08:
+		fx.spark_spray(e.position, e.last_hit_dir, Color.WHITE.lerp(GameData.FORCES.get(GameData.weapon_force(weapon_id), {}).get("color", Color.WHITE), 0.5), 1, 300.0, 1.2)
 
 func _on_enemy_died(e: ForceEnemy) -> void:
 	enemies.erase(e)
 	kills += 1
+	weapons.on_kill()
+	var glow: int = int(weapons.passives.get("afterglow", 0))
+	if glow > 0:
+		player.heal(0.4 * glow)
 	add_resonance(0.12 if not e.elite else 6.0)
 	var val: int = e.xp_value
 	if force_state == "FRACTURE":
@@ -643,14 +693,20 @@ func _on_enemy_died(e: ForceEnemy) -> void:
 	if e.boss:
 		_on_boss_defeated(e)
 	elif e.elite:
+		if e.kind == "dreadnought":
+			pending_levels += 1
+			for i in 10:
+				pickups.drop("mote", e.position + Vector2.from_angle(TAU * i / 10.0) * 40.0, 4)
+			if hud:
+				hud.toast("DREADNOUGHT BROKEN — salvage everywhere")
 		for i in 6:
 			pickups.drop("mote", e.position, maxi(1, val / 6))
 		pickups.drop("repair", e.position + Vector2(20, 0))
 		pending_levels += 1
-		fx.burst(e.position, e.tint, 26, 380.0, 4.0, 0.7)
-		fx.ring(e.position, 10.0, 160.0, e.tint, 0.5, 6.0)
-		shake(7.0)
-		hitstop(0.06)
+		fx.big_kill(e.position, e.tint, e.radius)
+		shake(9.0)
+		punch(0.06)
+		hitstop(0.07)
 		Audio.play_sfx("kill_big", 1.0, -2.0, 0.1)
 	else:
 		pickups.drop("mote", e.position, val)
@@ -659,7 +715,7 @@ func _on_enemy_died(e: ForceEnemy) -> void:
 			pickups.drop("repair", e.position)
 		elif roll < 0.018:
 			pickups.drop("magnet", e.position)
-		fx.burst(e.position, e.tint, 9, 260.0, 3.0, 0.45)
+		fx.kill(e.position, e.last_hit_dir, e.tint, e.radius)
 		Audio.play_sfx("kill", randf_range(0.85, 1.2), -9.0, 0.04)
 	e.queue_free()
 
@@ -669,7 +725,9 @@ func _on_boss_defeated(e: ForceEnemy) -> void:
 	hazards.clear()
 	for i in 20:
 		pickups.drop("mote", e.position, 6)
-	fx.burst(e.position, e.tint, 60, 520.0, 5.0, 1.2)
+	fx.big_kill(e.position, e.tint, e.radius)
+	fx.shatter(e.position, Color("2a1020"), 30, 600.0, 22.0)
+	punch(0.12)
 	for k in 4:
 		fx.ring(e.position, 20.0, 260.0 + k * 120.0, Color.WHITE.lerp(e.tint, k * 0.25), 0.8 + k * 0.2, 8.0)
 	shake(16.0)
@@ -737,8 +795,10 @@ func player_hit(amount: float, from: Vector2) -> bool:
 		return false
 	add_resonance(-6.0)
 	weapons.on_player_hurt()
-	shake(6.0)
+	shake(7.0)
 	fx.burst(player.position, Color("ff6f8f"), 10, 240.0)
+	fx.spark_spray(player.position, (player.position - from).normalized() if from != Vector2.ZERO else Vector2.ZERO, Color("ffb0c0"), 10, 520.0, 1.0)
+	fx.flash(player.position, 34.0, Color("ff6f8f"), 0.12)
 	Audio.play_sfx("hurt", randf_range(0.95, 1.05), -2.0, 0.1)
 	if hud:
 		hud.flash_damage()
@@ -1049,28 +1109,17 @@ func _claim_discovery(p: Dictionary) -> void:
 	var heading: String = String(p.title)
 	match String(p.kind):
 		"signal":
-			var force_id: String = String(d.get("force", ""))
-			var newly_attuned: bool = force_id != "" and not force_id in attuned
-			if force_id != "" and not force_id in attuned:
-				attuned.append(force_id)
 			var t: Dictionary = GameData.TRANSMISSIONS.get(String(d.get("transmission", "")), {})
 			if not t.is_empty():
 				heading = "%s — %s" % [String(t["project"]).to_upper(), String(t["title"])]
-			# A newly heard Force arrives as a weapon immediately: discovery
-			# changes what you can do, right now.
-			if newly_attuned and weapons.weapons.size() < WeaponSystem.MAX_WEAPONS:
-				var primary: String = String(GameData.FORCES[force_id]["primary"])
-				if not weapons.has_base(primary):
-					weapons.add_weapon(primary)
-					detail += "\nNEW FORCE ATTUNED: %s — %s joins your loadout." % [GameData.FORCES[force_id]["name"], GameData.weapon_name(primary)]
-			elif newly_attuned:
-				detail += "\nNEW FORCE ATTUNED: its weapons now appear in upgrades."
+			detail += _attune(String(d.get("force", "")))
 		"character":
 			var cid: String = String(d.get("unlock_character", ""))
 			if cid != "" and not Profile.has_character(cid):
 				detail += "\nNEW EXPLORER: %s joins when you return." % GameData.CHARACTERS[cid]["name"]
 			pending_levels += 1
 		"artifact":
+			detail += _attune(String(d.get("force", "")))
 			var cid2: String = String(d.get("unlock_character", ""))
 			if cid2 != "" and not Profile.has_character(cid2):
 				detail += "\nNEW EXPLORER: %s joins when you return." % GameData.CHARACTERS[cid2]["name"]
@@ -1108,6 +1157,19 @@ func spawn_guardian(p: Dictionary) -> ForceEnemy:
 	if hud:
 		hud.alert("GUARDIAN CAPTAIN", g.position if g else p.pos)
 	return g
+
+## Attunes a Force mid-run. A newly heard Force arrives as a weapon at once:
+## discovery changes what you can do, right now. Returns text for the card.
+func _attune(force_id: String) -> String:
+	if force_id == "" or force_id in attuned:
+		return ""
+	attuned.append(force_id)
+	if weapons.weapons.size() < WeaponSystem.MAX_WEAPONS:
+		var primary: String = String(GameData.FORCES[force_id]["primary"])
+		if not weapons.has_base(primary):
+			weapons.add_weapon(primary)
+			return "\nNEW FORCE ATTUNED: %s — %s joins your loadout." % [GameData.FORCES[force_id]["name"], GameData.weapon_name(primary)]
+	return "\nNEW FORCE ATTUNED: its weapons now appear in upgrades."
 
 func on_mirrorfold(from: Dictionary, to: Dictionary) -> void:
 	var dest: Vector2 = Vector2(to.pos) + Vector2(0, 70)
@@ -1172,10 +1234,9 @@ func confront() -> void:
 func _on_audio_beat(index: int) -> void:
 	if ended or choosing or get_tree().paused:
 		return
-	beat_index = index
-	weapons.on_beat(index)
-	if hud:
-		hud.on_beat(index)
+	# Handled inside step(), after the enemy list is rebuilt, so beat-driven
+	# weapons never see enemies freed between frames.
+	pending_beats.append(index)
 
 func _beat_fallback(delta: float) -> void:
 	if Audio.music_running:

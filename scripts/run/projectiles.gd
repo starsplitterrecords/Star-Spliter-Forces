@@ -18,6 +18,7 @@ class Shot:
 	var weapon: String
 	var echo: int
 	var split: int
+	var square: bool
 	var hit: Dictionary = {}
 	var active: bool = false
 
@@ -43,6 +44,10 @@ func spawn(pos: Vector2, vel: Vector2, damage: float, life: float, radius: float
 	s.weapon = String(opts.get("weapon", ""))
 	s.echo = int(opts.get("echo", 0))
 	s.split = int(opts.get("split", 0))
+	s.square = bool(opts.get("square", false))
+	if not s.hostile and run and run.player:
+		s.vel *= run.player.bandwidth_mult
+		s.life *= run.player.bandwidth_mult
 	s.hit.clear()
 	s.active = true
 	shots.append(s)
@@ -110,6 +115,11 @@ func _draw() -> void:
 			draw_circle(s.pos, s.radius, s.color)
 			draw_circle(s.pos, s.radius * 0.45, Color(1, 1, 1, 0.9))
 		else:
+			if s.square:
+				# Tracker notes: crisp square pixels.
+				draw_rect(Rect2(s.pos - Vector2(s.radius, s.radius) * 1.6, Vector2(s.radius, s.radius) * 3.2), Color(s.color, 0.18))
+				draw_rect(Rect2(s.pos - Vector2(s.radius, s.radius), Vector2(s.radius, s.radius) * 2.0), s.color)
+				continue
 			draw_line(s.pos - tail, s.pos, Color(s.color, 0.45), s.radius * 1.2)
 			draw_circle(s.pos, s.radius * 1.7, Color(s.color, 0.14))
 			draw_circle(s.pos, s.radius, s.color)

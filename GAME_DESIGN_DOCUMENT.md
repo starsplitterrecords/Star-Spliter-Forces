@@ -55,7 +55,13 @@ Abby — first completion of the Reach. Portraits and identities: `CHARACTER_REF
 | Star Splitter Rex | Impact: 2.2× knockback, +35% vs elites/bosses | Ion Lance → Breaker Lance (Plating); Riff Blades → Titan Riff (Wide Stereo) |
 | Ion Drive Orchestra | Ensemble: drone sections fire on the beat | Section Drones → Full Orchestra (Collector) |
 | Warm Circuits Rise | Improvisation: never repeats a pattern; jam grows while unhurt | Analog Star → Long Jam (Scanner) |
-| Minor Collapse | Wall of Sound: aura swells when slow/still | Fuzz Wall → Wall of Sound (Nanoweave) |
+| Minor Collapse | Wall of Sound: aura swells when slow/still | Fuzz Wall → Wall of Sound (Nanoweave); Feedback Bloom → Overload Bloom (Gain Stage) |
+| Supersonic Being | Hype: kill streaks raise Supersonic damage (to +60%); every 15 kills a spectacle burst | Mic Drop → Headliner (Compressor) |
+| Night Motion Archives | Afterimage: sweeping searchlights leave lingering cutting afterimages | Nightline → Night Shift (Bandwidth) |
+| Robots Sing Love Songs | Duet: companion machines; touched targets take +30% from other Forces | Duet Unit → Choir of Machines (Afterglow) |
+| Before the Reboot | Tracker: 16-step sequencer; downbeat notes +30% | Pattern Cannon → Full Module (Metronome) |
+
+Ion Drive Orchestra also has Brass Swell → Fanfare (Long Delay). New upgrades: Gain Stage (critical hits), Long Delay, Bandwidth, Compressor, Afterglow, Metronome. New harmonies: Main Stage, Late-Night Dub, Machine Chorus, Chiptune Anthem.
 
 Harmonies (both Forces ≥ level 3): Dub Drop, Stadium Riff, Festival Score, Road Jam,
 Reverb Wall, Score for a Boss Fight. Discovered in play, then listed in the Archive.
@@ -91,7 +97,11 @@ stillness; Ignition Chorus — three relays; Night Trace — moves away until co
 Splinter Skiff (weaving), Ram Cutter (telegraphed charge), Swarm Tender (summons),
 Rail Picket (keeps range, telegraphed shot), Mine Hauler (lays pools), Wreck Lurker
 (disguised as debris), Shield Tug (halves damage to allies), Gravitic Echo (anomaly),
-Splinter Captain (elite, telegraphed shockwave; drops an upgrade), The Silence (boss).
+Splinter Captain (elite, telegraphed shockwave; drops an upgrade), Splinter Gunship (3-shot bursts, from 3:00), Drift Leech (latches and slows, from 2:00), Veil Flicker (Phase anomaly that marks a point and reappears there, from 2:30), **Splinter Dreadnought** mini-boss at 8:00 (telegraphed twin broadsides, summons skiffs, drops an upgrade), The Silence (boss).
+
+## 8a. Feedback
+
+Hits spray sparks along the impact direction and squash the target; kills shatter into tumbling wreckage, flash and leave scorch marks; elites and the Dreadnought explode with smoke, shockwaves, hit-stop and a camera zoom-punch. Light effects use additive blending. Critical hits show a gold "CRIT". Damage numbers are throttled to one per enemy per 0.25 s. Shake, punch and hit-stop follow the accessibility settings.
 Wanderers idle until within aggro range; a portion spawn engaged (30% → 65% over time).
 
 ## 9. Progression

@@ -691,6 +691,8 @@ class HudCanvas:
 					value = w.jam
 				"minor_collapse":
 					value = w.swell
+				"supersonic_being":
+					value = fmod(w.hype, 15.0) / 15.0
 			entries.append([fid, lvl, value])
 		for e: Array in entries:
 			var f: Dictionary = GameData.FORCES[String(e[0])]

@@ -509,13 +509,80 @@ def layer_state_fracture():
             place(b, sw, bar_t(bar), 0.25)
     return fold_loop(b)
 
+def layer_force_supersonic():
+    # Hip-hop / pop spectacle: boom-bap kit, sub hits and brassy stabs.
+    b = new_buf(2)
+    for bar in range(BARS):
+        for q in [0, 2.5]:
+            place(b, kick(0.45), bar_t(bar, q), 0.9)
+        for q in [1, 3]:
+            place(b, snare(0.3), bar_t(bar, q), 0.75)
+        for i in range(8):
+            place(b, hat(), bar_t(bar, i * 0.5 + 0.25 * (i % 2)), 0.45)
+        place(b, bass_note(midi(root_at(bar)), BEAT * 1.5, "sine", 160), bar_t(bar, 0), 1.0)
+        if bar % 2 == 1:
+            n = int(BEAT * 0.4 * SR)
+            stab = sum(fft_filter(osc("saw", midi(m + 12), n) + osc("square", midi(m + 12), n), hi=3000) for m in chord_at(bar))
+            for q in [2.75, 3.5]:
+                place(b, stab * env_adsr(n, 0.005, 0.08, 0.5, 0.05), bar_t(bar, q), 0.18)
+    return fold_loop(b)
+
+def layer_force_night():
+    # Nocturnal indie: clean delayed guitar arpeggio, sparse and late.
+    b = new_buf(5)
+    for bar in range(BARS):
+        ch = chord_at(bar)
+        seq = [ch[0] + 12, ch[2] + 12, ch[1] + 24, ch[2] + 12]
+        for i, m in enumerate(seq):
+            place(b, pluck(midi(m), 0.6, 2600, "tri"), bar_t(bar, i * 1.0 + 0.5), 0.28)
+    b = delay(b, BEAT * 0.75, 0.45, 5, 2200)
+    b = b + convolve(b, reverb_ir(3.0, 3500))[: len(b)] * 0.6
+    return fold_loop(b)
+
+def layer_force_robots():
+    # Speculative pop: formant-ish square pad plus a bright pop pluck line.
+    b = new_buf(3)
+    for bar in range(0, BARS, 2):
+        for m in chord_at(bar):
+            n = int(2 * 4 * BEAT * SR)
+            tt = np.arange(n) / SR
+            s1 = osc("square", midi(m + 12), n) * (0.6 + 0.4 * np.sin(2 * np.pi * 6.0 * tt))
+            s1 = fft_filter(s1, lo=300, hi=1600)
+            place(b, s1 * env_adsr(n, 0.3, 0.2, 0.7, 0.4), bar_t(bar), 0.12)
+    hook = [0, 2, 4, 2, 7, 4, 2, 0]
+    for bar in range(BARS):
+        root = chord_at(bar)[0] + 12
+        for i, step in enumerate(hook):
+            place(b, pluck(midi(root + step), 0.22, 4200, "square"), bar_t(bar, i * 0.5), 0.14)
+    b = b + convolve(b, reverb_ir(1.8, 4000))[: len(b)] * 0.4
+    return fold_loop(b)
+
+def layer_force_tracker():
+    # Tracker interpretation: chiptune square arpeggio and noise percussion.
+    b = new_buf(1)
+    for bar in range(BARS):
+        ch = chord_at(bar)
+        arp_notes = [ch[0] + 12, ch[1] + 12, ch[2] + 12, ch[0] + 24]
+        for i in range(16):
+            n = int(BEAT * 0.25 * SR)
+            sq = osc("square", midi(arp_notes[i % 4]), n) * env_adsr(n, 0.001, 0.02, 0.6, 0.01)
+            place(b, sq, bar_t(bar, i * 0.25), 0.12)
+        for q in range(4):
+            nn = int(0.05 * SR)
+            place(b, np.sign(RNG.standard_normal(nn)) * np.linspace(1, 0, nn), bar_t(bar, q + 0.5), 0.12)
+            tri = osc("tri", np.linspace(160, 50, int(0.12 * SR)), int(0.12 * SR))
+            place(b, tri, bar_t(bar, q), 0.35)
+        place(b, osc("tri", midi(root_at(bar)), int(BEAT * 4 * SR)) * 0.5, bar_t(bar), 0.3)
+    return fold_loop(b)
+
 LAYERS = {
     "bed": layer_bed, "pulse": layer_pulse, "drive": layer_drive, "menu": layer_menu, "boss": layer_boss,
     "region_gate": layer_region_gate, "region_wrecks": layer_region_wrecks, "region_shelf": layer_region_shelf,
     "region_basin": layer_region_basin, "region_corridor": layer_region_corridor, "region_bloom": layer_region_bloom,
     "force_codex": layer_force_codex, "force_currents": layer_force_currents, "force_ghost": layer_force_ghost,
     "force_rex": layer_force_rex, "force_orchestra": layer_force_orchestra, "force_circuits": layer_force_circuits,
-    "force_collapse": layer_force_collapse, "state_resonance": layer_state_resonance, "state_fracture": layer_state_fracture,
+    "force_collapse": layer_force_collapse,
+    "force_supersonic": layer_force_supersonic, "force_night": layer_force_night, "force_robots": layer_force_robots, "force_tracker": layer_force_tracker, "state_resonance": layer_state_resonance, "state_fracture": layer_state_fracture,
 }
 # Target loudness (RMS) per layer, so adaptive mixes stay balanced.
 LEVELS = {"bed": 0.10, "pulse": 0.10, "drive": 0.07, "menu": 0.11, "boss": 0.13, "state_resonance": 0.07, "state_fracture": 0.05,

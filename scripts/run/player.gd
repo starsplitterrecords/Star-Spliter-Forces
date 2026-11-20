@@ -39,6 +39,11 @@ var luck: float = 0.0
 var shield: float = 0.0
 var max_shield: float = 0.0
 var damage_taken_mult: float = 1.0
+var crit_chance: float = 0.0
+var duration_mult: float = 1.0
+var bandwidth_mult: float = 1.0
+var knock_mult: float = 1.0
+var slow_timer: float = 0.0 # latched leeches drag the hull
 
 var invuln: float = 0.0
 var hurt_flash: float = 0.0
@@ -68,6 +73,8 @@ func move_speed() -> float:
 	var s: float = base_speed * speed_mult
 	if state == "DRIFT":
 		s *= 1.12
+	if slow_timer > 0.0:
+		s *= 0.62
 	elif state == "RESONANCE":
 		s *= 0.94
 	return s
@@ -78,6 +85,7 @@ func movement_ratio() -> float:
 func step(delta: float) -> void:
 	anim += delta
 	invuln = maxf(0.0, invuln - delta)
+	slow_timer = maxf(0.0, slow_timer - delta)
 	hurt_flash = maxf(0.0, hurt_flash - delta)
 	var desired: Vector2 = move_input.limit_length(1.0) * move_speed()
 	var rate: float = ACCEL if desired.length_squared() > 1.0 and velocity.dot(desired) >= 0.0 else BRAKE

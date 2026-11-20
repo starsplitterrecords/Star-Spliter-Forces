@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_review_regressions", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_new_content", "test_review_regressions", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	for t: String in tests:
 		current = t
@@ -46,6 +46,8 @@ func _dispatch(t: String) -> void:
 			await test_second_destination()
 		"test_review_regressions":
 			await test_review_regressions()
+		"test_new_content":
+			await test_new_content()
 		"test_signal_locks":
 			await test_signal_locks()
 		"test_camps_and_echoes":
@@ -102,9 +104,12 @@ func _remove_test_saves() -> void:
 				dir.remove(f)
 
 func _cleanup_runs() -> void:
-	get_tree().paused = false
 	for c: Node in get_children():
+		# Stop it at once: a run waiting to be freed can still open a
+		# level-up (and pause the tree) during its last frame.
+		c.process_mode = Node.PROCESS_MODE_DISABLED
 		c.queue_free()
+	get_tree().paused = false
 	_reset_profile()
 
 func _make_run(config: Dictionary = {}) -> GameRun:
@@ -568,7 +573,7 @@ func test_evolution_offer() -> void:
 		check(String(o2["id"]) != "pulse_bolt", "base weapon re-offered after evolution")
 
 func test_every_weapon_fires() -> void:
-	for group: Array in [["pulse_bolt", "riser", "sub_wave", "echo_tap", "power_chord"], ["trail_charges", "ion_lance", "riff_blades", "section_drones", "analog_star"], ["fuzz_wall"]]:
+	for group: Array in [["pulse_bolt", "riser", "sub_wave", "echo_tap", "power_chord"], ["trail_charges", "ion_lance", "riff_blades", "section_drones", "analog_star"], ["fuzz_wall", "mic_drop", "nightline", "duet_unit", "pattern_cannon"], ["brass_swell", "feedback_bloom"]]:
 		var run: GameRun = _make_run()
 		await get_tree().process_frame
 		run.player.god_mode = true
@@ -624,6 +629,68 @@ func test_abilities() -> void:
 		_cleanup_runs()
 		await get_tree().process_frame
 
+## Force mechanics, upgrades and enemies added 2026-11-20.
+func test_new_content() -> void:
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	run.player.god_mode = true
+	# Hype: 15 quick kills fire a spectacle burst.
+	run.weapons.add_weapon("mic_drop")
+	for i in 15:
+		var e: ForceEnemy = run.spawn_enemy("skiff", run.player.position + Vector2(300 + i * 4, 0), true)
+		run.damage_enemy(e, 9999.0, Vector2.RIGHT, 0.0, "mic_drop", true)
+	check(run.weapons.hype_bursts >= 1, "15-kill streak did not trigger a Hype spectacle")
+	# Critical hits.
+	run.weapons.passives["gain_stage"] = 5
+	run.weapons.apply_passives()
+	check(is_equal_approx(run.player.crit_chance, 0.30), "Gain Stage crit chance wrong")
+	# Duet harmony mark boosts the next hit from another Force, then clears.
+	var t: ForceEnemy = run.spawn_enemy("splinter_captain", run.player.position + Vector2(400, 0), true)
+	run.weapons.add_weapon("duet_unit")
+	run.player.crit_chance = 0.0
+	run.damage_enemy(t, 1.0, Vector2.ZERO, 0.0, "duet_unit", true)
+	check(t.harmony_mark, "Duet hit did not mark the target")
+	var before: float = t.hp
+	run.damage_enemy(t, 100.0, Vector2.ZERO, 0.0, "pulse_bolt", true)
+	check(before - t.hp > 125.0 and not t.harmony_mark, "harmony mark did not add +30% and clear")
+	# Leech latches and slows.
+	var leech: ForceEnemy = run.spawn_enemy("leech", run.player.position + Vector2(20, 0), true)
+	leech.clock = 0.0
+	_sim(run, 0.3)
+	check(leech.latched > 0.0 and run.player.slow_timer > 0.0, "leech did not latch and slow")
+	# Flicker teleports beside the player.
+	var fl: ForceEnemy = run.spawn_enemy("blink", run.player.position + Vector2(500, 0), true)
+	fl.clock = 0.0
+	_sim(run, 1.2)
+	check(not is_instance_valid(fl) or fl.position.distance_to(run.player.position) < 260.0, "flicker did not teleport near the player")
+	# Dreadnought arrives at 8:00 and fires broadsides.
+	run.elapsed = 479.9
+	_sim(run, 0.5)
+	check(run.dreadnought_spawned, "dreadnought did not spawn at 8:00")
+	var dn: ForceEnemy = null
+	for e2: ForceEnemy in run.enemies:
+		if e2.kind == "dreadnought":
+			dn = e2
+	check(dn != null, "dreadnought missing")
+	if dn:
+		dn.clock = 0.0
+		_sim(run, 1.4)
+		var beams: int = run.hazards.items.filter(func(h: Dictionary) -> bool: return String(h.kind) == "beam").size()
+		check(beams >= 2 or dn.telegraph > 0.0, "dreadnought broadside not fired")
+	# Crowd lock (Supersonic Being signal).
+	var sig: Dictionary = {}
+	for q: Dictionary in run.pois.items:
+		if String(q.id) == "sig_spectacle":
+			sig = q
+	check(not sig.is_empty(), "spectacle signal missing")
+	check(run.pois._lock_blocker(sig, run.player).begins_with("NEEDS A CROWD"), "crowd lock not enforced")
+	# Artifact discoveries attune their Force mid-run (Before the Reboot).
+	var run2: GameRun = run
+	run2.weapons.weapons.clear()
+	run2.weapons.weapon_order.clear()
+	run2._claim_discovery({"id": "art_tracker_module", "kind": "artifact", "pos": run2.player.position, "color": Color.WHITE, "title": "T", "data": GameData.DISCOVERIES["art_tracker_module"]})
+	check("before_the_reboot" in run2.attuned and run2.weapons.has_base("pattern_cannon"), "artifact did not attune Before the Reboot")
+
 ## Regressions from the 2026-11-17 code review.
 func test_review_regressions() -> void:
 	# 1. Guardian lock under real frames: exactly one guardian, tunes after it falls.
@@ -639,10 +706,14 @@ func test_review_regressions() -> void:
 	run.player.position = Vector2(beacon.pos)
 	for i in 30:
 		run.player.position = Vector2(beacon.pos)
+		if run.choosing:
+			run.hud._pick(run.hud.level_options[0])
 		await get_tree().process_frame
 	run.elite_times.clear()
 	var g: Variant = beacon.get("guardian")
-	check(is_instance_valid(g), "guardian missing")
+	check(is_instance_valid(g), "guardian missing (has key %s, blocked '%s', claimed %s, dist %d, visible %s, choosing %s, paused %s, elapsed %.2f, ended %s)" % [str(beacon.has("guardian")), String(beacon.get("blocked", "")), str(beacon.claimed), int(run.player.position.distance_to(beacon.pos)), str(run.pois.is_visible_poi(beacon)), str(run.choosing), str(get_tree().paused), run.elapsed, str(run.ended)])
+	if not is_instance_valid(g):
+		return
 	run.damage_enemy(g, 999999.0, Vector2.ZERO, 0.0, "environment", true)
 	for i in 400:
 		run.player.position = Vector2(beacon.pos)

@@ -166,6 +166,14 @@ func _lock_blocker(p: Dictionary, player: ForcePlayer) -> String:
 		"stillness":
 			if player.velocity.length() > 30.0:
 				return "HOLD STILL"
+		"crowd":
+			# Supersonic Being: it needs an audience.
+			var watching: int = 0
+			for e: ForceEnemy in run.enemy_hash.query(Vector2(p.pos), 420.0):
+				if not e.dead and e.position.distance_to(Vector2(p.pos)) < 420.0:
+					watching += 1
+			if watching < 3:
+				return "NEEDS A CROWD (%d/3)" % watching
 		"guardian":
 			# Spawn exactly once; a freed guardian compares equal to null in
 			# Godot 4, so presence of the key — not the value — is the test.

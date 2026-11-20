@@ -32,6 +32,19 @@ var road_jam_clock: float = 0.0
 var reverb_clock: float = 0.0
 var silenced: bool = false
 var anim: float = 0.0
+# New Forces
+var hype: float = 0.0            # Supersonic Being streak count
+var hype_clock: float = 0.0
+var hype_bursts: int = 0
+var beam_angle: float = 0.0      # Night Motion Archives searchlights
+var afterimages: Array = []      # {angle, t, max_t, id}
+var afterimage_clock: float = 0.0
+var companions: Array[Vector2] = [] # Robots Sing Love Songs duet units
+var tracker_step: int = -1       # Before the Reboot sequencer
+var blooms: Array = []           # Minor Collapse feedback seeds
+var brass_repeat: float = -1.0
+
+const BEAT_WEAPONS: Array = ["section_drones", "full_orchestra", "the_drop", "pattern_cannon", "full_module"]
 
 func setup(run_node: Node, p: ForcePlayer, starting_weapon: String) -> void:
 	run = run_node
@@ -101,6 +114,10 @@ func apply_passives() -> void:
 	player.projectile_bonus = (1 if mp >= 2 else 0) + (1 if mp >= 4 else 0)
 	player.armor = float(bonus.get("armor", 0.0)) + 1.5 * int(p.get("plating", 0))
 	player.regen = 0.5 * int(p.get("nanoweave", 0))
+	player.crit_chance = 0.06 * int(p.get("gain_stage", 0))
+	player.duration_mult = 1.0 + 0.15 * int(p.get("long_delay", 0))
+	player.bandwidth_mult = 1.0 + 0.12 * int(p.get("bandwidth", 0))
+	player.knock_mult = 1.0 + 0.2 * int(p.get("compressor", 0))
 	var new_max: float = float(bonus.get("max_hp", 100.0)) + 20.0 * int(p.get("hull", 0))
 	if new_max > player.max_hp:
 		player.hp += new_max - player.max_hp
@@ -231,6 +248,10 @@ func damage_for(id: String, base: float) -> float:
 		dmg *= 1.0 + jam * 0.6
 	if force == "minor_collapse":
 		dmg *= 0.8 + swell * 0.8
+	if force == "supersonic_being":
+		dmg *= 1.0 + minf(hype, 40.0) * 0.015
+	if id in BEAT_WEAPONS:
+		dmg *= 1.0 + 0.15 * int(passives.get("metronome", 0))
 	if run.character_id == "tessa_banks":
 		dmg *= 0.9
 	if run.character_id == "abby_saville" and player.movement_ratio() < 0.15:
@@ -248,6 +269,13 @@ func target_multiplier(e: ForceEnemy, weapon_id: String) -> float:
 		m *= 1.35
 	if has_harmony("boss_score") and (e.elite or e.boss):
 		m *= 1.4
+	if e.elite or e.boss:
+		m *= 1.0 + 0.06 * int(passives.get("compressor", 0))
+	# Duet: a target left in harmony takes +30% from any other Force.
+	if e.harmony_mark and force != "robots_sing_love_songs" and force != "":
+		m *= 1.3
+		if not weapons.has("choir_of_machines"):
+			e.harmony_mark = false
 	if force == "resonant_currents":
 		var crowded: bool = false
 		for other: ForceEnemy in run.enemy_hash.query(e.position, 80.0):
@@ -259,7 +287,7 @@ func target_multiplier(e: ForceEnemy, weapon_id: String) -> float:
 	return m
 
 func knock_for(id: String, base: float) -> float:
-	var k: float = base
+	var k: float = base * player.knock_mult
 	if GameData.weapon_force(id) == "star_splitter_rex":
 		k *= 2.2
 		if has_harmony("stadium"):
@@ -268,12 +296,37 @@ func knock_for(id: String, base: float) -> float:
 
 ## Called by the run whenever a weapon hit lands.
 func on_hit(weapon_id: String) -> void:
-	if GameData.weapon_force(weapon_id) == "pulse_width_codex" and drop_time <= 0.0:
-		var gain: float = 1.6 * (1.6 if run.force_state == "RESONANCE" else 1.0)
+	var f: String = GameData.weapon_force(weapon_id)
+	var codex_like: bool = f == "pulse_width_codex" or (f == "before_the_reboot" and has_harmony("chiptune_anthem"))
+	if codex_like and drop_time <= 0.0:
+		var gain: float = 1.6 * (1.6 if run.force_state == "RESONANCE" else 1.0) * (3.0 if f == "before_the_reboot" else 1.0)
 		build = minf(100.0, build + gain)
 		if build >= 100.0 and not drop_armed:
 			drop_armed = true
 			run.fx.label(player.position + Vector2(0, -56), "BUILD PEAKING", GameData.FORCES["pulse_width_codex"]["color"], 16, 0.9)
+
+## Called by the run when an enemy dies (Hype streaks).
+func on_kill() -> void:
+	if not has_force("supersonic_being"):
+		return
+	hype += 1.0
+	hype_clock = 1.6
+	if int(hype) % 15 == 0:
+		_spectacle()
+
+func _spectacle() -> void:
+	hype_bursts += 1
+	var lvl: int = force_level("supersonic_being")
+	var r: float = (230.0 + lvl * 12.0) * player.area_mult
+	_area_hit(player.position, r, damage_for("mic_drop", 30.0 + lvl * 8.0), "mic_drop", 300.0)
+	var col: Color = GameData.FORCES["supersonic_being"]["color"]
+	for c: Color in [col, Color("ffe08a"), Color("6ff6ff"), Color("b38bff")]:
+		run.fx.spark_spray(player.position, Vector2.ZERO, c, 8, 760.0, PI)
+	run.fx.ring(player.position, 20.0, r, col, 0.55, 8.0)
+	run.fx.label(player.position + Vector2(0, -64), "HYPE x%d" % int(hype), col, 26, 1.0)
+	run.punch(0.05)
+	run.shake(6.0)
+	Audio.play_sfx("harmony", 1.25, -4.0, 0.2)
 
 func on_player_hurt() -> void:
 	jam = 0.0 if not is_evolved_present("long_jam") else jam * 0.5
@@ -287,6 +340,10 @@ func on_beat(index: int) -> void:
 	var on_bar: bool = index % 4 == 0
 	if on_bar and drop_armed:
 		_drop()
+	if has_harmony("machine_chorus") and not silenced:
+		for wid: String in weapon_order:
+			if base_id(wid) == "duet_unit":
+				_fire_duet(wid, true)
 	for id: String in weapon_order:
 		if base_id(id) == "section_drones" and not silenced:
 			var every: int = 1 if (drop_time > 0.0 and has_harmony("festival_score")) else 2
@@ -308,11 +365,18 @@ func _drop() -> void:
 	_area_hit(player.position, radius, dmg, "pulse_bolt", 320.0)
 	var col: Color = GameData.FORCES["pulse_width_codex"]["color"]
 	run.fx.ring(player.position, 30.0, radius, col, 0.6, 10.0)
+	run.fx.flash(player.position, 120.0, col.lerp(Color.WHITE, 0.5), 0.18)
+	run.fx.spark_spray(player.position, Vector2.ZERO, col.lerp(Color.WHITE, 0.4), 24, 900.0, PI)
+	run.punch(0.08)
 	run.fx.ring(player.position, 10.0, radius * 0.7, Color.WHITE, 0.45, 4.0)
 	run.fx.label(player.position + Vector2(0, -70), "DROP", col, 30, 1.0)
 	run.shake(8.0)
 	run.hitstop(0.05)
 	Audio.play_sfx("drop", 1.0, 0.0, 0.2)
+	if has_harmony("main_stage"):
+		hype += 12.0
+		hype_clock = 2.0
+		_spectacle()
 	if has_harmony("dub_drop"):
 		_queue_echo(0.5, "area", player.position, Vector2.ZERO, dmg * 0.6, radius * 0.9, "pulse_bolt")
 		_queue_echo(1.0, "area", player.position, Vector2.ZERO, dmg * 0.35, radius * 0.8, "pulse_bolt")
@@ -331,6 +395,16 @@ func step(delta: float) -> void:
 	if has_force("minor_collapse"):
 		swell = clampf(swell + (delta * 0.6 if moving < 0.45 else -delta * 0.9), 0.0, 1.0)
 	orbit_phase += delta * (2.4 if run.force_state == "RESONANCE" else 2.0)
+	hype_clock -= delta
+	if hype_clock <= 0.0:
+		hype = maxf(0.0, hype - 12.0 * delta)
+	_step_companions(delta)
+	_step_afterimages(delta)
+	_step_blooms(delta)
+	if brass_repeat > 0.0:
+		brass_repeat -= delta
+		if brass_repeat <= 0.0 and weapons.has("fanfare"):
+			_fire_brass("fanfare", true)
 	_step_echoes(delta)
 	_step_charges(delta)
 	_step_fields(delta)
@@ -373,6 +447,7 @@ func _fire(id: String) -> void:
 			_area_hit(player.position, radius, dmg, id, 380.0)
 			run.fx.ring(player.position, 20.0, radius, GameData.FORCES["resonant_currents"]["color"], 0.4, 8.0)
 			Audio.play_sfx("wave", randf_range(0.95, 1.05), -6.0)
+			run.fx.flash(player.position, radius * 0.45, GameData.FORCES["resonant_currents"]["color"], 0.1)
 			_queue_echo(0.45, "area", player.position, Vector2.ZERO, dmg * 0.5, radius * 0.85, id)
 			_queue_echo(0.9, "area", player.position, Vector2.ZERO, dmg * 0.25, radius * 0.7, id)
 			if id == "deep_pressure":
@@ -445,6 +520,24 @@ func _fire(id: String) -> void:
 		"analog_star":
 			clocks[id] = cooldown_for(id)
 			_improvise(id)
+		"mic_drop":
+			clocks[id] = cooldown_for(id)
+			_fire_mic_drop(id)
+		"duet_unit":
+			clocks[id] = cooldown_for(id)
+			_fire_duet(id, false)
+		"pattern_cannon":
+			# One sequencer step per sixteenth note at the score's tempo.
+			clocks[id] = 60.0 / Audio.BPM / 4.0
+			_tracker_step(id)
+		"brass_swell":
+			clocks[id] = cooldown_for(id)
+			_fire_brass(id, false)
+		"feedback_bloom":
+			clocks[id] = cooldown_for(id)
+			_seed_bloom(id)
+		"nightline":
+			clocks[id] = 999.0 # continuous
 		_:
 			clocks[id] = 999.0
 
@@ -477,6 +570,8 @@ func _lance(from: Vector2, dir: Vector2, length: float, width: float, dmg: float
 				e.slow = maxf(e.slow, 0.8)
 		if not pierce_all:
 			break
+	run.fx.flash(from + dir * 24.0, width * 1.4, GameData.FORCES["star_splitter_rex"]["color"], 0.1)
+	run.fx.spark_spray(to, dir, GameData.FORCES["star_splitter_rex"]["color"], 5, 400.0, 0.6)
 	run.fx.beam(from, to, GameData.FORCES["star_splitter_rex"]["color"], 0.22, width)
 
 func _fire_sections(id: String, swell_volley: bool) -> void:
@@ -492,6 +587,186 @@ func _fire_sections(id: String, swell_volley: bool) -> void:
 			for k in 6:
 				run.projectiles.spawn(p, Vector2.from_angle(TAU * k / 6.0 + anim) * 480.0, damage_for(id, stat(id, "damage") * 0.8), 0.8, 5.0, col, {"weapon": id})
 	Audio.play_sfx("shot", 1.5, -14.0, 0.1)
+
+# ------------------------------------------------------------------ new Forces
+
+func _fire_mic_drop(id: String) -> void:
+	var targets: Array = []
+	var n: int = 3 if id == "headliner" else 1
+	var pool: Array = run.enemy_hash.query(player.position, 520.0).duplicate()
+	pool.sort_custom(func(a: ForceEnemy, b: ForceEnemy) -> bool: return a.position.distance_squared_to(player.position) < b.position.distance_squared_to(player.position))
+	for e: ForceEnemy in pool:
+		if e.dead or e.disguised or e.position.distance_to(player.position) > 520.0:
+			continue
+		var crowded: bool = false
+		for t: ForceEnemy in targets:
+			if t.position.distance_to(e.position) < 150.0:
+				crowded = true
+		if not crowded:
+			targets.append(e)
+		if targets.size() >= n:
+			break
+	if targets.is_empty():
+		clocks[id] = 0.2
+		return
+	var col: Color = GameData.FORCES["supersonic_being"]["color"]
+	var r: float = stat(id, "radius") * player.area_mult
+	for t2: ForceEnemy in targets:
+		var at: Vector2 = t2.position
+		_area_hit(at, r, damage_for(id, stat(id, "damage")), id, 260.0)
+		run.fx.flash(at, r * 0.7, col.lerp(Color.WHITE, 0.4), 0.12)
+		run.fx.ring(at, 10.0, r, col, 0.35, 7.0)
+		run.fx.spark_spray(at, Vector2.ZERO, col.lerp(Color.WHITE, 0.3), 10, 560.0, PI)
+		run.fx.scorch_mark(at, r * 0.6, col)
+		if id == "headliner":
+			for c: Color in [Color("ffe08a"), Color("6ff6ff"), Color("b38bff")]:
+				run.fx.spark_spray(at, Vector2.ZERO, c, 5, 640.0, PI)
+	run.shake(4.0)
+	Audio.play_sfx("chord", 0.8, -4.0, 0.08)
+
+func _step_companions(delta: float) -> void:
+	var want: int = 0
+	for id: String in weapon_order:
+		if base_id(id) == "duet_unit":
+			want = 3 if id == "choir_of_machines" else 1
+	while companions.size() < want:
+		companions.append(player.position)
+	while companions.size() > want:
+		companions.pop_back()
+	for i in companions.size():
+		var slot: Vector2 = player.position + Vector2.from_angle(player.facing + PI + (i - (companions.size() - 1) * 0.5) * 0.8) * 54.0
+		companions[i] = companions[i].lerp(slot, minf(1.0, delta * 6.0))
+
+func _fire_duet(id: String, on_beat_volley: bool) -> void:
+	var col: Color = GameData.FORCES["robots_sing_love_songs"]["color"]
+	var notes: int = int(stat(id, "count"))
+	for i in companions.size():
+		var p: Vector2 = companions[i]
+		var t: ForceEnemy = run.nearest_enemy(p, 540.0)
+		if t == null:
+			continue
+		var dir: Vector2 = p.direction_to(t.position)
+		for k in (2 if on_beat_volley else notes):
+			var spread: float = (float(k) - float(notes - 1) / 2.0) * 0.12
+			run.projectiles.spawn(p, dir.rotated(spread) * 560.0, damage_for(id, stat(id, "damage")), 1.2, 6.0, col, {"weapon": id, "homing": 3.0, "knock": 40.0})
+		run.fx.flash(p, 10.0, col, 0.08)
+	Audio.play_sfx("shot", 1.35, -12.0, 0.08)
+
+func _tracker_pattern(id: String) -> Array:
+	var notes: int = int(stat(id, "count"))
+	var order: Array = [0, 8, 4, 12, 14, 6, 2, 10, 3, 11]
+	return order.slice(0, notes)
+
+func _tracker_step(id: String) -> void:
+	tracker_step = (tracker_step + 1) % 16
+	var pattern: Array = _tracker_pattern(id)
+	var col: Color = GameData.FORCES["before_the_reboot"]["color"]
+	var downbeat: bool = tracker_step % 4 == 0
+	var t: ForceEnemy = run.nearest_enemy(player.position, 560.0)
+	if t == null:
+		return
+	var dir: Vector2 = player.position.direction_to(t.position)
+	var dmg: float = damage_for(id, stat(id, "damage")) * (1.3 if downbeat else 1.0)
+	if tracker_step in pattern:
+		run.projectiles.spawn(player.position, dir * 620.0, dmg, 1.1, 6.0 if downbeat else 4.5, col, {"weapon": id, "knock": 50.0, "square": true})
+		Audio.play_sfx("pickup", 0.5 + (tracker_step % 8) * 0.06, -16.0, 0.02)
+	# Full Module: a counter-melody channel on the off-steps.
+	if id == "full_module" and (tracker_step + 2) % 16 in pattern:
+		for k in [-0.25, 0.25]:
+			run.projectiles.spawn(player.position, dir.rotated(k) * 560.0, dmg * 0.7, 1.0, 4.0, col.lerp(Color("6ff6ff"), 0.4), {"weapon": id, "square": true})
+
+func _fire_brass(id: String, repeat: bool) -> void:
+	var col: Color = GameData.FORCES["ion_drive_orchestra"]["color"]
+	var t: ForceEnemy = run.nearest_enemy(player.position, 560.0)
+	var dmg: float = damage_for(id, stat(id, "damage")) * (0.6 if repeat else 1.0)
+	if id == "fanfare":
+		for k in 16:
+			run.projectiles.spawn(player.position, Vector2.from_angle(TAU * k / 16.0 + anim) * 360.0, dmg, 0.9, 10.0, col, {"weapon": id, "pierce": 3, "knock": 120.0})
+		if not repeat:
+			brass_repeat = 0.5 * player.duration_mult
+	else:
+		if t == null:
+			clocks[id] = 0.2
+			return
+		var aim: Vector2 = player.position.direction_to(t.position)
+		var n: int = int(stat(id, "count"))
+		for k in n:
+			var a: float = -0.5 + 1.0 * k / maxf(1.0, n - 1.0)
+			run.projectiles.spawn(player.position, aim.rotated(a) * 380.0, dmg, 0.9, 10.0, col, {"weapon": id, "pierce": 3, "knock": 120.0})
+	run.fx.ring(player.position, 20.0, 90.0, col, 0.3, 5.0)
+	Audio.play_sfx("wave", 0.8, -7.0, 0.1)
+
+func _seed_bloom(id: String) -> void:
+	var t: ForceEnemy = run.nearest_enemy(player.position, 520.0)
+	var at: Vector2 = (t.position if t else player.position) + Vector2.from_angle(randf() * TAU) * randf_range(20.0, 90.0)
+	var life: float = 1.6 * player.duration_mult
+	blooms.append({"pos": player.position, "target": at, "t": life, "max_t": life, "radius": stat(id, "radius") * player.area_mult, "dmg": damage_for(id, stat(id, "damage")), "weapon": id})
+
+func _step_blooms(delta: float) -> void:
+	for i in range(blooms.size() - 1, -1, -1):
+		if i >= blooms.size():
+			continue
+		var b: Dictionary = blooms[i]
+		b.t = float(b.t) - delta
+		b.pos = Vector2(b.pos).lerp(Vector2(b.target), minf(1.0, delta * 3.0))
+		if float(b.t) <= 0.0:
+			blooms.remove_at(i)
+			_burst_bloom(b)
+
+func _burst_bloom(b: Dictionary) -> void:
+	var col: Color = GameData.FORCES["minor_collapse"]["color"]
+	_area_hit(b.pos, float(b.radius), float(b.dmg), String(b.weapon), 200.0)
+	run.fx.flash(b.pos, float(b.radius) * 0.6, col.lerp(Color.WHITE, 0.5), 0.12)
+	run.fx.ring(b.pos, 10.0, float(b.radius), col, 0.4, 7.0)
+	run.fx.spark_spray(b.pos, Vector2.ZERO, col.lerp(Color.WHITE, 0.4), 10, 480.0, PI)
+	run.fx.puff(b.pos, 2, float(b.radius) * 0.5)
+	Audio.play_sfx("mine", 0.7, -8.0, 0.06)
+	if String(b.weapon) == "overload_bloom":
+		# Chain reaction: nearby seeds go off with it.
+		for other: Dictionary in blooms.duplicate():
+			if Vector2(other.pos).distance_to(b.pos) < float(b.radius) * 1.2:
+				blooms.erase(other)
+				_burst_bloom(other)
+
+func beam_count(id: String) -> int:
+	return 4 if id == "night_shift" else int(stat(id, "count"))
+
+func _step_afterimages(delta: float) -> void:
+	for i in range(afterimages.size() - 1, -1, -1):
+		afterimages[i].t = float(afterimages[i].t) - delta
+		if float(afterimages[i].t) <= 0.0:
+			afterimages.remove_at(i)
+
+func _nightline(id: String, delta: float) -> void:
+	beam_angle += delta * 1.7
+	var n: int = beam_count(id)
+	var length: float = stat(id, "radius") * player.area_mult * (1.25 if id == "night_shift" else 1.0)
+	var dps: float = damage_for(id, stat(id, "damage")) * 3.0
+	afterimage_clock -= delta
+	if afterimage_clock <= 0.0:
+		afterimage_clock = 0.1
+		var life: float = 0.6 * player.duration_mult * (2.0 if (id == "night_shift" or has_harmony("late_night_dub")) else 1.0)
+		for k in n:
+			afterimages.append({"angle": beam_angle + TAU * k / n, "t": life, "max_t": life, "id": id})
+	var angles: Array = []
+	for k in n:
+		angles.append([beam_angle + TAU * k / n, 1.0])
+	for a: Dictionary in afterimages:
+		angles.append([float(a.angle), 0.4])
+	for e: ForceEnemy in run.enemy_hash.query(player.position, length).duplicate():
+		if e.dead:
+			continue
+		var rel: Vector2 = e.position - player.position
+		var d: float = rel.length()
+		if d > length + e.radius or d < 1.0:
+			continue
+		var best: float = 0.0
+		for pair: Array in angles:
+			var off: float = absf(wrapf(rel.angle() - float(pair[0]), -PI, PI)) * d
+			if off < 16.0 + e.radius:
+				best = maxf(best, float(pair[1]))
+		if best > 0.0:
+			run.damage_enemy(e, dps * best * delta, rel / d, 0.0, id, true)
 
 func drone_position(i: int, count: int) -> Vector2:
 	return player.position + Vector2.from_angle(-orbit_phase * 0.6 + TAU * i / maxf(1.0, float(count))) * 56.0
@@ -552,6 +827,8 @@ func _continuous(delta: float) -> void:
 						e.slow = maxf(e.slow, 0.3)
 			if id == "wall_of_sound":
 				run.clear_hostile_shots_near(player.position, radius2)
+		elif b == "nightline":
+			_nightline(id, delta)
 
 func _harmony_extras(delta: float) -> void:
 	if has_harmony("road_jam") and player.movement_ratio() > 0.8:
@@ -606,6 +883,10 @@ func _step_charges(delta: float) -> void:
 		run.fx.ring(c.pos, 10.0, float(c.radius), col, 0.35, 6.0)
 		run.fx.burst(c.pos, col, 6, 200.0)
 		Audio.play_sfx("mine", randf_range(0.9, 1.1), -8.0, 0.07)
+		run.fx.flash(c.pos, float(c.radius) * 0.6, col.lerp(Color("ffcf7a"), 0.5), 0.1)
+		run.fx.spark_spray(c.pos, Vector2.ZERO, Color("ffcf7a"), 8, 500.0, PI)
+		run.fx.puff(c.pos, 2, float(c.radius) * 0.6)
+		run.fx.scorch_mark(c.pos, float(c.radius) * 0.7, col)
 		if String(c.weapon) == "ghost_mode":
 			fields.append({"pos": c.pos, "radius": float(c.radius) * 0.7, "t": 2.0, "dps": float(c.dmg) * 0.4, "slow": false, "weapon": "ghost_mode", "color": col})
 
@@ -662,12 +943,38 @@ func _draw() -> void:
 				var p2: Vector2 = drone_position(i, count2)
 				draw_circle(p2, 10.0, Color(col2, 0.18))
 				draw_colored_polygon(PackedVector2Array([p2 + Vector2(0, -8), p2 + Vector2(7, 5), p2 + Vector2(-7, 5)]), col2)
+		elif b == "nightline":
+			var length: float = stat(id, "radius") * player.area_mult * (1.25 if id == "night_shift" else 1.0)
+			var ncol: Color = GameData.FORCES["night_motion_archives"]["color"]
+			for a: Dictionary in afterimages:
+				var tt: float = float(a.t) / float(a.max_t)
+				draw_line(player.position, player.position + Vector2.from_angle(float(a.angle)) * length, Color(ncol, 0.10 * tt), 14.0)
+			var n2: int = beam_count(id)
+			for k in n2:
+				var ang: float = beam_angle + TAU * k / n2
+				var tip: Vector2 = player.position + Vector2.from_angle(ang) * length
+				draw_line(player.position, tip, Color(ncol, 0.18), 26.0)
+				draw_line(player.position, tip, Color(ncol, 0.75), 4.0)
+				draw_circle(tip, 6.0, Color(1, 1, 1, 0.8))
+		elif b == "duet_unit":
+			var dcol: Color = GameData.FORCES["robots_sing_love_songs"]["color"]
+			for cp: Vector2 in companions:
+				draw_circle(cp, 13.0, Color(dcol, 0.15))
+				draw_rect(Rect2(cp - Vector2(7, 8), Vector2(14, 14)), Color("e9e4f0"))
+				draw_rect(Rect2(cp - Vector2(5, 4), Vector2(10, 3)), dcol)
+				var mouth: float = 2.0 + 2.0 * absf(sin(anim * 9.0))
+				draw_rect(Rect2(cp + Vector2(-3, 1), Vector2(6, mouth)), Color("2a2030"))
 		elif b == "fuzz_wall":
 			var radius3: float = stat(id, "radius") * player.area_mult * (0.75 + swell * 0.6)
 			var col3: Color = GameData.FORCES["minor_collapse"]["color"]
 			draw_circle(player.position, radius3, Color(col3, 0.07 + swell * 0.07))
 			for k in 3:
 				draw_arc(player.position, radius3 * (0.7 + 0.15 * k), anim * (0.4 + k * 0.2), anim * (0.4 + k * 0.2) + PI * 1.3, 32, Color(col3, 0.25 + swell * 0.25), 3.0)
+	for bl: Dictionary in blooms:
+		var grow: float = 1.0 - float(bl.t) / float(bl.max_t)
+		var bc: Color = GameData.FORCES["minor_collapse"]["color"]
+		draw_circle(bl.pos, 6.0 + 14.0 * grow, Color(bc, 0.25 + 0.4 * grow))
+		draw_arc(bl.pos, float(bl.radius) * grow, 0.0, TAU, 32, Color(bc, 0.35), 2.0)
 	for c: Dictionary in charges:
 		var col4: Color = GameData.FORCES["ghost_driver_unit"]["color"]
 		draw_circle(c.pos, 8.0, col4)

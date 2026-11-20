@@ -23,6 +23,11 @@ var shape: String = "orb"
 var elite: bool = false
 var boss: bool = false
 var region_id: String = ""
+var last_hit_dir: Vector2 = Vector2.ZERO
+var last_number_time: float = -1.0
+var harmony_mark: bool = false
+var latched: float = 0.0       # leech: seconds attached to the player
+var blink_target: Vector2 = Vector2.ZERO
 var camp: int = -1
 
 var engaged: bool = false
@@ -160,6 +165,40 @@ func step(delta: float, player_pos: Vector2) -> void:
 				clock = 5.5
 		"boss":
 			_boss_step(delta, dir, dist, spd)
+		"leech":
+			# Latches onto the hull and drags it down, then lets go.
+			if latched > 0.0:
+				latched -= delta
+				position = player_pos + Vector2.from_angle(age * 3.0) * 20.0
+				if run:
+					run.player.slow_timer = maxf(run.player.slow_timer, 0.2)
+				if latched <= 0.0:
+					knock = -dir * 520.0
+					clock = 3.0
+			elif dist < radius + 26.0 and clock <= 0.0:
+				latched = 4.0
+			else:
+				var wobble: Vector2 = Vector2(-dir.y, dir.x) * sin(age * 7.0) * 0.5
+				position += (dir + wobble).normalized() * spd * delta
+		"blink":
+			# A Veil flicker: marks a point beside you, then reappears there.
+			position += Vector2(-dir.y, dir.x) * lateral * spd * 0.4 * delta
+			if clock <= 0.0 and dist < 700.0:
+				blink_target = player_pos + Vector2.from_angle(randf() * TAU) * randf_range(90.0, 150.0)
+				telegraph = 0.85
+				telegraph_dir = dir
+				clock = 3.2
+		"dreadnought":
+			# Salvage hulk: closes slowly, then turns broadside and fires.
+			var want: float = 300.0
+			var radial: float = 1.0 if dist > want + 60.0 else (-0.4 if dist < want - 60.0 else 0.0)
+			position += (dir * radial + Vector2(-dir.y, dir.x) * lateral * 0.3).normalized() * spd * delta
+			if clock <= 0.0:
+				telegraph = 1.1
+				telegraph_dir = dir
+				clock = 4.4
+			if fmod(age, 9.0) < delta and run:
+				run.enemy_summon(self, "skiff", 2)
 		_:
 			position += dir * spd * delta
 	_apply_knock(delta)
@@ -183,7 +222,25 @@ func _release(dir: Vector2) -> void:
 			dash = telegraph_dir * speed * 4.2
 		"ranged":
 			if run:
-				run.spawn_enemy_shot(position, telegraph_dir * float(def.get("shot_speed", 260.0)), contact_damage * 0.8, tint)
+				var burst: int = int(def.get("burst", 1))
+				for k in burst:
+					var spread: float = (float(k) - float(burst - 1) / 2.0) * 0.18
+					run.spawn_enemy_shot(position, telegraph_dir.rotated(spread) * float(def.get("shot_speed", 260.0)), contact_damage * 0.8, tint)
+		"blink":
+			if run:
+				run.fx.flash(position, 24.0, tint, 0.12)
+				position = blink_target
+				run.fx.flash(position, 30.0, tint, 0.15)
+				run.fx.ring(position, 10.0, 70.0, tint, 0.3, 4.0)
+				if position.distance_to(run.player.position) < 75.0:
+					run.player_hit(contact_damage, position)
+		"dreadnought":
+			if run:
+				# Broadsides: two long lines perpendicular to its heading.
+				var side: Vector2 = telegraph_dir.orthogonal()
+				for sgn: float in [-1.0, 1.0]:
+					run.spawn_beam(position, side * sgn, 760.0, 30.0, contact_damage, tint)
+				run.fx.flash(position, radius * 1.2, Color("ffcf8a"), 0.15)
 		"surge":
 			if run:
 				run.spawn_shockwave(position, 210.0, contact_damage, tint)
@@ -268,6 +325,13 @@ func _process(_delta: float) -> void:
 
 func _draw() -> void:
 	var c: Color = Color.WHITE if hit_flash > 0.0 else tint
+	# Hit squash: a quick flattening along the impact direction reads as weight.
+	if hit_flash > 0.0 and not boss:
+		var sq: float = hit_flash / 0.09
+		var ang: float = last_hit_dir.angle()
+		# Scale along the hit axis without rotating the silhouette.
+		var m: Transform2D = Transform2D(ang, Vector2.ZERO) * Transform2D.IDENTITY.scaled(Vector2(1.0 - 0.22 * sq, 1.0 + 0.16 * sq)) * Transform2D(-ang, Vector2.ZERO)
+		draw_set_transform_matrix(m)
 	if disguised:
 		# Disguised as drifting debris — an observant player can spot the faint pulse.
 		var pts: PackedVector2Array = PackedVector2Array([Vector2(-radius, -radius * 0.4), Vector2(-radius * 0.2, -radius), Vector2(radius, -radius * 0.3), Vector2(radius * 0.6, radius * 0.8), Vector2(-radius * 0.7, radius * 0.6)])
@@ -320,6 +384,32 @@ func _draw() -> void:
 			draw_colored_polygon(pts2, c)
 			draw_circle(Vector2.ZERO, radius * 0.38, Color("16172a"))
 			draw_arc(Vector2.ZERO, radius * 0.38, 0.0, TAU, 20, Color(1, 1, 1, 0.6), 2.0)
+		"gunship":
+			var gr: Vector2 = Vector2.from_angle((run.player.position - position).angle()) if run and run.player else Vector2.RIGHT
+			var gs: Vector2 = gr.orthogonal()
+			draw_colored_polygon(PackedVector2Array([gr * radius, gs * radius * 0.9 - gr * radius * 0.6, -gr * radius * 0.4, -gs * radius * 0.9 - gr * radius * 0.6]), c)
+			for sg2: float in [-1.0, 1.0]:
+				draw_line(gs * sg2 * radius * 0.45, gs * sg2 * radius * 0.45 + gr * radius * 1.3, Color("2a2a30"), 4.0)
+			draw_circle(Vector2.ZERO, radius * 0.25, Color("1a1a20"))
+		"leech":
+			for k in 4:
+				var seg: Vector2 = Vector2.from_angle(age * 5.0 + k * 0.6) * k * 4.0
+				draw_circle(seg, radius * (1.0 - k * 0.18), Color(c, 1.0 - k * 0.15))
+			draw_circle(Vector2.ZERO, radius * 0.35, Color("1a2416"))
+		"blink":
+			var flick: float = 0.6 + 0.4 * sin(age * 13.0)
+			draw_colored_polygon(PackedVector2Array([Vector2(0, -radius), Vector2(radius * 0.7, 0), Vector2(0, radius), Vector2(-radius * 0.7, 0)]), Color(c, flick))
+			draw_arc(Vector2.ZERO, radius * 1.3, age * 2.0, age * 2.0 + PI, 16, Color(c, 0.5), 2.0)
+		"dreadnought":
+			var dr: Vector2 = Vector2.from_angle(telegraph_dir.angle() if telegraph_dir != Vector2.ZERO else 0.0)
+			var ds: Vector2 = dr.orthogonal()
+			var hull: PackedVector2Array = PackedVector2Array([dr * radius * 1.5, ds * radius * 0.7 + dr * radius * 0.4, ds * radius * 0.8 - dr * radius * 1.2, -ds * radius * 0.8 - dr * radius * 1.2, -ds * radius * 0.7 + dr * radius * 0.4])
+			draw_colored_polygon(hull, c)
+			# Mismatched salvage plating: no faction marks.
+			for k in 4:
+				var pc: Vector2 = dr * radius * (0.8 - k * 0.55)
+				draw_rect(Rect2(pc - Vector2(9, 9), Vector2(18, 18)), [Color("8a8f99"), Color("7d7f4a"), Color("5f6670"), Color("b0683a")][k])
+			draw_circle(-dr * radius * 1.2, 8.0, Color("ffcf8a", 0.8))
 		"silence":
 			for i in 8:
 				var a2: float = TAU * i / 8.0 + age * 0.25 * (1.0 + boss_phase * 0.3)
@@ -348,6 +438,15 @@ func _draw_telegraph(c: Color) -> void:
 		"ranged":
 			draw_line(Vector2.ZERO, telegraph_dir * 520.0, Color(warn, warn.a * 0.7), 2.0)
 			draw_circle(Vector2.ZERO, radius + 6.0 * (1.0 - t), Color(warn, 0.3))
+		"blink":
+			var local: Vector2 = blink_target - position
+			draw_arc(local, 24.0 + 20.0 * t, 0.0, TAU, 24, warn, 3.0)
+			draw_line(Vector2.ZERO, local, Color(warn, warn.a * 0.3), 1.5)
+		"dreadnought":
+			var side2: Vector2 = telegraph_dir.orthogonal()
+			for sg: float in [-1.0, 1.0]:
+				draw_line(Vector2.ZERO, side2 * sg * 760.0, Color(warn, warn.a * 0.45), 60.0 * (1.0 - t * 0.5))
+				draw_line(Vector2.ZERO, side2 * sg * 760.0, warn, 2.0)
 		"surge":
 			draw_arc(Vector2.ZERO, 210.0, 0.0, TAU, 48, warn, 3.0)
 			draw_arc(Vector2.ZERO, 210.0 * (1.0 - t), 0.0, TAU, 48, Color(warn, 0.3), 2.0)

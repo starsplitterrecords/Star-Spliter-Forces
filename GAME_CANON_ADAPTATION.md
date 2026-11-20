@@ -40,6 +40,9 @@ Nothing in the signal layer may be used as evidence about Rex Fleet canon.
 | The Silence, "the hush", mystery fragments | **Noncanonical, game-original** | Archive title marks it "(game original — not Rex Fleet canon)" |
 | Resonance / Drift / Fracture | Game-original system | Origin: this repo `077a0bf` |
 | Placeholder score and SFX | Game-original, placeholder | Credited as such; replaced by authorised stems when available |
+| Gunship, Leech, Splinter Dreadnought | Adaptation of the unmarked raider group | Mismatched salvage colours, no faction marks |
+| Veil Flicker | Adaptation of the canon Phase anomaly family (Veil Auroras) | Behaves as a measurable hazard that relocates, not a creature with intent |
+| Supersonic Being, Night Motion Archives, Robots Sing Love Songs, Before the Reboot Forces | Adaptation of documented project language | Taglines verbatim; Before the Reboot has no transmission because it has no releases |
 
 ## Canon quality gate (applied to every new element)
 

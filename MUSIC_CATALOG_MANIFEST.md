@@ -28,6 +28,14 @@ strings are **verbatim**. Images were opened and checked (see `VISUAL_REFERENCE_
 | Warm Circuits Rise | Jamtronica / psychedelic · #FBB040 | "Improvised trips through sonic campfires and analog stars." | This Path’s for You; Shine (feat. Cheddr); "feat. Cheddr" (likely data error) — all Selected catalog | none | `artists/warmcircuitsrise.webp` | Improvisation |
 | Minor Collapse | Immersive rock · #7E86A8 | "The quietest emotions often feel the biggest." | Hexagonis · Selected catalog; Mach Point Five · Upcoming · December 13, 2026 | none | `artists/minor-collapse.webp` | Wall of Sound |
 
+## Forces added 2026-11-20 (same verified data as below)
+
+Supersonic Being (Hype) — transmission "Give It Up, Let’s Go" · Released · 2025.
+Night Motion Archives (Afterimage) — transmission "Hanging on the Edge" · Selected catalog.
+Robots Sing Love Songs (Duet) — transmission "Magnetic" · Selected catalog.
+Before the Reboot (Tracker) — **no transmission** (no published releases); attuned through the "Tracker Module" artifact, whose text states that nothing in it is a track.
+Motif layers `force_supersonic`, `force_night`, `force_robots`, `force_tracker` are original placeholder audio.
+
 ## Projects documented but not yet Forces
 
 | Project | Field · accent | Tagline | Releases | Notes for future Forces |
@@ -51,6 +59,9 @@ would go. Status today for all: **title verified, audio not supplied**.
 | rex_signals_and_shadows, rex_dominions_reach | Star Splitter Rex — Signals and Shadows / Dominion’s Reach | Dominion’s Reach ✓ |
 | gdu_watch_out, gdu_its_a_grind | Ghost Driver Unit — Watch Out / It’s a Grind (Ghost Mode Remix) | both ✓ |
 | ido_ignition_sequence, ido_freeze_frame | Ion Drive Orchestra — Ignition Sequence (feat. Cheddr) / Freeze Frame | Freeze Frame ✓ (Ignition is a 0-byte file) |
+| sb_give_it_up | Supersonic Being — Give It Up, Let’s Go | — |
+| nma_hanging_on_the_edge | Night Motion Archives — Hanging on the Edge | — |
+| rsls_magnetic | Robots Sing Love Songs — Magnetic | — (Perception's file is a PWC mismatch) |
 | mc_hexagonis, mc_mach_point_five | Minor Collapse — Hexagonis / Mach Point Five | Mach Point Five ✓ (Hexagonis excluded) |
 | wcr_this_paths_for_you, wcr_shine | Warm Circuits Rise — This Path’s for You / Shine (feat. Cheddr) | both ✓ |
 
