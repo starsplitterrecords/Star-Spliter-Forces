@@ -53,6 +53,23 @@ drop into the grass or turn hard just before they arrive. Frogs puff and glow th
 Stars: clear all three stages, finish with at least half your wings intact, and beat the score for your insect
 (dragonfly 12,000, honeybee 7,800, hawk-moth 9,500, ladybird 12,000).
 
+## Modes and progression
+
+- **Habitat run**: every run grows a fresh layout and rolls a weather twist (fair, breezy, heatwave, rain shower,
+  swarm day, dusk). An optional risk dial (hungry birds, angry wasps, sticky webs, no lock-on) multiplies your score.
+  After stage 3 your stars are banked and **Overtime** begins: escalating timed waves until one beats you.
+- **Daily flight**: one habitat, insect, twist and layout per date, the same for everyone, with a guaranteed rare
+  sighting, your best and a day streak. On the published page there is a shared board for today.
+- **Ring race**: a fixed 14-ring course per habitat with bronze, silver and gold times. Your best run is saved and
+  flies beside you as a ghost.
+- **Migration**: a ten-minute campaign across all four habitats. Wings carry over, and you pick an upgrade after each leg.
+- **Medals** for each insect and habitat: Untouched, Swift (under 80 s), Triple ×5, Freehand (no swoops).
+- **Field journal**: 26 entries for prey, predators, flowers and four rare sightings (golden mayfly, painted lady,
+  luna moth, jewel beetle) that appear in about half of runs.
+- **Unlockable insects** at 3/6/9/12 stars: Red-veined Darter, Elephant Hawk-moth, Buff-tailed Bumblebee
+  (rain-proof, 30 pollen) and the 22-spot Ladybird, which grazes mildew instead of aphids.
+- **Rider gear** (scarves, helmets, goggles) unlocks with medals.
+
 ## How it is built
 
 Everything is procedural: terrain from value noise, instanced grass with a wind shader, flowers and props
@@ -61,8 +78,9 @@ synthesized with the Web Audio API, including a generative soundtrack that picks
 
 ## Tests
 
-`tests/gameplay.test.cjs` drives the game in headless Chromium on a fixed timestep (29 checks, including the one-thumb
-touch control in phone emulation). `tests/playtest.cjs` runs the bot playtest across every mount and habitat; see
+`tests/gameplay.test.cjs` drives the game in headless Chromium on a fixed timestep (30 checks, including the one-thumb
+touch control in phone emulation). `tests/features.test.cjs` covers twists, risk, daily, overtime, medals, journal,
+rare sightings, variants, gear, races with ghosts and migration (31 checks). `tests/playtest.cjs` runs the bot playtest across every mount and habitat; see
 `PLAYTEST_REPORT.md`. Both route the jsDelivr request to a local copy of three.js:
 
 ```sh

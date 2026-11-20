@@ -1826,7 +1826,7 @@ function toast(text, sub = '', dur = 2.2) { toastEl.innerHTML = ''; toastEl.appe
 const alertEl = $('#alert');
 function alertMsg(text, dur = 1.8) { alertEl.textContent = text; alertEl.hidden = false; game.alertT = dur; }
 function hitStop(t) { game.hitStop = Math.max(game.hitStop, t); }
-function bumpCombo() { game.combo = Math.min(5, game.comboT > 0 ? game.combo + 1 : 1); game.comboT = 4; game.maxCombo = Math.max(game.maxCombo || 1, game.combo); }
+function bumpCombo() { const was = game.combo; game.combo = Math.min(5, game.comboT > 0 ? game.combo + 1 : 1); game.comboT = 4; game.maxCombo = Math.max(game.maxCombo || 1, game.combo); if (game.combo === 5 && was < 5) game.combo5 = (game.combo5 || 0) + 1; }
 
 function onEvent(type, kind, n = 1) {
   let finishedNow = false;
@@ -2200,7 +2200,7 @@ function updateBirds(dt, playing) {
     } else if (b.state === 'climb') {
       const tgt = _v.set(b.center.x + Math.cos(b.ang) * b.rad, b.alt, b.center.z + Math.sin(b.ang) * b.rad);
       b.vel.lerp(_v2.subVectors(tgt, b.pos).normalize().multiplyScalar(30), 1 - Math.exp(-2 * dt)); b.pos.addScaledVector(b.vel, dt);
-      if (b.pos.y > b.alt - 4 || b.t <= 0) { b.state = 'circle'; b.ang = Math.atan2(b.pos.z - b.center.z, b.pos.x - b.center.x); b.attackT = (bat ? MR(10, 16) : MR(14, 22)) * [1, 0.75, 0.55][game.stage] * run.fx.birdFreq * Math.pow(0.88, game.overtime ? game.overtime.wave : 0); }
+      if (b.pos.y > b.alt - 4 || b.t <= 0) { b.state = 'circle'; b.ang = Math.atan2(b.pos.z - b.center.z, b.pos.x - b.center.x); b.attackT = (bat ? MR(10, 16) : MR(14, 22)) * [1, 0.75, 0.55][game.stage] * run.fx.birdFreq * Math.pow(0.88, game.overtime ? game.overtime.wave : 0); if (game.obj.some((o) => o.type === 'dodge' && !o.done)) b.attackT = Math.min(b.attackT, 12); }
     }
     b.m.root.position.copy(b.pos);
     if (b.vel.lengthSq() > 1) { b.m.root.lookAt(_v.copy(b.pos).add(b.vel)); if (b.state === 'circle' || b.state === 'warn') b.m.root.rotateZ(-0.5); }
@@ -2472,7 +2472,7 @@ function updateHUD(dt) {
   const rr = game.rare, showR = rr && !rr.seen && !rr.leaving; hud.rareMark.hidden = !showR;
   if (showR) {
     const q = _v2.copy(rr.pos).project(camera); let px = q.x, py = q.y; if (q.z > 1) { px = -px || 0.01; py = -py; }
-    const edge = Math.max(Math.abs(px) / 0.88, Math.abs(py) / 0.8); if (q.z > 1 || edge > 1) { px /= edge; py /= edge; }
+    const edge = Math.max(Math.abs(px) / 0.88, (py < 0 ? -py / 0.55 : py / 0.8)); if (q.z > 1 || edge > 1) { px /= edge; py /= edge; }
     hud.rareMark.style.transform = `translate(${(px + 1) / 2 * innerWidth}px, ${(1 - py) / 2 * innerHeight}px)`;
     setText(hud.rareMark.firstElementChild, 'rare', `${JOURNAL.find((e) => e.id === rr.id).name} ${Math.round(rr.pos.distanceTo(player.pos))}`);
   }
@@ -2678,11 +2678,11 @@ function applyTwistAtmos(t) {
   scene.fog.density = fog; hemi.intensity = hm; sun.intensity = sn;
 }
 const Rain = {
-  n: 600,
+  n: 900,
   init() {
     this.p = new Float32Array(this.n * 3); this.arr = new Float32Array(this.n * 6);
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(this.arr, 3).setUsage(THREE.DynamicDrawUsage)); this.geo = g;
-    this.obj = new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: 0xb8c6d6, transparent: true, opacity: 0.45, depthWrite: false }));
+    this.obj = new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: 0xdde8f4, transparent: true, opacity: 0.7, depthWrite: false }));
     this.obj.frustumCulled = false; this.obj.visible = false; scene.add(this.obj);
   },
   reset(on) { this.obj.visible = on; const c = camera.position; for (let i = 0; i < this.n; i++) { this.p[i * 3] = c.x + MR(-35, 35); this.p[i * 3 + 1] = c.y + MR(-20, 30); this.p[i * 3 + 2] = c.z + MR(-35, 35); } },
@@ -2692,7 +2692,7 @@ const Rain = {
       let x = P[i * 3], y = P[i * 3 + 1] - 75 * dt, z = P[i * 3 + 2];
       if (y < c.y - 22) y += 50; if (x - c.x > 35) x -= 70; else if (x - c.x < -35) x += 70; if (z - c.z > 35) z -= 70; else if (z - c.z < -35) z += 70;
       P[i * 3] = x; P[i * 3 + 1] = y; P[i * 3 + 2] = z;
-      A.set([x, y, z, x, y + 1.8, z], i * 6);
+      A.set([x, y, z, x - run.windV.x * 0.04, y + 2.4, z - run.windV.z * 0.04], i * 6);
     }
     this.geo.attributes.position.needsUpdate = true;
   },
@@ -2719,8 +2719,8 @@ const Prog = {
 const isUnlocked = (k) => !MOUNTS[k].unlock || Prog.stars() >= MOUNTS[k].unlock;
 const MEDALS = {
   untouched: { name: 'Untouched', desc: 'Clear the stages without taking damage' },
-  swift: { name: 'Swift', desc: 'Clear the stages within 2 minutes' },
-  combo: { name: 'Combo ×5', desc: 'Reach a ×5 combo' },
+  swift: { name: 'Swift', desc: 'Clear the stages within 80 seconds' },
+  combo: { name: 'Triple ×5', desc: 'Build a ×5 combo three separate times' },
   freehand: { name: 'Freehand', desc: 'Clear the stages without a single swoop' },
 };
 const GEAR = {
@@ -2846,7 +2846,7 @@ function bankWin() {
   game.score += finish;
   const dmg = Object.values(game.tele.dmg).reduce((a, b) => a + b, 0);
   game.banked = { finish, score: game.score, hp: player.health, winT: game.tele.playT, base,
-    medals: { untouched: dmg === 0, swift: game.tele.playT <= 120, combo: (game.maxCombo || 1) >= 5, freehand: game.tele.swoops === 0 } };
+    medals: { untouched: dmg === 0, swift: game.tele.playT <= 80, combo: (game.combo5 || 0) >= 3, freehand: game.tele.swoops === 0 } };
 }
 function startOvertime() {
   bankWin(); Sound.sfx.win();
@@ -2857,13 +2857,13 @@ function startOvertime() {
 function startWave() {
   const ot = game.overtime; ot.wave++; game.nectarSeen.clear();
   const M = player.mount, base = M.base || M.key, H = world.H, n = ot.wave;
-  const obj = base === 'dragonfly' ? [J.catch(H.flyer, 6 + 2 * n)] : base === 'honeybee' ? [J.deliver(10 + 3 * n)] : base === 'hawkmoth' ? [J.nectar(4 + n)] : [J.catch(M.eats[0], 8 + 2 * n)];
+  const obj = base === 'dragonfly' ? [J.catch(H.flyer, 6 + 3 * n)] : base === 'honeybee' ? [J.deliver(10 + 5 * n)] : base === 'hawkmoth' ? [J.nectar(4 + 2 * n)] : [J.catch(M.eats[0], 8 + 3 * n)];
   if (n % 2 === 0 && H.wasps && M.fights) obj.push(J.defeat(1 + (n >> 1)));
   game.obj = obj.map((o) => ({ ...o, count: 0, done: false }));
-  game.time = 60; for (const b of world.birds) b.attackT = Math.min(b.attackT, MR(4, 8));
+  game.time = Math.max(40, 62 - 2 * n); for (const b of world.birds) b.attackT = Math.min(b.attackT, MR(4, 8));
   if (n % 2 === 1) spawnSwarm(base === 'ladybird' ? M.eats[0] : H.flyer);
   renderObjectives(); Sound.sfx.objective();
-  toast(`Overtime wave ${n}`, game.obj.map((o) => `${o.label} ×${o.target}`).join(' · ') + ' in 60 s', 2.6);
+  toast(`Overtime wave ${n}`, game.obj.map((o) => `${o.label} ×${o.target}`).join(' · ') + ` in ${Math.round(game.time)} s`, 2.6);
 }
 
 /* ---------- title: modes, mounts, habitats, risk, journal, rider ---------- */
@@ -2991,7 +2991,7 @@ function buildCourse() {
   let L = start.distanceTo(rings[0]); for (let i = 1; i < rings.length; i++) L += rings[i - 1].distanceTo(rings[i]);
   return { start, rings, L };
 }
-function raceThresholds(L = run.race.L, M = player.mount) { return { gold: L / (M.boost * 0.8), silver: L / (M.cruise * 1.1), bronze: L / (M.cruise * 0.8) }; }
+function raceThresholds(L = run.race.L, M = player.mount) { return { gold: L / (M.boost * 0.75), silver: L / (M.cruise * 1.0), bronze: L / (M.cruise * 0.7) }; }
 function setupRace() {
   const C = buildCourse(), M = player.mount;
   const rings = C.rings.map((c, i) => {
@@ -3107,7 +3107,7 @@ function startRun() {
   let stages = buildStages(H.key, mk), time = H.time;
   if (run.campaign) { stages = stages.slice(0, 2); time = 180 + (M.legBonus || 0); }
   if (mode === 'race') { stages = [{ name: 'Ring race', obj: [{ type: 'ring', target: RACE_RINGS, label: 'Fly through the rings' }] }]; time = 600; }
-  Object.assign(game, { tele: newTele(), stage: 0, stages, stageT: 0, chain: 0, lastCatchT: -9, state: 'play', time, score: run.campaign ? run.campaign.score : 0, combo: 1, comboT: 0, maxCombo: 1, obj: [], nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, shake: 0, hitStop: 0, camKick: 0, overtime: null, otT: 0, banked: null, rare: null, rareAt: -1, rareSeen: 0, newEntries: 0, before: { stars: Prog.stars(), medals: Prog.medalCount() } });
+  Object.assign(game, { tele: newTele(), stage: 0, stages, stageT: 0, chain: 0, lastCatchT: -9, state: 'play', time, score: run.campaign ? run.campaign.score : 0, combo: 1, comboT: 0, maxCombo: 1, combo5: 0, obj: [], nectarSeen: new Set(), ending: 0, endReason: '', alertT: 0, shake: 0, hitStop: 0, camKick: 0, overtime: null, otT: 0, banked: null, rare: null, rareAt: -1, rareSeen: 0, newEntries: 0, before: { stars: Prog.stars(), medals: Prog.medalCount() } });
   if (run.campaign) player.health = run.campaign.health;
   if (mode !== 'race') game.rareAt = (mode === 'daily' || Math.random() < 0.45) ? MR(35, 110) : -1;
   for (const b of world.birds) b.attackT *= run.fx.birdFreq;
@@ -3190,6 +3190,49 @@ function endRun(reason) {
   $('#resNotes').innerHTML = notes.map((n) => `<li>${n}</li>`).join(''); $('#resNotes').hidden = !notes.length;
   $('#againBtn').textContent = run.mode === 'race' ? 'Race again' : run.campaign ? 'New migration' : run.mode === 'daily' ? 'Fly it again' : 'Fly again (new layout)';
   setTimeout(() => { if (game.state === 'end') show('results'); }, 400);
+}
+
+
+/* ---------- shared daily leaderboard (only where the page host provides storage) ---------- */
+let boardDb = null, boardUser = null, boardReady = null;
+function boardInit() {
+  if (boardReady) return boardReady;
+  boardReady = (async () => {
+    if (!window.claude || typeof window.claude.use !== 'function') return false;
+    try { boardDb = await window.claude.use('db'); boardUser = await window.claude.use('user'); } catch (e) { return false; }
+    return !!(boardDb && boardUser);
+  })();
+  return boardReady;
+}
+async function submitScore(date, score, mount) {
+  if (!(await boardInit())) return;
+  try {
+    const id = await boardUser.id(); if (!id) return;
+    const ref = boardDb.doc('scores/' + id), snap = await ref.get(), cur = snap.exists ? snap.data() : null;
+    if (cur && cur.date === date && cur.score >= score) return;
+    await ref.set({ date, score: Math.round(score), mount, at: Date.now() });
+  } catch (e) { /* view-only visitors cannot post scores */ }
+}
+async function renderBoard(date) {
+  const el = $('#board'); if (!el) return;
+  if (!(await boardInit())) { el.hidden = true; return; }
+  el.hidden = false; el.textContent = "Loading today's board…";
+  let done = false; const timer = setTimeout(() => { if (!done) el.hidden = true; }, 10000);
+  try {
+    const q = await boardDb.collection('scores').where('date', '==', date).orderBy('score', 'desc').limit(10).get();
+    done = true; clearTimeout(timer);
+    const rows = q.docs.map((d) => ({ id: d.id, ...d.data() }));
+    el.innerHTML = '';
+    const h = document.createElement('b'); h.textContent = "Today's board"; el.append(h);
+    if (!rows.length) { const e = document.createElement('span'); e.textContent = 'No scores yet today. Fly it and take the top spot.'; el.append(e); return; }
+    const me = await boardUser.id(), ps = await boardUser.profiles(rows.map((r) => r.id));
+    rows.forEach((r, i) => {
+      const row = document.createElement('div'); row.className = 'row' + (r.id === me ? ' me' : '');
+      const a = document.createElement('span'), b = document.createElement('span'), c = document.createElement('span');
+      a.textContent = String(i + 1); b.textContent = (ps[r.id] && ps[r.id].name) || (r.id === me ? 'You' : 'Someone'); c.textContent = Number(r.score).toLocaleString();
+      row.append(a, b, c); el.append(row);
+    });
+  } catch (e) { done = true; clearTimeout(timer); el.hidden = true; }
 }
 
 /* ============================================================

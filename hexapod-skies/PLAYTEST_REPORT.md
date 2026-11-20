@@ -143,3 +143,17 @@ Still open:
 3. Score spread between mounts is still about 1.6× (honeybee lowest), handled for now by per-mount star scores.
 4. Difficulty for real players: the novice bot clears every run in about 2 minutes. People will be slower, and the
    target of roughly 60–70% wins needs a human playtest to confirm.
+
+## Round 3: replayability (twists, overtime, races)
+
+Raw data: `playtests/2026-11-20-v4-twists.json` (64 habitat runs with random twists) and `playtests/2026-11-20-v4-races.json`.
+
+- **Twists:** every twist was cleared by both bots. Rain and heatwave make runs slower, as intended. Rain made birds
+  dive so rarely that dodge goals couldn't finish, so birds now keep diving while a dodge goal is open.
+- **Medals** were retuned from the data: Swift was earned in 30/32 skilled runs at 2 minutes, so it is now 80 s
+  (13/32 skilled, 5/32 novice). Combo ×5 became Triple ×5 (17/32 skilled, 14/32 novice). Untouched: 6/32 skilled,
+  1/32 novice. Freehand (no swoops) is never earned by the bots, which always swoop; it is meant as a human challenge.
+- **Overtime:** waves now ramp faster (more targets, shorter timers). The skilled bot reaches a median of 6 waves and the novice 4.
+- **Races:** the hawk-moth bot circled rings forever until it learned to ease off for tight turns, as a person would.
+  Medal times are set from course length and insect speed: skilled runs earn mostly silver with some gold, and novice
+  runs earn bronze.

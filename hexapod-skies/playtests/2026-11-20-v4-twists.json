@@ -1,0 +1,9046 @@
+[
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "meadow",
+  "s": 1,
+  "reason": "overtime",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 82,
+   "hp": 100,
+   "score": 12248,
+   "medals": {
+    "untouched": true,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 25887,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 17,
+    "target": 18,
+    "doneAt": null
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 1,
+    "target": 3,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    14,
+    47,
+    82,
+    106,
+    128,
+    169
+   ],
+   "jukes": 36,
+   "clean": 59,
+   "chains": 27,
+   "strikes": 106,
+   "swoops": 106,
+   "swoopHit": 70,
+   "swoopMiss": 36,
+   "catchSwoop": 44,
+   "catchTouch": 59,
+   "dmg": {
+    "Swallow strike": 28,
+    "Webbed": 6
+   },
+   "hits": {
+    "Swallow strike": 1,
+    "Webbed": 1
+   },
+   "bumps": 7,
+   "hover": 0.8746666666666666,
+   "stuck": 1.8746666666666691,
+   "dist": 6676.762798119629,
+   "camClip": 0.704,
+   "noGoal": 0,
+   "lockAvail": 64.36399999999882,
+   "goalFar": 30.71066666666736,
+   "playT": 224.622666666656,
+   "dodgesReal": 11
+  },
+  "curve": [
+   [
+    12
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    5
+   ],
+   [
+    2,
+    1
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    7
+   ],
+   [
+    2,
+    1
+   ],
+   [
+    12,
+    2
+   ],
+   [
+    4
+   ],
+   [
+    11
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    9,
+    1
+   ],
+   [
+    15,
+    1
+   ]
+  ],
+  "wall": 20291
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "pond",
+  "s": 2,
+  "reason": "cap",
+  "twist": "breezy",
+  "banked": {
+   "winT": 60,
+   "hp": 100,
+   "score": 25952,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 9,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 125536,
+  "timeLeft": 39,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch mosquitoes",
+    "count": 3,
+    "target": 36,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    10,
+    45,
+    60,
+    68,
+    85,
+    107,
+    125,
+    145,
+    177,
+    199,
+    238,
+    273
+   ],
+   "jukes": 79,
+   "clean": 117,
+   "chains": 122,
+   "strikes": 215,
+   "swoops": 215,
+   "swoopHit": 133,
+   "swoopMiss": 79,
+   "catchSwoop": 133,
+   "catchTouch": 117,
+   "dmg": {
+    "Webbed": 42
+   },
+   "hits": {
+    "Webbed": 7
+   },
+   "bumps": 46,
+   "hover": 1.2000000000000004,
+   "stuck": 0.8999999999999999,
+   "dist": 8670.710717790525,
+   "camClip": 0.6333333333333333,
+   "noGoal": 0,
+   "lockAvail": 133.5759999999958,
+   "goalFar": 0,
+   "playT": 277.5306666666699,
+   "dodgesReal": 17
+  },
+  "curve": [
+   [
+    0,
+    3
+   ],
+   [
+    2,
+    8
+   ],
+   [
+    3,
+    10
+   ],
+   [
+    15,
+    0
+   ],
+   [
+    9
+   ],
+   [
+    10
+   ],
+   [
+    9
+   ],
+   [
+    2
+   ],
+   [
+    18
+   ],
+   [
+    13
+   ],
+   [
+    6
+   ],
+   [
+    16
+   ],
+   [
+    1
+   ],
+   [
+    21
+   ],
+   [
+    6
+   ],
+   [
+    15
+   ],
+   [
+    28
+   ],
+   [
+    14
+   ],
+   [
+    22
+   ],
+   [
+    3
+   ]
+  ],
+  "wall": 24173
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "garden",
+  "s": 1,
+  "reason": "overtime",
+  "twist": "fair",
+  "banked": {
+   "winT": 104,
+   "hp": 81,
+   "score": 10815,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 4,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 29925,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch midges",
+    "count": 15,
+    "target": 21,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    19,
+    45,
+    104,
+    134,
+    156,
+    176,
+    218
+   ],
+   "jukes": 40,
+   "clean": 59,
+   "chains": 36,
+   "strikes": 96,
+   "swoops": 96,
+   "swoopHit": 56,
+   "swoopMiss": 40,
+   "catchSwoop": 56,
+   "catchTouch": 59,
+   "dmg": {
+    "Bat strike": 22,
+    "Webbed": 12
+   },
+   "hits": {
+    "Bat strike": 1,
+    "Webbed": 2
+   },
+   "bumps": 9,
+   "hover": 0.3333333333333333,
+   "stuck": 0.26666666666666666,
+   "dist": 8373.257099614006,
+   "camClip": 0.304,
+   "noGoal": 0,
+   "lockAvail": 57.53333333333254,
+   "goalFar": 37.51600000000044,
+   "playT": 272.11333333333283,
+   "dodgesReal": 23
+  },
+  "curve": [
+   [
+    8
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    11,
+    2
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    2
+   ],
+   [
+    5
+   ],
+   [
+    3
+   ],
+   [
+    0
+   ],
+   [
+    9
+   ],
+   [
+    5
+   ],
+   [
+    12
+   ],
+   [
+    15
+   ],
+   [
+    5
+   ],
+   [
+    8
+   ],
+   [
+    11
+   ],
+   [
+    15
+   ]
+  ],
+  "wall": 10375
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "meadow",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "dusk",
+  "banked": {
+   "winT": 100,
+   "hp": 100,
+   "score": 11093,
+   "medals": {
+    "untouched": true,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 4,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 29846,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 18,
+    "target": 18,
+    "doneAt": 239
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 3,
+    "target": 3,
+    "doneAt": 226
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    26,
+    58,
+    100,
+    113,
+    130,
+    147,
+    202
+   ],
+   "jukes": 28,
+   "clean": 55,
+   "chains": 30,
+   "strikes": 109,
+   "swoops": 109,
+   "swoopHit": 81,
+   "swoopMiss": 28,
+   "catchSwoop": 45,
+   "catchTouch": 55,
+   "dmg": {},
+   "hits": {},
+   "bumps": 3,
+   "hover": 1.3000000000000007,
+   "stuck": 3.1999999999999984,
+   "dist": 6112.300506657408,
+   "camClip": 0.3373333333333333,
+   "noGoal": 0,
+   "lockAvail": 66.15466666666532,
+   "goalFar": 24.513333333333723,
+   "playT": 202.97733333332368,
+   "dodgesReal": 6
+  },
+  "curve": [
+   [
+    9
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    3,
+    9
+   ],
+   [
+    5,
+    1
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    5
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    10,
+    0
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    16,
+    3
+   ]
+  ],
+  "wall": 13634
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "pond",
+  "s": 1,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 63,
+   "hp": 100,
+   "score": 22837,
+   "medals": {
+    "untouched": true,
+    "swift": true,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 9,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 145134,
+  "timeLeft": 9,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch mosquitoes",
+    "count": 25,
+    "target": 36,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    9,
+    44,
+    63,
+    73,
+    84,
+    93,
+    115,
+    132,
+    161,
+    181,
+    212,
+    241
+   ],
+   "jukes": 72,
+   "clean": 113,
+   "chains": 151,
+   "strikes": 236,
+   "swoops": 236,
+   "swoopHit": 163,
+   "swoopMiss": 72,
+   "catchSwoop": 163,
+   "catchTouch": 113,
+   "dmg": {
+    "Webbed": 12,
+    "Frog tongue": 12
+   },
+   "hits": {
+    "Webbed": 2,
+    "Frog tongue": 1
+   },
+   "bumps": 37,
+   "hover": 0.7999999999999999,
+   "stuck": 0.5333333333333333,
+   "dist": 8434.941597066523,
+   "camClip": 0.4666666666666666,
+   "noGoal": 0,
+   "lockAvail": 137.3146666666619,
+   "goalFar": 0,
+   "playT": 276.0346666666684,
+   "dodgesReal": 17
+  },
+  "curve": [
+   [
+    0,
+    2
+   ],
+   [
+    2,
+    6
+   ],
+   [
+    3,
+    10
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    5
+   ],
+   [
+    12
+   ],
+   [
+    3
+   ],
+   [
+    16
+   ],
+   [
+    11
+   ],
+   [
+    4
+   ],
+   [
+    17
+   ],
+   [
+    3
+   ],
+   [
+    25
+   ],
+   [
+    14
+   ],
+   [
+    23
+   ],
+   [
+    13
+   ],
+   [
+    27
+   ],
+   [
+    7
+   ],
+   [
+    16
+   ],
+   [
+    25
+   ]
+  ],
+  "wall": 36967
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "garden",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "rain",
+  "banked": {
+   "winT": 87,
+   "hp": 100,
+   "score": 11460,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 4,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 1,
+  "score": 32150,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch midges",
+    "count": 17,
+    "target": 21,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    19,
+    46,
+    87,
+    106,
+    119,
+    160,
+    197
+   ],
+   "jukes": 44,
+   "clean": 69,
+   "chains": 41,
+   "strikes": 100,
+   "swoops": 100,
+   "swoopHit": 54,
+   "swoopMiss": 44,
+   "catchSwoop": 54,
+   "catchTouch": 69,
+   "dmg": {
+    "Webbed": 18
+   },
+   "hits": {
+    "Webbed": 3
+   },
+   "bumps": 3,
+   "hover": 0.36666666666666664,
+   "stuck": 0.13333333333333333,
+   "dist": 6936.149936040261,
+   "camClip": 0.14533333333333334,
+   "noGoal": 0,
+   "lockAvail": 60.977333333332425,
+   "goalFar": 24.568000000000385,
+   "playT": 250.5399999999876,
+   "dodgesReal": 14
+  },
+  "curve": [
+   [
+    8
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    11,
+    0
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    3
+   ],
+   [
+    7
+   ],
+   [
+    5
+   ],
+   [
+    10
+   ],
+   [
+    12
+   ],
+   [
+    2
+   ],
+   [
+    13
+   ],
+   [
+    0
+   ],
+   [
+    3
+   ],
+   [
+    10
+   ],
+   [
+    15
+   ]
+  ],
+  "wall": 15487
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 69,
+   "hp": 100,
+   "score": 11109,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 25940,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 18,
+    "target": 18,
+    "doneAt": 225
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 3,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    24,
+    50,
+    69,
+    88,
+    121,
+    152
+   ],
+   "jukes": 23,
+   "clean": 53,
+   "chains": 33,
+   "strikes": 100,
+   "swoops": 100,
+   "swoopHit": 77,
+   "swoopMiss": 23,
+   "catchSwoop": 51,
+   "catchTouch": 53,
+   "dmg": {
+    "Webbed": 12
+   },
+   "hits": {
+    "Webbed": 2
+   },
+   "bumps": 6,
+   "hover": 1.1,
+   "stuck": 2.2666666666666684,
+   "dist": 5994.281466321282,
+   "camClip": 0.1,
+   "noGoal": 0,
+   "lockAvail": 57.118666666665945,
+   "goalFar": 42.89333333333347,
+   "playT": 207.74666666665698,
+   "dodgesReal": 11
+  },
+  "curve": [
+   [
+    8
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    3,
+    5
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    8
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    2
+   ],
+   [
+    6
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    18,
+    1
+   ]
+  ],
+  "wall": 17715
+ },
+ {
+  "bot": "skilled",
+  "m": "dragonfly",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 120,
+   "hp": 100,
+   "score": 8994,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 28519,
+  "timeLeft": 36,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 3,
+    "target": 24,
+    "doneAt": null
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 0,
+    "target": 4,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    14,
+    53,
+    120,
+    138,
+    182,
+    213,
+    252,
+    273
+   ],
+   "jukes": 37,
+   "clean": 67,
+   "chains": 28,
+   "strikes": 125,
+   "swoops": 125,
+   "swoopHit": 83,
+   "swoopMiss": 37,
+   "catchSwoop": 56,
+   "catchTouch": 67,
+   "dmg": {
+    "Webbed": 48
+   },
+   "hits": {
+    "Webbed": 8
+   },
+   "bumps": 8,
+   "hover": 1.8666666666666691,
+   "stuck": 3.0999999999999988,
+   "dist": 8163.416983846183,
+   "camClip": 0.27466666666666667,
+   "noGoal": 0,
+   "lockAvail": 73.35733333333171,
+   "goalFar": 55.0613333333327,
+   "playT": 288.384000000013,
+   "dodgesReal": 14
+  },
+  "curve": [
+   [
+    10
+   ],
+   [
+    2,
+    1
+   ],
+   [
+    3,
+    6
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    5,
+    1
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    2
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    11,
+    0
+   ],
+   [
+    18,
+    0
+   ],
+   [
+    1
+   ],
+   [
+    21
+   ],
+   [
+    3,
+    0
+   ]
+  ],
+  "wall": 22885
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "pond",
+  "s": 2,
+  "reason": "cap",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 104,
+   "hp": 100,
+   "score": 11015,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 39170,
+  "timeLeft": 7,
+  "hp": 40,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 40,
+    "target": 45,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    13,
+    81,
+    104,
+    117,
+    130,
+    157,
+    188,
+    223,
+    255
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 213,
+   "swoops": 213,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 141.8181818181818,
+    "Swallow strike": 178.1818181818182,
+    "Webbed": 5.454545454545454
+   },
+   "hits": {
+    "Frog tongue": 13,
+    "Swallow strike": 7,
+    "Webbed": 1
+   },
+   "bumps": 38,
+   "hover": 23.93866666666702,
+   "stuck": 18.422666666666743,
+   "dist": 4917.529526544648,
+   "camClip": 7.666666666666649,
+   "noGoal": 0,
+   "lockAvail": 146.20933333332758,
+   "goalFar": 17.14933333333334,
+   "playT": 297.30133333335414,
+   "dodgesReal": 13
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    24,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    24
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    7
+   ],
+   [
+    35
+   ],
+   [
+    15
+   ],
+   [
+    20
+   ],
+   [
+    10
+   ],
+   [
+    20
+   ],
+   [
+    40
+   ]
+  ],
+  "wall": 21365
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "meadow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 70,
+   "hp": 100,
+   "score": 10820,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 50700,
+  "timeLeft": 15,
+  "hp": 75,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 40,
+    "target": 45,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    21,
+    52,
+    70,
+    88,
+    107,
+    141,
+    180,
+    222,
+    261
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 236,
+   "swoops": 236,
+   "swoopHit": 52,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 32.72727272727273,
+    "Stung": 54.54545454545454,
+    "Swallow strike": 50.90909090909091
+   },
+   "hits": {
+    "Webbed": 6,
+    "Stung": 5,
+    "Swallow strike": 2
+   },
+   "bumps": 8,
+   "hover": 21.86400000000025,
+   "stuck": 21.498666666666892,
+   "dist": 4850.906795793439,
+   "camClip": 4.853333333333325,
+   "noGoal": 0,
+   "lockAvail": 153.88533333332717,
+   "goalFar": 41.0826666666669,
+   "playT": 295.42400000001936,
+   "dodgesReal": 18
+  },
+  "curve": [
+   [
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    16,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    15
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    3
+   ],
+   [
+    20,
+    3
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    26
+   ],
+   [
+    11,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    40
+   ]
+  ],
+  "wall": 19705
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "pond",
+  "s": 1,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 50,
+   "hp": 95,
+   "score": 7005,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 8,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 35950,
+  "timeLeft": 36,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 0,
+    "target": 55,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    6,
+    36,
+    50,
+    70,
+    80,
+    102,
+    124,
+    168,
+    207,
+    249,
+    287
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 212,
+   "swoops": 212,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 54.54545454545454,
+    "Webbed": 10.909090909090908,
+    "Swallow strike": 203.63636363636363
+   },
+   "hits": {
+    "Frog tongue": 5,
+    "Webbed": 2,
+    "Swallow strike": 8
+   },
+   "bumps": 38,
+   "hover": 18.021333333333388,
+   "stuck": 16.553333333333313,
+   "dist": 4662.4140308336855,
+   "camClip": 10.733333333333306,
+   "noGoal": 0,
+   "lockAvail": 138.32266666666146,
+   "goalFar": 32.61600000000072,
+   "playT": 296.0693333333532,
+   "dodgesReal": 18
+  },
+  "curve": [
+   [
+    3,
+    0
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    14,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    5
+   ],
+   [
+    0
+   ],
+   [
+    11
+   ],
+   [
+    5
+   ],
+   [
+    5
+   ],
+   [
+    26
+   ],
+   [
+    14
+   ],
+   [
+    14
+   ],
+   [
+    40
+   ],
+   [
+    11
+   ],
+   [
+    11
+   ],
+   [
+    0
+   ],
+   [
+    5
+   ],
+   [
+    34
+   ],
+   [
+    0
+   ]
+  ],
+  "wall": 37004
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "meadow",
+  "s": 2,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 57,
+   "hp": 82,
+   "score": 9120,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 36580,
+  "timeLeft": 9,
+  "hp": 89,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 35,
+    "target": 45,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    13,
+    39,
+    57,
+    73,
+    96,
+    136,
+    172,
+    208,
+    254
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 245,
+   "swoops": 245,
+   "swoopHit": 51,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 127.27272727272727,
+    "Stung": 76.36363636363636,
+    "Webbed": 21.818181818181817
+   },
+   "hits": {
+    "Swallow strike": 5,
+    "Stung": 7,
+    "Webbed": 4
+   },
+   "bumps": 13,
+   "hover": 22.797333333333626,
+   "stuck": 20.314666666666835,
+   "dist": 4680.559323955441,
+   "camClip": 5.141333333333324,
+   "noGoal": 0,
+   "lockAvail": 161.7279999999934,
+   "goalFar": 28.298666666667227,
+   "playT": 295.21866666668564,
+   "dodgesReal": 16
+  },
+  "curve": [
+   [
+    16
+   ],
+   [
+    0,
+    2
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    4,
+    14
+   ],
+   [
+    15
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    24
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    20
+   ],
+   [
+    3,
+    1
+   ],
+   [
+    23,
+    1
+   ],
+   [
+    23,
+    2
+   ],
+   [
+    15
+   ],
+   [
+    35
+   ],
+   [
+    35
+   ]
+  ],
+  "wall": 18736
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "garden",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "breezy",
+  "banked": {
+   "winT": 83,
+   "hp": 86,
+   "score": 6345,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 4,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 19300,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 20,
+    "target": 35,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    18,
+    44,
+    83,
+    102,
+    132,
+    168,
+    207
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 155,
+   "swoops": 155,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 38.18181818181818,
+    "Bat strike": 40
+   },
+   "hits": {
+    "Webbed": 7,
+    "Bat strike": 2
+   },
+   "bumps": 4,
+   "hover": 13.749333333333293,
+   "stuck": 15.315999999999955,
+   "dist": 4481.519510358437,
+   "camClip": 4.799999999999993,
+   "noGoal": 0,
+   "lockAvail": 101.93199999999678,
+   "goalFar": 32.82400000000071,
+   "playT": 260.5933333333249,
+   "dodgesReal": 26
+  },
+  "curve": [
+   [
+    0
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    18,
+    2
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    20,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    20
+   ]
+  ],
+  "wall": 12376
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "garden",
+  "s": 1,
+  "reason": "cap",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 72,
+   "hp": 100,
+   "score": 8240,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 30490,
+  "timeLeft": 5,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 20,
+    "target": 40,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    18,
+    40,
+    72,
+    94,
+    117,
+    163,
+    205,
+    252
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 174,
+   "swoops": 174,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 16.363636363636363,
+    "Bat strike": 60
+   },
+   "hits": {
+    "Webbed": 3,
+    "Bat strike": 3
+   },
+   "bumps": 6,
+   "hover": 13.298666666666627,
+   "stuck": 17.074666666666673,
+   "dist": 5140.18324166813,
+   "camClip": 4.241333333333328,
+   "noGoal": 0,
+   "lockAvail": 112.91599999999615,
+   "goalFar": 37.100000000000456,
+   "playT": 298.8853333333554,
+   "dodgesReal": 29
+  },
+  "curve": [
+   [
+    0
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    24,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    25
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    20
+   ]
+  ],
+  "wall": 22122
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 99,
+   "hp": 100,
+   "score": 9410,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 1,
+  "score": 30740,
+  "timeLeft": 36,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 0,
+    "target": 45,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    11,
+    45,
+    99,
+    109,
+    138,
+    156,
+    197,
+    237,
+    282
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 229,
+   "swoops": 229,
+   "swoopHit": 42,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 16.363636363636363,
+    "Stung": 65.45454545454545,
+    "Swallow strike": 76.36363636363636
+   },
+   "hits": {
+    "Webbed": 3,
+    "Stung": 6,
+    "Swallow strike": 3
+   },
+   "bumps": 12,
+   "hover": 18.85200000000009,
+   "stuck": 23.39466666666699,
+   "dist": 4482.766867313123,
+   "camClip": 13.066666666666631,
+   "noGoal": 27.79066666666721,
+   "lockAvail": 148.1866666666608,
+   "goalFar": 27.357333333333855,
+   "playT": 295.893333333353,
+   "dodgesReal": 13
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    16,
+    0
+   ],
+   [
+    16,
+    2
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    3,
+    14
+   ],
+   [
+    3,
+    14
+   ],
+   [
+    0
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    20,
+    1
+   ],
+   [
+    17
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    25,
+    0
+   ],
+   [
+    25,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    32
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    28,
+    1
+   ],
+   [
+    40,
+    2
+   ],
+   [
+    0
+   ]
+  ],
+  "wall": 12445
+ },
+ {
+  "bot": "skilled",
+  "m": "honeybee",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 86,
+   "hp": 100,
+   "score": 8740,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 32825,
+  "timeLeft": 9,
+  "hp": 93,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 40,
+    "target": 45,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    11,
+    44,
+    86,
+    98,
+    120,
+    145,
+    180,
+    217,
+    255
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 234,
+   "swoops": 234,
+   "swoopHit": 44,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 21.818181818181817,
+    "Swallow strike": 101.81818181818181,
+    "Stung": 98.18181818181817
+   },
+   "hits": {
+    "Webbed": 4,
+    "Swallow strike": 4,
+    "Stung": 9
+   },
+   "bumps": 10,
+   "hover": 17.738666666666706,
+   "stuck": 20.506666666666845,
+   "dist": 4601.363687162328,
+   "camClip": 12.699999999999966,
+   "noGoal": 23.757333333333676,
+   "lockAvail": 154.10799999999387,
+   "goalFar": 22.20800000000026,
+   "playT": 295.4826666666859,
+   "dodgesReal": 22
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    16,
+    0
+   ],
+   [
+    16,
+    3
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    14
+   ],
+   [
+    0
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    20,
+    1
+   ],
+   [
+    2
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    1
+   ],
+   [
+    26,
+    2
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    20,
+    3
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    40
+   ]
+  ],
+  "wall": 22199
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "pond",
+  "s": 1,
+  "reason": "cap",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 84,
+   "hp": 100,
+   "score": 17270,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 7,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 80430,
+  "timeLeft": 5,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 18,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    10,
+    61,
+    84,
+    98,
+    113,
+    132,
+    161,
+    183,
+    211,
+    248
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 251,
+   "swoops": 251,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 21.538461538461537,
+    "Frog tongue": 212.30769230769224,
+    "Webbed": 9.23076923076923
+   },
+   "hits": {
+    "Swallow strike": 1,
+    "Frog tongue": 23,
+    "Webbed": 2
+   },
+   "bumps": 32,
+   "hover": 34.065333333333996,
+   "stuck": 22.47200000000028,
+   "dist": 4784.203029451353,
+   "camClip": 12.983999999999957,
+   "noGoal": 0,
+   "lockAvail": 171.19999999999263,
+   "goalFar": 0,
+   "playT": 290.6133333333485,
+   "dodgesReal": 19
+  },
+  "curve": [
+   [
+    1,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    1
+   ],
+   [
+    3
+   ],
+   [
+    9
+   ],
+   [
+    5
+   ],
+   [
+    11
+   ],
+   [
+    10
+   ],
+   [
+    3
+   ],
+   [
+    12
+   ],
+   [
+    2
+   ],
+   [
+    8
+   ],
+   [
+    15
+   ],
+   [
+    5
+   ],
+   [
+    11
+   ],
+   [
+    18
+   ]
+  ],
+  "wall": 29382
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "meadow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 63,
+   "hp": 100,
+   "score": 10000,
+   "medals": {
+    "untouched": true,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 7,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 57070,
+  "timeLeft": 9,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 19,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    10,
+    34,
+    63,
+    82,
+    98,
+    119,
+    148,
+    180,
+    215,
+    254
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 261,
+   "swoops": 261,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 9.23076923076923,
+    "Swallow strike": 64.61538461538461
+   },
+   "hits": {
+    "Webbed": 2,
+    "Swallow strike": 3
+   },
+   "bumps": 3,
+   "hover": 32.01600000000081,
+   "stuck": 22.65200000000029,
+   "dist": 4992.319778546961,
+   "camClip": 6.237333333333321,
+   "noGoal": 0,
+   "lockAvail": 176.83199999999243,
+   "goalFar": 0,
+   "playT": 292.0800000000165,
+   "dodgesReal": 16
+  },
+  "curve": [
+   [
+    2,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    3
+   ],
+   [
+    2
+   ],
+   [
+    1
+   ],
+   [
+    9
+   ],
+   [
+    5
+   ],
+   [
+    11
+   ],
+   [
+    5
+   ],
+   [
+    11
+   ],
+   [
+    5
+   ],
+   [
+    11
+   ],
+   [
+    1
+   ],
+   [
+    8
+   ],
+   [
+    15
+   ],
+   [
+    3
+   ],
+   [
+    12
+   ],
+   [
+    19
+   ]
+  ],
+  "wall": 16340
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "pond",
+  "s": 2,
+  "reason": "cap",
+  "twist": "dusk",
+  "banked": {
+   "winT": 112,
+   "hp": 100,
+   "score": 10550,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 7,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 51770,
+  "timeLeft": 38,
+  "hp": 99,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 5,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    15,
+    88,
+    112,
+    124,
+    140,
+    164,
+    186,
+    213,
+    240,
+    281
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 257,
+   "swoops": 257,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 129.2307692307692,
+    "Webbed": 9.23076923076923,
+    "Swallow strike": 107.69230769230768
+   },
+   "hits": {
+    "Frog tongue": 14,
+    "Webbed": 2,
+    "Swallow strike": 5
+   },
+   "bumps": 26,
+   "hover": 30.629333333334074,
+   "stuck": 23.09600000000031,
+   "dist": 4785.7719850707135,
+   "camClip": 9.893333333333304,
+   "noGoal": 0,
+   "lockAvail": 171.005333333326,
+   "goalFar": 0,
+   "playT": 290.81866666668185,
+   "dodgesReal": 13
+  },
+  "curve": [
+   [
+    5
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    1
+   ],
+   [
+    3
+   ],
+   [
+    2
+   ],
+   [
+    9
+   ],
+   [
+    5
+   ],
+   [
+    1
+   ],
+   [
+    8
+   ],
+   [
+    2
+   ],
+   [
+    11
+   ],
+   [
+    3
+   ],
+   [
+    10
+   ],
+   [
+    17
+   ],
+   [
+    5
+   ]
+  ],
+  "wall": 25181
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "garden",
+  "s": 1,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 80,
+   "hp": 100,
+   "score": 7330,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 32700,
+  "timeLeft": 39,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 3,
+    "target": 18,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    14,
+    47,
+    80,
+    101,
+    131,
+    161,
+    191,
+    236,
+    283
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 186,
+   "swoops": 186,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 64.6153846153846,
+    "Bat strike": 67.6923076923077
+   },
+   "hits": {
+    "Webbed": 14,
+    "Bat strike": 4
+   },
+   "bumps": 3,
+   "hover": 28.513333333333954,
+   "stuck": 20.53066666666685,
+   "dist": 4727.292419735126,
+   "camClip": 6.119999999999987,
+   "noGoal": 0,
+   "lockAvail": 125.36133333332893,
+   "goalFar": 1.5666666666666682,
+   "playT": 293.4880000000176,
+   "dodgesReal": 24
+  },
+  "curve": [
+   [
+    6
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    7,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    3
+   ],
+   [
+    0
+   ],
+   [
+    5
+   ],
+   [
+    10
+   ],
+   [
+    6
+   ],
+   [
+    12
+   ],
+   [
+    3
+   ],
+   [
+    9
+   ],
+   [
+    13
+   ],
+   [
+    4
+   ],
+   [
+    7
+   ],
+   [
+    13
+   ],
+   [
+    3
+   ]
+  ],
+  "wall": 22009
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "meadow",
+  "s": 2,
+  "reason": "cap",
+  "twist": "fair",
+  "banked": {
+   "winT": 85,
+   "hp": 100,
+   "score": 9940,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 7,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 48790,
+  "timeLeft": 34,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 6,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    12,
+    64,
+    85,
+    103,
+    121,
+    142,
+    169,
+    206,
+    242,
+    280
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 238,
+   "swoops": 238,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 4.615384615384615,
+    "Swallow strike": 86.15384615384615
+   },
+   "hits": {
+    "Webbed": 1,
+    "Swallow strike": 4
+   },
+   "bumps": 10,
+   "hover": 28.21333333333394,
+   "stuck": 21.39066666666689,
+   "dist": 5030.826717320604,
+   "camClip": 6.270666666666655,
+   "noGoal": 0,
+   "lockAvail": 158.4399999999936,
+   "goalFar": 0,
+   "playT": 293.0773333333506,
+   "dodgesReal": 14
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ],
+   [
+    6
+   ],
+   [
+    5
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    2
+   ],
+   [
+    9
+   ],
+   [
+    14
+   ],
+   [
+    7
+   ],
+   [
+    12
+   ],
+   [
+    3
+   ],
+   [
+    11
+   ],
+   [
+    17
+   ],
+   [
+    6
+   ]
+  ],
+  "wall": 26794
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "garden",
+  "s": 2,
+  "reason": "cap",
+  "twist": "fair",
+  "banked": {
+   "winT": 64,
+   "hp": 100,
+   "score": 8200,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 36090,
+  "timeLeft": 28,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 6,
+    "target": 18,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    14,
+    41,
+    64,
+    85,
+    108,
+    141,
+    182,
+    226,
+    273
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 190,
+   "swoops": 190,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Bat strike": 33.84615384615385,
+    "Webbed": 18.46153846153846
+   },
+   "hits": {
+    "Bat strike": 2,
+    "Webbed": 4
+   },
+   "bumps": 5,
+   "hover": 25.289333333333765,
+   "stuck": 17.81333333333337,
+   "dist": 5296.250519454967,
+   "camClip": 4.131999999999996,
+   "noGoal": 0,
+   "lockAvail": 128.29866666666203,
+   "goalFar": 2.182666666666669,
+   "playT": 294.0746666666848,
+   "dodgesReal": 28
+  },
+  "curve": [
+   [
+    6
+   ],
+   [
+    5,
+    1
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    2
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ],
+   [
+    2
+   ],
+   [
+    6
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    11
+   ],
+   [
+    2
+   ],
+   [
+    6
+   ],
+   [
+    12
+   ],
+   [
+    4
+   ],
+   [
+    9
+   ],
+   [
+    14
+   ],
+   [
+    2
+   ],
+   [
+    6
+   ]
+  ],
+  "wall": 25202
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "cap",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 63,
+   "hp": 100,
+   "score": 12560,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 8,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 1,
+  "score": 88760,
+  "timeLeft": 33,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 4,
+    "target": 22,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    13,
+    43,
+    63,
+    80,
+    98,
+    116,
+    142,
+    171,
+    203,
+    238,
+    279
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 231,
+   "swoops": 231,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 32.3076923076923,
+    "Swallow strike": 21.538461538461537
+   },
+   "hits": {
+    "Webbed": 7,
+    "Swallow strike": 1
+   },
+   "bumps": 8,
+   "hover": 25.10800000000044,
+   "stuck": 18.20133333333339,
+   "dist": 4535.556794252602,
+   "camClip": 19.189333333333444,
+   "noGoal": 0,
+   "lockAvail": 155.96666666666036,
+   "goalFar": 1.408000000000001,
+   "playT": 291.816000000016,
+   "dodgesReal": 19
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    2
+   ],
+   [
+    2
+   ],
+   [
+    1
+   ],
+   [
+    10
+   ],
+   [
+    7
+   ],
+   [
+    1
+   ],
+   [
+    8
+   ],
+   [
+    0
+   ],
+   [
+    9
+   ],
+   [
+    0
+   ],
+   [
+    8
+   ],
+   [
+    15
+   ],
+   [
+    5
+   ],
+   [
+    11
+   ],
+   [
+    19
+   ],
+   [
+    4
+   ]
+  ],
+  "wall": 24498
+ },
+ {
+  "bot": "skilled",
+  "m": "hawkmoth",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "dusk",
+  "banked": {
+   "winT": 82,
+   "hp": 100,
+   "score": 8050,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 7,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 42090,
+  "timeLeft": 40,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 1,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    12,
+    46,
+    82,
+    95,
+    110,
+    136,
+    164,
+    203,
+    240,
+    285
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 202,
+   "swoops": 202,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 23.076923076923073,
+    "Stung": 9.23076923076923,
+    "Swallow strike": 86.15384615384615
+   },
+   "hits": {
+    "Webbed": 5,
+    "Stung": 1,
+    "Swallow strike": 4
+   },
+   "bumps": 8,
+   "hover": 24.09733333333371,
+   "stuck": 17.652000000000037,
+   "dist": 4862.053015973417,
+   "camClip": 16.175999999999956,
+   "noGoal": 0,
+   "lockAvail": 138.86266666666148,
+   "goalFar": 1.8493333333333357,
+   "playT": 292.8426666666836,
+   "dodgesReal": 15
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    1
+   ],
+   [
+    3
+   ],
+   [
+    3
+   ],
+   [
+    7
+   ],
+   [
+    4
+   ],
+   [
+    10
+   ],
+   [
+    5
+   ],
+   [
+    10
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ],
+   [
+    12
+   ],
+   [
+    3
+   ],
+   [
+    10
+   ],
+   [
+    14
+   ],
+   [
+    1
+   ]
+  ],
+  "wall": 28303
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "pond",
+  "s": 1,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 64,
+   "hp": 100,
+   "score": 16933,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 7,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 68936,
+  "timeLeft": 40,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 2,
+    "target": 32,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    20,
+    46,
+    64,
+    77,
+    89,
+    117,
+    159,
+    203,
+    236,
+    276
+   ],
+   "jukes": 0,
+   "clean": 26,
+   "chains": 135,
+   "strikes": 175,
+   "swoops": 175,
+   "swoopHit": 169,
+   "swoopMiss": 0,
+   "catchSwoop": 169,
+   "catchTouch": 26,
+   "dmg": {
+    "Webbed": 19.09090909090909,
+    "Frog tongue": 10.909090909090908,
+    "Swallow strike": 12.727272727272727
+   },
+   "hits": {
+    "Webbed": 7,
+    "Frog tongue": 2,
+    "Swallow strike": 1
+   },
+   "bumps": 153,
+   "hover": 2.3826666666666685,
+   "stuck": 1.9000000000000026,
+   "dist": 6190.296766006114,
+   "camClip": 0.6453333333333333,
+   "noGoal": 0,
+   "lockAvail": 115.21599999999647,
+   "goalFar": 2.361333333333335,
+   "playT": 283.69066666667595,
+   "dodgesReal": 23
+  },
+  "curve": [
+   [
+    8
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    7,
+    0
+   ],
+   [
+    1
+   ],
+   [
+    5
+   ],
+   [
+    8
+   ],
+   [
+    15
+   ],
+   [
+    3
+   ],
+   [
+    10
+   ],
+   [
+    19
+   ],
+   [
+    4
+   ],
+   [
+    12
+   ],
+   [
+    16
+   ],
+   [
+    6
+   ],
+   [
+    21
+   ],
+   [
+    0
+   ],
+   [
+    16
+   ],
+   [
+    27
+   ],
+   [
+    2
+   ]
+  ],
+  "wall": 24079
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "meadow",
+  "s": 1,
+  "reason": "overtime",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 88,
+   "hp": 100,
+   "score": 12243,
+   "medals": {
+    "untouched": true,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 26693,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 18,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    22,
+    65,
+    88,
+    106,
+    153,
+    169
+   ],
+   "jukes": 0,
+   "clean": 15,
+   "chains": 55,
+   "strikes": 95,
+   "swoops": 95,
+   "swoopHit": 94,
+   "swoopMiss": 0,
+   "catchSwoop": 94,
+   "catchTouch": 15,
+   "dmg": {
+    "Webbed": 2.727272727272727,
+    "Stung": 5.454545454545454
+   },
+   "hits": {
+    "Webbed": 1,
+    "Stung": 1
+   },
+   "bumps": 65,
+   "hover": 0.39999999999999997,
+   "stuck": 0.3,
+   "dist": 4725.204135375683,
+   "camClip": 1.5333333333333348,
+   "noGoal": 0,
+   "lockAvail": 63.582666666665595,
+   "goalFar": 20.662666666666862,
+   "playT": 224.47999999998933,
+   "dodgesReal": 11
+  },
+  "curve": [
+   [
+    7
+   ],
+   [
+    3,
+    1
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    5
+   ],
+   [
+    4
+   ],
+   [
+    8
+   ],
+   [
+    9
+   ],
+   [
+    7
+   ],
+   [
+    0
+   ],
+   [
+    7
+   ],
+   [
+    10
+   ],
+   [
+    15
+   ]
+  ],
+  "wall": 7602
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "garden",
+  "s": 1,
+  "reason": "overtime",
+  "twist": "fair",
+  "banked": {
+   "winT": 106,
+   "hp": 100,
+   "score": 11494,
+   "medals": {
+    "untouched": true,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 22370,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 12,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    28,
+    71,
+    106,
+    131,
+    182,
+    212
+   ],
+   "jukes": 0,
+   "clean": 8,
+   "chains": 43,
+   "strikes": 96,
+   "swoops": 96,
+   "swoopHit": 95,
+   "swoopMiss": 0,
+   "catchSwoop": 95,
+   "catchTouch": 8,
+   "dmg": {
+    "Webbed": 2.727272727272727
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 64,
+   "hover": 0.49999999999999994,
+   "stuck": 0.39999999999999997,
+   "dist": 5615.655981930124,
+   "camClip": 0.8333333333333333,
+   "noGoal": 0,
+   "lockAvail": 68.9119999999986,
+   "goalFar": 16.88666666666666,
+   "playT": 267.4159999999966,
+   "dodgesReal": 22
+  },
+  "curve": [
+   [
+    8
+   ],
+   [
+    12
+   ],
+   [
+    3,
+    1
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    17,
+    1
+   ],
+   [
+    4
+   ],
+   [
+    10
+   ],
+   [
+    2
+   ],
+   [
+    5
+   ],
+   [
+    9
+   ],
+   [
+    2
+   ],
+   [
+    12
+   ],
+   [
+    2
+   ],
+   [
+    5
+   ],
+   [
+    9
+   ],
+   [
+    11
+   ]
+  ],
+  "wall": 5797
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "meadow",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "breezy",
+  "banked": {
+   "winT": 107,
+   "hp": 100,
+   "score": 10281,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 24266,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 8,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    40,
+    84,
+    107,
+    134,
+    162,
+    181
+   ],
+   "jukes": 0,
+   "clean": 11,
+   "chains": 48,
+   "strikes": 86,
+   "swoops": 86,
+   "swoopHit": 86,
+   "swoopMiss": 0,
+   "catchSwoop": 86,
+   "catchTouch": 11,
+   "dmg": {
+    "Stung": 21.818181818181817,
+    "Webbed": 2.727272727272727
+   },
+   "hits": {
+    "Stung": 4,
+    "Webbed": 1
+   },
+   "bumps": 63,
+   "hover": 0.5666666666666667,
+   "stuck": 0.5666666666666667,
+   "dist": 4960.821962230561,
+   "camClip": 1.1333333333333335,
+   "noGoal": 0,
+   "lockAvail": 59.29999999999915,
+   "goalFar": 35.26800000000056,
+   "playT": 237.10933333332184,
+   "dodgesReal": 13
+  },
+  "curve": [
+   [
+    5
+   ],
+   [
+    9
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    5,
+    1
+   ],
+   [
+    8,
+    2
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    15,
+    1
+   ],
+   [
+    6
+   ],
+   [
+    9
+   ],
+   [
+    9
+   ],
+   [
+    12
+   ],
+   [
+    12
+   ],
+   [
+    2
+   ],
+   [
+    8
+   ],
+   [
+    8
+   ],
+   [
+    8
+   ]
+  ],
+  "wall": 11073
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "overtime",
+  "twist": "fair",
+  "banked": {
+   "winT": 89,
+   "hp": 100,
+   "score": 12612,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 40340,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 13,
+    "target": 26,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    25,
+    55,
+    89,
+    105,
+    118,
+    144,
+    184,
+    223
+   ],
+   "jukes": 0,
+   "clean": 33,
+   "chains": 80,
+   "strikes": 123,
+   "swoops": 123,
+   "swoopHit": 121,
+   "swoopMiss": 0,
+   "catchSwoop": 121,
+   "catchTouch": 33,
+   "dmg": {
+    "Webbed": 21.818181818181817,
+    "Swallow strike": 25.454545454545453
+   },
+   "hits": {
+    "Webbed": 8,
+    "Swallow strike": 2
+   },
+   "bumps": 63,
+   "hover": 2.033333333333336,
+   "stuck": 1.400000000000001,
+   "dist": 5790.796934900148,
+   "camClip": 1.861333333333336,
+   "noGoal": 0,
+   "lockAvail": 81.53733333333129,
+   "goalFar": 18.626666666666747,
+   "playT": 274.66800000000205,
+   "dodgesReal": 13
+  },
+  "curve": [
+   [
+    6
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    17,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    3
+   ],
+   [
+    9
+   ],
+   [
+    2
+   ],
+   [
+    13
+   ],
+   [
+    9
+   ],
+   [
+    15
+   ],
+   [
+    0
+   ],
+   [
+    10
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    12
+   ]
+  ],
+  "wall": 14514
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "garden",
+  "s": 2,
+  "reason": "cap",
+  "twist": "breezy",
+  "banked": {
+   "winT": 90,
+   "hp": 100,
+   "score": 10745,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 35438,
+  "timeLeft": 12,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 9,
+    "target": 26,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    36,
+    61,
+    90,
+    107,
+    143,
+    178,
+    211,
+    249
+   ],
+   "jukes": 0,
+   "clean": 14,
+   "chains": 74,
+   "strikes": 129,
+   "swoops": 129,
+   "swoopHit": 129,
+   "swoopMiss": 0,
+   "catchSwoop": 129,
+   "catchTouch": 14,
+   "dmg": {
+    "Webbed": 10.909090909090908
+   },
+   "hits": {
+    "Webbed": 4
+   },
+   "bumps": 71,
+   "hover": 1.4333333333333345,
+   "stuck": 1.0333333333333332,
+   "dist": 5992.911975399158,
+   "camClip": 1.3000000000000007,
+   "noGoal": 0,
+   "lockAvail": 82.38533333333126,
+   "goalFar": 10.9053333333333,
+   "playT": 288.64800000001316,
+   "dodgesReal": 30
+  },
+  "curve": [
+   [
+    7
+   ],
+   [
+    9
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    9,
+    2
+   ],
+   [
+    4,
+    1
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    5
+   ],
+   [
+    0
+   ],
+   [
+    8
+   ],
+   [
+    14
+   ],
+   [
+    10
+   ],
+   [
+    13
+   ],
+   [
+    4
+   ],
+   [
+    16
+   ],
+   [
+    3
+   ],
+   [
+    11
+   ],
+   [
+    20
+   ],
+   [
+    3
+   ],
+   [
+    6
+   ],
+   [
+    9
+   ]
+  ],
+  "wall": 20584
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "pond",
+  "s": 2,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 76,
+   "hp": 100,
+   "score": 17687,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 58003,
+  "timeLeft": 2,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 15,
+    "target": 29,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    15,
+    47,
+    76,
+    97,
+    111,
+    145,
+    168,
+    200,
+    236
+   ],
+   "jukes": 0,
+   "clean": 18,
+   "chains": 122,
+   "strikes": 167,
+   "swoops": 167,
+   "swoopHit": 163,
+   "swoopMiss": 0,
+   "catchSwoop": 163,
+   "catchTouch": 18,
+   "dmg": {
+    "Frog tongue": 10.909090909090908,
+    "Webbed": 19.09090909090909,
+    "Swallow strike": 63.63636363636363
+   },
+   "hits": {
+    "Frog tongue": 2,
+    "Webbed": 7,
+    "Swallow strike": 5
+   },
+   "bumps": 156,
+   "hover": 3.166666666666665,
+   "stuck": 1.7666666666666688,
+   "dist": 6319.28259121657,
+   "camClip": 1.316000000000001,
+   "noGoal": 0,
+   "lockAvail": 117.30266666666304,
+   "goalFar": 0.13333333333333333,
+   "playT": 284.01333333334225,
+   "dodgesReal": 17
+  },
+  "curve": [
+   [
+    9
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    7,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    5
+   ],
+   [
+    0
+   ],
+   [
+    1
+   ],
+   [
+    6
+   ],
+   [
+    13
+   ],
+   [
+    5
+   ],
+   [
+    0
+   ],
+   [
+    10
+   ],
+   [
+    21
+   ],
+   [
+    2
+   ],
+   [
+    16
+   ],
+   [
+    0
+   ],
+   [
+    5
+   ],
+   [
+    10
+   ],
+   [
+    15
+   ]
+  ],
+  "wall": 38132
+ },
+ {
+  "bot": "skilled",
+  "m": "ladybird",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 88,
+   "hp": 100,
+   "score": 9901,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 34005,
+  "timeLeft": 7,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 14,
+    "target": 26,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    21,
+    61,
+    88,
+    104,
+    151,
+    167,
+    213,
+    244
+   ],
+   "jukes": 0,
+   "clean": 29,
+   "chains": 72,
+   "strikes": 123,
+   "swoops": 123,
+   "swoopHit": 121,
+   "swoopMiss": 0,
+   "catchSwoop": 121,
+   "catchTouch": 29,
+   "dmg": {
+    "Webbed": 16.363636363636363,
+    "Swallow strike": 25.454545454545453
+   },
+   "hits": {
+    "Webbed": 6,
+    "Swallow strike": 2
+   },
+   "bumps": 66,
+   "hover": 2.4333333333333345,
+   "stuck": 1.5666666666666682,
+   "dist": 5690.048045364133,
+   "camClip": 3.7186666666666635,
+   "noGoal": 0,
+   "lockAvail": 79.67866666666484,
+   "goalFar": 19.81600000000014,
+   "playT": 287.79733333334593,
+   "dodgesReal": 8
+  },
+  "curve": [
+   [
+    8
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    4,
+    1
+   ],
+   [
+    11,
+    2
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    19,
+    1
+   ],
+   [
+    7
+   ],
+   [
+    4
+   ],
+   [
+    8
+   ],
+   [
+    11
+   ],
+   [
+    4
+   ],
+   [
+    0
+   ],
+   [
+    8
+   ],
+   [
+    13
+   ],
+   [
+    0
+   ],
+   [
+    9
+   ],
+   [
+    23
+   ],
+   [
+    3
+   ],
+   [
+    8
+   ],
+   [
+    14
+   ]
+  ],
+  "wall": 25117
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "pond",
+  "s": 1,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 142,
+   "hp": 100,
+   "score": 19824,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 47361,
+  "timeLeft": 6,
+  "hp": 97,
+  "obj": [
+   {
+    "label": "Catch mosquitoes",
+    "count": 21,
+    "target": 21,
+    "doneAt": 233
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    21,
+    50,
+    142,
+    158,
+    175,
+    208,
+    241,
+    287
+   ],
+   "jukes": 0,
+   "clean": 18,
+   "chains": 35,
+   "strikes": 101,
+   "swoops": 101,
+   "swoopHit": 100,
+   "swoopMiss": 0,
+   "catchSwoop": 100,
+   "catchTouch": 18,
+   "dmg": {
+    "Frog tongue": 72,
+    "Swallow strike": 196,
+    "Webbed": 18
+   },
+   "hits": {
+    "Frog tongue": 6,
+    "Swallow strike": 7,
+    "Webbed": 3
+   },
+   "bumps": 30,
+   "hover": 3.8666666666666627,
+   "stuck": 1.9000000000000026,
+   "dist": 5817.969318553556,
+   "camClip": 0.512,
+   "noGoal": 0,
+   "lockAvail": 127.89733333332904,
+   "goalFar": 0,
+   "playT": 288.03200000001254,
+   "dodgesReal": 6
+  },
+  "curve": [
+   [
+    8
+   ],
+   [
+    1,
+    3
+   ],
+   [
+    2,
+    7
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    10,
+    0
+   ],
+   [
+    18,
+    0
+   ],
+   [
+    18,
+    0
+   ],
+   [
+    18,
+    0
+   ],
+   [
+    18,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    9
+   ],
+   [
+    11
+   ],
+   [
+    4
+   ],
+   [
+    11
+   ],
+   [
+    4
+   ],
+   [
+    12
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    12
+   ],
+   [
+    21
+   ]
+  ],
+  "wall": 22529
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "pond",
+  "s": 2,
+  "reason": "cap",
+  "twist": "fair",
+  "banked": {
+   "winT": 109,
+   "hp": 100,
+   "score": 14302,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 42052,
+  "timeLeft": 45,
+  "hp": 91,
+  "obj": [
+   {
+    "label": "Catch mosquitoes",
+    "count": 2,
+    "target": 24,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    26,
+    68,
+    109,
+    134,
+    165,
+    202,
+    233,
+    282
+   ],
+   "jukes": 0,
+   "clean": 12,
+   "chains": 30,
+   "strikes": 110,
+   "swoops": 110,
+   "swoopHit": 109,
+   "swoopMiss": 0,
+   "catchSwoop": 109,
+   "catchTouch": 12,
+   "dmg": {
+    "Swallow strike": 140,
+    "Frog tongue": 120,
+    "Webbed": 6
+   },
+   "hits": {
+    "Swallow strike": 5,
+    "Frog tongue": 10,
+    "Webbed": 1
+   },
+   "bumps": 24,
+   "hover": 3.766666666666663,
+   "stuck": 1.8333333333333357,
+   "dist": 6251.4786490499555,
+   "camClip": 0.9999999999999999,
+   "noGoal": 0,
+   "lockAvail": 153.12799999999402,
+   "goalFar": 0.16666666666666666,
+   "playT": 287.856000000013,
+   "dodgesReal": 12
+  },
+  "curve": [
+   [
+    5
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    3,
+    4
+   ],
+   [
+    4,
+    6
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    13,
+    1
+   ],
+   [
+    2
+   ],
+   [
+    7
+   ],
+   [
+    3
+   ],
+   [
+    10
+   ],
+   [
+    3
+   ],
+   [
+    8
+   ],
+   [
+    15
+   ],
+   [
+    10
+   ],
+   [
+    17
+   ],
+   [
+    4
+   ],
+   [
+    9
+   ],
+   [
+    16
+   ],
+   [
+    2
+   ]
+  ],
+  "wall": 28988
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "meadow",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "dusk",
+  "banked": {
+   "winT": 166,
+   "hp": 100,
+   "score": 7310,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 2,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 13528,
+  "timeLeft": 0,
+  "hp": 44,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 12,
+    "doneAt": 212
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 2,
+    "target": 2,
+    "doneAt": 239
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    40,
+    89,
+    166,
+    190,
+    249
+   ],
+   "jukes": 0,
+   "clean": 23,
+   "chains": 5,
+   "strikes": 69,
+   "swoops": 69,
+   "swoopHit": 69,
+   "swoopMiss": 0,
+   "catchSwoop": 49,
+   "catchTouch": 23,
+   "dmg": {
+    "Stung": 60,
+    "Swallow strike": 56
+   },
+   "hits": {
+    "Stung": 5,
+    "Swallow strike": 2
+   },
+   "bumps": 6,
+   "hover": 0.36666666666666664,
+   "stuck": 0.9666666666666666,
+   "dist": 5442.385385994883,
+   "camClip": 0.36666666666666664,
+   "noGoal": 0,
+   "lockAvail": 82.64266666666471,
+   "goalFar": 55.166666666666075,
+   "playT": 249.28666666665407,
+   "dodgesReal": 8
+  },
+  "curve": [
+   [
+    6
+   ],
+   [
+    8
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    3,
+    4
+   ],
+   [
+    3,
+    9
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    9,
+    1
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    15,
+    1
+   ],
+   [
+    1
+   ],
+   [
+    8
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    1
+   ]
+  ],
+  "wall": 14403
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "garden",
+  "s": 1,
+  "reason": "cap",
+  "twist": "breezy",
+  "banked": {
+   "winT": 140,
+   "hp": 100,
+   "score": 8770,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 17340,
+  "timeLeft": 36,
+  "hp": 92,
+  "obj": [
+   {
+    "label": "Catch midges",
+    "count": 6,
+    "target": 18,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    41,
+    114,
+    140,
+    175,
+    228,
+    273
+   ],
+   "jukes": 0,
+   "clean": 14,
+   "chains": 7,
+   "strikes": 72,
+   "swoops": 72,
+   "swoopHit": 71,
+   "swoopMiss": 0,
+   "catchSwoop": 71,
+   "catchTouch": 14,
+   "dmg": {
+    "Bat strike": 220
+   },
+   "hits": {
+    "Bat strike": 10
+   },
+   "bumps": 0,
+   "hover": 0.13333333333333333,
+   "stuck": 0.19999999999999998,
+   "dist": 6709.380522723636,
+   "camClip": 0.03333333333333333,
+   "noGoal": 0,
+   "lockAvail": 87.44533333333098,
+   "goalFar": 39.64533333333365,
+   "playT": 292.0213333333496,
+   "dodgesReal": 12
+  },
+  "curve": [
+   [
+    4
+   ],
+   [
+    9
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    8,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    1
+   ],
+   [
+    4
+   ],
+   [
+    9
+   ],
+   [
+    5
+   ],
+   [
+    7
+   ],
+   [
+    10
+   ],
+   [
+    1
+   ],
+   [
+    6
+   ],
+   [
+    11
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ]
+  ],
+  "wall": 11467
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "meadow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 145,
+   "hp": 100,
+   "score": 8353,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 19544,
+  "timeLeft": 25,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 12,
+    "target": 18,
+    "doneAt": null
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 0,
+    "target": 3,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    25,
+    90,
+    145,
+    182,
+    232,
+    260
+   ],
+   "jukes": 0,
+   "clean": 32,
+   "chains": 6,
+   "strikes": 89,
+   "swoops": 89,
+   "swoopHit": 89,
+   "swoopMiss": 0,
+   "catchSwoop": 69,
+   "catchTouch": 32,
+   "dmg": {
+    "Stung": 48,
+    "Swallow strike": 112
+   },
+   "hits": {
+    "Stung": 4,
+    "Swallow strike": 4
+   },
+   "bumps": 1,
+   "hover": 0.3,
+   "stuck": 0.7666666666666666,
+   "dist": 6622.386799933666,
+   "camClip": 0.408,
+   "noGoal": 0,
+   "lockAvail": 105.02533333333034,
+   "goalFar": 27.51600000000055,
+   "playT": 290.3493333333485,
+   "dodgesReal": 14
+  },
+  "curve": [
+   [
+    6
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    3,
+    1
+   ],
+   [
+    3,
+    4
+   ],
+   [
+    3,
+    8
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    3
+   ],
+   [
+    7
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    8,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    12,
+    2
+   ],
+   [
+    3
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    7,
+    0
+   ],
+   [
+    12,
+    0
+   ]
+  ],
+  "wall": 24267
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "garden",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "swarm",
+  "banked": {
+   "winT": 92,
+   "hp": 100,
+   "score": 10710,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 18680,
+  "timeLeft": 0,
+  "hp": 94,
+  "obj": [
+   {
+    "label": "Catch midges",
+    "count": 14,
+    "target": 18,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    29,
+    58,
+    92,
+    123,
+    166,
+    215
+   ],
+   "jukes": 0,
+   "clean": 18,
+   "chains": 3,
+   "strikes": 76,
+   "swoops": 76,
+   "swoopHit": 75,
+   "swoopMiss": 0,
+   "catchSwoop": 75,
+   "catchTouch": 18,
+   "dmg": {
+    "Bat strike": 110,
+    "Webbed": 12
+   },
+   "hits": {
+    "Bat strike": 5,
+    "Webbed": 2
+   },
+   "bumps": 4,
+   "hover": 0.4333333333333333,
+   "stuck": 0.4666666666666666,
+   "dist": 6195.435225612435,
+   "camClip": 0.1,
+   "noGoal": 0,
+   "lockAvail": 96.65466666666376,
+   "goalFar": 21.365333333333552,
+   "playT": 270.46533333333247,
+   "dodgesReal": 21
+  },
+  "curve": [
+   [
+    6
+   ],
+   [
+    11
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    11,
+    2
+   ],
+   [
+    3,
+    1
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    2
+   ],
+   [
+    5
+   ],
+   [
+    1
+   ],
+   [
+    6
+   ],
+   [
+    10
+   ],
+   [
+    2
+   ],
+   [
+    5
+   ],
+   [
+    10
+   ],
+   [
+    0
+   ],
+   [
+    4
+   ],
+   [
+    7
+   ],
+   [
+    12
+   ]
+  ],
+  "wall": 17647
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 94,
+   "hp": 100,
+   "score": 8878,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 19086,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 17,
+    "target": 18,
+    "doneAt": null
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 0,
+    "target": 3,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    29,
+    70,
+    94,
+    128,
+    167,
+    184
+   ],
+   "jukes": 0,
+   "clean": 44,
+   "chains": 5,
+   "strikes": 74,
+   "swoops": 74,
+   "swoopHit": 72,
+   "swoopMiss": 0,
+   "catchSwoop": 55,
+   "catchTouch": 44,
+   "dmg": {
+    "Webbed": 12,
+    "Swallow strike": 112
+   },
+   "hits": {
+    "Webbed": 2,
+    "Swallow strike": 4
+   },
+   "bumps": 5,
+   "hover": 0.6666666666666666,
+   "stuck": 1.166666666666667,
+   "dist": 5290.654198431557,
+   "camClip": 0.4666666666666666,
+   "noGoal": 0,
+   "lockAvail": 88.61199999999766,
+   "goalFar": 30.606666666667355,
+   "playT": 240.00933333332134,
+   "dodgesReal": 7
+  },
+  "curve": [
+   [
+    5
+   ],
+   [
+    12
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    3,
+    5
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    1
+   ],
+   [
+    4
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    7,
+    0
+   ],
+   [
+    12,
+    0
+   ]
+  ],
+  "wall": 13192
+ },
+ {
+  "bot": "novice",
+  "m": "dragonfly",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "overtime",
+  "twist": "fair",
+  "banked": {
+   "winT": 107,
+   "hp": 75,
+   "score": 8916,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 16694,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Catch gnats",
+    "count": 16,
+    "target": 18,
+    "doneAt": null
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 0,
+    "target": 3,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    33,
+    83,
+    107,
+    137,
+    191,
+    221
+   ],
+   "jukes": 0,
+   "clean": 28,
+   "chains": 3,
+   "strikes": 85,
+   "swoops": 85,
+   "swoopHit": 84,
+   "swoopMiss": 0,
+   "catchSwoop": 68,
+   "catchTouch": 28,
+   "dmg": {
+    "Stung": 24,
+    "Swallow strike": 84,
+    "Webbed": 12
+   },
+   "hits": {
+    "Stung": 2,
+    "Swallow strike": 3,
+    "Webbed": 2
+   },
+   "bumps": 15,
+   "hover": 0.7333333333333333,
+   "stuck": 1.2000000000000004,
+   "dist": 6238.276558367664,
+   "camClip": 0.5533333333333332,
+   "noGoal": 0,
+   "lockAvail": 99.15866666666379,
+   "goalFar": 24.514666666667054,
+   "playT": 276.87466666667063,
+   "dodgesReal": 8
+  },
+  "curve": [
+   [
+    5
+   ],
+   [
+    9
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    5
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    2
+   ],
+   [
+    6
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    10,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    4
+   ],
+   [
+    9
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    8,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    16,
+    0
+   ]
+  ],
+  "wall": 22581
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "pond",
+  "s": 2,
+  "reason": "downed",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 154,
+   "hp": 100,
+   "score": 7355,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 4,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 20410,
+  "timeLeft": 37,
+  "hp": 0,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 0,
+    "target": 35,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    10,
+    135,
+    154,
+    172,
+    196,
+    227,
+    266
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 79,
+   "swoops": 79,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 152.72727272727272,
+    "Swallow strike": 229.09090909090907
+   },
+   "hits": {
+    "Frog tongue": 14,
+    "Swallow strike": 9
+   },
+   "bumps": 15,
+   "hover": 6.223999999999989,
+   "stuck": 5.815999999999989,
+   "dist": 3720.2562047612773,
+   "camClip": 3.466666666666664,
+   "noGoal": 0,
+   "lockAvail": 122.94266666666236,
+   "goalFar": 4.799999999999993,
+   "playT": 285.13466666667773,
+   "dodgesReal": 8
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    18,
+    0
+   ],
+   [
+    18,
+    0
+   ],
+   [
+    18,
+    0
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    18,
+    1
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    30
+   ],
+   [
+    0
+   ]
+  ],
+  "wall": 20738
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "meadow",
+  "s": 1,
+  "reason": "downed",
+  "twist": "rain",
+  "banked": {
+   "winT": 62,
+   "hp": 88,
+   "score": 6465,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 13100,
+  "timeLeft": 41,
+  "hp": 0,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 0,
+    "target": 30,
+    "doneAt": null
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 1,
+    "target": 3,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    12,
+    42,
+    62,
+    78,
+    103,
+    138
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 91,
+   "swoops": 91,
+   "swoopHit": 28,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 76.36363636363636,
+    "Stung": 163.63636363636363
+   },
+   "hits": {
+    "Swallow strike": 3,
+    "Stung": 15
+   },
+   "bumps": 6,
+   "hover": 3.6266666666666643,
+   "stuck": 10.030666666666635,
+   "dist": 1498.8915031106408,
+   "camClip": 3.107999999999999,
+   "noGoal": 0,
+   "lockAvail": 111.81066666666301,
+   "goalFar": 0,
+   "playT": 155.15733333332707,
+   "dodgesReal": 2
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    16,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    18,
+    2
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0,
+    0
+   ]
+  ],
+  "wall": 14771
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "pond",
+  "s": 1,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 102,
+   "hp": 100,
+   "score": 6320,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 21810,
+  "timeLeft": 38,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 0,
+    "target": 45,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    13,
+    43,
+    102,
+    117,
+    134,
+    174,
+    208,
+    246,
+    287
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 90,
+   "swoops": 90,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 10.909090909090908,
+    "Swallow strike": 254.5454545454545
+   },
+   "hits": {
+    "Frog tongue": 1,
+    "Swallow strike": 10
+   },
+   "bumps": 41,
+   "hover": 3.115999999999999,
+   "stuck": 6.34933333333332,
+   "dist": 3602.1075612783725,
+   "camClip": 16.97866666666667,
+   "noGoal": 0,
+   "lockAvail": 149.22266666666079,
+   "goalFar": 15.615999999999953,
+   "playT": 298.357333333355,
+   "dodgesReal": 6
+  },
+  "curve": [
+   [
+    16
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    24,
+    0
+   ],
+   [
+    24,
+    0
+   ],
+   [
+    24,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    30
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ]
+  ],
+  "wall": 26913
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "garden",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "fair",
+  "banked": {
+   "winT": 74,
+   "hp": 100,
+   "score": 6375,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 4,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 17960,
+  "timeLeft": 0,
+  "hp": 96,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 20,
+    "target": 35,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    19,
+    41,
+    74,
+    96,
+    118,
+    154,
+    193
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 80,
+   "swoops": 80,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Bat strike": 220
+   },
+   "hits": {
+    "Bat strike": 11
+   },
+   "bumps": 0,
+   "hover": 1.8746666666666691,
+   "stuck": 4.107999999999995,
+   "dist": 3251.3215908480965,
+   "camClip": 3.8746666666666627,
+   "noGoal": 0,
+   "lockAvail": 129.69599999999525,
+   "goalFar": 28.749333333333926,
+   "playT": 246.17599999998842,
+   "dodgesReal": 19
+  },
+  "curve": [
+   [
+    0
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    24,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    17
+   ],
+   [
+    30
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ]
+  ],
+  "wall": 11824
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "meadow",
+  "s": 2,
+  "reason": "cap",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 85,
+   "hp": 75,
+   "score": 8825,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 30605,
+  "timeLeft": 5,
+  "hp": 46,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 40,
+    "target": 40,
+    "doneAt": 233
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 3,
+    "target": 4,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    14,
+    56,
+    85,
+    101,
+    130,
+    159,
+    208,
+    249
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 123,
+   "swoops": 123,
+   "swoopHit": 37,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 229.09090909090907,
+    "Stung": 152.72727272727272
+   },
+   "hits": {
+    "Swallow strike": 9,
+    "Stung": 14
+   },
+   "bumps": 14,
+   "hover": 1.6573333333333353,
+   "stuck": 6.385333333333318,
+   "dist": 3806.249172240308,
+   "camClip": 3.4999999999999973,
+   "noGoal": 0,
+   "lockAvail": 182.99066666665885,
+   "goalFar": 24.541333333333714,
+   "playT": 295.77600000001956,
+   "dodgesReal": 6
+  },
+  "curve": [
+   [
+    16
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    16,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    1
+   ],
+   [
+    30,
+    2
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    2
+   ],
+   [
+    19,
+    3
+   ],
+   [
+    40,
+    3
+   ]
+  ],
+  "wall": 19415
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "downed",
+  "twist": "rain",
+  "banked": {
+   "winT": 123,
+   "hp": 34,
+   "score": 5980,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 1,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 7460,
+  "timeLeft": 55,
+  "hp": 0,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 0,
+    "target": 20,
+    "doneAt": null
+   },
+   {
+    "label": "Drive off raiding wasps",
+    "count": 0,
+    "target": 2,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    17,
+    53,
+    123,
+    140
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 50,
+   "swoops": 50,
+   "swoopHit": 17,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 101.81818181818181,
+    "Stung": 87.27272727272727
+   },
+   "hits": {
+    "Swallow strike": 4,
+    "Stung": 8
+   },
+   "bumps": 4,
+   "hover": 4.815999999999992,
+   "stuck": 5.023999999999991,
+   "dist": 1640.0972100672407,
+   "camClip": 3.774666666666663,
+   "noGoal": 24.31600000000037,
+   "lockAvail": 62.40933333333231,
+   "goalFar": 5.80799999999999,
+   "playT": 146.99733333332756
+  },
+  "curve": [
+   [
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    16,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0,
+    0
+   ]
+  ],
+  "wall": 12176
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "rain",
+  "banked": {
+   "winT": 97,
+   "hp": 100,
+   "score": 6800,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 4,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 19925,
+  "timeLeft": 0,
+  "hp": 55,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 34,
+    "target": 35,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    14,
+    51,
+    97,
+    117,
+    145,
+    181,
+    232
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 128,
+   "swoops": 128,
+   "swoopHit": 38,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Stung": 185.45454545454544,
+    "Swallow strike": 127.27272727272727
+   },
+   "hits": {
+    "Stung": 17,
+    "Swallow strike": 5
+   },
+   "bumps": 6,
+   "hover": 8.09733333333331,
+   "stuck": 11.209333333333298,
+   "dist": 3068.765200518655,
+   "camClip": 12.994666666666628,
+   "noGoal": 29.74933333333397,
+   "lockAvail": 180.31466666665887,
+   "goalFar": 5.666666666666656,
+   "playT": 285.2640000000111,
+   "dodgesReal": 7
+  },
+  "curve": [
+   [
+    16
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    16,
+    2
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    15
+   ],
+   [
+    0,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    20,
+    3
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    1
+   ],
+   [
+    20
+   ]
+  ],
+  "wall": 18127
+ },
+ {
+  "bot": "novice",
+  "m": "honeybee",
+  "h": "garden",
+  "s": 1,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 95,
+   "hp": 89,
+   "score": 6045,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 4,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 17545,
+  "timeLeft": 10,
+  "hp": 75,
+  "obj": [
+   {
+    "label": "Bring pollen to the nest",
+    "count": 20,
+    "target": 35,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    24,
+    52,
+    95,
+    126,
+    173,
+    208,
+    255
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 106,
+   "swoops": 106,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Bat strike": 200
+   },
+   "hits": {
+    "Bat strike": 10
+   },
+   "bumps": 6,
+   "hover": 1.2826666666666675,
+   "stuck": 5.307999999999991,
+   "dist": 3552.8011159960633,
+   "camClip": 4.533333333333327,
+   "noGoal": 0,
+   "lockAvail": 164.9639999999932,
+   "goalFar": 24.149333333333693,
+   "playT": 298.82666666668877,
+   "dodgesReal": 21
+  },
+  "curve": [
+   [
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    2
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    25
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    20
+   ]
+  ],
+  "wall": 37733
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "pond",
+  "s": 1,
+  "reason": "cap",
+  "twist": "dusk",
+  "banked": {
+   "winT": 97,
+   "hp": 100,
+   "score": 7660,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 35670,
+  "timeLeft": 16,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 14,
+    "target": 18,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    18,
+    62,
+    97,
+    113,
+    131,
+    154,
+    184,
+    217,
+    258
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 112,
+   "swoops": 112,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 258.4615384615385,
+    "Frog tongue": 175.38461538461533
+   },
+   "hits": {
+    "Swallow strike": 12,
+    "Frog tongue": 19
+   },
+   "bumps": 12,
+   "hover": 10.873333333333301,
+   "stuck": 9.131999999999977,
+   "dist": 3625.22059312062,
+   "camClip": 11.351999999999967,
+   "noGoal": 0,
+   "lockAvail": 199.24399999999105,
+   "goalFar": 0,
+   "playT": 291.25866666668225,
+   "dodgesReal": 8
+  },
+  "curve": [
+   [
+    4
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    1
+   ],
+   [
+    0
+   ],
+   [
+    8
+   ],
+   [
+    5
+   ],
+   [
+    2
+   ],
+   [
+    7
+   ],
+   [
+    3
+   ],
+   [
+    9
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ],
+   [
+    12
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    14
+   ]
+  ],
+  "wall": 20831
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "pond",
+  "s": 2,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 110,
+   "hp": 100,
+   "score": 8370,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 35920,
+  "timeLeft": 26,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 11,
+    "target": 18,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    14,
+    83,
+    110,
+    129,
+    145,
+    170,
+    202,
+    237,
+    269
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 99,
+   "swoops": 99,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Frog tongue": 110.76923076923073,
+    "Swallow strike": 215.38461538461542,
+    "Webbed": 9.23076923076923
+   },
+   "hits": {
+    "Frog tongue": 12,
+    "Swallow strike": 10,
+    "Webbed": 2
+   },
+   "bumps": 12,
+   "hover": 9.631999999999973,
+   "stuck": 7.63999999999998,
+   "dist": 3503.875017785505,
+   "camClip": 11.773333333333298,
+   "noGoal": 0,
+   "lockAvail": 182.93733333332537,
+   "goalFar": 0,
+   "playT": 292.5493333333502,
+   "dodgesReal": 6
+  },
+  "curve": [
+   [
+    6
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    2
+   ],
+   [
+    0
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ],
+   [
+    12
+   ],
+   [
+    5
+   ],
+   [
+    12
+   ],
+   [
+    4
+   ],
+   [
+    11
+   ]
+  ],
+  "wall": 15718
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "meadow",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "breezy",
+  "banked": {
+   "winT": 91,
+   "hp": 100,
+   "score": 6520,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 27500,
+  "timeLeft": 0,
+  "hp": 86,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 14,
+    "target": 16,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    17,
+    43,
+    91,
+    109,
+    133,
+    161,
+    199,
+    242
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 94,
+   "swoops": 94,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 4.615384615384615,
+    "Swallow strike": 193.84615384615387,
+    "Stung": 27.69230769230769
+   },
+   "hits": {
+    "Webbed": 1,
+    "Swallow strike": 9,
+    "Stung": 3
+   },
+   "bumps": 1,
+   "hover": 3.63733333333333,
+   "stuck": 5.653333333333323,
+   "dist": 4042.72250310554,
+   "camClip": 7.36666666666665,
+   "noGoal": 0,
+   "lockAvail": 175.30933333332595,
+   "goalFar": 0.3746666666666666,
+   "playT": 293.6253333333509,
+   "dodgesReal": 11
+  },
+  "curve": [
+   [
+    4
+   ],
+   [
+    3,
+    1
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    3
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    4
+   ],
+   [
+    10
+   ],
+   [
+    4
+   ],
+   [
+    10
+   ],
+   [
+    1
+   ],
+   [
+    5
+   ],
+   [
+    10
+   ],
+   [
+    2
+   ],
+   [
+    7
+   ],
+   [
+    11
+   ],
+   [
+    14
+   ]
+  ],
+  "wall": 14204
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "garden",
+  "s": 1,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 74,
+   "hp": 99,
+   "score": 7555,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 28285,
+  "timeLeft": 11,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 12,
+    "target": 16,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    19,
+    37,
+    74,
+    94,
+    129,
+    162,
+    206,
+    254
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 86,
+   "swoops": 86,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 13.846153846153845,
+    "Bat strike": 84.61538461538461
+   },
+   "hits": {
+    "Webbed": 3,
+    "Bat strike": 5
+   },
+   "bumps": 0,
+   "hover": 6.3573333333333215,
+   "stuck": 5.70799999999999,
+   "dist": 3937.917586973644,
+   "camClip": 4.437333333333328,
+   "noGoal": 0,
+   "lockAvail": 160.14533333332676,
+   "goalFar": 0,
+   "playT": 294.661333333352,
+   "dodgesReal": 18
+  },
+  "curve": [
+   [
+    4
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    5,
+    1
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    4
+   ],
+   [
+    1
+   ],
+   [
+    5
+   ],
+   [
+    0
+   ],
+   [
+    5
+   ],
+   [
+    10
+   ],
+   [
+    4
+   ],
+   [
+    8
+   ],
+   [
+    12
+   ],
+   [
+    3
+   ],
+   [
+    8
+   ],
+   [
+    12
+   ],
+   [
+    4
+   ],
+   [
+    7
+   ],
+   [
+    12
+   ]
+  ],
+  "wall": 12616
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "meadow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 96,
+   "hp": 100,
+   "score": 7890,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 5,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 30530,
+  "timeLeft": 10,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 15,
+    "target": 16,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    18,
+    64,
+    96,
+    119,
+    143,
+    172,
+    209,
+    253
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 95,
+   "swoops": 95,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 150.76923076923077,
+    "Stung": 27.69230769230769,
+    "Webbed": 4.615384615384615
+   },
+   "hits": {
+    "Swallow strike": 7,
+    "Stung": 3,
+    "Webbed": 1
+   },
+   "bumps": 1,
+   "hover": 5.274666666666658,
+   "stuck": 6.2533333333333205,
+   "dist": 3959.5829178849835,
+   "camClip": 5.799999999999989,
+   "noGoal": 0,
+   "lockAvail": 176.5853333333258,
+   "goalFar": 0,
+   "playT": 294.07466666668495,
+   "dodgesReal": 15
+  },
+  "curve": [
+   [
+    4
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    1
+   ],
+   [
+    5
+   ],
+   [
+    4
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ],
+   [
+    1
+   ],
+   [
+    6
+   ],
+   [
+    11
+   ],
+   [
+    3
+   ],
+   [
+    8
+   ],
+   [
+    13
+   ],
+   [
+    4
+   ],
+   [
+    10
+   ],
+   [
+    15
+   ]
+  ],
+  "wall": 31408
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "fair",
+  "banked": {
+   "winT": 240,
+   "hp": 100,
+   "score": 5910,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 2,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 13750,
+  "timeLeft": 34,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 9,
+    "target": 10,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    12,
+    119,
+    240,
+    254,
+    273
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 52,
+   "swoops": 52,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Stung": 9.23076923076923,
+    "Swallow strike": 236.92307692307696
+   },
+   "hits": {
+    "Stung": 1,
+    "Swallow strike": 11
+   },
+   "bumps": 9,
+   "hover": 4.353333333333328,
+   "stuck": 3.590666666666664,
+   "dist": 4897.919611566374,
+   "camClip": 8.251999999999978,
+   "noGoal": 0,
+   "lockAvail": 80.97599999999801,
+   "goalFar": 1.408000000000001,
+   "playT": 296.362666666687,
+   "dodgesReal": 5
+  },
+  "curve": [
+   [
+    0,
+    0
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    8,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    4
+   ],
+   [
+    5
+   ],
+   [
+    3
+   ],
+   [
+    9
+   ]
+  ],
+  "wall": 15260
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "garden",
+  "s": 2,
+  "reason": "overtime",
+  "twist": "breezy",
+  "banked": {
+   "winT": 69,
+   "hp": 99,
+   "score": 8235,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 34485,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 16,
+    "target": 16,
+    "doneAt": 239
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    18,
+    36,
+    69,
+    91,
+    115,
+    145,
+    180,
+    217,
+    268
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 93,
+   "swoops": 93,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Webbed": 23.076923076923073,
+    "Bat strike": 135.3846153846154
+   },
+   "hits": {
+    "Webbed": 5,
+    "Bat strike": 8
+   },
+   "bumps": 1,
+   "hover": 7.239999999999982,
+   "stuck": 5.849333333333321,
+   "dist": 3522.100976391932,
+   "camClip": 7.066666666666651,
+   "noGoal": 0,
+   "lockAvail": 174.03999999999266,
+   "goalFar": 0,
+   "playT": 268.60799999999756,
+   "dodgesReal": 23
+  },
+  "curve": [
+   [
+    5
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    7,
+    0
+   ],
+   [
+    0
+   ],
+   [
+    4
+   ],
+   [
+    3
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ],
+   [
+    0
+   ],
+   [
+    5
+   ],
+   [
+    10
+   ],
+   [
+    4
+   ],
+   [
+    9
+   ],
+   [
+    0
+   ],
+   [
+    6
+   ],
+   [
+    10
+   ],
+   [
+    14
+   ]
+  ],
+  "wall": 22918
+ },
+ {
+  "bot": "novice",
+  "m": "hawkmoth",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 74,
+   "hp": 100,
+   "score": 7250,
+   "medals": {
+    "untouched": false,
+    "swift": true,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 6,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 31980,
+  "timeLeft": 13,
+  "hp": 86,
+  "obj": [
+   {
+    "label": "Sip nectar from different flowers",
+    "count": 14,
+    "target": 18,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    17,
+    52,
+    74,
+    92,
+    117,
+    141,
+    177,
+    214,
+    256
+   ],
+   "jukes": 0,
+   "clean": 0,
+   "chains": 0,
+   "strikes": 119,
+   "swoops": 119,
+   "swoopHit": 0,
+   "swoopMiss": 0,
+   "catchSwoop": 0,
+   "catchTouch": 0,
+   "dmg": {
+    "Swallow strike": 344.6153846153847,
+    "Webbed": 18.46153846153846
+   },
+   "hits": {
+    "Swallow strike": 16,
+    "Webbed": 4
+   },
+   "bumps": 13,
+   "hover": 10.081333333333307,
+   "stuck": 5.482666666666658,
+   "dist": 3532.015146000071,
+   "camClip": 11.721333333333295,
+   "noGoal": 0,
+   "lockAvail": 179.5239999999922,
+   "goalFar": 0,
+   "playT": 292.72533333335036,
+   "dodgesReal": 8
+  },
+  "curve": [
+   [
+    3
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    4
+   ],
+   [
+    2
+   ],
+   [
+    8
+   ],
+   [
+    5
+   ],
+   [
+    3
+   ],
+   [
+    7
+   ],
+   [
+    11
+   ],
+   [
+    6
+   ],
+   [
+    11
+   ],
+   [
+    1
+   ],
+   [
+    9
+   ],
+   [
+    13
+   ],
+   [
+    2
+   ],
+   [
+    9
+   ],
+   [
+    14
+   ]
+  ],
+  "wall": 20964
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "pond",
+  "s": 1,
+  "reason": "time",
+  "twist": "rain",
+  "banked": null,
+  "waves": null,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 9099,
+  "timeLeft": 0,
+  "hp": 87,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 20,
+    "target": 20,
+    "doneAt": 91
+   },
+   {
+    "label": "Dodge the swallow's dives",
+    "count": 0,
+    "target": 1,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    31,
+    99
+   ],
+   "jukes": 0,
+   "clean": 5,
+   "chains": 19,
+   "strikes": 48,
+   "swoops": 48,
+   "swoopHit": 48,
+   "swoopMiss": 0,
+   "catchSwoop": 48,
+   "catchTouch": 5,
+   "dmg": {
+    "Frog tongue": 27.27272727272727,
+    "Swallow strike": 139.99999999999997,
+    "Webbed": 2.727272727272727
+   },
+   "hits": {
+    "Frog tongue": 5,
+    "Swallow strike": 11,
+    "Webbed": 1
+   },
+   "bumps": 55,
+   "hover": 1.1786666666666672,
+   "stuck": 1.8120000000000025,
+   "dist": 3730.047541008249,
+   "camClip": 0.3333333333333333,
+   "noGoal": 0,
+   "lockAvail": 79.84933333333132,
+   "goalFar": 0.3333333333333333,
+   "playT": 280.0306666666739,
+   "dodgesReal": 2
+  },
+  "curve": [
+   [
+    7
+   ],
+   [
+    11
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    19,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    20,
+    0
+   ]
+  ],
+  "wall": 16567
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "pond",
+  "s": 2,
+  "reason": "cap",
+  "twist": "dusk",
+  "banked": {
+   "winT": 188,
+   "hp": 100,
+   "score": 9627,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 21381,
+  "timeLeft": 37,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 11,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    29,
+    144,
+    188,
+    215,
+    239,
+    272
+   ],
+   "jukes": 0,
+   "clean": 16,
+   "chains": 31,
+   "strikes": 93,
+   "swoops": 93,
+   "swoopHit": 92,
+   "swoopMiss": 0,
+   "catchSwoop": 92,
+   "catchTouch": 16,
+   "dmg": {
+    "Frog tongue": 5.454545454545454,
+    "Webbed": 13.636363636363635,
+    "Swallow strike": 76.36363636363636
+   },
+   "hits": {
+    "Frog tongue": 1,
+    "Webbed": 5,
+    "Swallow strike": 6
+   },
+   "bumps": 105,
+   "hover": 1.9000000000000026,
+   "stuck": 1.4333333333333345,
+   "dist": 4636.100312767042,
+   "camClip": 0.9333333333333332,
+   "noGoal": 0,
+   "lockAvail": 127.00933333332914,
+   "goalFar": 0,
+   "playT": 290.496000000015,
+   "dodgesReal": 10
+  },
+  "curve": [
+   [
+    6
+   ],
+   [
+    11
+   ],
+   [
+    4,
+    0
+   ],
+   [
+    10,
+    0
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    5,
+    0
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    20,
+    1
+   ],
+   [
+    5
+   ],
+   [
+    0
+   ],
+   [
+    10
+   ],
+   [
+    2
+   ],
+   [
+    10
+   ],
+   [
+    1
+   ],
+   [
+    11
+   ]
+  ],
+  "wall": 13896
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "meadow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "breezy",
+  "banked": {
+   "winT": 142,
+   "hp": 100,
+   "score": 8774,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 20481,
+  "timeLeft": 10,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 17,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    50,
+    92,
+    142,
+    168,
+    208,
+    246
+   ],
+   "jukes": 0,
+   "clean": 22,
+   "chains": 8,
+   "strikes": 84,
+   "swoops": 84,
+   "swoopHit": 83,
+   "swoopMiss": 0,
+   "catchSwoop": 83,
+   "catchTouch": 22,
+   "dmg": {
+    "Webbed": 5.454545454545454,
+    "Stung": 5.454545454545454,
+    "Swallow strike": 12.727272727272727
+   },
+   "hits": {
+    "Webbed": 2,
+    "Stung": 1,
+    "Swallow strike": 1
+   },
+   "bumps": 79,
+   "hover": 0.9333333333333332,
+   "stuck": 0.6333333333333333,
+   "dist": 4745.80798411622,
+   "camClip": 0.3333333333333333,
+   "noGoal": 0,
+   "lockAvail": 123.42666666666246,
+   "goalFar": 6.5359999999999845,
+   "playT": 291.81600000001623,
+   "dodgesReal": 15
+  },
+  "curve": [
+   [
+    3
+   ],
+   [
+    6
+   ],
+   [
+    10
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    15,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    8
+   ],
+   [
+    2
+   ],
+   [
+    7
+   ],
+   [
+    13
+   ],
+   [
+    7
+   ],
+   [
+    14
+   ],
+   [
+    0
+   ],
+   [
+    4
+   ],
+   [
+    10
+   ],
+   [
+    17
+   ]
+  ],
+  "wall": 11744
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "garden",
+  "s": 2,
+  "reason": "cap",
+  "twist": "rain",
+  "banked": {
+   "winT": 128,
+   "hp": 100,
+   "score": 9655,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 21293,
+  "timeLeft": 13,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 10,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    49,
+    94,
+    128,
+    164,
+    199,
+    249
+   ],
+   "jukes": 0,
+   "clean": 25,
+   "chains": 10,
+   "strikes": 73,
+   "swoops": 73,
+   "swoopHit": 73,
+   "swoopMiss": 0,
+   "catchSwoop": 73,
+   "catchTouch": 25,
+   "dmg": {
+    "Webbed": 2.727272727272727
+   },
+   "hits": {
+    "Webbed": 1
+   },
+   "bumps": 60,
+   "hover": 0.6666666666666666,
+   "stuck": 0.6333333333333333,
+   "dist": 4357.580842416342,
+   "camClip": 0.8373333333333333,
+   "noGoal": 0,
+   "lockAvail": 111.01199999999639,
+   "goalFar": 23.41733333333366,
+   "playT": 292.37333333334993,
+   "dodgesReal": 26
+  },
+  "curve": [
+   [
+    5
+   ],
+   [
+    7
+   ],
+   [
+    11
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    7,
+    2
+   ],
+   [
+    10,
+    2
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    9,
+    1
+   ],
+   [
+    0
+   ],
+   [
+    5
+   ],
+   [
+    10
+   ],
+   [
+    5
+   ],
+   [
+    12
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    10
+   ],
+   [
+    16
+   ],
+   [
+    4
+   ],
+   [
+    7
+   ],
+   [
+    10
+   ]
+  ],
+  "wall": 12939
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "garden",
+  "s": 1,
+  "reason": "overtime",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 147,
+   "hp": 100,
+   "score": 9108,
+   "medals": {
+    "untouched": true,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 1,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 13221,
+  "timeLeft": 0,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 10,
+    "target": 14,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    53,
+    86,
+    147,
+    173
+   ],
+   "jukes": 0,
+   "clean": 10,
+   "chains": 8,
+   "strikes": 55,
+   "swoops": 55,
+   "swoopHit": 55,
+   "swoopMiss": 0,
+   "catchSwoop": 55,
+   "catchTouch": 10,
+   "dmg": {
+    "Bat strike": 10
+   },
+   "hits": {
+    "Bat strike": 1
+   },
+   "bumps": 43,
+   "hover": 0.19999999999999998,
+   "stuck": 0.3,
+   "dist": 3784.214583469549,
+   "camClip": 0.4666666666666666,
+   "noGoal": 0,
+   "lockAvail": 77.66399999999813,
+   "goalFar": 30.56533333333403,
+   "playT": 232.81066666665546,
+   "dodgesReal": 19
+  },
+  "curve": [
+   [
+    2
+   ],
+   [
+    5
+   ],
+   [
+    8
+   ],
+   [
+    3,
+    0
+   ],
+   [
+    9,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    9,
+    1
+   ],
+   [
+    13,
+    1
+   ],
+   [
+    19,
+    1
+   ],
+   [
+    4
+   ],
+   [
+    0
+   ],
+   [
+    3
+   ],
+   [
+    5
+   ],
+   [
+    8
+   ],
+   [
+    10
+   ]
+  ],
+  "wall": 17205
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "hedgerow",
+  "s": 1,
+  "reason": "cap",
+  "twist": "heatwave",
+  "banked": {
+   "winT": 184,
+   "hp": 91,
+   "score": 5660,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": false,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 15618,
+  "timeLeft": 33,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 5,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    42,
+    105,
+    184,
+    208,
+    233,
+    270
+   ],
+   "jukes": 0,
+   "clean": 16,
+   "chains": 10,
+   "strikes": 77,
+   "swoops": 77,
+   "swoopHit": 76,
+   "swoopMiss": 0,
+   "catchSwoop": 76,
+   "catchTouch": 16,
+   "dmg": {
+    "Webbed": 13.636363636363635,
+    "Swallow strike": 89.0909090909091
+   },
+   "hits": {
+    "Webbed": 5,
+    "Swallow strike": 7
+   },
+   "bumps": 49,
+   "hover": 1.9000000000000026,
+   "stuck": 1.3000000000000007,
+   "dist": 4736.464607302724,
+   "camClip": 1.3453333333333342,
+   "noGoal": 0,
+   "lockAvail": 108.71733333332996,
+   "goalFar": 11.514666666666633,
+   "playT": 292.19733333334983,
+   "dodgesReal": 9
+  },
+  "curve": [
+   [
+    4
+   ],
+   [
+    8
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    4,
+    1
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    10,
+    0
+   ],
+   [
+    12,
+    0
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    1
+   ],
+   [
+    10
+   ],
+   [
+    5
+   ],
+   [
+    14
+   ],
+   [
+    7
+   ],
+   [
+    13
+   ],
+   [
+    2
+   ],
+   [
+    5
+   ]
+  ],
+  "wall": 5074
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "meadow",
+  "s": 2,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 137,
+   "hp": 100,
+   "score": 10918,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 3,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 19849,
+  "timeLeft": 21,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 7,
+    "target": 20,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    22,
+    94,
+    137,
+    164,
+    209,
+    257
+   ],
+   "jukes": 0,
+   "clean": 15,
+   "chains": 19,
+   "strikes": 79,
+   "swoops": 79,
+   "swoopHit": 78,
+   "swoopMiss": 0,
+   "catchSwoop": 78,
+   "catchTouch": 15,
+   "dmg": {
+    "Swallow strike": 76.36363636363636,
+    "Stung": 27.27272727272727,
+    "Webbed": 2.727272727272727
+   },
+   "hits": {
+    "Swallow strike": 6,
+    "Stung": 5,
+    "Webbed": 1
+   },
+   "bumps": 75,
+   "hover": 0.4453333333333333,
+   "stuck": 0.47866666666666663,
+   "dist": 4546.10769871337,
+   "camClip": 0.9999999999999999,
+   "noGoal": 0,
+   "lockAvail": 112.23066666666301,
+   "goalFar": 10.657333333333305,
+   "playT": 291.61066666668216,
+   "dodgesReal": 15
+  },
+  "curve": [
+   [
+    9
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    9,
+    1
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    2
+   ],
+   [
+    9
+   ],
+   [
+    3
+   ],
+   [
+    7
+   ],
+   [
+    11
+   ],
+   [
+    1
+   ],
+   [
+    7
+   ],
+   [
+    13
+   ],
+   [
+    0
+   ],
+   [
+    4
+   ],
+   [
+    7
+   ]
+  ],
+  "wall": 27030
+ },
+ {
+  "bot": "novice",
+  "m": "ladybird",
+  "h": "hedgerow",
+  "s": 2,
+  "reason": "cap",
+  "twist": "swarm",
+  "banked": {
+   "winT": 92,
+   "hp": 100,
+   "score": 10557,
+   "medals": {
+    "untouched": false,
+    "swift": false,
+    "combo": true,
+    "freehand": false
+   }
+  },
+  "waves": 4,
+  "raceT": null,
+  "raceL": null,
+  "rings": null,
+  "rareSeen": 0,
+  "score": 25869,
+  "timeLeft": 21,
+  "hp": 100,
+  "obj": [
+   {
+    "label": "Eat aphids",
+    "count": 17,
+    "target": 23,
+    "doneAt": null
+   }
+  ],
+  "tele": {
+   "stageAt": [
+    27,
+    51,
+    92,
+    121,
+    161,
+    207,
+    257
+   ],
+   "jukes": 0,
+   "clean": 35,
+   "chains": 10,
+   "strikes": 90,
+   "swoops": 90,
+   "swoopHit": 90,
+   "swoopMiss": 0,
+   "catchSwoop": 90,
+   "catchTouch": 35,
+   "dmg": {
+    "Webbed": 10.909090909090908,
+    "Stung": 10.909090909090908,
+    "Swallow strike": 50.90909090909091
+   },
+   "hits": {
+    "Webbed": 4,
+    "Stung": 2,
+    "Swallow strike": 4
+   },
+   "bumps": 66,
+   "hover": 1.9666666666666694,
+   "stuck": 1.1333333333333335,
+   "dist": 4720.369673877546,
+   "camClip": 2.366666666666668,
+   "noGoal": 0,
+   "lockAvail": 114.50799999999637,
+   "goalFar": 7.806666666666648,
+   "playT": 289.7040000000148,
+   "dodgesReal": 18
+  },
+  "curve": [
+   [
+    5
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    1,
+    0
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    17,
+    1
+   ],
+   [
+    1
+   ],
+   [
+    6
+   ],
+   [
+    2
+   ],
+   [
+    9
+   ],
+   [
+    13
+   ],
+   [
+    3
+   ],
+   [
+    7
+   ],
+   [
+    13
+   ],
+   [
+    3
+   ],
+   [
+    10
+   ],
+   [
+    14
+   ],
+   [
+    0
+   ],
+   [
+    9
+   ],
+   [
+    17
+   ]
+  ],
+  "wall": 60666
+ }
+]

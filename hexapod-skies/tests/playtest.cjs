@@ -7,6 +7,7 @@ const MOUNTS = ['dragonfly', 'honeybee', 'hawkmoth', 'ladybird'];
 const HABS = ['pond', 'meadow', 'garden', 'hedgerow'];
 const BOTS = (process.env.BOTS || 'skilled,novice').split(',');
 const SEEDS = +(process.env.SEEDS || 1);
+const MODE = process.env.MODE || 'run';
 
 // Runs inside the page. A bot only touches `input` (like a mouse and keyboard would) and reads what a player can see.
 function installBot([kind, seed]) {
@@ -50,8 +51,10 @@ function installBot([kind, seed]) {
       if (skilled && P.groundGap < 1.5 && st.dPitch < 0 && !(o && o.type === 'skim')) st.dPitch = 0.15;
       // flowers / nest: slow down and hover inside; otherwise keep flying
       st.thrust = !(stopNear && d < 3.5);
+      // like a person: ease off to tighten the turn when the target is close and off to the side
+      if (Math.abs(wrap(st.dYaw - P.yaw)) > 0.75 && d < 30 && P.speed > 8) st.thrust = false;
       if (!skilled && stopNear && d < 6) st.thrust = rnd() < 0.3;
-      st.boost = skilled && d > 70 && P.stamina > 45 && !birdThreat;
+      st.boost = skilled && (o && o.type === 'ring' ? d > 18 && P.stamina > 15 : d > 70 && P.stamina > 45) && !birdThreat;
       st.dist = d;
     }
     if (inp.thrust && P.speed < 3 && P.swoopT <= 0) st.stuckT += dt; else st.stuckT = 0;
@@ -80,7 +83,7 @@ function installBot([kind, seed]) {
     await page.waitForFunction(() => window.__hexapod?.game.state === 'title', null, { timeout: 60000 });
     while (jobs.length) {
       const j = jobs.shift(); const t0 = Date.now();
-      await page.evaluate(([h, m]) => { const x = __hexapod; x.sel.hab = h; x.sel.mount = m; x.startRun(); x.game.headless = true; x.settings.sens = 1; }, [j.h, j.m]);
+      await page.evaluate(([h, m, mode]) => { const x = __hexapod; Object.assign(x.sel, { hab: h, mount: m, mode, risk: {}, twistOverride: null }); x.startRun(); x.game.headless = true; x.settings.sens = 1; }, [j.h, j.m, MODE]);
       await page.evaluate(installBot, [j.bot, j.s]);
       let state = 'play', snaps = [];
       for (let k = 0; k < 60 && state === 'play'; k++) {
@@ -88,11 +91,12 @@ function installBot([kind, seed]) {
         const snap = await page.evaluate(() => { const x = __hexapod; return { t: Math.round(x.HABITATS[x.sel.hab].time - x.game.time), obj: x.game.obj.map((o) => o.count), hp: Math.round(x.player.health), state: x.game.state }; });
         snaps.push(snap); state = snap.state;
       }
-      const res = await page.evaluate(() => { const x = __hexapod, g = x.game; return { reason: g.endReason || g.state, score: g.score, timeLeft: Math.round(g.time), hp: Math.round(x.player.health), obj: g.obj.map((o) => ({ label: o.label, count: o.count, target: o.target, doneAt: o.doneAt ?? null })), tele: g.tele }; });
+      if (state === 'play') await page.evaluate(() => __hexapod.endRun('cap'));
+      const res = await page.evaluate(() => { const x = __hexapod, g = x.game; return { reason: g.endReason || g.state, twist: x.run.twist, banked: g.banked ? { winT: Math.round(g.banked.winT), hp: Math.round(g.banked.hp), score: g.banked.score, medals: g.banked.medals } : null, waves: g.overtime ? g.overtime.cleared || 0 : null, raceT: x.run.race ? +x.run.race.t.toFixed(2) : null, raceL: x.run.race ? Math.round(x.run.race.L) : null, rings: x.run.race ? x.run.race.next : null, rareSeen: g.rareSeen, score: g.score, timeLeft: Math.round(g.time), hp: Math.round(x.player.health), obj: g.obj.map((o) => ({ label: o.label, count: o.count, target: o.target, doneAt: o.doneAt ?? null })), tele: g.tele }; });
       await page.evaluate(() => { __hexapod.game.bot = null; __hexapod.game.headless = false; });
       results.push({ ...j, ...res, curve: snaps.filter((_, i) => i % 3 === 2).map((s) => s.obj), wall: Date.now() - t0 });
       const r = results[results.length - 1];
-      console.log(`${j.bot.padEnd(7)} ${j.m.padEnd(9)} ${j.h.padEnd(8)} ${r.reason.padEnd(6)} ${r.obj.map((o) => `${o.count}/${o.target}${o.doneAt != null ? '@' + o.doneAt : ''}`).join(' ').padEnd(22)} hp ${String(r.hp).padStart(3)} score ${r.score}  (${(r.wall / 1000).toFixed(0)}s)`);
+      console.log(`${j.bot.padEnd(7)} ${j.m.padEnd(9)} ${j.h.padEnd(8)} ${String(r.twist).padEnd(8)} ${r.reason.padEnd(8)} ${r.raceT != null ? `race ${r.raceT}s rings ${r.rings}` : `win@${r.banked ? r.banked.winT : '-'} waves ${r.waves}`} score ${r.score}  (${(r.wall / 1000).toFixed(0)}s)`);
     }
     if (errs.length) console.log('PAGE ERRORS', errs.slice(0, 3));
   };
