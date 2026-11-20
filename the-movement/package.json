@@ -12,7 +12,8 @@
     "test:watch": "vitest",
     "balance": "tsx scripts/balance.ts",
     "e2e": "node e2e/playthrough.mjs",
-    "build-data": "node scripts/build-data.mjs"
+    "build-data": "node scripts/build-data.mjs",
+    "build-standalone": "node scripts/build-standalone.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.11.0",

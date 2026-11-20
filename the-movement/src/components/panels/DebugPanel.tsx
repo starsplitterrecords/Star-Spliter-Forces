@@ -14,7 +14,7 @@ export default function DebugPanel() {
   const [docId, setDocId] = useState(game.movement.doctrines[0].id);
   const target = selectedCity ?? game.movement.headquarters.cityId;
   const btn = (label: string, fn: () => void) => (
-    <button className="btn-ghost btn-sm" onClick={fn}>
+    <button key={label} className="btn-ghost btn-sm" onClick={fn}>
       {label}
     </button>
   );

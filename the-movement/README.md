@@ -25,6 +25,7 @@ npm run build && npm start      # http://localhost:3000
 | `npm run lint` | TypeScript type check |
 | `npm run e2e` | Full browser playthrough with Playwright, run against a running server (`BASE_URL=http://localhost:3000`). It saves screenshots to `e2e/screenshots/` |
 | `npm run balance -- [games] [hours]` | Automated balancing: plays many seeded games with different doctrines and modes and reports time-to-milestones |
+| `npm run build-standalone` | Builds `dist-standalone/the-movement.html`, the whole game in one file you can open directly in a browser (no server; AI narration off) |
 | `npm run build-data -- <geonamescache/data>` | Regenerates the bundled city/country dataset |
 
 **Debug mode:** open `/?debug=1` or enable it in Settings. This adds 20×/100× speed and a Debug panel: accelerate time, add followers, zealots and influence, raise resistance, spawn splinters, jump to phases 3–7, trigger any event, and edit a doctrine's derived attributes.

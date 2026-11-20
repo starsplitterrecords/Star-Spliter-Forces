@@ -22,7 +22,7 @@ export default function App() {
       if (params.get('debug') === '1') setGlobalSettings({ debug: true });
       setReady(true);
     });
-    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') void navigator.serviceWorker.register('/sw.js').catch(() => undefined);
+    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_STANDALONE) void navigator.serviceWorker.register('/sw.js').catch(() => undefined);
   }, [setGlobalSettings]);
 
   useEffect(() => {

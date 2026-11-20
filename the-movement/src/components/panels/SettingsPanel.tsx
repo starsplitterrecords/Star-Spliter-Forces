@@ -13,6 +13,10 @@ export function SettingsForm() {
   const bump = useStore((s) => s.bump);
   const [aiAvailable, setAiAvailable] = useState<boolean | null>(null);
   useEffect(() => {
+    if (process.env.NEXT_PUBLIC_STANDALONE) {
+      setAiAvailable(false);
+      return;
+    }
     fetch('/api/narrate')
       .then((r) => r.json())
       .then((j) => setAiAvailable(!!j.enabled))
