@@ -4,9 +4,22 @@
 
 An absurdist movement-building strategy / incremental simulation. Invent a ridiculous philosophy, recruit followers city by city across a real-world map, earn zealots, build outposts, face opposition, survive schisms and rival movements, and try to reshape an (entirely fictional) world around your founding customs, which come back again and again in the news, disputes, splinter groups and the ending.
 
+The game has two editions:
+
+- **Card Edition** (the main mode). You lead the movement one card at a time. Characters bring you decisions and you swipe left or right; nothing is set up in advance. The idea itself, your title, the headquarters, the spirit animal, the banner, what followers eat, wear, play and live in: each is decided on a card as it comes up, and each belief then keeps returning in later cards, disputes, breakaway factions and endings. Four meters (Reach, Fervor, Coffers, Standing) must stay away from both empty and full. When one hits an extreme your leader falls in one of nine endings, and the movement carries on under a successor. Your followers spread outward over the real world map from your headquarters, and you win at 95% of the world.
+- **Classic Strategy Edition**: the original map-based simulation described below.
+
 Everything runs in the browser. You don't need an account, an API key or a network connection after the first load.
 
 ---
+
+## Card Edition at a glance
+
+- `src/cards/engine.ts`: a pure, seeded engine with meters, the card draw (follow-ups and cooldowns), choices, world spread, leader endings, succession, victory, and save/load.
+- `src/cards/deck.ts`: about 60 card definitions. The founding sequence and the custom-belief cards each offer two doctrine themes taken from the 48-theme lexicon; the recurring cards are generated from your own doctrines (heresy, purism, shortage, measure, committee and so on). It also holds the follow-up chains, the leader endings and the victory endings.
+- `src/cards/characters.ts`: the recurring cast. `src/components/cards/Portrait.tsx` draws their portraits procedurally.
+- `src/components/cards/CardsGame.tsx`: the swipe UI. You can drag, tap or use the arrow keys. Dots under the meters show which ones a choice will move, but not in which direction. It also has the map, beliefs and history sheets.
+- Tests: `tests/cards.test.ts`. Browser check: `node e2e/cards.mjs`.
 
 ## Quick start
 

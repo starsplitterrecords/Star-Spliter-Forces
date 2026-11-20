@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { setMusic, setSound } from '@/lib/audio';
 import { loadGlobalSettings } from '@/lib/storage';
 import { useStore } from '@/store/game';
+import CardsGame from './cards/CardsGame';
 import GameScreen from './GameScreen';
 import MainMenu from './MainMenu';
 import Wizard from './Wizard';
@@ -39,6 +40,7 @@ export default function App() {
   if (!ready) return <div className="flex h-full items-center justify-center font-serif text-ink-300">Consulting the founding documents…</div>;
   if (screen === 'wizard') return <Wizard slot={slot} onCancel={() => setScreen('menu')} />;
   if (screen === 'game') return <GameScreen />;
+  if (screen === 'cards') return <CardsGame onExit={() => setScreen('menu')} />;
   return (
     <MainMenu
       onNew={(s) => {

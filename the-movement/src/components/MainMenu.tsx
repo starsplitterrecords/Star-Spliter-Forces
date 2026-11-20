@@ -8,6 +8,7 @@ import type { LegacyRecord } from '@/engine/types';
 import { play } from '@/lib/audio';
 import { SLOT_COUNT, type SlotMeta, deleteSlot, lastSlot, listSlots, loadLegacy, loadSlot, saveSlot } from '@/lib/storage';
 import { useStore } from '@/store/game';
+import { loadCardGame } from '@/lib/cardStorage';
 import { SettingsForm } from './panels/SettingsPanel';
 import { Modal } from './ui';
 
@@ -22,6 +23,10 @@ export default function MainMenu({ onNew }: { onNew: (slot: number) => void }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const { setGame, setScreen } = useStore();
 
+  const [hasCards, setHasCards] = useState(false);
+  useEffect(() => {
+    void loadCardGame().then((g) => setHasCards(!!g));
+  }, []);
   const refresh = async () => {
     setSlots(await listSlots());
     setLast(await lastSlot());
@@ -110,8 +115,13 @@ export default function MainMenu({ onNew }: { onNew: (slot: number) => void }) {
         <h1 className="mt-3 font-serif text-5xl font-black tracking-tight sm:text-6xl">THE MOVEMENT</h1>
         <p className="mt-3 font-serif italic text-ink-300">Plant a seed. Watch it grow. Spread it. Eventually the world will recognize your obvious brilliance. Muahahaha.</p>
         <div className="mt-8 flex flex-col gap-3">
+          <button className="btn-primary py-4 text-lg" onClick={() => setScreen('cards')}>
+            {hasCards ? 'Continue: Card Edition' : 'Play: Card Edition'}
+          </button>
+          <p className="-mt-1 text-xs text-ink-400">Lead the movement one swipe at a time. Every belief is decided as you play.</p>
+          <div className="label mt-4">Classic Strategy Edition</div>
           {last != null && slots[last] && (
-            <button className="btn-primary py-3 text-base" disabled={busy} onClick={() => open(last)}>
+            <button className="btn-ghost py-3 text-base" disabled={busy} onClick={() => open(last)}>
               {busy ? 'Calculating what happened while you were away…' : `Continue: ${slots[last]!.ideologyName}`}
             </button>
           )}

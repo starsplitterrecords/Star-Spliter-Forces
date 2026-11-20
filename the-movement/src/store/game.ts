@@ -6,7 +6,7 @@ import { DEFAULT_SETTINGS } from '@/engine/config';
 import type { GameEvent, GameState, Settings } from '@/engine/types';
 import { saveSlot } from '@/lib/storage';
 
-export type Screen = 'menu' | 'wizard' | 'game';
+export type Screen = 'menu' | 'wizard' | 'game' | 'cards';
 export type PanelId =
   | 'campaigns'
   | 'outposts'
