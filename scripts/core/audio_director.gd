@@ -34,9 +34,8 @@ var _last_beat: int = -1
 var _last_bar: int = -1
 
 var sfx_streams: Dictionary = {}
-var sfx_voices: Array[AudioStreamPlayer] = []
+var sfx_players: Dictionary = {} # sfx name -> AudioStreamPlayer
 var sfx_last_played: Dictionary = {}
-var _voice_cursor: int = 0
 
 var catalog_player: AudioStreamPlayer
 var catalog_track: String = ""
@@ -48,11 +47,16 @@ func _ready() -> void:
 	_ensure_bus("SFX")
 	_load_score()
 	_load_sfx()
-	for i in 14:
+	# One player per effect, stream assigned once. Reassigning streams on a
+	# shared pool re-registers audio samples in web builds every play, which
+	# grew browser memory without bound over long sessions.
+	for sfx_name: String in sfx_streams.keys():
 		var p: AudioStreamPlayer = AudioStreamPlayer.new()
 		p.bus = "SFX"
+		p.stream = sfx_streams[sfx_name]
+		p.max_polyphony = 4
 		add_child(p)
-		sfx_voices.append(p)
+		sfx_players[sfx_name] = p
 	catalog_player = AudioStreamPlayer.new()
 	catalog_player.bus = "Music"
 	add_child(catalog_player)
@@ -168,7 +172,11 @@ func _process(delta: float) -> void:
 			var target: float = float(layer_targets[layer])
 			var level: float = move_toward(float(layer_levels[layer]), target, FADE_SPEED * delta)
 			layer_levels[layer] = level
-			p.volume_db = linear_to_db(maxf(0.0001, level * duck)) if level > 0.001 else -80.0
+			var db: float = linear_to_db(maxf(0.0001, level * duck)) if level > 0.001 else -80.0
+			# Only touch the player when the level really moves (web audio
+			# crosses into JS on every volume change).
+			if absf(db - p.volume_db) > 0.05:
+				p.volume_db = db
 			if layer == master_layer:
 				continue
 			if level > 0.001 and not p.playing and not p.stream_paused:
@@ -196,11 +204,12 @@ func play_sfx(sfx_name: String, pitch: float = 1.0, volume_db: float = 0.0, min_
 	if now - float(sfx_last_played.get(sfx_name, -10.0)) < min_gap:
 		return
 	sfx_last_played[sfx_name] = now
-	var voice: AudioStreamPlayer = sfx_voices[_voice_cursor]
-	_voice_cursor = (_voice_cursor + 1) % sfx_voices.size()
-	voice.stream = sfx_streams[sfx_name]
-	voice.pitch_scale = clampf(pitch, 0.25, 4.0)
-	voice.volume_db = volume_db
+	var voice: AudioStreamPlayer = sfx_players[sfx_name]
+	var ps: float = clampf(pitch, 0.25, 4.0)
+	if not is_equal_approx(voice.pitch_scale, ps):
+		voice.pitch_scale = ps
+	if not is_equal_approx(voice.volume_db, volume_db):
+		voice.volume_db = volume_db
 	voice.play()
 
 ## Stingers duck the score briefly so the moment reads.
