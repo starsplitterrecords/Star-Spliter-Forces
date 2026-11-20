@@ -99,6 +99,11 @@ def main():
     styles = "".join(re.findall(r"<style>.*?</style>", head, re.S))
     fragment = "<title>Star Splitter Forces</title>\n" + styles + "\n" + body
     open(os.path.join(OUT, "index.html"), "w").write(fragment)
+    # Everything the page needs besides index.html. Publish exactly this map;
+    # chunk counts change as the game grows (a missing chunk = load failure).
+    files = {f: "export/web_artifact/" + f for f in sorted(os.listdir(OUT)) if f not in ("index.html", "publish_files.json")}
+    json.dump(files, open(os.path.join(OUT, "publish_files.json"), "w"), indent=1)
+    print("publish files:", ", ".join(files))
     print("written", OUT)
 
 if __name__ == "__main__":
