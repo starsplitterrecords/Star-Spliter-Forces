@@ -720,17 +720,12 @@ class HudCanvas:
 			else:
 				draw_circle(to_map.call(r["center"]), float(r["radius"]) * sc, Color(col, 0.16))
 		# Fog: unexplored cells are darker unless the survey chart is known.
+		# Baked into a tiny texture, rebuilt only when exploration changes,
+		# instead of ~700 rectangles every frame.
 		if not run.map_revealed:
-			var cell: float = 400.0
-			var x: float = -hs.x
-			while x < hs.x:
-				var y: float = -hs.y
-				while y < hs.y:
-					var key: Vector2i = Vector2i(floori(x / cell), floori(y / cell))
-					if not run.explored.has(key):
-						draw_rect(Rect2(to_map.call(Vector2(x, y)), Vector2(cell, cell) * sc + Vector2(0.6, 0.6)), Color(0.0, 0.0, 0.02, 0.55))
-					y += cell
-				x += cell
+			var fog: ImageTexture = _fog_texture(run, hs)
+			if fog:
+				draw_texture_rect(fog, Rect2(to_map.call(-hs), hs * 2.0 * sc), false)
 		for poi: Dictionary in run.pois.items:
 			if not bool(poi.known) or bool(poi.claimed) and String(poi.kind) != "resonator":
 				continue
@@ -755,6 +750,31 @@ class HudCanvas:
 		draw_colored_polygon(PackedVector2Array([pp + f * 6.0, pp + f.rotated(2.4) * 4.0, pp + f.rotated(-2.4) * 4.0]), Color.WHITE)
 		draw_rect(rect, Color(1, 1, 1, 0.2), false, 1.0)
 		draw_string(UiTheme.font("bold"), rect.position + Vector2(6, rect.size.y + 16), "MAP [M]", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(11), Color(1, 1, 1, 0.45))
+
+	var _fog_tex: ImageTexture
+	var _fog_count: int = -1
+
+	func _fog_texture(run: GameRun, hs: Vector2) -> ImageTexture:
+		if run.explored.size() == _fog_count and _fog_tex:
+			return _fog_tex
+		_fog_count = run.explored.size()
+		var cell: float = 400.0
+		var w: int = int(ceil(hs.x * 2.0 / cell))
+		var h: int = int(ceil(hs.y * 2.0 / cell))
+		var img: Image = Image.create(w, h, false, Image.FORMAT_RGBA8)
+		img.fill(Color(0.0, 0.0, 0.02, 0.55))
+		var ox: int = floori(-hs.x / cell)
+		var oy: int = floori(-hs.y / cell)
+		for key: Vector2i in run.explored.keys():
+			var px: int = key.x - ox
+			var py: int = key.y - oy
+			if px >= 0 and py >= 0 and px < w and py < h:
+				img.set_pixel(px, py, Color(0, 0, 0, 0))
+		if _fog_tex == null:
+			_fog_tex = ImageTexture.create_from_image(img)
+		else:
+			_fog_tex.set_image(img)
+		return _fog_tex
 
 	func _draw_compass(run: GameRun, vp: Vector2, font: Font) -> void:
 		var targets: Array = []

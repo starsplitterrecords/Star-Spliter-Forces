@@ -48,17 +48,18 @@ class Floor:
 				var a: Vector2 = r["a"]
 				var b: Vector2 = r["b"]
 				var rad: float = float(r["radius"])
-				for k in 4:
-					var w: float = rad * 2.0 * (1.0 - k * 0.12)
-					draw_line(a, b, Color(col.lerp(acc, 0.02 * k), 0.4), w)
-					draw_circle(a, w * 0.5, Color(col.lerp(acc, 0.02 * k), 0.4))
-					draw_circle(b, w * 0.5, Color(col.lerp(acc, 0.02 * k), 0.4))
+				# One opaque layer: stacked translucent floors cost a lot of
+				# fill rate on phone GPUs.
+				var fc: Color = col.lerp(acc, 0.03)
+				draw_line(a, b, fc, rad * 2.0)
+				draw_circle(a, rad, fc)
+				draw_circle(b, rad, fc)
 				draw_line(a, b, Color(acc, 0.05), 6.0)
 			else:
 				var c: Vector2 = r["center"]
 				var rad2: float = float(r["radius"])
-				for k in 5:
-					draw_circle(c, rad2 * (1.15 - k * 0.12), Color(col.lerp(acc, 0.018 * k), 0.32))
+				draw_circle(c, rad2 * 1.08, Color(col.lerp(Color(world.dest["background"]), 0.5)))
+				draw_circle(c, rad2 * 0.92, col.lerp(acc, 0.035))
 				draw_arc(c, rad2, 0.0, TAU, 96, Color(acc, 0.10), 3.0)
 		# World edge reads as a fading boundary, not a wall.
 		draw_rect(Rect2(-hs, hs * 2.0), Color(0.4, 0.6, 1.0, 0.25), false, 6.0)
@@ -76,7 +77,8 @@ class Stars:
 		for i in count:
 			var p: Vector2 = Vector2(r.randf() * tile, r.randf() * tile)
 			var s: float = size * r.randf_range(0.5, 1.4)
-			draw_circle(p, s, Color(tint, tint.a * r.randf_range(0.3, 1.0)))
+			# Squares batch into a handful of draw calls; circles do not.
+			draw_rect(Rect2(p - Vector2(s, s) * 0.5, Vector2(s, s)), Color(tint, tint.a * r.randf_range(0.3, 1.0)))
 
 func build(dest_id: String) -> void:
 	destination_id = dest_id
@@ -98,12 +100,14 @@ func build(dest_id: String) -> void:
 		obstacle_hash.insert(o, o.pos, float(o.r))
 
 func _add_starfield() -> void:
-	var specs: Array = [[0.15, 1024.0, 120, Color(0.6, 0.7, 1.0, 0.45), 11, 1.2], [0.4, 1400.0, 70, Color(0.85, 0.9, 1.0, 0.7), 23, 1.8]]
+	# Tiles larger than the screen need only one repeat each way (3x3 copies);
+	# more repeats multiplied the starfield's draw cost many times over.
+	var specs: Array = [[0.15, 2048.0, 360, Color(0.6, 0.7, 1.0, 0.45), 11, 1.2], [0.4, 2048.0, 150, Color(0.85, 0.9, 1.0, 0.7), 23, 1.8]]
 	for s: Array in specs:
 		var px: Parallax2D = Parallax2D.new()
 		px.scroll_scale = Vector2(float(s[0]), float(s[0]))
 		px.repeat_size = Vector2(float(s[1]), float(s[1]))
-		px.repeat_times = 4
+		px.repeat_times = 1
 		px.z_index = -60
 		var stars: Stars = Stars.new()
 		stars.tile = float(s[1])

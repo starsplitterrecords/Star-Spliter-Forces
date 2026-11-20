@@ -75,6 +75,7 @@ var beat_index: int = 0
 var climax_warned: bool = false
 var dreadnought_spawned: bool = false
 var pending_beats: Array[int] = []
+var step_usec: int = 0 # last simulation step cost (perf probes)
 var motes_collected: int = 0
 var second_wind_used: bool = false
 var player_veiled: float = 0.0
@@ -277,7 +278,9 @@ func _process(delta: float) -> void:
 	if hitstop_clock > 0.0:
 		hitstop_clock -= delta
 		delta *= 0.15
+	var t0: int = Time.get_ticks_usec()
 	step(minf(delta, 1.0 / 20.0))
+	step_usec = Time.get_ticks_usec() - t0
 	_update_camera(delta)
 
 func step(delta: float) -> void:

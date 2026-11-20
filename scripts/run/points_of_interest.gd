@@ -253,14 +253,26 @@ func signals_remaining() -> int:
 
 # ------------------------------------------------------------------ drawing
 
+## Only what is near the camera is drawn (beams reach ~320px above a site).
+func _view_rect() -> Rect2:
+	if run.camera == null:
+		return Rect2(-1e6, -1e6, 2e6, 2e6)
+	var size: Vector2 = get_viewport_rect().size / run.camera.zoom
+	return Rect2(run.camera.get_screen_center_position() - size * 0.5, size).grow(380.0)
+
 func _draw() -> void:
+	var view: Rect2 = _view_rect()
 	for b: Dictionary in run.world.beacons:
 		var bp: Vector2 = b.pos
+		if not view.has_point(bp):
+			continue
 		draw_circle(bp, float(b.r), Color(0.3, 1.0, 0.55, 0.05))
 		draw_arc(bp, float(b.r), anim * 0.5, anim * 0.5 + TAU, 40, Color(0.3, 1.0, 0.55, 0.25), 2.0)
 		draw_rect(Rect2(bp - Vector2(5, 14), Vector2(10, 28)), Color("1b3a2a"))
 		draw_circle(bp + Vector2(0, -16), 5.0 + sin(anim * 3.0 + bp.x) * 1.5, Color(0.4, 1.0, 0.6, 0.9))
 	for p: Dictionary in items:
+		if not view.has_point(p.pos):
+			continue
 		var vis: bool = is_visible_poi(p)
 		var pos: Vector2 = p.pos
 		var c: Color = p.color
