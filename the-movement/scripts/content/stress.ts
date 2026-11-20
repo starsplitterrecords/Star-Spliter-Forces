@@ -19,6 +19,7 @@ const fates: Record<string, Record<string, number>> = {};
 const decisionsToGrassroots: number[] = [];
 const followersAt: number[] = [];
 let backToBack = 0;
+const emptyDays: number[] = [];
 let totalDecisions = 0;
 const customsSets = new Set<string>();
 
@@ -29,8 +30,9 @@ for (let i = 0; i < runs; i++) {
   const rng = new Rng(77 + i);
   let lastCard = '';
   let grassAt = -1;
+  const track = { emptyDays: 0 };
   for (let d = 0; d < days && !s.ended; d += 5) {
-    playFor(s, 5, policy, rng);
+    playFor(s, 5, policy, rng, 0.3, track);
     if (grassAt < 0 && s.era !== 'founding') {
       grassAt = s.decisions;
       decisionsToGrassroots.push(s.decisions);
@@ -42,6 +44,7 @@ for (let i = 0; i < runs; i++) {
     lastCard = h.cardId;
   }
   totalDecisions += s.decisions;
+  emptyDays.push(track.emptyDays);
   const end = s.ended?.title ?? `alive (${s.era})`;
   endings[end] = (endings[end] ?? 0) + 1;
   names[s.movementName ?? '(unnamed)'] = (names[s.movementName ?? '(unnamed)'] ?? 0) + 1;
@@ -68,6 +71,7 @@ console.log('\n=== STRESS REPORT ===');
 console.log(`runs ${runs} × ${days} days · decisions/run ${(totalDecisions / runs).toFixed(0)}`);
 console.log(`coverage: ${LIBRARY.cards.length - never.length}/${LIBRARY.cards.length} cards seen; never seen: ${never.join(', ') || 'none'}`);
 console.log(`back-to-back repeats: ${backToBack}`);
+console.log(`empty-desk days per run (nobody needed you): median ${emptyDays.sort((a, b) => a - b)[Math.floor(emptyDays.length / 2)].toFixed(0)}, max ${Math.max(...emptyDays).toFixed(0)} of ${days}`);
 console.log(`decisions to grassroots era: median ${decisionsToGrassroots.sort((a, b) => a - b)[Math.floor(decisionsToGrassroots.length / 2)] ?? 'n/a'} (spec target 15–25 founding decisions)`);
 console.log(`final followers: min ${Math.min(...followersAt)}, median ${followersAt.sort((a, b) => a - b)[Math.floor(followersAt.length / 2)]}, max ${Math.max(...followersAt)}`);
 console.log(`idle 14 days after 60 active days: +${idleGain} followers (from ${f0})`);

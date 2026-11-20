@@ -103,6 +103,8 @@ The shipped game reads only the bundled JSON. Generative AI is a **development t
 
 ## 9. Known gaps (next steps)
 
+- **The desk goes quiet around decision 50 (≈500–700 followers).** Almost all slice cards are one-off. Once they are used, or locked out by earlier choices, only a few repeatable cards remain, and those have long cooldowns. Growth continues, but nobody asks you anything for 20–150 game days before the Regional threshold (now 1,500 followers). The stress report tracks this as *empty-desk days*, and the game says so honestly when the written story runs out. The fix is content: a layer of repeatable, templated "recurring situation" cards between the authored beats.
+
 - Succession: the movement continuing under a new leader.
 - The Regional era and beyond have no authored content yet; the slice stops at the threshold.
 - Rival movements founded by characters who leave (the `rolf_rival` and `agnes_faction` flags are set and waiting for content).

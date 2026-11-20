@@ -35,7 +35,7 @@ export function pickChoice(s: StoryState, policy: Policy, rng: Rng): 0 | 1 {
 }
 
 /** Play for `days` of game time: decide everything that arrives, call meetings when the desk is empty. */
-export function playFor(s: StoryState, days: number, policy: Policy, rng: Rng, idleShare = 0.3) {
+export function playFor(s: StoryState, days: number, policy: Policy, rng: Rng, idleShare = 0.3, track?: { emptyDays: number }) {
   const end = s.day + days;
   let guard = 0;
   while (s.day < end && !s.ended && guard++ < 20000) {
@@ -45,7 +45,12 @@ export function playFor(s: StoryState, days: number, policy: Policy, rng: Rng, i
       const i = pickChoice(s, policy, rng);
       const input = card.choices[i].input ? 'The Lentil Fellowship' : undefined;
       choose(s, inst.uid, i, input);
-    } else if (rng.chance(idleShare)) advanceDays(s, 1);
-    else callMeeting(s);
+    } else if (rng.chance(idleShare)) {
+      advanceDays(s, 1);
+      if (track && !currentCard(s)) track.emptyDays += 1;
+    } else {
+      const waited = callMeeting(s);
+      if (track && !currentCard(s)) track.emptyDays += waited;
+    }
   }
 }

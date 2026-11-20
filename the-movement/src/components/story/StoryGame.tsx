@@ -5,7 +5,7 @@ import { randomSeed } from '@/engine/rng';
 import { fmt } from '@/engine/text';
 import { play } from '@/lib/audio';
 import { clearStory, loadSavedStory, saveStory } from '@/lib/storyStorage';
-import { CARD_BY_ID, CHAR_BY_ID, callMeeting, charName, choose, currentCard, followers, growthPerRealHour, newStory, render, tickRealTime } from '@/story/engine';
+import { CARD_BY_ID, CHAR_BY_ID, TIME, callMeeting, deskStatus, charName, choose, currentCard, followers, growthPerRealHour, newStory, render, tickRealTime } from '@/story/engine';
 import { type ChoiceOutcome, type Gauge, GAUGES, type StoryState } from '@/story/types';
 import { useReducedMotion } from '../ui';
 import { Portrait, anonSpec } from './Portrait';
@@ -293,6 +293,13 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
         ) : (
           <div className="mt-10 max-w-md text-center">
             <p className="font-serif text-xl">Nobody needs you right now.</p>
+            {deskStatus(s).exhausted && (
+              <p className="mt-2 rounded-md border border-brass-500/50 bg-brass-400/10 p-3 text-sm text-brass-300">
+                {s.era === 'regional'
+                  ? 'You have reached the end of this vertical slice. The Regional era has not been written yet; the movement will keep growing on its own.'
+                  : `You have reached the edge of the written story for the ${s.era} era. The next chapter opens at ${fmt(TIME.regionalFollowers)} followers (you have ${fmt(f)}). The movement keeps growing while you wait.`}
+              </p>
+            )}
             <p className="mt-2 text-sm text-ink-300">{s.movementName ?? 'The group'} carries on without you: {fmt(f)} people, {growth >= 0 ? 'growing' : 'shrinking'} by about {fmt(Math.abs(growth))} an hour. Someone will turn up with a problem soon.</p>
             <button className="btn-primary mt-5 py-3" onClick={next}>Call a meeting</button>
           </div>

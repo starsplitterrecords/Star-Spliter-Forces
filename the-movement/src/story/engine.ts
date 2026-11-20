@@ -37,6 +37,7 @@ export const TIME = {
   cardsPerDay: { founding: 2.4, grassroots: 1.5, regional: 1.1, national: 1, international: 1, world: 1 } as Record<Era, number>,
   crisisWindowDays: 14,
   regionRadiusKm: 260,
+  regionalFollowers: 1500, // the slice's closing card unlocks here (or two towns at 85%)
   regionMaxCities: 40,
 };
 
@@ -600,7 +601,7 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
 
   // era progression safety nets (cards normally move eras)
   if (s.era === 'founding' && s.movementName && f2 >= 80) setEra(s, 'grassroots');
-  if (s.era === 'grassroots' && (f2 >= 4000 || s.region.filter((id) => s.cities[id].milestone).length >= 2) && s.flags.regional_ready == null) {
+  if (s.era === 'grassroots' && (f2 >= TIME.regionalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 2) && s.flags.regional_ready == null) {
     s.flags.regional_ready = s.day;
   }
 
@@ -960,4 +961,11 @@ export function assignOrganizer(s: StoryState, cityId: number, delta: 1 | -1): b
     s.organizersFree++;
   }
   return true;
+}
+
+/** Is anything left to ask the player in this era? Used to be honest when the written story runs out. */
+export function deskStatus(s: StoryState) {
+  const eligible = eligibleCards(s).length;
+  const scheduled = s.scheduled.length;
+  return { eligible, scheduled, exhausted: eligible === 0 && scheduled === 0 && s.inbox.length === 0 };
 }
