@@ -139,14 +139,31 @@ describe('simulation', () => {
     expect(s.ended?.text).not.toMatch(/\{/);
   });
 
-  it('characters remember: enough slights and they walk out', () => {
+  it('characters remember: enough slights bring an exit scene that quotes the grievance; a second time they just go', () => {
     const s = fresh(7);
     s.chars.dez.loyalty = -85;
     const inst = currentCard(s)!;
-    // apply a direct slight through effects
-    CARD_BY_ID.get(inst.cardId)!.choices[0].effects.loyalty = { ...(CARD_BY_ID.get(inst.cardId)!.choices[0].effects.loyalty ?? {}), dez: -10 };
+    const fx = CARD_BY_ID.get(inst.cardId)!.choices[0].effects;
+    fx.loyalty = { ...(fx.loyalty ?? {}), dez: -10 };
     choose(s, inst.uid, 0);
-    delete CARD_BY_ID.get(inst.cardId)!.choices[0].effects.loyalty!.dez;
+    delete fx.loyalty!.dez;
+    // not a silent walkout: Dez comes to you, quoting what you said
+    expect(s.chars.dez.present).toBe(true);
+    const exit = currentCard(s)!;
+    expect(exit.cardId).toBe('people.last_straw');
+    expect(exit.speaker).toBe('dez');
+    expect(exit.ctx.mQuote).toBeTruthy();
+    // persuade them to stay
+    choose(s, exit.uid, 0);
+    expect(s.chars.dez.present).toBe(true);
+    expect(s.flags.dez_persuaded).toBeDefined();
+    // the second time, there is no scene
+    s.chars.dez.loyalty = -85;
+    const next = currentCard(s) ?? (callMeeting(s), currentCard(s))!;
+    const fx2 = CARD_BY_ID.get(next.cardId)!.choices[0].effects;
+    fx2.loyalty = { ...(fx2.loyalty ?? {}), dez: -10 };
+    choose(s, next.uid, 0);
+    delete fx2.loyalty!.dez;
     expect(s.chars.dez.present).toBe(false);
     expect(s.flags.dez_left).toBeDefined();
   });

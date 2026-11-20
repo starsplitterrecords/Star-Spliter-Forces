@@ -16,7 +16,7 @@ export interface ValidationReport {
 
 const LIMITS = { text: 420, label: 80, reaction: 260, hint: 70, gauge: 40, loyalty: 30, group: 0.1 };
 const STATS = ['recruitment', 'retention', 'awareness', 'campaign', 'income', 'reputation'];
-const ENGINE_FLAGS = ['regional_ready', 'national_ready'];
+const ENGINE_FLAGS = ['regional_ready', 'national_ready', 'international_ready'];
 const CHAR_FLAG_SUFFIXES = ['_disgruntled', '_devoted', '_left', '_rival', '_retired'];
 const CMP = /^(>=|<=|>|<|=)?\s*-?[\d.]+$/;
 
@@ -77,6 +77,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
     }
   }
   followTargets.add('found.garage'); // the engine opens with it
+  for (const id of ['people.last_straw', 'people.last_straw_plain']) followTargets.add(id); // the engine stages exit scenes
 
   // pass 2: each card
   const texts = new Map<string, string>();
@@ -97,10 +98,14 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
         if (!AGENDAS.includes(sp.slice(7) as never)) errors.push(`${where}: unknown agenda speaker ${sp}`);
       } else if (sp.startsWith('champion:')) {
         if (!card.bind?.[sp.slice(9)]) errors.push(`${where}: champion speaker needs bind.${sp.slice(9)}`);
+      } else if (sp === 'departed') {
+        if (!card.bind?.departed && !card.followUpOnly) errors.push(`${where}: speaker “departed” needs bind.departed`);
       } else if (sp === 'recall') {
         if (!card.recall) errors.push(`${where}: speaker “recall” needs a recall query`);
       } else if (!sp.startsWith('role:') && !['any', 'unhappy', 'devoted'].includes(sp) && !charIds.has(sp)) errors.push(`${where}: unknown speaker ${sp}`);
     } else if (!card.speaker.anon?.name || !card.speaker.anon?.role) errors.push(`${where}: anonymous speaker needs name and role`);
+    for (const id of card.notSpeaker ?? []) if (!charIds.has(id)) errors.push(`${where}: notSpeaker ${id} unknown`);
+    if (typeof card.speaker === 'string' && card.notSpeaker?.includes(card.speaker)) errors.push(`${where}: its fixed speaker is excluded by notSpeaker`);
     // binds
     const ctxKeys = new Set<string>();
     for (const [k, b] of Object.entries(card.bind ?? {})) {
@@ -108,6 +113,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
       if (!BINDERS[name]) errors.push(`${where}: unknown binder ${b}`);
       if (name === 'emergent' && rest.length && !EMERGENT_ARGS.test(rest.join(':'))) errors.push(`${where}: bad emergent binder ${b}`);
       if (name === 'emergent') ['emergentBy', 'ctx.emergentBy'].forEach((x) => ctxKeys.add(x));
+      if (name === 'departed') ctxKeys.add('departedHabit');
       ctxKeys.add(k);
       ctxKeys.add(`ctx.${k}`);
       if (k.startsWith('practice')) ctxKeys.add(`${k}Noun`);
@@ -212,7 +218,8 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
       if ((e.stance || e.starterLoyalty) && !card.bind?.emergent) errors.push(`${w}: stance needs bind.emergent`);
       if (e.stance && !STANCES.includes(e.stance)) errors.push(`${w}: unknown stance ${e.stance}`);
       for (const id of e.join ?? []) if (!charIds.has(id)) errors.push(`${w}: join unknown character ${id}`);
-      for (const l of e.leave ?? []) if (!charIds.has(l.id)) errors.push(`${w}: leave unknown character ${l.id}`);
+      for (const l of e.leave ?? []) if (!charIds.has(l.id) && l.id !== 'speaker') errors.push(`${w}: leave unknown character ${l.id}`);
+      if (e.rejoin && !card.bind?.departed && card.speaker !== 'departed') errors.push(`${w}: rejoin needs a departed character`);
       for (const id of Object.keys(e.role ?? {})) if (!charIds.has(id)) errors.push(`${w}: role for unknown character ${id}`);
       for (const m of e.modifiers ?? []) {
         if (!STATS.includes(m.stat)) errors.push(`${w}: unknown modifier stat ${m.stat}`);

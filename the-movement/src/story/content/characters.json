@@ -18,7 +18,9 @@
    "glasses": true,
    "mood": "worried",
    "prop": "📋"
-  }
+  },
+  "exit": "I’ve laminated my resignation. It’s in the orange pouch. I’d like the pouch back eventually.",
+  "habit": "laminates the agenda"
  },
  {
   "id": "priya",
@@ -39,7 +41,9 @@
    "hat": "bun",
    "mood": "smile",
    "prop": "🍲"
-  }
+  },
+  "exit": "I’m taking the big pot. The small pot is yours. Make soup for someone, sometime.",
+  "habit": "brings soup nobody asked for"
  },
  {
   "id": "dez",
@@ -60,7 +64,9 @@
    "hat": "cap",
    "mood": "smug",
    "prop": "📣"
-  }
+  },
+  "exit": "I’m going to start something. Something small, at first. I’ve already told the radio.",
+  "habit": "makes promises the rest of us have to keep"
  },
  {
   "id": "gary",
@@ -81,7 +87,9 @@
    "mustache": true,
    "mood": "flat",
    "prop": "📖"
-  }
+  },
+  "exit": "I’m going to have a lie down. A long one. In the garage. It’s still my garage.",
+  "habit": "falls asleep in the second row"
  },
  {
   "id": "agnes",
@@ -103,7 +111,9 @@
    "hat": "bun",
    "mood": "flat",
    "prop": "📓"
-  }
+  },
+  "exit": "I am resigning. The minutes will show that I resigned with dignity. I am writing them now.",
+  "habit": "minutes the things nobody else was listening to"
  },
  {
   "id": "rolf",
@@ -125,7 +135,9 @@
    "glasses": true,
    "mood": "smug",
    "prop": "🧮"
-  }
+  },
+  "exit": "I’ve closed my ledger. The figures are in order. You are not.",
+  "habit": "finds money where nobody thought to look"
  },
  {
   "id": "ophelia",
@@ -146,7 +158,9 @@
    "hat": "none",
    "mood": "smug",
    "prop": "🗺️"
-  }
+  },
+  "exit": "The branches know where to find me. So, I suspect, will you.",
+  "habit": "grows a branch while nobody is watching"
  },
  {
   "id": "lionel",
@@ -168,6 +182,79 @@
    "glasses": true,
    "mood": "flat",
    "prop": "🗂️"
-  }
+  },
+  "exit": "I’m restructuring myself out of the organisation. It’s the most efficient decision I’ve ever made.",
+  "habit": "turns arguments into departments"
+ },
+ {
+  "id": "constance",
+  "name": "Constance Pryor",
+  "short": "Constance",
+  "role": "General Secretary",
+  "agenda": "comfort",
+  "ally": "organizers",
+  "bio": "Runs the national office. Has never met you in person and considers this a strength. Communicates exclusively by memo, each beginning “Further to my last memo”. Wants the movement to still exist in a hundred years, ideally unchanged.",
+  "competence": 88,
+  "startsPresent": false,
+  "startLoyalty": 10,
+  "startInfluence": 40,
+  "portrait": {
+   "skin": "#d9a77f",
+   "hair": "#2b2b2b",
+   "coat": "#5b4a6e",
+   "hat": "bun",
+   "glasses": true,
+   "mood": "flat",
+   "prop": "🗂️"
+  },
+  "exit": "Further to my last memo: this is my last memo.",
+  "habit": "sends a memo before anything can happen"
+ },
+ {
+  "id": "tobias",
+  "name": "Tobias Wren",
+  "short": "Tobias",
+  "role": "Leader of the Northern Region",
+  "agenda": "purity",
+  "ally": "traditionalists",
+  "bio": "Built the Northern Region from four people and a minibus. Runs it like a small, sincere principality. Believes the North does the customs properly and everyone else is doing an impression.",
+  "competence": 70,
+  "startsPresent": false,
+  "startLoyalty": 0,
+  "startInfluence": 45,
+  "portrait": {
+   "skin": "#f0c8a8",
+   "hair": "#8a6a3a",
+   "coat": "#2f5d50",
+   "hat": "cap",
+   "mustache": true,
+   "mood": "smug",
+   "prop": "📜"
+  },
+  "exit": "The North will remember this. The North remembers everything. It’s cold up there; there’s not much else to do.",
+  "habit": "issues edicts nobody asked him to issue"
+ },
+ {
+  "id": "juniper",
+  "name": "Juniper Hale",
+  "short": "Juniper",
+  "role": "Youth Officer",
+  "agenda": "joy",
+  "ally": "enthusiasts",
+  "bio": "Nineteen. Grew up in the movement; her parents met at a meeting. Knows every custom, every song and every founding story, and has corrected you about your own life more than once. Thinks of you the way people think of a statue.",
+  "competence": 64,
+  "startsPresent": false,
+  "startLoyalty": 35,
+  "startInfluence": 25,
+  "portrait": {
+   "skin": "#c68c62",
+   "hair": "#6a2e2e",
+   "coat": "#c0603a",
+   "hat": "beret",
+   "mood": "smile",
+   "prop": "📖"
+  },
+  "exit": "I’ll always love what this was. I just think I loved the version in the book.",
+  "habit": "knows the words to all the songs"
  }
 ]

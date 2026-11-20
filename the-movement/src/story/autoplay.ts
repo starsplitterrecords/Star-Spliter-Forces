@@ -76,3 +76,23 @@ export function playUntilDecision(s: StoryState, target: number, policy: Policy,
   }
   return false;
 }
+
+/** Playtesting: fast-forward a new game to the start of an era with a sensible, accommodating leader. */
+export function fastForwardTo(s: StoryState, era: StoryState['era'], seed = 1): boolean {
+  const order = ['founding', 'grassroots', 'regional', 'national', 'international', 'world'];
+  const rng = new Rng(seed);
+  let guard = 0;
+  while (order.indexOf(s.era) < order.indexOf(era) && !s.ended && guard++ < 6000) {
+    const inst = currentCard(s);
+    if (!inst) {
+      callMeeting(s);
+      continue;
+    }
+    const card = CARD_BY_ID.get(inst.cardId)!;
+    // steer away from the edges so the fast-forward doesn't end the leadership
+    const i = pickChoice(s, 'pleaser', rng);
+    choose(s, inst.uid, i, card.choices[i].input ? 'The Lentil Fellowship' : undefined);
+  }
+  s.chronicle.push({ day: s.day, text: `(Playtest: the story so far was played automatically, to reach the ${era} era.)` });
+  return s.era === era && !s.ended;
+}

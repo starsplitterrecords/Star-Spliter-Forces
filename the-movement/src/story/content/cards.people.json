@@ -1267,5 +1267,214 @@
     }
    }
   ]
+ },
+ {
+  "id": "people.last_straw",
+  "type": "character",
+  "speaker": "recall",
+  "shape": "callback",
+  "setting": "private",
+  "followUpOnly": true,
+  "topic": "leaving",
+  "recall": {
+   "kind": [
+    "overruled",
+    "passed_over",
+    "blamed",
+    "embarrassed",
+    "broken_promise"
+   ],
+   "unresolved": true
+  },
+  "text": "I’m done, {title}. It wasn’t one thing. Well. It was mostly one thing: {mAgo}, {mWhere}, “{mQuote}.” {exit}",
+  "choices": [
+   {
+    "label": "Stay. Tell me what it would take.",
+    "hint": "One last chance · Costly",
+    "reaction": "{speaker} stays. It isn’t fixed. But for now it isn’t broken either, and you both know which of you has to be careful.",
+    "effects": {
+     "speakerLoyalty": 45,
+     "gauges": {
+      "unity": 3,
+      "resources": -4,
+      "enthusiasm": -2
+     },
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "backed",
+       "weight": 3
+      }
+     ],
+     "recall": "resolve",
+     "flags": [
+      "{speakerId}_persuaded"
+     ]
+    }
+   },
+   {
+    "label": "I understand. Go well.",
+    "hint": "Let them go",
+    "reaction": "{speaker} goes. The {meeting} is quieter afterwards, in a way nobody mentions and everybody notices.",
+    "effects": {
+     "leave": [
+      {
+       "id": "speaker",
+       "as": "left"
+      }
+     ],
+     "gauges": {
+      "unity": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "people.last_straw_plain",
+  "type": "character",
+  "speaker": "any",
+  "shape": "schism",
+  "setting": "private",
+  "followUpOnly": true,
+  "topic": "leaving",
+  "text": "I’m done, {title}. It wasn’t one thing. It was a hundred small things, and you were there for all of them. {exit}",
+  "choices": [
+   {
+    "label": "Stay. Tell me what it would take.",
+    "hint": "One last chance · Costly",
+    "reaction": "{speaker} stays. It isn’t fixed. But for now it isn’t broken either, and you both know which of you has to be careful.",
+    "effects": {
+     "speakerLoyalty": 45,
+     "gauges": {
+      "unity": 3,
+      "resources": -4,
+      "enthusiasm": -2
+     },
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "backed",
+       "weight": 3
+      }
+     ],
+     "flags": [
+      "{speakerId}_persuaded"
+     ]
+    }
+   },
+   {
+    "label": "I understand. Go well.",
+    "hint": "Let them go",
+    "reaction": "{speaker} goes. The {meeting} is quieter afterwards, in a way nobody mentions and everybody notices.",
+    "effects": {
+     "leave": [
+      {
+       "id": "speaker",
+       "as": "left"
+      }
+     ],
+     "gauges": {
+      "unity": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "people.missing",
+  "type": "character",
+  "speaker": "any",
+  "shape": "callback",
+  "setting": "meeting",
+  "bind": {
+   "departed": "departed"
+  },
+  "topic": "someone who left",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "cooldown": 25,
+  "spacing": 15,
+  "weight": 1.4,
+  "text": "Nobody {departedHabit} anymore. Since {departed} left, the {meeting} finishes on time, and nobody can explain why that feels worse.",
+  "variants": [
+   "Nobody {departedHabit} anymore. Since {departed} left, the {meeting} finishes on time, and nobody can explain why that feels worse.",
+   "A newcomer asked who used to sit in that chair. I said {departed}. They asked what {departed} was like. I said: someone who {departedHabit}. Then I had to go outside for a bit.",
+   "I saw {departed} at the bus stop. We talked about the weather for nine minutes. Neither of us mentioned {movement}. It was the longest conversation about {movement} I’ve ever had."
+  ],
+  "choices": [
+   {
+    "label": "Reach out to {departed}.",
+    "hint": "Swallow some pride",
+    "reaction": "You write a short note. You rewrite it four times. The fifth version just says “The door’s open.”",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": -1
+     },
+     "followUps": [
+      {
+       "card": "people.return",
+       "delay": 3,
+       "maxDelay": 14
+      }
+     ]
+    }
+   },
+   {
+    "label": "We manage without them.",
+    "hint": "Move on",
+    "reaction": "You manage. Someone else starts doing it, slightly wrong, and that becomes the new way.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 2,
+      "unity": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "people.return",
+  "type": "character",
+  "speaker": "departed",
+  "shape": "callback",
+  "setting": "private",
+  "followUpOnly": true,
+  "topic": "coming back",
+  "text": "I got your note. I’m not saying I’d come back. I’m saying I walked past the {meeting} twice last week, and nobody was doing it properly.",
+  "choices": [
+   {
+    "label": "Come back. On your terms.",
+    "hint": "Reconcile · Old quarrels resurface",
+    "reaction": "{speaker} comes back. By the second {meeting} it’s as if they never left, which is both the good news and the bad news.",
+    "effects": {
+     "rejoin": true,
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": 3
+     },
+     "speakerInfluence": -10
+    }
+   },
+   {
+    "label": "It’s better this way.",
+    "hint": "Close the door",
+    "reaction": "{speaker} nods, as if they’d expected it, and gives you back the key they forgot to return.",
+    "effects": {
+     "gauges": {
+      "unity": -1
+     },
+     "flags": [
+      "{ctx.departed}_gone_for_good"
+     ]
+    }
+   }
+  ]
  }
 ]

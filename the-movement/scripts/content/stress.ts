@@ -2,7 +2,7 @@
 // Plays the vertical slice many times with different leadership styles and reports on
 // coverage, repetition, divergence between playthroughs, character fates and pacing.
 import { LIBRARY } from '../../src/story/library';
-import { followers, newStory, centralBelief, currentCard, advanceDays } from '../../src/story/engine';
+import { followers, newStory, centralBelief, currentCard, advanceDays, callbackCoverage, CARD_BY_ID } from '../../src/story/engine';
 import { playFor, type Policy } from '../../src/story/autoplay';
 import { Rng } from '../../src/engine/rng';
 import { CITIES } from '../../src/engine/geo';
@@ -25,6 +25,10 @@ const starvedDays: number[] = [];
 let totalDecisions = 0;
 const customsSets = new Set<string>();
 const seqs: SequenceReport[] = [];
+const coverage: { share: number; deep: number; n: number; d: number }[] = [];
+const echoedCards: Record<string, number> = {};
+const silentCards: Record<string, number> = {};
+const exits = { scenes: 0, stayed: 0, left: 0 };
 const chains = { delivered: 0, expired: 0, cancelled: 0 };
 const memoryStats = { written: 0, witnessed: 0, withOther: 0, recalled: 0 };
 const emergent = { started: 0, endorsed: 0, tolerated: 0, reformed: 0, condemned: 0, underground: 0, none: 0 };
@@ -64,6 +68,18 @@ for (let i = 0; i < runs; i++) {
   }
   followersAt.push(followers(s));
   seqs.push(sequenceReport(s));
+  const cov = callbackCoverage(s);
+  coverage.push({ share: cov.share, deep: callbackCoverage(s, 2).share, n: cov.consequential, d: cov.decisions });
+  for (const h of s.history) {
+    if (h.n == null || h.cardId.startsWith('crisis.')) continue;
+    if ((s.echoes[h.n] ?? 0) > 0) echoedCards[h.cardId] = (echoedCards[h.cardId] ?? 0) + 1;
+    else silentCards[h.cardId] = (silentCards[h.cardId] ?? 0) + 1;
+    if (h.cardId.startsWith('people.last_straw')) {
+      exits.scenes++;
+      if (h.choice === 0) exits.stayed++;
+      else exits.left++;
+    }
+  }
   for (const k of ['delivered', 'expired', 'cancelled'] as const) chains[k] += s.chains[k];
   memoryStats.written += s.nextMemoryId - 1;
   memoryStats.witnessed += s.memory.filter((m) => m.setting !== 'private').length;
@@ -103,6 +119,11 @@ console.log('movement names:', names);
 console.log('central beliefs:', beliefs);
 console.log(`distinct sets of customs across runs: ${customsSets.size}/${runs}`);
 console.log('character fates:', JSON.stringify(fates));
+const med = (a: number[]) => [...a].sort((x, y) => x - y)[Math.floor(a.length / 2)] ?? 0;
+console.log(`consequential callback coverage: median ${pct(med(coverage.map((c) => c.share)))} of decisions came back later (${med(coverage.map((c) => c.n))} of ${med(coverage.map((c) => c.d))}); ${pct(med(coverage.map((c) => c.deep)))} came back twice or more`);
+const silentShare = Object.entries(silentCards).map(([k, v]) => [k, v / (v + (echoedCards[k] ?? 0)), v + (echoedCards[k] ?? 0)] as const).filter(([, , n]) => n >= 8).sort((a, b) => b[1] - a[1]);
+console.log(`  decisions that never come back (≥8 samples, share forgotten): ${silentShare.filter(([, r]) => r >= 0.95).map(([k]) => k).slice(0, 14).join(', ') || 'none'}`);
+console.log(`exit scenes: ${exits.scenes} (${exits.stayed} persuaded to stay, ${exits.left} let go) across ${runs} runs`);
 console.log(`story chains: ${chains.delivered} delivered, ${chains.expired} expired (moment passed), ${chains.cancelled} cancelled (situation gone)`);
 console.log(`character memory per run: ${(memoryStats.written / runs).toFixed(0)} memories written, ${pct(memoryStats.witnessed / Math.max(1, memoryStats.written))} witnessed, ${pct(memoryStats.withOther / Math.max(1, memoryStats.written))} name a rival; ${(memoryStats.recalled / runs).toFixed(1)} called back`);
 console.log(`members’ customs per run: ${(emergent.started / runs).toFixed(1)} started; stances ${JSON.stringify(Object.fromEntries(Object.entries(emergent).filter(([k]) => k !== 'started').map(([k, v]) => [k, +(v / runs).toFixed(1)])))}`);

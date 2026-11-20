@@ -10,6 +10,7 @@ import { type ChoiceOutcome, type Gauge, GAUGES, type StoryState } from '@/story
 import { useReducedMotion } from '../ui';
 import { Portrait, anonSpec } from './Portrait';
 import { CustomsSheet, HistorySheet, MapSheet, PeopleSheet } from './StorySheets';
+import { fastForwardTo } from '@/story/autoplay';
 
 const GAUGE_INFO: Record<Gauge, { label: string; short: string; blurb: string }> = {
   enthusiasm: { label: 'Enthusiasm', short: 'Zeal', blurb: 'How intensely members participate and recruit.' },
@@ -17,7 +18,7 @@ const GAUGE_INFO: Record<Gauge, { label: string; short: string; blurb: string }>
   attention: { label: 'Public Attention', short: 'Attention', blurb: 'How much the outside world notices you.' },
   resources: { label: 'Resources', short: 'Means', blurb: 'How much organisational capacity you can sustain.' },
 };
-const ERA_LABEL: Record<string, string> = { founding: 'Founding Era', grassroots: 'Grassroots Era', regional: 'Regional Era', national: 'National Era' };
+const ERA_LABEL: Record<string, string> = { founding: 'Founding Era', grassroots: 'Grassroots Era', regional: 'Regional Era', national: 'National Era', international: 'International Era', world: 'World Era' };
 const HOMETOWNS = CITIES.filter((c) => c.pop > 80_000 && c.pop < 900_000);
 
 function GaugeBar({ g, value, preview, delta }: { g: Gauge; value: number; preview?: number; delta?: number }) {
@@ -46,6 +47,7 @@ type Sheet = 'people' | 'customs' | 'map' | 'history' | 'menu' | null;
 export default function StoryGame({ onExit }: { onExit: () => void }) {
   const [s, setS] = useState<StoryState | null>(null);
   const [loading, setLoading] = useState(true);
+  const [jump, setJump] = useState<'founding' | 'grassroots' | 'regional' | 'national'>('founding');
   const [, setV] = useState(0);
   const bump = () => setV((v) => v + 1);
   const [outcome, setOutcome] = useState<(ChoiceOutcome & { speaker: string }) | null>(null);
@@ -163,7 +165,16 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
             onSubmit={(e) => {
               e.preventDefault();
               const home = town ?? HOMETOWNS[Math.floor(Math.random() * HOMETOWNS.length)].id;
-              const ns = newStory(name || 'Jeff', home, randomSeed());
+              let ns = newStory(name || 'Jeff', home, randomSeed());
+              if (jump !== 'founding') {
+                // playtesting: try a few seeds until the automated leader survives to the chosen era
+                for (let t = 0; t < 6; t++) {
+                  if (fastForwardTo(ns, jump, t + 1)) break;
+                  ns = newStory(name || 'Jeff', home, randomSeed());
+                }
+                ns.lastRealTime = Date.now();
+                ns.report = undefined;
+              }
               void saveStory(ns);
               play('milestone');
               setS(ns);
@@ -189,6 +200,17 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
             <button className="btn-primary mt-2 py-3 text-base" type="submit">Open the garage</button>
             <button className="btn-ghost" type="button" onClick={onExit}>Back</button>
           </form>
+          <details className="mt-6 text-sm text-ink-400">
+            <summary className="cursor-pointer select-none">Playtesting</summary>
+            <p className="mt-2">Start later in the story. Earlier decisions are made automatically by an accommodating leader, so you can test a later era straight away.</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {(['founding', 'grassroots', 'regional', 'national'] as const).map((e) => (
+                <button key={e} type="button" className={`rounded-full border px-3 py-1 ${jump === e ? 'border-brass-400 text-brass-300' : 'border-ink-600'}`} onClick={() => setJump(e)} aria-pressed={jump === e}>
+                  {e === 'founding' ? 'From the beginning' : ERA_LABEL[e]}
+                </button>
+              ))}
+            </div>
+          </details>
         </div>
       </div>
     );
@@ -295,9 +317,9 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
             <p className="font-serif text-xl">Nobody needs you right now.</p>
             {deskStatus(s).exhausted && (
               <p className="mt-2 rounded-md border border-brass-500/50 bg-brass-400/10 p-3 text-sm text-brass-300">
-                {s.era === 'national' || s.era === 'international' || s.era === 'world'
-                  ? 'You have reached the end of the written story so far. The National era has not been written yet; the movement will keep growing on its own.'
-                  : `You have reached the edge of the written story for the ${s.era} era. The next chapter opens at ${fmt(s.era === 'regional' ? TIME.nationalFollowers : TIME.regionalFollowers)} followers (you have ${fmt(f)}). The movement keeps growing while you wait.`}
+                {s.era === 'international' || s.era === 'world'
+                  ? 'You have reached the end of the written story so far. The International era has not been written yet; the movement will keep growing on its own.'
+                  : `You have reached the edge of the written story for the ${s.era} era. The next chapter opens at ${fmt(s.era === 'national' ? TIME.internationalFollowers : s.era === 'regional' ? TIME.nationalFollowers : TIME.regionalFollowers)} followers (you have ${fmt(f)}). The movement keeps growing while you wait.`}
               </p>
             )}
             <p className="mt-2 text-sm text-ink-300">{s.movementName ?? 'The group'} carries on without you: {fmt(f)} people, {growth >= 0 ? 'growing' : 'shrinking'} by about {fmt(Math.abs(growth))} an hour. Someone will turn up with a problem soon.</p>

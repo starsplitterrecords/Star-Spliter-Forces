@@ -2,7 +2,7 @@
   "name": "the-movement",
   "version": "1.0.0",
   "private": true,
-  "description": "THE MOVEMENT — A Completely Reasonable Path to World Domination. An absurdist movement-building strategy simulation.",
+  "description": "THE MOVEMENT \u2014 A Completely Reasonable Path to World Domination. An absurdist movement-building strategy simulation.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -16,7 +16,8 @@
     "build-standalone": "node scripts/build-standalone.mjs",
     "content:validate": "tsx scripts/content/validate.ts",
     "content:stress": "tsx scripts/content/stress.ts",
-    "content:draft": "tsx scripts/content/draft-batch.ts"
+    "content:draft": "tsx scripts/content/draft-batch.ts",
+    "content:relationships": "tsx scripts/content/relationships.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.11.0",

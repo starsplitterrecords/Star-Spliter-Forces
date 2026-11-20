@@ -204,7 +204,21 @@ The stress test plays many games with five leadership styles and then reports:
    - **dominated choices**, where one option is no worse on any gauge and costs nobody more;
    - **no-cost cards**;
    - **agenda predictability**: for each character, how consistently serving their agenda moves each gauge the same way. Over 85% is flagged as a "button".
-4. **Counterfactual branches.** At set decisions the game is snapshotted. Both choices are played forward 25 days with identical luck. The resulting movements are compared by flags, customs (with stance), relationships, the cards that followed, name and belief, size and fate. **Inert choices**, where both options led to effectively the same story, are listed by card.
+4. **Consequential callback coverage.** Of the decisions in a playthrough, what share did a later event refer back to? The engine records which decision last wrote each flag and custom (`provenance`). A decision is credited (`echoes`) whenever a later card:
+   - requires a flag or custom that decision set;
+   - binds or quotes a custom that decision changed;
+   - recalls a memory that decision created;
+   - is a follow-up that decision planted;
+   - reopens it (`rec.reopen`);
+   - names what it established (the movement's name, the founder's title, the central belief, the meeting day, the uniform).
+
+   The stress test reports:
+   - the median share;
+   - the share that came back twice or more;
+   - cards whose decisions are almost never referred back to (a writing target).
+
+   The History sheet shows "↺ came back 3 times" beside each such decision.
+5. **Counterfactual branches.** At set decisions the game is snapshotted. Both choices are played forward 25 days with identical luck. The resulting movements are compared by flags, customs (with stance), relationships, the cards that followed, name and belief, size and fate. **Inert choices**, where both options led to effectively the same story, are listed by card.
 
 The validator (`npm run content:validate`) also warns when:
 
@@ -213,12 +227,58 @@ The validator (`npm run content:validate`) also warns when:
 - a recall card never quotes its memory;
 - a chain condition refers to a flag nothing sets.
 
-## 7. Open questions (next steps)
+## 7. Relationships: departures must be consequences
+
+`npm run content:relationships` plays 40 games and asks, for each character:
+
+- where their loyalty losses came from. *Direct* means it was their own request, or they were named. *Collateral* means their agenda was opposed in someone else's matter.
+- whether they were visibly unhappy before leaving, and for how many decisions;
+- whether they brought you a grievance first (a chance to reconcile);
+- whether they left in an on-screen exit scene;
+- which cards cost them most.
+
+**What it found, and what changed:**
+
+| Finding | Fix |
+|---|---|
+| Priya left in 8 of 40 games, 5 of them under the accommodating *pleaser* style. 45% of her losses were collateral, led by a recurring card that opposed joy whenever someone asked for a sign-in sheet. | Bystanders feel an opposed agenda at **half strength**: −3/+2, against −6/+4 for the person who asked. The recurring push cards no longer carry a built-in second agenda unless the clash is inherent to the situation. |
+| Loyalty only ever fell. Twenty small, reasonable slights added up to a walkout. | **Small slights heal** (+0.07 loyalty a day while negative), but not while a heavy (weight 2+), unresolved grievance from the last 45 days is still raw. |
+| 0% of departures happened on screen. A number crossed −90 and the character was gone. | **Exit scenes.** At −90 the character comes to you (`people.last_straw`) and quotes the moment that broke it: *"It was mostly one thing: three meetings ago, in front of everyone, 'Let Dez keep his 4 a.m. meetings.'"* You get one chance to persuade them to stay (+45 loyalty, at a cost); a second time, they simply go. |
+| Nobody missed anyone. | **Absence and return.** `people.missing` notices what the departed person always did (`habit`: Priya "brings soup nobody asked for"). Reaching out can lead to `people.return`, where they come back with old grievances settled. |
+
+**Now:**
+
+- departures happen in about 1 of 40 games for each original character;
+- every one followed visible unhappiness and a grievance the player could answer;
+- every one ended in an exit scene.
+
+**The remaining outlier is Ophelia.** She leaves as a rival in 7 of 23 games through her authored breakaway arc, often without being unhappy first. That departure is the direct result of a single decision, not of history. The arc's last card should require a history of being overruled, or should quote it. *Next relationship fix.*
+
+**Human playtest questions** that the tooling cannot answer:
+
+- Does the player understand *why* someone is unhappy before the exit scene?
+- Do they miss them?
+- Does reconciliation feel earned or cheap?
+
+## 8. Succession: architecture proposal (not yet built)
+
+Losing power should not end the game. The movement continues, with all its customs, disputes, institutions and characters, and the old founder may become a troublesome historical figure. The pieces below are designed to fit the existing state model. **Succession-specific stories are held until this is built.**
+
+1. **Separate the leader from the movement.** `StoryState.leader = { id, name, title, since, generation, origin: 'founder' | 'successor' }`, plus `leaders[]` as history. Tokens: `{title}` is always the *current* leader, and `{founder}` is always the original. `requires.leader` gates cards on generation or origin.
+2. **Endings become transitions.** The eight endings (Out-believed, The Split, Under Investigation and the rest) become the *cause* of a succession, not the end. The game ends only when the movement itself ends: membership collapses, a final schism happens, or the player chooses to retire and see an epilogue.
+3. **The succession scene.** Candidates are drawn from present characters with the highest influence, weighted by their ally group's share and their loyalty to the movement, plus "someone nobody expected" (an anonymous member). The player chooses whom to continue as, or, in a contested succession, the factions choose and the player inherits the result.
+4. **Memory carries a subject.** `MemoryRecord.about` is the leader the memory concerns. Characters keep their memories of the founder: grudges, debts, the time you were overruled at the meeting. A new leader starts with loyalty seeded from each character's *relationship with the new leader*, not with the old one. Old grudges against the founder become material: *"You sound exactly like {founder}."*
+5. **The founder becomes a character.** At succession, a dynamic character `founder` is added. Their agenda is the one the player served most often (a computed history), their influence comes from founders and traditionalists, and their speaker cards come from a dedicated set: the memoir, the interview, the unauthorised convention, the statue they want moved. They can be consulted, sidelined, honoured or exiled. Their exit line is written from their own history.
+6. **Institutions persist.** Customs, flags, chains, the national office, the North, the Charter and the Official History all carry over unchanged. A new leader's first cards are the institution testing them: Constance's memo, Tobias's edict, Juniper asking what the new leader thinks of the mountain.
+7. **Saves.** One migration: wrap the existing `founder` and `founderTitle` into `leader` generation 1.
+
+Batch 1 seeds this. The flags `founder_figurehead`, `emeritus_rumour`, `chair_elected`, `founder_vs_chair`, `official_history`, `founder_statue` and `founder_double` are set now, so succession stories can pay them off later.
+
+## 9. Open questions (next steps)
 
 - **Memory and selection.** Memories currently surface through recall cards. A natural next step is to let heavy, unresolved memories raise a character's chance of presenting `unhappy` or `devoted` cards, and colour their reactions.
 - **A topic registry.** At 1,000 cards, `topic` should come from a shared vocabulary (`the meeting day`, `the soup`, `money`) so callbacks can target themes, not just cards.
 - **Promises as obligations.** A `promise` memory could carry a due date and turn into `broken_promise` automatically when it lapses.
-- **Succession.** When a leader falls, memories should transfer: characters remember the old leader, judge the new one against them, and the new leader inherits the grudges.
 - **Content backlog from the novelty report.**
   - Dominated choices remain in older cards: `found.handshake`, `found.symbol`, `found.whales`, `found.husband`, `found.constable`, `grass.mugs`, `grass.principles`, `grass.sacred_day`, `grass.weekend`, `grass.whale_wednesday`, `rec.windfall`, `reg.reformers_lite`.
   - Choices that serve Dez's and Ophelia's expansion agenda are about 90% "+enthusiasm +attention −resources", which makes them predictable buttons.

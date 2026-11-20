@@ -97,14 +97,16 @@ Character memory, story chains with windows and cancellation, and customs the me
 ## 8. Vertical slice: what exists now
 
 - **8 characters.** Four at the start. Agnes and Rolf join in the grassroots era, Ophelia Stroud (ambitious branch leader, agenda expansion) and Lionel Fitch (consultant who speaks in departments, agenda order) in the regional era.
+- **11 characters.** The National era adds Constance Pryor (General Secretary), Tobias Wren (Leader of the Northern Region) and Juniper Hale (Youth Officer).
 - **40 customs:** 14 practices, and 14 customs the members can invent without asking.
-- **148 cards:**
+- **216 cards:**
   - 30 founding
   - 36 grassroots
   - 23 regional
+  - **64 national** (batch 1; see `WRITERS-ROOM.md`)
   - 21 recurring
-  - 21 character cards (memory callbacks, plus twists where characters are right for the wrong reasons)
-  - 9 doctrine cards (taking a stance on members' customs)
+  - 25 character cards (memory callbacks, twists, exit scenes, absence and return)
+  - 9 doctrine cards
   - 8 crises
 - **Arcs:**
   - Grassroots: Rolf's commercialisation, Agnes's minutes leading to a schism, Priya's burnout, the Knitting Circle feud, Kevin's memoir, soup in the boot of a car, and the Tuesday that becomes sacred.
@@ -118,7 +120,11 @@ Character memory, story chains with windows and cancellation, and customs the me
   - the press;
   - towns feeling forgotten, branch leaders, rival towns;
   - money running tight, or a windfall.
-- **Eras:** founding, grassroots and regional are written. The **National** era opens with a documentary card at 20,000 followers (or four towns at 85%), and the written story currently stops there. Entering the Regional era widens the map from 40 to about 110 towns.
+- **Eras:** founding, grassroots, regional and **national** are written.
+  - The National era opens with the documentary card at 20,000 followers and widens the map to about 240 towns across the country.
+  - It closes with a letter from abroad at 250,000 followers (or ten towns at 85%), which opens the **International** era, where the written story currently stops.
+  - Entering the Regional era widens the map from 40 to about 110 towns.
+- **Playtesting:** the start screen has a *Playtesting* option that fast-forwards a new game to the start of a later era. Earlier decisions are made by an accommodating automated leader.
 - **Continuous idle simulation** with bounded offline progress and a report when you return.
 
 **Stress-test results** (15 runs × 300 days, five leadership styles):
@@ -126,6 +132,8 @@ Character memory, story chains with windows and cancellation, and customs the me
 - **Starved days** (nothing left that could be drawn, the stall reported in playtest) are a median of 0 and a maximum of 7. Before the recurring layer it was about 196 of 200.
 - **Quiet days** (nobody at the door, including ordinary gaps between arrivals that *Call a meeting* skips) run 25–45 of 300, mostly in the Regional era.
 - 136 of 148 cards were seen, with 0 back-to-back repeats.
+- **Consequential callback coverage:** 23% before the National batch and 26% after, in 600-day runs (about 60 decisions per playthrough that later events refer back to). See `STORY-STATE.md` §6.
+- **Relationships:** see `STORY-STATE.md` §7 (`npm run content:relationships`).
 - **Character memory:** each run writes about 170 memories. About a third were witnessed and about 40% name a rival; about 18 get called back.
 - **Story chains:** 101 delivered, 1 expired and 6 cancelled across 15 runs.
 - **Members' customs:** about 5 per run. The automated players mostly reform or condemn them; tolerating is rare.
@@ -144,8 +152,8 @@ Character memory, story chains with windows and cancellation, and customs the me
 
 ## 9. Known gaps (next steps)
 
-- **The National era** is not written; the story ends at the documentary. Players are told so on screen.
-- **Succession:** the movement continuing under a new leader.
+- **The International and World eras** are not written; the story ends at the letter from abroad. Players are told so on screen.
+- **Succession:** the movement continuing under a new leader. The architecture is proposed in `STORY-STATE.md` §8.
 - **Quiet stretches in the Regional era** could be cut further with more regional recurring cards.
 - **Loyalty patterns from automated play:**
   - Priya leaves in about 40% of runs, because many choices oppose her joy agenda;

@@ -37,6 +37,8 @@ export interface CharacterDef {
   agenda: Agenda;
   ally: Group; // member group they draw support from
   bio: string;
+  exit: string; // first-person goodbye, used in their exit scene ({exit})
+  habit: string; // what they always do, in the third person ("brings soup nobody asked for"): missed when they go ({habit}, {departedHabit})
   competence: number; // 0..100
   startsPresent: boolean;
   startLoyalty: number;
@@ -146,6 +148,7 @@ export interface ScheduledCard {
   requires?: Requires;
   cancelIf?: Requires;
   from?: string; // the card that planted it
+  fromDecision?: number;
 }
 
 export type Stance = 'none' | 'endorsed' | 'tolerated' | 'reformed' | 'condemned';
@@ -186,7 +189,8 @@ export interface Effects {
   reveal?: number; // discover N nearby cities
   campaign?: { city: 'ctx' | 'next'; organizers: number };
   join?: string[]; // characters who join
-  leave?: { id: string; as: 'left' | 'retired' | 'rival' }[];
+  leave?: { id: string; as: 'left' | 'retired' | 'rival' }[]; // id may be 'speaker'
+  rejoin?: boolean; // the character bound as ctx.departed comes back
   role?: Record<string, string>;
   era?: Era;
   followUps?: FollowUp[];
@@ -219,6 +223,7 @@ export interface CardDef {
   id: string;
   type: 'character' | 'organization' | 'doctrine' | 'regional' | 'follower' | 'rivalry' | 'scandal' | 'plot' | 'crisis';
   speaker: SpeakerRef; // 'martin', 'agenda:expansion', 'role:treasurer', or an anonymous person
+  notSpeaker?: string[]; // characters who must not present it (the card is about them)
   requires?: Requires;
   bind?: Record<string, string>; // ctx binders: { city: 'nextCity', item1: 'attire' }
   text: string;
@@ -317,6 +322,8 @@ export interface Modifier {
 }
 
 export interface Resolved {
+  n?: number; // decision number
+  echoes?: number; // how many later events referred back to this decision (consequential callback coverage)
   cardId: string;
   day: number;
   choice: 0 | 1;
@@ -347,6 +354,9 @@ export interface StoryState {
   inbox: CardInstance[];
   scheduled: ScheduledCard[];
   memory: MemoryRecord[]; // what characters remember about you, newest last
+  // which decision last wrote each piece of state, so later cards that read it can credit that decision
+  provenance: { flags: Record<string, number>; customs: Record<string, number> };
+  echoes: Record<number, number>; // decision number -> times a later event referred back to it
   nextMemoryId: number;
   chains: { delivered: number; expired: number; cancelled: number; log: { card: string; outcome: 'expired' | 'cancelled'; day: number }[] };
   lastSeen: Record<string, number>; // card id -> day

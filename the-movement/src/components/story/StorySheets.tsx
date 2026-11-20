@@ -196,6 +196,11 @@ export function HistorySheet({ s }: { s: StoryState }) {
           {[...s.history].reverse().slice(0, 25).map((h, i) => (
             <li key={i}>
               <span className="text-ink-500">Day {Math.floor(h.day) + 1} · {h.speaker === 'anon' ? 'a member' : charName(s, h.speaker)}:</span> {h.summary}
+              {h.n != null && (s.echoes?.[h.n] ?? 0) > 0 && (
+                <span className="ml-2 whitespace-nowrap text-[11px] text-brass-300" title="Later events came back to this decision">
+                  ↺ came back {s.echoes[h.n] === 1 ? 'once' : `${s.echoes[h.n]} times`}
+                </span>
+              )}
             </li>
           ))}
         </ul>

@@ -1,0 +1,3962 @@
+[
+ {
+  "id": "nat.constance_arrives",
+  "type": "character",
+  "speaker": "constance",
+  "shape": "procedure",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "constance": {
+     "present": false
+    }
+   }
+  },
+  "once": true,
+  "priority": 3,
+  "weight": 3,
+  "topic": "the national office",
+  "text": "Further to my last memo, which you will not have received, as this is the first: I am Constance Pryor, General Secretary. The national office has run for six weeks without anyone noticing. I would like that to continue.",
+  "choices": [
+   {
+    "label": "Welcome. Carry on.",
+    "hint": "An office runs itself",
+    "reaction": "Constance sends a memo confirming receipt of your welcome. It is copied to eleven people you have never heard of.",
+    "effects": {
+     "join": [
+      "constance"
+     ],
+     "serves": [
+      "comfort"
+     ],
+     "gauges": {
+      "unity": 6,
+      "resources": 4,
+      "enthusiasm": -3
+     },
+     "flags": [
+      "national_office"
+     ]
+    }
+   },
+   {
+    "label": "Who appointed you?",
+    "hint": "Assert yourself",
+    "reaction": "Constance replies that she appointed herself, by memo, and encloses the memo. It is signed by you. You do not remember signing it.",
+    "effects": {
+     "join": [
+      "constance"
+     ],
+     "gauges": {
+      "unity": -3,
+      "attention": 2
+     },
+     "loyalty": {
+      "constance": -8
+     },
+     "flags": [
+      "national_office",
+      "office_questioned"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.tobias_arrives",
+  "type": "character",
+  "speaker": "tobias",
+  "shape": "feud",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "tobias": {
+     "present": false
+    }
+   },
+   "decisions": ">=3"
+  },
+  "once": true,
+  "priority": 2,
+  "weight": 2.5,
+  "topic": "the North",
+  "text": "Tobias Wren, Northern Region. I’ve come down to say, respectfully, that the North has been doing {belief} properly for some time, and we’d appreciate the rest of you doing it properly too. I’ve brought a pamphlet. I brought it in the Northern Fleet. That’s the minibus.",
+  "choices": [
+   {
+    "label": "The North is welcome on the national committee.",
+    "hint": "Bring him in · Traditionalists rise",
+    "reaction": "Tobias accepts with the air of a man accepting an apology. The minibus is parked across three spaces for the duration.",
+    "effects": {
+     "join": [
+      "tobias"
+     ],
+     "serves": [
+      "purity"
+     ],
+     "groups": {
+      "traditionalists": 0.03
+     },
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": 2
+     }
+    }
+   },
+   {
+    "label": "We all do it properly. Just differently.",
+    "hint": "Diplomacy · Tobias bristles",
+    "reaction": "Tobias joins anyway, for the sake of the North, and takes notes on everything you do differently.",
+    "effects": {
+     "join": [
+      "tobias"
+     ],
+     "serves": [
+      "-purity"
+     ],
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": 3
+     },
+     "loyalty": {
+      "tobias": -10
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.juniper_arrives",
+  "type": "character",
+  "speaker": "juniper",
+  "shape": "callback",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "juniper": {
+     "present": false
+    }
+   },
+   "decisions": ">=6"
+  },
+  "once": true,
+  "priority": 2,
+  "weight": 2.5,
+  "topic": "the tote bag",
+  "text": "Hi! Sorry. I’m Juniper. My parents met at a {meeting}. I’ve been coming since I was four. I know all the songs. Can I just say: the story of you in the garage, with the folding chairs? I have it on a tote bag.",
+  "choices": [
+   {
+    "label": "Make her Youth Officer.",
+    "hint": "Enthusiasm · A believer at the table",
+    "reaction": "Juniper cries, briefly and efficiently, then produces a five-year plan for the youth wing. It has illustrations.",
+    "effects": {
+     "join": [
+      "juniper"
+     ],
+     "role": {
+      "juniper": "Youth Officer"
+     },
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 6
+     },
+     "groups": {
+      "enthusiasts": 0.02
+     }
+    }
+   },
+   {
+    "label": "It wasn’t quite like the tote bag.",
+    "hint": "Honesty · She doesn’t believe you",
+    "reaction": "Juniper laughs warmly, as if you’ve made a joke, and joins the national committee. The tote bag is reordered in a larger size.",
+    "effects": {
+     "join": [
+      "juniper"
+     ],
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": 2
+     },
+     "remember": [
+      {
+       "who": "juniper",
+       "kind": "embarrassed",
+       "weight": 1
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.convention_called",
+  "type": "organization",
+  "speaker": "constance",
+  "shape": "logistics",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "national_office"
+   ],
+   "chars": {
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 2,
+  "topic": "the Convention",
+  "text": "Further to my last memo: it is time for the first National Convention. The arena seats eight thousand and has a sponsor. Alternatively, a faction proposes we hold it in Gary’s garage, in shifts, for authenticity. That would take nine days.",
+  "choices": [
+   {
+    "label": "The arena.",
+    "hint": "Scale · Feels corporate",
+    "reaction": "The arena is booked. A sponsor’s logo appears on the lanyards, slightly larger than {movement}’s.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "resources": -8,
+      "unity": -2
+     },
+     "flags": [
+      "convention_arena"
+     ],
+     "followUps": [
+      {
+       "card": "nat.convention_motion",
+       "delay": 3,
+       "maxDelay": 10
+      }
+     ]
+    }
+   },
+   {
+    "label": "Gary’s garage, in shifts.",
+    "hint": "Authenticity · Exhausting",
+    "reaction": "The convention runs for nine days in shifts. The last shift is attended mainly by people who have forgotten why they came, and they have the best time of anyone.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 6,
+      "unity": 4,
+      "resources": -3,
+      "attention": -2
+     },
+     "flags": [
+      "convention_shifts"
+     ],
+     "groups": {
+      "traditionalists": 0.02
+     },
+     "followUps": [
+      {
+       "card": "nat.convention_motion",
+       "delay": 3,
+       "maxDelay": 10
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.convention_motion",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "procedure",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "topic": "Motion fourteen",
+  "text": "Motion fourteen, from the floor: that {movement} move its main {meeting} from {day} to whatever day each region prefers. Four hours of debate so far. Two delegates have fainted, one from heat and one from procedure.",
+  "choices": [
+   {
+    "label": "Keep {day}. Everywhere.",
+    "hint": "Unity of practice · The regions grumble",
+    "reaction": "Motion fourteen fails. A delegate stands on a chair and shouts “{day} forever”, which becomes a chant, then a badge.",
+    "effects": {
+     "serves": [
+      "purity",
+      "-expansion"
+     ],
+     "gauges": {
+      "unity": 6,
+      "enthusiasm": 3
+     },
+     "groups": {
+      "traditionalists": 0.02
+     },
+     "custom": [
+      {
+       "id": "weekly_meeting",
+       "prominence": 1
+      }
+     ],
+     "followUps": [
+      {
+       "card": "nat.convention_floor",
+       "delay": 1,
+       "maxDelay": 5
+      }
+     ]
+    }
+   },
+   {
+    "label": "Let each region choose.",
+    "hint": "Local freedom · The centre weakens",
+    "reaction": "Motion fourteen passes. Within a month there are meetings on every day of the week, and a small but devoted group that meets on all of them.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-purity"
+     ],
+     "gauges": {
+      "unity": -6,
+      "enthusiasm": 4
+     },
+     "flags": [
+      "regions_choose_day"
+     ],
+     "followUps": [
+      {
+       "card": "nat.convention_floor",
+       "delay": 1,
+       "maxDelay": 5
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.convention_floor",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "bind": {
+   "practice": "practiceAny"
+  },
+  "topic": "the vote that never was",
+  "text": "The delegates won’t leave. They say the convention cannot close until “{practice}” gets its own vote. The venue wants us out by midnight. It is eleven forty. Someone has started a song.",
+  "choices": [
+   {
+    "label": "Hold the vote. Now.",
+    "hint": "Give them their moment",
+    "reaction": "The vote is unanimous and takes ninety seconds. The celebration takes four hours. The venue sends an invoice titled “Regarding the Song”.",
+    "effects": {
+     "custom": [
+      {
+       "id": "{ctx.practice}",
+       "prominence": 2
+      }
+     ],
+     "gauges": {
+      "enthusiasm": 8,
+      "resources": -6,
+      "unity": 3
+     },
+     "followUps": [
+      {
+       "card": "nat.convention_annual",
+       "delay": 20,
+       "maxDelay": 60
+      }
+     ]
+    }
+   },
+   {
+    "label": "Close the convention.",
+    "hint": "Order · They feel cheated",
+    "reaction": "You close the convention. The delegates sing on the pavement until two, which the local paper calls “the real convention”.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": -5,
+      "attention": 5
+     },
+     "followUps": [
+      {
+       "card": "nat.convention_annual",
+       "delay": 20,
+       "maxDelay": 60
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.convention_annual",
+  "type": "organization",
+  "speaker": "agenda:joy",
+  "shape": "escalation",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "topic": "the Convention",
+  "text": "Everyone’s asking when the next Convention is. Some people want it annual. Some people want it monthly. One delegate has been living in the car park since the last one, “so as not to miss it”.",
+  "choices": [
+   {
+    "label": "Annual. Make it a tradition.",
+    "hint": "Identity · Expensive",
+    "reaction": "The Convention becomes a fixture. The car-park delegate is given an honorary pass and a parking permit, in that order.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 6,
+      "resources": -6,
+      "unity": 3
+     },
+     "flags": [
+      "convention_tradition"
+     ]
+    }
+   },
+   {
+    "label": "Once was enough.",
+    "hint": "Thrift · Disappointment",
+    "reaction": "The announcement is received in silence. Members begin holding unofficial conventions, which are smaller, cheaper and somehow better.",
+    "effects": {
+     "serves": [
+      "-joy"
+     ],
+     "gauges": {
+      "resources": 5,
+      "enthusiasm": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.ribbons",
+  "type": "character",
+  "speaker": "constance",
+  "shape": "logistics",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the ribbons",
+  "text": "Further to my last memo: your diary for the coming month. You are opening four branch offices, unveiling a plaque, judging a soup competition and cutting eleven ribbons. There is no time allocated for decisions. Decisions are handled by the office.",
+  "choices": [
+   {
+    "label": "Fine. I’ll cut the ribbons.",
+    "hint": "Figurehead · The office decides",
+    "reaction": "You cut the ribbons. You are very good at it. Several decisions are made in your absence and are, frankly, fine. That is the worrying part.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "gauges": {
+      "unity": 5,
+      "attention": 4
+     },
+     "flags": [
+      "founder_figurehead"
+     ],
+     "speakerInfluence": 6,
+     "followUps": [
+      {
+       "card": "nat.not_consulted",
+       "delay": 4,
+       "maxDelay": 15
+      }
+     ]
+    }
+   },
+   {
+    "label": "Clear the diary. I decide things.",
+    "hint": "Control · Constance objects",
+    "reaction": "The diary is cleared. Constance sends a memo noting that the eleven ribbons remain uncut, and attaches photographs of them, uncut.",
+    "effects": {
+     "serves": [
+      "-comfort"
+     ],
+     "gauges": {
+      "unity": -3,
+      "enthusiasm": 3
+     },
+     "speakerLoyalty": -6
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.not_consulted",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "drift",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "bind": {
+   "practice": "practiceAny"
+  },
+  "topic": "the welcome video",
+  "text": "Did you know the national office changed how new members are welcomed? It’s in the newsletter. Page six. They’ve replaced {practice} with a short video. You’re in the video. You don’t remember being filmed.",
+  "choices": [
+   {
+    "label": "Reverse it. Nobody changes that without me.",
+    "hint": "Founder’s authority",
+    "reaction": "The video is withdrawn. The office sends you the footage, in which you are clearly nodding along to something off-camera.",
+    "effects": {
+     "gauges": {
+      "unity": -3,
+      "enthusiasm": 4
+     },
+     "flags": [
+      "founder_reasserted"
+     ],
+     "custom": [
+      {
+       "id": "{ctx.practice}",
+       "prominence": 1
+      }
+     ],
+     "followUps": [
+      {
+       "card": "nat.statue",
+       "delay": 6,
+       "maxDelay": 30
+      }
+     ]
+    }
+   },
+   {
+    "label": "Let them. It’s their movement too.",
+    "hint": "Let go · The institution grows",
+    "reaction": "The video is shown in four hundred halls. It is quite good. You watch it once, alone, and recognise almost nothing.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "gauges": {
+      "unity": 3,
+      "resources": 3
+     },
+     "flags": [
+      "institution_runs_itself"
+     ],
+     "custom": [
+      {
+       "id": "{ctx.practice}",
+       "prominence": -1
+      }
+     ],
+     "followUps": [
+      {
+       "card": "nat.statue",
+       "delay": 6,
+       "maxDelay": 30
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.statue",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "backfire",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "topic": "the statue",
+  "text": "There is a statue of you in {hometown}. It is bronze, nine feet tall, and has {c.martin}’s face, because the sculptor worked from the only photograph of the founding, which {c.martin} took and is in. The unveiling is Saturday.",
+  "choices": [
+   {
+    "label": "Unveil it as it is.",
+    "hint": "Grace · Martin is mortified",
+    "reaction": "You unveil it. Martin stands beside it for photographs, looking like a man standing beside his own statue, which he is.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 4,
+      "unity": 2
+     },
+     "flags": [
+      "founder_statue"
+     ],
+     "loyalty": {
+      "martin": 4
+     }
+    }
+   },
+   {
+    "label": "Recast the face. It’s my statue.",
+    "hint": "Vanity · Costly",
+    "reaction": "The face is recast. The new face looks like nobody. Members call it “the Founder”, and say it has your expression exactly.",
+    "effects": {
+     "gauges": {
+      "resources": -8,
+      "attention": 4
+     },
+     "flags": [
+      "founder_statue"
+     ],
+     "loyalty": {
+      "martin": -4
+     },
+     "remember": [
+      {
+       "who": "martin",
+       "kind": "embarrassed",
+       "weight": 1
+      }
+     ]
+    }
+   }
+  ],
+  "notSpeaker": [
+   "martin"
+  ]
+ },
+ {
+  "id": "nat.emeritus_rumour",
+  "type": "character",
+  "speaker": "devoted",
+  "shape": "schism",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "founder_figurehead"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the word Emeritus",
+  "text": "I wasn’t going to tell you this. There’s a word going round the national office. The word is “Emeritus”. Nobody has said it to your face. Several people have said it to the photocopier.",
+  "choices": [
+   {
+    "label": "Find out who started it.",
+    "hint": "Confront · Someone loses face",
+    "reaction": "You find out. It was a working group. The working group is dissolved, and three of its members form a new working group about why it was dissolved.",
+    "effects": {
+     "gauges": {
+      "unity": -5,
+      "enthusiasm": 3
+     },
+     "flags": [
+      "emeritus_rumour",
+      "emeritus_confronted"
+     ],
+     "speakerLoyalty": 6
+    }
+   },
+   {
+    "label": "Let them say it. I’m not going anywhere.",
+    "hint": "Calm · The word sticks",
+    "reaction": "Nothing happens. Then, very slowly, the word appears on a door.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "flags": [
+      "emeritus_rumour"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.memo_reply",
+  "type": "character",
+  "speaker": "martin",
+  "shape": "feud",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "martin": {
+     "present": true
+    },
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the memos",
+  "text": "Constance sent a memo about the agenda format. I replied by memo. She replied. I replied to her reply with a numbered list. It’s been nine days. I’ve never felt so understood, {title}. Also, we disagree about everything.",
+  "choices": [
+   {
+    "label": "Keep writing to her.",
+    "hint": "Let it happen",
+    "reaction": "Martin buys a better pen. The memos grow longer and more formal and, everybody agrees, much happier.",
+    "effects": {
+     "loyalty": {
+      "martin": 5,
+      "constance": 5
+     },
+     "gauges": {
+      "unity": 4
+     },
+     "flags": [
+      "memo_correspondence"
+     ],
+     "followUps": [
+      {
+       "card": "nat.memo_romance",
+       "delay": 8,
+       "maxDelay": 30,
+       "cancelIf": {
+        "anyFlags": [
+         "martin_left",
+         "martin_rival",
+         "martin_retired",
+         "constance_left",
+         "constance_rival",
+         "constance_retired"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "Use the phone like a normal person.",
+    "hint": "Efficiency · Something is lost",
+    "reaction": "Martin telephones. The call lasts four minutes and is excruciating for both of them. The memos resume, but shorter.",
+    "effects": {
+     "loyalty": {
+      "martin": -4
+     },
+     "gauges": {
+      "resources": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.memo_romance",
+  "type": "character",
+  "speaker": "priya",
+  "shape": "callback",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "topic": "the letterhead",
+  "text": "I need to tell you something and I need you not to make a face. Martin and Constance are in love. Through memos. They’ve never been in the same room. Martin wants a ruling on whether personal correspondence may use the official letterhead.",
+  "choices": [
+   {
+    "label": "Approve the letterhead.",
+    "hint": "Romance · Rules bend",
+    "reaction": "The ruling is laminated. Constance’s next memo has a small heart in the reference number. Martin keeps it in the orange pouch.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-order"
+     ],
+     "loyalty": {
+      "martin": 8,
+      "constance": 6,
+      "priya": 4
+     },
+     "gauges": {
+      "enthusiasm": 5
+     },
+     "flags": [
+      "memo_love"
+     ],
+     "followUps": [
+      {
+       "card": "nat.memo_wedding",
+       "delay": 12,
+       "maxDelay": 45,
+       "cancelIf": {
+        "anyFlags": [
+         "martin_left",
+         "martin_rival",
+         "martin_retired",
+         "constance_left",
+         "constance_rival",
+         "constance_retired"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "Rules are rules. Plain paper.",
+    "hint": "Order · It hurts a little",
+    "reaction": "Martin agrees that rules are rules. His next memo, on plain paper, is the most beautiful thing anyone in the office has ever read.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "loyalty": {
+      "martin": -3
+     },
+     "gauges": {
+      "unity": 2
+     },
+     "flags": [
+      "memo_love"
+     ],
+     "followUps": [
+      {
+       "card": "nat.memo_wedding",
+       "delay": 12,
+       "maxDelay": 45,
+       "cancelIf": {
+        "anyFlags": [
+         "martin_left",
+         "martin_rival",
+         "martin_retired",
+         "constance_left",
+         "constance_rival",
+         "constance_retired"
+        ]
+       }
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.memo_wedding",
+  "type": "character",
+  "speaker": "martin",
+  "shape": "escalation",
+  "setting": "meeting",
+  "requires": {
+   "chars": {
+    "martin": {
+     "present": true
+    },
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "followUpOnly": true,
+  "topic": "the wedding",
+  "text": "Constance and I would like to be married. At the Convention. As a procedural motion: proposed, seconded, carried. It would be the first time we’ve met. I’ve drafted the vows. They’re in the standing orders.",
+  "choices": [
+   {
+    "label": "Put it on the agenda.",
+    "hint": "Joy · Item one",
+    "reaction": "The motion is carried by acclamation. They meet at the podium. Constance is exactly as Martin imagined, he says, and she says nothing, and copies him in.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "loyalty": {
+      "martin": 15,
+      "constance": 12
+     },
+     "gauges": {
+      "enthusiasm": 10,
+      "unity": 8,
+      "attention": 6
+     },
+     "flags": [
+      "memo_wedding"
+     ]
+    }
+   },
+   {
+    "label": "Not at the Convention. Somewhere private.",
+    "hint": "Discretion · Martin understands",
+    "reaction": "They marry in a registry office on a {day}. Afterwards they exchange memos about how it went. Both give it top marks.",
+    "effects": {
+     "loyalty": {
+      "martin": 6,
+      "constance": 8
+     },
+     "gauges": {
+      "unity": 4
+     },
+     "flags": [
+      "memo_wedding"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.north_thursday",
+  "type": "character",
+  "speaker": "tobias",
+  "shape": "drift",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "tobias": {
+     "present": true
+    }
+   }
+  },
+  "bind": {
+   "practice": "practiceAny"
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "northern Thursdays",
+  "text": "A courtesy note. The North now meets on Thursdays. We consulted extensively, within the North. We have also slightly improved {practice}. You’ll find the northern version is longer, colder, and more correct.",
+  "choices": [
+   {
+    "label": "Overrule it. One movement, one way.",
+    "hint": "The centre holds · The North sulks",
+    "reaction": "The North complies, technically. It meets on {day}, then again on Thursday, “for the North”.",
+    "effects": {
+     "serves": [
+      "-purity",
+      "order"
+     ],
+     "speakerLoyalty": -10,
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -3
+     },
+     "flags": [
+      "north_overruled"
+     ],
+     "followUps": [
+      {
+       "card": "nat.north_pass",
+       "delay": 8,
+       "maxDelay": 30,
+       "cancelIf": {
+        "anyFlags": [
+         "tobias_left",
+         "tobias_rival",
+         "tobias_retired"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "The North knows the North.",
+    "hint": "Autonomy · The map fragments",
+    "reaction": "Tobias thanks you formally. Three other regions write the next morning asking what they can improve.",
+    "effects": {
+     "serves": [
+      "purity",
+      "-order"
+     ],
+     "speakerLoyalty": 8,
+     "gauges": {
+      "unity": -5,
+      "enthusiasm": 4
+     },
+     "flags": [
+      "north_autonomy"
+     ],
+     "followUps": [
+      {
+       "card": "nat.north_pass",
+       "delay": 8,
+       "maxDelay": 30,
+       "cancelIf": {
+        "anyFlags": [
+         "tobias_left",
+         "tobias_rival",
+         "tobias_retired"
+        ]
+       }
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.north_pass",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "topic": "the Northern Pass",
+  "text": "Members visiting the North now need a Northern Pass. It’s free. It requires a short test on northern customs, which nobody from the south has passed. Someone from {hometown} failed it on the question about you.",
+  "choices": [
+   {
+    "label": "Abolish the pass.",
+    "hint": "One movement · Tobias is furious",
+    "reaction": "The pass is abolished. The North issues a commemorative pass to mark its abolition. It requires a test.",
+    "effects": {
+     "speakerLoyalty": 0,
+     "loyalty": {
+      "tobias": -12
+     },
+     "gauges": {
+      "unity": 5
+     },
+     "flags": [
+      "north_pass_abolished"
+     ],
+     "followUps": [
+      {
+       "card": "nat.north_senior",
+       "delay": 10,
+       "maxDelay": 40,
+       "cancelIf": {
+        "anyFlags": [
+         "tobias_left",
+         "tobias_rival",
+         "tobias_retired"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "Take the test yourself.",
+    "hint": "Diplomacy · Risky",
+    "reaction": "You take the test. You fail the question about you. Tobias, moved, awards you an honorary pass, and the story spreads in both directions.",
+    "effects": {
+     "loyalty": {
+      "tobias": 10
+     },
+     "gauges": {
+      "unity": 2,
+      "attention": 5,
+      "enthusiasm": 3
+     },
+     "remember": [
+      {
+       "who": "tobias",
+       "kind": "credited",
+       "weight": 2
+      }
+     ],
+     "followUps": [
+      {
+       "card": "nat.north_senior",
+       "delay": 10,
+       "maxDelay": 40,
+       "cancelIf": {
+        "anyFlags": [
+         "tobias_left",
+         "tobias_rival",
+         "tobias_retired"
+        ]
+       }
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.north_senior",
+  "type": "character",
+  "speaker": "tobias",
+  "shape": "schism",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "topic": "the Senior Region",
+  "text": "The North has grown. It is, by membership, a third of {movement}. We would like to be recognised as the Senior Region. Not because we are better. Because we are older, by about four weeks, and more correct.",
+  "choices": [
+   {
+    "label": "There are no senior regions.",
+    "hint": "Equality · The North considers its options",
+    "reaction": "Tobias accepts the ruling with a short, very cold speech. The Northern Fleet leaves without honking, which everyone agrees is worse.",
+    "effects": {
+     "serves": [
+      "-purity"
+     ],
+     "speakerLoyalty": -14,
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": 2
+     },
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "overruled",
+       "weight": 3
+      }
+     ]
+    }
+   },
+   {
+    "label": "The North is senior. Ceremonially.",
+    "hint": "Peace · Everyone else is annoyed",
+    "reaction": "The North is Senior. It receives a ceremonial lanyard and the right to speak first. It speaks first for forty minutes.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "speakerLoyalty": 12,
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -3
+     },
+     "groups": {
+      "traditionalists": 0.03
+     },
+     "flags": [
+      "north_senior"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.history_draft",
+  "type": "character",
+  "speaker": "juniper",
+  "shape": "literalism",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "juniper": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the Official History",
+  "text": "I’m writing the Official History! Chapter one: you, alone on a mountain at dawn, receive the idea of {belief}. Then you walk down the mountain and meet three strangers. I know it was technically {hometown}. But it was a mountain spiritually.",
+  "choices": [
+   {
+    "label": "It was a garage. Write the garage.",
+    "hint": "Truth · Less inspiring",
+    "reaction": "Juniper rewrites chapter one. It is accurate and touching and features a lawnmower. Sales are modest.",
+    "effects": {
+     "speakerLoyalty": -4,
+     "gauges": {
+      "unity": 3
+     },
+     "flags": [
+      "official_history",
+      "history_garage"
+     ],
+     "followUps": [
+      {
+       "card": "nat.history_gary",
+       "delay": 5,
+       "maxDelay": 25
+      }
+     ]
+    }
+   },
+   {
+    "label": "Keep the mountain.",
+    "hint": "Myth · Recruitment soars",
+    "reaction": "The Official History is a bestseller. Tourists ask {hometown} for directions to the mountain. There is no mountain. A local man starts renting out a hill.",
+    "effects": {
+     "speakerLoyalty": 8,
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 1.2,
+       "days": 20,
+       "label": "The mountain story"
+      }
+     ],
+     "gauges": {
+      "attention": 6
+     },
+     "flags": [
+      "official_history",
+      "history_mountain"
+     ],
+     "followUps": [
+      {
+       "card": "nat.history_gary",
+       "delay": 5,
+       "maxDelay": 25
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.history_gary",
+  "type": "character",
+  "speaker": "gary",
+  "shape": "callback",
+  "setting": "private",
+  "requires": {
+   "chars": {
+    "gary": {
+     "present": true
+    }
+   }
+  },
+  "followUpOnly": true,
+  "topic": "the Hermit of the Garage",
+  "text": "I read the History. I’m in it. I’m “the Hermit of the Garage”. It says I spoke only in riddles. I didn’t. I mostly asked if anyone wanted tea. Is it all right if I’m a bit hurt?",
+  "choices": [
+   {
+    "label": "Have Gary’s chapter rewritten.",
+    "hint": "Gary first",
+    "reaction": "The new chapter calls him “the Keeper of the Chairs, who asked if anyone wanted tea”. Gary reads it nine times and says it’s the best thing anyone has written about him.",
+    "effects": {
+     "loyalty": {
+      "gary": 10,
+      "juniper": -4
+     },
+     "gauges": {
+      "unity": 3,
+      "resources": -3
+     }
+    }
+   },
+   {
+    "label": "Being a legend has a cost, Gary.",
+    "hint": "Myth first · Gary is quiet",
+    "reaction": "Gary nods and goes home. Pilgrims start knocking on his door asking for riddles. He gives them tea. They take it as a riddle.",
+    "effects": {
+     "loyalty": {
+      "gary": -8,
+      "juniper": 3
+     },
+     "gauges": {
+      "attention": 3
+     },
+     "flags": [
+      "gary_hermit"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.history_corrects_you",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "{anon}",
+    "role": "Member, reading group"
+   }
+  },
+  "shape": "literalism",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "official_history"
+   ]
+  },
+  "once": true,
+  "weight": 1.4,
+  "topic": "the founding day",
+  "text": "With respect: that’s not what happened. You didn’t found {movement} on a {day}. Chapter two is very clear that it was the following morning, at dawn, on the mountain. My whole reading group says so. Are you sure you were there?",
+  "choices": [
+   {
+    "label": "I was there. It was a {day}, in a garage.",
+    "hint": "Insist · You sound unsure",
+    "reaction": "The reading group is polite but unconvinced. One of them pats your hand.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -3
+     },
+     "serves": [
+      "purity"
+     ]
+    }
+   },
+   {
+    "label": "The book is probably right.",
+    "hint": "Concede · History wins",
+    "reaction": "The reading group is delighted. At the next {meeting} you find yourself telling the dawn version. It goes down better.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 5,
+      "unity": -1
+     },
+     "flags": [
+      "founder_defers_to_history"
+     ],
+     "serves": [
+      "-purity"
+     ]
+    }
+   }
+  ],
+  "bind": {
+   "anon": "anonName"
+  }
+ },
+ {
+  "id": "nat.garage_heritage",
+  "type": "organization",
+  "speaker": "constance",
+  "shape": "proposal",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "gary": {
+     "present": true
+    },
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the garage",
+  "text": "Further to my last memo: the Heritage Register would like to list Gary’s garage as a site of national significance, preserved exactly as it was. Gary still parks there. He would have to stop, or become part of the preservation.",
+  "choices": [
+   {
+    "label": "List it. Gary can stay, as he is.",
+    "hint": "Heritage · Gary becomes an exhibit",
+    "reaction": "The garage is listed. Gary is now, legally, a fixture. He is given a small brass plaque, which he wears.",
+    "effects": {
+     "gauges": {
+      "attention": 7,
+      "unity": 3,
+      "resources": -6
+     },
+     "flags": [
+      "garage_heritage"
+     ],
+     "loyalty": {
+      "gary": 4
+     },
+     "followUps": [
+      {
+       "card": "nat.garage_tours",
+       "delay": 6,
+       "maxDelay": 25,
+       "cancelIf": {
+        "anyFlags": [
+         "gary_left",
+         "gary_rival",
+         "gary_retired"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "It’s Gary’s garage. Leave it be.",
+    "hint": "Privacy · Pilgrims keep coming",
+    "reaction": "The listing is declined. Pilgrims continue to arrive anyway, unofficially, and Gary continues to offer them tea.",
+    "effects": {
+     "gauges": {
+      "attention": -2,
+      "unity": 2
+     },
+     "loyalty": {
+      "gary": 6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.garage_tours",
+  "type": "character",
+  "speaker": "gary",
+  "shape": "literalism",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "topic": "the tours",
+  "text": "There are tours now. A guide explains the Nap Corner to visitors while I’m napping in it. Yesterday she said I was a re-enactor. I didn’t correct her. I think I might be a re-enactor.",
+  "choices": [
+   {
+    "label": "Make Gary the official guide.",
+    "hint": "Gary’s moment",
+    "reaction": "Gary’s tours are thirty minutes long, twenty of which are about whales. They receive the best reviews of any heritage site in the country.",
+    "effects": {
+     "loyalty": {
+      "gary": 10
+     },
+     "gauges": {
+      "attention": 5,
+      "enthusiasm": 4,
+      "resources": 3
+     },
+     "flags": [
+      "gary_guide"
+     ],
+     "followUps": [
+      {
+       "card": "nat.gary_exhibit",
+       "delay": 10,
+       "maxDelay": 40,
+       "cancelIf": {
+        "anyFlags": [
+         "gary_left",
+         "gary_rival",
+         "gary_retired"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "Close the tours. Gary needs his garage.",
+    "hint": "Kindness · Revenue lost",
+    "reaction": "The tours close. Gary sleeps for fourteen hours, then asks where everyone went.",
+    "effects": {
+     "loyalty": {
+      "gary": 4
+     },
+     "gauges": {
+      "resources": -4,
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.gary_exhibit",
+  "type": "character",
+  "speaker": "gary",
+  "shape": "vindication",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "twist": "right_wrong_reasons",
+  "topic": "what Gary was for",
+  "text": "I wanted to say thank you. I used to think I didn’t do anything in {movement}. Now I’m on a leaflet. People come from all over to watch me have a rest. I’ve never been so rested, {title}. I think this might be what I was for.",
+  "choices": [
+   {
+    "label": "It is exactly what you were for.",
+    "hint": "Tell him",
+    "reaction": "Gary goes back to the garage and lies down with the contentment of a man who has found his calling, which is lying down.",
+    "effects": {
+     "loyalty": {
+      "gary": 12
+     },
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": 1
+     },
+     "remember": [
+      {
+       "who": "gary",
+       "kind": "credited",
+       "weight": 3
+      }
+     ]
+    }
+   },
+   {
+    "label": "You were always more than that.",
+    "hint": "Tell him something bigger",
+    "reaction": "Gary thinks about it for a long time, then falls asleep. When he wakes he says, “More than resting?”, as if it had never occurred to anyone.",
+    "effects": {
+     "loyalty": {
+      "gary": 8
+     },
+     "gauges": {
+      "enthusiasm": 6,
+      "unity": 1
+     },
+     "speakerInfluence": 8
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.tv_debate",
+  "type": "organization",
+  "speaker": "dez",
+  "shape": "overpromise",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "dez": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the debate",
+  "text": "Live television. A debate programme wants someone from {movement} on the panel opposite a professor who calls us “a fad with a filing system”. I’ve said yes on your behalf. I’ve said I’ll do it. Or you. Mostly me.",
+  "choices": [
+   {
+    "label": "Send Dez.",
+    "hint": "Spectacle · A risk",
+    "reaction": "Dez is booked. He spends the week rehearsing in the mirror, then in front of Martin, then in front of Martin’s mirror.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "gauges": {
+      "attention": 5,
+      "enthusiasm": 3
+     },
+     "flags": [
+      "tv_dez"
+     ],
+     "followUps": [
+      {
+       "card": "nat.dez_live",
+       "delay": 2,
+       "maxDelay": 6,
+       "cancelIf": {
+        "anyFlags": [
+         "dez_left",
+         "dez_rival",
+         "dez_retired"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "I’ll go myself.",
+    "hint": "Founder on camera",
+    "reaction": "You go. You are fine. The professor is better. The clip of you saying “well, that’s a very good question” is shared two hundred thousand times.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "unity": 2,
+      "enthusiasm": -2
+     },
+     "flags": [
+      "tv_founder"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.dez_live",
+  "type": "character",
+  "speaker": "dez",
+  "shape": "vindication",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "twist": "right_wrong_reasons",
+  "topic": "the truth on live TV",
+  "text": "So I’m on live TV, and the professor asks what {movement} actually stands for, and I opened my mouth to promise something, and instead I said, “I don’t know. But I’ve never been happier.” And then I cried. Was that bad?",
+  "choices": [
+   {
+    "label": "It was the best thing you’ve ever said.",
+    "hint": "Dez was right · for once by accident",
+    "reaction": "The clip runs on every channel. Membership enquiries triple. The national office, which had prepared talking points, is alarmed. Dez is offered his own programme and turns it down, which nobody has ever seen him do.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "followersPct": 0.06,
+     "gauges": {
+      "attention": 10,
+      "enthusiasm": 6,
+      "unity": -3
+     },
+     "loyalty": {
+      "dez": 12
+     },
+     "remember": [
+      {
+       "who": "dez",
+       "kind": "vindicated",
+       "weight": 3
+      }
+     ]
+    }
+   },
+   {
+    "label": "Next time, stick to the talking points.",
+    "hint": "Discipline · Dez deflates",
+    "reaction": "Dez nods and laminates the talking points, which is how you know he is genuinely upset. The clip goes viral anyway.",
+    "effects": {
+     "followersPct": 0.04,
+     "gauges": {
+      "attention": 8,
+      "unity": 4
+     },
+     "loyalty": {
+      "dez": -8
+     },
+     "remember": [
+      {
+       "who": "dez",
+       "kind": "embarrassed",
+       "weight": 2
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.sitcom",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "backfire",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "martin": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.3,
+  "topic": "the sitcom",
+  "text": "There is a sitcom loosely based on {movement}. The founder character is a buffoon. The heroic one, who keeps everything together, is clearly based on {c.martin}. {c.martin} has watched every episode and is furious that it’s accurate.",
+  "choices": [
+   {
+    "label": "Ask for a cameo.",
+    "hint": "Play along",
+    "reaction": "You appear in episode six as “Man at Bus Stop”. Your one line gets the biggest laugh of the series.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 4
+     },
+     "followersPct": 0.03,
+     "loyalty": {
+      "martin": 3
+     }
+    }
+   },
+   {
+    "label": "Complain to the network.",
+    "hint": "Dignity · Streisand effect",
+    "reaction": "The network apologises and commissions a second series, specifically about the complaint.",
+    "effects": {
+     "gauges": {
+      "attention": 10,
+      "unity": -3
+     }
+    }
+   }
+  ],
+  "notSpeaker": [
+   "martin"
+  ]
+ },
+ {
+  "id": "nat.lanyards",
+  "type": "organization",
+  "speaker": "constance",
+  "shape": "procedure",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "national_office"
+   ],
+   "chars": {
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.4,
+  "topic": "the lanyards",
+  "text": "Further to my last memo: the office has introduced colour-coded lanyards. Blue for staff, green for officers, gold for regional leaders. The founder’s lanyard is “Visitor”. This is an oversight. Correcting it requires Form 7B.",
+  "choices": [
+   {
+    "label": "Fill in Form 7B.",
+    "hint": "Comply · Wait six weeks",
+    "reaction": "You fill in Form 7B. It is returned asking which form authorised you to request the form. You receive a gold lanyard after six weeks. It says “Visitor (Gold)”.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -2
+     },
+     "flags": [
+      "lanyards"
+     ]
+    }
+   },
+   {
+    "label": "Abolish the lanyards.",
+    "hint": "Freedom · The office panics",
+    "reaction": "The lanyards are abolished. Nobody can now tell who works there, including the people who work there. Productivity improves.",
+    "effects": {
+     "serves": [
+      "-comfort"
+     ],
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": 4,
+      "resources": 2
+     },
+     "flags": [
+      "lanyards_abolished"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.app_password",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Dev Morrow",
+    "role": "National office, Digital"
+   }
+  },
+  "shape": "logistics",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "once": true,
+  "weight": 1.3,
+  "topic": "the app",
+  "text": "The official {movement} app is live. To reset your password, you answer a security question: “What is the founder’s favourite {beliefNoun}?” Forty thousand members are locked out. Including the founder.",
+  "choices": [
+   {
+    "label": "Publish the answer.",
+    "hint": "Practical · Undignified",
+    "reaction": "The answer is published. It becomes the most-searched fact about you. You are asked about it at every public appearance for a year.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "attention": 4
+     },
+     "flags": [
+      "app_answer_public"
+     ]
+    }
+   },
+   {
+    "label": "Scrap the app.",
+    "hint": "Back to paper",
+    "reaction": "The app is scrapped. Members return to the noticeboard, which has never once asked for a password.",
+    "effects": {
+     "gauges": {
+      "resources": -5,
+      "enthusiasm": 2,
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.helpline",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Ray Ashdown",
+    "role": "Volunteer, Doctrine Helpline"
+   }
+  },
+  "shape": "literalism",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "bind": {
+   "practice": "practiceAny"
+  },
+  "once": true,
+  "weight": 1.3,
+  "topic": "the helpline",
+  "text": "The national doctrine helpline takes nine hundred calls a week. Most are about {practice}. The volunteer who answers them has started making things up, very confidently. Members say it’s the best part of {movement}.",
+  "choices": [
+   {
+    "label": "Give him a script.",
+    "hint": "Consistency",
+    "reaction": "The script is accurate and nobody calls any more. Members miss the old answers, which they write down and circulate as “the Lost Teachings”.",
+    "effects": {
+     "serves": [
+      "order",
+      "purity"
+     ],
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -4
+     },
+     "flags": [
+      "lost_teachings"
+     ]
+    }
+   },
+   {
+    "label": "Let him keep improvising.",
+    "hint": "Doctrine by phone",
+    "reaction": "The helpline’s answers become doctrine, one call at a time. Some are better than the originals. The founding minutes, if consulted, would disagree. Nobody consults them.",
+    "effects": {
+     "serves": [
+      "-purity",
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 5,
+      "unity": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.mission_statement",
+  "type": "character",
+  "speaker": "constance",
+  "shape": "procedure",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.4,
+  "topic": "the mission statement",
+  "text": "Further to my last memo: the working group has completed {movement}’s mission statement after nine months. It reads, in full: “To continue.” I find it perfect. Others have asked whether it should mention {belief}.",
+  "choices": [
+   {
+    "label": "“To continue.” Perfect.",
+    "hint": "Continuity · Purpose fades",
+    "reaction": "The mission statement is engraved over the door of the national office. Visitors find it either profound or ominous, depending on the weather.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": -5
+     },
+     "flags": [
+      "mission_continue"
+     ],
+     "speakerLoyalty": 6
+    }
+   },
+   {
+    "label": "Put {belief} back in it.",
+    "hint": "Purpose · Nine more months",
+    "reaction": "The working group reconvenes. The new statement mentions {belief} three times and is so long it is printed as a booklet.",
+    "effects": {
+     "serves": [
+      "-comfort",
+      "purity"
+     ],
+     "gauges": {
+      "enthusiasm": 4,
+      "resources": -4
+     },
+     "speakerLoyalty": -6,
+     "flags": [
+      "mission_belief"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.custom_lobby",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "{anon}",
+    "role": "Chair, a custom association"
+   }
+  },
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "bind": {
+   "anon": "anonName",
+   "practice": "practiceAny"
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the custom lobby",
+  "text": "We represent forty thousand members who joined {movement} for {practice} and, frankly, nothing else. We call ourselves the Association. We’d like {practice} written into the Charter. Otherwise we may start our own movement, which would be exactly the same but only that.",
+  "choices": [
+   {
+    "label": "Write it into the Charter.",
+    "hint": "Placate · Others want theirs",
+    "reaction": "It goes into the Charter. By Friday nine other associations have written in with the same request, each about a different custom.",
+    "effects": {
+     "custom": [
+      {
+       "id": "{ctx.practice}",
+       "status": "sacred"
+      }
+     ],
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": 3,
+      "resources": -2
+     },
+     "groups": {
+      "traditionalists": 0.03
+     },
+     "followUps": [
+      {
+       "card": "nat.charter",
+       "delay": 3,
+       "maxDelay": 15
+      }
+     ]
+    }
+   },
+   {
+    "label": "{movement} is more than {practice}.",
+    "hint": "Principle · They might leave",
+    "reaction": "The Association considers its position. A third of its members leave, form a new group, and discover within a month that they miss everything else.",
+    "effects": {
+     "followersPct": -0.03,
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": -3
+     },
+     "followUps": [
+      {
+       "card": "nat.charter",
+       "delay": 3,
+       "maxDelay": 15
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.charter",
+  "type": "organization",
+  "speaker": "agenda:order",
+  "shape": "procedure",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "topic": "the Charter",
+  "text": "We need a written Charter. Article One has to say what {movement} is for. Draft A says “{belief}”. Draft B says “whatever its members decide, by majority, on {day}s”. Draft C is blank and was submitted by {c.gary}.",
+  "choices": [
+   {
+    "label": "Draft A: {belief}.",
+    "hint": "Clarity · Some feel excluded",
+    "reaction": "Article One is adopted. The movement now officially is what it has, unofficially, been for a while. Some members are surprised to learn this.",
+    "effects": {
+     "serves": [
+      "purity",
+      "order"
+     ],
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": 2
+     },
+     "flags": [
+      "charter_belief"
+     ],
+     "custom": [
+      {
+       "id": "weekly_meeting",
+       "prominence": 1
+      }
+     ]
+    }
+   },
+   {
+    "label": "Draft B: whatever the members decide.",
+    "hint": "Democracy · Drift",
+    "reaction": "Article One is adopted. At the next {meeting}, the members decide to have a longer {meeting}, and then decide nothing else for a year.",
+    "effects": {
+     "serves": [
+      "-purity",
+      "expansion"
+     ],
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": 5
+     },
+     "flags": [
+      "charter_members"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.soup_contract",
+  "type": "character",
+  "speaker": "priya",
+  "shape": "commerce",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "priya": {
+     "present": true
+    }
+   },
+   "flags": [
+    "national_office"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "Community Broth",
+  "text": "The national office has signed a catering contract. Soup now comes from a company. It arrives in sealed tubs labelled “Community Broth”. I tasted it. {title}, I want to be calm about this. I am not calm.",
+  "choices": [
+   {
+    "label": "Cancel the contract. Priya runs the soup.",
+    "hint": "Priya · Expensive",
+    "reaction": "Priya is given a kitchen, a budget and four volunteers. The office sends a memo about the budget. Priya makes soup out of the memo, figuratively.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-comfort"
+     ],
+     "loyalty": {
+      "priya": 10,
+      "constance": -6
+     },
+     "gauges": {
+      "resources": -8,
+      "enthusiasm": 6
+     }
+    }
+   },
+   {
+    "label": "The contract stands. It’s a big movement now.",
+    "hint": "Scale · Priya goes rogue",
+    "reaction": "The contract stands. Priya says “all right” in a voice that means the opposite of all right.",
+    "effects": {
+     "serves": [
+      "comfort",
+      "-joy"
+     ],
+     "loyalty": {
+      "priya": -8
+     },
+     "gauges": {
+      "resources": 4
+     },
+     "flags": [
+      "soup_rogue"
+     ],
+     "followUps": [
+      {
+       "card": "nat.soup_line",
+       "delay": 8,
+       "maxDelay": 40,
+       "requires": {
+        "flags": [
+         "convention_tradition"
+        ]
+       },
+       "cancelIf": {
+        "anyFlags": [
+         "priya_left",
+         "priya_rival",
+         "priya_retired"
+        ]
+       }
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.soup_line",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Officer Paget",
+    "role": "Venue security"
+   }
+  },
+  "shape": "drift",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "followUpOnly": true,
+  "topic": "the soup line",
+  "text": "There’s a woman with a car boot full of soup outside the Convention. There’s a queue. The queue is longer than the Convention. Several delegates have left the hall “for air” and are now in the queue. Should we move her on?",
+  "choices": [
+   {
+    "label": "Move her on.",
+    "hint": "The rules · You’ll regret it",
+    "reaction": "Priya is moved on. She sets up across the road. The queue crosses the road with her, in an orderly fashion, carrying their lanyards.",
+    "effects": {
+     "loyalty": {
+      "priya": -10
+     },
+     "gauges": {
+      "unity": -6,
+      "attention": 3
+     }
+    }
+   },
+   {
+    "label": "Bring the soup inside.",
+    "hint": "Concede · Priya was right",
+    "reaction": "The soup comes inside. The Convention, for the first time, feels like a {meeting} in the garage. The national office notes this in a memo, positively.",
+    "effects": {
+     "loyalty": {
+      "priya": 12
+     },
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "unity": 7,
+      "enthusiasm": 6
+     },
+     "remember": [
+      {
+       "who": "priya",
+       "kind": "vindicated",
+       "weight": 3
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.crisps",
+  "type": "character",
+  "speaker": "rolf",
+  "shape": "commerce",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "rolf": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.4,
+  "topic": "the crisps",
+  "text": "A crisp company wants to license {movement}. The flavour would be “{beliefNoun} and Vinegar”. I have tasted the prototype. It is not good. The money, however, is very good, and the money has no flavour.",
+  "choices": [
+   {
+    "label": "License it.",
+    "hint": "Money · Members wince",
+    "reaction": "{beliefNoun} and Vinegar sells out in a week. Nobody can explain why. Rolf asks to keep a bag, unopened, as a record of the strangest success of his career.",
+    "effects": {
+     "serves": [
+      "money",
+      "-purity"
+     ],
+     "gauges": {
+      "resources": 12,
+      "unity": -4,
+      "attention": 5
+     },
+     "flags": [
+      "crisps"
+     ]
+    }
+   },
+   {
+    "label": "Some things shouldn’t be crisps.",
+    "hint": "Dignity · Rolf sighs",
+    "reaction": "Rolf declines the deal by letter. He then spends an evening, alone, eating the prototype and thinking about what might have been.",
+    "effects": {
+     "serves": [
+      "-money",
+      "purity"
+     ],
+     "gauges": {
+      "unity": 3
+     },
+     "speakerLoyalty": -4
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.rolf_free",
+  "type": "character",
+  "speaker": "rolf",
+  "shape": "vindication",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "rolf": {
+     "present": true
+    }
+   },
+   "anyFlags": [
+    "crisps",
+    "professional",
+    "sponsored",
+    "dues"
+   ]
+  },
+  "once": true,
+  "weight": 1.3,
+  "twist": "wrong_reasonable",
+  "topic": "giving something away",
+  "text": "I’ve monetised everything. The customs, the meetings, the mugs, the potato. There is nothing left. So I had an idea, and I don’t like it: I would like to give something away. For free. I don’t know how. Could you show me?",
+  "choices": [
+   {
+    "label": "Give away the {meeting}. Free, forever.",
+    "hint": "Generosity · Revenue falls",
+    "reaction": "Rolf announces it himself, slightly pale. Attendance doubles. Rolf calculates the unmeasurable benefit and reports, with wonder, that it is unmeasurable.",
+    "effects": {
+     "serves": [
+      "-money",
+      "joy"
+     ],
+     "gauges": {
+      "resources": -8,
+      "enthusiasm": 6,
+      "unity": 5
+     },
+     "followersPct": 0.03,
+     "loyalty": {
+      "rolf": 10
+     }
+    }
+   },
+   {
+    "label": "You’re good at money, Rolf. Stay good at it.",
+    "hint": "Keep him as he is",
+    "reaction": "Rolf is relieved and a little disappointed. He finds a way to charge for the relief, then refunds it, which he describes as “a start”.",
+    "effects": {
+     "serves": [
+      "money"
+     ],
+     "gauges": {
+      "resources": 4
+     },
+     "loyalty": {
+      "rolf": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.agnes_archive",
+  "type": "character",
+  "speaker": "agnes",
+  "shape": "callback",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "agnes": {
+     "present": true
+    },
+    "juniper": {
+     "present": true
+    }
+   },
+   "flags": [
+    "official_history"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the forty-one points",
+  "text": "As Keeper of the Record I have compared the Official History with my minutes. They disagree on forty-one points. On thirty-nine, the minutes are right. On two, I was asleep. I would like the History corrected.",
+  "choices": [
+   {
+    "label": "Correct it. The minutes are the truth.",
+    "hint": "Truth · Juniper is crushed",
+    "reaction": "The History is corrected. The second edition is shorter, accurate and has a lawnmower in it. Juniper reads it in one sitting and does not speak for a day.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "loyalty": {
+      "agnes": 10,
+      "juniper": -10
+     },
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -4
+     },
+     "flags": [
+      "history_corrected"
+     ]
+    }
+   },
+   {
+    "label": "Leave the History. People love it.",
+    "hint": "Myth · Agnes keeps receipts",
+    "reaction": "Agnes publishes the forty-one points as an appendix, which is read by more people than the History.",
+    "effects": {
+     "serves": [
+      "-purity",
+      "joy"
+     ],
+     "loyalty": {
+      "agnes": -10,
+      "juniper": 4
+     },
+     "gauges": {
+      "enthusiasm": 3,
+      "attention": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.original_lawsuit",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Ms Fairweather",
+    "role": "Solicitor"
+   }
+  },
+  "shape": "feud",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "anyFlags": [
+    "agnes_rival",
+    "agnes_faction"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the lawsuit",
+  "text": "Letter from the solicitors for the Original {movement}. They claim the name, the customs, the folding chairs and “the true memory of {day}”. They enclose minutes as evidence. The minutes are extremely good.",
+  "choices": [
+   {
+    "label": "Settle. Let them have the chairs.",
+    "hint": "Peace · Costs money",
+    "reaction": "The settlement transfers forty folding chairs. The Original holds a ceremony to receive them. It is, by all accounts, very moving.",
+    "effects": {
+     "gauges": {
+      "resources": -8,
+      "unity": 3
+     }
+    }
+   },
+   {
+    "label": "Fight it. We are the original.",
+    "hint": "Pride · Headlines",
+    "reaction": "The case is heard in public. The judge asks both sides what the movement is actually for. Neither side can say, and the case is adjourned indefinitely.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "unity": -3,
+      "resources": -4
+     },
+     "flags": [
+      "lawsuit_original"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.lionel_converts",
+  "type": "character",
+  "speaker": "lionel",
+  "shape": "vindication",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "lionel": {
+     "present": true
+    }
+   },
+   "flags": [
+    "national_office"
+   ]
+  },
+  "once": true,
+  "weight": 1.4,
+  "twist": "wrong_reasonable",
+  "topic": "Lionel’s conversion",
+  "text": "I need to confess something. I’ve resigned from my firm. I came here to restructure {movement}, and somewhere around the third {meeting} I started {belief}, and I didn’t want to stop. The national office is now more structured than anything I ever built, and I hate it.",
+  "choices": [
+   {
+    "label": "Then help me make it less structured.",
+    "hint": "Lionel, reformed",
+    "reaction": "Lionel dismantles three departments in a week, with the energy of a man who built them. Martin watches, unable to decide whether to be proud or bereaved.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-order"
+     ],
+     "loyalty": {
+      "lionel": 10,
+      "martin": -4
+     },
+     "gauges": {
+      "enthusiasm": 5,
+      "unity": -2,
+      "resources": 3
+     }
+    }
+   },
+   {
+    "label": "You built the structure. Live with it.",
+    "hint": "Consequences",
+    "reaction": "Lionel accepts this. He sits in the Department of Departments and does {belief} quietly at his desk, which is technically against policy.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "loyalty": {
+      "lionel": -6
+     },
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.ophelia_chair",
+  "type": "character",
+  "speaker": "ophelia",
+  "shape": "schism",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "ophelia": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the Chair",
+  "text": "The regions want an elected National Chair. Someone to speak for {movement} day to day. Not instead of you; alongside you. I would like to stand. I’d like your blessing. I will also stand without it.",
+  "choices": [
+   {
+    "label": "You have my blessing.",
+    "hint": "Share power · Influence moves",
+    "reaction": "Ophelia wins with seventy per cent. She thanks you first in her speech, warmly, and then speaks for fifty minutes about the future, in which you are mentioned once.",
+    "effects": {
+     "speakerLoyalty": 10,
+     "speakerInfluence": 12,
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": 3
+     },
+     "flags": [
+      "chair_elected"
+     ],
+     "followUps": [
+      {
+       "card": "nat.chair_vs_founder",
+       "delay": 8,
+       "maxDelay": 30,
+       "cancelIf": {
+        "anyFlags": [
+         "ophelia_left",
+         "ophelia_rival",
+         "ophelia_retired"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "There’s no need for a Chair.",
+    "hint": "Hold power · A contest",
+    "reaction": "Ophelia stands anyway and wins narrowly. Her first act as Chair is to send you a very polite letter.",
+    "effects": {
+     "speakerLoyalty": -10,
+     "speakerInfluence": 8,
+     "gauges": {
+      "unity": -5,
+      "attention": 4
+     },
+     "flags": [
+      "chair_elected",
+      "chair_contested"
+     ],
+     "followUps": [
+      {
+       "card": "nat.chair_vs_founder",
+       "delay": 8,
+       "maxDelay": 30,
+       "cancelIf": {
+        "anyFlags": [
+         "ophelia_left",
+         "ophelia_rival",
+         "ophelia_retired"
+        ]
+       }
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.chair_vs_founder",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "schism",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "bind": {
+   "practice": "practiceAny"
+  },
+  "followUpOnly": true,
+  "topic": "who speaks for us",
+  "text": "Ophelia gave an interview saying {movement} is “moving beyond {practice}”. You gave one last week saying it never would. A reporter has put both quotes side by side. Members are asking who actually speaks for us.",
+  "choices": [
+   {
+    "label": "Issue a joint statement with Ophelia.",
+    "hint": "Unity · You compromise",
+    "reaction": "The joint statement is so carefully balanced that it means nothing, which both camps read as victory.",
+    "effects": {
+     "loyalty": {
+      "ophelia": 6
+     },
+     "gauges": {
+      "unity": 5,
+      "attention": -2
+     }
+    }
+   },
+   {
+    "label": "I founded this. I speak for it.",
+    "hint": "Authority · The Chair is diminished",
+    "reaction": "Members cheer. Then they look at Ophelia, and some of them stop cheering. The word “Emeritus” is not mentioned. It is in the air.",
+    "effects": {
+     "loyalty": {
+      "ophelia": -12
+     },
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": 4
+     },
+     "flags": [
+      "founder_vs_chair"
+     ],
+     "remember": [
+      {
+       "who": "ophelia",
+       "kind": "overruled",
+       "weight": 3
+      }
+     ]
+    }
+   }
+  ],
+  "notSpeaker": [
+   "ophelia"
+  ]
+ },
+ {
+  "id": "nat.constance_rebrand",
+  "type": "character",
+  "speaker": "constance",
+  "shape": "vindication",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "bind": {
+   "practice": "practiceAny"
+  },
+  "once": true,
+  "weight": 1.3,
+  "twist": "right_wrong_reasons",
+  "topic": "MVMNT",
+  "text": "A branding agency proposes we rename {movement} to “MVMNT” and replace {practice} with a wellness app. The board likes it. I have refused to process the paperwork, on the grounds that I refuse to process anything new. Do you overrule me?",
+  "choices": [
+   {
+    "label": "Constance is right. Nothing changes.",
+    "hint": "Continuity saves the day",
+    "reaction": "The agency goes on to rebrand a rival group, which collapses within the year. Constance receives no credit and asks for none, though she files the newspaper clipping.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "speakerLoyalty": 8,
+     "gauges": {
+      "unity": 5
+     },
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "vindicated",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "Let’s at least hear the agency out.",
+    "hint": "Novelty · A risk",
+    "reaction": "The agency presents for three hours. At the end, the only thing anyone remembers is the word “MVMNT”, which members begin using sarcastically, then affectionately, then unironically.",
+    "effects": {
+     "serves": [
+      "-comfort",
+      "expansion"
+     ],
+     "gauges": {
+      "attention": 6,
+      "unity": -4,
+      "resources": -5
+     },
+     "speakerLoyalty": -6
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.tobias_standard",
+  "type": "character",
+  "speaker": "tobias",
+  "shape": "procedure",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "tobias": {
+     "present": true
+    }
+   }
+  },
+  "bind": {
+   "practice": "practiceAny"
+  },
+  "once": true,
+  "weight": 1.3,
+  "twist": "wrong_reasonable",
+  "topic": "the forty pages",
+  "text": "For newcomers’ sake, I’ve written down exactly how {practice} is done in the North. Every step, timed. No more confusion, no more doing it wrong. It’s forty pages. Newcomers will never feel lost again.",
+  "choices": [
+   {
+    "label": "Adopt the standard nationally.",
+    "hint": "Clarity · Something dies",
+    "reaction": "The standard is adopted. Newcomers do {practice} perfectly and with no apparent joy. Old members start doing it wrong on purpose, in the car park.",
+    "effects": {
+     "serves": [
+      "purity",
+      "order"
+     ],
+     "speakerLoyalty": 8,
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -6
+     },
+     "groups": {
+      "traditionalists": 0.02
+     }
+    }
+   },
+   {
+    "label": "Some of it should stay unwritten.",
+    "hint": "Mystery · Tobias is wounded",
+    "reaction": "Tobias takes the forty pages home. He reads them every evening, he says, “for the North”.",
+    "effects": {
+     "serves": [
+      "-purity"
+     ],
+     "speakerLoyalty": -8,
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.juniper_myth",
+  "type": "character",
+  "speaker": "juniper",
+  "shape": "backfire",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "juniper": {
+     "present": true
+    }
+   },
+   "flags": [
+    "official_history"
+   ]
+  },
+  "once": true,
+  "weight": 1.3,
+  "twist": "right_wrong_reasons",
+  "topic": "the wings",
+  "text": "Okay, so, slight problem. A school is teaching the Official History. As history. A teacher wrote to say the children love you. They’ve made you out of papier-mâché. You have wings in it. I didn’t write the wings! The wings are folk tradition now.",
+  "choices": [
+   {
+    "label": "Visit the school.",
+    "hint": "Embrace the myth",
+    "reaction": "You visit. The children ask about the wings. You say you never had wings. They look at you with deep pity. Recruitment among parents rises sharply.",
+    "effects": {
+     "gauges": {
+      "attention": 5,
+      "enthusiasm": 4
+     },
+     "followersPct": 0.03,
+     "loyalty": {
+      "juniper": 8
+     },
+     "remember": [
+      {
+       "who": "juniper",
+       "kind": "vindicated",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "Write to correct the curriculum.",
+    "hint": "Truth · You lose the children",
+    "reaction": "The curriculum is corrected. The papier-mâché founder is kept, with the wings removed. It looks diminished, and the children say so.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": -3
+     },
+     "loyalty": {
+      "juniper": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.weather_payoff",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "callback",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "weather_member"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the forecasts",
+  "text": "The weather presenter, the one who joined because of Gary’s whale flyer, now forecasts entirely in terms of {belief}. “Lovely day for it.” “Not a day for it.” The network has received complaints and four thousand membership enquiries.",
+  "choices": [
+   {
+    "label": "Send her flowers.",
+    "hint": "Gratitude",
+    "reaction": "She reads your card out on air, before the shipping forecast. Fishermen begin asking about {movement}.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "enthusiasm": 3
+     },
+     "followersPct": 0.02
+    }
+   },
+   {
+    "label": "Ask her to tone it down.",
+    "hint": "Discretion",
+    "reaction": "She tones it down. The forecasts are now merely suggestive. Members decode them nightly.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "attention": 2
+     }
+    }
+   }
+  ],
+  "notSpeaker": [
+   "gary"
+  ]
+ },
+ {
+  "id": "nat.whales_parliament",
+  "type": "organization",
+  "speaker": "juniper",
+  "shape": "callback",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "whale_doctrine"
+   ],
+   "chars": {
+    "juniper": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "whales in Parliament",
+  "text": "Our position on whales was quoted in Parliament! The forty-page one. A minister called it “the most thorough document on whales ever produced by an organisation that is not about whales”. {c.gary} has had it framed.",
+  "choices": [
+   {
+    "label": "Issue a statement: we are, in a sense, about whales.",
+    "hint": "Lean in · Whales ascendant",
+    "reaction": "Membership among marine biologists becomes a statistical anomaly. {c.gary} is invited to a reception, and falls asleep in the most distinguished company of his life.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 3,
+      "unity": -2
+     },
+     "loyalty": {
+      "gary": 6
+     }
+    }
+   },
+   {
+    "label": "No comment.",
+    "hint": "Mystery",
+    "reaction": "“No comment” is interpreted as a deep and principled position on whales. The minister quotes that too.",
+    "effects": {
+     "gauges": {
+      "attention": 4,
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.bus_stop",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Mr Okafor",
+    "role": "Regional Bus Company"
+   }
+  },
+  "shape": "callback",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "bus_shelter"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the bus shelter",
+  "text": "The bus company is renaming the stop where you held {meeting}s after you lost the hall. It will be called “{movement} Shelter”. The timetable will say it. Do you object, or would you like to attend the unveiling?",
+  "choices": [
+   {
+    "label": "Attend the unveiling.",
+    "hint": "Sentiment",
+    "reaction": "You attend. The bus is late. Everyone agrees it’s exactly like old times.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 5,
+      "attention": 4,
+      "resources": -3
+     },
+     "loyalty": {
+      "priya": 4,
+      "martin": 2
+     }
+    }
+   },
+   {
+    "label": "Decline. It was a bad week.",
+    "hint": "Modesty",
+    "reaction": "The stop is renamed anyway. Your absence is noted in the local paper as “characteristically humble”.",
+    "effects": {
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.inspector_returns",
+  "type": "character",
+  "speaker": "martin",
+  "shape": "callback",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "inspection_passed"
+   ],
+   "chars": {
+    "martin": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the evacuation plan",
+  "text": "Remember the fire inspector? He’s joined. He’s now our National Safety Officer. He’s asked to see my original evacuation plan. Apparently it’s taught on a course. I’ve been asked to sign copies. {title}, people are queueing.",
+  "choices": [
+   {
+    "label": "Sign them, Martin.",
+    "hint": "Martin’s day · Others feel overlooked",
+    "reaction": "Martin signs four hundred copies with the good pen. The National Safety Officer asks him to sign his own copy too, and has it framed.",
+    "effects": {
+     "loyalty": {
+      "martin": 10
+     },
+     "gauges": {
+      "unity": 4,
+      "attention": 3,
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "Let’s not make it a cult of Martin.",
+    "hint": "Modesty · Martin agrees, a bit sadly",
+    "reaction": "Martin agrees entirely and signs only forty. He keeps the forty-first.",
+    "effects": {
+     "loyalty": {
+      "martin": -2
+     },
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.constable_promoted",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Chief Supt. Rennick",
+    "role": "Police"
+   }
+  },
+  "shape": "callback",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "constable_friend"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the posters",
+  "text": "Afternoon. You won’t remember me. I was the constable who asked about the posters, back when it was a garage. I’m Chief Superintendent now. I’d like to ask about the march on Saturday. Is something happening?",
+  "choices": [
+   {
+    "label": "Something is happening.",
+    "hint": "Old friends",
+    "reaction": "He laughs for a long time, then provides an escort, a route and, after a pause, his own membership form.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "unity": -1,
+      "resources": 2
+     },
+     "followersPct": 0.01
+    }
+   },
+   {
+    "label": "Nothing is happening, officer.",
+    "hint": "Discretion · Lost charm",
+    "reaction": "He nods slowly. On Saturday, eighty thousand people do nothing in an orderly fashion, and he writes in his report that he has never seen nothing so well organised.",
+    "effects": {
+     "gauges": {
+      "unity": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.knitters_merger",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Mrs Penhallow",
+    "role": "Chair, the Knitting Circle"
+   }
+  },
+  "shape": "callback",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "knitters_peace"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the knitters",
+  "text": "The Knitting Circle would like to merge. Thirty-one years in the hall, nine branches, and, since our truce, rather fond of you. We would bring our banners and our grudges. We would want {day}s off.",
+  "choices": [
+   {
+    "label": "Merge. Welcome, knitters.",
+    "hint": "Growth · New customs",
+    "reaction": "The merger brings forty thousand knitters and a thousand-metre banner, which is unrolled at the Convention and turns out to be about you, fondly.",
+    "effects": {
+     "followersPct": 0.05,
+     "gauges": {
+      "unity": -3,
+      "enthusiasm": 5
+     },
+     "groups": {
+      "traditionalists": 0.03
+     },
+     "flags": [
+      "knitters_merged"
+     ]
+    }
+   },
+   {
+    "label": "Stay friends. Stay separate.",
+    "hint": "Identity",
+    "reaction": "The knitters accept graciously and knit you a scarf in the movement’s colours, which neither group officially has.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "attention": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.lost_rulebook",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "callback",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "rulebook_shelved"
+   ]
+  },
+  "once": true,
+  "weight": 1.4,
+  "topic": "the Lost Book",
+  "text": "Someone found Agnes’s rulebook. The one we shelved. Two hundred and twelve pages, every decision we ever made. Members are calling it the Lost Book. Some want it read aloud at every {meeting}. Page ninety-four is about you.",
+  "choices": [
+   {
+    "label": "Read it aloud. All of it.",
+    "hint": "Scripture · Hours long",
+    "reaction": "The Lost Book is read aloud in instalments. Page ninety-four is met with applause, then silence, then a motion to discuss page ninety-four.",
+    "effects": {
+     "serves": [
+      "purity",
+      "order"
+     ],
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": -3
+     },
+     "flags": [
+      "lost_book"
+     ]
+    }
+   },
+   {
+    "label": "Put it in a museum.",
+    "hint": "History · Contained",
+    "reaction": "The Lost Book is displayed under glass. Queues form to read page ninety-four. Nobody will tell you what it says.",
+    "effects": {
+     "gauges": {
+      "attention": 5,
+      "unity": 2
+     }
+    }
+   }
+  ],
+  "notSpeaker": [
+   "agnes"
+  ]
+ },
+ {
+  "id": "nat.megaphone",
+  "type": "character",
+  "speaker": "dez",
+  "shape": "callback",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "megaphone"
+   ],
+   "chars": {
+    "dez": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.4,
+  "topic": "the megaphone",
+  "text": "The original megaphone. The one from the soup-jar money. It’s in a glass case at the national office, with a plaque. I walked past it today and it looked at me. {title}, I want it back. I’m not saying for what.",
+  "choices": [
+   {
+    "label": "Give Dez his megaphone.",
+    "hint": "Sentiment · Chaos",
+    "reaction": "Dez is given the megaphone in a small ceremony. He uses it immediately, to thank everyone, at a volume that triggers the fire alarm.",
+    "effects": {
+     "loyalty": {
+      "dez": 10
+     },
+     "gauges": {
+      "attention": 5,
+      "unity": -2
+     }
+    }
+   },
+   {
+    "label": "It belongs to {movement} now.",
+    "hint": "History · Dez is hurt",
+    "reaction": "Dez nods. He visits the megaphone every {day}. Once, a guard catches him whispering into it.",
+    "effects": {
+     "loyalty": {
+      "dez": -6
+     },
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.copycats",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "outsider",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "anyFlags": [
+    "documentary_honest",
+    "documentary_polished"
+   ]
+  },
+  "once": true,
+  "weight": 1.2,
+  "topic": "the chair worshippers",
+  "text": "A movement abroad has copied {movement} from the documentary, but slightly wrong. They worship the folding chair. Not sit on it. Worship it. There are two million of them. They’d like a delegation.",
+  "choices": [
+   {
+    "label": "Send a delegation.",
+    "hint": "Diplomacy · Bewildering",
+    "reaction": "The delegation is received with great ceremony and asked to stand, as sitting would be disrespectful. They stand for a week.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 3,
+      "resources": -4
+     },
+     "flags": [
+      "chair_worshippers"
+     ]
+    }
+   },
+   {
+    "label": "Ignore them.",
+    "hint": "Distance",
+    "reaction": "The Chair movement takes your silence as a sign of deep holiness and grows by a further million.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "flags": [
+      "chair_worshippers"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.time_capsule",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "logistics",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "once": true,
+  "weight": 1.2,
+  "topic": "the time capsule",
+  "text": "In week three, the founders buried a time capsule behind Gary’s garage. Nobody remembers what’s in it. Television wants to open it live. {c.martin} thinks it contains the original agenda. {c.priya} thinks it contains soup.",
+  "choices": [
+   {
+    "label": "Open it live.",
+    "hint": "Spectacle · Unknown contents",
+    "reaction": "It contains a receipt for fourteen dollars, two buttons, a bus token and a note in your handwriting saying “I hope this went well.” The nation weeps.",
+    "effects": {
+     "gauges": {
+      "attention": 10,
+      "enthusiasm": 6,
+      "unity": 3
+     }
+    }
+   },
+   {
+    "label": "Open it privately.",
+    "hint": "Discretion",
+    "reaction": "You open it alone. You never say what was inside. This becomes the single most discussed mystery in {movement}.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": 3
+     },
+     "flags": [
+      "capsule_secret"
+     ]
+    }
+   }
+  ],
+  "notSpeaker": [
+   "gary",
+   "martin",
+   "priya"
+  ]
+ },
+ {
+  "id": "nat.lost_property",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Mrs Doyle",
+    "role": "National Lost Property"
+   }
+  },
+  "shape": "logistics",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "once": true,
+  "weight": 1.1,
+  "topic": "the goose",
+  "text": "National Lost Property. We currently hold four hundred identical {item}, nine hundred umbrellas, a pram, a framed photograph of {c.gary}, and a goose. The goose is alive and seems to be a member. Instructions?",
+  "choices": [
+   {
+    "label": "The goose may stay.",
+    "hint": "Whimsy",
+    "reaction": "The goose attends every {meeting} from then on. It is given a lanyard. It bites Constance, which she minutes.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": 2
+     },
+     "flags": [
+      "goose"
+     ]
+    }
+   },
+   {
+    "label": "Return everything. Including the goose.",
+    "hint": "Order",
+    "reaction": "Everything is returned. The goose returns itself the following week, with a friend.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "flags": [
+      "goose"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.impostor",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "outsider",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "once": true,
+  "weight": 1.1,
+  "topic": "the impostor",
+  "text": "There’s a man touring the regions pretending to be you. Same coat. Same title. His speeches are better. Three branches have asked if he can come back.",
+  "choices": [
+   {
+    "label": "Expose him.",
+    "hint": "Truth · Awkward",
+    "reaction": "You confront him at a town hall. He is gracious, apologises, and asks for your autograph. The branches are disappointed, specifically with you.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "attention": 4,
+      "enthusiasm": -3
+     }
+    }
+   },
+   {
+    "label": "Hire him.",
+    "hint": "Pragmatism · Unsettling",
+    "reaction": "He now does the regions, you do the capital. Some days you forget which one of you is real. So does he.",
+    "effects": {
+     "gauges": {
+      "attention": 5,
+      "enthusiasm": 4,
+      "unity": -3
+     },
+     "flags": [
+      "founder_double"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.census",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Mr Gethin",
+    "role": "National Census Office"
+   }
+  },
+  "shape": "outsider",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "once": true,
+  "weight": 1.1,
+  "topic": "the census",
+  "text": "Census office. We’re updating the form. Under “Religion or belief”, forty thousand people wrote “{movement}”. Under “Hobby”, eighty thousand wrote the same. We need to know which box you belong in.",
+  "choices": [
+   {
+    "label": "A way of life, not a belief.",
+    "hint": "Gentle",
+    "reaction": "The census adds a box: “A way of life”. It is ticked by four million people, most of whom have never heard of you.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "A hobby. Absolutely a hobby.",
+    "hint": "Modest · Members object",
+    "reaction": "Members are deeply offended to be a hobby, which is the most united they have been in years.",
+    "effects": {
+     "gauges": {
+      "unity": 6,
+      "enthusiasm": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.mascot",
+  "type": "organization",
+  "speaker": "agenda:joy",
+  "shape": "proposal",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "once": true,
+  "weight": 1.2,
+  "topic": "the mascot",
+  "text": "We need a mascot for the Convention. The youth wing has designed one. It’s a giant foam {beliefNoun}. It has a name, and a backstory, and the costume is very warm. Someone has to wear it. They’ve suggested you.",
+  "choices": [
+   {
+    "label": "I’ll wear it.",
+    "hint": "Dignity, abandoned",
+    "reaction": "You wear the foam {beliefNoun}. You are unrecognisable. For three hours you are the most popular person at the Convention. Nobody knows it was you, which you find you prefer.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 7,
+      "attention": 4
+     },
+     "flags": [
+      "founder_mascot"
+     ]
+    }
+   },
+   {
+    "label": "Someone else will wear it.",
+    "hint": "Dignity, preserved",
+    "reaction": "Martin wears it. He takes it very seriously, and as a result the mascot becomes a strict, procedural figure that children respect.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": 2
+     },
+     "loyalty": {
+      "martin": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.rec_memo",
+  "type": "character",
+  "speaker": "constance",
+  "shape": "procedure",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "constance": {
+     "present": true
+    }
+   }
+  },
+  "cooldown": 8,
+  "spacing": 10,
+  "weight": 1.2,
+  "topic": "memos",
+  "variants": [
+   "Further to my last memo: the national office proposes moving the archive to a larger room. The larger room is the archive. Approval is a formality. Please approve the formality.",
+   "Further to my last memo: we have received a complaint about the volume of memos. I have responded by memo. Your sign-off is required on the response.",
+   "Further to my last memo: the regions have each designed their own letterhead. I propose a single national letterhead. I have designed it. It is beige. It is very beige.",
+   "Further to my last memo: the office would like to stop doing something. Anything. I have prepared a shortlist of things we could stop doing. It is three pages long."
+  ],
+  "text": "Further to my last memo.",
+  "choices": [
+   {
+    "label": "Approve it.",
+    "hint": "Trust the office",
+    "reaction": "Constance sends a memo acknowledging your approval. The office runs smoothly, and slightly further from you.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -2
+     },
+     "speakerInfluence": 2
+    }
+   },
+   {
+    "label": "Send it back with questions.",
+    "hint": "Stay involved",
+    "reaction": "Constance replies with answers, and a memo about the questions, and a memo about the memo. Things happen more slowly, but you know about them.",
+    "effects": {
+     "serves": [
+      "-comfort"
+     ],
+     "gauges": {
+      "enthusiasm": 2,
+      "unity": -2,
+      "resources": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.rec_region_decided",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "drift",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "bind": {
+   "city": "activeCity",
+   "practice": "practiceAny"
+  },
+  "cooldown": 7,
+  "spacing": 9,
+  "weight": 1.4,
+  "topic": "the regions",
+  "variants": [
+   "The {city} region has replaced {practice} with “a shorter version for busy people”. Nobody asked you. It’s in the newsletter, page eleven, under Good News.",
+   "{city} has elected its own founder. Not to replace you, they say. As a local equivalent. He is a retired dentist. They say he has your energy.",
+   "{city} has started charging a small fee for {practice}. The money goes to a fund for more {practice}. The newsletter calls it “sustainable”.",
+   "The {city} branch has written its own history. You appear in chapter four, briefly, as “a friend of the movement”."
+  ],
+  "text": "You find out from the newsletter, again.",
+  "choices": [
+   {
+    "label": "Call the region in.",
+    "hint": "Founder’s authority",
+    "reaction": "The regional committee arrives with a presentation and leaves with a reprimand and a strong sense that they’ll do it again, but tell you first.",
+    "effects": {
+     "serves": [
+      "order",
+      "-expansion"
+     ],
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -3
+     }
+    }
+   },
+   {
+    "label": "Let the regions run themselves.",
+    "hint": "Autonomy",
+    "reaction": "The region carries on. It’s going well. You hear about it from the newsletter.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-order"
+     ],
+     "gauges": {
+      "unity": -3,
+      "enthusiasm": 3,
+      "resources": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.rec_delegate",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "{anon}",
+    "role": "Convention delegate"
+   }
+  },
+  "shape": "proposal",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "national"
+   ]
+  },
+  "bind": {
+   "anon": "anonName",
+   "practice": "practiceAny"
+  },
+  "cooldown": 7,
+  "spacing": 9,
+  "weight": 1.3,
+  "topic": "motions",
+  "variants": [
+   "Motion from the floor: that {practice} be performed twice on special occasions, and that every occasion be declared special.",
+   "Motion from the floor: that the founder’s chair at the Convention be kept empty “in their honour”, even while they are sitting in it.",
+   "Motion from the floor: that the minutes of the last Convention be read aloud before this one may begin. They are nine hours long.",
+   "Motion from the floor: that {practice} be accompanied by a short song. A song has been written. It is not short."
+  ],
+  "text": "A delegate has a motion.",
+  "choices": [
+   {
+    "label": "Support the motion.",
+    "hint": "Let it pass",
+    "reaction": "The motion passes. It is added to the Rules, which are now longer than the Official History and more widely read.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -2
+     },
+     "custom": [
+      {
+       "id": "{ctx.practice}",
+       "prominence": 1
+      }
+     ]
+    }
+   },
+   {
+    "label": "Refer it to a committee.",
+    "hint": "Bury it",
+    "reaction": "The motion is referred to a committee, which refers it to a subcommittee, which meets on {day}s and is very happy.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.international",
+  "type": "organization",
+  "speaker": "any",
+  "shape": "outsider",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "flags": [
+    "international_ready"
+   ]
+  },
+  "once": true,
+  "priority": 2,
+  "weight": 4,
+  "topic": "going international",
+  "text": "A letter, from abroad. A group in another country has been doing {belief} for two years, after seeing the documentary. They have forty branches, a translation of everything we’ve ever said, which is longer than the original, and a question: may they join us, or are we supposed to join them?",
+  "choices": [
+   {
+    "label": "They join us.",
+    "hint": "One movement · The International era",
+    "reaction": "{Movement} becomes international overnight. The translators’ first task is the word “{meeting}”, which turns out not to translate. They keep it.",
+    "effects": {
+     "era": "international",
+     "gauges": {
+      "attention": 10,
+      "enthusiasm": 6,
+      "unity": -3
+     },
+     "flags": [
+      "international_us"
+     ]
+    }
+   },
+   {
+    "label": "We join each other. A federation.",
+    "hint": "Equals · The International era",
+    "reaction": "{Movement} and the group abroad form a federation. The first federal meeting is held on a {day}, by agreement, and on a Friday, by the other agreement.",
+    "effects": {
+     "era": "international",
+     "gauges": {
+      "attention": 8,
+      "unity": 3,
+      "enthusiasm": 3
+     },
+     "flags": [
+      "international_federation"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.tobias_villain",
+  "type": "character",
+  "speaker": "tobias",
+  "shape": "feud",
+  "setting": "private",
+  "topic": "the youth newsletter",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "tobias": {
+     "present": true
+    },
+    "juniper": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.4,
+  "text": "The youth newsletter has a comic strip. The villain is a man from the North with a moustache and a minibus called “the Northern Fleet”. I would like it known that I have feelings. They are northern feelings, so they are very deep and I will not be discussing them.",
+  "choices": [
+   {
+    "label": "Juniper will drop the strip.",
+    "hint": "Protect Tobias · Juniper sulks",
+    "reaction": "The strip ends. Its final panel shows the villain waving from the minibus, which Tobias cuts out and keeps in his wallet.",
+    "effects": {
+     "loyalty": {
+      "tobias": 10,
+      "juniper": -6
+     },
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "It’s affectionate, Tobias. Truly.",
+    "hint": "Keep the joke · Tobias tries",
+    "reaction": "Tobias reads every back issue to check. By issue nine he is rooting for the villain. By issue twelve he is writing in with suggestions.",
+    "effects": {
+     "loyalty": {
+      "tobias": -4,
+      "juniper": 5
+     },
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": -1
+     },
+     "remember": [
+      {
+       "who": "tobias",
+       "kind": "embarrassed",
+       "weight": 1
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "nat.juniper_asks",
+  "type": "character",
+  "speaker": "juniper",
+  "shape": "callback",
+  "setting": "private",
+  "topic": "the garage, really",
+  "requires": {
+   "era": [
+    "national"
+   ],
+   "chars": {
+    "juniper": {
+     "present": true
+    }
+   },
+   "decisions": ">=8"
+  },
+  "once": true,
+  "weight": 1.3,
+  "text": "Can I ask you something, off the record? What was it actually like? In the garage, at the start. Before the tote bags, before the History. I’ve never asked anyone who was there. I think I was scared to.",
+  "choices": [
+   {
+    "label": "Cold. Seven people. Four thought it was a book club.",
+    "hint": "The truth",
+    "reaction": "Juniper laughs until she has to sit down. Then she asks about the book club people, by name, and writes every name down. It is the best interview anyone has ever done with you.",
+    "effects": {
+     "loyalty": {
+      "juniper": 10
+     },
+     "gauges": {
+      "unity": 4
+     },
+     "flags": [
+      "juniper_knows"
+     ],
+     "remember": [
+      {
+       "who": "juniper",
+       "kind": "backed",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "It was exactly like the book.",
+    "hint": "Keep the magic",
+    "reaction": "Juniper nods slowly, relieved and a little disappointed, the way people are when they get exactly what they asked for.",
+    "effects": {
+     "loyalty": {
+      "juniper": 3
+     },
+     "gauges": {
+      "enthusiasm": 4
+     },
+     "flags": [
+      "juniper_myth_kept"
+     ]
+    }
+   }
+  ]
+ }
+]

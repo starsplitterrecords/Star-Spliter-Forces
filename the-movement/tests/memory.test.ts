@@ -142,3 +142,31 @@ describe('emergent doctrine', () => {
     expect(underground).toBeLessThan(20);
   });
 });
+
+describe('playtesting and the National era', () => {
+  it('fast-forwards a new game to the National era, where the institution arrives', async () => {
+    const { fastForwardTo } = await import('../src/story/autoplay');
+    let ok = false;
+    let s = fresh(31);
+    for (let t = 0; t < 6 && !ok; t++) {
+      s = fresh(31 + t);
+      ok = fastForwardTo(s, 'national', t + 1);
+    }
+    expect(ok).toBe(true);
+    expect(s.era).toBe('national');
+    expect(s.region.length).toBeGreaterThan(110); // the map widens to the country
+    playFor(s, 60, 'pleaser', new Rng(3));
+    const seen = new Set(s.history.map((h) => h.cardId));
+    expect([...seen].filter((id) => id.startsWith('nat.')).length).toBeGreaterThan(8);
+  }, 60000);
+
+  it('credits earlier decisions when later events refer back to them', async () => {
+    const { callbackCoverage } = await import('../src/story/engine');
+    const s = fresh(32);
+    playFor(s, 120, 'pleaser', new Rng(32));
+    const cov = callbackCoverage(s);
+    expect(cov.decisions).toBeGreaterThan(50);
+    expect(cov.share).toBeGreaterThan(0.1);
+    expect(cov.share).toBeLessThan(1);
+  });
+});

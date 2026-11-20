@@ -32,6 +32,9 @@
      }
     }
    }
+  ],
+  "notSpeaker": [
+   "gary"
   ]
  },
  {
@@ -101,6 +104,9 @@
      }
     }
    }
+  ],
+  "notSpeaker": [
+   "dez"
   ]
  },
  {
@@ -254,6 +260,9 @@
      "organizers": 3
     }
    }
+  ],
+  "notSpeaker": [
+   "rolf"
   ]
  },
  {
@@ -290,6 +299,9 @@
      }
     }
    }
+  ],
+  "notSpeaker": [
+   "gary"
   ]
  }
 ]
