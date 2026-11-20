@@ -32,4 +32,5 @@ need confirmation from the Star Splitter team.
 | D-25 | **Mid-run checkpoints**: the expedition is saved every 45 s and on every discovery; an interrupted run (crash, closed tab) is committed on next launch as "interrupted" with everything kept | D-21 | Done |
 | D-26 | The Silence HP 30,000 → 24,000 | D-21: owner has never beaten it | Done — tune again after more playtests |
 | D-27 | Web build patches Emscripten `GL.getNewId` to reuse freed WebGL names per table | Forced-GC browser soak: retained JS heap +16 MB/min, all in GL object tables (heap sampler). After patch: flat ~8 MB. Also: one AudioStreamPlayer per SFX, music volumes only set on change | Done — re-verify on each Godot upgrade (build asserts) |
+| D-28 | Web audio uses Godot's **stream** playback (`audio/general/default_playback_type.web=0`) instead of 4.3's default sample playback | Owner: "There is no sound." Browser probe: output RMS exactly 0 on title and in-game with sample playback (layers and SFX never started); 0.017–0.018 with stream playback | Done |
 
