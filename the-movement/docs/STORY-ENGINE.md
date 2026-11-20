@@ -73,6 +73,7 @@ Each card (`CardDef` in `src/story/types.ts`) has:
 | `choices[2]` | `label`, `hint`, `reaction`, `effects`, and optional free-text `input` |
 | `effects` | Gauges, `serves`, loyalty, influence, group shifts, customs, flags, timed modifiers, followers, organizers, awareness, campaigns, joins/leaves/roles, era, follow-ups, chronicle memory |
 | `weight`, `cooldown` (days), `spacing` (decisions), `once`, `priority`, `followUpOnly` | Frequency and repetition control |
+| `setting`, `topic`, `recall`, `shape`, `twist` | Memory, callbacks and editorial novelty (see `STORY-STATE.md`) |
 
 **Selection.** Follow-ups are scheduled at a specific day. Otherwise a card is drawn roughly every 0.4–0.9 game days, depending on era, from all eligible cards. A card is eligible when its requirements are met, it isn't on cooldown or spacing, and its speaker is present. Each card's weight is multiplied by its speaker's influence, and recent speakers are down-weighted. Crises jump the queue. Everything is seeded, so the same choices produce the same story.
 
@@ -91,15 +92,19 @@ The shipped game reads only the bundled JSON. Generative AI is a **development t
 - `npm run content:stress` plays dozens of games with five leadership styles (pleaser, random, order, expansion, stubborn). It reports card coverage, back-to-back repeats, decisions to each era, follower growth, idle compounding, how much playthroughs differ (names, beliefs, sets of customs) and what happened to each character.
 - A person edits drafts and promotes them into `src/story/content/`.
 
+Character memory, story chains with windows and cancellation, and customs the members invent are specified in **[`STORY-STATE.md`](STORY-STATE.md)**.
+
 ## 8. Vertical slice: what exists now
 
 - **8 characters.** Four at the start. Agnes and Rolf join in the grassroots era, Ophelia Stroud (ambitious branch leader, agenda expansion) and Lionel Fitch (consultant who speaks in departments, agenda order) in the regional era.
-- **26 customs**, 14 of them practices.
-- **118 cards:**
+- **40 customs:** 14 practices, and 14 customs the members can invent without asking.
+- **148 cards:**
   - 30 founding
   - 36 grassroots
   - 23 regional
   - 21 recurring
+  - 21 character cards (memory callbacks, plus twists where characters are right for the wrong reasons)
+  - 9 doctrine cards (taking a stance on members' customs)
   - 8 crises
 - **Arcs:**
   - Grassroots: Rolf's commercialisation, Agnes's minutes leading to a schism, Priya's burnout, the Knitting Circle feud, Kevin's memoir, soup in the boot of a car, and the Tuesday that becomes sacred.
@@ -120,7 +125,15 @@ The shipped game reads only the bundled JSON. Generative AI is a **development t
 
 - **Starved days** (nothing left that could be drawn, the stall reported in playtest) are a median of 0 and a maximum of 7. Before the recurring layer it was about 196 of 200.
 - **Quiet days** (nobody at the door, including ordinary gaps between arrivals that *Call a meeting* skips) run 25–45 of 300, mostly in the Regional era.
-- 110 of 118 cards were seen, with 0 back-to-back repeats.
+- 136 of 148 cards were seen, with 0 back-to-back repeats.
+- **Character memory:** each run writes about 170 memories. About a third were witnessed and about 40% name a rival; about 18 get called back.
+- **Story chains:** 101 delivered, 1 expired and 6 cancelled across 15 runs.
+- **Members' customs:** about 5 per run. The automated players mostly reform or condemn them; tolerating is rare.
+- **Editorial novelty:**
+  - the same comic shape twice running about 6 times per run;
+  - no character presents more than about 33% of named-character cards;
+  - a median story distance of 0.37 between counterfactual branches;
+  - 3 of 52 branched choices found inert.
 - Leaving the founding era takes about 25 decisions.
 - Most careful playthroughs reach the National era in 100–260 game days (130–330 decisions).
 - Leadership endings follow play style:

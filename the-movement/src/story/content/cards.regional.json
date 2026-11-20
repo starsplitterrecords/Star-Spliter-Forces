@@ -1,306 +1,1384 @@
 [
-  {
-    "id": "reg.ophelia_arrives", "type": "character", "speaker": "ophelia", "once": true, "priority": 6,
-    "requires": { "era": ["regional"], "chars": { "ophelia": { "present": false } } }, "bind": { "city": "activeCity" },
-    "text": "Ophelia Stroud. I run the {city} branch. Well, I’ve been running it; nobody actually asked me to. We’ve tripled since spring. I’d like a seat at the table.",
-    "choices": [
-      { "label": "Welcome to the table, Regional Director.", "hint": "Growth · A rising power",
-        "reaction": "Ophelia sits down at the table and, within a minute, is somehow at the head of it.",
-        "effects": { "join": ["ophelia"], "role": { "ophelia": "Regional Director" }, "loyalty": { "ophelia": 12 }, "influence": { "ophelia": 10 }, "serves": ["expansion"], "gauges": { "enthusiasm": 4 },
-          "memory": "Ophelia Stroud, who built the {city} branch, became Regional Director." } },
-      { "label": "Branches report to {hq}. That’s how it works.", "hint": "Control · She joins, unimpressed",
-        "reaction": "“Of course,” says Ophelia, in a voice that files the remark somewhere safe.",
-        "effects": { "join": ["ophelia"], "role": { "ophelia": "Branch Leader, {city}" }, "loyalty": { "ophelia": -15 }, "serves": ["order", "-expansion"], "gauges": { "unity": 2 } } }
-    ]
+ {
+  "id": "reg.ophelia_arrives",
+  "type": "character",
+  "speaker": "ophelia",
+  "shape": "outsider",
+  "once": true,
+  "priority": 6,
+  "requires": {
+   "era": [
+    "regional"
+   ],
+   "chars": {
+    "ophelia": {
+     "present": false
+    }
+   }
   },
-  {
-    "id": "reg.lionel_arrives", "type": "character", "speaker": "lionel", "once": true, "priority": 5,
-    "requires": { "era": ["regional"], "chars": { "lionel": { "present": false } }, "decisions": ">=3" },
-    "text": "Lionel Fitch. I came to observe. I’ve now observed. You have no structure. You have a garage, a soup committee and a lot of goodwill. I propose seven departments.",
-    "choices": [
-      { "label": "Seven departments it is.", "hint": "Order · Bureaucracy begins",
-        "reaction": "By Friday there are seven departments, each with a logo. The logos are surprisingly good.",
-        "effects": { "join": ["lionel"], "role": { "lionel": "Director of Operations" }, "flags": ["departments"], "loyalty": { "lionel": 12 }, "serves": ["order", "-joy"], "gauges": { "unity": 5, "enthusiasm": -4, "resources": -6 },
-          "memory": "Lionel Fitch reorganised {movement} into seven departments." } },
-      { "label": "We’ll grow our own way.", "hint": "Spontaneity · He stays to watch",
-        "reaction": "Lionel nods and stays anyway, taking notes in a small leather notebook marked OBSERVATIONS.",
-        "effects": { "join": ["lionel"], "loyalty": { "lionel": -10 }, "serves": ["-order", "joy"], "gauges": { "enthusiasm": 3 } } }
-    ]
+  "bind": {
+   "city": "activeCity"
   },
-  {
-    "id": "reg.martin_lionel", "type": "character", "speaker": "martin", "once": true,
-    "requires": { "flags": ["departments"], "chars": { "martin": { "present": true }, "lionel": { "present": true } } },
-    "text": "Lionel has replaced my laminated sign with a laminated policy about laminated signs. I founded this with you. Who decides how things are run now: me, or him?",
-    "choices": [
-      { "label": "You do, Martin.", "hint": "Loyalty to a founder · Lionel sidelined",
-        "reaction": "Martin rehangs his sign. It is slightly crooked, which he decides to leave as a statement.",
-        "effects": { "loyalty": { "martin": 12, "lionel": -12 }, "influence": { "martin": 8 }, "gauges": { "unity": 2 } } },
-      { "label": "Lionel does. It’s his job now.", "hint": "Professionalism · Martin hurt",
-        "reaction": "Martin says he understands. He goes home and laminates nothing for the first time in years.",
-        "effects": { "loyalty": { "martin": -14, "lionel": 10 }, "influence": { "lionel": 10 }, "gauges": { "unity": -3 }, "followUps": [{ "card": "reg.martin_doubts", "delay": 12, "chance": 0.7 }] } }
-    ]
+  "text": "Ophelia Stroud. I run the {city} branch. Well, I’ve been running it; nobody actually asked me to. We’ve tripled since spring. I’d like a seat at the table.",
+  "choices": [
+   {
+    "label": "Welcome to the table, Regional Director.",
+    "hint": "Growth · A rising power",
+    "reaction": "Ophelia sits down at the table and, within a minute, is somehow at the head of it.",
+    "effects": {
+     "join": [
+      "ophelia"
+     ],
+     "role": {
+      "ophelia": "Regional Director"
+     },
+     "loyalty": {
+      "ophelia": 12
+     },
+     "influence": {
+      "ophelia": 10
+     },
+     "serves": [
+      "expansion"
+     ],
+     "gauges": {
+      "enthusiasm": 4
+     },
+     "memory": "Ophelia Stroud, who built the {city} branch, became Regional Director."
+    }
+   },
+   {
+    "label": "Branches report to {hq}. That’s how it works.",
+    "hint": "Control · She joins, unimpressed",
+    "reaction": "“Of course,” says Ophelia, in a voice that files the remark somewhere safe.",
+    "effects": {
+     "join": [
+      "ophelia"
+     ],
+     "role": {
+      "ophelia": "Branch Leader, {city}"
+     },
+     "loyalty": {
+      "ophelia": -15
+     },
+     "serves": [
+      "order",
+      "-expansion"
+     ],
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.lionel_arrives",
+  "type": "character",
+  "speaker": "lionel",
+  "shape": "procedure",
+  "setting": "meeting",
+  "once": true,
+  "priority": 5,
+  "requires": {
+   "era": [
+    "regional"
+   ],
+   "chars": {
+    "lionel": {
+     "present": false
+    }
+   },
+   "decisions": ">=3"
   },
-  {
-    "id": "reg.martin_doubts", "type": "plot", "speaker": "martin", "once": true, "followUpOnly": true, "requires": { "chars": { "martin": { "present": true } } },
-    "text": "Do you remember the first gathering? Seven people. Four thought it was a book club. I knew every name. I don’t know anyone’s name any more, {title}.",
-    "choices": [
-      { "label": "Then help me fix that. Run the founders’ council.", "hint": "Martin restored · More structure",
-        "reaction": "The founders’ council meets in Gary’s garage, for old times’ sake. Martin brings name tags.",
-        "effects": { "role": { "martin": "Chair of the Founders’ Council" }, "loyalty": { "martin": 15 }, "groups": { "founders": 0.01 }, "gauges": { "unity": 4, "resources": -3 } } },
-      { "label": "That’s what growing looks like.", "hint": "Honest · Martin drifts",
-        "reaction": "Martin agrees that it is. He starts arriving late, then leaving early.",
-        "effects": { "loyalty": { "martin": -10 }, "gauges": { "enthusiasm": 2, "unity": -2 } } }
-    ]
+  "text": "Lionel Fitch. I came to observe. I’ve now observed. You have no structure. You have a garage, a soup committee and a lot of goodwill. I propose seven departments.",
+  "choices": [
+   {
+    "label": "Seven departments it is.",
+    "hint": "Order · Bureaucracy begins",
+    "reaction": "By Friday there are seven departments, each with a logo. The logos are surprisingly good.",
+    "effects": {
+     "join": [
+      "lionel"
+     ],
+     "role": {
+      "lionel": "Director of Operations"
+     },
+     "flags": [
+      "departments"
+     ],
+     "loyalty": {
+      "lionel": 12
+     },
+     "serves": [
+      "order",
+      "-joy"
+     ],
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": -4,
+      "resources": -6
+     },
+     "memory": "Lionel Fitch reorganised {movement} into seven departments."
+    }
+   },
+   {
+    "label": "We’ll grow our own way.",
+    "hint": "Spontaneity · He stays to watch",
+    "reaction": "Lionel nods and stays anyway, taking notes in a small leather notebook marked OBSERVATIONS.",
+    "effects": {
+     "join": [
+      "lionel"
+     ],
+     "loyalty": {
+      "lionel": -10
+     },
+     "serves": [
+      "-order",
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.martin_lionel",
+  "type": "character",
+  "speaker": "martin",
+  "shape": "feud",
+  "once": true,
+  "requires": {
+   "flags": [
+    "departments"
+   ],
+   "chars": {
+    "martin": {
+     "present": true
+    },
+    "lionel": {
+     "present": true
+    }
+   }
   },
-  {
-    "id": "reg.departments_bloat", "type": "organization", "speaker": "lionel", "cooldown": 30, "spacing": 18,
-    "requires": { "flags": ["departments"], "era": ["regional", "national"] },
-    "text": "The Department of Refreshments has requested budget to form a Department of Biscuits. The Department of Biscuits has, in turn, requested a Deputy.",
-    "variants": [
-      "The Department of Refreshments has requested budget to form a Department of Biscuits. The Department of Biscuits has, in turn, requested a Deputy.",
-      "Form 14-B, the form for requesting Form 14-A, now has a waiting list. I propose a Form 14-C to manage the list.",
-      "Two departments have discovered they are doing the same job. Both would like the other one abolished."
-    ],
-    "choices": [
-      { "label": "Approve it. Process is important.", "hint": "Order · Bureaucracy · Cost",
-        "reaction": "Approved. The approval itself requires approval, which arrives the following week.",
-        "effects": { "serves": ["order"], "gauges": { "unity": 2, "resources": -5, "enthusiasm": -2 } } },
-      { "label": "Merge the departments.", "hint": "Efficiency · Lionel irritated",
-        "reaction": "The departments merge. Their logos merge too, into something that looks like a confused owl.",
-        "effects": { "serves": ["-order"], "loyalty": { "lionel": -6 }, "gauges": { "resources": 4, "enthusiasm": 2 } } }
-    ]
+  "text": "Lionel has replaced my laminated sign with a laminated policy about laminated signs. I founded this with you. Who decides how things are run now: me, or him?",
+  "choices": [
+   {
+    "label": "You do, Martin.",
+    "hint": "Loyalty to a founder · Lionel sidelined",
+    "reaction": "Martin rehangs his sign. It is slightly crooked, which he decides to leave as a statement.",
+    "effects": {
+     "loyalty": {
+      "martin": 12,
+      "lionel": -12
+     },
+     "influence": {
+      "martin": 8
+     },
+     "gauges": {
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "Lionel does. It’s his job now.",
+    "hint": "Professionalism · Martin hurt",
+    "reaction": "Martin says he understands. He goes home and laminates nothing for the first time in years.",
+    "effects": {
+     "loyalty": {
+      "martin": -14,
+      "lionel": 10
+     },
+     "influence": {
+      "lionel": 10
+     },
+     "gauges": {
+      "unity": -3
+     },
+     "followUps": [
+      {
+       "card": "reg.martin_doubts",
+       "delay": 12,
+       "chance": 0.7
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.martin_doubts",
+  "type": "plot",
+  "speaker": "martin",
+  "shape": "callback",
+  "once": true,
+  "followUpOnly": true,
+  "requires": {
+   "chars": {
+    "martin": {
+     "present": true
+    }
+   }
   },
-  {
-    "id": "reg.branch_customs", "type": "doctrine", "speaker": "agenda:expansion", "cooldown": 18, "spacing": 14,
-    "requires": { "era": ["regional", "national"] }, "bind": { "city": "activeCity", "tradition": "tradition" },
-    "text": "The {city} branch does “{tradition}” differently. They say it suits them better. {hometown} says it’s heresy. {city} says {hometown} says everything is heresy.",
-    "choices": [
-      { "label": "Let {city} have its local version.", "hint": "Growth · Regional variation · Less unity",
-        "reaction": "The {city} version spreads to two neighbouring towns within a month. Nobody can say which is the original any more.",
-        "effects": { "serves": ["expansion", "-purity"], "groups": { "reformers": 0.02 }, "gauges": { "unity": -4, "enthusiasm": 4 }, "awareness": { "scope": "ctx", "amount": 0.1 } } },
-      { "label": "One movement, one way.", "hint": "Unity · {city} sulks",
-        "reaction": "{city} complies. Its {meeting} becomes very correct and noticeably quieter.",
-        "effects": { "serves": ["purity", "-expansion"], "groups": { "traditionalists": 0.02 }, "gauges": { "unity": 3, "enthusiasm": -3 } } }
-    ]
+  "text": "Do you remember the first gathering? Seven people. Four thought it was a book club. I knew every name. I don’t know anyone’s name any more, {title}.",
+  "choices": [
+   {
+    "label": "Then help me fix that. Run the founders’ council.",
+    "hint": "Martin restored · More structure",
+    "reaction": "The founders’ council meets in Gary’s garage, for old times’ sake. Martin brings name tags.",
+    "effects": {
+     "role": {
+      "martin": "Chair of the Founders’ Council"
+     },
+     "loyalty": {
+      "martin": 15
+     },
+     "groups": {
+      "founders": 0.01
+     },
+     "gauges": {
+      "unity": 4,
+      "resources": -3
+     }
+    }
+   },
+   {
+    "label": "That’s what growing looks like.",
+    "hint": "Honest · Martin drifts",
+    "reaction": "Martin agrees that it is. He starts arriving late, then leaving early.",
+    "effects": {
+     "loyalty": {
+      "martin": -10
+     },
+     "gauges": {
+      "enthusiasm": 2,
+      "unity": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.departments_bloat",
+  "type": "organization",
+  "speaker": "lionel",
+  "shape": "escalation",
+  "cooldown": 30,
+  "spacing": 18,
+  "requires": {
+   "flags": [
+    "departments"
+   ],
+   "era": [
+    "regional",
+    "national"
+   ]
   },
-  {
-    "id": "reg.ophelia_plan", "type": "plot", "speaker": "ophelia", "once": true, "requires": { "chars": { "ophelia": { "present": true } }, "decisions": ">=6", "era": ["regional"] },
-    "text": "I have a plan to reach every town within a day’s drive by spring. It needs organizers, a budget and, frankly, fewer decisions going through {hq}.",
-    "choices": [
-      { "label": "Do it. You have my backing.", "hint": "Fast growth · Ophelia’s power grows",
-        "reaction": "Ophelia’s plan arrives as a forty-page document with a map, a timeline and your signature already on it.",
-        "effects": { "serves": ["expansion", "-order"], "influence": { "ophelia": 12 }, "loyalty": { "ophelia": 8 }, "organizers": 2, "gauges": { "resources": -8 }, "reveal": 4,
-          "modifiers": [{ "stat": "campaign", "mult": 1.3, "days": 30, "label": "Ophelia’s regional plan" }], "followUps": [{ "card": "reg.ophelia_ambition", "delay": 25, "chance": 0.8 }] } },
-      { "label": "Slower, and through {hq}.", "hint": "Control · Ophelia frustrated",
-        "reaction": "Ophelia revises the plan. The new version is two pages long and says “as directed” eleven times.",
-        "effects": { "serves": ["order", "-expansion"], "loyalty": { "ophelia": -10 }, "gauges": { "unity": 3 }, "followUps": [{ "card": "reg.ophelia_ambition", "delay": 18, "chance": 0.6 }] } }
-    ]
+  "text": "The Department of Refreshments has requested budget to form a Department of Biscuits. The Department of Biscuits has, in turn, requested a Deputy.",
+  "variants": [
+   "The Department of Refreshments has requested budget to form a Department of Biscuits. The Department of Biscuits has, in turn, requested a Deputy.",
+   "Form 14-B, the form for requesting Form 14-A, now has a waiting list. I propose a Form 14-C to manage the list.",
+   "Two departments have discovered they are doing the same job. Both would like the other one abolished."
+  ],
+  "choices": [
+   {
+    "label": "Approve it. Process is important.",
+    "hint": "Order · Bureaucracy · Cost",
+    "reaction": "Approved. The approval itself requires approval, which arrives the following week.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": 2,
+      "resources": -5,
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "Merge the departments.",
+    "hint": "Efficiency · Lionel irritated",
+    "reaction": "The departments merge. Their logos merge too, into something that looks like a confused owl.",
+    "effects": {
+     "serves": [
+      "-order"
+     ],
+     "loyalty": {
+      "lionel": -6
+     },
+     "gauges": {
+      "resources": 4,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.branch_customs",
+  "type": "doctrine",
+  "speaker": "agenda:expansion",
+  "shape": "drift",
+  "cooldown": 18,
+  "spacing": 14,
+  "requires": {
+   "era": [
+    "regional",
+    "national"
+   ]
   },
-  {
-    "id": "reg.ophelia_ambition", "type": "plot", "speaker": "ophelia", "once": true, "followUpOnly": true, "requires": { "chars": { "ophelia": { "present": true } } },
-    "text": "The branches are asking who actually leads {movement}. Some of them have started saying it’s me. I haven’t discouraged them. I think we should discuss what happens next.",
-    "choices": [
-      { "label": "Share leadership with Ophelia.", "hint": "Stability · Less control",
-        "reaction": "A joint statement is issued. It is mostly in Ophelia’s handwriting.",
-        "effects": { "role": { "ophelia": "Co-Leader" }, "loyalty": { "ophelia": 20 }, "influence": { "ophelia": 15 }, "flags": ["shared_leadership"], "gauges": { "unity": 5 },
-          "memory": "{title} agreed to share the leadership of {movement} with Ophelia Stroud." } },
-      { "label": "There is one leader.", "hint": "Authority · Risk of a split",
-        "reaction": "Ophelia smiles, thanks you for your clarity, and calls a meeting of the branch leaders. You are not invited.",
-        "effects": { "loyalty": { "ophelia": -20 }, "gauges": { "unity": -5 }, "followUps": [{ "card": "reg.ophelia_split", "delay": 10, "chance": 0.75 }] } }
-    ]
+  "bind": {
+   "city": "activeCity",
+   "tradition": "tradition"
   },
-  {
-    "id": "reg.ophelia_split", "type": "plot", "speaker": "ophelia", "once": true, "followUpOnly": true, "requires": { "chars": { "ophelia": { "present": true, "loyalty": "<10" } } },
-    "text": "Several branches have voted to become independent. They’ll keep the customs, the name with a small amendment, and me. We can part as friends, or not.",
-    "choices": [
-      { "label": "Part as friends.", "hint": "Lose branches · Keep goodwill",
-        "reaction": "{movement} (Regional) is founded the next day. They send flowers. The card is signed by Ophelia and four hundred others.",
-        "effects": { "leave": [{ "id": "ophelia", "as": "rival" }], "followersPct": -0.12, "gauges": { "unity": 4 }, "flags": ["ophelia_split"],
-          "memory": "Ophelia Stroud led several branches out of {movement} to form {movement} (Regional)." } },
-      { "label": "Fight for every branch.", "hint": "Keep more members · Bitter",
-        "reaction": "It is a long, ugly month of competing {meetings}. You keep most of the branches and lose most of your sleep.",
-        "effects": { "leave": [{ "id": "ophelia", "as": "rival" }], "followersPct": -0.05, "gauges": { "unity": -8, "resources": -10, "enthusiasm": 4 }, "flags": ["ophelia_split", "branch_war"] } }
-    ]
+  "text": "The {city} branch does “{tradition}” differently. They say it suits them better. {hometown} says it’s heresy. {city} says {hometown} says everything is heresy.",
+  "choices": [
+   {
+    "label": "Let {city} have its local version.",
+    "hint": "Growth · Regional variation · Less unity",
+    "reaction": "The {city} version spreads to two neighbouring towns within a month. Nobody can say which is the original any more.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-purity"
+     ],
+     "groups": {
+      "reformers": 0.02
+     },
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": 4
+     },
+     "awareness": {
+      "scope": "ctx",
+      "amount": 0.1
+     }
+    }
+   },
+   {
+    "label": "One movement, one way.",
+    "hint": "Unity · {city} sulks",
+    "reaction": "{city} complies. Its {meeting} becomes very correct and noticeably quieter.",
+    "effects": {
+     "serves": [
+      "purity",
+      "-expansion"
+     ],
+     "groups": {
+      "traditionalists": 0.02
+     },
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.ophelia_plan",
+  "type": "plot",
+  "speaker": "ophelia",
+  "shape": "overpromise",
+  "setting": "meeting",
+  "once": true,
+  "requires": {
+   "chars": {
+    "ophelia": {
+     "present": true
+    }
+   },
+   "decisions": ">=6",
+   "era": [
+    "regional"
+   ]
   },
-  {
-    "id": "reg.original", "type": "rivalry", "speaker": "any", "cooldown": 25, "spacing": 20,
-    "requires": { "flags": ["agnes_faction"], "era": ["regional", "national"] }, "bind": { "city": "activeCity" },
-    "text": "Agnes’s Original {movement} has opened a branch in {city}. Their leaflet says we have “lost the minutes, and with them our way”.",
-    "choices": [
-      { "label": "Invite Agnes to talks.", "hint": "Reconciliation · Purists approve",
-        "reaction": "Agnes attends. She brings the original minutes and reads from them for two hours. Some of it is genuinely moving.",
-        "effects": { "serves": ["purity"], "groups": { "traditionalists": 0.02 }, "followersPct": 0.02, "gauges": { "unity": 4, "enthusiasm": -2 } } },
-      { "label": "Out-recruit them.", "hint": "Competition · Attention",
-        "reaction": "Two rival {meetings} on the same street, on the same night. Both are well attended. Neither will admit it.",
-        "effects": { "serves": ["expansion"], "gauges": { "enthusiasm": 4, "attention": 4, "unity": -2 }, "awareness": { "scope": "ctx", "amount": 0.08 } } }
-    ]
+  "text": "I have a plan to reach every town within a day’s drive by spring. It needs organizers, a budget and, frankly, fewer decisions going through {hq}.",
+  "choices": [
+   {
+    "label": "Do it. You have my backing.",
+    "hint": "Fast growth · Ophelia’s power grows",
+    "reaction": "Ophelia’s plan arrives as a forty-page document with a map, a timeline and your signature already on it.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-order"
+     ],
+     "influence": {
+      "ophelia": 12
+     },
+     "loyalty": {
+      "ophelia": 8
+     },
+     "organizers": 2,
+     "gauges": {
+      "resources": -8
+     },
+     "reveal": 4,
+     "modifiers": [
+      {
+       "stat": "campaign",
+       "mult": 1.3,
+       "days": 30,
+       "label": "Ophelia’s regional plan"
+      }
+     ],
+     "followUps": [
+      {
+       "card": "reg.ophelia_ambition",
+       "delay": 25,
+       "chance": 0.8
+      }
+     ]
+    }
+   },
+   {
+    "label": "Slower, and through {hq}.",
+    "hint": "Control · Ophelia frustrated",
+    "reaction": "Ophelia revises the plan. The new version is two pages long and says “as directed” eleven times.",
+    "effects": {
+     "serves": [
+      "order",
+      "-expansion"
+     ],
+     "loyalty": {
+      "ophelia": -10
+     },
+     "gauges": {
+      "unity": 3
+     },
+     "followUps": [
+      {
+       "card": "reg.ophelia_ambition",
+       "delay": 18,
+       "chance": 0.6
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.ophelia_ambition",
+  "type": "plot",
+  "speaker": "ophelia",
+  "shape": "schism",
+  "once": true,
+  "followUpOnly": true,
+  "requires": {
+   "chars": {
+    "ophelia": {
+     "present": true
+    }
+   }
   },
-  {
-    "id": "reg.rolf_company", "type": "rivalry", "speaker": "any", "once": true,
-    "requires": { "flags": ["rolf_rival"], "era": ["regional", "national"] },
-    "text": "Rolf has launched a company. It sells our customs as a monthly subscription box, with an app. It is doing extremely well.",
-    "choices": [
-      { "label": "Denounce it publicly.", "hint": "Integrity · Attention",
-        "reaction": "The denunciation is shared widely, mostly by people who then buy the box out of curiosity.",
-        "effects": { "serves": ["purity", "-money"], "gauges": { "attention": 6, "enthusiasm": 3, "resources": -2 } } },
-      { "label": "Negotiate a licensing deal.", "hint": "Resources · Purists aghast",
-        "reaction": "Rolf answers the phone on the first ring, as if he had been waiting. He had.",
-        "effects": { "serves": ["money", "-purity"], "gauges": { "resources": 12, "unity": -5 }, "groups": { "opportunists": 0.02 }, "flags": ["rolf_licensed"] } }
-    ]
+  "text": "The branches are asking who actually leads {movement}. Some of them have started saying it’s me. I haven’t discouraged them. I think we should discuss what happens next.",
+  "choices": [
+   {
+    "label": "Share leadership with Ophelia.",
+    "hint": "Stability · Less control",
+    "reaction": "A joint statement is issued. It is mostly in Ophelia’s handwriting.",
+    "effects": {
+     "role": {
+      "ophelia": "Co-Leader"
+     },
+     "loyalty": {
+      "ophelia": 20
+     },
+     "influence": {
+      "ophelia": 15
+     },
+     "flags": [
+      "shared_leadership"
+     ],
+     "gauges": {
+      "unity": 5
+     },
+     "memory": "{title} agreed to share the leadership of {movement} with Ophelia Stroud."
+    }
+   },
+   {
+    "label": "There is one leader.",
+    "hint": "Authority · Risk of a split",
+    "reaction": "Ophelia smiles, thanks you for your clarity, and calls a meeting of the branch leaders. You are not invited.",
+    "effects": {
+     "loyalty": {
+      "ophelia": -20
+     },
+     "gauges": {
+      "unity": -5
+     },
+     "followUps": [
+      {
+       "card": "reg.ophelia_split",
+       "delay": 10,
+       "chance": 0.75
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.ophelia_split",
+  "type": "plot",
+  "speaker": "ophelia",
+  "shape": "schism",
+  "setting": "meeting",
+  "once": true,
+  "followUpOnly": true,
+  "requires": {
+   "chars": {
+    "ophelia": {
+     "present": true,
+     "loyalty": "<10"
+    }
+   }
   },
-  {
-    "id": "reg.pilgrimage", "type": "doctrine", "speaker": "gary", "once": true,
-    "requires": { "era": ["regional"], "chars": { "gary": { "present": true } }, "followers": ">=2000" },
-    "text": "There are people outside my garage. From other towns. They want to see where it started. One of them asked if they could touch the lawnmower.",
-    "choices": [
-      { "label": "Open the garage to visitors.", "hint": "Tradition · Gary becomes a tour guide",
-        "reaction": "Gary gives tours. He is wonderful at it, mostly because he gets the history slightly wrong in a way everyone prefers.",
-        "effects": { "serves": ["comfort", "purity"], "loyalty": { "gary": 12 }, "role": { "gary": "Keeper of the Garage" }, "gauges": { "attention": 5, "enthusiasm": 4 }, "custom": [{ "id": "garage", "status": "sacred" }],
-          "memory": "Gary’s garage became a place of pilgrimage." } },
-      { "label": "Ask them to respect Gary’s privacy.", "hint": "Kindness · A missed moment",
-        "reaction": "The visitors leave politely. One leaves a small plaque on the gate. Gary keeps it polished.",
-        "effects": { "loyalty": { "gary": 5 }, "gauges": { "unity": 2 } } }
-    ]
+  "text": "Several branches have voted to become independent. They’ll keep the customs, the name with a small amendment, and me. We can part as friends, or not.",
+  "choices": [
+   {
+    "label": "Part as friends.",
+    "hint": "Lose branches · Keep goodwill",
+    "reaction": "{movement} (Regional) is founded the next day. They send flowers. The card is signed by Ophelia and four hundred others.",
+    "effects": {
+     "leave": [
+      {
+       "id": "ophelia",
+       "as": "rival"
+      }
+     ],
+     "followersPct": -0.12,
+     "gauges": {
+      "unity": 4
+     },
+     "flags": [
+      "ophelia_split"
+     ],
+     "memory": "Ophelia Stroud led several branches out of {movement} to form {movement} (Regional)."
+    }
+   },
+   {
+    "label": "Fight for every branch.",
+    "hint": "Keep more members · Bitter",
+    "reaction": "It is a long, ugly month of competing {meetings}. You keep most of the branches and lose most of your sleep.",
+    "effects": {
+     "leave": [
+      {
+       "id": "ophelia",
+       "as": "rival"
+      }
+     ],
+     "followersPct": -0.05,
+     "gauges": {
+      "unity": -8,
+      "resources": -10,
+      "enthusiasm": 4
+     },
+     "flags": [
+      "ophelia_split",
+      "branch_war"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.original",
+  "type": "rivalry",
+  "speaker": "any",
+  "shape": "feud",
+  "setting": "public",
+  "cooldown": 25,
+  "spacing": 20,
+  "requires": {
+   "flags": [
+    "agnes_faction"
+   ],
+   "era": [
+    "regional",
+    "national"
+   ]
   },
-  {
-    "id": "reg.priya_cookbook", "type": "character", "speaker": "priya", "once": true,
-    "requires": { "era": ["regional"], "customs": { "practice.soup": "practice+" }, "chars": { "priya": { "present": true } } },
-    "text": "A publisher wants a cookbook. “The Soups of {movement}”. They want me to write it, and they want you to write the foreword.",
-    "choices": [
-      { "label": "Write the foreword.", "hint": "Attention · Priya proud",
-        "reaction": "Your foreword is two pages about the night soup became a thing. Priya cries at the launch, into a soup.",
-        "effects": { "serves": ["joy"], "loyalty": { "priya": 12 }, "gauges": { "attention": 6, "resources": 5 }, "memory": "Priya Moss published “The Soups of {movement}”." } },
-      { "label": "Soup shouldn’t be a product.", "hint": "Integrity · Priya disappointed",
-        "reaction": "Priya agrees, sadly, and writes it anyway as a pamphlet. It is photocopied eight thousand times.",
-        "effects": { "loyalty": { "priya": -8 }, "gauges": { "enthusiasm": 2 } } }
-    ]
+  "bind": {
+   "city": "activeCity"
   },
-  {
-    "id": "reg.dez_billboard", "type": "character", "speaker": "dez", "once": true,
-    "requires": { "era": ["regional"], "chars": { "dez": { "present": true } } },
-    "text": "Hear me out. Motorway billboard. Forty feet wide. Your face, the word {movement}, and the phrase “Obviously.” I’ve put down a deposit.",
-    "choices": [
-      { "label": "Put my face on the motorway.", "hint": "Huge attention · Cost",
-        "reaction": "The billboard causes a minor traffic incident and a major surge in enquiries. Your face is now a landmark.",
-        "effects": { "serves": ["expansion"], "loyalty": { "dez": 10 }, "gauges": { "attention": 12, "resources": -10 }, "awareness": { "scope": "known", "amount": 0.08 } } },
-      { "label": "Get the deposit back.", "hint": "Dignity · Dez deflated",
-        "reaction": "Dez gets half the deposit back and spends it on a slightly smaller billboard, of his own face.",
-        "effects": { "loyalty": { "dez": -8 }, "gauges": { "resources": 3 } } }
-    ]
+  "text": "Agnes’s Original {movement} has opened a branch in {city}. Their leaflet says we have “lost the minutes, and with them our way”.",
+  "choices": [
+   {
+    "label": "Invite Agnes to talks.",
+    "hint": "Reconciliation · Purists approve",
+    "reaction": "Agnes attends. She brings the original minutes and reads from them for two hours. Some of it is genuinely moving.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "groups": {
+      "traditionalists": 0.02
+     },
+     "followersPct": 0.02,
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "Out-recruit them.",
+    "hint": "Competition · Attention",
+    "reaction": "Two rival {meetings} on the same street, on the same night. Both are well attended. Neither will admit it.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "gauges": {
+      "enthusiasm": 4,
+      "attention": 4,
+      "unity": -2
+     },
+     "awareness": {
+      "scope": "ctx",
+      "amount": 0.08
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.rolf_company",
+  "type": "rivalry",
+  "speaker": "any",
+  "shape": "commerce",
+  "setting": "public",
+  "once": true,
+  "requires": {
+   "flags": [
+    "rolf_rival"
+   ],
+   "era": [
+    "regional",
+    "national"
+   ]
   },
-  {
-    "id": "reg.permit", "type": "organization", "speaker": { "anon": { "name": "Ms. Ainsley Brook", "role": "County licensing office" } }, "once": true,
-    "requires": { "era": ["regional"], "followers": ">=3000" },
-    "text": "Gatherings of over two hundred people now require a permit. Your {meetings} have been very large. Some of them were, technically, parades.",
-    "choices": [
-      { "label": "Apply for the permits.", "hint": "Respectability · Paperwork",
-        "reaction": "The permits arrive. Lionel, or someone very like him, frames the first one.",
-        "effects": { "serves": ["order"], "gauges": { "resources": -6, "attention": -2, "unity": 2 } } },
-      { "label": "Smaller {meetings}, more of them.", "hint": "Spread out · Harder to organise",
-        "reaction": "Forty small {meetings} spring up in living rooms across the region. It feels, people say, like the garage days.",
-        "effects": { "serves": ["joy", "-order"], "gauges": { "enthusiasm": 3, "unity": -2 }, "awareness": { "scope": "known", "amount": 0.05 } } }
-    ]
+  "text": "Rolf has launched a company. It sells our customs as a monthly subscription box, with an app. It is doing extremely well.",
+  "choices": [
+   {
+    "label": "Denounce it publicly.",
+    "hint": "Integrity · Attention",
+    "reaction": "The denunciation is shared widely, mostly by people who then buy the box out of curiosity.",
+    "effects": {
+     "serves": [
+      "purity",
+      "-money"
+     ],
+     "gauges": {
+      "attention": 6,
+      "enthusiasm": 3,
+      "resources": -2
+     }
+    }
+   },
+   {
+    "label": "Negotiate a licensing deal.",
+    "hint": "Resources · Purists aghast",
+    "reaction": "Rolf answers the phone on the first ring, as if he had been waiting. He had.",
+    "effects": {
+     "serves": [
+      "money",
+      "-purity"
+     ],
+     "gauges": {
+      "resources": 12,
+      "unity": -5
+     },
+     "groups": {
+      "opportunists": 0.02
+     },
+     "flags": [
+      "rolf_licensed"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.pilgrimage",
+  "type": "doctrine",
+  "speaker": "gary",
+  "shape": "escalation",
+  "setting": "public",
+  "once": true,
+  "requires": {
+   "era": [
+    "regional"
+   ],
+   "chars": {
+    "gary": {
+     "present": true
+    }
+   },
+   "followers": ">=2000"
   },
-  {
-    "id": "reg.mayor", "type": "regional", "speaker": { "anon": { "name": "Mayor Cordelia Ashgrove", "role": "Mayor of {city}" } }, "once": true,
-    "requires": { "era": ["regional"], "followers": ">=5000" }, "bind": { "city": "bigCity" },
-    "text": "Half my constituents seem to be {members}, and the other half want to know why. I’m up for re-election. Would {movement} endorse me?",
-    "choices": [
-      { "label": "Endorse the mayor.", "hint": "Influence · Members divided",
-        "reaction": "The mayor wins comfortably and starts every speech with {belief}. Some members love it. Some feel used.",
-        "effects": { "gauges": { "attention": 8, "unity": -5 }, "awareness": { "scope": "ctx", "amount": 0.15 }, "flags": ["political"] } },
-      { "label": "We don’t do politics.", "hint": "Neutrality",
-        "reaction": "The mayor is disappointed but impressed. She attends a {meeting} anyway, as a private citizen with a large entourage.",
-        "effects": { "gauges": { "unity": 3, "attention": 2 } } }
-    ]
+  "text": "There are people outside my garage. From other towns. They want to see where it started. One of them asked if they could touch the lawnmower.",
+  "choices": [
+   {
+    "label": "Open the garage to visitors.",
+    "hint": "Tradition · Gary becomes a tour guide",
+    "reaction": "Gary gives tours. He is wonderful at it, mostly because he gets the history slightly wrong in a way everyone prefers.",
+    "effects": {
+     "serves": [
+      "comfort",
+      "purity"
+     ],
+     "loyalty": {
+      "gary": 12
+     },
+     "role": {
+      "gary": "Keeper of the Garage"
+     },
+     "gauges": {
+      "attention": 5,
+      "enthusiasm": 4
+     },
+     "custom": [
+      {
+       "id": "garage",
+       "status": "sacred"
+      }
+     ],
+     "memory": "Gary’s garage became a place of pilgrimage."
+    }
+   },
+   {
+    "label": "Ask them to respect Gary’s privacy.",
+    "hint": "Kindness · A missed moment",
+    "reaction": "The visitors leave politely. One leaves a small plaque on the gate. Gary keeps it polished.",
+    "effects": {
+     "loyalty": {
+      "gary": 5
+     },
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.priya_cookbook",
+  "type": "character",
+  "speaker": "priya",
+  "shape": "commerce",
+  "once": true,
+  "requires": {
+   "era": [
+    "regional"
+   ],
+   "customs": {
+    "practice.soup": "practice+"
+   },
+   "chars": {
+    "priya": {
+     "present": true
+    }
+   }
   },
-  {
-    "id": "reg.radio", "type": "regional", "speaker": "agenda:expansion", "once": true, "requires": { "era": ["regional"] },
-    "text": "Regional radio has offered us a weekly show. Thirty minutes, Sunday mornings. The producer asked who our “voice” is. Everyone looked at you.",
-    "choices": [
-      { "label": "I’ll host it myself.", "hint": "Attention · Personal fame",
-        "reaction": "Your first broadcast is twenty-nine minutes of nerves and one minute of something genuinely good. Listeners write in about that minute.",
-        "effects": { "gauges": { "attention": 8, "enthusiasm": 3, "unity": 2 }, "awareness": { "scope": "known", "amount": 0.06 } } },
-      { "label": "Let the members host it.", "hint": "Shared voice · Unpredictable",
-        "reaction": "A different member hosts every week. The week Gary hosts is the most popular episode by a distance.",
-        "effects": { "serves": ["joy"], "gauges": { "attention": 5, "enthusiasm": 4 }, "loyalty": { "gary": 4 } } }
-    ]
+  "text": "A publisher wants a cookbook. “The Soups of {movement}”. They want me to write it, and they want you to write the foreword.",
+  "choices": [
+   {
+    "label": "Write the foreword.",
+    "hint": "Attention · Priya proud",
+    "reaction": "Your foreword is two pages about the night soup became a thing. Priya cries at the launch, into a soup.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "loyalty": {
+      "priya": 12
+     },
+     "gauges": {
+      "attention": 6,
+      "resources": 5
+     },
+     "memory": "Priya Moss published “The Soups of {movement}”."
+    }
+   },
+   {
+    "label": "Soup shouldn’t be a product.",
+    "hint": "Integrity · Priya disappointed",
+    "reaction": "Priya agrees, sadly, and writes it anyway as a pamphlet. It is photocopied eight thousand times.",
+    "effects": {
+     "loyalty": {
+      "priya": -8
+     },
+     "gauges": {
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.dez_billboard",
+  "type": "character",
+  "speaker": "dez",
+  "shape": "overpromise",
+  "setting": "public",
+  "once": true,
+  "requires": {
+   "era": [
+    "regional"
+   ],
+   "chars": {
+    "dez": {
+     "present": true
+    }
+   }
   },
-  {
-    "id": "reg.newsletter", "type": "organization", "speaker": "agenda:order", "once": true, "requires": { "era": ["regional"] },
-    "text": "The official newsletter needs an editorial line. Some want news. Some want doctrine. Gary has submitted a nine-page piece about whales.",
-    "choices": [
-      { "label": "News and doctrine, plus Gary’s whales.", "hint": "Everyone gets something",
-        "reaction": "The newsletter triples in length. The whale section is the most read.",
-        "effects": { "serves": ["joy", "comfort"], "loyalty": { "gary": 6 }, "gauges": { "resources": -4, "enthusiasm": 3 } } },
-      { "label": "Doctrine only.", "hint": "Purity · A thinner read",
-        "reaction": "The newsletter becomes four pages of carefully checked doctrine. It is cited often and read rarely.",
-        "effects": { "serves": ["purity", "order"], "groups": { "traditionalists": 0.01 }, "gauges": { "unity": 3, "enthusiasm": -2 } } }
-    ]
+  "text": "Hear me out. Motorway billboard. Forty feet wide. Your face, the word {movement}, and the phrase “Obviously.” I’ve put down a deposit.",
+  "choices": [
+   {
+    "label": "Put my face on the motorway.",
+    "hint": "Huge attention · Cost",
+    "reaction": "The billboard causes a minor traffic incident and a major surge in enquiries. Your face is now a landmark.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "loyalty": {
+      "dez": 10
+     },
+     "gauges": {
+      "attention": 12,
+      "resources": -10
+     },
+     "awareness": {
+      "scope": "known",
+      "amount": 0.08
+     }
+    }
+   },
+   {
+    "label": "Get the deposit back.",
+    "hint": "Dignity · Dez deflated",
+    "reaction": "Dez gets half the deposit back and spends it on a slightly smaller billboard, of his own face.",
+    "effects": {
+     "loyalty": {
+      "dez": -8
+     },
+     "gauges": {
+      "resources": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.permit",
+  "type": "organization",
+  "speaker": {
+   "anon": {
+    "name": "Ms. Ainsley Brook",
+    "role": "County licensing office"
+   }
   },
-  {
-    "id": "reg.reformers_lite", "type": "doctrine", "speaker": { "anon": { "name": "Tasha Merriweather", "role": "Reformers’ spokesperson" } }, "once": true,
-    "requires": { "era": ["regional", "national"], "groups": { "reformers": ">=0.08" } },
-    "text": "We’d like to propose “{movement} Lite”. All the community, none of the mandatory anything. People would join who never would otherwise.",
-    "choices": [
-      { "label": "Allow a lighter membership.", "hint": "Much growth · Purists outraged",
-        "reaction": "Lite membership is enormously popular. The traditionalists refer to Lite members exclusively as “tourists”.",
-        "effects": { "serves": ["expansion", "joy", "-purity"], "groups": { "reformers": 0.03, "casuals": 0.03 }, "gauges": { "unity": -6 }, "modifiers": [{ "stat": "recruitment", "mult": 1.25, "days": 40, "label": "{movement} Lite" }],
-          "memory": "{movement} introduced a lighter form of membership." } },
-      { "label": "Membership means something.", "hint": "Purity · Reformers restless",
-        "reaction": "The proposal is declined. The reformers start meeting on a different night, “just to talk”.",
-        "effects": { "serves": ["purity"], "groups": { "traditionalists": 0.02 }, "gauges": { "unity": -2 }, "flags": ["reform_restless"] } }
-    ]
+  "shape": "outsider",
+  "setting": "public",
+  "once": true,
+  "requires": {
+   "era": [
+    "regional"
+   ],
+   "followers": ">=3000"
   },
-  {
-    "id": "reg.knitters_franchise", "type": "rivalry", "speaker": { "anon": { "name": "Mildred Fanshawe", "role": "The Thursday Knitting Circle (Regional)" } }, "once": true,
-    "requires": { "era": ["regional"], "anyFlags": ["knitters_war", "banner_war"] },
-    "text": "The Knitting Circle now has branches in nine towns. It turns out a common enemy is very good for recruitment. We thought you should know. That’s all.",
-    "choices": [
-      { "label": "Propose a truce. And a joint event.", "hint": "Peace · Attention",
-        "reaction": "The joint event is a craft fair with soup. It is the most peaceful afternoon either organisation has ever had.",
-        "effects": { "gauges": { "unity": 3, "attention": 4 }, "flags": ["knitters_peace"] } },
-      { "label": "This is war.", "hint": "Rivalry · Energy",
-        "reaction": "Both organisations recruit furiously. Wool sales and {movement} membership rise together.",
-        "effects": { "gauges": { "enthusiasm": 5, "attention": 4, "unity": -2 }, "modifiers": [{ "stat": "recruitment", "mult": 1.1, "days": 20, "label": "The Knitting War" }] } }
-    ]
+  "text": "Gatherings of over two hundred people now require a permit. Your {meetings} have been very large. Some of them were, technically, parades.",
+  "choices": [
+   {
+    "label": "Apply for the permits.",
+    "hint": "Respectability · Paperwork",
+    "reaction": "The permits arrive. Lionel, or someone very like him, frames the first one.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "resources": -6,
+      "attention": -2,
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "Smaller {meetings}, more of them.",
+    "hint": "Spread out · Harder to organise",
+    "reaction": "Forty small {meetings} spring up in living rooms across the region. It feels, people say, like the garage days.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-order"
+     ],
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -2
+     },
+     "awareness": {
+      "scope": "known",
+      "amount": 0.05
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.mayor",
+  "type": "regional",
+  "speaker": {
+   "anon": {
+    "name": "Mayor Cordelia Ashgrove",
+    "role": "Mayor of {city}"
+   }
   },
-  {
-    "id": "reg.lionel_review", "type": "organization", "speaker": "lionel", "once": true, "requires": { "chars": { "lionel": { "present": true } }, "decisions": ">=15", "era": ["regional"] },
-    "text": "I’ve reviewed the founding decisions. Some of them are, with respect, not scalable. “{belief}” for example. Have you considered a pilot programme?",
-    "choices": [
-      { "label": "Our founding customs are not up for review.", "hint": "Identity · Lionel annoyed",
-        "reaction": "Lionel writes “not up for review” in his notebook and underlines it, which is his version of shouting.",
-        "effects": { "serves": ["purity", "-order"], "loyalty": { "lionel": -8 }, "groups": { "traditionalists": 0.01 }, "gauges": { "unity": 3 } } },
-      { "label": "Run the pilot.", "hint": "Efficiency · Founders uneasy",
-        "reaction": "The pilot programme for {belief} has a steering group, three phases and a launch event. It is, somehow, still {belief}.",
-        "effects": { "serves": ["order", "-purity"], "loyalty": { "lionel": 8, "gary": -4, "priya": -4 }, "gauges": { "resources": 4, "enthusiasm": -3 } } }
-    ]
+  "shape": "outsider",
+  "setting": "public",
+  "once": true,
+  "requires": {
+   "era": [
+    "regional"
+   ],
+   "followers": ">=5000"
   },
-  {
-    "id": "reg.dez_overpromise", "type": "character", "speaker": "dez", "once": true, "requires": { "flags": ["dez_director"], "era": ["regional"] },
-    "bind": { "city": "activeCity" },
-    "text": "Small thing. I may have promised the {city} branch that {title} would visit. Personally. Every week. Forever.",
-    "choices": [
-      { "label": "Keep the promise, for a while.", "hint": "Local devotion · Costs your time",
-        "reaction": "You visit {city} every week for two months. They name a bench after you. Dez takes the credit.",
-        "effects": { "awareness": { "scope": "ctx", "amount": 0.15 }, "loyalty": { "dez": 8 }, "gauges": { "enthusiasm": 4, "resources": -5 } } },
-      { "label": "Correct the promise.", "hint": "Honesty · {city} disappointed",
-        "reaction": "{city} accepts a monthly visit instead, and a signed photograph that Dez had already printed.",
-        "effects": { "loyalty": { "dez": -5 }, "gauges": { "unity": 1 } } }
-    ]
+  "bind": {
+   "city": "bigCity"
   },
-  {
-    "id": "reg.national", "type": "plot", "speaker": "any", "once": true, "priority": 6,
-    "requires": { "era": ["regional"], "anyFlags": ["national_ready"] },
-    "text": "National television wants a documentary. They’ve asked to film a {meeting}, the garage and you. Someone has to decide what kind of movement the country sees.",
-    "choices": [
-      { "label": "Show them everything, as it is.", "hint": "Honesty · National era",
-        "reaction": "The documentary shows Gary asleep, Martin’s laminated signs and a very large pot of something. The country falls a little bit in love.",
-        "effects": { "era": "national", "gauges": { "attention": 10 }, "flags": ["documentary_honest"], "memory": "{Movement} appeared on national television, exactly as it was." } },
-      { "label": "Show them the best version of us.", "hint": "Polish · National era",
-        "reaction": "The documentary is beautifully shot and slightly untrue. Nobody can quite say which parts.",
-        "effects": { "era": "national", "gauges": { "attention": 8, "unity": 3 }, "flags": ["documentary_polished"], "memory": "{Movement} appeared on national television, at its very best." } }
-    ]
-  }
+  "text": "Half my constituents seem to be {members}, and the other half want to know why. I’m up for re-election. Would {movement} endorse me?",
+  "choices": [
+   {
+    "label": "Endorse the mayor.",
+    "hint": "Influence · Members divided",
+    "reaction": "The mayor wins comfortably and starts every speech with {belief}. Some members love it. Some feel used.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "unity": -5
+     },
+     "awareness": {
+      "scope": "ctx",
+      "amount": 0.15
+     },
+     "flags": [
+      "political"
+     ]
+    }
+   },
+   {
+    "label": "We don’t do politics.",
+    "hint": "Neutrality",
+    "reaction": "The mayor is disappointed but impressed. She attends a {meeting} anyway, as a private citizen with a large entourage.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "attention": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.radio",
+  "type": "regional",
+  "speaker": "agenda:expansion",
+  "shape": "outsider",
+  "setting": "public",
+  "once": true,
+  "requires": {
+   "era": [
+    "regional"
+   ]
+  },
+  "text": "Regional radio has offered us a weekly show. Thirty minutes, Sunday mornings. The producer asked who our “voice” is. Everyone looked at you.",
+  "choices": [
+   {
+    "label": "I’ll host it myself.",
+    "hint": "Attention · Personal fame",
+    "reaction": "Your first broadcast is twenty-nine minutes of nerves and one minute of something genuinely good. Listeners write in about that minute.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 3,
+      "unity": 2
+     },
+     "awareness": {
+      "scope": "known",
+      "amount": 0.06
+     }
+    }
+   },
+   {
+    "label": "Let the members host it.",
+    "hint": "Shared voice · Unpredictable",
+    "reaction": "A different member hosts every week. The week Gary hosts is the most popular episode by a distance.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "attention": 5,
+      "enthusiasm": 4
+     },
+     "loyalty": {
+      "gary": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.newsletter",
+  "type": "organization",
+  "speaker": "agenda:order",
+  "shape": "procedure",
+  "once": true,
+  "requires": {
+   "era": [
+    "regional"
+   ]
+  },
+  "text": "The official newsletter needs an editorial line. Some want news. Some want doctrine. Gary has submitted a nine-page piece about whales.",
+  "choices": [
+   {
+    "label": "News and doctrine, plus Gary’s whales.",
+    "hint": "Everyone gets something",
+    "reaction": "The newsletter triples in length. The whale section is the most read.",
+    "effects": {
+     "serves": [
+      "joy",
+      "comfort"
+     ],
+     "loyalty": {
+      "gary": 6
+     },
+     "gauges": {
+      "resources": -4,
+      "enthusiasm": 3
+     }
+    }
+   },
+   {
+    "label": "Doctrine only.",
+    "hint": "Purity · A thinner read",
+    "reaction": "The newsletter becomes four pages of carefully checked doctrine. It is cited often and read rarely.",
+    "effects": {
+     "serves": [
+      "purity",
+      "order"
+     ],
+     "groups": {
+      "traditionalists": 0.01
+     },
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.reformers_lite",
+  "type": "doctrine",
+  "speaker": {
+   "anon": {
+    "name": "Tasha Merriweather",
+    "role": "Reformers’ spokesperson"
+   }
+  },
+  "shape": "schism",
+  "setting": "meeting",
+  "once": true,
+  "requires": {
+   "era": [
+    "regional",
+    "national"
+   ],
+   "groups": {
+    "reformers": ">=0.08"
+   }
+  },
+  "text": "We’d like to propose “{movement} Lite”. All the community, none of the mandatory anything. People would join who never would otherwise.",
+  "choices": [
+   {
+    "label": "Allow a lighter membership.",
+    "hint": "Much growth · Purists outraged",
+    "reaction": "Lite membership is enormously popular. The traditionalists refer to Lite members exclusively as “tourists”.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "joy",
+      "-purity"
+     ],
+     "groups": {
+      "reformers": 0.03,
+      "casuals": 0.03
+     },
+     "gauges": {
+      "unity": -6
+     },
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 1.25,
+       "days": 40,
+       "label": "{movement} Lite"
+      }
+     ],
+     "memory": "{movement} introduced a lighter form of membership."
+    }
+   },
+   {
+    "label": "Membership means something.",
+    "hint": "Purity · Reformers restless",
+    "reaction": "The proposal is declined. The reformers start meeting on a different night, “just to talk”.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "groups": {
+      "traditionalists": 0.02
+     },
+     "gauges": {
+      "unity": -2
+     },
+     "flags": [
+      "reform_restless"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.knitters_franchise",
+  "type": "rivalry",
+  "speaker": {
+   "anon": {
+    "name": "Mildred Fanshawe",
+    "role": "The Thursday Knitting Circle (Regional)"
+   }
+  },
+  "shape": "backfire",
+  "setting": "public",
+  "once": true,
+  "requires": {
+   "era": [
+    "regional"
+   ],
+   "anyFlags": [
+    "knitters_war",
+    "banner_war"
+   ]
+  },
+  "text": "The Knitting Circle now has branches in nine towns. It turns out a common enemy is very good for recruitment. We thought you should know. That’s all.",
+  "choices": [
+   {
+    "label": "Propose a truce. And a joint event.",
+    "hint": "Peace · Attention",
+    "reaction": "The joint event is a craft fair with soup. It is the most peaceful afternoon either organisation has ever had.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "attention": 4
+     },
+     "flags": [
+      "knitters_peace"
+     ]
+    }
+   },
+   {
+    "label": "This is war.",
+    "hint": "Rivalry · Energy",
+    "reaction": "Both organisations recruit furiously. Wool sales and {movement} membership rise together.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 5,
+      "attention": 4,
+      "unity": -2
+     },
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 1.1,
+       "days": 20,
+       "label": "The Knitting War"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.lionel_review",
+  "type": "organization",
+  "speaker": "lionel",
+  "shape": "procedure",
+  "once": true,
+  "requires": {
+   "chars": {
+    "lionel": {
+     "present": true
+    }
+   },
+   "decisions": ">=15",
+   "era": [
+    "regional"
+   ]
+  },
+  "text": "I’ve reviewed the founding decisions. Some of them are, with respect, not scalable. “{belief}” for example. Have you considered a pilot programme?",
+  "choices": [
+   {
+    "label": "Our founding customs are not up for review.",
+    "hint": "Identity · Lionel annoyed",
+    "reaction": "Lionel writes “not up for review” in his notebook and underlines it, which is his version of shouting.",
+    "effects": {
+     "serves": [
+      "purity",
+      "-order"
+     ],
+     "loyalty": {
+      "lionel": -8
+     },
+     "groups": {
+      "traditionalists": 0.01
+     },
+     "gauges": {
+      "unity": 3
+     }
+    }
+   },
+   {
+    "label": "Run the pilot.",
+    "hint": "Efficiency · Founders uneasy",
+    "reaction": "The pilot programme for {belief} has a steering group, three phases and a launch event. It is, somehow, still {belief}.",
+    "effects": {
+     "serves": [
+      "order",
+      "-purity"
+     ],
+     "loyalty": {
+      "lionel": 8,
+      "gary": -4,
+      "priya": -4
+     },
+     "gauges": {
+      "resources": 4,
+      "enthusiasm": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.dez_overpromise",
+  "type": "character",
+  "speaker": "dez",
+  "shape": "overpromise",
+  "once": true,
+  "requires": {
+   "flags": [
+    "dez_director"
+   ],
+   "era": [
+    "regional"
+   ]
+  },
+  "bind": {
+   "city": "activeCity"
+  },
+  "text": "Small thing. I may have promised the {city} branch that {title} would visit. Personally. Every week. Forever.",
+  "choices": [
+   {
+    "label": "Keep the promise, for a while.",
+    "hint": "Local devotion · Costs your time",
+    "reaction": "You visit {city} every week for two months. They name a bench after you. Dez takes the credit.",
+    "effects": {
+     "awareness": {
+      "scope": "ctx",
+      "amount": 0.15
+     },
+     "loyalty": {
+      "dez": 8
+     },
+     "gauges": {
+      "enthusiasm": 4,
+      "resources": -5
+     }
+    }
+   },
+   {
+    "label": "Correct the promise.",
+    "hint": "Honesty · {city} disappointed",
+    "reaction": "{city} accepts a monthly visit instead, and a signed photograph that Dez had already printed.",
+    "effects": {
+     "loyalty": {
+      "dez": -5
+     },
+     "gauges": {
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "reg.national",
+  "type": "plot",
+  "speaker": "any",
+  "shape": "outsider",
+  "setting": "public",
+  "once": true,
+  "priority": 6,
+  "requires": {
+   "era": [
+    "regional"
+   ],
+   "anyFlags": [
+    "national_ready"
+   ]
+  },
+  "text": "National television wants a documentary. They’ve asked to film a {meeting}, the garage and you. Someone has to decide what kind of movement the country sees.",
+  "choices": [
+   {
+    "label": "Show them everything, as it is.",
+    "hint": "Honesty · National era",
+    "reaction": "The documentary shows Gary asleep, Martin’s laminated signs and a very large pot of something. The country falls a little bit in love.",
+    "effects": {
+     "era": "national",
+     "gauges": {
+      "attention": 10
+     },
+     "flags": [
+      "documentary_honest"
+     ],
+     "memory": "{Movement} appeared on national television, exactly as it was."
+    }
+   },
+   {
+    "label": "Show them the best version of us.",
+    "hint": "Polish · National era",
+    "reaction": "The documentary is beautifully shot and slightly untrue. Nobody can quite say which parts.",
+    "effects": {
+     "era": "national",
+     "gauges": {
+      "attention": 8,
+      "unity": 3
+     },
+     "flags": [
+      "documentary_polished"
+     ],
+     "memory": "{Movement} appeared on national television, at its very best."
+    }
+   }
+  ]
+ }
 ]

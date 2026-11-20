@@ -73,7 +73,7 @@ describe('founding', () => {
     s.customs['practice.soup'] = { status: 'practice', values: {}, prominence: 10, since: 0, history: [] };
     (s as unknown as { flags: Record<string, number> }).flags = {};
     // queue the naming card directly
-    s.scheduled.push({ card: 'found.name', day: s.day, ctx: {} });
+    s.scheduled.push({ card: 'found.name', day: s.day, until: s.day + 5, ctx: {} });
     advanceDays(s, 0.3);
     const inst = s.inbox.find((i) => i.cardId === 'found.name')!;
     expect(inst.ctx.name).toMatch(/Soup/);

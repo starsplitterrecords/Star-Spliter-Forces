@@ -3,6 +3,7 @@
   "id": "rec.grumble",
   "type": "character",
   "speaker": "unhappy",
+  "shape": "feud",
   "cooldown": 8,
   "spacing": 10,
   "weight": 1.6,
@@ -50,6 +51,7 @@
   "id": "rec.devoted",
   "type": "character",
   "speaker": "devoted",
+  "shape": "proposal",
   "cooldown": 10,
   "spacing": 12,
   "weight": 1.2,
@@ -99,6 +101,8 @@
   "id": "rec.reopen",
   "type": "character",
   "speaker": "any",
+  "shape": "callback",
+  "setting": "meeting",
   "cooldown": 10,
   "spacing": 14,
   "requires": {
@@ -164,6 +168,7 @@
     "role": "Member"
    }
   },
+  "shape": "proposal",
   "bind": {
    "anon": "anonName"
   },
@@ -222,6 +227,7 @@
     "role": "Joined last week"
    }
   },
+  "shape": "outsider",
   "bind": {
    "anon": "anonName"
   },
@@ -292,6 +298,8 @@
     "role": "Lives near a {meeting} venue"
    }
   },
+  "shape": "outsider",
+  "setting": "public",
   "bind": {
    "anon": "anonName",
    "city": "activeCity"
@@ -362,6 +370,8 @@
     "role": "Local press"
    }
   },
+  "shape": "outsider",
+  "setting": "public",
   "bind": {
    "anon": "anonName"
   },
@@ -414,6 +424,8 @@
   "id": "rec.order_push",
   "type": "organization",
   "speaker": "agenda:order",
+  "shape": "procedure",
+  "setting": "meeting",
   "cooldown": 6,
   "spacing": 10,
   "requires": {
@@ -467,6 +479,7 @@
   "id": "rec.joy_push",
   "type": "character",
   "speaker": "agenda:joy",
+  "shape": "proposal",
   "cooldown": 6,
   "spacing": 10,
   "requires": {
@@ -519,6 +532,8 @@
   "id": "rec.purity_push",
   "type": "doctrine",
   "speaker": "agenda:purity",
+  "shape": "escalation",
+  "setting": "meeting",
   "cooldown": 7,
   "spacing": 11,
   "requires": {
@@ -579,6 +594,7 @@
   "id": "rec.money_push",
   "type": "organization",
   "speaker": "agenda:money",
+  "shape": "commerce",
   "cooldown": 7,
   "spacing": 11,
   "requires": {
@@ -637,6 +653,7 @@
   "id": "rec.comfort_push",
   "type": "character",
   "speaker": "agenda:comfort",
+  "shape": "proposal",
   "cooldown": 8,
   "spacing": 12,
   "requires": {
@@ -696,6 +713,7 @@
   "id": "rec.visit_town",
   "type": "regional",
   "speaker": "any",
+  "shape": "logistics",
   "cooldown": 6,
   "spacing": 10,
   "requires": {
@@ -751,6 +769,8 @@
   "id": "rec.money_tight",
   "type": "organization",
   "speaker": "any",
+  "shape": "logistics",
+  "setting": "meeting",
   "cooldown": 8,
   "spacing": 12,
   "requires": {
@@ -799,6 +819,8 @@
   "id": "rec.windfall",
   "type": "organization",
   "speaker": "any",
+  "shape": "logistics",
+  "setting": "meeting",
   "cooldown": 10,
   "spacing": 12,
   "requires": {
@@ -849,6 +871,8 @@
   "id": "rec.faction_murmur",
   "type": "doctrine",
   "speaker": "any",
+  "shape": "schism",
+  "setting": "meeting",
   "cooldown": 10,
   "spacing": 14,
   "requires": {
@@ -903,6 +927,8 @@
   "id": "rec.celebrate",
   "type": "plot",
   "speaker": "any",
+  "shape": "proposal",
+  "setting": "meeting",
   "cooldown": 20,
   "spacing": 18,
   "requires": {
@@ -950,6 +976,7 @@
     "role": "Branch leader, {city}"
    }
   },
+  "shape": "logistics",
   "bind": {
    "anon": "anonName",
    "city": "activeCity"
@@ -1013,6 +1040,7 @@
     "role": "Organizer"
    }
   },
+  "shape": "logistics",
   "bind": {
    "anon": "anonName"
   },
@@ -1073,6 +1101,7 @@
   "id": "rec.rival_town",
   "type": "rivalry",
   "speaker": "any",
+  "shape": "feud",
   "cooldown": 8,
   "spacing": 12,
   "requires": {
@@ -1133,6 +1162,8 @@
     "role": "Regional news"
    }
   },
+  "shape": "outsider",
+  "setting": "public",
   "bind": {
    "anon": "anonName",
    "city": "activeCity"

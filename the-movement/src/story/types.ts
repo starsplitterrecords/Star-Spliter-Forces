@@ -55,6 +55,8 @@ export interface CustomProps {
 
 export interface CustomDef {
   id: string; // 'weekly_meeting' or 'practice.soup'
+  emergent?: boolean; // members can start this on their own; the founder never proposes it
+  startedBy?: string; // emergent: the character most likely to have started it (or a member group)
   category: 'schedule' | 'name' | 'attire' | 'greeting' | 'practice' | 'symbol' | 'rule' | 'ritual' | 'economy' | 'place';
   label: string; // shown in the customs list; may contain {value.x}
   noun?: string; // practices: "soup"
@@ -65,6 +67,89 @@ export interface CustomDef {
 }
 
 export type Cmp = string; // ">=10", "<0.3", "practice+", "none"
+
+// ------------------------------------------------------------------ memory, chains, doctrine
+
+/** What happened between you and a character, in enough detail to call it back precisely. */
+export type MemoryKind =
+  | 'overruled' // you went against what they asked for
+  | 'backed' // you gave them what they asked for
+  | 'passed_over' // you chose someone else's proposal over theirs (they were not the speaker)
+  | 'favoured' // you chose their proposal over someone else's
+  | 'promise' // you promised them something (see promise follow-ups)
+  | 'broken_promise'
+  | 'credited' // you gave them public credit
+  | 'blamed' // you blamed them
+  | 'vindicated' // they turned out to be right
+  | 'embarrassed'; // they were made to look foolish
+
+export type Setting = 'private' | 'meeting' | 'public'; // where the conversation on a card takes place
+
+export interface MemoryRecord {
+  id: number;
+  who: string; // the character who remembers
+  kind: MemoryKind;
+  topic: string; // what it was about: an authored topic, else the card id
+  cardId: string;
+  choice: 0 | 1;
+  quote: string; // the choice label as the player said it, rendered
+  day: number;
+  decision: number;
+  meeting: number; // which weekly meeting it happened at (floor(day / 7))
+  setting: Setting; // 'meeting' and 'public' memories were witnessed
+  other?: string; // the character you sided with instead (overruled/passed_over) or against (favoured)
+  weight: number; // 1 small, 2 notable, 3 unforgettable
+  resolved?: boolean; // apologised for, repaid, or otherwise settled by a later card
+  recalled: number; // how many times a card has called it back
+  lastRecalled?: number; // day
+}
+
+/** Authored memory: who remembers what about this choice. Automatic memories are written as well. */
+export interface RememberEffect {
+  who: string; // 'speaker', 'other' (from the recalled memory), 'starter' (of the bound emergent custom), or a character id
+  kind: MemoryKind;
+  topic?: string;
+  other?: string; // 'speaker' or a character id
+  weight?: number;
+}
+
+/** Find the memory a card calls back. The card is only eligible when one matches. */
+export interface RecallQuery {
+  who?: string; // a character id, 'speaker' (the card's fixed speaker) or 'any' (default)
+  exclude?: string[]; // never these characters (e.g. the speaker quoting someone else's memory)
+  kind?: MemoryKind | MemoryKind[];
+  topic?: string;
+  witnessed?: boolean; // setting was meeting/public (true) or private (false)
+  hasOther?: boolean; // only memories where you sided with someone else, who is still around
+  minAgo?: number; // in meetings
+  maxAgo?: number;
+  minWeight?: number;
+  unresolved?: boolean; // default true
+}
+
+export interface FollowUp {
+  card: string;
+  delay: number; // earliest arrival, in game days after the choice
+  maxDelay?: number; // latest arrival; after this the punchline has expired (default delay + 10)
+  chance?: number;
+  requires?: Requires; // must hold when it arrives (it waits until it does, or expires)
+  cancelIf?: Requires; // drop it the moment this holds: the situation that made it funny is gone
+  speaker?: 'same' | string; // 'same' keeps the person who presented the original card
+}
+
+export interface ScheduledCard {
+  card: string;
+  day: number; // earliest
+  until: number; // latest
+  ctx: Record<string, string>;
+  speaker?: string;
+  requires?: Requires;
+  cancelIf?: Requires;
+  from?: string; // the card that planted it
+}
+
+export type Stance = 'none' | 'endorsed' | 'tolerated' | 'reformed' | 'condemned';
+export type Origin = 'founder' | 'members';
 
 export interface Requires {
   era?: Era[];
@@ -80,6 +165,8 @@ export interface Requires {
   groups?: Partial<Record<Group, Cmp>>;
   cities?: Cmp; // cities at 85%+
   known?: Cmp; // known cities
+  memory?: RecallQuery; // at least one matching memory exists
+  meetings?: Cmp; // weekly meetings held so far
 }
 
 export interface Effects {
@@ -88,7 +175,7 @@ export interface Effects {
   loyalty?: Record<string, number>;
   influence?: Record<string, number>;
   groups?: Partial<Record<Group, number>>; // share of membership moved into (or out of) a group
-  custom?: { id: string; status?: CustomStatus; values?: Record<string, string>; prominence?: number }[];
+  custom?: { id: string; status?: CustomStatus; values?: Record<string, string>; prominence?: number; stance?: Stance }[];
   flags?: string[];
   clearFlags?: string[];
   modifiers?: { stat: Stat; mult: number; days: number; label: string }[];
@@ -102,10 +189,15 @@ export interface Effects {
   leave?: { id: string; as: 'left' | 'retired' | 'rival' }[];
   role?: Record<string, string>;
   era?: Era;
-  followUps?: { card: string; delay: number; chance?: number }[];
+  followUps?: FollowUp[];
+  remember?: RememberEffect[];
+  recall?: 'resolve' | 'deepen' | 'forget'; // what happens to the memory this card called back
+  stance?: Stance; // the founder's position on the emergent custom bound as ctx.emergent
   memory?: string; // chronicle entry
   speakerLoyalty?: number; // loyalty change for whoever presented the card
   speakerInfluence?: number;
+  otherLoyalty?: number; // loyalty change for the other person in the recalled memory ({mOther})
+  starterLoyalty?: number; // loyalty change for whoever started the bound emergent custom ({emergentBy})
   movementName?: string; // set name directly
   founderTitle?: string;
 }
@@ -132,6 +224,11 @@ export interface CardDef {
   text: string;
   variants?: string[]; // alternative texts for recurring cards; one is picked when the card is drawn
   choices: [ChoiceDef, ChoiceDef];
+  setting?: Setting; // where this conversation happens (default private): decides whether memories were witnessed
+  topic?: string; // what it is about, for memories (default: the card id)
+  recall?: RecallQuery; // call back a memory: fills {mQuote} {mAgo} {mWhen} {mWhere} {mOther} {mWho} {mTopic}
+  shape?: Shape; // the comic structure, for editorial novelty checks
+  twist?: 'right_wrong_reasons' | 'wrong_reasonable'; // a character subverting their own agenda
   weight?: number;
   cooldown?: number; // game days
   spacing?: number; // minimum decisions between appearances (default 12)
@@ -139,6 +236,26 @@ export interface CardDef {
   priority?: number; // higher jumps the queue
   followUpOnly?: boolean; // only arrives via a follow-up
 }
+
+/** Comic structures. Stress testing reports how often each one appears in a playthrough. */
+export const SHAPES = [
+  'proposal', // someone wants a thing adopted
+  'escalation', // a thing already adopted has grown out of proportion
+  'literalism', // someone took words exactly as said
+  'procedure', // the problem is the process itself
+  'overpromise', // someone committed you to something
+  'commerce', // a sacred thing meets money
+  'feud', // two people or groups versus each other
+  'outsider', // the world outside reacts
+  'callback', // the past returns, quoted
+  'vindication', // someone was right (possibly for the wrong reason)
+  'backfire', // something worked, and that was the problem
+  'schism', // the movement threatens to divide
+  'drift', // members changed something without asking
+  'logistics', // a small practical problem with absurd stakes
+  'crisis',
+] as const;
+export type Shape = (typeof SHAPES)[number];
 
 export interface ContentLibrary {
   version: number;
@@ -165,6 +282,10 @@ export interface CustomState {
   prominence: number;
   since: number;
   history: { day: number; status: CustomStatus; note?: string }[];
+  origin?: Origin; // who established it (default founder)
+  stance?: Stance; // the founder's position on a custom members started
+  startedBy?: string; // character id, if a character started it
+  underground?: boolean; // condemned, but still practised quietly
 }
 
 export interface CityState {
@@ -224,7 +345,10 @@ export interface StoryState {
   flags: Record<string, number>;
   modifiers: Modifier[];
   inbox: CardInstance[];
-  scheduled: { card: string; day: number; ctx: Record<string, string>; speaker?: string }[];
+  scheduled: ScheduledCard[];
+  memory: MemoryRecord[]; // what characters remember about you, newest last
+  nextMemoryId: number;
+  chains: { delivered: number; expired: number; cancelled: number; log: { card: string; outcome: 'expired' | 'cancelled'; day: number }[] };
   lastSeen: Record<string, number>; // card id -> day
   lastSeenAt: Record<string, number>; // card id -> decision count when it arrived
   decisions: number;

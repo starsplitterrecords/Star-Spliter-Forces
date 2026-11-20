@@ -7,6 +7,7 @@ import worldTopo from 'world-atlas/countries-50m.json';
 import { city, countryName } from '@/engine/geo';
 import { fmt, pct } from '@/engine/text';
 import { CHAR_BY_ID, CUSTOM_BY_ID, GROUP_LABEL, assignOrganizer, centralBelief, charName, followers, groupShare, renderCustomLabel } from '@/story/engine';
+import { describeMemory, salience } from '@/story/memory';
 import { GROUPS, type StoryState } from '@/story/types';
 import { Portrait } from './Portrait';
 
@@ -61,11 +62,16 @@ export function PeopleSheet({ s }: { s: StoryState }) {
                   </div>
                 </div>
                 <p className="mt-2 text-xs text-ink-300">{def.bio}</p>
-                {c.memories.length > 0 && (
-                  <ul className="mt-1 space-y-0.5 text-[11px] text-ink-400">
-                    {c.memories.slice(-3).map((m, i) => <li key={i}>• {m}</li>)}
-                  </ul>
-                )}
+                {(() => {
+                  // what is on their mind: the most salient things they remember about you
+                  const mems = (s.memory ?? []).filter((m) => m.who === id).sort((a, b) => salience(s, b) - salience(s, a)).slice(0, 3);
+                  if (!mems.length) return null;
+                  return (
+                    <ul className="mt-1 space-y-0.5 text-[11px] text-ink-400">
+                      {mems.map((m) => <li key={m.id}>• {describeMemory(m, (x) => charName(s, x))}</li>)}
+                    </ul>
+                  );
+                })()}
               </li>
             );
           })}
@@ -97,8 +103,15 @@ export function CustomsSheet({ s }: { s: StoryState }) {
                 <span className="font-serif">{def ? renderCustomLabel(s, id) : id}</span>
                 <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider ${STATUS_STYLE[c.status] ?? ''}`}>{c.status}</span>
               </div>
-              {def?.champion && <div className="mt-1 text-[11px] text-ink-400">Champion: {charName(s, def.champion)}</div>}
-              <div className="mt-1 text-[11px] text-ink-500">{c.history.map((h) => `${h.status} (day ${Math.floor(h.day)})`).join(' → ')}</div>
+              {c.origin === 'members' ? (
+                <div className="mt-1 text-[11px] text-ink-300">
+                  Started by {c.startedBy ? charName(s, c.startedBy) : 'the members'}, not you · {c.stance && c.stance !== 'none' ? `you ${({ endorsed: 'endorsed', tolerated: 'tolerate', reformed: 'reformed', condemned: 'condemned' } as Record<string, string>)[c.stance]} it` : 'you have not taken a position'}
+                  {c.underground && ' · still practised quietly'}
+                </div>
+              ) : (
+                def?.champion && <div className="mt-1 text-[11px] text-ink-400">Champion: {charName(s, def.champion)}</div>
+              )}
+              <div className="mt-1 text-[11px] text-ink-500">{c.history.map((h) => `${h.note && h.note !== 'started by members' ? h.note : h.status} (day ${Math.floor(h.day) + 1})`).join(' → ')}</div>
             </li>
           );
         })}

@@ -60,3 +60,19 @@ export function playFor(s: StoryState, days: number, policy: Policy, rng: Rng, i
     }
   }
 }
+
+/** Play until `target` decisions have been made and the next card is waiting (or the game ends). */
+export function playUntilDecision(s: StoryState, target: number, policy: Policy, rng: Rng, maxDays = 400): boolean {
+  const end = s.day + maxDays;
+  let guard = 0;
+  while (!s.ended && s.day < end && guard++ < 20000) {
+    const inst = currentCard(s);
+    if (inst && s.decisions >= target) return true;
+    if (inst) {
+      const card = CARD_BY_ID.get(inst.cardId)!;
+      const i = pickChoice(s, policy, rng);
+      choose(s, inst.uid, i, card.choices[i].input ? 'The Lentil Fellowship' : undefined);
+    } else callMeeting(s);
+  }
+  return false;
+}

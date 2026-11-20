@@ -1,0 +1,1271 @@
+[
+ {
+  "id": "mem.public_rejection",
+  "type": "character",
+  "speaker": "recall",
+  "shape": "callback",
+  "setting": "private",
+  "recall": {
+   "kind": "overruled",
+   "witnessed": true,
+   "hasOther": true,
+   "minAgo": 2
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 0.9,
+  "cooldown": 20,
+  "spacing": 16,
+  "text": "{mAgo}, {mWhere}, you went with {mOther} instead of me. You said, and I wrote it down: “{mQuote}.” I haven’t mentioned it since. I’m mentioning it now.",
+  "variants": [
+   "{mAgo}, {mWhere}, you went with {mOther} instead of me. You said, and I wrote it down: “{mQuote}.” I haven’t mentioned it since. I’m mentioning it now.",
+   "You remember. {mAgo}, {mWhere}: “{mQuote}.” {mOther} looked very pleased. I have thought about {mOther}’s face a great deal since.",
+   "People still bring it up. “Weren’t you the one {title} overruled for {mOther}?” That was {mAgo}. I’d like it to stop being the thing I’m known for."
+  ],
+  "choices": [
+   {
+    "label": "I shouldn’t have done it in front of everyone.",
+    "hint": "Apologise · Settles it",
+    "reaction": "{speaker} accepts the apology formally, then informally, then formally again for the minutes.",
+    "effects": {
+     "recall": "resolve",
+     "speakerLoyalty": 10,
+     "otherLoyalty": -3,
+     "gauges": {
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "{mOther} had the better idea.",
+    "hint": "Stand by it · The grudge deepens",
+    "reaction": "{speaker} nods slowly. {mOther} hears about it within the hour and becomes, briefly, unbearable.",
+    "effects": {
+     "recall": "deepen",
+     "speakerLoyalty": -8,
+     "otherLoyalty": 6,
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": 3
+     },
+     "remember": [
+      {
+       "who": "other",
+       "kind": "favoured",
+       "other": "speaker",
+       "weight": 2
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "mem.passed_over",
+  "type": "character",
+  "speaker": "recall",
+  "shape": "feud",
+  "setting": "private",
+  "recall": {
+   "kind": "passed_over",
+   "hasOther": true,
+   "minAgo": 1
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 0.9,
+  "cooldown": 20,
+  "spacing": 16,
+  "text": "Ever since you sided with {mOther}, {mAgo}, {mOther} has been unbearable. There’s a lanyard now. {mOther} had it made.",
+  "variants": [
+   "Ever since you sided with {mOther}, {mAgo}, {mOther} has been unbearable. There’s a lanyard now. {mOther} had it made.",
+   "{mOther} keeps quoting you. “{mQuote}.” At breakfast. At the {meeting}. Once, at a funeral. You chose {mOther} over me, and I live with the consequences daily."
+  ],
+  "choices": [
+   {
+    "label": "I’ll have a word with {mOther}.",
+    "hint": "Repair · {mOther} deflates",
+    "reaction": "The lanyard is retired. {mOther} keeps it in a drawer and looks at it sometimes.",
+    "effects": {
+     "recall": "resolve",
+     "speakerLoyalty": 7,
+     "otherLoyalty": -6,
+     "gauges": {
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "{mOther} earned it.",
+    "hint": "Hold firm · Resentment",
+    "reaction": "{speaker} commissions a larger lanyard. A lanyard arms race begins.",
+    "effects": {
+     "recall": "deepen",
+     "speakerLoyalty": -6,
+     "otherLoyalty": 4,
+     "gauges": {
+      "unity": -2,
+      "resources": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "mem.minutes",
+  "type": "character",
+  "speaker": "agnes",
+  "shape": "callback",
+  "setting": "meeting",
+  "recall": {
+   "witnessed": true,
+   "minAgo": 3,
+   "exclude": [
+    "agnes"
+   ],
+   "unresolved": false
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ],
+   "chars": {
+    "agnes": {
+     "present": true
+    }
+   }
+  },
+  "weight": 0.9,
+  "cooldown": 30,
+  "spacing": 16,
+  "text": "I am compiling the year’s minutes. Under “Things {title} Said”, I have: “{mQuote}”, said to {mWho} {mWhen}, {mWhere}. Do you stand by it? I ask because it will be bound.",
+  "choices": [
+   {
+    "label": "Every word.",
+    "hint": "Purity · It becomes scripture",
+    "reaction": "Agnes binds it in green cloth. {mWho} is given a copy, which they did not ask for.",
+    "effects": {
+     "recall": "deepen",
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": 2
+     }
+    }
+   },
+   {
+    "label": "Strike it from the record.",
+    "hint": "Forget it · Agnes objects",
+    "reaction": "Agnes strikes it out with a single, perfect line. The line is itself minuted.",
+    "effects": {
+     "recall": "forget",
+     "serves": [
+      "-purity"
+     ],
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "mem.vindicated",
+  "type": "character",
+  "speaker": "recall",
+  "shape": "vindication",
+  "setting": "private",
+  "recall": {
+   "kind": "overruled",
+   "minAgo": 4
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 0.9,
+  "cooldown": 20,
+  "spacing": 16,
+  "text": "{mAgo} I asked for something, and you said: “{mQuote}.” I’ve since been proven right. I won’t say how. I would simply like it noted.",
+  "choices": [
+   {
+    "label": "Noted. You were right.",
+    "hint": "Concede · Influence for them",
+    "reaction": "{speaker} has the word “noted” embroidered on a cushion, and brings the cushion to the {meeting}.",
+    "effects": {
+     "recall": "resolve",
+     "speakerLoyalty": 8,
+     "speakerInfluence": 4,
+     "gauges": {
+      "unity": 2
+     },
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "vindicated",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "Noted that you’re keeping score.",
+    "hint": "Authority · The list grows",
+    "reaction": "{speaker} writes “keeping score” on the list, which is now a scorecard.",
+    "effects": {
+     "recall": "deepen",
+     "speakerLoyalty": -6,
+     "gauges": {
+      "enthusiasm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "mem.mandate",
+  "type": "character",
+  "speaker": "recall",
+  "shape": "escalation",
+  "setting": "private",
+  "recall": {
+   "kind": "backed",
+   "minWeight": 2,
+   "minAgo": 1
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 0.9,
+  "cooldown": 20,
+  "spacing": 16,
+  "text": "{mAgo} you said: “{mQuote}.” It meant a great deal. So I’ve gone ahead and done eleven more things in the same spirit. I assumed you’d want that. Here is the list.",
+  "choices": [
+   {
+    "label": "Wonderful. Carry on.",
+    "hint": "Momentum · Costs money",
+    "reaction": "{speaker} carries on. Items twelve to nineteen are added by lunchtime.",
+    "effects": {
+     "recall": "resolve",
+     "speakerLoyalty": 6,
+     "speakerInfluence": 5,
+     "gauges": {
+      "enthusiasm": 4,
+      "resources": -5,
+      "unity": -2
+     }
+    }
+   },
+   {
+    "label": "That was one decision, not a mandate.",
+    "hint": "Rein in · They feel foolish",
+    "reaction": "{speaker} folds the list very small. You later find it, unfolded again, pinned to the noticeboard.",
+    "effects": {
+     "recall": "resolve",
+     "speakerLoyalty": -8,
+     "gauges": {
+      "unity": 3
+     },
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "embarrassed",
+       "weight": 1
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "mem.say_it_publicly",
+  "type": "character",
+  "speaker": "recall",
+  "shape": "callback",
+  "setting": "private",
+  "recall": {
+   "kind": "vindicated",
+   "minAgo": 1
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 0.9,
+  "cooldown": 20,
+  "spacing": 16,
+  "text": "{mAgo} I was proven right, and you said so: “{mQuote}.” Privately. Which I appreciate. But the people who laughed at me laughed at the {meeting}. Would you say it there?",
+  "choices": [
+   {
+    "label": "I’ll say it at the {meeting}.",
+    "hint": "Public credit · Someone else is embarrassed",
+    "reaction": "You say it. The room applauds. {speaker} pretends not to have prepared a response, then delivers it.",
+    "effects": {
+     "recall": "resolve",
+     "speakerLoyalty": 10,
+     "speakerInfluence": 4,
+     "gauges": {
+      "unity": -1,
+      "enthusiasm": 2
+     },
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "credited",
+       "weight": 3
+      }
+     ]
+    }
+   },
+   {
+    "label": "It doesn’t need saying twice.",
+    "hint": "Keep the peace · They notice",
+    "reaction": "{speaker} says that’s fine, in the voice people use when it is not fine.",
+    "effects": {
+     "recall": "deepen",
+     "speakerLoyalty": -5,
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.martin_inspection",
+  "type": "character",
+  "speaker": "martin",
+  "shape": "vindication",
+  "setting": "public",
+  "twist": "right_wrong_reasons",
+  "topic": "the evacuation plan",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "decisions": ">=15"
+  },
+  "once": true,
+  "weight": 1.5,
+  "text": "There’s a fire inspector at the door. Unannounced. He wants our evacuation plan. We have one: I laminated it in week two, mostly because I wanted to try the new orange pouches. Everyone laughed. May I show him?",
+  "choices": [
+   {
+    "label": "Show him Martin’s plan.",
+    "hint": "Order · Martin was right",
+    "reaction": "The inspector calls it the best plan he has seen in a community setting. Martin is asked to laminate the inspector’s plans too.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": 6,
+      "attention": 2
+     },
+     "speakerInfluence": 6,
+     "flags": [
+      "inspection_passed"
+     ],
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "vindicated",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "I’ll handle this myself.",
+    "hint": "Pride · Costs money",
+    "reaction": "You improvise. The inspector writes eleven things down. The fine arrives on very thin paper. Martin offers to laminate it.",
+    "effects": {
+     "serves": [
+      "-order"
+     ],
+     "gauges": {
+      "resources": -10,
+      "attention": 4
+     },
+     "speakerLoyalty": -6
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.dez_promise",
+  "type": "character",
+  "speaker": "dez",
+  "shape": "overpromise",
+  "setting": "public",
+  "topic": "the weather presenter",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "decisions": ">=12"
+  },
+  "once": true,
+  "weight": 1.5,
+  "text": "Small update. On local radio this morning I may have promised that the weather presenter from Channel Four will be at our next {meeting}. I haven’t asked her. But I said it with total confidence, which is half the battle.",
+  "choices": [
+   {
+    "label": "Then we’d better be ready for her.",
+    "hint": "Expansion · Dez on the hook",
+    "reaction": "Chairs are added. Someone irons a tablecloth. Dez practises a handshake that is both warm and meteorological.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "gauges": {
+      "attention": 6,
+      "enthusiasm": 4
+     },
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "promise",
+       "weight": 1
+      }
+     ],
+     "followUps": [
+      {
+       "card": "twist.dez_delivers",
+       "delay": 3,
+       "maxDelay": 9,
+       "requires": {
+        "gauges": {
+         "attention": ">=40"
+        }
+       },
+       "cancelIf": {
+        "anyFlags": [
+         "dez_promise_settled",
+         "dez_left",
+         "dez_rival",
+         "dez_retired"
+        ]
+       }
+      },
+      {
+       "card": "twist.dez_flop",
+       "delay": 5,
+       "maxDelay": 12,
+       "requires": {
+        "gauges": {
+         "attention": "<40"
+        }
+       },
+       "cancelIf": {
+        "anyFlags": [
+         "dez_promise_settled",
+         "dez_left",
+         "dez_rival",
+         "dez_retired"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "Call the station and retract it.",
+    "hint": "Caution · Dez is hurt",
+    "reaction": "The station reads your retraction on air. Dez listens in the car with the engine running and doesn’t come in for a while.",
+    "effects": {
+     "serves": [
+      "-expansion"
+     ],
+     "gauges": {
+      "attention": -3,
+      "unity": 2
+     },
+     "speakerLoyalty": -8
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.dez_delivers",
+  "type": "character",
+  "speaker": "gary",
+  "shape": "vindication",
+  "setting": "meeting",
+  "twist": "right_wrong_reasons",
+  "followUpOnly": true,
+  "topic": "the weather presenter",
+  "text": "She came. The weather presenter. Not because of Dez: she saw my whale flyer in the library and thought this was a whale-watching group. She stayed for the soup. She’d like to join. She knows a lot about whales.",
+  "choices": [
+   {
+    "label": "Welcome her. Let Dez take the credit.",
+    "hint": "Dez vindicated · Gary knows",
+    "reaction": "Dez accepts the credit with grace and a short speech. Gary nods. He knows. The whales know.",
+    "effects": {
+     "followers": 60,
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 4
+     },
+     "loyalty": {
+      "dez": 8,
+      "gary": -3
+     },
+     "flags": [
+      "dez_promise_settled",
+      "weather_member"
+     ],
+     "remember": [
+      {
+       "who": "dez",
+       "kind": "vindicated",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "Credit where due: Gary’s flyer.",
+    "hint": "Gary credited · Dez deflates",
+    "reaction": "Gary gets a round of applause and immediately falls asleep, overwhelmed. Dez applauds loudest, slightly hurt.",
+    "effects": {
+     "followers": 60,
+     "gauges": {
+      "attention": 6,
+      "unity": 2
+     },
+     "loyalty": {
+      "gary": 8,
+      "dez": -4
+     },
+     "flags": [
+      "dez_promise_settled",
+      "weather_member"
+     ],
+     "remember": [
+      {
+       "who": "gary",
+       "kind": "credited",
+       "weight": 2
+      },
+      {
+       "who": "dez",
+       "kind": "embarrassed",
+       "weight": 1
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.dez_flop",
+  "type": "character",
+  "speaker": "dez",
+  "shape": "backfire",
+  "setting": "private",
+  "followUpOnly": true,
+  "topic": "the weather presenter",
+  "text": "She didn’t come. I told everyone she sent her regards. Then people asked what her regards were, so I’ve been writing them. There are quite a lot of regards now. Some of them are forecasts.",
+  "choices": [
+   {
+    "label": "Come clean at the {meeting}.",
+    "hint": "Honesty · Dez embarrassed",
+    "reaction": "Dez confesses. The room forgives him instantly. Someone asks whether the forecasts were accurate. Two were.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -3
+     },
+     "speakerLoyalty": -4,
+     "flags": [
+      "dez_promise_settled"
+     ],
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "embarrassed",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "Keep the regards coming.",
+    "hint": "A harmless fiction · Unity frays",
+    "reaction": "“Regards from the Weather” becomes a regular feature of the newsletter. It is, by some distance, the most popular one.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "attention": 3,
+      "unity": -3
+     },
+     "speakerLoyalty": 6,
+     "flags": [
+      "dez_promise_settled",
+      "weather_regards"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.priya_picnic",
+  "type": "character",
+  "speaker": "priya",
+  "shape": "logistics",
+  "setting": "meeting",
+  "twist": "wrong_reasonable",
+  "topic": "the picnic",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "decisions": ">=18"
+  },
+  "once": true,
+  "weight": 1.5,
+  "text": "The council votes on our hall booking at three o’clock today. I’ve also organised a picnic at three o’clock, because it’s the first sunny day in five weeks and everyone is exhausted. I think the picnic matters more. I know how that sounds.",
+  "choices": [
+   {
+    "label": "Everyone to the council.",
+    "hint": "Secure the hall · Joy objects",
+    "reaction": "The booking is approved. Priya eats the picnic alone in the park and reports that it was, honestly, a very good picnic.",
+    "effects": {
+     "serves": [
+      "-joy"
+     ],
+     "gauges": {
+      "resources": 6,
+      "unity": 2,
+      "enthusiasm": -6
+     }
+    }
+   },
+   {
+    "label": "Everyone to the picnic.",
+    "hint": "Joy · Lose the hall for a while",
+    "reaction": "The council gives the hall to the Knitting Circle. Nobody at the picnic finds out until five, and nobody minds until six.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 9,
+      "unity": 5,
+      "resources": -6
+     },
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 0.85,
+       "days": 10,
+       "label": "No hall for a fortnight"
+      }
+     ],
+     "followUps": [
+      {
+       "card": "twist.picnic_after",
+       "delay": 2,
+       "maxDelay": 8,
+       "cancelIf": {
+        "anyFlags": [
+         "priya_left",
+         "priya_retired",
+         "priya_rival"
+        ]
+       }
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.picnic_after",
+  "type": "character",
+  "speaker": "martin",
+  "shape": "callback",
+  "setting": "private",
+  "followUpOnly": true,
+  "topic": "the picnic",
+  "text": "We lost the hall. This week’s {meeting} is in the bus shelter. I want to be cross about the picnic, {title}. I can’t. It was the best day we’ve had. That’s the problem. It was a lovely problem.",
+  "choices": [
+   {
+    "label": "Book somewhere for next week.",
+    "hint": "Order · Costs money",
+    "reaction": "Martin books a scout hut and laminates directions to it. Several people still go to the bus shelter, out of affection.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "resources": -4,
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "The bus shelter has its charms.",
+    "hint": "Visible · Order objects",
+    "reaction": "Passengers start staying for the {meeting}. Two miss their bus on purpose. One joins.",
+    "effects": {
+     "serves": [
+      "-order"
+     ],
+     "gauges": {
+      "attention": 4,
+      "enthusiasm": 3
+     },
+     "followers": 12,
+     "flags": [
+      "bus_shelter"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.agnes_roof",
+  "type": "character",
+  "speaker": "agnes",
+  "shape": "procedure",
+  "setting": "meeting",
+  "twist": "wrong_reasonable",
+  "topic": "the roof",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "chars": {
+    "agnes": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.3,
+  "text": "Before anyone votes on fixing the roof, every member must re-read the founding minutes. It is the only way to be sure the roof is consistent with our principles. At current reading speeds this will take eleven weeks. The roof is leaking now. I am aware.",
+  "choices": [
+   {
+    "label": "The minutes first.",
+    "hint": "Purity · The damp spreads",
+    "reaction": "Members read the minutes under umbrellas. Comprehension is high. So is the damp.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": 5,
+      "resources": -8,
+      "enthusiasm": -3
+     }
+    }
+   },
+   {
+    "label": "Fix the roof. Read later.",
+    "hint": "Practical · Agnes objects",
+    "reaction": "The roof is fixed in an afternoon. Agnes notes in the minutes that the roof is now “unprincipled, but dry”.",
+    "effects": {
+     "serves": [
+      "-purity"
+     ],
+     "gauges": {
+      "resources": -3,
+      "unity": -2,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.gary_biologists",
+  "type": "character",
+  "speaker": "gary",
+  "shape": "backfire",
+  "setting": "private",
+  "twist": "right_wrong_reasons",
+  "topic": "the whale newsletter",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "decisions": ">=20"
+  },
+  "once": true,
+  "weight": 1.3,
+  "text": "My whale newsletter went to the wrong mailing list. Forty marine biologists have joined. They think we’re about whales. I haven’t told them. I’m not completely sure we aren’t.",
+  "choices": [
+   {
+    "label": "We are, in a sense, about whales.",
+    "hint": "Growth · Muddied message",
+    "reaction": "The biologists are delighted. Gary becomes, informally, Head of Whales. Nobody objects, because nobody is sure it wasn’t already true.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "followers": 40,
+     "gauges": {
+      "attention": 4,
+      "unity": -3
+     },
+     "flags": [
+      "biologists"
+     ],
+     "followUps": [
+      {
+       "card": "twist.biologists_position",
+       "delay": 6,
+       "maxDelay": 20,
+       "cancelIf": {
+        "anyFlags": [
+         "gary_left",
+         "gary_retired",
+         "gary_rival"
+        ]
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "Gently explain the mix-up.",
+    "hint": "Honest · Gary feels silly",
+    "reaction": "Most of the biologists leave politely. Eight stay. Whales or no whales, they say, the soup is excellent.",
+    "effects": {
+     "followers": 8,
+     "gauges": {
+      "unity": 2
+     },
+     "speakerLoyalty": -4,
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "embarrassed",
+       "weight": 1
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.biologists_position",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Dr Wren Okafor",
+    "role": "Marine biologist, member"
+   }
+  },
+  "shape": "escalation",
+  "setting": "meeting",
+  "followUpOnly": true,
+  "topic": "the whale position",
+  "text": "The biologists have a question. What is {movement}’s official position on whales? We have drafted one. It is supportive. It is forty pages. {c.gary} has read it twice and cried once.",
+  "choices": [
+   {
+    "label": "Adopt it.",
+    "hint": "Gary delighted · Message drifts",
+    "reaction": "{Movement} now has a position on whales. It is more detailed than its position on anything else.",
+    "effects": {
+     "gauges": {
+      "attention": 4,
+      "enthusiasm": 4,
+      "unity": -3
+     },
+     "loyalty": {
+      "gary": 6
+     },
+     "flags": [
+      "whale_doctrine"
+     ]
+    }
+   },
+   {
+    "label": "We have no position on whales.",
+    "hint": "Focus · Some biologists leave",
+    "reaction": "Fifteen biologists leave. Gary is quiet for a week, then puts up a small, unofficial whale on the noticeboard.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "followers": -15,
+     "loyalty": {
+      "gary": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.rolf_potato",
+  "type": "character",
+  "speaker": "rolf",
+  "shape": "backfire",
+  "setting": "private",
+  "twist": "right_wrong_reasons",
+  "topic": "the potato mugs",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "customs": {
+    "merch": "practice+"
+   }
+  },
+  "once": true,
+  "weight": 1.2,
+  "text": "The misprinted mugs, the ones where the logo came out looking like a worried potato. I was going to write them off. They’ve sold out. People love the potato. I don’t understand why, and I do not enjoy not understanding why.",
+  "choices": [
+   {
+    "label": "Lean into the potato.",
+    "hint": "Money · The image wobbles",
+    "reaction": "The worried potato appears on tea towels and badges. Members adopt it as a sort of mascot; it unites people in a way the logo never did. Rolf calls it “the most profitable mistake of my career”, with visible discomfort.",
+    "effects": {
+     "serves": [
+      "money"
+     ],
+     "gauges": {
+      "resources": 10,
+      "attention": 4,
+      "unity": 3,
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "Reprint them properly.",
+    "hint": "Dignity · Rolf is relieved",
+    "reaction": "The corrected mugs sell four. Rolf keeps one potato mug on his desk, as a warning.",
+    "effects": {
+     "gauges": {
+      "resources": 2,
+      "unity": 2
+     },
+     "speakerLoyalty": 3
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.lionel_double_booking",
+  "type": "character",
+  "speaker": "lionel",
+  "shape": "vindication",
+  "setting": "private",
+  "twist": "right_wrong_reasons",
+  "topic": "the Department of Departments",
+  "requires": {
+   "era": [
+    "regional",
+    "national"
+   ],
+   "chars": {
+    "lionel": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.3,
+  "text": "My Department of Departments has no clear function. I accept that. However, while auditing itself it noticed that the hall is double-booked for the {meeting}: by us, and by a wedding. The wedding is in six days.",
+  "choices": [
+   {
+    "label": "Thank the Department of Departments.",
+    "hint": "Order · Lionel was right",
+    "reaction": "The booking is untangled. The Department of Departments receives a commendation, which it files in a department created for the purpose.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": 4,
+      "resources": 3
+     },
+     "speakerInfluence": 5,
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "vindicated",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "Merge the {meeting} with the wedding.",
+    "hint": "Joy · Chaos",
+    "reaction": "The bride is surprised. The groom joins. The speeches mention {belief} more than either family expected.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-order"
+     ],
+     "gauges": {
+      "enthusiasm": 8,
+      "attention": 5,
+      "resources": -4,
+      "unity": -2
+     },
+     "followers": 30
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.martin_cards",
+  "type": "character",
+  "speaker": "martin",
+  "shape": "procedure",
+  "setting": "meeting",
+  "twist": "wrong_reasonable",
+  "topic": "membership cards",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "decisions": ">=25"
+  },
+  "once": true,
+  "weight": 1.2,
+  "text": "Membership cards. Numbered, laminated, checked at the door. It’s only sensible. We don’t know who half these people are. I have the laminator warming up.",
+  "choices": [
+   {
+    "label": "Cards at the door.",
+    "hint": "Order · The queue grows",
+    "reaction": "Everyone gets a card. The queue at the door reaches the bus stop, where three people waiting to join give up and go home.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": 4,
+      "resources": -3
+     },
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 0.8,
+       "days": 10,
+       "label": "Queue at the door"
+      }
+     ]
+    }
+   },
+   {
+    "label": "Leave the door open.",
+    "hint": "Welcoming · Martin worries",
+    "reaction": "The door stays open. Martin laminates a single card, his own, and shows it to people who don’t ask.",
+    "effects": {
+     "serves": [
+      "-order"
+     ],
+     "gauges": {
+      "enthusiasm": 2,
+      "unity": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.dez_parade",
+  "type": "character",
+  "speaker": "dez",
+  "shape": "overpromise",
+  "setting": "public",
+  "twist": "right_wrong_reasons",
+  "topic": "the parade",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "decisions": ">=30"
+  },
+  "once": true,
+  "weight": 1.3,
+  "text": "I promised the mayor a parade. This Saturday. We don’t have a parade. But the carnival is on Saturday, and if we walk in front of it confidently enough, I believe we become the front of the carnival.",
+  "choices": [
+   {
+    "label": "Walk in front of the carnival.",
+    "hint": "Expansion · Enormous, if it works",
+    "reaction": "It works. Thirty thousand people cheer you for eleven minutes before anyone checks the programme. The carnival’s collection buckets end up with you. The paper calls you “the surprise opening act”.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "followers": 80,
+     "gauges": {
+      "attention": 10,
+      "enthusiasm": 5,
+      "unity": -2,
+      "resources": 6
+     },
+     "remember": [
+      {
+       "who": "speaker",
+       "kind": "vindicated",
+       "weight": 2
+      }
+     ]
+    }
+   },
+   {
+    "label": "Tell the mayor the truth.",
+    "hint": "Honest · Dez deflates",
+    "reaction": "The mayor is relieved; she had also promised a parade, to someone else. Dez is quiet for an entire afternoon.",
+    "effects": {
+     "serves": [
+      "-expansion"
+     ],
+     "speakerLoyalty": -6,
+     "gauges": {
+      "attention": -2,
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.ophelia_one_night",
+  "type": "character",
+  "speaker": "ophelia",
+  "shape": "procedure",
+  "setting": "meeting",
+  "twist": "wrong_reasonable",
+  "topic": "one night everywhere",
+  "requires": {
+   "era": [
+    "regional",
+    "national"
+   ],
+   "chars": {
+    "ophelia": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.3,
+  "text": "Every branch meets on a different night. It’s chaos for the newsletter, the radio show and me. One night, everywhere. It’s efficient, it’s fair, and I’ve already printed the calendars.",
+  "choices": [
+   {
+    "label": "One night, everywhere.",
+    "hint": "Tidy · Regulars drift away",
+    "reaction": "The calendars are beautiful. In nine towns, the people who could only come on the old night stop coming. Nobody notices for a month.",
+    "effects": {
+     "gauges": {
+      "unity": 4,
+      "resources": 3,
+      "enthusiasm": -3
+     },
+     "followersPct": -0.04,
+     "speakerInfluence": 4,
+     "serves": [
+      "expansion"
+     ]
+    }
+   },
+   {
+    "label": "Let each branch choose.",
+    "hint": "Local loyalty · Ophelia is irritated",
+    "reaction": "Ophelia reprints the calendars with forty-one different nights on them. They are still beautiful.",
+    "effects": {
+     "speakerLoyalty": -5,
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "twist.rolf_auditor",
+  "type": "character",
+  "speaker": "rolf",
+  "shape": "procedure",
+  "setting": "private",
+  "twist": "wrong_reasonable",
+  "topic": "the auditor",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "chars": {
+    "rolf": {
+     "present": true
+    }
+   },
+   "decisions": ">=30"
+  },
+  "once": true,
+  "weight": 1.2,
+  "text": "We need a proper external auditor. Not because anything is wrong. Because one day something will be, and I want it found by a professional. The good ones charge by the hour. They have a lot of hours.",
+  "choices": [
+   {
+    "label": "Hire the auditor.",
+    "hint": "Sound finances · Expensive",
+    "reaction": "The auditor finds nothing wrong, very thoroughly, over six weeks. The invoice is the largest thing the movement has ever bought. Rolf frames the clean report.",
+    "effects": {
+     "serves": [
+      "money"
+     ],
+     "gauges": {
+      "resources": -9,
+      "unity": 4
+     }
+    }
+   },
+   {
+    "label": "Rolf can audit us himself.",
+    "hint": "Cheap · Rolf is uneasy",
+    "reaction": "Rolf audits himself and finds two biscuits unaccounted for. He reports himself to himself and is, reluctantly, cleared.",
+    "effects": {
+     "serves": [
+      "-money"
+     ],
+     "gauges": {
+      "resources": 2,
+      "unity": -1
+     },
+     "speakerLoyalty": -4
+    }
+   }
+  ]
+ }
+]

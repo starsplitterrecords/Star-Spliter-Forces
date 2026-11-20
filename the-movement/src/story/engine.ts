@@ -6,6 +6,7 @@ import { CITIES, city, distanceKm } from '../engine/geo';
 import { moderate } from '../engine/ideology';
 import { Rng } from '../engine/rng';
 import { LIBRARY } from './library';
+import { agoText, findMemories, meetingNumber, recordMemory, salience, whereText, witnessed } from './memory';
 import {
   AGENDAS,
   type AwayReport,
@@ -17,6 +18,11 @@ import {
   type CustomStatus,
   type Effects,
   type Era,
+  type MemoryKind,
+  type RecallQuery,
+  type ScheduledCard,
+  type Setting,
+  type Stance,
   ERAS,
   GAUGES,
   type Gauge,
@@ -176,19 +182,26 @@ export function render(s: StoryState, text: string, ctx: Record<string, string> 
     beliefNoun: belief?.noun ?? 'the thing',
     item: s.customs.attire?.values.item ?? 'badges',
     towns: String(s.region.filter((id) => s.cities[id].followers > 0).length),
+    meetingNo: String(meetingNumber(s.day) + 1),
   };
   if (speaker && CHAR_BY_ID.has(speaker)) base.speaker = charName(s, speaker);
   for (const [k, v] of Object.entries(ctx)) {
     base[`ctx.${k}`] = v;
     if (k === 'city' || k.endsWith('City')) base[k] = city(Number(v)).name;
-    else if (k.startsWith('tradition')) base[k] = renderCustomLabel(s, v).replace(/^\w/, (c) => c.toLowerCase());
+    else if (k.startsWith('tradition') || k === 'emergent') base[k] = renderCustomLabel(s, v).replace(/^\w/, (c) => c.toLowerCase());
     else if (k.startsWith('practice')) {
       const p = CUSTOM_BY_ID.get(v);
       base[k] = p?.phrase ?? v;
       base[`${k}Noun`] = p?.noun ?? v;
     } else base[k] = v;
   }
-  return text.replace(/\{([\w.]+)\}/g, (whole, key: string) => {
+  const out = text.replace(/\{([\w.]+)\}/g, (whole, key: string, offset: number) => {
+    const v = value(whole, key);
+    // a phrase substituted at the start of a sentence starts with a capital
+    return /(^|[.!?]\s+)$/.test(text.slice(0, offset)) ? v.replace(/^[a-z]/, (ch) => ch.toUpperCase()) : v;
+  });
+  return out;
+  function value(whole: string, key: string): string {
     if (key in base) return base[key];
     if (key.startsWith('c.')) return charName(s, key.slice(2));
     if (key.startsWith('C.')) return charName(s, key.slice(2), true);
@@ -198,16 +211,17 @@ export function render(s: StoryState, text: string, ctx: Record<string, string> 
       return s.customs[id]?.values[field] ?? whole;
     }
     return whole;
-  });
+  }
 }
 
-export const RENDER_TOKENS = ['pastText', 'pastDay', 'pastWho', 'towns', 'title', 'founder', 'initial', 'movement', 'Movement', 'members', 'member', 'Members', 'meeting', 'meetings', 'day', 'hq', 'hometown', 'count', 'belief', 'beliefNoun', 'item', 'speaker'];
+export const RECALL_TOKENS = ['mQuote', 'mAgo', 'mWhen', 'mWhere', 'mOther', 'mWho', 'mTopic', 'mDay'];
+export const RENDER_TOKENS = ['meetingNo', 'pastText', 'pastDay', 'pastWho', 'towns', 'title', 'founder', 'initial', 'movement', 'Movement', 'members', 'member', 'Members', 'meeting', 'meetings', 'day', 'hq', 'hometown', 'count', 'belief', 'beliefNoun', 'item', 'speaker'];
 
 // ------------------------------------------------------------------ binders (fill card context at draw time)
 
 const ATTIRE = ['matching hats', 'green socks', 'small badges', 'capes', 'identical scarves', 'monocles', 'orange shoelaces', 'name tags written in calligraphy'];
 
-type Binder = (s: StoryState, rng: Rng) => string | null;
+type Binder = (s: StoryState, rng: Rng, arg?: string) => string | null;
 // practices that have their own authored introduction cards are not offered generically
 const DEDICATED_PRACTICES = new Set(
   LIBRARY.cards.flatMap((c) => c.choices.flatMap((ch) => (ch.effects.custom ?? []).map((x) => x.id))).filter((id) => id.startsWith('practice.')),
@@ -256,7 +270,28 @@ export const BINDERS: Record<string, Binder> = {
     return list.length ? rng.pick(list) : null;
   },
   rivalName: (_s, rng) => rng.pick(['the Thursday Knitting Circle', 'the Hometown Chess & Grievance Club', 'the Society for Ordinary Evenings']),
+  // emergent:<stance>[:starter] — a custom the members started, with the founder's current stance
+  // ('none' = not yet addressed, 'underground' = condemned but still practised). ':starter' needs a present starter.
+  emergent: (s, rng, arg = 'none') => {
+    const [stance, need] = arg.split(':');
+    const list = Object.entries(s.customs).filter(([id, c]) => {
+      if (c.origin !== 'members' || !CUSTOM_BY_ID.has(id)) return false;
+      if (stance === 'underground') { if (!c.underground) return false; }
+      else if ((c.stance ?? 'none') !== stance || c.status === 'abandoned') return false;
+      if (need === 'starter' && !(c.startedBy && s.chars[c.startedBy]?.present && s.chars[c.startedBy].status === 'active')) return false;
+      if (need === 'grown' && c.prominence < 3) return false;
+      return true;
+    });
+    return list.length ? rng.weighted(list, ([, c]) => 1 + c.prominence)![0] : null;
+  },
 };
+
+export function binderFor(name: string): ((s: StoryState, rng: Rng) => string | null) | null {
+  const i = name.indexOf(':');
+  const fn = BINDERS[i < 0 ? name : name.slice(0, i)];
+  if (!fn) return null;
+  return (st, rng) => fn(st, rng, i < 0 ? undefined : name.slice(i + 1));
+}
 
 // ------------------------------------------------------------------ requirements
 
@@ -285,6 +320,8 @@ export function requirementsMet(s: StoryState, r: Requires | undefined): boolean
   if (r.groups) for (const [g, e] of Object.entries(r.groups)) if (!compare(groupShare(s, g as Group), e!)) return false;
   if (r.cities && !compare(s.region.filter((id) => s.cities[id].milestone).length, r.cities)) return false;
   if (r.known && !compare(s.region.filter((id) => s.cities[id].known).length, r.known)) return false;
+  if (r.meetings && !compare(meetingNumber(s.day), r.meetings)) return false;
+  if (r.memory && !findMemories(s, r.memory).length) return false;
   return true;
 }
 
@@ -324,6 +361,9 @@ export function newStory(founderName: string, hometown: number, seed: number, no
     modifiers: [],
     inbox: [],
     scheduled: [],
+    memory: [],
+    nextMemoryId: 1,
+    chains: { delivered: 0, expired: 0, cancelled: 0, log: [] },
     lastSeen: {},
     lastSeenAt: {},
     decisions: 0,
@@ -373,10 +413,36 @@ function bindCard(s: StoryState, card: CardDef, rng: Rng, preset: Record<string,
   const ctx: Record<string, string> = { ...preset };
   for (const [k, binder] of Object.entries(card.bind ?? {})) {
     if (ctx[k] != null) continue;
-    const fn = BINDERS[binder];
+    const fn = binderFor(binder);
     const v = fn ? fn(s, rng) : null;
     if (v == null) return null;
     ctx[k] = v;
+  }
+  if (ctx.emergent != null && ctx.emergentBy == null) {
+    const by = s.customs[ctx.emergent]?.startedBy;
+    ctx.emergentById = by ?? '';
+    ctx.emergentBy = by ? charName(s, by) : 'a few of the members';
+  }
+  if (card.recall && ctx.mem == null) {
+    const fixed = typeof card.speaker === 'string' && CHAR_BY_ID.has(card.speaker) ? card.speaker : undefined;
+    const list = findMemories(s, card.recall, fixed);
+    if (!list.length) return null;
+    const m = rng.weighted(list, (x) => salience(s, x) + 0.01)!;
+    const meet = meetingWord(s);
+    const day = s.customs.weekly_meeting?.values.day ?? 'Tuesday';
+    Object.assign(ctx, {
+      mem: String(m.id),
+      mWhoId: m.who,
+      mWho: charName(s, m.who),
+      mQuote: m.quote.replace(/[.!?]$/, ''),
+      mAgo: agoText(meetingNumber(s.day) - m.meeting, meet, day),
+      mWhen: `on day ${Math.floor(m.day) + 1}`,
+      mDay: String(Math.floor(m.day) + 1),
+      mWhere: whereText(m.setting, meet.one),
+      mOtherId: m.other ?? '',
+      mOther: m.other ? charName(s, m.other) : 'someone else',
+      mTopic: m.topic.includes('.') ? 'that' : m.topic,
+    });
   }
   if (card.bind?.anon && !ctx.anon) ctx.anon = BINDERS.anonName(s, rng)!;
   if (ctx.past != null && ctx.pastText == null) {
@@ -397,9 +463,12 @@ function enqueue(s: StoryState, cardId: string, rng: Rng, preset: Record<string,
   if (!ctx) return null;
   let who: ReturnType<typeof resolveSpeaker>;
   if (speakerOverride && s.chars[speakerOverride]?.present) who = { speaker: speakerOverride };
+  else if (card.speaker === 'recall') who = ctx.mWhoId ? { speaker: ctx.mWhoId } : null;
   else if (typeof card.speaker === 'string' && card.speaker.startsWith('champion:')) {
-    const p = CUSTOM_BY_ID.get(ctx[card.speaker.slice(9)] ?? '');
-    const champ = p?.champion && s.chars[p.champion]?.present ? p.champion : null;
+    const cid = ctx[card.speaker.slice(9)] ?? '';
+    const p = CUSTOM_BY_ID.get(cid);
+    const pick = s.customs[cid]?.startedBy ?? p?.champion;
+    const champ = pick && s.chars[pick]?.present && s.chars[pick].status === 'active' ? pick : null;
     const present = Object.entries(s.chars).filter(([, c]) => c.present && c.status === 'active');
     who = champ ? { speaker: champ } : present.length ? { speaker: rng.pick(present)[0] } : null;
   } else who = resolveSpeaker(s, card, rng);
@@ -407,6 +476,13 @@ function enqueue(s: StoryState, cardId: string, rng: Rng, preset: Record<string,
   if (who.anon && ctx.anon) who.anon.name = ctx.anon;
   const inst: CardInstance = { uid: `k${s.nextUid++}`, cardId, speaker: who.speaker, anon: who.anon, ctx, arrivedDay: s.day, priority: card.priority ?? 0 };
   s.inbox.push(inst);
+  if (ctx.mem) {
+    const m = s.memory.find((x) => x.id === Number(ctx.mem));
+    if (m) {
+      m.recalled++;
+      m.lastRecalled = s.day;
+    }
+  }
   s.lastSeen[cardId] = s.day;
   s.lastSeenAt[cardId] = s.decisions;
   return inst;
@@ -421,17 +497,23 @@ export function eligibleCards(s: StoryState): CardDef[] {
     // spacing is measured in decisions, but quiet stretches count too (otherwise an empty desk could never refill)
     const spacing = c.spacing ?? 12;
     if (s.lastSeenAt[c.id] != null && s.decisions - s.lastSeenAt[c.id] < spacing && s.day - s.lastSeen[c.id] < spacing) return false;
-    return requirementsMet(s, c.requires);
+    if (!requirementsMet(s, c.requires)) return false;
+    if (c.recall && !findMemories(s, c.recall, typeof c.speaker === 'string' && CHAR_BY_ID.has(c.speaker) ? c.speaker : undefined).length) return false;
+    return true;
   });
 }
 
 function drawRandomCard(s: StoryState, rng: Rng): CardInstance | null {
   const recentSpeakers = s.history.slice(-2).map((h) => h.speaker);
+  // vary the comic structure: the same kind of joke twice running is the fastest way to make 1,000 cards feel like 10
+  const recentShapes = s.history.slice(-2).map((h) => CARD_BY_ID.get(h.cardId)?.shape);
   const pool = eligibleCards(s);
   for (let attempt = 0; attempt < 6 && pool.length; attempt++) {
     const card = rng.weighted(pool, (c) => {
       let w = c.weight ?? 1;
       if (c.priority) w *= 1 + c.priority / 2;
+      if (c.shape && c.shape === recentShapes[1]) w *= 0.35;
+      else if (c.shape && c.shape === recentShapes[0]) w *= 0.7;
       if (typeof c.speaker === 'string' && s.chars[c.speaker]) {
         w *= 0.5 + s.chars[c.speaker].influence / 25; // influential people get your attention
         if (recentSpeakers.includes(c.speaker)) w *= 0.4;
@@ -515,15 +597,20 @@ function customAggregates(s: StoryState): Agg {
   const a: Agg = { w: 0, appeal: 0, friction: 0, visibility: 0, commitment: 0, commerce: 0, ambiguity: 0, traditions: 0 };
   for (const [id, c] of Object.entries(s.customs)) {
     const def = CUSTOM_BY_ID.get(id);
-    const w = STATUS_WEIGHT[c.status];
+    // a condemned custom that survives underground still shapes the movement, quietly
+    const w = c.underground ? 0.3 : STATUS_WEIGHT[c.status];
     if (!def || !w) continue;
+    const st = c.origin === 'members' ? c.stance ?? 'none' : 'endorsed';
+    const fr = st === 'reformed' ? 0.5 : c.underground ? 1.5 : 1; // reform files the edges off; secrecy sharpens them
+    const amb = st === 'none' || st === 'tolerated' ? 1.6 : st === 'reformed' ? 1.2 : 1; // nobody knows if it is official
+    const vis = c.underground ? 0.3 : 1;
     a.w += w;
     a.appeal += w * (def.props.appeal - 50);
-    a.friction += w * def.props.friction;
-    a.visibility += w * def.props.visibility;
+    a.friction += w * def.props.friction * fr;
+    a.visibility += w * def.props.visibility * vis;
     a.commitment += w * (def.props.commitment - 50);
     a.commerce += w * def.props.commerce;
-    a.ambiguity += w * def.props.ambiguity;
+    a.ambiguity += w * def.props.ambiguity * amb;
     if (c.status === 'tradition' || c.status === 'sacred') a.traditions += 1;
   }
   return a;
@@ -638,14 +725,118 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
 
   // follow-ups and new arrivals
   if (s.crisis && (s.day - s.crisis.day > TIME.crisisWindowDays || s.decisions - (s.crisis.decision ?? s.decisions) > TIME.crisisWindowDecisions)) s.crisis = null;
-  const due = s.scheduled.filter((x) => x.day <= s.day);
-  if (due.length) {
-    s.scheduled = s.scheduled.filter((x) => x.day > s.day);
-    for (const d of due) if (enqueue(s, d.card, rng, d.ctx, d.speaker) && report) report.arrivals++;
-  }
+  processChains(s, rng, report);
+  emergeCustoms(s, dt, rng, report);
   if (s.day >= s.nextCardAt) {
     s.nextCardAt = s.day + (1 / TIME.cardsPerDay[s.era]) * rng.range(0.6, 1.4);
     if (s.inbox.length < TIME.inboxMax && drawRandomCard(s, rng) && report) report.arrivals++;
+  }
+}
+
+// ------------------------------------------------------------------ story chains
+
+function chainOutcome(s: StoryState, x: ScheduledCard, outcome: 'expired' | 'cancelled') {
+  s.chains[outcome]++;
+  s.chains.log.push({ card: x.card, outcome, day: s.day });
+  if (s.chains.log.length > 60) s.chains.log.shift();
+}
+
+/** Deliver follow-ups inside their window, wait while their prerequisites are unmet, drop them when the moment has passed. */
+function processChains(s: StoryState, rng: Rng, report?: AwayReport) {
+  if (!s.scheduled.length) return;
+  const keep: ScheduledCard[] = [];
+  for (const x of s.scheduled) {
+    const until = x.until ?? x.day + 10;
+    const speakerGone = x.speaker && !(s.chars[x.speaker]?.present && s.chars[x.speaker].status === 'active');
+    if ((x.cancelIf && requirementsMet(s, x.cancelIf)) || speakerGone) {
+      chainOutcome(s, x, 'cancelled');
+      continue;
+    }
+    if (s.day < x.day) {
+      keep.push(x);
+      continue;
+    }
+    const card = CARD_BY_ID.get(x.card);
+    const ready = requirementsMet(s, x.requires) && requirementsMet(s, card?.requires && { ...card.requires, era: undefined });
+    if (ready) {
+      const inst = enqueue(s, x.card, rng, x.ctx, x.speaker);
+      if (inst) {
+        s.chains.delivered++;
+        if (report) report.arrivals++;
+        continue;
+      }
+    }
+    if (s.day > until) chainOutcome(s, x, 'expired');
+    else keep.push(x);
+  }
+  s.scheduled = keep;
+}
+
+// ------------------------------------------------------------------ emergent doctrine
+
+export const EMERGENT = LIBRARY.customs.filter((c) => c.emergent);
+const EMERGE = { perDay: 0.05, maxUnaddressed: 1, maxActive: 7 };
+
+/** Members invent customs of their own. The founder finds out afterwards and has to take a position. */
+function emergeCustoms(s: StoryState, dt: number, rng: Rng, report?: AwayReport) {
+  if (s.era === 'founding') return;
+  const mine = Object.entries(s.customs).filter(([, c]) => c.origin === 'members');
+  for (const [, c] of mine) {
+    if (c.stance === 'tolerated' && c.status !== 'abandoned') c.prominence += 0.12 * dt; // left alone, it grows
+    if (c.underground) {
+      c.prominence -= 0.04 * dt;
+      if (c.prominence <= 0) {
+        c.underground = false;
+        c.prominence = 0;
+      }
+    }
+  }
+  const unaddressed = mine.filter(([, c]) => (c.stance ?? 'none') === 'none' && c.status !== 'abandoned').length;
+  const active = mine.filter(([, c]) => c.status !== 'abandoned' || c.underground).length;
+  if (unaddressed >= EMERGE.maxUnaddressed || active >= EMERGE.maxActive) return;
+  const zeal = 0.5 + s.gauges.enthusiasm / 100 + groupShare(s, 'traditionalists') * 2 + groupShare(s, 'enthusiasts');
+  if (!rng.chance(1 - Math.exp(-EMERGE.perDay * zeal * dt))) return;
+  const free = EMERGENT.filter((d) => customStatus(s, d.id) === 'none');
+  const def = rng.weighted(free, (d) => (d.startedBy && s.chars[d.startedBy]?.present ? 2 : d.startedBy ? 0.2 : 1));
+  if (!def) return;
+  const starter = def.startedBy && s.chars[def.startedBy]?.present && s.chars[def.startedBy].status === 'active' ? def.startedBy : undefined;
+  setCustom(s, def.id, 'practice', undefined, 0.5);
+  Object.assign(s.customs[def.id], { origin: 'members', stance: 'none', startedBy: starter });
+  s.customs[def.id].history[s.customs[def.id].history.length - 1].note = 'started by members';
+  const text = `Members began ${renderCustomLabel(s, def.id).replace(/^\w/, (ch) => ch.toLowerCase())} without asking anyone.`;
+  s.chronicle.push({ day: s.day, text });
+  report?.notes.push(text);
+}
+
+/** The founder's position on a custom the members started. */
+function applyStance(s: StoryState, id: string, stance: Stance, inst: CardInstance, out: ChoiceOutcome, rng: Rng, quote: string, setting: Setting, choice: 0 | 1) {
+  const c = s.customs[id];
+  if (!c) return;
+  c.stance = stance;
+  c.history.push({ day: s.day, status: c.status, note: stance });
+  if (stance === 'endorsed') {
+    setCustom(s, id, 'tradition', undefined, 2);
+    c.underground = false;
+  } else if (stance === 'tolerated') {
+    if (c.status === 'abandoned') setCustom(s, id, 'practice');
+    c.underground = false;
+  } else if (stance === 'reformed') {
+    if (c.status === 'abandoned') setCustom(s, id, 'practice');
+    c.prominence = Math.max(0, c.prominence - 1);
+    c.underground = false;
+  } else if (stance === 'condemned') {
+    setCustom(s, id, 'abandoned');
+    // the more devoted the membership, the likelier it carries on in secret
+    c.underground = rng.chance(Math.min(0.9, 0.25 + groupShare(s, 'traditionalists') * 1.5 + groupShare(s, 'enthusiasts')));
+    if (c.underground) c.prominence = Math.max(c.prominence, 2);
+  }
+  const lbl = renderCustomLabel(s, id);
+  out.notes.push(`${lbl}: ${stance}${c.underground ? ' (it carries on quietly)' : ''}`);
+  s.chronicle.push({ day: s.day, text: `${address(s)} ${stance === 'tolerated' ? 'tolerated' : stance} ${lbl.replace(/^\w/, (ch) => ch.toLowerCase())}.` });
+  // the person who started it takes it personally
+  if (c.startedBy && s.chars[c.startedBy]?.present) {
+    const kind: MemoryKind = stance === 'endorsed' ? 'credited' : stance === 'condemned' ? 'overruled' : stance === 'reformed' ? 'overruled' : 'backed';
+    recordMemory(s, { who: c.startedBy, kind, topic: lbl, cardId: inst.cardId, choice, quote, setting, weight: stance === 'condemned' ? 3 : stance === 'endorsed' ? 2 : 1 });
   }
 }
 
@@ -707,7 +898,7 @@ export function choose(s: StoryState, uid: string, choiceIdx: 0 | 1, input?: str
       setCustom(s, id, 'practice', { [field]: text });
     }
   }
-  applyEffects(s, ch.effects, inst, rng, outcome, ch.label);
+  applyEffects(s, ch.effects, inst, rng, outcome, ch.label, choiceIdx);
   outcome.reaction = render(s, ch.reaction, inst.ctx, inst.speaker);
   s.inbox = s.inbox.filter((i) => i.uid !== uid);
   s.decisions++;
@@ -733,7 +924,7 @@ function setCustom(s: StoryState, id: string, status: CustomStatus | undefined, 
   s.customs[id] = cur;
 }
 
-export function applyEffects(s: StoryState, e: Effects, inst: CardInstance, rng: Rng, out: ChoiceOutcome, label: string) {
+export function applyEffects(s: StoryState, e: Effects, inst: CardInstance, rng: Rng, out: ChoiceOutcome, label: string, choiceIdx: 0 | 1 = 0) {
   const R = (t: string) => render(s, t, inst.ctx, inst.speaker);
   for (const [g, v] of Object.entries(e.gauges ?? {})) {
     const before = s.gauges[g as Gauge];
@@ -752,28 +943,37 @@ export function applyEffects(s: StoryState, e: Effects, inst: CardInstance, rng:
   }
   for (const [id, v] of Object.entries(e.loyalty ?? {})) loyaltyDelta[id] = (loyaltyDelta[id] ?? 0) + v;
   if (e.speakerLoyalty && s.chars[inst.speaker]) loyaltyDelta[inst.speaker] = (loyaltyDelta[inst.speaker] ?? 0) + e.speakerLoyalty;
+  if (e.otherLoyalty && inst.ctx.mOtherId && s.chars[inst.ctx.mOtherId]) loyaltyDelta[inst.ctx.mOtherId] = (loyaltyDelta[inst.ctx.mOtherId] ?? 0) + e.otherLoyalty;
+  if (e.starterLoyalty && inst.ctx.emergentById && s.chars[inst.ctx.emergentById]) loyaltyDelta[inst.ctx.emergentById] = (loyaltyDelta[inst.ctx.emergentById] ?? 0) + e.starterLoyalty;
   if (e.speakerInfluence && s.chars[inst.speaker]) s.chars[inst.speaker].influence = clamp(s.chars[inst.speaker].influence + e.speakerInfluence, 0, 100);
   for (const [id, v] of Object.entries(loyaltyDelta)) {
     const c = s.chars[id];
     if (!c || !c.present) continue;
     c.loyalty = clamp(c.loyalty + v, -100, 100);
     out.loyalty.push({ id, delta: v });
-    if (Math.abs(v) >= 8) {
-      c.memories.push(`${v > 0 ? 'Grateful' : 'Remembers'}: “${R(label)}” (day ${Math.floor(s.day)})`);
-      if (c.memories.length > 12) c.memories.shift();
-    }
     updateCharacterStatus(s, id, out);
   }
+  writeMemories(s, e, inst, loyaltyDelta, R(label), choiceIdx);
   for (const [id, v] of Object.entries(e.influence ?? {})) if (s.chars[id]) s.chars[id].influence = clamp(s.chars[id].influence + v, 0, 100);
   for (const [g, v] of Object.entries(e.groups ?? {})) {
     shiftGroup(s, g as Group, v!);
     out.groupNotes.push(`${GROUP_LABEL[g as Group]} ${v! > 0 ? 'gain ground' : 'lose ground'}`);
+  }
+  const card = CARD_BY_ID.get(inst.cardId);
+  const setting: Setting = card?.setting ?? 'private';
+  if (e.stance && inst.ctx.emergent) applyStance(s, inst.ctx.emergent, e.stance, inst, out, rng, R(label), setting, choiceIdx);
+  if (e.recall && inst.ctx.mem) {
+    const m = s.memory.find((x) => x.id === Number(inst.ctx.mem));
+    if (m && e.recall === 'resolve') m.resolved = true;
+    if (m && e.recall === 'deepen') m.weight = Math.min(3, m.weight + 1);
+    if (m && e.recall === 'forget') s.memory = s.memory.filter((x) => x !== m);
   }
   for (const c of e.custom ?? []) {
     const values = c.values ? Object.fromEntries(Object.entries(c.values).map(([k, v]) => [k, R(v)])) : undefined;
     const id = R(c.id);
     const before = customStatus(s, id);
     setCustom(s, id, c.status, values, c.prominence ?? 0);
+    if (c.stance) applyStance(s, id, c.stance, inst, out, rng, R(label), setting, choiceIdx);
     if (c.status && c.status !== before) {
       const def = CUSTOM_BY_ID.get(id);
       const lbl = def ? R(renderCustomLabel(s, id)) : id;
@@ -858,9 +1058,52 @@ export function applyEffects(s: StoryState, e: Effects, inst: CardInstance, rng:
   if (e.movementName) s.movementName = R(e.movementName);
   if (e.founderTitle) s.founderTitle = R(e.founderTitle);
   for (const f of e.followUps ?? []) {
-    if (f.chance == null || rng.chance(f.chance)) s.scheduled.push({ card: f.card, day: s.day + f.delay, ctx: inst.ctx, speaker: undefined });
+    if (f.chance != null && !rng.chance(f.chance)) continue;
+    const speaker = f.speaker === 'same' ? (s.chars[inst.speaker] ? inst.speaker : undefined) : f.speaker;
+    s.scheduled.push({ card: f.card, day: s.day + f.delay, until: s.day + (f.maxDelay ?? f.delay + 10), ctx: { ...inst.ctx, mem: '' }, speaker, requires: f.requires, cancelIf: f.cancelIf, from: inst.cardId });
   }
   if (e.memory) s.chronicle.push({ day: s.day, text: R(e.memory) });
+}
+
+/**
+ * Who remembers this choice, and how. Automatic rules (authored `remember` adds to them):
+ * - the speaker remembers being backed or overruled when their loyalty moved by 4 or more;
+ * - if you overruled the speaker while someone else gained, the speaker remembers who you favoured,
+ *   and that person remembers being chosen over the speaker (and vice versa when you backed the speaker);
+ * - anyone else whose loyalty moved by 8 or more remembers being passed over or favoured.
+ * Weight: 1 for small moves, 2 for 10+, 3 for 18+; witnessed slights count one step heavier.
+ */
+function writeMemories(s: StoryState, e: Effects, inst: CardInstance, delta: Record<string, number>, quote: string, choice: 0 | 1) {
+  const card = CARD_BY_ID.get(inst.cardId);
+  if (!card) return;
+  const setting: Setting = card.setting ?? 'private';
+  const topic = card.topic ?? card.id;
+  const weigh = (v: number, slight: boolean) => Math.min(3, (Math.abs(v) >= 18 ? 3 : Math.abs(v) >= 10 ? 2 : 1) + (slight && setting !== 'private' ? 1 : 0));
+  const base = { topic, cardId: inst.cardId, choice, quote, setting };
+  const sp = inst.speaker;
+  const spv = delta[sp] ?? 0;
+  const others = Object.entries(delta).filter(([id]) => id !== sp && s.chars[id]?.present);
+  if (s.chars[sp] && Math.abs(spv) >= 4) {
+    if (spv < 0) {
+      const fav = others.filter(([, v]) => v >= 4).sort((a, b) => b[1] - a[1])[0]?.[0];
+      recordMemory(s, { ...base, who: sp, kind: 'overruled', other: fav, weight: weigh(spv, true) });
+      if (fav) recordMemory(s, { ...base, who: fav, kind: 'favoured', other: sp, weight: weigh(delta[fav], false) });
+    } else {
+      const rival = others.filter(([, v]) => v <= -4).sort((a, b) => a[1] - b[1])[0]?.[0];
+      recordMemory(s, { ...base, who: sp, kind: 'backed', other: rival, weight: weigh(spv, false) });
+      if (rival) recordMemory(s, { ...base, who: rival, kind: 'passed_over', other: sp, weight: weigh(delta[rival], true) });
+    }
+  }
+  for (const [id, v] of others) {
+    if (Math.abs(v) < 8) continue;
+    recordMemory(s, { ...base, who: id, kind: v > 0 ? 'favoured' : 'passed_over', other: s.chars[sp] ? sp : undefined, weight: weigh(v, v < 0) });
+  }
+  for (const r of e.remember ?? []) {
+    const who = r.who === 'speaker' ? sp : r.who === 'other' ? inst.ctx.mOtherId : r.who === 'starter' ? inst.ctx.emergentById : r.who;
+    if (!who || !s.chars[who]?.present) continue;
+    const other = r.other === 'speaker' ? sp : r.other === 'other' ? inst.ctx.mOtherId : r.other;
+    recordMemory(s, { ...base, topic: r.topic ?? topic, who, kind: r.kind, other: other && s.chars[other] ? other : undefined, weight: r.weight ?? 2 });
+  }
 }
 
 function updateCharacterStatus(s: StoryState, id: string, out: ChoiceOutcome) {
@@ -977,12 +1220,16 @@ export function loadStory(json: string): StoryState {
   const p = JSON.parse(json);
   const s = (p?.format === 'the-movement-v2' ? p.state : p) as StoryState;
   if (!s || !s.gauges || !s.chars || !s.cities || !Array.isArray(s.inbox)) throw new Error('Not a save for this version of THE MOVEMENT.');
-  for (const g of GAUGES) s.gauges[g] = clamp(Number(s.gauges[g]) || 50, 0, 100);
+  for (const g of GAUGES) s.gauges[g] = clamp(Number.isFinite(Number(s.gauges[g])) ? Number(s.gauges[g]) : 50, 0, 100);
   // characters added to the content library after this save was made
   for (const c of LIBRARY.characters) {
     s.chars[c.id] ??= { present: false, status: 'absent', loyalty: c.startLoyalty, influence: c.startInfluence, role: c.role, memories: [] };
   }
   s.lastSeenAt ??= {};
+  s.memory ??= [];
+  s.nextMemoryId ??= 1;
+  s.chains ??= { delivered: 0, expired: 0, cancelled: 0, log: [] };
+  for (const x of s.scheduled ?? []) x.until ??= x.day + 10;
   s.inbox = s.inbox.filter((i) => CARD_BY_ID.has(i.cardId));
   s.scheduled = (s.scheduled ?? []).filter((x) => CARD_BY_ID.has(x.card));
   return s;

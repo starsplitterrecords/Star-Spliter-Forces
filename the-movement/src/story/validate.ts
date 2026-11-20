@@ -1,7 +1,12 @@
 // Content validation: the gate every authored or AI-drafted batch must pass before shipping.
 // Errors block the build; warnings go to editorial review.
-import { BINDERS, ENDINGS, RENDER_TOKENS } from './engine';
-import { AGENDAS, type CardDef, type ContentLibrary, type Effects, ERAS, GAUGES, GROUPS, STATUS_ORDER } from './types';
+import { BINDERS, ENDINGS, RECALL_TOKENS, RENDER_TOKENS } from './engine';
+import { AGENDAS, type CardDef, type ContentLibrary, type Effects, ERAS, GAUGES, GROUPS, type RecallQuery, type Requires, SHAPES, STATUS_ORDER } from './types';
+
+const MEMORY_KINDS = ['overruled', 'backed', 'passed_over', 'favoured', 'promise', 'broken_promise', 'credited', 'blamed', 'vindicated', 'embarrassed'];
+const SETTINGS = ['private', 'meeting', 'public'];
+const STANCES = ['none', 'endorsed', 'tolerated', 'reformed', 'condemned'];
+const EMERGENT_ARGS = /^(none|endorsed|tolerated|reformed|condemned|underground)(:(starter|grown))?$/;
 
 export interface ValidationReport {
   errors: string[];
@@ -55,7 +60,11 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
     for (const [k, v] of Object.entries(c.props)) if (v < 0 || v > 100) errors.push(`custom ${c.id}: ${k}=${v} out of range`);
     if (c.category === 'practice' && (!c.noun || !c.phrase || !c.root)) errors.push(`custom ${c.id}: practices need noun, phrase and root`);
     if (c.champion && !charIds.has(c.champion)) errors.push(`custom ${c.id}: unknown champion ${c.champion}`);
+    if (c.startedBy && !charIds.has(c.startedBy)) errors.push(`custom ${c.id}: unknown startedBy ${c.startedBy}`);
+    if (c.emergent && !c.id.startsWith('emergent.')) warnings.push(`custom ${c.id}: emergent customs should use the emergent. prefix`);
   }
+  const emergentCount = lib.customs.filter((c) => c.emergent).length;
+  if (emergentCount < 6) warnings.push(`only ${emergentCount} emergent customs; members will run out of things to invent`);
 
   // pass 1: collect ids, flags, follow-up targets
   for (const card of lib.cards) {
@@ -63,6 +72,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
     cardIds.add(card.id);
     for (const ch of card.choices ?? []) {
       for (const f of ch.effects.flags ?? []) setFlags.add(f);
+      if (ch.effects.leave?.length) for (const l of ch.effects.leave) setFlags.add(`${l.id}_${l.as}`);
       for (const f of ch.effects.followUps ?? []) followTargets.add(f.card);
     }
   }
@@ -87,19 +97,37 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
         if (!AGENDAS.includes(sp.slice(7) as never)) errors.push(`${where}: unknown agenda speaker ${sp}`);
       } else if (sp.startsWith('champion:')) {
         if (!card.bind?.[sp.slice(9)]) errors.push(`${where}: champion speaker needs bind.${sp.slice(9)}`);
+      } else if (sp === 'recall') {
+        if (!card.recall) errors.push(`${where}: speaker “recall” needs a recall query`);
       } else if (!sp.startsWith('role:') && !['any', 'unhappy', 'devoted'].includes(sp) && !charIds.has(sp)) errors.push(`${where}: unknown speaker ${sp}`);
     } else if (!card.speaker.anon?.name || !card.speaker.anon?.role) errors.push(`${where}: anonymous speaker needs name and role`);
     // binds
     const ctxKeys = new Set<string>();
     for (const [k, b] of Object.entries(card.bind ?? {})) {
-      if (!BINDERS[b]) errors.push(`${where}: unknown binder ${b}`);
+      const [name, ...rest] = b.split(':');
+      if (!BINDERS[name]) errors.push(`${where}: unknown binder ${b}`);
+      if (name === 'emergent' && rest.length && !EMERGENT_ARGS.test(rest.join(':'))) errors.push(`${where}: bad emergent binder ${b}`);
+      if (name === 'emergent') ['emergentBy', 'ctx.emergentBy'].forEach((x) => ctxKeys.add(x));
       ctxKeys.add(k);
       ctxKeys.add(`ctx.${k}`);
       if (k.startsWith('practice')) ctxKeys.add(`${k}Noun`);
       if (k === 'past') ['pastText', 'pastDay', 'pastWho'].forEach((x) => ctxKeys.add(x));
     }
+    // memory, setting, shape
+    if (card.recall) {
+      RECALL_TOKENS.forEach((x) => ctxKeys.add(x));
+      checkRecall(card.recall, where, charIds, errors);
+      const all = [card.text, ...(card.variants ?? [])].join(' ');
+      if (!/\{m[A-Z]\w*\}/.test(all)) warnings.push(`${where}: recalls a memory but never quotes it`);
+    }
+    if (card.setting && !SETTINGS.includes(card.setting)) errors.push(`${where}: unknown setting ${card.setting}`);
+    if (!card.shape) warnings.push(`${where}: no comic shape tagged`);
+    else if (!SHAPES.includes(card.shape)) errors.push(`${where}: unknown shape ${card.shape}`);
+    if (card.twist && !['right_wrong_reasons', 'wrong_reasonable'].includes(card.twist)) errors.push(`${where}: unknown twist ${card.twist}`);
+    if (card.twist && (typeof card.speaker !== 'string' || !charIds.has(card.speaker))) warnings.push(`${where}: a twist should belong to a named character`);
     // requires
     const r = card.requires ?? {};
+    if (r.memory) checkRecall(r.memory, `${where} requires.memory`, charIds, errors);
     for (const e of r.era ?? []) if (!ERAS.includes(e)) errors.push(`${where}: unknown era ${e}`);
     for (const f of [...(r.flags ?? []), ...(r.anyFlags ?? [])]) if (!setFlags.has(f)) warnings.push(`${where}: requires flag “${f}” that no card sets`);
     for (const [id, e] of Object.entries(r.customs ?? {})) {
@@ -170,7 +198,19 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
       for (const f of e.followUps ?? []) {
         if (!cardIds.has(f.card)) errors.push(`${w}: follow-up to unknown card ${f.card}`);
         if (f.delay < 0) errors.push(`${w}: negative follow-up delay`);
+        if (f.maxDelay != null && f.maxDelay < f.delay) errors.push(`${w}: follow-up maxDelay is before delay`);
+        if (f.speaker && f.speaker !== 'same' && !charIds.has(f.speaker)) errors.push(`${w}: follow-up speaker ${f.speaker} unknown`);
+        for (const q of [f.requires, f.cancelIf]) checkRequiresFlags(q, w, setFlags, warnings);
       }
+      for (const m of e.remember ?? []) {
+        if (!MEMORY_KINDS.includes(m.kind)) errors.push(`${w}: unknown memory kind ${m.kind}`);
+        if (!['speaker', 'other', 'starter'].includes(m.who) && !charIds.has(m.who)) errors.push(`${w}: remember who “${m.who}” unknown`);
+        if (m.who === 'other' && !card.recall) errors.push(`${w}: remember who “other” needs a recall query`);
+        if (m.who === 'starter' && !Object.values(card.bind ?? {}).some((b) => b.startsWith('emergent'))) errors.push(`${w}: remember who “starter” needs an emergent binder`);
+      }
+      if ((e.recall || e.otherLoyalty) && !card.recall) errors.push(`${w}: recall effects need a recall query on the card`);
+      if ((e.stance || e.starterLoyalty) && !card.bind?.emergent) errors.push(`${w}: stance needs bind.emergent`);
+      if (e.stance && !STANCES.includes(e.stance)) errors.push(`${w}: unknown stance ${e.stance}`);
       for (const id of e.join ?? []) if (!charIds.has(id)) errors.push(`${w}: join unknown character ${id}`);
       for (const l of e.leave ?? []) if (!charIds.has(l.id)) errors.push(`${w}: leave unknown character ${l.id}`);
       for (const id of Object.keys(e.role ?? {})) if (!charIds.has(id)) errors.push(`${w}: role for unknown character ${id}`);
@@ -187,6 +227,13 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
     if (card.choices[0].reaction === card.choices[1].reaction && !card.id.includes('compete')) warnings.push(`${where}: both choices share a reaction`);
   }
 
+  // shapes and twists across the library
+  const shapes: Record<string, number> = {};
+  for (const c of lib.cards) if (c.shape) shapes[c.shape] = (shapes[c.shape] ?? 0) + 1;
+  const twists: Record<string, number> = {};
+  for (const c of lib.cards) if (c.twist && typeof c.speaker === 'string') twists[c.speaker] = (twists[c.speaker] ?? 0) + 1;
+  for (const c of lib.characters) if (!twists[c.id]) warnings.push(`character ${c.id}: never right for the wrong reasons or wrong for reasonable ones (no twist cards)`);
+
   // crisis coverage
   for (const g of GAUGES) for (const hl of ['high', 'low']) {
     if (!cardIds.has(`crisis.${g}.${hl}`)) errors.push(`missing crisis card crisis.${g}.${hl}`);
@@ -200,8 +247,19 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
   return {
     errors,
     warnings,
-    stats: { cards: lib.cards.length, characters: lib.characters.length, customs: lib.customs.length, perType, perSpeaker, perEra, flags: setFlags.size },
+    stats: { cards: lib.cards.length, characters: lib.characters.length, customs: lib.customs.length, emergent: emergentCount, perType, perSpeaker, perEra, shapes, twists, flags: setFlags.size },
   };
+}
+
+function checkRecall(q: RecallQuery, where: string, charIds: Set<string>, errors: string[]) {
+  for (const k of [q.kind ?? []].flat()) if (!MEMORY_KINDS.includes(k)) errors.push(`${where}: unknown memory kind ${k}`);
+  if (q.who && !['any', 'speaker'].includes(q.who) && !charIds.has(q.who)) errors.push(`${where}: recall who “${q.who}” unknown`);
+  for (const x of q.exclude ?? []) if (!charIds.has(x)) errors.push(`${where}: recall exclude “${x}” unknown`);
+  if (q.minAgo != null && q.maxAgo != null && q.maxAgo < q.minAgo) errors.push(`${where}: recall window is empty`);
+}
+
+function checkRequiresFlags(q: Requires | undefined, where: string, setFlags: Set<string>, warnings: string[]) {
+  for (const f of [...(q?.flags ?? []), ...(q?.anyFlags ?? []), ...(q?.notFlags ?? [])]) if (!setFlags.has(f)) warnings.push(`${where}: chain condition on flag “${f}” that nothing sets`);
 }
 
 export type { CardDef };

@@ -1,0 +1,507 @@
+[
+ {
+  "id": "doc.noticed_starter",
+  "type": "doctrine",
+  "speaker": "champion:emergent",
+  "shape": "drift",
+  "setting": "private",
+  "bind": {
+   "emergent": "emergent:none:starter"
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 3,
+  "priority": 1,
+  "cooldown": 4,
+  "spacing": 4,
+  "text": "I didn’t plan it, {title}. I did it once, and now it’s everywhere: {emergent}. Newcomers think you invented it. Could it be official? Properly official?",
+  "choices": [
+   {
+    "label": "Make it official.",
+    "hint": "Endorse · It becomes yours too",
+    "reaction": "{emergentBy} reads the announcement aloud twice. By the next {meeting}, {emergent} has a laminated explanation.",
+    "effects": {
+     "stance": "endorsed",
+     "gauges": {
+      "enthusiasm": 5,
+      "unity": 3
+     },
+     "speakerLoyalty": 8,
+     "groups": {
+      "traditionalists": 0.02
+     }
+    }
+   },
+   {
+    "label": "Let it carry on as it is.",
+    "hint": "Tolerate · It grows on its own",
+    "reaction": "{emergentBy} is a little disappointed and entirely unstopped. It carries on, unofficially and with growing confidence.",
+    "effects": {
+     "stance": "tolerated",
+     "gauges": {
+      "enthusiasm": 2,
+      "unity": -2
+     },
+     "speakerLoyalty": 2
+    }
+   }
+  ]
+ },
+ {
+  "id": "doc.noticed_purist",
+  "type": "doctrine",
+  "speaker": "agenda:purity",
+  "shape": "procedure",
+  "setting": "meeting",
+  "bind": {
+   "emergent": "emergent:none"
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 2.5,
+  "priority": 1,
+  "cooldown": 4,
+  "spacing": 4,
+  "text": "Point of order. Nobody voted on {emergent}. It was started by {emergentBy}, it appears in no minutes, and most of the membership now does it. Either it is ours or it is not.",
+  "choices": [
+   {
+    "label": "It isn’t ours. Stop it.",
+    "hint": "Condemn · Purists approve",
+    "reaction": "The ruling is read at the {meeting}. Nobody argues. Several people do it anyway on the way out.",
+    "effects": {
+     "stance": "condemned",
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": -4
+     },
+     "starterLoyalty": -10
+    }
+   },
+   {
+    "label": "It’s ours now. Leave it.",
+    "hint": "Tolerate · Purists object",
+    "reaction": "{speaker} writes “tolerated” in the minutes and underlines it in a way that suggests a footnote is coming.",
+    "effects": {
+     "stance": "tolerated",
+     "serves": [
+      "-purity"
+     ],
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "doc.noticed_order",
+  "type": "doctrine",
+  "speaker": "agenda:order",
+  "shape": "procedure",
+  "setting": "private",
+  "bind": {
+   "emergent": "emergent:none"
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 2.5,
+  "priority": 1,
+  "cooldown": 4,
+  "spacing": 4,
+  "text": "{emergent} has no procedure. People do it differently in every room. I’d like to write it down properly: when, how, and who decides. Otherwise it’s just… happening.",
+  "choices": [
+   {
+    "label": "Write the rules for it.",
+    "hint": "Reform · Orderly, less fun",
+    "reaction": "{speaker} produces a four-page procedure. {emergentBy} reads it and says it is the same thing, but worse. Members adopt the procedure and quietly keep the original.",
+    "effects": {
+     "stance": "reformed",
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -3
+     },
+     "starterLoyalty": -4,
+     "groups": {
+      "organizers": 0.01
+     }
+    }
+   },
+   {
+    "label": "Some things should just happen.",
+    "hint": "Tolerate · Order objects",
+    "reaction": "{speaker} says “just happen” the way other people say “mould”. It carries on happening.",
+    "effects": {
+     "stance": "tolerated",
+     "serves": [
+      "-order"
+     ],
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "doc.noticed_member",
+  "type": "doctrine",
+  "speaker": {
+   "anon": {
+    "name": "{anon}",
+    "role": "Member since the spring"
+   }
+  },
+  "shape": "drift",
+  "setting": "private",
+  "bind": {
+   "emergent": "emergent:none",
+   "anon": "anonName"
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 2,
+  "priority": 1,
+  "cooldown": 4,
+  "spacing": 4,
+  "text": "Can I ask something? There’s a new thing going round: {emergent}. We’ve all been at it for weeks. Is that allowed? Nobody said it was. Nobody said it wasn’t. I’d like to know before I teach it to my mother.",
+  "choices": [
+   {
+    "label": "It’s allowed. It’s encouraged.",
+    "hint": "Endorse · Enthusiasm",
+    "reaction": "The mother in question learns it by the weekend and teaches it to her bridge club. {emergent} is now, officially, ours.",
+    "effects": {
+     "stance": "endorsed",
+     "gauges": {
+      "enthusiasm": 5,
+      "attention": 2,
+      "unity": 1
+     },
+     "starterLoyalty": 6
+    }
+   },
+   {
+    "label": "Please don’t teach it to your mother.",
+    "hint": "Condemn · Members disappointed",
+    "reaction": "Nobody tells the mother. She finds out anyway and is, by all accounts, furious about being excluded from something.",
+    "effects": {
+     "stance": "condemned",
+     "gauges": {
+      "enthusiasm": -5,
+      "unity": 2
+     },
+     "starterLoyalty": -8
+    }
+   }
+  ]
+ },
+ {
+  "id": "doc.tolerated_grows",
+  "type": "doctrine",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "meeting",
+  "bind": {
+   "emergent": "emergent:tolerated:grown"
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 2.5,
+  "cooldown": 10,
+  "spacing": 8,
+  "text": "{emergent} has grown. There are workshops now. A newcomer asked me which came first, {belief} or {emergent}. I didn’t know what to say, {title}. Do you?",
+  "choices": [
+   {
+    "label": "Take it on officially.",
+    "hint": "Endorse · Claim it",
+    "reaction": "You announce that {emergent} has, in a sense, always been part of {movement}. {emergentBy} is delighted to hear it.",
+    "effects": {
+     "stance": "endorsed",
+     "gauges": {
+      "unity": 4,
+      "attention": 3
+     },
+     "starterLoyalty": 4
+    }
+   },
+   {
+    "label": "It’s gone too far. End it.",
+    "hint": "Condemn · It may go underground",
+    "reaction": "The ban is announced. A smaller, more committed group carries on in the car park, with a lookout.",
+    "effects": {
+     "stance": "condemned",
+     "gauges": {
+      "unity": -6,
+      "enthusiasm": -5
+     },
+     "starterLoyalty": -10,
+     "groups": {
+      "reformers": 0.02
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "doc.endorsed_mutates",
+  "type": "doctrine",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "meeting",
+  "bind": {
+   "emergent": "emergent:endorsed"
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 1.5,
+  "cooldown": 20,
+  "spacing": 10,
+  "text": "Since you made {emergent} official, members have developed an advanced version. It takes longer and involves more people, and there is now a beginners’ version that nobody wants to be seen doing.",
+  "choices": [
+   {
+    "label": "Let it evolve.",
+    "hint": "Enthusiasm · Divides the room",
+    "reaction": "There are now three versions. Newcomers are given a leaflet. The leaflet has an advanced version.",
+    "effects": {
+     "custom": [
+      {
+       "id": "{ctx.emergent}",
+       "prominence": 2
+      }
+     ],
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 6,
+      "unity": -4
+     }
+    }
+   },
+   {
+    "label": "One version. The one I approved.",
+    "hint": "Reform · Order",
+    "reaction": "The advanced version is retired. Its practitioners describe themselves as “between versions”.",
+    "effects": {
+     "stance": "reformed",
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -4
+     },
+     "starterLoyalty": -3
+    }
+   }
+  ]
+ },
+ {
+  "id": "doc.underground",
+  "type": "doctrine",
+  "speaker": "any",
+  "shape": "drift",
+  "setting": "private",
+  "bind": {
+   "emergent": "emergent:underground"
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 2,
+  "cooldown": 12,
+  "spacing": 8,
+  "text": "It’s still going on: {emergent}. Quietly, after the {meeting}, in the car park. They have a lookout. The lookout is asleep, but the principle stands.",
+  "choices": [
+   {
+    "label": "Fine. Bring it back inside.",
+    "hint": "Tolerate · Unity",
+    "reaction": "{emergent} returns indoors to a standing ovation, which members insist was spontaneous.",
+    "effects": {
+     "stance": "tolerated",
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": 3
+     },
+     "starterLoyalty": 6
+    }
+   },
+   {
+    "label": "A ban is a ban.",
+    "hint": "Condemn again · Resentment",
+    "reaction": "The car park is patrolled. The practice moves to a different car park. There are a lot of car parks.",
+    "effects": {
+     "stance": "condemned",
+     "gauges": {
+      "unity": -6,
+      "attention": 2
+     },
+     "starterLoyalty": -6
+    }
+   }
+  ]
+ },
+ {
+  "id": "doc.reformed_purists",
+  "type": "doctrine",
+  "speaker": "any",
+  "shape": "schism",
+  "setting": "meeting",
+  "bind": {
+   "emergent": "emergent:reformed"
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "weight": 1.5,
+  "cooldown": 20,
+  "spacing": 10,
+  "text": "The people who started {emergent} say your reformed version has lost its soul. They’ve started doing the original again, slightly louder, as a protest.",
+  "choices": [
+   {
+    "label": "Restore the original.",
+    "hint": "Endorse · Order objects",
+    "reaction": "The original returns. It is, everyone agrees, exactly as good as before, plus a small amount of triumph.",
+    "effects": {
+     "stance": "endorsed",
+     "serves": [
+      "-order"
+     ],
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": 3,
+      "resources": -3
+     },
+     "starterLoyalty": 8
+    }
+   },
+   {
+    "label": "The reformed version stays.",
+    "hint": "Order · The originalists dig in",
+    "reaction": "The originalists form a small society. It meets at the same time as everyone else, in the same room, facing the other way.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": -4
+     },
+     "starterLoyalty": -6,
+     "groups": {
+      "traditionalists": 0.02
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "doc.credit",
+  "type": "doctrine",
+  "speaker": {
+   "anon": {
+    "name": "{anon}",
+    "role": "Features writer"
+   }
+  },
+  "shape": "outsider",
+  "setting": "public",
+  "bind": {
+   "emergent": "emergent:endorsed:starter",
+   "anon": "anonName"
+  },
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "text": "Quick question for the profile. Readers love {emergent}. It’s the bit everyone mentions. Was it your idea?",
+  "choices": [
+   {
+    "label": "It was {emergentBy}’s idea.",
+    "hint": "Credit · Loyalty",
+    "reaction": "The profile runs with a photograph of {emergentBy}, who buys forty copies.",
+    "effects": {
+     "starterLoyalty": 10,
+     "gauges": {
+      "attention": 2,
+      "unity": 2
+     },
+     "remember": [
+      {
+       "who": "starter",
+       "kind": "credited",
+       "weight": 3
+      }
+     ]
+    }
+   },
+   {
+    "label": "Everything here started with me.",
+    "hint": "Glory · Someone remembers",
+    "reaction": "The profile calls you the visionary behind {emergent}. {emergentBy} cuts it out, frames it and hangs it upside down.",
+    "effects": {
+     "starterLoyalty": -12,
+     "gauges": {
+      "attention": 5
+     },
+     "remember": [
+      {
+       "who": "starter",
+       "kind": "passed_over",
+       "weight": 3
+      }
+     ]
+    }
+   }
+  ]
+ }
+]

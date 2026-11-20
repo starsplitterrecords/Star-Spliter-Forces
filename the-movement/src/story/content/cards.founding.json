@@ -3,6 +3,8 @@
   "id": "found.garage",
   "type": "character",
   "speaker": "gary",
+  "shape": "logistics",
+  "setting": "meeting",
   "once": true,
   "followUpOnly": true,
   "priority": 20,
@@ -59,6 +61,8 @@
   "id": "found.first_gathering",
   "type": "organization",
   "speaker": "martin",
+  "shape": "procedure",
+  "setting": "meeting",
   "once": true,
   "followUpOnly": true,
   "priority": 15,
@@ -133,6 +137,7 @@
   "id": "found.tuesday_absence",
   "type": "organization",
   "speaker": "martin",
+  "shape": "procedure",
   "once": true,
   "followUpOnly": true,
   "priority": 3,
@@ -205,6 +210,8 @@
   "id": "found.spontaneous_chaos",
   "type": "organization",
   "speaker": "martin",
+  "shape": "procedure",
+  "setting": "meeting",
   "once": true,
   "followUpOnly": true,
   "priority": 3,
@@ -260,6 +267,8 @@
   "id": "found.soup",
   "type": "doctrine",
   "speaker": "priya",
+  "shape": "proposal",
+  "setting": "meeting",
   "once": true,
   "priority": 4,
   "text": "I brought soup to the gathering. Just a big pot of lentil. People stayed two hours longer than planned, and three of them asked if they could come back. Should soup be… a thing we do?",
@@ -319,6 +328,7 @@
   "id": "found.soup_underground",
   "type": "character",
   "speaker": "priya",
+  "shape": "drift",
   "once": true,
   "followUpOnly": true,
   "text": "Small confession. There has been soup. In the boot of my car. Every week. Attendance at the car is now higher than attendance at the meeting.",
@@ -373,6 +383,7 @@
   "id": "found.bus_stop",
   "type": "character",
   "speaker": "dez",
+  "shape": "overpromise",
   "once": true,
   "text": "I recruited three people at the bus stop! I may have promised them a life-changing experience. Or a free lunch. One of those.",
   "choices": [
@@ -418,6 +429,8 @@
   "id": "found.deliver",
   "type": "character",
   "speaker": "dez",
+  "shape": "overpromise",
+  "setting": "meeting",
   "once": true,
   "followUpOnly": true,
   "text": "The bus stop people are here. They want their life-changing experience. I have a cardboard box and a dream.",
@@ -459,6 +472,8 @@
   "id": "found.nap",
   "type": "doctrine",
   "speaker": "gary",
+  "shape": "drift",
+  "setting": "meeting",
   "once": true,
   "text": "Sorry. I fell asleep during the meeting. When I woke up, six people had joined me. Someone brought blankets. It was very peaceful.",
   "choices": [
@@ -507,6 +522,7 @@
   "id": "found.dress_alike",
   "type": "doctrine",
   "speaker": "martin",
+  "shape": "proposal",
   "once": true,
   "requires": {
    "decisions": ">=3"
@@ -565,6 +581,8 @@
   "id": "found.name",
   "type": "plot",
   "speaker": "dez",
+  "shape": "proposal",
+  "setting": "meeting",
   "once": true,
   "priority": 6,
   "weight": 3,
@@ -626,6 +644,7 @@
   "id": "found.title",
   "type": "character",
   "speaker": "dez",
+  "shape": "proposal",
   "once": true,
   "priority": 2,
   "requires": {
@@ -681,6 +700,8 @@
   "id": "found.handshake",
   "type": "doctrine",
   "speaker": "priya",
+  "shape": "drift",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "decisions": ">=5"
@@ -729,6 +750,8 @@
   "id": "found.agnes_arrives",
   "type": "character",
   "speaker": "agnes",
+  "shape": "callback",
+  "setting": "meeting",
   "once": true,
   "priority": 4,
   "requires": {
@@ -797,6 +820,8 @@
   "id": "found.symbol",
   "type": "doctrine",
   "speaker": "gary",
+  "shape": "drift",
+  "setting": "public",
   "once": true,
   "requires": {
    "decisions": ">=5"
@@ -852,6 +877,7 @@
   "id": "found.whales",
   "type": "character",
   "speaker": "gary",
+  "shape": "literalism",
   "once": true,
   "requires": {
    "flags": [
@@ -906,6 +932,8 @@
     "role": "Next-door neighbour"
    }
   },
+  "shape": "outsider",
+  "setting": "public",
   "once": true,
   "requires": {
    "followers": ">=18"
@@ -957,6 +985,8 @@
     "role": "Next-door neighbour"
    }
   },
+  "shape": "outsider",
+  "setting": "public",
   "once": true,
   "followUpOnly": true,
   "text": "I joined a book club to check. They’ve never heard of you. Also, why does everyone leave your garage talking about {belief}?",
@@ -993,6 +1023,8 @@
   "id": "found.money",
   "type": "organization",
   "speaker": "priya",
+  "shape": "logistics",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "decisions": ">=7"
@@ -1046,6 +1078,7 @@
     "role": "Member, three weeks"
    }
   },
+  "shape": "outsider",
   "once": true,
   "requires": {
    "followers": ">=12"
@@ -1084,6 +1117,8 @@
   "id": "found.manifesto",
   "type": "doctrine",
   "speaker": "any",
+  "shape": "proposal",
+  "setting": "meeting",
   "once": true,
   "priority": 3,
   "requires": {
@@ -1155,6 +1190,7 @@
   "id": "found.practice_emerges",
   "type": "doctrine",
   "speaker": "champion:practice",
+  "shape": "drift",
   "weight": 1.5,
   "cooldown": 6,
   "requires": {
@@ -1212,6 +1248,8 @@
   "id": "found.practices_compete",
   "type": "doctrine",
   "speaker": "any",
+  "shape": "feud",
+  "setting": "meeting",
   "cooldown": 25,
   "requires": {
    "decisions": ">=8"
@@ -1275,6 +1313,8 @@
   "id": "found.martin_rules",
   "type": "organization",
   "speaker": "martin",
+  "shape": "procedure",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "decisions": ">=7"
@@ -1320,6 +1360,8 @@
   "id": "found.posters",
   "type": "character",
   "speaker": "dez",
+  "shape": "overpromise",
+  "setting": "public",
   "once": true,
   "requires": {
    "decisions": ">=6"
@@ -1373,6 +1415,8 @@
     "role": "Local police"
    }
   },
+  "shape": "outsider",
+  "setting": "public",
   "once": true,
   "followUpOnly": true,
   "text": "Afternoon. Someone has covered the station noticeboard in posters saying something is happening. Is something happening? We’d like to know in advance.",
@@ -1411,6 +1455,7 @@
   "id": "found.gary_vp",
   "type": "character",
   "speaker": "gary",
+  "shape": "literalism",
   "once": true,
   "requires": {
    "decisions": ">=14"
@@ -1455,6 +1500,7 @@
   "id": "found.cold",
   "type": "doctrine",
   "speaker": "priya",
+  "shape": "logistics",
   "once": true,
   "requires": {
    "decisions": ">=9",
@@ -1510,6 +1556,7 @@
   "id": "found.dez_ideas",
   "type": "character",
   "speaker": "dez",
+  "shape": "feud",
   "once": true,
   "requires": {
    "chars": {
@@ -1556,6 +1603,7 @@
   "id": "found.outgrow",
   "type": "plot",
   "speaker": "martin",
+  "shape": "logistics",
   "once": true,
   "priority": 8,
   "requires": {

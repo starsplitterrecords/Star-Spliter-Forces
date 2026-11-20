@@ -1,29 +1,602 @@
 [
-  { "id": "weekly_meeting", "category": "schedule", "label": "Gatherings every {value.day} (attendance: {value.mandatory})", "champion": "martin", "props": { "visibility": 20, "commitment": 65, "friction": 35, "appeal": 45, "commerce": 10, "ambiguity": 20 } },
-  { "id": "gathering_name", "category": "name", "label": "Gatherings are called {value.name}", "props": { "visibility": 25, "commitment": 55, "friction": 10, "appeal": 55, "commerce": 5, "ambiguity": 10 } },
-  { "id": "attire", "category": "attire", "label": "Members wear {value.item}", "champion": "martin", "props": { "visibility": 85, "commitment": 60, "friction": 45, "appeal": 50, "commerce": 60, "ambiguity": 40 } },
-  { "id": "greeting.handshake", "category": "greeting", "label": "The Handshake (forty-one steps and a small bow)", "champion": "priya", "props": { "visibility": 60, "commitment": 70, "friction": 30, "appeal": 60, "commerce": 5, "ambiguity": 45 } },
-  { "id": "symbol", "category": "symbol", "label": "The symbol from the garage door: a {value.what}", "champion": "gary", "props": { "visibility": 70, "commitment": 40, "friction": 20, "appeal": 50, "commerce": 50, "ambiguity": 70 } },
-  { "id": "minutes", "category": "rule", "label": "Everything said is minuted", "champion": "agnes", "props": { "visibility": 5, "commitment": 55, "friction": 30, "appeal": 30, "commerce": 0, "ambiguity": 5 } },
-  { "id": "rulebook", "category": "rule", "label": "The Rulebook ({value.pages} pages)", "champion": "agnes", "props": { "visibility": 10, "commitment": 70, "friction": 55, "appeal": 25, "commerce": 5, "ambiguity": 20 } },
-  { "id": "dues", "category": "economy", "label": "Membership dues: {value.amount}", "champion": "rolf", "props": { "visibility": 10, "commitment": 55, "friction": 45, "appeal": 30, "commerce": 75, "ambiguity": 10 } },
-  { "id": "merch", "category": "economy", "label": "Official merchandise: {value.what}", "champion": "rolf", "props": { "visibility": 60, "commitment": 20, "friction": 25, "appeal": 55, "commerce": 90, "ambiguity": 20 } },
-  { "id": "garage", "category": "place", "label": "Gary’s garage is sacred ground", "champion": "gary", "props": { "visibility": 15, "commitment": 60, "friction": 10, "appeal": 55, "commerce": 0, "ambiguity": 25 } },
-  { "id": "cold", "category": "ritual", "label": "Being slightly cold builds character", "props": { "visibility": 15, "commitment": 65, "friction": 25, "appeal": 35, "commerce": 0, "ambiguity": 40 } },
-  { "id": "pins", "category": "ritual", "label": "Attendance pins", "props": { "visibility": 40, "commitment": 60, "friction": 15, "appeal": 60, "commerce": 30, "ambiguity": 15 } },
-
-  { "id": "practice.soup", "category": "practice", "label": "Sharing soup", "noun": "soup", "phrase": "sharing soup", "root": "Soup", "champion": "priya", "props": { "visibility": 35, "commitment": 50, "friction": 10, "appeal": 80, "commerce": 40, "ambiguity": 45 } },
-  { "id": "practice.nap", "category": "practice", "label": "Napping together", "noun": "nap", "phrase": "napping together", "root": "Nap", "champion": "gary", "props": { "visibility": 30, "commitment": 35, "friction": 25, "appeal": 75, "commerce": 20, "ambiguity": 50 } },
-  { "id": "practice.backward", "category": "practice", "label": "Walking backward", "noun": "backward walk", "phrase": "walking backward", "root": "Backward", "champion": "dez", "props": { "visibility": 85, "commitment": 60, "friction": 50, "appeal": 55, "commerce": 15, "ambiguity": 30 } },
-  { "id": "practice.circle", "category": "practice", "label": "Sitting in a perfect circle", "noun": "circle", "phrase": "sitting in a perfect circle", "root": "Circle", "champion": "agnes", "props": { "visibility": 20, "commitment": 55, "friction": 15, "appeal": 50, "commerce": 5, "ambiguity": 25 } },
-  { "id": "practice.whales", "category": "practice", "label": "Talking about whales", "noun": "whale", "phrase": "talking about whales", "root": "Whale", "champion": "gary", "props": { "visibility": 25, "commitment": 45, "friction": 10, "appeal": 65, "commerce": 25, "ambiguity": 60 } },
-  { "id": "practice.pebbles", "category": "practice", "label": "Carrying an interesting pebble", "noun": "pebble", "phrase": "carrying an interesting pebble", "root": "Pebble", "props": { "visibility": 30, "commitment": 40, "friction": 10, "appeal": 70, "commerce": 35, "ambiguity": 55 } },
-  { "id": "practice.humming", "category": "practice", "label": "Humming in unison", "noun": "hum", "phrase": "humming in unison", "root": "Hum", "props": { "visibility": 45, "commitment": 50, "friction": 30, "appeal": 60, "commerce": 5, "ambiguity": 45 } },
-  { "id": "practice.compliments", "category": "practice", "label": "Complimenting strangers’ shoes", "noun": "compliment", "phrase": "complimenting strangers’ shoes", "root": "Compliment", "props": { "visibility": 70, "commitment": 45, "friction": 20, "appeal": 85, "commerce": 10, "ambiguity": 25 } },
-  { "id": "practice.tallchairs", "category": "practice", "label": "Sitting in very tall chairs", "noun": "tall chair", "phrase": "sitting in very tall chairs", "root": "Tallchair", "props": { "visibility": 75, "commitment": 55, "friction": 40, "appeal": 55, "commerce": 60, "ambiguity": 35 } },
-  { "id": "practice.puddles", "category": "practice", "label": "Jumping in puddles", "noun": "puddle", "phrase": "jumping in puddles", "root": "Puddle", "props": { "visibility": 70, "commitment": 50, "friction": 35, "appeal": 70, "commerce": 25, "ambiguity": 30 } },
-  { "id": "practice.sundial", "category": "practice", "label": "Telling the time by sundial", "noun": "sundial", "phrase": "telling the time by sundial", "root": "Sundial", "props": { "visibility": 40, "commitment": 70, "friction": 45, "appeal": 40, "commerce": 40, "ambiguity": 50 } },
-  { "id": "practice.pancakes", "category": "practice", "label": "Eating pancakes at dusk", "noun": "pancake", "phrase": "eating pancakes at dusk", "root": "Pancake", "props": { "visibility": 30, "commitment": 45, "friction": 10, "appeal": 85, "commerce": 50, "ambiguity": 30 } },
-  { "id": "practice.kazoo", "category": "practice", "label": "Playing the kazoo before every vote", "noun": "kazoo", "phrase": "playing the kazoo before every vote", "root": "Kazoo", "props": { "visibility": 60, "commitment": 50, "friction": 45, "appeal": 55, "commerce": 40, "ambiguity": 35 } },
-  { "id": "practice.orange", "category": "practice", "label": "Painting doors orange", "noun": "orange door", "phrase": "painting doors orange", "root": "Orange", "props": { "visibility": 90, "commitment": 55, "friction": 50, "appeal": 55, "commerce": 55, "ambiguity": 30 } }
+ {
+  "id": "weekly_meeting",
+  "category": "schedule",
+  "label": "Gatherings every {value.day} (attendance: {value.mandatory})",
+  "champion": "martin",
+  "props": {
+   "visibility": 20,
+   "commitment": 65,
+   "friction": 35,
+   "appeal": 45,
+   "commerce": 10,
+   "ambiguity": 20
+  }
+ },
+ {
+  "id": "gathering_name",
+  "category": "name",
+  "label": "Gatherings are called {value.name}",
+  "props": {
+   "visibility": 25,
+   "commitment": 55,
+   "friction": 10,
+   "appeal": 55,
+   "commerce": 5,
+   "ambiguity": 10
+  }
+ },
+ {
+  "id": "attire",
+  "category": "attire",
+  "label": "Members wear {value.item}",
+  "champion": "martin",
+  "props": {
+   "visibility": 85,
+   "commitment": 60,
+   "friction": 45,
+   "appeal": 50,
+   "commerce": 60,
+   "ambiguity": 40
+  }
+ },
+ {
+  "id": "greeting.handshake",
+  "category": "greeting",
+  "label": "The Handshake (forty-one steps and a small bow)",
+  "champion": "priya",
+  "props": {
+   "visibility": 60,
+   "commitment": 70,
+   "friction": 30,
+   "appeal": 60,
+   "commerce": 5,
+   "ambiguity": 45
+  }
+ },
+ {
+  "id": "symbol",
+  "category": "symbol",
+  "label": "The symbol from the garage door: a {value.what}",
+  "champion": "gary",
+  "props": {
+   "visibility": 70,
+   "commitment": 40,
+   "friction": 20,
+   "appeal": 50,
+   "commerce": 50,
+   "ambiguity": 70
+  }
+ },
+ {
+  "id": "minutes",
+  "category": "rule",
+  "label": "Everything said is minuted",
+  "champion": "agnes",
+  "props": {
+   "visibility": 5,
+   "commitment": 55,
+   "friction": 30,
+   "appeal": 30,
+   "commerce": 0,
+   "ambiguity": 5
+  }
+ },
+ {
+  "id": "rulebook",
+  "category": "rule",
+  "label": "The Rulebook ({value.pages} pages)",
+  "champion": "agnes",
+  "props": {
+   "visibility": 10,
+   "commitment": 70,
+   "friction": 55,
+   "appeal": 25,
+   "commerce": 5,
+   "ambiguity": 20
+  }
+ },
+ {
+  "id": "dues",
+  "category": "economy",
+  "label": "Membership dues: {value.amount}",
+  "champion": "rolf",
+  "props": {
+   "visibility": 10,
+   "commitment": 55,
+   "friction": 45,
+   "appeal": 30,
+   "commerce": 75,
+   "ambiguity": 10
+  }
+ },
+ {
+  "id": "merch",
+  "category": "economy",
+  "label": "Official merchandise: {value.what}",
+  "champion": "rolf",
+  "props": {
+   "visibility": 60,
+   "commitment": 20,
+   "friction": 25,
+   "appeal": 55,
+   "commerce": 90,
+   "ambiguity": 20
+  }
+ },
+ {
+  "id": "garage",
+  "category": "place",
+  "label": "Gary’s garage is sacred ground",
+  "champion": "gary",
+  "props": {
+   "visibility": 15,
+   "commitment": 60,
+   "friction": 10,
+   "appeal": 55,
+   "commerce": 0,
+   "ambiguity": 25
+  }
+ },
+ {
+  "id": "cold",
+  "category": "ritual",
+  "label": "Being slightly cold builds character",
+  "props": {
+   "visibility": 15,
+   "commitment": 65,
+   "friction": 25,
+   "appeal": 35,
+   "commerce": 0,
+   "ambiguity": 40
+  }
+ },
+ {
+  "id": "pins",
+  "category": "ritual",
+  "label": "Attendance pins",
+  "props": {
+   "visibility": 40,
+   "commitment": 60,
+   "friction": 15,
+   "appeal": 60,
+   "commerce": 30,
+   "ambiguity": 15
+  }
+ },
+ {
+  "id": "practice.soup",
+  "category": "practice",
+  "label": "Sharing soup",
+  "noun": "soup",
+  "phrase": "sharing soup",
+  "root": "Soup",
+  "champion": "priya",
+  "props": {
+   "visibility": 35,
+   "commitment": 50,
+   "friction": 10,
+   "appeal": 80,
+   "commerce": 40,
+   "ambiguity": 45
+  }
+ },
+ {
+  "id": "practice.nap",
+  "category": "practice",
+  "label": "Napping together",
+  "noun": "nap",
+  "phrase": "napping together",
+  "root": "Nap",
+  "champion": "gary",
+  "props": {
+   "visibility": 30,
+   "commitment": 35,
+   "friction": 25,
+   "appeal": 75,
+   "commerce": 20,
+   "ambiguity": 50
+  }
+ },
+ {
+  "id": "practice.backward",
+  "category": "practice",
+  "label": "Walking backward",
+  "noun": "backward walk",
+  "phrase": "walking backward",
+  "root": "Backward",
+  "champion": "dez",
+  "props": {
+   "visibility": 85,
+   "commitment": 60,
+   "friction": 50,
+   "appeal": 55,
+   "commerce": 15,
+   "ambiguity": 30
+  }
+ },
+ {
+  "id": "practice.circle",
+  "category": "practice",
+  "label": "Sitting in a perfect circle",
+  "noun": "circle",
+  "phrase": "sitting in a perfect circle",
+  "root": "Circle",
+  "champion": "agnes",
+  "props": {
+   "visibility": 20,
+   "commitment": 55,
+   "friction": 15,
+   "appeal": 50,
+   "commerce": 5,
+   "ambiguity": 25
+  }
+ },
+ {
+  "id": "practice.whales",
+  "category": "practice",
+  "label": "Talking about whales",
+  "noun": "whale",
+  "phrase": "talking about whales",
+  "root": "Whale",
+  "champion": "gary",
+  "props": {
+   "visibility": 25,
+   "commitment": 45,
+   "friction": 10,
+   "appeal": 65,
+   "commerce": 25,
+   "ambiguity": 60
+  }
+ },
+ {
+  "id": "practice.pebbles",
+  "category": "practice",
+  "label": "Carrying an interesting pebble",
+  "noun": "pebble",
+  "phrase": "carrying an interesting pebble",
+  "root": "Pebble",
+  "props": {
+   "visibility": 30,
+   "commitment": 40,
+   "friction": 10,
+   "appeal": 70,
+   "commerce": 35,
+   "ambiguity": 55
+  }
+ },
+ {
+  "id": "practice.humming",
+  "category": "practice",
+  "label": "Humming in unison",
+  "noun": "hum",
+  "phrase": "humming in unison",
+  "root": "Hum",
+  "props": {
+   "visibility": 45,
+   "commitment": 50,
+   "friction": 30,
+   "appeal": 60,
+   "commerce": 5,
+   "ambiguity": 45
+  }
+ },
+ {
+  "id": "practice.compliments",
+  "category": "practice",
+  "label": "Complimenting strangers’ shoes",
+  "noun": "compliment",
+  "phrase": "complimenting strangers’ shoes",
+  "root": "Compliment",
+  "props": {
+   "visibility": 70,
+   "commitment": 45,
+   "friction": 20,
+   "appeal": 85,
+   "commerce": 10,
+   "ambiguity": 25
+  }
+ },
+ {
+  "id": "practice.tallchairs",
+  "category": "practice",
+  "label": "Sitting in very tall chairs",
+  "noun": "tall chair",
+  "phrase": "sitting in very tall chairs",
+  "root": "Tallchair",
+  "props": {
+   "visibility": 75,
+   "commitment": 55,
+   "friction": 40,
+   "appeal": 55,
+   "commerce": 60,
+   "ambiguity": 35
+  }
+ },
+ {
+  "id": "practice.puddles",
+  "category": "practice",
+  "label": "Jumping in puddles",
+  "noun": "puddle",
+  "phrase": "jumping in puddles",
+  "root": "Puddle",
+  "props": {
+   "visibility": 70,
+   "commitment": 50,
+   "friction": 35,
+   "appeal": 70,
+   "commerce": 25,
+   "ambiguity": 30
+  }
+ },
+ {
+  "id": "practice.sundial",
+  "category": "practice",
+  "label": "Telling the time by sundial",
+  "noun": "sundial",
+  "phrase": "telling the time by sundial",
+  "root": "Sundial",
+  "props": {
+   "visibility": 40,
+   "commitment": 70,
+   "friction": 45,
+   "appeal": 40,
+   "commerce": 40,
+   "ambiguity": 50
+  }
+ },
+ {
+  "id": "practice.pancakes",
+  "category": "practice",
+  "label": "Eating pancakes at dusk",
+  "noun": "pancake",
+  "phrase": "eating pancakes at dusk",
+  "root": "Pancake",
+  "props": {
+   "visibility": 30,
+   "commitment": 45,
+   "friction": 10,
+   "appeal": 85,
+   "commerce": 50,
+   "ambiguity": 30
+  }
+ },
+ {
+  "id": "practice.kazoo",
+  "category": "practice",
+  "label": "Playing the kazoo before every vote",
+  "noun": "kazoo",
+  "phrase": "playing the kazoo before every vote",
+  "root": "Kazoo",
+  "props": {
+   "visibility": 60,
+   "commitment": 50,
+   "friction": 45,
+   "appeal": 55,
+   "commerce": 40,
+   "ambiguity": 35
+  }
+ },
+ {
+  "id": "practice.orange",
+  "category": "practice",
+  "label": "Painting doors orange",
+  "noun": "orange door",
+  "phrase": "painting doors orange",
+  "root": "Orange",
+  "props": {
+   "visibility": 90,
+   "commitment": 55,
+   "friction": 50,
+   "appeal": 55,
+   "commerce": 55,
+   "ambiguity": 30
+  }
+ },
+ {
+  "id": "emergent.nod",
+  "category": "greeting",
+  "label": "The Nod",
+  "emergent": true,
+  "props": {
+   "visibility": 40,
+   "commitment": 30,
+   "friction": 10,
+   "appeal": 65,
+   "commerce": 0,
+   "ambiguity": 70
+  },
+  "startedBy": "gary"
+ },
+ {
+  "id": "emergent.empty_chair",
+  "category": "ritual",
+  "label": "Leaving one chair empty",
+  "emergent": true,
+  "props": {
+   "visibility": 30,
+   "commitment": 35,
+   "friction": 5,
+   "appeal": 70,
+   "commerce": 0,
+   "ambiguity": 60
+  },
+  "startedBy": "priya"
+ },
+ {
+  "id": "emergent.whale_facts",
+  "category": "ritual",
+  "label": "Whale facts before the minutes",
+  "emergent": true,
+  "props": {
+   "visibility": 35,
+   "commitment": 40,
+   "friction": 20,
+   "appeal": 60,
+   "commerce": 0,
+   "ambiguity": 40
+  },
+  "startedBy": "gary"
+ },
+ {
+  "id": "emergent.laminated_vows",
+  "category": "ritual",
+  "label": "Laminating personal vows",
+  "emergent": true,
+  "props": {
+   "visibility": 50,
+   "commitment": 70,
+   "friction": 25,
+   "appeal": 45,
+   "commerce": 30,
+   "ambiguity": 30
+  },
+  "startedBy": "martin"
+ },
+ {
+  "id": "emergent.upside_down",
+  "category": "attire",
+  "label": "Wearing the badge upside down on bad days",
+  "emergent": true,
+  "props": {
+   "visibility": 55,
+   "commitment": 30,
+   "friction": 15,
+   "appeal": 55,
+   "commerce": 0,
+   "ambiguity": 75
+  }
+ },
+ {
+  "id": "emergent.one_minute_early",
+  "category": "schedule",
+  "label": "Arriving exactly one minute early",
+  "emergent": true,
+  "props": {
+   "visibility": 20,
+   "commitment": 65,
+   "friction": 30,
+   "appeal": 35,
+   "commerce": 0,
+   "ambiguity": 20
+  },
+  "startedBy": "agnes"
+ },
+ {
+  "id": "emergent.whispered_title",
+  "category": "rule",
+  "label": "Whispering the founder’s title",
+  "emergent": true,
+  "props": {
+   "visibility": 45,
+   "commitment": 55,
+   "friction": 45,
+   "appeal": 40,
+   "commerce": 0,
+   "ambiguity": 55
+  },
+  "startedBy": "dez"
+ },
+ {
+  "id": "emergent.portraits",
+  "category": "economy",
+  "label": "Selling hand-drawn portraits of the founder",
+  "emergent": true,
+  "props": {
+   "visibility": 70,
+   "commitment": 20,
+   "friction": 40,
+   "appeal": 45,
+   "commerce": 80,
+   "ambiguity": 45
+  },
+  "startedBy": "rolf"
+ },
+ {
+  "id": "emergent.four_handshakes",
+  "category": "greeting",
+  "label": "The four-season handshake",
+  "emergent": true,
+  "props": {
+   "visibility": 45,
+   "commitment": 60,
+   "friction": 35,
+   "appeal": 55,
+   "commerce": 0,
+   "ambiguity": 80
+  },
+  "startedBy": "dez"
+ },
+ {
+  "id": "emergent.private_minutes",
+  "category": "rule",
+  "label": "Taking minutes of private conversations",
+  "emergent": true,
+  "props": {
+   "visibility": 30,
+   "commitment": 60,
+   "friction": 70,
+   "appeal": 20,
+   "commerce": 0,
+   "ambiguity": 25
+  },
+  "startedBy": "agnes"
+ },
+ {
+  "id": "emergent.long_way",
+  "category": "ritual",
+  "label": "Walking the long way to meetings",
+  "emergent": true,
+  "props": {
+   "visibility": 60,
+   "commitment": 50,
+   "friction": 20,
+   "appeal": 60,
+   "commerce": 0,
+   "ambiguity": 65
+  }
+ },
+ {
+  "id": "emergent.pet_names",
+  "category": "ritual",
+  "label": "Naming pets after the co-founders",
+  "emergent": true,
+  "props": {
+   "visibility": 40,
+   "commitment": 25,
+   "friction": 15,
+   "appeal": 70,
+   "commerce": 0,
+   "ambiguity": 50
+  }
+ },
+ {
+  "id": "emergent.soup_tithe",
+  "category": "economy",
+  "label": "The soup tithe",
+  "emergent": true,
+  "props": {
+   "visibility": 35,
+   "commitment": 55,
+   "friction": 35,
+   "appeal": 60,
+   "commerce": 40,
+   "ambiguity": 40
+  },
+  "startedBy": "priya"
+ },
+ {
+  "id": "emergent.applause_urn",
+  "category": "ritual",
+  "label": "Applauding the urn when it boils",
+  "emergent": true,
+  "props": {
+   "visibility": 40,
+   "commitment": 30,
+   "friction": 25,
+   "appeal": 65,
+   "commerce": 0,
+   "ambiguity": 60
+  }
+ }
 ]

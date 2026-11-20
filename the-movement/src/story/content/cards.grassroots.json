@@ -3,6 +3,7 @@
   "id": "grass.rolf_arrives",
   "type": "character",
   "speaker": "rolf",
+  "shape": "commerce",
   "once": true,
   "priority": 4,
   "requires": {
@@ -68,6 +69,8 @@
   "id": "grass.dues",
   "type": "organization",
   "speaker": "rolf",
+  "shape": "commerce",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "chars": {
@@ -130,6 +133,7 @@
   "id": "grass.mugs",
   "type": "organization",
   "speaker": "rolf",
+  "shape": "commerce",
   "once": true,
   "requires": {
    "chars": {
@@ -193,6 +197,7 @@
   "id": "grass.rolf_more",
   "type": "plot",
   "speaker": "rolf",
+  "shape": "backfire",
   "once": true,
   "followUpOnly": true,
   "text": "The mugs sold out. Next steps: a {beliefNoun} subscription box, a podcast, and two dollars at the door of every {meeting}.",
@@ -243,6 +248,7 @@
   "id": "grass.rolf_sponsor",
   "type": "plot",
   "speaker": "rolf",
+  "shape": "commerce",
   "once": true,
   "followUpOnly": true,
   "text": "A soup company wants to sponsor {belief}. Their logo would appear on the {item}. Very small. Medium. It would be medium.",
@@ -304,6 +310,7 @@
   "id": "grass.rolf_ultimatum",
   "type": "plot",
   "speaker": "rolf",
+  "shape": "schism",
   "once": true,
   "followUpOnly": true,
   "requires": {
@@ -368,6 +375,7 @@
   "id": "grass.expand_city",
   "type": "regional",
   "speaker": "agenda:expansion",
+  "shape": "proposal",
   "weight": 2,
   "cooldown": 10,
   "requires": {
@@ -425,6 +433,8 @@
   "id": "grass.festival",
   "type": "regional",
   "speaker": "agenda:joy",
+  "shape": "proposal",
+  "setting": "public",
   "cooldown": 20,
   "requires": {
    "era": [
@@ -473,6 +483,7 @@
   "id": "grass.director",
   "type": "character",
   "speaker": "dez",
+  "shape": "proposal",
   "once": true,
   "requires": {
    "era": [
@@ -528,6 +539,8 @@
   "id": "grass.principles",
   "type": "character",
   "speaker": "agnes",
+  "shape": "procedure",
+  "setting": "meeting",
   "once": true,
   "priority": 3,
   "requires": {
@@ -603,6 +616,8 @@
     "role": "Reporter, the local Gazette"
    }
   },
+  "shape": "outsider",
+  "setting": "public",
   "once": true,
   "requires": {
    "era": [
@@ -647,6 +662,8 @@
   "id": "grass.soup_committee",
   "type": "organization",
   "speaker": "martin",
+  "shape": "procedure",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "customs": {
@@ -698,6 +715,7 @@
   "id": "grass.nap_room",
   "type": "doctrine",
   "speaker": "gary",
+  "shape": "proposal",
   "once": true,
   "requires": {
    "customs": {
@@ -753,6 +771,8 @@
   "id": "grass.sacred_day",
   "type": "doctrine",
   "speaker": "agenda:purity",
+  "shape": "escalation",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "customs": {
@@ -823,6 +843,8 @@
     "role": "Organiser, younger members"
    }
   },
+  "shape": "procedure",
+  "setting": "meeting",
   "once": true,
   "followUpOnly": true,
   "text": "Respectfully: some of us work on {day}s. Could {meetings} also happen at weekends? There’s a petition. It has stickers.",
@@ -876,6 +898,8 @@
   "id": "grass.rulebook",
   "type": "doctrine",
   "speaker": "agnes",
+  "shape": "procedure",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "chars": {
@@ -944,6 +968,7 @@
   "id": "grass.agnes_minutes",
   "type": "plot",
   "speaker": "agnes",
+  "shape": "callback",
   "once": true,
   "followUpOnly": true,
   "requires": {
@@ -996,6 +1021,8 @@
   "id": "grass.agnes_faction",
   "type": "plot",
   "speaker": "agnes",
+  "shape": "schism",
+  "setting": "meeting",
   "once": true,
   "followUpOnly": true,
   "requires": {
@@ -1057,6 +1084,7 @@
   "id": "grass.feud",
   "type": "character",
   "speaker": "martin",
+  "shape": "feud",
   "cooldown": 40,
   "requires": {
    "era": [
@@ -1116,6 +1144,7 @@
   "id": "grass.priya_burnout",
   "type": "character",
   "speaker": "priya",
+  "shape": "logistics",
   "once": true,
   "requires": {
    "customs": {
@@ -1174,6 +1203,7 @@
   "id": "grass.priya_steps_back",
   "type": "plot",
   "speaker": "priya",
+  "shape": "backfire",
   "once": true,
   "followUpOnly": true,
   "requires": {
@@ -1230,6 +1260,8 @@
     "role": "Member, attire enthusiast"
    }
   },
+  "shape": "drift",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "customs": {
@@ -1298,6 +1330,8 @@
     "role": "The Thursday Knitting Circle"
    }
   },
+  "shape": "outsider",
+  "setting": "public",
   "once": true,
   "requires": {
    "flags": [
@@ -1352,6 +1386,8 @@
     "role": "The Thursday Knitting Circle"
    }
   },
+  "shape": "feud",
+  "setting": "public",
   "once": true,
   "followUpOnly": true,
   "text": "We have knitted a banner. It says what we think of {movement}. It is in the town square. It is quite long.",
@@ -1392,6 +1428,8 @@
   "id": "grass.board",
   "type": "organization",
   "speaker": "martin",
+  "shape": "procedure",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "followers": ">=300",
@@ -1454,6 +1492,8 @@
     "role": "Parents’ group"
    }
   },
+  "shape": "escalation",
+  "setting": "public",
   "once": true,
   "requires": {
    "flags": [
@@ -1495,6 +1535,8 @@
   "id": "grass.viral",
   "type": "regional",
   "speaker": "dez",
+  "shape": "backfire",
+  "setting": "public",
   "once": true,
   "requires": {
    "customs": {
@@ -1542,6 +1584,8 @@
   "id": "grass.whale_wednesday",
   "type": "doctrine",
   "speaker": "gary",
+  "shape": "proposal",
+  "setting": "meeting",
   "once": true,
   "requires": {
    "customs": {
@@ -1596,6 +1640,7 @@
     "role": "Member since the garage"
    }
   },
+  "shape": "proposal",
   "once": true,
   "requires": {
    "era": [
@@ -1641,6 +1686,8 @@
   "id": "grass.pins",
   "type": "organization",
   "speaker": "agenda:order",
+  "shape": "escalation",
+  "setting": "meeting",
   "once": true,
   "followUpOnly": true,
   "text": "Since Brenda got her pin, four hundred people want pins. There is now a Pin Committee, which wants its own pin.",
@@ -1698,6 +1745,7 @@
     "role": "Member, claims to be a founder"
    }
   },
+  "shape": "callback",
   "once": true,
   "requires": {
    "era": [
@@ -1746,6 +1794,8 @@
     "role": "Author"
    }
   },
+  "shape": "callback",
+  "setting": "public",
   "once": true,
   "followUpOnly": true,
   "text": "My memoir is out. It’s called “I Invented {belief}”. Chapter nine is about you. It is not kind.",
@@ -1778,6 +1828,7 @@
   "id": "grass.local_leader",
   "type": "regional",
   "speaker": "agenda:order",
+  "shape": "schism",
   "cooldown": 30,
   "requires": {
    "era": [
@@ -1837,6 +1888,7 @@
   "id": "grass.training",
   "type": "organization",
   "speaker": "martin",
+  "shape": "proposal",
   "once": true,
   "requires": {
    "followers": ">=150",
@@ -1885,6 +1937,7 @@
   "id": "grass.biscuits",
   "type": "scandal",
   "speaker": "agenda:order",
+  "shape": "logistics",
   "once": true,
   "requires": {
    "chars": {
@@ -1933,6 +1986,8 @@
   "id": "grass.regional",
   "type": "plot",
   "speaker": "any",
+  "shape": "proposal",
+  "setting": "meeting",
   "once": true,
   "priority": 6,
   "requires": {
