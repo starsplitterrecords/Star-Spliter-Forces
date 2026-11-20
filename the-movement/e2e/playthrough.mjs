@@ -22,7 +22,7 @@ page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
 
 await page.goto(`${BASE}/?debug=1`);
 await page.getByRole('button', { name: 'New Movement' }).click();
-await page.getByRole('button', { name: 'Begin' }).first().click();
+await page.getByRole('button', { name: 'Begin', exact: true }).first().click();
 log('wizard opened');
 
 // 1 name

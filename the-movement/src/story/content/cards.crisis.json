@@ -1,0 +1,98 @@
+[
+  {
+    "id": "crisis.enthusiasm.high", "type": "crisis", "speaker": "any", "priority": 100,
+    "text": "This is getting intense. Members are recruiting in their sleep; Gary recruited a man while napping. People are skipping work, meals and in one case their own wedding for {belief}. Something has to give.",
+    "choices": [
+      { "label": "Cool things down.", "hint": "Calm · Some leave",
+        "reaction": "You cancel two {meetings} and announce a “gentle week”. It is the most controversial thing you have ever done.",
+        "effects": { "gauges": { "enthusiasm": -30, "unity": -5 }, "followersPct": -0.05 } },
+      { "label": "Channel it into one great {meeting}.", "hint": "Spend resources · Attention",
+        "reaction": "The great {meeting} runs for nineteen hours. Everyone goes home exhausted and, briefly, normal.",
+        "effects": { "gauges": { "enthusiasm": -25, "resources": -12, "attention": 8 } } }
+    ]
+  },
+  {
+    "id": "crisis.enthusiasm.low", "type": "crisis", "speaker": "any", "priority": 100,
+    "text": "Last {day}, eleven people came. Nine were there for the warmth. One was lost. The mood is flat, {title}. People are drifting away.",
+    "choices": [
+      { "label": "Throw a party.", "hint": "Spend resources",
+        "reaction": "The party has a theme, a playlist and, crucially, a reason to come back.",
+        "effects": { "gauges": { "enthusiasm": 30, "resources": -12 } } },
+      { "label": "Remind them why we started.", "hint": "Speech · Divisive",
+        "reaction": "You tell the story of Gary’s garage. Half the room is moved. The other half was not there and feels left out.",
+        "effects": { "gauges": { "enthusiasm": 25, "unity": -6 } } }
+    ]
+  },
+  {
+    "id": "crisis.unity.high", "type": "crisis", "speaker": "any", "priority": 100,
+    "text": "Nobody has disagreed with anything in months. Every vote is unanimous. Dez has stopped having ideas, which has never happened. It’s unsettling, {title}.",
+    "choices": [
+      { "label": "Invite disagreement.", "hint": "Healthy friction",
+        "reaction": "The first disagreement in months is about chairs. Everyone is relieved.",
+        "effects": { "gauges": { "unity": -30, "enthusiasm": 4 } } },
+      { "label": "Hold an open forum.", "hint": "Openness · Attention",
+        "reaction": "The forum produces forty-one complaints, three ideas and one excellent cake.",
+        "effects": { "gauges": { "unity": -25, "attention": 3 }, "groups": { "reformers": 0.02 } } }
+    ]
+  },
+  {
+    "id": "crisis.unity.low", "type": "crisis", "speaker": "any", "priority": 100,
+    "text": "Three factions have formed around the snack table. Nobody will sit with anybody. Someone has started a rival newsletter, and it is better than ours.",
+    "choices": [
+      { "label": "Emergency all-member {meeting}.", "hint": "Spend resources · Restore unity",
+        "reaction": "The emergency {meeting} ends with a group handshake. It takes eleven minutes, but it is a handshake.",
+        "effects": { "gauges": { "unity": 30, "resources": -10 } } },
+      { "label": "Let each faction run its own night.", "hint": "Peace by separation",
+        "reaction": "Three {meeting} nights, three snack tables, one uneasy peace.",
+        "effects": { "gauges": { "unity": 25, "enthusiasm": -5 }, "groups": { "reformers": 0.03 } } }
+    ]
+  },
+  {
+    "id": "crisis.attention.high", "type": "crisis", "speaker": { "anon": { "name": "Councillor Basil Wexford", "role": "Town council" } }, "priority": 100,
+    "text": "The council has questions. So do two newspapers, a radio station and a man who keeps filming {hq} from a hedge.",
+    "choices": [
+      { "label": "Hold a press conference.", "hint": "Transparency · Cost",
+        "reaction": "You answer every question. The man in the hedge asks the last one. He seems satisfied.",
+        "effects": { "gauges": { "attention": -30, "unity": 3, "resources": -6 } } },
+      { "label": "Go quiet for a month.", "hint": "Lower profile · Slower growth",
+        "reaction": "{Movement} goes quiet. The hedge man waits. Then the hedge man leaves.",
+        "effects": { "gauges": { "attention": -35, "enthusiasm": -8 }, "modifiers": [{ "stat": "recruitment", "mult": 0.8, "days": 30, "label": "Keeping a low profile" }] } }
+    ]
+  },
+  {
+    "id": "crisis.attention.low", "type": "crisis", "speaker": "any", "priority": 100,
+    "text": "Nobody knows we exist. I asked someone at the bus stop about {movement}. He thought I was selling insurance.",
+    "choices": [
+      { "label": "A big public stunt.", "hint": "Attention · Cost",
+        "reaction": "The stunt involves {belief}, a brass band and the fountain. Nobody forgets it.",
+        "effects": { "gauges": { "attention": 30, "resources": -10, "unity": -3 } } },
+      { "label": "Door to door, the old way.", "hint": "Slow, honest",
+        "reaction": "Members knock on six thousand doors. Two thousand open. Forty people join. It is a start.",
+        "effects": { "gauges": { "attention": 25, "enthusiasm": -5 }, "followers": 10 } }
+    ]
+  },
+  {
+    "id": "crisis.resources.high", "type": "crisis", "speaker": "any", "priority": 100,
+    "text": "We have more money than we know what to do with. People are proposing a fountain. Rolf, or someone very like him, wants a yacht.",
+    "choices": [
+      { "label": "Give it to the community.", "hint": "Goodwill",
+        "reaction": "The new benches in {hometown} each carry a small plaque. Some are already being sat on with conviction.",
+        "effects": { "gauges": { "resources": -35, "attention": 6, "enthusiasm": 3 } } },
+      { "label": "Invest it in organisers.", "hint": "Growth",
+        "reaction": "Three paid organisers are hired. Volunteers wonder why they are not paid. The question will not go away.",
+        "effects": { "gauges": { "resources": -30, "unity": -3 }, "organizers": 3 } }
+    ]
+  },
+  {
+    "id": "crisis.resources.low", "type": "crisis", "speaker": "any", "priority": 100,
+    "text": "We are out of money. The hall wants rent, the urn needs descaling, and someone has been paying for the biscuits personally. It is Gary.",
+    "choices": [
+      { "label": "Pass the hat.", "hint": "Members chip in · Some resent it",
+        "reaction": "The hat comes back heavier than expected. Several members put in IOUs. One puts in a pebble.",
+        "effects": { "gauges": { "resources": 30, "enthusiasm": -6 } } },
+      { "label": "Sell the megaphone.", "hint": "Quieter · Dez heartbroken",
+        "reaction": "The megaphone fetches a surprising sum. Dez attends the sale in a black armband.",
+        "effects": { "gauges": { "resources": 25, "attention": -6 }, "loyalty": { "dez": -8 } } }
+    ]
+  }
+]

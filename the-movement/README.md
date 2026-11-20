@@ -4,22 +4,25 @@
 
 An absurdist movement-building strategy / incremental simulation. Invent a ridiculous philosophy, recruit followers city by city across a real-world map, earn zealots, build outposts, face opposition, survive schisms and rival movements, and try to reshape an (entirely fictional) world around your founding customs, which come back again and again in the news, disputes, splinter groups and the ending.
 
-The game has two editions:
+The game has two modes:
 
-- **Card Edition** (the main mode). You lead the movement one card at a time. Characters bring you decisions and you swipe left or right; nothing is set up in advance. The idea itself, your title, the headquarters, the spirit animal, the banner, what followers eat, wear, play and live in: each is decided on a card as it comes up, and each belief then keeps returning in later cards, disputes, breakaway factions and endings. Four meters (Reach, Fervor, Coffers, Standing) must stay away from both empty and full. When one hits an extreme your leader falls in one of nine endings, and the movement carries on under a successor. Your followers spread outward over the real world map from your headquarters, and you win at 95% of the world.
+- **The Movement (v2, main mode)**: you lead an increasingly large, increasingly absurd group of people. Co-founders, members and outsiders bring you problems; you choose one of two answers, and the movement responds. Its name, customs and central belief emerge from those decisions. The people remember how you treated them. A continuous simulation (with bounded offline progress) keeps the membership recruiting, drifting and splitting into groups while you're away. This is currently a **vertical slice**: the founding and grassroots eras, with 6 characters and 74 authored cards. The systems spec is in [`docs/STORY-ENGINE.md`](docs/STORY-ENGINE.md) and the writing bible in [`docs/WRITING-BIBLE.md`](docs/WRITING-BIBLE.md).
 - **Classic Strategy Edition**: the original map-based simulation described below.
 
 Everything runs in the browser. You don't need an account, an API key or a network connection after the first load.
 
 ---
 
-## Card Edition at a glance
+## The Movement v2 at a glance
 
-- `src/cards/engine.ts`: a pure, seeded engine with meters, the card draw (follow-ups and cooldowns), choices, world spread, leader endings, succession, victory, and save/load.
-- `src/cards/deck.ts`: about 60 card definitions. The founding sequence and the custom-belief cards each offer two doctrine themes taken from the 48-theme lexicon; the recurring cards are generated from your own doctrines (heresy, purism, shortage, measure, committee and so on). It also holds the follow-up chains, the leader endings and the victory endings.
-- `src/cards/characters.ts`: the recurring cast. `src/components/cards/Portrait.tsx` draws their portraits procedurally.
-- `src/components/cards/CardsGame.tsx`: the swipe UI. You can drag, tap or use the arrow keys. Dots under the meters show which ones a choice will move, but not in which direction. It also has the map, beliefs and history sheets.
-- Tests: `tests/cards.test.ts`. Browser check: `node e2e/cards.mjs`.
+- `src/story/`: the story engine (`engine.ts`), data model (`types.ts`), content validator (`validate.ts`) and automated players (`autoplay.ts`).
+- `src/story/content/*.json`: the shipped content library (characters, customs, cards). No AI or network is used at runtime.
+- `src/components/story/`: the dilemma screen, the movement's response, and the People / Customs / Map / History sheets.
+- Content pipeline:
+  - `npm run content:validate` is the editorial gate.
+  - `npm run content:stress -- [runs] [days]` reports coverage, repetition, how much playthroughs differ, pacing and what happens to each character.
+  - `npm run content:draft -- --era grassroots --count 12 --brief "..."` is a **development-time** tool that drafts a batch with Claude into `content/drafts/` for human review. It needs `ANTHROPIC_API_KEY`, and nothing it produces ships until a person edits it and moves it into `src/story/content/`.
+- Tests: `tests/story.test.ts`. Browser check: `node e2e/story.mjs`.
 
 ## Quick start
 

@@ -1,0 +1,1982 @@
+[
+ {
+  "id": "grass.rolf_arrives",
+  "type": "character",
+  "speaker": "rolf",
+  "once": true,
+  "priority": 4,
+  "requires": {
+   "era": [
+    "grassroots"
+   ],
+   "chars": {
+    "rolf": {
+     "present": false
+    }
+   }
+  },
+  "text": "Rolf Ledger. Accountant. I’ve reviewed your finances. You have forty-one dollars, a soup jar and a lanyard that says Vice President. I can help.",
+  "choices": [
+   {
+    "label": "Make him Treasurer.",
+    "hint": "Resources · A new ally with ideas",
+    "reaction": "Rolf opens a laptop. It already has a spreadsheet called {Movement}.",
+    "effects": {
+     "join": [
+      "rolf"
+     ],
+     "role": {
+      "rolf": "Treasurer"
+     },
+     "loyalty": {
+      "rolf": 10
+     },
+     "serves": [
+      "money"
+     ],
+     "gauges": {
+      "resources": 8
+     },
+     "memory": "Rolf Ledger became Treasurer."
+    }
+   },
+   {
+    "label": "We’re not about money.",
+    "hint": "Principle · He joins anyway, unimpressed",
+    "reaction": "Rolf joins anyway. He sits at the back, quietly calculating the value of the folding chairs.",
+    "effects": {
+     "join": [
+      "rolf"
+     ],
+     "loyalty": {
+      "rolf": -15
+     },
+     "serves": [
+      "-money"
+     ],
+     "gauges": {
+      "enthusiasm": 2
+     },
+     "flags": [
+      "rolf_spurned"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.dues",
+  "type": "organization",
+  "speaker": "rolf",
+  "once": true,
+  "requires": {
+   "chars": {
+    "rolf": {
+     "present": true
+    }
+   }
+  },
+  "text": "Membership dues. Five dollars a month. Members who pay feel invested. Members who don’t, leave, which is also a kind of investment.",
+  "choices": [
+   {
+    "label": "Five dollars a month.",
+    "hint": "Resources · Some casual members leave",
+    "reaction": "Forty people pay. Eleven leave. Rolf calls this “a healthy correction”.",
+    "effects": {
+     "serves": [
+      "money",
+      "order",
+      "-joy"
+     ],
+     "flags": [
+      "dues"
+     ],
+     "gauges": {
+      "resources": 10
+     },
+     "followersPct": -0.04,
+     "groups": {
+      "casuals": -0.04
+     },
+     "custom": [
+      {
+       "id": "dues",
+       "status": "practice",
+       "values": {
+        "amount": "five dollars a month"
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "Free forever.",
+    "hint": "Openness · Tight budget",
+    "reaction": "Priya hugs you. Rolf makes a note in a spreadsheet tab labelled REGRETS.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-money"
+     ],
+     "gauges": {
+      "enthusiasm": 4,
+      "resources": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.mugs",
+  "type": "organization",
+  "speaker": "rolf",
+  "once": true,
+  "requires": {
+   "chars": {
+    "rolf": {
+     "present": true
+    }
+   },
+   "followers": ">=60"
+  },
+  "text": "Mugs. {beliefNoun} mugs. Twelve dollars each. I’ve already ordered two hundred, as a hypothetical.",
+  "choices": [
+   {
+    "label": "Sell the mugs.",
+    "hint": "Money · Commercialisation begins",
+    "reaction": "The mugs sell out in a weekend. Agnes refuses to drink from one on principle, then quietly buys two.",
+    "effects": {
+     "serves": [
+      "money",
+      "-purity"
+     ],
+     "gauges": {
+      "resources": 12
+     },
+     "groups": {
+      "opportunists": 0.03
+     },
+     "custom": [
+      {
+       "id": "merch",
+       "status": "practice",
+       "values": {
+        "what": "{beliefNoun} mugs"
+       }
+      }
+     ],
+     "followUps": [
+      {
+       "card": "grass.rolf_more",
+       "delay": 10
+      }
+     ]
+    }
+   },
+   {
+    "label": "Return the mugs.",
+    "hint": "Integrity · Rolf disappointed",
+    "reaction": "Rolf returns the mugs. He keeps one, to look at sadly.",
+    "effects": {
+     "serves": [
+      "purity",
+      "-money"
+     ],
+     "gauges": {
+      "resources": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.rolf_more",
+  "type": "plot",
+  "speaker": "rolf",
+  "once": true,
+  "followUpOnly": true,
+  "text": "The mugs sold out. Next steps: a {beliefNoun} subscription box, a podcast, and two dollars at the door of every {meeting}.",
+  "choices": [
+   {
+    "label": "Do all three.",
+    "hint": "Money · Members grumble",
+    "reaction": "The podcast is mostly Rolf reading the accounts aloud. It has a loyal audience.",
+    "effects": {
+     "serves": [
+      "money",
+      "-joy",
+      "-purity"
+     ],
+     "gauges": {
+      "resources": 15,
+      "enthusiasm": -6,
+      "unity": -5
+     },
+     "groups": {
+      "opportunists": 0.05
+     },
+     "followUps": [
+      {
+       "card": "grass.rolf_sponsor",
+       "delay": 12
+      }
+     ]
+    }
+   },
+   {
+    "label": "Just the podcast.",
+    "hint": "Moderation",
+    "reaction": "Episode one is called “Soup, Margins and You”.",
+    "effects": {
+     "loyalty": {
+      "rolf": -4
+     },
+     "gauges": {
+      "resources": 5,
+      "attention": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.rolf_sponsor",
+  "type": "plot",
+  "speaker": "rolf",
+  "once": true,
+  "followUpOnly": true,
+  "text": "A soup company wants to sponsor {belief}. Their logo would appear on the {item}. Very small. Medium. It would be medium.",
+  "choices": [
+   {
+    "label": "Accept the sponsorship.",
+    "hint": "Money · Purists appalled",
+    "reaction": "The logo is medium-large. Nobody can agree whether it counts as part of the {item} now.",
+    "effects": {
+     "serves": [
+      "money",
+      "-purity",
+      "-joy"
+     ],
+     "gauges": {
+      "resources": 18,
+      "attention": 5,
+      "unity": -8
+     },
+     "groups": {
+      "opportunists": 0.05,
+      "reformers": 0.02
+     },
+     "flags": [
+      "sponsored"
+     ],
+     "memory": "{Movement} accepted its first corporate sponsor."
+    }
+   },
+   {
+    "label": "Some things aren’t for sale.",
+    "hint": "Integrity · Rolf’s patience runs out",
+    "reaction": "The members cheer. Rolf does not.",
+    "effects": {
+     "serves": [
+      "purity",
+      "joy",
+      "-money"
+     ],
+     "loyalty": {
+      "rolf": -15
+     },
+     "gauges": {
+      "enthusiasm": 6,
+      "unity": 4
+     },
+     "followUps": [
+      {
+       "card": "grass.rolf_ultimatum",
+       "delay": 8,
+       "chance": 0.7
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.rolf_ultimatum",
+  "type": "plot",
+  "speaker": "rolf",
+  "once": true,
+  "followUpOnly": true,
+  "requires": {
+   "chars": {
+    "rolf": {
+     "present": true,
+     "loyalty": "<10"
+    }
+   }
+  },
+  "text": "I’ve been patient. This organisation could be a business, and a good one. Either we professionalise, or I take my spreadsheets elsewhere.",
+  "choices": [
+   {
+    "label": "Professionalise.",
+    "hint": "Order and money · Joy suffers",
+    "reaction": "Rolf becomes Chief Financial Officer. He orders business cards for everyone, including Gary, whose says VICE PRESIDENT (DEPUTY).",
+    "effects": {
+     "role": {
+      "rolf": "Chief Financial Officer"
+     },
+     "loyalty": {
+      "rolf": 20
+     },
+     "serves": [
+      "money",
+      "order",
+      "-joy"
+     ],
+     "gauges": {
+      "resources": 10,
+      "unity": -6
+     },
+     "flags": [
+      "professional"
+     ],
+     "memory": "{Movement} professionalised. Rolf Ledger became Chief Financial Officer."
+    }
+   },
+   {
+    "label": "Then take them elsewhere.",
+    "hint": "Integrity · Lose a capable person",
+    "reaction": "Rolf leaves with three laptops and the good stapler. He says you will hear from him.",
+    "effects": {
+     "leave": [
+      {
+       "id": "rolf",
+       "as": "rival"
+      }
+     ],
+     "gauges": {
+      "resources": -10,
+      "unity": 5
+     },
+     "flags": [
+      "rolf_rival"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.expand_city",
+  "type": "regional",
+  "speaker": "agenda:expansion",
+  "weight": 2,
+  "cooldown": 10,
+  "requires": {
+   "era": [
+    "grassroots"
+   ]
+  },
+  "bind": {
+   "city": "nextCity"
+  },
+  "text": "There’s real interest in {city}. Give me two volunteers and a car, and I’ll have a chapter there by {day}.",
+  "choices": [
+   {
+    "label": "Go to {city}.",
+    "hint": "Expansion · Costs resources",
+    "reaction": "{speaker} leaves at dawn with two volunteers, a car and a megaphone that may or may not be charged.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-comfort"
+     ],
+     "campaign": {
+      "city": "ctx",
+      "organizers": 1
+     },
+     "gauges": {
+      "resources": -6,
+      "enthusiasm": 3
+     }
+    }
+   },
+   {
+    "label": "Focus on {hometown} first.",
+    "hint": "Depth · Stability",
+    "reaction": "{speaker} sighs, then knocks on every door on one street instead.",
+    "effects": {
+     "serves": [
+      "comfort",
+      "order",
+      "-expansion"
+     ],
+     "gauges": {
+      "unity": 4
+     },
+     "awareness": {
+      "scope": "hometown",
+      "amount": 0.1
+     }
+    }
+   }
+  ],
+  "spacing": 6
+ },
+ {
+  "id": "grass.festival",
+  "type": "regional",
+  "speaker": "agenda:joy",
+  "cooldown": 20,
+  "requires": {
+   "era": [
+    "grassroots"
+   ],
+   "known": ">=2"
+  },
+  "bind": {
+   "city": "activeCity"
+  },
+  "text": "{city} has a street festival next month. I could run a stall. Possibly a large stall. Definitely with {beliefNoun}.",
+  "choices": [
+   {
+    "label": "Run the stall.",
+    "hint": "Awareness in {city} · Costs resources",
+    "reaction": "The stall is a hit. Somebody from the council asks for the recipe, and then for a leaflet.",
+    "effects": {
+     "serves": [
+      "joy",
+      "expansion"
+     ],
+     "awareness": {
+      "scope": "ctx",
+      "amount": 0.3
+     },
+     "followers": 6,
+     "gauges": {
+      "resources": -5,
+      "attention": 4
+     }
+    }
+   },
+   {
+    "label": "Skip the festival.",
+    "hint": "Save resources",
+    "reaction": "The festival happens without you. It is, by all accounts, fine.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.director",
+  "type": "character",
+  "speaker": "dez",
+  "once": true,
+  "requires": {
+   "era": [
+    "grassroots"
+   ]
+  },
+  "text": "Small request. I’d like a title. Director of Recruitment. It would really help with recruiting. People respect directors.",
+  "choices": [
+   {
+    "label": "Director of Recruitment it is.",
+    "hint": "Dez empowered · Expansion faction grows",
+    "reaction": "Dez’s business cards arrive the next morning. He had ordered them before asking.",
+    "effects": {
+     "role": {
+      "dez": "Director of Recruitment"
+     },
+     "influence": {
+      "dez": 15
+     },
+     "loyalty": {
+      "dez": 10
+     },
+     "flags": [
+      "dez_director"
+     ],
+     "gauges": {
+      "enthusiasm": 4
+     },
+     "groups": {
+      "enthusiasts": 0.03
+     }
+    }
+   },
+   {
+    "label": "No titles.",
+    "hint": "Equality · Dez hurt",
+    "reaction": "Dez puts the business cards back in the box he had ordered them in.",
+    "effects": {
+     "loyalty": {
+      "dez": -10
+     },
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.principles",
+  "type": "character",
+  "speaker": "agnes",
+  "once": true,
+  "priority": 3,
+  "requires": {
+   "flags": [
+    "dez_director"
+   ],
+   "chars": {
+    "agnes": {
+     "present": true
+    }
+   },
+   "customs": {
+    "weekly_meeting": "practice+"
+   }
+  },
+  "text": "{title}, your Director of Recruitment has a proposal. Unfortunately, I believe it violates the principles you established last {day}. Dez wants to hold recruitment events during the {day} {meeting}. The {day} {meeting} is for members. It says so in the minutes.",
+  "choices": [
+   {
+    "label": "Side with Dez. Growth matters.",
+    "hint": "Recruitment up · Agnes will remember",
+    "reaction": "Dez sets up a welcome table at the door. Agnes sets up a second table, for minuting the first table.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-purity"
+     ],
+     "loyalty": {
+      "dez": 8,
+      "agnes": -10
+     },
+     "gauges": {
+      "unity": -5
+     },
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 1.25,
+       "days": 21,
+       "label": "Recruitment at the {day} {meeting}"
+      }
+     ]
+    }
+   },
+   {
+    "label": "Side with Agnes. Principles matter.",
+    "hint": "Unity · Dez will remember",
+    "reaction": "The {day} {meeting} remains for members. Dez recruits on the pavement outside, which the minutes do not cover.",
+    "effects": {
+     "serves": [
+      "purity",
+      "-expansion"
+     ],
+     "loyalty": {
+      "agnes": 10,
+      "dez": -8
+     },
+     "gauges": {
+      "unity": 4
+     },
+     "groups": {
+      "traditionalists": 0.03
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.gazette",
+  "type": "rivalry",
+  "speaker": {
+   "anon": {
+    "name": "Hollis Brandt",
+    "role": "Reporter, the local Gazette"
+   }
+  },
+  "once": true,
+  "requires": {
+   "era": [
+    "grassroots"
+   ],
+   "followers": ">=50"
+  },
+  "text": "I’m writing a piece on {movement}. Readers want to know: is it true that members spend their evenings {belief}? And who exactly is {title}?",
+  "choices": [
+   {
+    "label": "Give a full interview.",
+    "hint": "Attention · Risk of misquotes",
+    "reaction": "The headline reads “Local Group Insists It Is Not a Book Club”. Membership enquiries triple.",
+    "effects": {
+     "gauges": {
+      "attention": 10,
+      "unity": -2
+     },
+     "awareness": {
+      "scope": "known",
+      "amount": 0.1
+     },
+     "flags": [
+      "gazette_interview"
+     ]
+    }
+   },
+   {
+    "label": "“No comment.”",
+    "hint": "Mystery",
+    "reaction": "The headline reads “Mysterious Group Declines to Comment”. Membership enquiries double.",
+    "effects": {
+     "gauges": {
+      "attention": 4,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.soup_committee",
+  "type": "organization",
+  "speaker": "martin",
+  "once": true,
+  "requires": {
+   "customs": {
+    "practice.soup": "practice+"
+   },
+   "followers": ">=40"
+  },
+  "text": "The soup situation needs governance. Who decides the soup? Who stirs? I propose a Soup Committee: four members, two-year terms and a stirring rota.",
+  "choices": [
+   {
+    "label": "Establish the Soup Committee.",
+    "hint": "Order · Priya loses control of her soup",
+    "reaction": "The first committee meeting lasts three hours. No soup is made.",
+    "effects": {
+     "serves": [
+      "order",
+      "-joy"
+     ],
+     "loyalty": {
+      "martin": 8,
+      "priya": -8
+     },
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -3
+     },
+     "flags": [
+      "soup_committee"
+     ]
+    }
+   },
+   {
+    "label": "Priya decides the soup.",
+    "hint": "Trust · Martin worried",
+    "reaction": "Priya decides on minestrone. It is the correct decision.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "loyalty": {
+      "priya": 10,
+      "martin": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.nap_room",
+  "type": "doctrine",
+  "speaker": "gary",
+  "once": true,
+  "requires": {
+   "customs": {
+    "practice.nap": "practice+"
+   },
+   "era": [
+    "grassroots"
+   ]
+  },
+  "text": "The blanket corner is full. I’d like a proper nap room. With a sign. The sign would say NAP ROOM.",
+  "choices": [
+   {
+    "label": "Build the nap room.",
+    "hint": "Comfort · Tradition",
+    "reaction": "The NAP ROOM sign is hand-lettered by Gary. The room is never empty.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "loyalty": {
+      "gary": 10
+     },
+     "gauges": {
+      "resources": -6,
+      "unity": 5,
+      "enthusiasm": -3
+     },
+     "custom": [
+      {
+       "id": "practice.nap",
+       "status": "tradition",
+       "prominence": 6
+      }
+     ]
+    }
+   },
+   {
+    "label": "No nap room.",
+    "hint": "Energy · Gary sad",
+    "reaction": "Gary naps in the car instead. Several members join him. It is a big car.",
+    "effects": {
+     "loyalty": {
+      "gary": -6
+     },
+     "gauges": {
+      "enthusiasm": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.sacred_day",
+  "type": "doctrine",
+  "speaker": "agenda:purity",
+  "once": true,
+  "requires": {
+   "customs": {
+    "weekly_meeting": "tradition+"
+   },
+   "era": [
+    "grassroots"
+   ]
+  },
+  "text": "Members now refuse to do anything else on {day}s. One missed her own birthday. I propose we make {day} sacred. Officially.",
+  "choices": [
+   {
+    "label": "{day} is sacred.",
+    "hint": "Devotion · Traditionalists · Future friction",
+    "reaction": "Calendars are amended. Several employers receive identical letters.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": 5,
+      "attention": 3
+     },
+     "groups": {
+      "traditionalists": 0.05,
+      "reformers": 0.02
+     },
+     "custom": [
+      {
+       "id": "weekly_meeting",
+       "status": "sacred"
+      }
+     ],
+     "followUps": [
+      {
+       "card": "grass.weekend",
+       "delay": 10
+      }
+     ],
+     "memory": "{day} became sacred to {movement}."
+    }
+   },
+   {
+    "label": "It’s just a day.",
+    "hint": "Flexibility · Purists hurt",
+    "reaction": "It is, everyone agrees, just a day. Several people take it personally anyway.",
+    "effects": {
+     "serves": [
+      "-purity"
+     ],
+     "gauges": {
+      "unity": -3
+     },
+     "groups": {
+      "reformers": 0.02
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.weekend",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Tasha Merriweather",
+    "role": "Organiser, younger members"
+   }
+  },
+  "once": true,
+  "followUpOnly": true,
+  "text": "Respectfully: some of us work on {day}s. Could {meetings} also happen at weekends? There’s a petition. It has stickers.",
+  "choices": [
+   {
+    "label": "Add weekend {meetings}.",
+    "hint": "Retention · Traditionalists upset",
+    "reaction": "Weekend {meetings} are popular, loud and attended by people Agnes describes as “the weekend element”.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-purity"
+     ],
+     "gauges": {
+      "unity": -4
+     },
+     "groups": {
+      "reformers": 0.04
+     },
+     "modifiers": [
+      {
+       "stat": "retention",
+       "mult": 1.2,
+       "days": 40,
+       "label": "Weekend meetings"
+      }
+     ]
+    }
+   },
+   {
+    "label": "{day} or nothing.",
+    "hint": "Purity · Some young members leave",
+    "reaction": "The petition is returned, stickers intact.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": -3
+     },
+     "groups": {
+      "traditionalists": 0.03,
+      "reformers": 0.02
+     },
+     "followersPct": -0.03
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.rulebook",
+  "type": "doctrine",
+  "speaker": "agnes",
+  "once": true,
+  "requires": {
+   "chars": {
+    "agnes": {
+     "present": true
+    }
+   },
+   "decisions": ">=25"
+  },
+  "text": "I have compiled every decision we have ever made into a rulebook. It is two hundred and twelve pages. Page ninety contradicts page four. I have flagged it.",
+  "choices": [
+   {
+    "label": "Adopt the rulebook.",
+    "hint": "Order · Less spontaneity",
+    "reaction": "The rulebook is placed on a small table of its own. Nobody is allowed to put a mug on it.",
+    "effects": {
+     "serves": [
+      "purity",
+      "order",
+      "-joy"
+     ],
+     "gauges": {
+      "unity": 6,
+      "enthusiasm": -5
+     },
+     "groups": {
+      "traditionalists": 0.04
+     },
+     "custom": [
+      {
+       "id": "rulebook",
+       "status": "practice",
+       "values": {
+        "pages": "212"
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "Thank you, Agnes. Shelve it.",
+    "hint": "Freedom · Agnes keeps a note",
+    "reaction": "The rulebook goes on a shelf. Agnes adds “shelved” to the minutes, with the date.",
+    "effects": {
+     "loyalty": {
+      "agnes": -12
+     },
+     "gauges": {
+      "enthusiasm": 3
+     },
+     "followUps": [
+      {
+       "card": "grass.agnes_minutes",
+       "delay": 15,
+       "chance": 0.6
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.agnes_minutes",
+  "type": "plot",
+  "speaker": "agnes",
+  "once": true,
+  "followUpOnly": true,
+  "requires": {
+   "chars": {
+    "agnes": {
+     "present": true,
+     "loyalty": "<=0"
+    }
+   }
+  },
+  "text": "I have begun keeping separate minutes. About you. Purely for the historical record. You have said three things this month that contradict the founding statement.",
+  "choices": [
+   {
+    "label": "Let’s go through them together.",
+    "hint": "Reconciliation · Slower decisions",
+    "reaction": "It takes four hours. Two of the contradictions are resolved. The third becomes a footnote.",
+    "effects": {
+     "loyalty": {
+      "agnes": 12
+     },
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "Stop taking minutes about me.",
+    "hint": "Authority · Agnes becomes a dissident",
+    "reaction": "Agnes closes the notebook. She opens a different notebook.",
+    "effects": {
+     "loyalty": {
+      "agnes": -15
+     },
+     "flags": [
+      "agnes_dissident"
+     ],
+     "followUps": [
+      {
+       "card": "grass.agnes_faction",
+       "delay": 12,
+       "chance": 0.75
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.agnes_faction",
+  "type": "plot",
+  "speaker": "agnes",
+  "once": true,
+  "followUpOnly": true,
+  "requires": {
+   "chars": {
+    "agnes": {
+     "present": true
+    }
+   }
+  },
+  "text": "A number of members feel {movement} has drifted from its founding principles. We will be meeting separately, on {day}s, as originally intended. You are welcome to attend. As a guest.",
+  "choices": [
+   {
+    "label": "Reconcile. Restore the old ways.",
+    "hint": "Unity · Less flexibility",
+    "reaction": "Agnes accepts, on the condition that the reconciliation is minuted. It is.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "loyalty": {
+      "agnes": 20
+     },
+     "groups": {
+      "traditionalists": 0.05
+     },
+     "gauges": {
+      "enthusiasm": -4,
+      "unity": 6
+     },
+     "flags": [
+      "reconciled_agnes"
+     ]
+    }
+   },
+   {
+    "label": "Then go.",
+    "hint": "The first schism",
+    "reaction": "Agnes leaves with forty members and the original minutes. The original minutes were the only copy.",
+    "effects": {
+     "leave": [
+      {
+       "id": "agnes",
+       "as": "rival"
+      }
+     ],
+     "followersPct": -0.08,
+     "gauges": {
+      "unity": -6
+     },
+     "flags": [
+      "agnes_faction"
+     ],
+     "memory": "Agnes Thimble founded the Original {movement}, meeting on {day}s, as originally intended."
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.feud",
+  "type": "character",
+  "speaker": "martin",
+  "cooldown": 40,
+  "requires": {
+   "era": [
+    "grassroots"
+   ],
+   "chars": {
+    "dez": {
+     "present": true
+    },
+    "martin": {
+     "present": true
+    }
+   },
+   "decisions": ">=20"
+  },
+  "text": "Dez and I aren’t speaking. He says I’m “killing the vibe with paperwork”. I say paperwork is the vibe. You need to decide who’s right.",
+  "choices": [
+   {
+    "label": "Martin is right.",
+    "hint": "Order · Dez sulks",
+    "reaction": "Martin produces a form for formally resolving the dispute. Dez signs it with a very large signature.",
+    "effects": {
+     "serves": [
+      "order",
+      "-expansion"
+     ],
+     "loyalty": {
+      "martin": 10,
+      "dez": -12
+     },
+     "gauges": {
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "Dez is right.",
+    "hint": "Energy · Martin sulks",
+    "reaction": "Dez celebrates with the megaphone. Martin files the noise complaint himself.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-order"
+     ],
+     "loyalty": {
+      "dez": 10,
+      "martin": -12
+     },
+     "gauges": {
+      "enthusiasm": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.priya_burnout",
+  "type": "character",
+  "speaker": "priya",
+  "once": true,
+  "requires": {
+   "customs": {
+    "practice.soup": "practice+"
+   },
+   "followers": ">=100"
+  },
+  "text": "I made soup for a hundred and forty people this week. My hands smell of onions in my dreams. I need help, or I need to stop.",
+  "choices": [
+   {
+    "label": "Recruit a soup team.",
+    "hint": "Organisation · Costs resources",
+    "reaction": "The soup team has nine members, matching aprons and, inevitably, a rota.",
+    "effects": {
+     "serves": [
+      "joy",
+      "order"
+     ],
+     "loyalty": {
+      "priya": 10
+     },
+     "gauges": {
+      "resources": -5
+     },
+     "groups": {
+      "organizers": 0.02
+     },
+     "flags": [
+      "soup_team"
+     ]
+    }
+   },
+   {
+    "label": "“You’re doing amazing.”",
+    "hint": "Free · Priya exhausted",
+    "reaction": "Priya smiles the smile of someone chopping her nine hundredth onion.",
+    "effects": {
+     "loyalty": {
+      "priya": -12
+     },
+     "gauges": {
+      "enthusiasm": -3
+     },
+     "followUps": [
+      {
+       "card": "grass.priya_steps_back",
+       "delay": 10,
+       "chance": 0.6
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.priya_steps_back",
+  "type": "plot",
+  "speaker": "priya",
+  "once": true,
+  "followUpOnly": true,
+  "requires": {
+   "chars": {
+    "priya": {
+     "present": true,
+     "loyalty": "<=10"
+    }
+   }
+  },
+  "text": "I’m stepping back. From soup, and from most things. I’ll still come on {day}s. I just won’t bring anything.",
+  "choices": [
+   {
+    "label": "Beg her to stay.",
+    "hint": "Loyalty · Costs resources",
+    "reaction": "Priya stays, on the condition that someone else does the onions. Martin volunteers, which surprises everyone.",
+    "effects": {
+     "loyalty": {
+      "priya": 15,
+      "martin": 3
+     },
+     "gauges": {
+      "resources": -5,
+      "enthusiasm": 2
+     }
+    }
+   },
+   {
+    "label": "Thank her, and let her rest.",
+    "hint": "Lose a founder",
+    "reaction": "Priya’s last soup is a quiet minestrone. Several people cry. Gary cries twice.",
+    "effects": {
+     "leave": [
+      {
+       "id": "priya",
+       "as": "retired"
+      }
+     ],
+     "gauges": {
+      "enthusiasm": -6,
+      "unity": -3
+     },
+     "memory": "Priya Moss stepped back. The soup was never quite the same."
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.attire_dispute",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Bernard Oyelaran",
+    "role": "Member, attire enthusiast"
+   }
+  },
+  "once": true,
+  "requires": {
+   "customs": {
+    "attire": "practice+"
+   },
+   "era": [
+    "grassroots"
+   ]
+  },
+  "text": "Someone wore their {item} inside out to the {meeting}. Half the room thinks it’s disrespectful. The other half has started doing it too.",
+  "choices": [
+   {
+    "label": "Inside out is forbidden.",
+    "hint": "Purity · Tradition",
+    "reaction": "A diagram of the correct orientation is pinned to the door.",
+    "effects": {
+     "serves": [
+      "purity"
+     ],
+     "groups": {
+      "traditionalists": 0.03
+     },
+     "gauges": {
+      "unity": -2
+     },
+     "custom": [
+      {
+       "id": "attire",
+       "status": "tradition"
+      }
+     ]
+    }
+   },
+   {
+    "label": "Either way round is fine.",
+    "hint": "Flexibility · Reformers",
+    "reaction": "Within a month, wearing {item} inside out has become a quiet statement of something nobody can define.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "groups": {
+      "reformers": 0.02
+     },
+     "gauges": {
+      "unity": 2
+     },
+     "custom": [
+      {
+       "id": "attire",
+       "values": {
+        "style": "either way round"
+       }
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.knitters",
+  "type": "rivalry",
+  "speaker": {
+   "anon": {
+    "name": "Mildred Fanshawe",
+    "role": "The Thursday Knitting Circle"
+   }
+  },
+  "once": true,
+  "requires": {
+   "flags": [
+    "hq_hall"
+   ]
+  },
+  "text": "The Knitting Circle has used this hall for thirty-one years. Your people keep taking our chairs. We are prepared to escalate.",
+  "choices": [
+   {
+    "label": "Share the hall graciously.",
+    "hint": "Peace",
+    "reaction": "Mildred accepts. A Knitting Circle member is later seen at a {meeting}, knitting thoughtfully.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "attention": -2
+     },
+     "flags": [
+      "knitters_peace"
+     ]
+    }
+   },
+   {
+    "label": "Outbook them.",
+    "hint": "Rivalry · Attention",
+    "reaction": "You book every evening for six months. Mildred is seen buying an unusual quantity of wool.",
+    "effects": {
+     "gauges": {
+      "resources": -6,
+      "enthusiasm": 4,
+      "attention": 4
+     },
+     "flags": [
+      "knitters_war"
+     ],
+     "followUps": [
+      {
+       "card": "grass.knitters_banner",
+       "delay": 8
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.knitters_banner",
+  "type": "rivalry",
+  "speaker": {
+   "anon": {
+    "name": "Mildred Fanshawe",
+    "role": "The Thursday Knitting Circle"
+   }
+  },
+  "once": true,
+  "followUpOnly": true,
+  "text": "We have knitted a banner. It says what we think of {movement}. It is in the town square. It is quite long.",
+  "choices": [
+   {
+    "label": "Knit a longer banner.",
+    "hint": "Escalation · Attention",
+    "reaction": "The banner war makes the regional news. Wool shops report a record month.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 6,
+      "resources": -4
+     },
+     "flags": [
+      "banner_war"
+     ],
+     "memory": "{Movement} and the Thursday Knitting Circle fought the Great Banner War."
+    }
+   },
+   {
+    "label": "Apologise with {beliefNoun}.",
+    "hint": "Peace",
+    "reaction": "Mildred accepts the apology. The banner stays up, but someone adds “(sorry)” in different wool.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "attention": -2
+     },
+     "flags": [
+      "knitters_peace"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.board",
+  "type": "organization",
+  "speaker": "martin",
+  "once": true,
+  "requires": {
+   "followers": ">=300",
+   "chars": {
+    "martin": {
+     "present": true
+    }
+   }
+  },
+  "text": "We’re too big for {title} to decide everything. I propose a board: you, me, and three elected members. It’s good governance. It is also slightly about me.",
+  "choices": [
+   {
+    "label": "Create the board.",
+    "hint": "Delegation · Martin rises",
+    "reaction": "The first board meeting approves its own existence, unanimously, and then breaks for soup.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "flags": [
+      "board"
+     ],
+     "influence": {
+      "martin": 15
+     },
+     "loyalty": {
+      "martin": 10
+     },
+     "gauges": {
+      "unity": 5
+     },
+     "memory": "{Movement} created its first board."
+    }
+   },
+   {
+    "label": "I am the board.",
+    "hint": "Control · Martin sidelined",
+    "reaction": "Martin nods, and adds “The Board (one person)” to the organisation chart.",
+    "effects": {
+     "flags": [
+      "founder_rule"
+     ],
+     "loyalty": {
+      "martin": -10
+     },
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.master_public",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Joan Pickering",
+    "role": "Parents’ group"
+   }
+  },
+  "once": true,
+  "requires": {
+   "flags": [
+    "title_master"
+   ],
+   "followers": ">=80"
+  },
+  "text": "A small concern from the parents’ group. Members have started bowing to you in the supermarket and calling you Master {initial}. A child asked if you were a wizard.",
+  "choices": [
+   {
+    "label": "Tell them to stop bowing.",
+    "hint": "Respectability",
+    "reaction": "The bowing becomes a small, discreet nod. Somehow this is more unsettling.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "attention": -3,
+      "enthusiasm": -2
+     }
+    }
+   },
+   {
+    "label": "Bowing is fine. I am not a wizard.",
+    "hint": "Mystique · Attention",
+    "reaction": "The child is not convinced. Neither, increasingly, is anyone else.",
+    "effects": {
+     "gauges": {
+      "attention": 5,
+      "enthusiasm": 4
+     },
+     "groups": {
+      "enthusiasts": 0.02
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.viral",
+  "type": "regional",
+  "speaker": "dez",
+  "once": true,
+  "requires": {
+   "customs": {
+    "practice.backward": "practice+"
+   },
+   "era": [
+    "grassroots"
+   ]
+  },
+  "text": "The backward-walking video has two million views. Most of the comments are confused. Some are just a picture of a crab.",
+  "choices": [
+   {
+    "label": "Backward march through {hometown}.",
+    "hint": "Huge attention · Some friction",
+    "reaction": "Four hundred people walk backward down the high street. Two walk into a bakery. The bakery joins.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "gauges": {
+      "attention": 14,
+      "unity": -2,
+      "resources": -4
+     },
+     "followersPct": 0.05,
+     "awareness": {
+      "scope": "known",
+      "amount": 0.15
+     }
+    }
+   },
+   {
+    "label": "Stay humble.",
+    "hint": "Modest attention",
+    "reaction": "Dez posts a single, humble follow-up video. It is also walking backward.",
+    "effects": {
+     "gauges": {
+      "attention": 5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.whale_wednesday",
+  "type": "doctrine",
+  "speaker": "gary",
+  "once": true,
+  "requires": {
+   "customs": {
+    "practice.whales": "practice+"
+   },
+   "era": [
+    "grassroots"
+   ]
+  },
+  "text": "Proposal: Whale Wednesday. One evening a week where we just talk about whales. I’ve prepared slides. There are ninety slides.",
+  "choices": [
+   {
+    "label": "Whale Wednesday is official.",
+    "hint": "Gary · Tradition",
+    "reaction": "Attendance at Whale Wednesday overtakes the main {meeting} by week three.",
+    "effects": {
+     "loyalty": {
+      "gary": 10
+     },
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": 2,
+      "attention": 2
+     },
+     "custom": [
+      {
+       "id": "practice.whales",
+       "status": "tradition",
+       "prominence": 8
+      }
+     ]
+    }
+   },
+   {
+    "label": "Once a month.",
+    "hint": "Compromise",
+    "reaction": "Gary accepts. The slides are reorganised into a monthly epic.",
+    "effects": {
+     "loyalty": {
+      "gary": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.brenda",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Brenda Hollis",
+    "role": "Member since the garage"
+   }
+  },
+  "once": true,
+  "requires": {
+   "era": [
+    "grassroots"
+   ],
+   "followers": ">=60"
+  },
+  "text": "I’ve been to every {meeting} since the garage. Every single one. I don’t want much. Maybe a pin.",
+  "choices": [
+   {
+    "label": "Brenda gets a pin.",
+    "hint": "Loyalty · Precedent",
+    "reaction": "Brenda wears the pin everywhere, including in the bath.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "resources": -2
+     },
+     "groups": {
+      "enthusiasts": 0.02
+     },
+     "followUps": [
+      {
+       "card": "grass.pins",
+       "delay": 10
+      }
+     ]
+    }
+   },
+   {
+    "label": "We don’t do pins.",
+    "hint": "Principle",
+    "reaction": "Brenda makes her own pin. It is better than any pin you would have made.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.pins",
+  "type": "organization",
+  "speaker": "agenda:order",
+  "once": true,
+  "followUpOnly": true,
+  "text": "Since Brenda got her pin, four hundred people want pins. There is now a Pin Committee, which wants its own pin.",
+  "choices": [
+   {
+    "label": "Pins for everyone.",
+    "hint": "Enthusiasm · Cost",
+    "reaction": "Pins are distributed. A secondary market in rare pins emerges within a fortnight.",
+    "effects": {
+     "gauges": {
+      "resources": -8,
+      "enthusiasm": 6,
+      "unity": 2
+     },
+     "custom": [
+      {
+       "id": "pins",
+       "status": "practice"
+      }
+     ]
+    }
+   },
+   {
+    "label": "Pins must be earned.",
+    "hint": "Hierarchy · Traditionalists",
+    "reaction": "The Pin Committee publishes eligibility criteria. They are forty pages long.",
+    "effects": {
+     "serves": [
+      "order",
+      "purity"
+     ],
+     "gauges": {
+      "unity": -3,
+      "enthusiasm": 2
+     },
+     "groups": {
+      "traditionalists": 0.02
+     },
+     "custom": [
+      {
+       "id": "pins",
+       "status": "tradition"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.kevin",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Kevin Pruitt",
+    "role": "Member, claims to be a founder"
+   }
+  },
+  "once": true,
+  "requires": {
+   "era": [
+    "grassroots"
+   ],
+   "followers": ">=120"
+  },
+  "text": "I want it on the record that I invented {belief}. I was there. Possibly. It was dark.",
+  "choices": [
+   {
+    "label": "Thank Kevin publicly.",
+    "hint": "Kindness · Confusion",
+    "reaction": "Kevin is thanked at the {meeting}. Priya, Gary and three others quietly look at each other.",
+    "effects": {
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": 3
+     }
+    }
+   },
+   {
+    "label": "Kevin did not invent it.",
+    "hint": "Truth · A grudge",
+    "reaction": "Kevin accepts this with the face of a man who will write a book.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "followUps": [
+      {
+       "card": "grass.kevin_book",
+       "delay": 20,
+       "chance": 0.6
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.kevin_book",
+  "type": "scandal",
+  "speaker": {
+   "anon": {
+    "name": "Kevin Pruitt",
+    "role": "Author"
+   }
+  },
+  "once": true,
+  "followUpOnly": true,
+  "text": "My memoir is out. It’s called “I Invented {belief}”. Chapter nine is about you. It is not kind.",
+  "choices": [
+   {
+    "label": "Buy every copy.",
+    "hint": "Contain it · Costs resources",
+    "reaction": "You buy every copy. Kevin orders a second printing with the proceeds.",
+    "effects": {
+     "gauges": {
+      "resources": -8,
+      "attention": -2
+     }
+    }
+   },
+   {
+    "label": "Ignore it.",
+    "hint": "Attention · Doubts",
+    "reaction": "The book sells forty copies, all in {hometown}. Everyone has read chapter nine.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "unity": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.local_leader",
+  "type": "regional",
+  "speaker": "agenda:order",
+  "cooldown": 30,
+  "requires": {
+   "era": [
+    "grassroots"
+   ]
+  },
+  "bind": {
+   "city": "activeCity"
+  },
+  "text": "The {city} chapter wants its own leader and its own {meeting} night. They say {hometown} doesn’t understand them.",
+  "choices": [
+   {
+    "label": "Give {city} its own leader.",
+    "hint": "Autonomy · Local growth · Less control",
+    "reaction": "The new {city} leader’s first act is to change the snacks. Nobody in {hometown} is told what to.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-order"
+     ],
+     "flags": [
+      "local_autonomy"
+     ],
+     "organizers": 1,
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": 4
+     },
+     "modifiers": [
+      {
+       "stat": "campaign",
+       "mult": 1.2,
+       "days": 30,
+       "label": "Local leadership"
+      }
+     ]
+    }
+   },
+   {
+    "label": "All decisions come from {hq}.",
+    "hint": "Control · {city} grumbles",
+    "reaction": "{city} accepts. Its minutes become noticeably shorter.",
+    "effects": {
+     "serves": [
+      "order",
+      "-expansion"
+     ],
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.training",
+  "type": "organization",
+  "speaker": "martin",
+  "once": true,
+  "requires": {
+   "followers": ">=150",
+   "chars": {
+    "martin": {
+     "present": true
+    }
+   }
+  },
+  "text": "Some members want to do more. I’d like to run an organiser course: how to start a chapter, how to book a hall, how to stop Dez promising lunch.",
+  "choices": [
+   {
+    "label": "Train organisers.",
+    "hint": "Organizers · Costs resources",
+    "reaction": "The course has twelve graduates. Their final project is a laminated guide to lamination.",
+    "effects": {
+     "serves": [
+      "order",
+      "expansion"
+     ],
+     "flags": [
+      "organizer_training"
+     ],
+     "organizers": 2,
+     "gauges": {
+      "resources": -8
+     },
+     "groups": {
+      "organizers": 0.03
+     }
+    }
+   },
+   {
+    "label": "People can learn on the job.",
+    "hint": "Cheaper · Messier",
+    "reaction": "They do learn on the job, mostly from Dez, which explains a lot.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.biscuits",
+  "type": "scandal",
+  "speaker": "agenda:order",
+  "once": true,
+  "requires": {
+   "chars": {
+    "rolf": {
+     "present": true
+    }
+   },
+   "gauges": {
+    "resources": ">=45"
+   }
+  },
+  "text": "Odd thing. The petty cash buys a lot of biscuits. More biscuits than we have members. Someone is eating a great many biscuits.",
+  "choices": [
+   {
+    "label": "Investigate.",
+    "hint": "Integrity · Somebody will be embarrassed",
+    "reaction": "The investigation finds that Gary has been feeding the biscuits to a family of foxes. The foxes are now considered members.",
+    "effects": {
+     "loyalty": {
+      "gary": -3,
+      "rolf": 4
+     },
+     "gauges": {
+      "unity": 3,
+      "resources": 3
+     },
+     "flags": [
+      "fox_members"
+     ]
+    }
+   },
+   {
+    "label": "Biscuits are morale.",
+    "hint": "Let it go",
+    "reaction": "The biscuit budget doubles. Nobody asks where they go.",
+    "effects": {
+     "gauges": {
+      "resources": -5,
+      "enthusiasm": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.regional",
+  "type": "plot",
+  "speaker": "any",
+  "once": true,
+  "priority": 6,
+  "requires": {
+   "era": [
+    "grassroots"
+   ],
+   "anyFlags": [
+    "regional_ready"
+   ]
+  },
+  "text": "We’re in {towns} towns now. People in places I’ve never been are arguing about {belief}. We need a regional structure. Or we need to accept that we don’t control this any more.",
+  "choices": [
+   {
+    "label": "Build a regional structure.",
+    "hint": "Order · Regional era",
+    "reaction": "Martin unrolls a map of the region. He has already drawn on it, in three colours.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "era": "regional",
+     "flags": [
+      "regional_structure"
+     ],
+     "memory": "{Movement} became a regional organisation, with a map in three colours."
+    }
+   },
+   {
+    "label": "Let it grow wild.",
+    "hint": "Energy · Less control · Regional era",
+    "reaction": "Dez is delighted. Martin quietly rolls up the map.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-order"
+     ],
+     "era": "regional",
+     "flags": [
+      "regional_wild"
+     ],
+     "gauges": {
+      "enthusiasm": 5,
+      "unity": -5
+     },
+     "memory": "{Movement} spread across the region without a plan, which some called a plan."
+    }
+   }
+  ]
+ }
+]

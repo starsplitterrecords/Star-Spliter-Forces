@@ -1,0 +1,1633 @@
+[
+ {
+  "id": "found.garage",
+  "type": "character",
+  "speaker": "gary",
+  "once": true,
+  "followUpOnly": true,
+  "priority": 20,
+  "text": "Welcome to my garage! I moved the lawnmower and found eleven folding chairs. Quick question before people arrive: is this the book club?",
+  "choices": [
+   {
+    "label": "It’s better than a book club.",
+    "hint": "Mystery · Enthusiasm",
+    "reaction": "Gary nods slowly. “Better than a book club,” he repeats, to himself, several times.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 6,
+      "unity": -2
+     },
+     "loyalty": {
+      "gary": 3
+     },
+     "flags": [
+      "gary_confused"
+     ],
+     "followUps": [
+      {
+       "card": "found.first_gathering",
+       "delay": 0.4
+      }
+     ]
+    }
+   },
+   {
+    "label": "Sort of. Bring the book.",
+    "hint": "Comfort · Gary’s approval",
+    "reaction": "Gary is thrilled. He has been reading the same book about whales since 2019.",
+    "effects": {
+     "gauges": {
+      "unity": 5
+     },
+     "loyalty": {
+      "gary": 10
+     },
+     "flags": [
+      "gary_book"
+     ],
+     "followUps": [
+      {
+       "card": "found.first_gathering",
+       "delay": 0.4
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.first_gathering",
+  "type": "organization",
+  "speaker": "martin",
+  "once": true,
+  "followUpOnly": true,
+  "priority": 15,
+  "text": "Our first gathering was a tremendous success. Seven people attended. Unfortunately, four of them thought it was a book club. I think we need to establish a regular meeting.",
+  "choices": [
+   {
+    "label": "“Every Tuesday. Attendance is mandatory.”",
+    "hint": "More structure · More commitment · Potential resentment",
+    "reaction": "Martin is already making a laminated sign. Priya asks, quietly, what happens if someone is ill.",
+    "effects": {
+     "serves": [
+      "order",
+      "-joy"
+     ],
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": 4
+     },
+     "followers": 3,
+     "custom": [
+      {
+       "id": "weekly_meeting",
+       "status": "practice",
+       "values": {
+        "day": "Tuesday",
+        "mandatory": "mandatory"
+       }
+      }
+     ],
+     "flags": [
+      "meeting_mandatory"
+     ],
+     "followUps": [
+      {
+       "card": "found.tuesday_absence",
+       "delay": 4,
+       "chance": 0.9
+      }
+     ],
+     "memory": "{title} declared that the group would meet every Tuesday, attendance mandatory."
+    }
+   },
+   {
+    "label": "“Only when someone has something interesting to say.”",
+    "hint": "More flexibility · Less organization · Greater spontaneity",
+    "reaction": "Dez immediately has something interesting to say. It is 11:40 p.m.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-order"
+     ],
+     "gauges": {
+      "enthusiasm": 6,
+      "unity": -4
+     },
+     "followers": 2,
+     "flags": [
+      "meetings_spontaneous"
+     ],
+     "followUps": [
+      {
+       "card": "found.spontaneous_chaos",
+       "delay": 3
+      }
+     ],
+     "memory": "{title} decided the group would meet only when someone had something interesting to say."
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.tuesday_absence",
+  "type": "organization",
+  "speaker": "martin",
+  "once": true,
+  "followUpOnly": true,
+  "priority": 3,
+  "requires": {
+   "flags": [
+    "meeting_mandatory"
+   ]
+  },
+  "text": "It’s {day}. Eight people didn’t come. One sent a note saying her cat “needed her”. What does mandatory mean, exactly?",
+  "choices": [
+   {
+    "label": "Mandatory means mandatory.",
+    "hint": "Commitment · Traditionalists · Some leave",
+    "reaction": "The cat owner does not return. Martin starts a register. The register has a register.",
+    "effects": {
+     "serves": [
+      "order",
+      "purity",
+      "-joy"
+     ],
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": -4
+     },
+     "followersPct": -0.08,
+     "groups": {
+      "traditionalists": 0.06
+     },
+     "custom": [
+      {
+       "id": "weekly_meeting",
+       "status": "tradition"
+      }
+     ],
+     "memory": "Attendance on {day}s was declared truly mandatory."
+    }
+   },
+   {
+    "label": "Mandatory-ish.",
+    "hint": "Flexibility · Martin’s sign",
+    "reaction": "Martin adds “-ish” to the laminated sign with a marker. It does not laminate.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-order"
+     ],
+     "gauges": {
+      "unity": -3,
+      "enthusiasm": 3
+     },
+     "loyalty": {
+      "martin": -6
+     },
+     "custom": [
+      {
+       "id": "weekly_meeting",
+       "values": {
+        "mandatory": "mandatory-ish"
+       }
+      }
+     ],
+     "clearFlags": [
+      "meeting_mandatory"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.spontaneous_chaos",
+  "type": "organization",
+  "speaker": "martin",
+  "once": true,
+  "followUpOnly": true,
+  "priority": 3,
+  "text": "Dez called a meeting at 4 a.m. because he “had a thought”. Fourteen people came. Nobody knows when the next one is. Can we please have a schedule?",
+  "choices": [
+   {
+    "label": "Fine. Every Thursday, optional.",
+    "hint": "Order · Martin relieved",
+    "reaction": "Martin exhales for the first time in a week.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": -3
+     },
+     "custom": [
+      {
+       "id": "weekly_meeting",
+       "status": "practice",
+       "values": {
+        "day": "Thursday",
+        "mandatory": "optional"
+       }
+      }
+     ]
+    }
+   },
+   {
+    "label": "Spontaneity is who we are.",
+    "hint": "Energy · Chaos · Attention",
+    "reaction": "The next meeting happens in a supermarket. It goes surprisingly well.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-order"
+     ],
+     "gauges": {
+      "enthusiasm": 6,
+      "unity": -5,
+      "attention": 3
+     },
+     "flags": [
+      "spontaneity"
+     ],
+     "memory": "Meetings happened wherever and whenever someone had a thought, including once in a supermarket."
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.soup",
+  "type": "doctrine",
+  "speaker": "priya",
+  "once": true,
+  "priority": 4,
+  "text": "I brought soup to the gathering. Just a big pot of lentil. People stayed two hours longer than planned, and three of them asked if they could come back. Should soup be… a thing we do?",
+  "choices": [
+   {
+    "label": "Soup is now a thing we do.",
+    "hint": "Warmth · A custom begins",
+    "reaction": "Priya cries a little, into the soup. It’s fine. It’s her soup.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 5,
+      "resources": -4
+     },
+     "followers": 2,
+     "custom": [
+      {
+       "id": "practice.soup",
+       "status": "practice",
+       "prominence": 7
+      }
+     ],
+     "memory": "Priya brought soup, and soup became a thing."
+    }
+   },
+   {
+    "label": "Let’s not make soup a thing.",
+    "hint": "Focus · Priya’s feelings",
+    "reaction": "Priya says that is completely fine and takes the pot home. The pot is very full.",
+    "effects": {
+     "serves": [
+      "-joy"
+     ],
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "priya": -6
+     },
+     "flags": [
+      "soup_declined"
+     ],
+     "followUps": [
+      {
+       "card": "found.soup_underground",
+       "delay": 7,
+       "chance": 0.75
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.soup_underground",
+  "type": "character",
+  "speaker": "priya",
+  "once": true,
+  "followUpOnly": true,
+  "text": "Small confession. There has been soup. In the boot of my car. Every week. Attendance at the car is now higher than attendance at the meeting.",
+  "choices": [
+   {
+    "label": "Fine. Soup is a thing.",
+    "hint": "Priya vindicated",
+    "reaction": "The soup comes in from the car park like a returning hero.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "loyalty": {
+      "priya": 12
+     },
+     "gauges": {
+      "enthusiasm": 4
+     },
+     "custom": [
+      {
+       "id": "practice.soup",
+       "status": "practice",
+       "prominence": 12
+      }
+     ]
+    }
+   },
+   {
+    "label": "Shut down the boot soup.",
+    "hint": "Order · Resentment",
+    "reaction": "Priya closes the boot. Somewhere, a lentil weeps.",
+    "effects": {
+     "serves": [
+      "order",
+      "-joy"
+     ],
+     "loyalty": {
+      "priya": -12
+     },
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": -4
+     },
+     "flags": [
+      "soup_banned"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.bus_stop",
+  "type": "character",
+  "speaker": "dez",
+  "once": true,
+  "text": "I recruited three people at the bus stop! I may have promised them a life-changing experience. Or a free lunch. One of those.",
+  "choices": [
+   {
+    "label": "Then we deliver a life-changing experience.",
+    "hint": "Recruitment · Expectations",
+    "reaction": "Dez punches the air. Martin writes “LIFE-CHANGING EXPERIENCE?” on a whiteboard and circles it twice.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "gauges": {
+      "enthusiasm": 7,
+      "attention": 3,
+      "resources": -3
+     },
+     "followers": 3,
+     "followUps": [
+      {
+       "card": "found.deliver",
+       "delay": 3
+      }
+     ]
+    }
+   },
+   {
+    "label": "Dez, please stop promising things.",
+    "hint": "Restraint · Dez deflates",
+    "reaction": "Two of the three leave. The third stays because the chairs are comfortable.",
+    "effects": {
+     "serves": [
+      "-expansion"
+     ],
+     "gauges": {
+      "unity": 4
+     },
+     "followers": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.deliver",
+  "type": "character",
+  "speaker": "dez",
+  "once": true,
+  "followUpOnly": true,
+  "text": "The bus stop people are here. They want their life-changing experience. I have a cardboard box and a dream.",
+  "choices": [
+   {
+    "label": "Improvise something profound.",
+    "hint": "Enthusiasm · Risk",
+    "reaction": "You speak for forty minutes about {belief}. One of them weeps. Another asks if there’s lunch.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "gauges": {
+      "enthusiasm": 8,
+      "attention": 4,
+      "unity": -3
+     },
+     "followers": 4
+    }
+   },
+   {
+    "label": "Give them the free lunch.",
+    "hint": "Comfort · Costs money",
+    "reaction": "Priya feeds everyone. The bus stop people declare it the best Thursday of their lives. It is Monday.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "resources": -6,
+      "unity": 3
+     },
+     "followers": 2
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.nap",
+  "type": "doctrine",
+  "speaker": "gary",
+  "once": true,
+  "text": "Sorry. I fell asleep during the meeting. When I woke up, six people had joined me. Someone brought blankets. It was very peaceful.",
+  "choices": [
+   {
+    "label": "Rest is welcome here.",
+    "hint": "Comfort · A custom begins",
+    "reaction": "A small blanket pile now lives in the corner of the garage. Nobody remembers who started it.",
+    "effects": {
+     "serves": [
+      "comfort",
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": -3,
+      "unity": 6
+     },
+     "custom": [
+      {
+       "id": "practice.nap",
+       "status": "practice",
+       "prominence": 6
+      }
+     ]
+    }
+   },
+   {
+    "label": "Gary, please stay awake.",
+    "hint": "Energy · Gary’s pride",
+    "reaction": "Gary agrees and immediately yawns. The yawn spreads to eleven people.",
+    "effects": {
+     "serves": [
+      "order",
+      "-comfort"
+     ],
+     "gauges": {
+      "enthusiasm": 4
+     },
+     "loyalty": {
+      "gary": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.dress_alike",
+  "type": "doctrine",
+  "speaker": "martin",
+  "once": true,
+  "requires": {
+   "decisions": ">=3"
+  },
+  "bind": {
+   "item1": "attire1"
+  },
+  "text": "People keep asking how they can tell who’s with us. I’ve priced out {item1}. There’s a bulk discount. Should members dress alike?",
+  "choices": [
+   {
+    "label": "Yes: {item1} for everyone.",
+    "hint": "Identity · Visibility · Cost",
+    "reaction": "Within a week, nineteen people are wearing {item1}. Two are wearing them incorrectly, which is now a topic.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": 6,
+      "attention": 5,
+      "resources": -6
+     },
+     "custom": [
+      {
+       "id": "attire",
+       "status": "practice",
+       "values": {
+        "item": "{item1}"
+       }
+      }
+     ],
+     "memory": "Members began wearing {item1}."
+    }
+   },
+   {
+    "label": "People should express themselves.",
+    "hint": "Freedom · Less cohesion",
+    "reaction": "Martin returns the {item1}. The receipt is laminated.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-order"
+     ],
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -3
+     },
+     "flags": [
+      "no_uniform"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.name",
+  "type": "plot",
+  "speaker": "dez",
+  "once": true,
+  "priority": 6,
+  "weight": 3,
+  "requires": {
+   "decisions": ">=5",
+   "notFlags": [
+    "named"
+   ]
+  },
+  "bind": {
+   "name": "suggestedName"
+  },
+  "text": "We need a name. Everyone keeps calling us “the garage people”. I’ve workshopped something: “{name}”. It tested extremely well with me.",
+  "choices": [
+   {
+    "label": "“{name}” it is.",
+    "hint": "Dez’s idea · Momentum",
+    "reaction": "Dez has it printed on a banner within the hour. The banner is slightly too large for the garage.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "movementName": "{name}",
+     "flags": [
+      "named"
+     ],
+     "gauges": {
+      "enthusiasm": 4,
+      "attention": 2
+     },
+     "memory": "The group named itself {movement}, on Dez’s suggestion."
+    }
+   },
+   {
+    "label": "I have a better name.",
+    "hint": "Your words · Dez sulks a little",
+    "input": {
+     "target": "movementName",
+     "placeholder": "e.g. The Lentil Fellowship",
+     "suggest": "{name}"
+    },
+    "reaction": "“{movement},” Dez repeats. “Bold. Honestly? It’s growing on me.”",
+    "effects": {
+     "loyalty": {
+      "dez": -4
+     },
+     "flags": [
+      "named"
+     ],
+     "gauges": {
+      "unity": 3
+     },
+     "memory": "{title} named the group {movement}."
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.title",
+  "type": "character",
+  "speaker": "dez",
+  "once": true,
+  "priority": 2,
+  "requires": {
+   "decisions": ">=8",
+   "notFlags": [
+    "title_decided"
+   ]
+  },
+  "text": "People don’t know what to call you. I’ve started saying “Master {initial}”. Martin thinks it’s “a bit much”.",
+  "choices": [
+   {
+    "label": "“Master {initial}” is fine.",
+    "hint": "Authority · Martin uneasy",
+    "reaction": "By evening, “Master {initial}” is on a mug. Martin drinks from a different mug.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-order"
+     ],
+     "founderTitle": "Master {initial}",
+     "flags": [
+      "title_decided",
+      "title_master"
+     ],
+     "gauges": {
+      "enthusiasm": 5,
+      "attention": 3
+     },
+     "memory": "Members began calling the founder Master {initial}."
+    }
+   },
+   {
+    "label": "“Just call me {founder}.”",
+    "hint": "Humility · Dez wounded",
+    "reaction": "Dez looks genuinely wounded. He had already ordered the mug.",
+    "effects": {
+     "serves": [
+      "order",
+      "-expansion"
+     ],
+     "flags": [
+      "title_decided",
+      "title_humble"
+     ],
+     "gauges": {
+      "unity": 5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.handshake",
+  "type": "doctrine",
+  "speaker": "priya",
+  "once": true,
+  "requires": {
+   "decisions": ">=5"
+  },
+  "text": "Some of the newer members invented a handshake. It has forty-one steps and ends with a small bow. People are practising it in the car park.",
+  "choices": [
+   {
+    "label": "Make it our handshake.",
+    "hint": "Belonging · Visibility",
+    "reaction": "The first official forty-one-step handshake takes four minutes. Both participants describe it as “worth it”.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "unity": 6,
+      "attention": 4,
+      "enthusiasm": 2
+     },
+     "custom": [
+      {
+       "id": "greeting.handshake",
+       "status": "practice"
+      }
+     ]
+    }
+   },
+   {
+    "label": "We don’t need a handshake.",
+    "hint": "Restraint",
+    "reaction": "They keep doing it anyway, but faster, with an air of defiance.",
+    "effects": {
+     "serves": [
+      "order",
+      "-joy"
+     ],
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.agnes_arrives",
+  "type": "character",
+  "speaker": "agnes",
+  "once": true,
+  "priority": 4,
+  "requires": {
+   "decisions": ">=10",
+   "chars": {
+    "agnes": {
+     "present": false
+    }
+   }
+  },
+  "text": "I am Agnes Thimble. I have attended your last three meetings and taken minutes. You have contradicted yourselves eleven times. I would like to join, and I would like to discuss the contradictions.",
+  "choices": [
+   {
+    "label": "Welcome. Please keep taking minutes.",
+    "hint": "Consistency · A new ally",
+    "reaction": "Agnes produces a second notebook, for the minutes about the minutes.",
+    "effects": {
+     "join": [
+      "agnes"
+     ],
+     "role": {
+      "agnes": "Keeper of the Minutes"
+     },
+     "loyalty": {
+      "agnes": 15
+     },
+     "serves": [
+      "purity"
+     ],
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": -3
+     },
+     "custom": [
+      {
+       "id": "minutes",
+       "status": "practice"
+      }
+     ],
+     "memory": "Agnes Thimble joined and became Keeper of the Minutes."
+    }
+   },
+   {
+    "label": "We don’t really do minutes.",
+    "hint": "Spontaneity · She joins anyway",
+    "reaction": "“Noted,” says Agnes, and writes it down.",
+    "effects": {
+     "join": [
+      "agnes"
+     ],
+     "loyalty": {
+      "agnes": -20
+     },
+     "gauges": {
+      "enthusiasm": 3
+     },
+     "flags": [
+      "agnes_unminuted"
+     ],
+     "memory": "Agnes Thimble joined, uninvited, with a notebook."
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.symbol",
+  "type": "doctrine",
+  "speaker": "gary",
+  "once": true,
+  "requires": {
+   "decisions": ">=5"
+  },
+  "bind": {
+   "thing": "symbolThing"
+  },
+  "text": "I painted a symbol on the garage door to make it look official. It’s a {thing}. People have started drawing it on things.",
+  "choices": [
+   {
+    "label": "Adopt it as our symbol.",
+    "hint": "Identity · Gary’s pride",
+    "reaction": "Within a month, the {thing} is on forty notebooks, a car and one forearm.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "loyalty": {
+      "gary": 8
+     },
+     "gauges": {
+      "attention": 5,
+      "unity": 4
+     },
+     "custom": [
+      {
+       "id": "symbol",
+       "status": "practice",
+       "values": {
+        "what": "{thing}"
+       }
+      }
+     ],
+     "memory": "Gary’s {thing} became the symbol of {movement}."
+    }
+   },
+   {
+    "label": "Paint over it.",
+    "hint": "Dignity · Gary’s feelings",
+    "reaction": "Gary paints over it. The outline is still visible on sunny days. People say it is watching.",
+    "effects": {
+     "loyalty": {
+      "gary": -8
+     },
+     "gauges": {
+      "unity": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.whales",
+  "type": "character",
+  "speaker": "gary",
+  "once": true,
+  "requires": {
+   "flags": [
+    "gary_book"
+   ],
+   "decisions": ">=4"
+  },
+  "text": "I finished the book! It’s about whales. Did you know some whales sing songs that change every year? Can I talk about whales at the next {meeting}?",
+  "choices": [
+   {
+    "label": "Whales are relevant now.",
+    "hint": "Gary · A strange new custom",
+    "reaction": "Gary’s whale talk runs fifty minutes. Afterwards, three people say it was the most moving thing they have heard in years.",
+    "effects": {
+     "serves": [
+      "comfort"
+     ],
+     "loyalty": {
+      "gary": 10
+     },
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": 2
+     },
+     "custom": [
+      {
+       "id": "practice.whales",
+       "status": "practice",
+       "prominence": 5
+      }
+     ]
+    }
+   },
+   {
+    "label": "Gary.",
+    "hint": "Focus",
+    "reaction": "“Gary,” agrees Gary.",
+    "effects": {
+     "loyalty": {
+      "gary": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.neighbour",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Mr. Hedges",
+    "role": "Next-door neighbour"
+   }
+  },
+  "once": true,
+  "requires": {
+   "followers": ">=18"
+  },
+  "text": "Evening. I’ve counted thirty-one people going into that garage this week. Either you’re running a business, a band or a cult. Which is it?",
+  "choices": [
+   {
+    "label": "“A book club.”",
+    "hint": "Discretion · It may not hold",
+    "reaction": "Mr. Hedges narrows his eyes. He has read books. This is not that.",
+    "effects": {
+     "gauges": {
+      "attention": -4
+     },
+     "flags": [
+      "hedges_lied"
+     ],
+     "followUps": [
+      {
+       "card": "found.hedges_returns",
+       "delay": 6
+      }
+     ]
+    }
+   },
+   {
+    "label": "“Come in and see.”",
+    "hint": "Openness · Attention",
+    "reaction": "Mr. Hedges stays until midnight. He brings his own folding chair the following week.",
+    "effects": {
+     "gauges": {
+      "attention": 3,
+      "enthusiasm": 3
+     },
+     "followers": 1,
+     "flags": [
+      "hedges_member"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.hedges_returns",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Mr. Hedges",
+    "role": "Next-door neighbour"
+   }
+  },
+  "once": true,
+  "followUpOnly": true,
+  "text": "I joined a book club to check. They’ve never heard of you. Also, why does everyone leave your garage talking about {belief}?",
+  "choices": [
+   {
+    "label": "“It’s an advanced book club.”",
+    "hint": "Mystery · Rumours",
+    "reaction": "By Friday, the street believes the garage is an advanced book club, which is somehow worse.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "unity": -2
+     }
+    }
+   },
+   {
+    "label": "“Fine. Join us.”",
+    "hint": "Honesty",
+    "reaction": "Mr. Hedges joins. Within a month he is the most devoted member on the street.",
+    "effects": {
+     "gauges": {
+      "attention": -2,
+      "enthusiasm": 3
+     },
+     "followers": 1,
+     "flags": [
+      "hedges_member"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.money",
+  "type": "organization",
+  "speaker": "priya",
+  "once": true,
+  "requires": {
+   "decisions": ">=7"
+  },
+  "text": "We collected fourteen dollars in the soup jar, two buttons and a bus token. Martin wants a budget meeting. Dez wants a megaphone.",
+  "choices": [
+   {
+    "label": "Buy the megaphone.",
+    "hint": "Expansion · Noise",
+    "reaction": "Dez’s first announcement through the megaphone is “testing”. His second is “TESTING”.",
+    "effects": {
+     "serves": [
+      "expansion",
+      "-order"
+     ],
+     "gauges": {
+      "attention": 6,
+      "resources": -5
+     },
+     "flags": [
+      "megaphone"
+     ]
+    }
+   },
+   {
+    "label": "Start a proper fund.",
+    "hint": "Order · Prudence",
+    "reaction": "Martin opens a spreadsheet titled FUND. It has one row.",
+    "effects": {
+     "serves": [
+      "order",
+      "-expansion"
+     ],
+     "gauges": {
+      "resources": 6,
+      "enthusiasm": -2
+     },
+     "flags": [
+      "fund"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.husband",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Dolores Quint",
+    "role": "Member, three weeks"
+   }
+  },
+  "once": true,
+  "requires": {
+   "followers": ">=12"
+  },
+  "text": "My husband thinks this is a cult. I told him it’s just {belief}. He asked what that means. I realised I don’t know.",
+  "choices": [
+   {
+    "label": "Bring him to a {meeting}.",
+    "hint": "Openness · Recruitment",
+    "reaction": "He comes, eats three bowls of something and leaves with a pamphlet he did not ask for.",
+    "effects": {
+     "gauges": {
+      "attention": 2,
+      "enthusiasm": 3
+     },
+     "followers": 1
+    }
+   },
+   {
+    "label": "Tell him it’s a book club.",
+    "hint": "The book club excuse",
+    "reaction": "It is the fourth time this month someone has used the book club excuse. Gary feels seen.",
+    "effects": {
+     "gauges": {
+      "unity": -2,
+      "attention": -2
+     },
+     "loyalty": {
+      "gary": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.manifesto",
+  "type": "doctrine",
+  "speaker": "any",
+  "once": true,
+  "priority": 3,
+  "requires": {
+   "decisions": ">=12",
+   "flags": [
+    "named"
+   ]
+  },
+  "bind": {
+   "practice1": "practice1"
+  },
+  "text": "Members keep asking what we actually believe. The most common answer is “{practice1}”. The second most common is “I thought this was a book club”. Should we write something down?",
+  "choices": [
+   {
+    "label": "Write it down. Make it official.",
+    "hint": "Clarity · Tradition · Less flexibility",
+    "reaction": "The founding statement is one page long. Agnes, or someone like her, has already found a typo. The typo is now doctrine.",
+    "effects": {
+     "serves": [
+      "purity",
+      "order",
+      "-joy"
+     ],
+     "gauges": {
+      "unity": 7,
+      "enthusiasm": 3,
+      "attention": 2
+     },
+     "groups": {
+      "traditionalists": 0.04
+     },
+     "custom": [
+      {
+       "id": "{ctx.practice1}",
+       "status": "tradition",
+       "prominence": 10
+      }
+     ],
+     "flags": [
+      "manifesto"
+     ],
+     "memory": "{Movement} wrote down what it believed: {practice1}."
+    }
+   },
+   {
+    "label": "We believe whatever feels right.",
+    "hint": "Openness · Everyone believes something different",
+    "reaction": "Everyone nods. Everyone nods at something different.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-purity"
+     ],
+     "gauges": {
+      "unity": -4,
+      "enthusiasm": 4
+     },
+     "groups": {
+      "reformers": 0.03
+     },
+     "flags": [
+      "open_doctrine"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.practice_emerges",
+  "type": "doctrine",
+  "speaker": "champion:practice",
+  "weight": 1.5,
+  "cooldown": 6,
+  "requires": {
+   "decisions": ">=2",
+   "era": [
+    "founding",
+    "grassroots"
+   ]
+  },
+  "bind": {
+   "practice": "newPractice"
+  },
+  "text": "Something is catching on. After every {meeting}, a few members have started {practice}. Nobody organised it. It just happened. People seem to love it.",
+  "choices": [
+   {
+    "label": "Encourage it.",
+    "hint": "A new custom · Enthusiasm",
+    "reaction": "Within a week, {practice} is simply what {members} do.",
+    "effects": {
+     "serves": [
+      "joy"
+     ],
+     "gauges": {
+      "enthusiasm": 4,
+      "attention": 2
+     },
+     "custom": [
+      {
+       "id": "{ctx.practice}",
+       "status": "practice",
+       "prominence": 9
+      }
+     ],
+     "memory": "{Members} began {practice}. Nobody remembers deciding it."
+    }
+   },
+   {
+    "label": "Gently discourage it.",
+    "hint": "Focus",
+    "reaction": "It continues in the car park, where it is technically not our responsibility.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": -2
+     }
+    }
+   }
+  ],
+  "spacing": 8
+ },
+ {
+  "id": "found.practices_compete",
+  "type": "doctrine",
+  "speaker": "any",
+  "cooldown": 25,
+  "requires": {
+   "decisions": ">=8"
+  },
+  "bind": {
+   "practice1": "practice1",
+   "practice2": "practice2"
+  },
+  "text": "The {practice1Noun} people and the {practice2Noun} people both want the last half hour of every {meeting}. There have been words. One of the words was “heresy”.",
+  "choices": [
+   {
+    "label": "Put {practice1} first.",
+    "hint": "One custom rises · The other side sulks",
+    "reaction": "The losing side announces an “informal extension” in the car park.",
+    "effects": {
+     "gauges": {
+      "unity": -3
+     },
+     "groups": {
+      "traditionalists": 0.02
+     },
+     "custom": [
+      {
+       "id": "{ctx.practice1}",
+       "prominence": 8
+      },
+      {
+       "id": "{ctx.practice2}",
+       "prominence": -5
+      }
+     ]
+    }
+   },
+   {
+    "label": "Put {practice2} first.",
+    "hint": "The underdog rises",
+    "reaction": "The losing side announces an “informal extension” in the car park.",
+    "effects": {
+     "gauges": {
+      "unity": -3
+     },
+     "groups": {
+      "reformers": 0.02
+     },
+     "custom": [
+      {
+       "id": "{ctx.practice2}",
+       "prominence": 12
+      },
+      {
+       "id": "{ctx.practice1}",
+       "prominence": -5
+      }
+     ]
+    }
+   }
+  ],
+  "spacing": 20
+ },
+ {
+  "id": "found.martin_rules",
+  "type": "organization",
+  "speaker": "martin",
+  "once": true,
+  "requires": {
+   "decisions": ">=7"
+  },
+  "text": "I’ve drafted some simple rules. Rule one: no shouting. Rule two: no shouting about rule one. There are fourteen more.",
+  "choices": [
+   {
+    "label": "Adopt Martin’s rules.",
+    "hint": "Order · Fewer fun nights",
+    "reaction": "Martin reads all sixteen rules aloud. Nobody shouts, though several people want to.",
+    "effects": {
+     "serves": [
+      "order",
+      "-joy"
+     ],
+     "gauges": {
+      "unity": 5,
+      "enthusiasm": -4
+     },
+     "flags": [
+      "martin_rules"
+     ]
+    }
+   },
+   {
+    "label": "We don’t need rules yet.",
+    "hint": "Freedom · Martin hurt",
+    "reaction": "Martin folds the rules very small and puts them in his wallet, for later.",
+    "effects": {
+     "serves": [
+      "joy",
+      "-order"
+     ],
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.posters",
+  "type": "character",
+  "speaker": "dez",
+  "once": true,
+  "requires": {
+   "decisions": ">=6"
+  },
+  "text": "I made posters. They say “{Movement}: IT’S HAPPENING.” I put up four hundred of them. Some are on the police station.",
+  "choices": [
+   {
+    "label": "Leave them up.",
+    "hint": "Attention · Questions",
+    "reaction": "People are asking what is happening. This is, Dez points out, the point.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "gauges": {
+      "attention": 9,
+      "resources": -3
+     },
+     "followers": 3,
+     "followUps": [
+      {
+       "card": "found.constable",
+       "delay": 4,
+       "chance": 0.6
+      }
+     ]
+    }
+   },
+   {
+    "label": "Take down the police station ones.",
+    "hint": "Caution",
+    "reaction": "Dez takes them down and puts them up again on the library, which he considers neutral ground.",
+    "effects": {
+     "gauges": {
+      "attention": 4,
+      "unity": 2
+     },
+     "loyalty": {
+      "dez": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.constable",
+  "type": "follower",
+  "speaker": {
+   "anon": {
+    "name": "Constable Haversham",
+    "role": "Local police"
+   }
+  },
+  "once": true,
+  "followUpOnly": true,
+  "text": "Afternoon. Someone has covered the station noticeboard in posters saying something is happening. Is something happening? We’d like to know in advance.",
+  "choices": [
+   {
+    "label": "Invite the constable to a {meeting}.",
+    "hint": "Goodwill",
+    "reaction": "Constable Haversham attends in uniform, stays out of uniform, and leaves humming.",
+    "effects": {
+     "gauges": {
+      "attention": 3,
+      "unity": 2
+     },
+     "flags": [
+      "constable_friend"
+     ]
+    }
+   },
+   {
+    "label": "“Nothing is happening.”",
+    "hint": "Low profile · Dez disagrees",
+    "reaction": "The constable writes “NOTHING HAPPENING” in a notebook and underlines it.",
+    "effects": {
+     "gauges": {
+      "attention": -4,
+      "enthusiasm": -3
+     },
+     "loyalty": {
+      "dez": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.gary_vp",
+  "type": "character",
+  "speaker": "gary",
+  "once": true,
+  "requires": {
+   "decisions": ">=14"
+  },
+  "text": "Quick thing. I’ve been introducing myself as Vice President. Nobody stopped me, so I assumed it was fine. Is it fine?",
+  "choices": [
+   {
+    "label": "Congratulations, Vice President Gary.",
+    "hint": "Gary delighted · Martin baffled",
+    "reaction": "Gary is given a lanyard. He wears it to the supermarket.",
+    "effects": {
+     "role": {
+      "gary": "Vice President"
+     },
+     "loyalty": {
+      "gary": 15,
+      "martin": -6
+     },
+     "gauges": {
+      "unity": -2,
+      "enthusiasm": 3
+     },
+     "memory": "Gary became Vice President, by introducing himself as Vice President."
+    }
+   },
+   {
+    "label": "We don’t have vice presidents.",
+    "hint": "Order · Gary deflated",
+    "reaction": "Gary nods and starts introducing himself as Deputy Vice President.",
+    "effects": {
+     "serves": [
+      "order"
+     ],
+     "loyalty": {
+      "gary": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.cold",
+  "type": "doctrine",
+  "speaker": "priya",
+  "once": true,
+  "requires": {
+   "decisions": ">=9",
+   "notFlags": [
+    "hq_hall"
+   ]
+  },
+  "text": "It’s freezing in the garage. Half the members wear coats indoors. I could make the soup hotter, we could buy a heater, or we could make the cold part of it.",
+  "choices": [
+   {
+    "label": "Buy a heater.",
+    "hint": "Comfort · Costs money",
+    "reaction": "The heater smells faintly of burnt dust. People love it immediately.",
+    "effects": {
+     "serves": [
+      "comfort",
+      "joy"
+     ],
+     "gauges": {
+      "resources": -6,
+      "enthusiasm": 3,
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "The cold builds character.",
+    "hint": "A hardy custom · Traditionalists",
+    "reaction": "Within a month, members describe being slightly cold as “the {movement} way”.",
+    "effects": {
+     "serves": [
+      "purity",
+      "-comfort"
+     ],
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": -2
+     },
+     "groups": {
+      "traditionalists": 0.02
+     },
+     "custom": [
+      {
+       "id": "cold",
+       "status": "practice"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.dez_ideas",
+  "type": "character",
+  "speaker": "dez",
+  "once": true,
+  "requires": {
+   "chars": {
+    "dez": {
+     "loyalty": "<=-10"
+    }
+   }
+  },
+  "text": "Honestly? I feel like nobody listens to my ideas. I have SO many ideas. I have a notebook. It’s mostly ideas.",
+  "choices": [
+   {
+    "label": "Pick your best idea. We’ll do it.",
+    "hint": "Dez restored · Some chaos",
+    "reaction": "Dez’s best idea is a parade. It is approved, and then it is a parade.",
+    "effects": {
+     "serves": [
+      "expansion"
+     ],
+     "loyalty": {
+      "dez": 12
+     },
+     "gauges": {
+      "attention": 5,
+      "resources": -5
+     }
+    }
+   },
+   {
+    "label": "Maybe fewer ideas.",
+    "hint": "Calm · Dez wounded",
+    "reaction": "Dez writes “fewer ideas” in the notebook. It is, technically, another idea.",
+    "effects": {
+     "loyalty": {
+      "dez": -10
+     },
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.outgrow",
+  "type": "plot",
+  "speaker": "martin",
+  "once": true,
+  "priority": 8,
+  "requires": {
+   "followers": ">=20",
+   "decisions": ">=12",
+   "flags": [
+    "named"
+   ],
+   "era": [
+    "founding"
+   ]
+  },
+  "text": "We’ve outgrown the garage. Gary’s car hasn’t been inside since spring. The community hall is available on {day}s for forty dollars.",
+  "choices": [
+   {
+    "label": "Rent the hall.",
+    "hint": "Growth · Gary sad · Grassroots era",
+    "reaction": "Gary helps carry the chairs. He keeps one, for old times’ sake.",
+    "effects": {
+     "serves": [
+      "order",
+      "expansion",
+      "-comfort"
+     ],
+     "loyalty": {
+      "gary": -5
+     },
+     "gauges": {
+      "resources": -8,
+      "attention": 5
+     },
+     "flags": [
+      "hq_hall"
+     ],
+     "era": "grassroots",
+     "memory": "{Movement} moved out of Gary’s garage and into the community hall."
+    }
+   },
+   {
+    "label": "We stay in the garage. It’s where it began.",
+    "hint": "Tradition · Limited space · Grassroots era",
+    "reaction": "People start queuing down the driveway. Gary sets out snacks for the queue.",
+    "effects": {
+     "serves": [
+      "comfort",
+      "purity"
+     ],
+     "loyalty": {
+      "gary": 12
+     },
+     "gauges": {
+      "unity": 5,
+      "attention": -3
+     },
+     "era": "grassroots",
+     "custom": [
+      {
+       "id": "garage",
+       "status": "tradition"
+      }
+     ],
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 0.85,
+       "days": 30,
+       "label": "Queue down the driveway"
+      }
+     ],
+     "memory": "{Movement} refused to leave Gary’s garage. People queued down the driveway."
+    }
+   }
+  ]
+ }
+]
