@@ -102,6 +102,29 @@ func _ready() -> void:
 	await _wait(0.3)
 	await _shot("12_map")
 	run.hud._close_map()
+	# Discovery card with "what you got" lines.
+	for q: Dictionary in run.pois.items:
+		if String(q.id) == "sig_green_echo":
+			run._claim_discovery(q)
+	await _wait(0.4)
+	await _shot("12b_discovery_card")
+	run.hud.card_clock = 0.0
+	# Gate choice panel.
+	run.discoveries = ["sig_green_echo", "sig_now_or_never", "sig_hexagonis"]
+	run.left_gate = true
+	await _teleport(run, run.world.gate + Vector2(40, 40))
+	await _wait(0.4)
+	await _shot("12c_gate_choice")
+	run.request_extract()
+	await _wait(0.5)
+	await _shot("12d_gate_leaving")
+	run.request_extract()
+	run.hud.toggle_pause()
+	run.hud._open_field_guide()
+	await _wait(0.3)
+	await _shot("12e_field_guide")
+	run.hud.toggle_pause()
+	await _teleport(run, bloom)
 	run.discoveries = ["sig_green_echo", "sig_now_or_never"]
 	run.spawn_boss(run.player.position + Vector2(0, -300))
 	await _drive(run, run.player.position + Vector2(300, 0), 4.0)

@@ -173,6 +173,8 @@ static func migrate(raw: Dictionary) -> Dictionary:
 		if out["mastery"].has(old_id) and not out["mastery"].has(retired[old_id]):
 			out["mastery"][retired[old_id]] = out["mastery"][old_id]
 		out["mastery"].erase(old_id)
+	if typeof(raw.get("active_run")) == TYPE_DICTIONARY:
+		out["active_run"] = raw["active_run"]
 	if not "ella_venn" in out["unlocked_characters"]:
 		out["unlocked_characters"].append("ella_venn")
 	if not "black_drift_reach" in out["unlocked_destinations"]:
@@ -280,7 +282,7 @@ func record_expedition(result: Dictionary) -> Dictionary:
 		"complete":
 			stats["completions"] = int(stats["completions"]) + 1
 			stats["bosses"] = int(stats["bosses"]) + 1
-		"extracted":
+		"extracted", "interrupted":
 			stats["extractions"] = int(stats["extractions"]) + 1
 		_:
 			stats["defeats"] = int(stats["defeats"]) + 1
@@ -315,8 +317,30 @@ func record_expedition(result: Dictionary) -> Dictionary:
 	m["level"] = GameData.mastery_level(int(m["xp"]))
 	data["last_character"] = cid2
 	data["last_destination"] = String(result.get("destination", data["last_destination"]))
+	data.erase("active_run")
 	save()
 	return {"currency": currency, "unlocks": unlocks, "new_discoveries": new_discoveries, "mastery_levels": int(m["level"]) - before}
+
+## Mid-run checkpoint: a result-shaped snapshot of the expedition in progress.
+func checkpoint_run(snapshot: Dictionary) -> void:
+	data["active_run"] = snapshot
+	save()
+
+func has_interrupted_run() -> bool:
+	return typeof(data.get("active_run")) == TYPE_DICTIONARY and not (data["active_run"] as Dictionary).is_empty()
+
+## Commits an expedition that never reached its ending (crash, closed tab).
+## Everything found is kept. Returns the record_expedition summary, or {}.
+func recover_interrupted_run() -> Dictionary:
+	if not has_interrupted_run():
+		data.erase("active_run")
+		return {}
+	var snap: Dictionary = data["active_run"]
+	snap["outcome"] = "interrupted"
+	var out: Dictionary = record_expedition(snap)
+	out["discoveries"] = (snap.get("discoveries", []) as Array).size()
+	out["time"] = float(snap.get("time", 0.0))
+	return out
 
 func buy_workshop(id: String) -> bool:
 	var def: Dictionary = GameData.WORKSHOP.get(id, {})

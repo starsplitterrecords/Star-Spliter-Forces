@@ -28,8 +28,12 @@ static func text_scale() -> float:
 		return 1.0
 	return clampf(float(p.setting("text_scale")), 0.8, 1.5)
 
+## Playtest: text read as too small on laptops and phones, so every UI size
+## is scaled up from its design value before the player's own Text size.
+const BASE_TEXT: float = 1.3
+
 static func fs(size: int) -> int:
-	return int(round(size * text_scale()))
+	return int(round(size * BASE_TEXT * text_scale()))
 
 static func box(bg: Color, border: Color, width: int = 1, radius: int = 10, pad: int = 14) -> StyleBoxFlat:
 	var s: StyleBoxFlat = StyleBoxFlat.new()

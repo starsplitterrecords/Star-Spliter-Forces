@@ -117,10 +117,10 @@ func number(pos: Vector2, value: float, color: Color = Color.WHITE, big: bool = 
 		return
 	if texts.size() >= MAX_TEXTS:
 		texts.pop_front()
-	texts.append([pos + Vector2(randf_range(-10, 10), -10), str(int(round(value))), 0.65, 0.65, color, 24 if big else 15, 1.0 if big else 0.0])
+	texts.append([pos + Vector2(randf_range(-10, 10), -10), str(int(round(value))), 0.65, 0.65, color, 30 if big else 19, 1.0 if big else 0.0])
 
 func label(pos: Vector2, text: String, color: Color, size: int = 18, life: float = 1.2) -> void:
-	texts.append([pos, text, life, life, color, size, 0.6])
+	texts.append([pos, text, life * 1.4, life * 1.4, color, int(size * 1.35), 0.6])
 
 ## Composite effects ------------------------------------------------------
 

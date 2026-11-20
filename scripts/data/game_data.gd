@@ -370,18 +370,18 @@ const PASSIVES: Dictionary = {
 const ENEMIES: Dictionary = {
 	"skiff": {"name": "Splinter Skiff", "hp": 16.0, "speed": 96.0, "damage": 8.0, "xp": 1, "radius": 13.0, "color": Color("9aa3ad"), "behavior": "drift", "shape": "dart", "aggro": 430.0},
 	"ram_cutter": {"name": "Ram Cutter", "hp": 40.0, "speed": 120.0, "damage": 13.0, "xp": 2, "radius": 17.0, "color": Color("d0743c"), "behavior": "charge", "shape": "dart", "aggro": 480.0},
-	"swarm_tender": {"name": "Swarm Tender", "hp": 95.0, "speed": 62.0, "damage": 14.0, "xp": 5, "radius": 25.0, "color": Color("5ee6a8"), "behavior": "orbit", "shape": "ring", "aggro": 520.0, "summon": "skiff", "summon_count": 2, "summon_every": 7.0},
+	"swarm_tender": {"name": "Swarm Tender", "hp": 95.0, "speed": 62.0, "damage": 14.0, "xp": 5, "radius": 25.0, "color": Color("d8664a"), "behavior": "orbit", "shape": "ring", "aggro": 520.0, "summon": "skiff", "summon_count": 2, "summon_every": 7.0},
 	"rail_picket": {"name": "Rail Picket", "hp": 34.0, "speed": 88.0, "damage": 12.0, "xp": 3, "radius": 16.0, "color": Color("ffb35c"), "behavior": "ranged", "shape": "lancer", "aggro": 560.0, "keep": 330.0, "fire_every": 3.4, "shot_speed": 250.0},
 	"mine_hauler": {"name": "Mine Hauler", "hp": 70.0, "speed": 58.0, "damage": 14.0, "xp": 4, "radius": 22.0, "color": Color("ff4fd8"), "behavior": "layer", "shape": "cell", "aggro": 500.0, "lay_every": 2.8, "hazard_radius": 62.0},
 	"wreck_lurker": {"name": "Wreck Lurker", "hp": 52.0, "speed": 150.0, "damage": 15.0, "xp": 4, "radius": 18.0, "color": Color("ff8f6a"), "behavior": "ambush", "shape": "shard", "aggro": 190.0},
-	"shield_tug": {"name": "Shield Tug", "hp": 60.0, "speed": 80.0, "damage": 10.0, "xp": 4, "radius": 19.0, "color": Color("9fe8ff"), "behavior": "warden", "shape": "warden", "aggro": 520.0},
-	"echo_mote": {"name": "Gravitic Echo", "hp": 22.0, "speed": 70.0, "damage": 7.0, "xp": 2, "radius": 14.0, "color": Color("8ff0c8"), "behavior": "drift", "shape": "orb", "aggro": 360.0},
+	"shield_tug": {"name": "Shield Tug", "hp": 60.0, "speed": 80.0, "damage": 10.0, "xp": 4, "radius": 19.0, "color": Color("b49aa8"), "behavior": "warden", "shape": "warden", "aggro": 520.0},
+	"echo_mote": {"name": "Gravitic Echo", "hp": 22.0, "speed": 70.0, "damage": 7.0, "xp": 2, "radius": 14.0, "color": Color("e0708a"), "behavior": "drift", "shape": "orb", "aggro": 360.0},
 	"splinter_captain": {"name": "Splinter Captain", "hp": 520.0, "speed": 84.0, "damage": 22.0, "xp": 30, "radius": 36.0, "color": Color("ffd75e"), "behavior": "surge", "shape": "elite", "elite": true, "aggro": 9999.0},
 	"gunship": {"name": "Splinter Gunship", "min_time": 180.0, "hp": 80.0, "speed": 70.0, "damage": 11.0, "xp": 5, "radius": 22.0, "color": Color("c8a24a"), "behavior": "ranged", "shape": "gunship", "aggro": 600.0, "keep": 390.0, "fire_every": 3.8, "shot_speed": 280.0, "burst": 3},
-	"leech": {"name": "Drift Leech", "min_time": 120.0, "hp": 30.0, "speed": 135.0, "damage": 4.0, "xp": 3, "radius": 12.0, "color": Color("7fb069"), "behavior": "leech", "shape": "leech", "aggro": 420.0},
-	"blink": {"name": "Veil Flicker", "min_time": 150.0, "hp": 36.0, "speed": 60.0, "damage": 11.0, "xp": 3, "radius": 15.0, "color": Color("b48cff"), "behavior": "blink", "shape": "blink", "aggro": 520.0},
+	"leech": {"name": "Drift Leech", "min_time": 120.0, "hp": 30.0, "speed": 135.0, "damage": 4.0, "xp": 3, "radius": 12.0, "color": Color("b0a050"), "behavior": "leech", "shape": "leech", "aggro": 420.0},
+	"blink": {"name": "Veil Flicker", "min_time": 150.0, "hp": 36.0, "speed": 60.0, "damage": 11.0, "xp": 3, "radius": 15.0, "color": Color("e05a9a"), "behavior": "blink", "shape": "blink", "aggro": 520.0},
 	"dreadnought": {"name": "Splinter Dreadnought", "hp": 3200.0, "speed": 48.0, "damage": 22.0, "xp": 60, "radius": 50.0, "color": Color("a8784a"), "behavior": "dreadnought", "shape": "dreadnought", "elite": true, "aggro": 99999.0},
-	"the_silence": {"name": "The Silence", "hp": 30000.0, "speed": 78.0, "damage": 26.0, "xp": 0, "radius": 72.0, "color": Color("ff376f"), "behavior": "boss", "shape": "silence", "boss": true, "aggro": 99999.0},
+	"the_silence": {"name": "The Silence", "hp": 24000.0, "speed": 78.0, "damage": 26.0, "xp": 0, "radius": 72.0, "color": Color("ff376f"), "behavior": "boss", "shape": "silence", "boss": true, "aggro": 99999.0},
 }
 
 # ============================================================== destinations & regions
@@ -419,7 +419,7 @@ const DESTINATIONS: Dictionary = {
 const REGIONS: Dictionary = {
 	"array_gate": {"name": "ARRAY GATE", "shape": "circle", "center": Vector2(0, 0), "radius": 494.0,
 		"color": Color("68ecff"), "floor": Color("0a1424"), "props": "gate", "density": 0.25, "music": "region_gate",
-		"enemies": {"skiff": 1.0}, "blurb": "A reblazed corridor gate. Extraction point.", "threat": 0},
+		"enemies": {"skiff": 1.0}, "blurb": "A reblazed corridor gate. Your way home — and where The Silence is called out.", "threat": 0},
 	"silver_wrecks": {"name": "SILVER WRECKS", "shape": "circle", "center": Vector2(3325, 2128), "radius": 1208.0,
 		"color": Color("9fb4d0"), "floor": Color("0b111c"), "props": "wreck", "density": 1.0, "music": "region_wrecks",
 		"enemies": {"skiff": 0.9, "ram_cutter": 0.6, "wreck_lurker": 0.55, "shield_tug": 0.25, "leech": 0.3}, "blurb": "Old hull wreckage. Not every piece of debris is debris.", "threat": 2},
@@ -437,7 +437,7 @@ const REGIONS: Dictionary = {
 		"enemies": {"shield_tug": 0.5, "ram_cutter": 0.6, "skiff": 0.6, "rail_picket": 0.4, "blink": 0.6}, "blurb": "A phase anomaly in full bloom. Rifts here unbalance everything.", "threat": 3},
 	"rift_mouth": {"name": "RIFT MOUTH", "shape": "circle", "center": Vector2(-6300, 0), "radius": 520.0,
 		"color": Color("68ecff"), "floor": Color("0a1424"), "props": "gate", "density": 0.25, "music": "region_gate",
-		"enemies": {"skiff": 1.0}, "blurb": "Convoy staging point. Extraction.", "threat": 0},
+		"enemies": {"skiff": 1.0}, "blurb": "Convoy staging point. Your way home — and where The Silence is called out.", "threat": 0},
 	"grain_convoy": {"name": "GREEN CORRIDOR APPROACH", "shape": "circle", "center": Vector2(-3500, 1100), "radius": 1150.0,
 		"color": Color("c6e27a"), "floor": Color("0d120a"), "props": "wreck", "density": 1.1, "music": "region_wrecks",
 		"enemies": {"skiff": 0.9, "ram_cutter": 0.7, "wreck_lurker": 0.6, "gunship": 0.3}, "blurb": "Kaldr Rift's convoy lane through old hull wreckage, where raiders strike the approach.", "threat": 2},
@@ -640,6 +640,84 @@ const SFX_NAMES: Array[String] = [
 	"extract", "boss_appear", "boss_phase", "boss_die", "ui_click", "ui_back", "harmony", "enemy_shot",
 	"victory", "defeat", "ping", "evolve",
 ]
+
+# ============================================================== field guide
+## Visual classification: every thing you meet belongs to one category with a
+## fixed colour family and icon. Enemies are always warm with a red threat rim;
+## pickups are small, bright and cool; discoveries are tall landmarks.
+const CATEGORY_ORDER: Array[String] = ["hostile", "elite", "xp", "supply", "cache", "signal", "explorer", "artifact", "fragment", "anomaly", "echo", "resonator", "rift", "camp", "gate"]
+const CATEGORIES: Dictionary = {
+	"hostile": {"name": "HOSTILE", "group": "THREATS", "color": Color("ff4a4a"),
+		"what": "Raider ships and things of the hush. Always ringed in red.",
+		"why": "They hurt on contact or by firing. Your weapons fire on their own — cleared ships drop XP shards."},
+	"elite": {"name": "ELITE / BOSS", "group": "THREATS", "color": Color("ffb03a"),
+		"what": "Big ships with a thick red-and-gold ring and a health bar.",
+		"why": "Dangerous but rich: they drop piles of shards. The Silence is the boss that ends an expedition."},
+	"xp": {"name": "XP SHARD", "group": "PICKUPS", "color": Color("6ff6ff"),
+		"what": "Small spinning diamonds (cyan, violet, gold = bigger).",
+		"why": "Fly over them. Fill the top bar to LEVEL UP and pick a new weapon or ship system."},
+	"supply": {"name": "SUPPLIES", "group": "PICKUPS", "color": Color("7dffb2"),
+		"what": "Green cross = repair cell. Blue horseshoe = magnet.",
+		"why": "Repair restores hull. A magnet pulls every shard on screen to you."},
+	"cache": {"name": "SUPPLY CACHE", "group": "PICKUPS", "color": Color("7dffb2"),
+		"what": "Green crates in the field (red ones appear only in Fracture).",
+		"why": "Fly into one: repairs and shards. Red Fracture caches give a free level-up."},
+	"signal": {"name": "MUSIC SIGNAL", "group": "DISCOVERIES", "color": Color("ff5fb0"),
+		"what": "Tall columns of light broadcasting a Star Splitter Records project.",
+		"why": "Hold still in the ring to tune it: attunes that project's FORCE (new weapons in level-ups) and files a real track in your Archive. Tune 3 to call out The Silence."},
+	"explorer": {"name": "EXPLORER", "group": "DISCOVERIES", "color": Color("ffd75e"),
+		"what": "Distress calls and beacons from Rex Fleet crews.",
+		"why": "Answer one to unlock a new playable explorer with their own ship, trait and ability."},
+	"artifact": {"name": "ARTIFACT", "group": "DISCOVERIES", "color": Color("b48cff"),
+		"what": "Recovered tech, often hidden until Resonance or Fracture.",
+		"why": "Permanent rewards: perks for every future expedition, a new Force, or a new explorer."},
+	"fragment": {"name": "LOG FRAGMENT", "group": "DISCOVERIES", "color": Color("c9d3e6"),
+		"what": "Logs, recorders and buoys.",
+		"why": "Quick to read. Pieces of the mystery of the hush, kept in the Archive."},
+	"anomaly": {"name": "ANOMALY", "group": "DISCOVERIES", "color": Color("4fe0d0"),
+		"what": "Strange space: wells and folds.",
+		"why": "Unusual effects for this run — a free choice, or a shortcut across the map."},
+	"echo": {"name": "ECHO TRANSMISSION", "group": "FIELD SITES", "color": Color("ff8fb0"),
+		"what": "A timed broadcast with a countdown.",
+		"why": "Reach it before it fades: free level-up, Resonance and bonus Signal."},
+	"resonator": {"name": "RESONATOR", "group": "FIELD SITES", "color": Color("71cda0"),
+		"what": "Green pylons that hum.",
+		"why": "Boosts Resonance (stronger weapons, hidden sites appear) and repairs a little."},
+	"rift": {"name": "PHASE RIFT", "group": "FIELD SITES", "color": Color("ff4f7b"),
+		"what": "A torn red star in space.",
+		"why": "A gamble: drains Resonance toward Fracture, but spills shards."},
+	"camp": {"name": "RAIDER CAMP", "group": "FIELD SITES", "color": Color("d0743c"),
+		"what": "A fortified raider nest with turrets.",
+		"why": "Clear the defenders to loot it."},
+	"gate": {"name": "THE GATE", "group": "FIELD SITES", "color": Color("68ecff"),
+		"what": "The big ring where you started.",
+		"why": "Your way home (keep everything) — and where you choose to face The Silence."},
+}
+
+## Category for a point of interest kind.
+static func poi_category(kind: String) -> String:
+	match kind:
+		"signal":
+			return "signal"
+		"character":
+			return "explorer"
+		"artifact":
+			return "artifact"
+		"fragment":
+			return "fragment"
+		"anomaly", "mirror", "mirror_pair":
+			return "anomaly"
+		"cache", "fracture_cache":
+			return "cache"
+		"echo":
+			return "echo"
+		"resonator":
+			return "resonator"
+		"rift":
+			return "rift"
+		"camp":
+			return "camp"
+	return ""
 
 # ============================================================== helpers
 

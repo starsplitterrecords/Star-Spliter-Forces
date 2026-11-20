@@ -24,9 +24,12 @@ func _ready() -> void:
 	selected_destination = String(Profile.data.get("last_destination", "black_drift_reach"))
 	if not Profile.has_character(selected_character):
 		selected_character = "ella_venn"
+	var recovered: Dictionary = Profile.recover_interrupted_run()
 	show_title()
 	if Profile.last_load_note != "":
 		_toast(Profile.last_load_note)
+	if not recovered.is_empty():
+		_toast("Your last expedition was interrupted — progress kept: %d discoveries, +%d signal." % [int(recovered["discoveries"]), int(recovered["currency"])])
 
 func _menu_music() -> void:
 	Audio.stop_catalog()
@@ -79,7 +82,7 @@ func _heading(parent: Control, text: String, sub: String = "") -> void:
 ## instead, down to MIN_LAYOUT so every screen still fits.
 const DESIGN_SIZE: Vector2 = Vector2(1280, 720)
 const MIN_LAYOUT: Vector2 = Vector2(880, 500)
-const READABLE_SCALE: float = 0.9
+const READABLE_SCALE: float = 1.0
 
 func _apply_ui_scale() -> void:
 	var win: Window = get_window()
@@ -119,11 +122,16 @@ func _project_force(pname: String) -> String:
 func _toast(text: String) -> void:
 	if screen == null:
 		return
-	var l: Label = UiTheme.label(text, 15, UiTheme.GOLD, "bold")
-	l.position = Vector2(48, 680)
+	var l: Label = UiTheme.label(text, 17, UiTheme.GOLD, "bold")
+	var stacked: int = 0
+	for c: Node in screen.get_children():
+		if c.has_meta("toast"):
+			stacked += 1
+	l.set_meta("toast", true)
+	l.position = Vector2(48, 672 - stacked * 34)
 	screen.add_child(l)
 	var tw: Tween = create_tween()
-	tw.tween_interval(3.0)
+	tw.tween_interval(6.0)
 	tw.tween_property(l, "modulate:a", 0.0, 0.8)
 	tw.tween_callback(l.queue_free)
 
@@ -435,6 +443,9 @@ func show_archive() -> void:
 	tabs.add_child(_archive_explorers())
 	tabs.add_child(_archive_mystery())
 	tabs.add_child(_archive_log())
+	var fg: Array = _scroll("Field Guide")
+	FieldGuide.fill(fg[1], 1080.0)
+	tabs.add_child(fg[0])
 	_back_row(v, func() -> void:
 		Audio.stop_catalog()
 		show_title())

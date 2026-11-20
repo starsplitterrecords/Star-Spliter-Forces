@@ -323,6 +323,8 @@ func _process(_delta: float) -> void:
 	if visible_on_screen:
 		queue_redraw()
 
+const THREAT_RIM: Color = Color(1.0, 0.29, 0.29, 0.9)
+
 func _draw() -> void:
 	var c: Color = Color.WHITE if hit_flash > 0.0 else tint
 	# Hit squash: a quick flattening along the impact direction reads as weight.
@@ -340,7 +342,13 @@ func _draw() -> void:
 		return
 	if telegraph > 0.0:
 		_draw_telegraph(c)
-	draw_circle(Vector2.ZERO, radius * 1.6, Color(c, 0.08))
+	# Threat language (Field Guide): every hostile sits on a red glow inside a
+	# red ring, so nothing dangerous can be mistaken for a pickup.
+	var rim_r: float = radius + (7.0 if elite or boss else 5.0)
+	draw_circle(Vector2.ZERO, rim_r, Color(1.0, 0.12, 0.18, 0.16))
+	draw_arc(Vector2.ZERO, rim_r, 0.0, TAU, 20 if radius < 30.0 else 40, THREAT_RIM, 2.5 if not (elite or boss) else 5.0)
+	if elite or boss:
+		draw_arc(Vector2.ZERO, rim_r + 6.0, 0.0, TAU, 40, Color("ffb03a", 0.8), 2.0)
 	if shielded > 0.0:
 		draw_arc(Vector2.ZERO, radius + 6.0, 0.0, TAU, 24, Color("9fe8ff", 0.6), 2.0)
 	var face: float = telegraph_dir.angle() if telegraph_dir != Vector2.ZERO else age

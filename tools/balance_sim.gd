@@ -83,7 +83,22 @@ func _ready() -> void:
 			print("  boss defeated after %ds" % int(boss_end - boss_t))
 		if run.elapsed >= next_report:
 			next_report += 60.0
+			# Let queued frees run, as they would between real frames.
+			await get_tree().process_frame
+			print("      mem static=%.1fMB objects=%d nodes=%d orphans=%d | shots=%d pool=%d motes=%d fx=%d/%d/%d pois=%d hazards=%d echoes=%d" % [Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, Performance.get_monitor(Performance.OBJECT_COUNT), Performance.get_monitor(Performance.OBJECT_NODE_COUNT), Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT), run.projectiles.shots.size(), run.projectiles.pool.size(), run.pickups.items.size(), run.fx.particles.size(), run.fx.debris.size(), run.fx.texts.size(), run.pois.items.size(), run.hazards.items.size(), run.weapons.echoes.size()])
 			print("%4ds  %3d %5d %7d %3d/%3d %-10s %-17s sig %d/%d pos %s goal %s" % [int(run.elapsed), run.level, run.kills, run.enemies.size(), int(run.player.hp), int(run.player.max_hp), run.force_state, String(run.current_region_def()["name"]), run.signals_found(), run.goal_signals(), str(run.player.position.round()), target_desc])
+	await get_tree().process_frame
+	var hist: Dictionary = {}
+	var stack: Array = [get_tree().root]
+	while not stack.is_empty():
+		var nd: Node = stack.pop_back()
+		var key: String = nd.get_class() + ("/" + nd.get_script().get_global_name() if nd.get_script() and nd.get_script().get_global_name() != "" else "") + " @" + str(nd.get_parent().name if nd.get_parent() else "")
+		hist[key] = int(hist.get(key, 0)) + 1
+		stack.append_array(nd.get_children())
+	var keys: Array = hist.keys()
+	keys.sort_custom(func(a: String, b: String) -> bool: return hist[a] > hist[b])
+	for k: String in keys.slice(0, 8):
+		print("   NODES ", hist[k], "  ", k)
 	print("RESULT %s at %s, level %d, kills %d, discoveries %s, lowest hull %d, weapons %s, harmonies %s" % [String(result.get("outcome", "timeout")), GameData.format_time(run.elapsed), run.level, run.kills, str(run.discoveries), int(hp_min), str(run.weapons.weapons), str(run.weapons.harmonies)])
 	get_tree().quit()
 
@@ -96,6 +111,8 @@ func _goal(run: GameRun, plan: String) -> Vector2:
 	if enough or run.player.hp < run.player.max_hp * 0.25:
 		if run.at_gate() and run.climax_available() and plan == "explore" and run.player.hp > run.player.max_hp * 0.5:
 			run.confront()
+		elif run.at_gate() and not run.extract_armed and not (run.climax_available() and plan == "explore"):
+			run.request_extract()
 		return run.world.gate
 	# Locks: relays first; Resonance-locked signals want a resonator.
 	var echo: Dictionary = run.pois.nearest_unclaimed(run.player.position, ["echo"], true)

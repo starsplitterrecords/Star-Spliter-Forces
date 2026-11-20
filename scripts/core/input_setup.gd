@@ -17,6 +17,7 @@ const ACTIONS: Dictionary = {
 	"choose_4": [KEY_4],
 	"reroll": [KEY_R],
 	"interact": [KEY_E, KEY_ENTER],
+	"extract": [KEY_Q, KEY_BACKSPACE],
 }
 
 const PAD_BUTTONS: Dictionary = {
@@ -25,6 +26,7 @@ const PAD_BUTTONS: Dictionary = {
 	"map": [JOY_BUTTON_BACK],
 	"reroll": [JOY_BUTTON_X],
 	"interact": [JOY_BUTTON_B, JOY_BUTTON_Y],
+	"extract": [JOY_BUTTON_LEFT_SHOULDER],
 }
 
 const PAD_AXES: Dictionary = {

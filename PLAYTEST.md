@@ -37,3 +37,19 @@ Run on a phone if at all possible. Do not explain anything beyond "drag to fly".
 7. **Run again?** — Do they voluntarily start another expedition?
 
 Record: device, session length, deaths, discoveries, and every moment of confusion.
+
+## Owner playtest 2 — 2026-11-20 (web build)
+
+"It's fun!" Liked the regions and the variety of finds (explorers, weapon systems,
+weapons, music). Problems reported and responses:
+
+| Report | Response |
+|---|---|
+| Text still too small; clicked through cards unread | UI text ×1.3, larger world labels, cards stay longer and list concrete gains (D-22, D-23) |
+| Can't tell pickups from enemies | Red threat rings on every hostile, warm enemy palette, Field Guide + first-sighting explainers (D-23) |
+| Crashed after a long session | Long-run soak: game state bounded (≈280 nodes, ≈47 MB over 13 min sim; browser renderer memory flat). Earlier node growth was a simulator artifact. Mid-run checkpoints added so a crash no longer loses progress (D-25) |
+| Save my progress | Checkpoints every 45 s + every discovery; recovered on next launch (D-25) |
+| Never beat a boss | Silence HP −20 %; gate panel now explains how to call it out (D-24, D-26) |
+| Going back through the gate is confusing | Gate is an explicit two-button choice; no accidental extraction (D-24) |
+| Not clear what I'm picking up or why to care | Category tags, "why it matters", discovery "+ gained" lines, level-up card types (D-23) |
+

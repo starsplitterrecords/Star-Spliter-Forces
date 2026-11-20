@@ -34,9 +34,12 @@ var level_panel: Control
 var level_box: HBoxContainer
 var level_options: Array = []
 var reroll_button: Button
-var gate_panel: VBoxContainer
+var gate_panel: PanelContainer
 var gate_label: Label
+var gate_info: Label
+var extract_button: Button
 var confront_button: Button
+var _gate_state: String = ""
 var ability_button: Button
 var pause_button: Button
 var pause_panel: Control
@@ -104,7 +107,8 @@ func _layout() -> void:
 	var ab_x: float = safe.end.x - 150 if right_hand else safe.position.x + 22
 	ability_button.position = Vector2(ab_x, safe.end.y - 150)
 	pause_button.position = Vector2(safe.end.x - 64, safe.position.y)
-	gate_panel.position = Vector2(safe.end.x - 460, safe.end.y - 300) if right_hand else Vector2(safe.position.x + 20, safe.end.y - 300)
+	var gx: float = safe.end.x - gate_panel.size.x - 170.0 if right_hand else safe.position.x + 170.0
+	gate_panel.position = Vector2(maxf(safe.position.x, gx), maxf(safe.position.y + 190.0, safe.end.y - gate_panel.size.y - 20.0))
 
 func _build_labels() -> void:
 	hull_label = UiTheme.label("", 17, UiTheme.TEXT, "bold")
@@ -170,19 +174,27 @@ func _build_buttons() -> void:
 	_layout()
 
 func _build_gate_panel() -> void:
-	gate_panel = VBoxContainer.new()
-	gate_panel.custom_minimum_size = Vector2(440, 0)
-	gate_panel.add_theme_constant_override("separation", 8)
+	gate_panel = PanelContainer.new()
+	gate_panel.add_theme_stylebox_override("panel", UiTheme.box(Color(0.03, 0.06, 0.1, 0.92), Color("68ecff"), 2, 12, 16))
+	gate_panel.custom_minimum_size = Vector2(480, 0)
 	gate_panel.visible = false
+	gate_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(gate_panel)
-	gate_label = UiTheme.label("", 17, Color("a8f7ff"), "bold")
-	gate_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	gate_label.add_theme_constant_override("outline_size", 6)
-	gate_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.7))
-	gate_panel.add_child(gate_label)
-	confront_button = UiTheme.button("CONFRONT THE SILENCE  [E]", func() -> void: run.confront(), 440.0, 58.0)
+	var v: VBoxContainer = VBoxContainer.new()
+	v.add_theme_constant_override("separation", 8)
+	gate_panel.add_child(v)
+	gate_label = UiTheme.label("", 18, Color("a8f7ff"), "bold")
+	v.add_child(gate_label)
+	gate_info = UiTheme.label("", 14, UiTheme.TEXT)
+	gate_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	gate_info.custom_minimum_size = Vector2(448, 0)
+	v.add_child(gate_info)
+	extract_button = UiTheme.button("GO HOME — KEEP EVERYTHING  [Q]", func() -> void: run.request_extract(), 448.0, 54.0)
+	extract_button.add_theme_color_override("font_color", Color("a8f7ff"))
+	v.add_child(extract_button)
+	confront_button = UiTheme.button("FACE THE SILENCE  [E]", func() -> void: run.confront(), 448.0, 54.0)
 	confront_button.add_theme_color_override("font_color", Color("ff8fb0"))
-	gate_panel.add_child(confront_button)
+	v.add_child(confront_button)
 	_layout()
 
 # ================================================================== per-frame
@@ -209,6 +221,7 @@ func _process(delta: float) -> void:
 		if alerts[i][2] <= 0.0:
 			alerts.remove_at(i)
 	_update_hint(delta)
+	_update_teach(delta)
 	_update_labels()
 	_update_gate()
 	if Input.is_action_just_pressed("pause"):
@@ -258,9 +271,9 @@ func _update_labels() -> void:
 	elif run.boss_defeated:
 		obj = "Signal restored — returning home"
 	elif run.climax_available():
-		obj = "SIGNALS %d/%d ✓   Return to the %s to extract — or confront The Silence" % [found, run.goal_signals(), run.gate_name()]
+		obj = "SIGNALS %d/%d ✓   Fly to the %s: go home, or face The Silence" % [found, run.goal_signals(), run.gate_name()]
 	else:
-		obj = "SIGNALS %d/%d   Tune distant signals • Extract at the %s any time" % [found, run.goal_signals(), run.gate_name()]
+		obj = "SIGNALS %d/%d   Tune signals to call out The Silence • Go home at the %s any time" % [found, run.goal_signals(), run.gate_name()]
 	objective_label.text = obj
 
 func _state_color() -> Color:
@@ -272,12 +285,33 @@ func _state_color() -> Color:
 	return Color("a8c8ff")
 
 func _update_gate() -> void:
-	var show: bool = run.at_gate() and run.left_gate and not (run.boss_spawned and not run.boss_defeated) and not run.ended
+	var show: bool = run.can_extract()
 	gate_panel.visible = show
 	if not show:
 		return
-	gate_label.text = "EXTRACTING — hold position %d%%" % int(run.extract_progress / GameRun.EXTRACT_TIME * 100.0)
-	confront_button.visible = run.climax_available()
+	var found: int = run.discoveries.size()
+	var est: int = int(run.build_result("extracted")["currency"])
+	if run.extract_armed:
+		gate_label.text = "LEAVING THE REACH IN %.1fs" % maxf(0.0, GameRun.EXTRACT_TIME - run.extract_progress)
+		gate_info.text = "Fly out of the ring, or press again, to stay."
+		extract_button.text = "STAY  [Q]"
+	else:
+		gate_label.text = run.gate_name().to_upper() + " — YOUR WAY HOME"
+		var lines: Array[String] = ["Go home now: keep all %d discoveries and about +%d Signal. The expedition ends safely." % [found, est]]
+		if run.climax_available():
+			lines.append("Or face The Silence: beat it to complete the Reach — +120 Signal bonus and new explorers / routes.")
+		else:
+			var need: int = run.goal_signals() - run.signals_found()
+			lines.append("Tune %d more signal%s to call out The Silence and finish the expedition. Or keep exploring — the gate will be here." % [need, "" if need == 1 else "s"])
+		gate_info.text = "\n".join(lines)
+		extract_button.text = "GO HOME — KEEP EVERYTHING  [Q]"
+	confront_button.visible = run.climax_available() and not run.extract_armed
+	var state_key: String = str(run.extract_armed) + str(confront_button.visible)
+	if state_key != _gate_state:
+		_gate_state = state_key
+		gate_panel.size = Vector2.ZERO
+		gate_panel.reset_size()
+	_layout()
 
 # ================================================================== messages
 
@@ -302,25 +336,39 @@ func flash_damage() -> void:
 func on_beat(index: int) -> void:
 	beat_pulse = 1.0 if index % 4 == 0 else 0.5
 
-func discovery_card(title: String, text: String, color: Color, first_time: bool, kind: String) -> void:
+func discovery_card(title: String, text: String, color: Color, first_time: bool, kind: String, gains: Array = []) -> void:
 	if card:
 		card.queue_free()
 	card = PanelContainer.new()
-	card.add_theme_stylebox_override("panel", UiTheme.box(Color(0.03, 0.05, 0.1, 0.92), color, 2, 14, 20))
-	card.custom_minimum_size = Vector2(minf(620.0, safe.size.x - 40.0), 0)
+	card.add_theme_stylebox_override("panel", UiTheme.box(Color(0.03, 0.05, 0.1, 0.94), color, 2, 14, 20))
+	card.custom_minimum_size = Vector2(minf(680.0, safe.size.x - 40.0), 0)
+	var h: HBoxContainer = HBoxContainer.new()
+	h.add_theme_constant_override("separation", 14)
+	card.add_child(h)
+	var cat: String = GameData.poi_category(kind)
+	var cdef: Dictionary = GameData.CATEGORIES.get(cat, {})
+	var icon: CategoryIcon = CategoryIcon.new(cat if cat != "" else "signal", 64.0)
+	icon.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	h.add_child(icon)
 	var v: VBoxContainer = VBoxContainer.new()
 	v.add_theme_constant_override("separation", 6)
-	card.add_child(v)
-	var tag: String = {"signal": "SIGNAL TUNED", "character": "CONTACT", "artifact": "ARTIFACT RECOVERED", "fragment": "ARCHIVE FRAGMENT", "anomaly": "ANOMALY"}.get(kind, "DISCOVERY")
-	v.add_child(UiTheme.label(tag + ("   •   NEW TO THE ARCHIVE" if first_time else ""), 13, color, "bold"))
-	v.add_child(UiTheme.label(title, 24, Color.WHITE, "display"))
-	v.add_child(UiTheme.label(text, 16, UiTheme.TEXT))
-	if kind == "signal":
-		v.add_child(UiTheme.label("Listen in the Star Splitter Archive after your expedition.", 13, UiTheme.DIM))
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(v)
+	var tag: String = String(cdef.get("name", "DISCOVERY"))
+	v.add_child(UiTheme.label(tag + ("   •   NEW TO THE ARCHIVE" if first_time else ""), 13, cdef.get("color", color), "bold"))
+	v.add_child(UiTheme.label(title, 22, Color.WHITE, "display"))
+	for g: Variant in gains:
+		var gl: Label = UiTheme.label("+ " + String(g), 15, UiTheme.GOLD, "bold")
+		gl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		v.add_child(gl)
+	if text != "":
+		var tl: Label = UiTheme.label(text, 14, UiTheme.DIM)
+		tl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		v.add_child(tl)
 	root.add_child(card)
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.modulate.a = 0.0
-	card_clock = 6.5
+	card_clock = 6.5 + 1.5 * gains.size()
 	# Autowrapped labels only know their height after a layout pass.
 	var c: PanelContainer = card
 	await get_tree().process_frame
@@ -331,6 +379,61 @@ func discovery_card(title: String, text: String, color: Color, first_time: bool,
 	# Sit low on screen, clear of the ship at the centre and the HUD at the top.
 	c.position = Vector2(safe.position.x + (safe.size.x - c.size.x) * 0.5, safe.end.y - c.size.y - 96)
 	c.modulate.a = 1.0
+
+# ================================================================== field guide
+
+var teach_queue: Array[String] = []
+var teach_panel: PanelContainer
+var teach_clock: float = 0.0
+
+## Shows a "first sighting" card for a Field Guide category.
+func teach(cat: String) -> void:
+	if not cat in teach_queue:
+		teach_queue.append(cat)
+
+func _update_teach(delta: float) -> void:
+	if not get_tree().paused:
+		teach_clock -= delta
+	if teach_panel and teach_clock <= 0.0:
+		teach_panel.queue_free()
+		teach_panel = null
+	if teach_panel == null and not teach_queue.is_empty():
+		_show_teach(teach_queue.pop_front())
+	if teach_panel:
+		teach_panel.modulate.a = clampf(teach_clock * 2.0, 0.0, 1.0)
+		teach_panel.visible = not level_panel.visible and pause_panel == null and not run.ended
+
+func _show_teach(cat: String) -> void:
+	var def: Dictionary = GameData.CATEGORIES[cat]
+	teach_panel = PanelContainer.new()
+	teach_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	teach_panel.add_theme_stylebox_override("panel", UiTheme.box(Color(0.03, 0.05, 0.1, 0.9), Color(def["color"], 0.8), 2, 12, 12))
+	var h: HBoxContainer = HBoxContainer.new()
+	h.add_theme_constant_override("separation", 12)
+	teach_panel.add_child(h)
+	var icon: CategoryIcon = CategoryIcon.new(cat, 56.0)
+	icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	h.add_child(icon)
+	var v: VBoxContainer = VBoxContainer.new()
+	v.add_theme_constant_override("separation", 2)
+	h.add_child(v)
+	v.add_child(UiTheme.label("NEW SIGHTING  •  " + String(def["name"]), 14, def["color"], "bold"))
+	var what: Label = UiTheme.label(String(def["what"]), 13, UiTheme.TEXT)
+	what.custom_minimum_size = Vector2(380, 0)
+	v.add_child(what)
+	var why: Label = UiTheme.label(String(def["why"]), 13, UiTheme.GOLD)
+	why.custom_minimum_size = Vector2(380, 0)
+	v.add_child(why)
+	root.add_child(teach_panel)
+	teach_panel.position = Vector2(safe.position.x, safe.position.y + UiTheme.fs(160))
+	teach_clock = 7.0 + String(def["why"]).length() / 40.0
+	# Autowrapped labels only know their height after a layout pass.
+	var tp: PanelContainer = teach_panel
+	tp.modulate.a = 0.0
+	await get_tree().process_frame
+	if is_instance_valid(tp):
+		tp.size = Vector2.ZERO
+		tp.reset_size()
 
 # ================================================================== level up
 
@@ -376,6 +479,13 @@ func show_level_up(options: Array) -> void:
 	reroll_button.disabled = run.rerolls <= 0 and not jex_free
 	level_panel.visible = true
 	await get_tree().process_frame
+	# Grow every card to fit its wrapped text, all to the same height.
+	var tallest: float = 236.0
+	for c: Node in level_box.get_children():
+		if c.get_child_count() > 0:
+			tallest = maxf(tallest, (c.get_child(0) as Control).get_combined_minimum_size().y + 34.0)
+	for c: Node in level_box.get_children():
+		(c as Control).custom_minimum_size.y = tallest
 	if level_box.get_child_count() > 0:
 		(level_box.get_child(0) as Control).grab_focus()
 
@@ -390,6 +500,7 @@ func _choice_card(option: Dictionary, index: int, width: float) -> Button:
 	var origin: String = ""
 	var desc: String = ""
 	var note: String = ""
+	var kind_tag: String = ""
 	var lvl: int = int(option["level"])
 	match type:
 		"weapon":
@@ -397,16 +508,18 @@ func _choice_card(option: Dictionary, index: int, width: float) -> Button:
 			var f: Dictionary = GameData.FORCES[String(w["force"])]
 			color = f["color"]
 			name = String(w["name"])
-			origin = String(f["name"]).to_upper() + "  •  " + String(f["mechanic"])
+			origin = "Force: " + String(f["name"]) + " (" + String(f["mechanic"]) + ")"
+			kind_tag = "NEW WEAPON" if lvl == 1 else "WEAPON UPGRADE"
 			desc = String(w["desc"])
-			note = "NEW WEAPON" if lvl == 1 else "LEVEL %d: %s" % [lvl, String(w["notes"][lvl - 1])]
+			note = "Adds a new gun to your ship." if lvl == 1 else "LEVEL %d: %s" % [lvl, String(w["notes"][lvl - 1])]
 			if lvl == 1 and run.weapons.force_level(String(w["force"])) == 0:
 				note += "\nAdds the %s mechanic: %s" % [String(f["mechanic"]), String(f["desc"])]
 		"passive":
 			var pdef: Dictionary = GameData.PASSIVES[id]
 			color = Color("cfd9ff")
 			name = String(pdef["name"])
-			origin = "SYSTEM"
+			origin = "Boosts your whole ship"
+			kind_tag = "SHIP SYSTEM"
 			desc = String(pdef["desc"])
 			note = "RANK %d / %d" % [lvl, int(pdef["max"])]
 			for wid: String in run.weapons.weapons.keys():
@@ -416,7 +529,8 @@ func _choice_card(option: Dictionary, index: int, width: float) -> Button:
 			var ev: Dictionary = GameData.EVOLUTIONS[id]
 			color = UiTheme.GOLD
 			name = String(ev["name"])
-			origin = "EVOLUTION"
+			origin = "Your weapon transforms"
+			kind_tag = "EVOLUTION"
 			desc = String(ev["desc"])
 			note = "Transforms " + GameData.weapon_name(String(ev["from"]))
 	b.add_theme_stylebox_override("normal", UiTheme.box(Color("0d1428", 0.96), Color(color, 0.7), 2, 14, 16))
@@ -428,8 +542,9 @@ func _choice_card(option: Dictionary, index: int, width: float) -> Button:
 	v.add_theme_constant_override("separation", 8)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(v)
-	var key: Label = UiTheme.label("[%d]   %s" % [index + 1, origin], 12, color, "bold")
+	var key: Label = UiTheme.label("[%d]  %s" % [index + 1, kind_tag], 14, color, "bold")
 	v.add_child(key)
+	v.add_child(UiTheme.label(origin, 11, UiTheme.DIM))
 	v.add_child(UiTheme.label(name, 23, Color.WHITE, "display"))
 	if type == "weapon" or type == "passive":
 		var maxl: int = 5 if type == "weapon" else int(GameData.PASSIVES[id]["max"])
@@ -492,6 +607,7 @@ func toggle_pause() -> void:
 	v.add_child(UiTheme.button("MAP", func() -> void:
 		toggle_pause()
 		open_map(), 360.0))
+	v.add_child(UiTheme.button("FIELD GUIDE — WHAT IS EVERYTHING?", _open_field_guide, 360.0))
 	var shake_btn: CheckButton = CheckButton.new()
 	shake_btn.text = "Screen shake"
 	shake_btn.button_pressed = float(Profile.setting("screen_shake")) > 0.0
@@ -507,6 +623,42 @@ func toggle_pause() -> void:
 		run.end_run("defeat"), 360.0))
 	v.position = (get_viewport().get_visible_rect().size - v.get_combined_minimum_size()) * 0.5
 	resume.grab_focus()
+
+func _open_field_guide() -> void:
+	if pause_panel == null:
+		return
+	var vp: Vector2 = get_viewport().get_visible_rect().size
+	var backdrop: ColorRect = ColorRect.new()
+	backdrop.color = Color(0.01, 0.015, 0.04, 1.0)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	pause_panel.add_child(backdrop)
+	var overlay: PanelContainer = PanelContainer.new()
+	overlay.add_theme_stylebox_override("panel", UiTheme.box(Color(0.02, 0.03, 0.07, 0.98), UiTheme.ACCENT, 2, 14, 18))
+	overlay.position = safe.position + Vector2(10, 10)
+	overlay.size = safe.size - Vector2(20, 20)
+	pause_panel.add_child(overlay)
+	var v: VBoxContainer = VBoxContainer.new()
+	v.add_theme_constant_override("separation", 10)
+	overlay.add_child(v)
+	var top: HBoxContainer = HBoxContainer.new()
+	v.add_child(top)
+	var t: Label = UiTheme.label("FIELD GUIDE", 28, Color.WHITE, "display")
+	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top.add_child(t)
+	var close: Button = UiTheme.button("BACK", func() -> void:
+		backdrop.queue_free()
+		overlay.queue_free(), 160.0, 48.0)
+	top.add_child(close)
+	var sc: ScrollContainer = ScrollContainer.new()
+	sc.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	sc.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v.add_child(sc)
+	var inner: VBoxContainer = VBoxContainer.new()
+	inner.add_theme_constant_override("separation", 8)
+	inner.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	sc.add_child(inner)
+	FieldGuide.fill(inner, minf(1000.0, vp.x - 100.0))
+	close.grab_focus()
 
 func _loadout_text() -> String:
 	var parts: Array = []
@@ -569,6 +721,10 @@ func _input(event: InputEvent) -> void:
 			return
 		if gate_panel.visible and confront_button.visible and confront_button.get_global_rect().has_point(tp):
 			run.confront()
+			get_viewport().set_input_as_handled()
+			return
+		if gate_panel.visible and extract_button.get_global_rect().has_point(tp):
+			run.request_extract()
 			get_viewport().set_input_as_handled()
 			return
 	if event is InputEventMouseButton and (event as InputEventMouseButton).device == InputEvent.DEVICE_ID_EMULATION:
@@ -894,7 +1050,7 @@ class MapOverlay:
 				draw_string(font, mp + Vector2(9, 5), String(poi.title), HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(12), Color(c, 0.85))
 		var g: Vector2 = center + world.gate * sc
 		draw_arc(g, 9.0, 0.0, TAU, 20, Color("68ecff"), 2.5)
-		draw_string(font, g + Vector2(12, -8), run.gate_name() + " (extract)", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(12), Color("68ecff"))
+		draw_string(font, g + Vector2(12, -8), run.gate_name() + " (way home)", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(12), Color("68ecff"))
 		var pp: Vector2 = center + run.player.position * sc
 		var f: Vector2 = Vector2.from_angle(run.player.facing)
 		draw_colored_polygon(PackedVector2Array([pp + f * 10.0, pp + f.rotated(2.4) * 7.0, pp + f.rotated(-2.4) * 7.0]), Color.WHITE)

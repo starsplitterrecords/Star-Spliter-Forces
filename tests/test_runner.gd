@@ -18,7 +18,7 @@ func _ready() -> void:
 	var tests: Array[String] = [
 		"test_scripts_compile", "test_data_integrity", "test_save_migration_and_recovery",
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
-		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries",
+		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries", "test_checkpoint_recovery",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
 		"test_real_frames", "test_new_content", "test_review_regressions", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
@@ -70,6 +70,8 @@ func _dispatch(t: String) -> void:
 			await test_extraction()
 		"test_boss_completion_and_unlocks":
 			await test_boss_completion_and_unlocks()
+		"test_checkpoint_recovery":
+			await test_checkpoint_recovery()
 		"test_death_keeps_discoveries":
 			await test_death_keeps_discoveries()
 		"test_evolution_offer":
@@ -278,6 +280,29 @@ func test_save_migration_and_recovery() -> void:
 	dir.remove("test_migrate.backup.json")
 	_reset_profile()
 
+func test_checkpoint_recovery() -> void:
+	_reset_profile()
+	Profile.save()
+	var run: GameRun = _make_run()
+	await get_tree().process_frame
+	_sim(run, 50.0, func(r: GameRun) -> void: r.player.move_input = Vector2.RIGHT)
+	check(Profile.has_interrupted_run(), "no periodic checkpoint after 50s")
+	run.discoveries.append("sig_green_echo")
+	run.new_this_run.append("sig_green_echo")
+	run.checkpoint()
+	# Simulate a crash: reload from disk without ending the run.
+	Profile.load_profile(TEST_SAVE)
+	check(Profile.has_interrupted_run(), "checkpoint not persisted to disk")
+	var rec: Dictionary = Profile.recover_interrupted_run()
+	check(not rec.is_empty() and int(rec["discoveries"]) == 1, "recovery summary wrong: %s" % str(rec))
+	check(Profile.is_discovered("sig_green_echo"), "discovery lost after crash")
+	check(Profile.is_attuned("resonant_currents"), "force from discovery not granted on recovery")
+	check(int(Profile.data["stats"]["expeditions"]) == 1, "interrupted run not counted")
+	check(not Profile.has_interrupted_run(), "checkpoint not cleared after recovery")
+	Profile.load_profile(TEST_SAVE)
+	check(not Profile.has_interrupted_run(), "cleared checkpoint came back after reload")
+	_reset_profile()
+
 func test_simulated_expedition_minute() -> void:
 	var run: GameRun = _make_run()
 	await get_tree().process_frame
@@ -417,8 +442,17 @@ func test_extraction() -> void:
 	_sim(run, 0.2)
 	check(run.left_gate, "left_gate not set after leaving")
 	run.player.position = run.world.gate
+	_sim(run, 3.0, func(r: GameRun) -> void: r.player.position = r.world.gate)
+	check(not run.ended, "extracted without the player choosing to")
+	run.request_extract()
 	_sim(run, 1.0, func(r: GameRun) -> void: r.player.position = r.world.gate)
 	check(not run.ended, "extracted too quickly")
+	run.player.position = Vector2(600, 0)
+	_sim(run, 0.1)
+	check(not run.extract_armed, "leaving the ring did not cancel extraction")
+	run.player.position = run.world.gate
+	_sim(run, 0.1, func(r: GameRun) -> void: r.player.position = r.world.gate)
+	run.request_extract()
 	_sim(run, 2.5, func(r: GameRun) -> void: r.player.position = r.world.gate)
 	check(run.ended and String(finished_result.get("outcome", "")) == "extracted", "extraction did not complete: %s" % str(finished_result.get("outcome")))
 

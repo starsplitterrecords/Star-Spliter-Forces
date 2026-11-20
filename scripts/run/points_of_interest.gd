@@ -5,6 +5,7 @@ extends Node2D
 ## event, not a pickup. Some sites only reveal themselves in a particular
 ## Resonance state or to a scanner sweep: curiosity is rewarded, not marked.
 
+const LABELLED: Array[String] = ["signal", "character", "artifact", "anomaly", "mirror", "echo", "fragment", "camp", "rift", "resonator", "fracture_cache"]
 const TUNE_TIME: Dictionary = {"echo": 3.0, "signal": 4.5, "character": 4.0, "artifact": 1.5, "fragment": 0.8, "resonator": 1.4}
 
 var run: Node
@@ -13,7 +14,7 @@ var anim: float = 0.0
 var font: Font
 
 func _ready() -> void:
-	font = ThemeDB.fallback_font
+	font = UiTheme.font("bold")
 	z_index = -5
 
 func add(poi: Dictionary) -> Dictionary:
@@ -359,19 +360,29 @@ func _draw() -> void:
 					pts2.append(pos + Vector2.from_angle(TAU * k / 10.0 + anim * 0.3) * rr2)
 				draw_colored_polygon(pts2, Color(c, 0.35))
 				draw_circle(pos, r * 0.25, Color(0.05, 0.0, 0.05, 0.9))
-		if bool(p.known) and String(p.kind) in ["signal", "character", "artifact", "anomaly", "mirror", "echo"] and String(p.title) != "":
+		if bool(p.known) and String(p.kind) in LABELLED and String(p.title) != "":
+			# Two-line label: category tag (Field Guide colour) over the name.
+			var cat: String = GameData.poi_category(String(p.kind))
+			var cdef: Dictionary = GameData.CATEGORIES.get(cat, {})
 			var label: String = String(p.title)
-			var w: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
-			draw_string_outline(font, pos + Vector2(-w / 2.0, r + 24.0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, 4, Color(0, 0, 0, 0.7))
-			draw_string(font, pos + Vector2(-w / 2.0, r + 24.0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(c, 0.9))
+			var y0: float = r + 28.0
+			if not cdef.is_empty() and String(cdef["name"]) != label:
+				var tag: String = String(cdef["name"])
+				var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
+				draw_string_outline(font, pos + Vector2(-tw / 2.0, y0), tag, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, 4, Color(0, 0, 0, 0.75))
+				draw_string(font, pos + Vector2(-tw / 2.0, y0), tag, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, cdef["color"])
+				y0 += 22.0
+			var w: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 22).x
+			draw_string_outline(font, pos + Vector2(-w / 2.0, y0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 22, 5, Color(0, 0, 0, 0.7))
+			draw_string(font, pos + Vector2(-w / 2.0, y0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(c, 0.95))
 
 func _draw_progress(p: Dictionary, pos: Vector2, r: float, c: Color) -> void:
 	var tune: float = float(TUNE_TIME.get(String(p.kind), 0.0))
 	var blocked: String = String(p.get("blocked", ""))
 	if blocked != "" and run.player.position.distance_to(pos) < r:
-		var w: float = font.get_string_size(blocked, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
-		draw_string_outline(font, pos + Vector2(-w / 2.0, -r - 16.0), blocked, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, 4, Color(0, 0, 0, 0.8))
-		draw_string(font, pos + Vector2(-w / 2.0, -r - 16.0), blocked, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("ffe08a"))
+		var w: float = font.get_string_size(blocked, HORIZONTAL_ALIGNMENT_LEFT, -1, 22).x
+		draw_string_outline(font, pos + Vector2(-w / 2.0, -r - 16.0), blocked, HORIZONTAL_ALIGNMENT_LEFT, -1, 22, 5, Color(0, 0, 0, 0.8))
+		draw_string(font, pos + Vector2(-w / 2.0, -r - 16.0), blocked, HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color("ffe08a"))
 	if tune <= 0.0 or float(p.progress) <= 0.0:
 		return
 	var t: float = float(p.progress) / tune

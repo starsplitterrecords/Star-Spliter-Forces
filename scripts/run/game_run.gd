@@ -11,7 +11,7 @@ const STATE_EXIT_RES: float = 66.0
 const STATE_ENTER_FRAC: float = 28.0
 const STATE_EXIT_FRAC: float = 34.0
 const GATE_RADIUS: float = 170.0
-const EXTRACT_TIME: float = 3.0
+const EXTRACT_TIME: float = 2.0
 const MAX_ENEMIES: int = 90
 
 # Config
@@ -54,6 +54,8 @@ var force_state: String = "DRIFT"
 var attuned: Array = []
 var discoveries: Array = []
 var new_this_run: Array = []
+var last_checkpoint: float = 0.0
+var checkpoint_due: bool = false
 var current_region: String = ""
 var visited_regions: Array = []
 var boss: ForceEnemy = null
@@ -62,6 +64,7 @@ var boss_defeated: bool = false
 var victory_clock: float = -1.0
 var extract_progress: float = 0.0
 var left_gate: bool = false
+var extract_armed: bool = false
 var spawn_clock: float = 1.5
 var patrol_clock: float = 22.0
 var elite_times: Array = [180.0, 420.0, 660.0, 900.0]
@@ -268,7 +271,7 @@ func _queue_onboarding() -> void:
 	if not Profile.seen("hint_signal"):
 		hint_queue.append(["hint_signal", "Columns of light are SIGNALS. Fly into the ring and hold still to tune them in."])
 	if not Profile.seen("hint_extract"):
-		hint_queue.append(["hint_extract", "Return to the %s ring at any time to extract with everything you've found." % gate_name()])
+		hint_queue.append(["hint_extract", "Fly back into the %s ring any time to go home with everything you've found." % gate_name()])
 
 # ================================================================== loop
 
@@ -300,6 +303,10 @@ func step(delta: float) -> void:
 			player.velocity -= n * into
 	_update_region()
 	_explore_mark()
+	_scan_categories(delta)
+	if checkpoint_due or elapsed - last_checkpoint > 45.0:
+		checkpoint_due = false
+		checkpoint()
 	_update_state(delta)
 	_update_ability(delta)
 	# Broad-phase rebuild once per frame.
@@ -389,6 +396,40 @@ func _update_region() -> void:
 		var r: Dictionary = GameData.REGIONS[rid]
 		if hud:
 			hud.banner(String(r["name"]), String(r["blurb"]), r["color"])
+
+## First sighting of each Field Guide category teaches what it is (once per
+## profile). Checked a few times a second, not every frame.
+var _scan_clock: float = 0.0
+var taught: Dictionary = {}
+
+func _scan_categories(delta: float) -> void:
+	_scan_clock -= delta
+	if _scan_clock > 0.0 or hud == null:
+		return
+	_scan_clock = 0.4
+	var pp: Vector2 = player.position
+	for e: ForceEnemy in enemies:
+		if is_instance_valid(e) and not e.dead and not e.disguised and e.position.distance_squared_to(pp) < 650.0 * 650.0:
+			_teach("elite" if (e.elite or e.boss) else "hostile")
+	for it: Dictionary in pickups.items:
+		if Vector2(it.pos).distance_squared_to(pp) < 520.0 * 520.0:
+			_teach("xp" if String(it.kind) == "mote" else "supply")
+	for p: Dictionary in pois.items:
+		if bool(p.known) and not bool(p.claimed) and String(p.get("hidden", "")) in ["", force_state] and Vector2(p.pos).distance_squared_to(pp) < 720.0 * 720.0:
+			var cat: String = GameData.poi_category(String(p.kind))
+			if cat != "":
+				_teach(cat)
+	if left_gate and at_gate():
+		_teach("gate")
+
+func _teach(cat: String) -> void:
+	if taught.has(cat):
+		return
+	taught[cat] = true
+	if Profile.seen("cat_" + cat) or quick_test:
+		return
+	Profile.mark_seen("cat_" + cat)
+	hud.teach(cat)
 
 func _explore_mark() -> void:
 	var cell: Vector2i = Vector2i(floori(player.position.x / 400.0), floori(player.position.y / 400.0))
@@ -1096,6 +1137,7 @@ func _claim_discovery(p: Dictionary) -> void:
 	var d: Dictionary = p.data
 	if not id in discoveries:
 		discoveries.append(id)
+		checkpoint_due = true
 		if not Profile.is_discovered(id):
 			new_this_run.append(id)
 	var first_time: bool = id in new_this_run
@@ -1110,32 +1152,45 @@ func _claim_discovery(p: Dictionary) -> void:
 	fx.burst(p.pos, p.color, 30, 340.0, 4.0, 0.9)
 	var detail: String = String(d.get("text", ""))
 	var heading: String = String(p.title)
+	var gains: Array[String] = [] # "What you got" lines for the card.
+	var att: String = ""
 	match String(p.kind):
 		"signal":
 			var t: Dictionary = GameData.TRANSMISSIONS.get(String(d.get("transmission", "")), {})
 			if not t.is_empty():
 				heading = "%s — %s" % [String(t["project"]).to_upper(), String(t["title"])]
-			detail += _attune(String(d.get("force", "")))
+				gains.append("TRACK FILED: \"%s\" — listen in the Archive after you return." % String(t["title"]))
+			att = _attune(String(d.get("force", "")))
+			var left: int = goal_signals() - signals_found()
+			gains.append("SIGNALS %d / %d — %s" % [signals_found(), goal_signals(), ("%d more to call out The Silence." % left) if left > 0 else "The Silence can be called out at the gate."])
 		"character":
 			var cid: String = String(d.get("unlock_character", ""))
 			if cid != "" and not Profile.has_character(cid):
-				detail += "\nNEW EXPLORER: %s joins when you return." % GameData.CHARACTERS[cid]["name"]
+				gains.append("NEW EXPLORER: %s — playable from your next expedition." % GameData.CHARACTERS[cid]["name"])
+			gains.append("FREE UPGRADE: pick one now.")
 			pending_levels += 1
 		"artifact":
-			detail += _attune(String(d.get("force", "")))
+			att = _attune(String(d.get("force", "")))
 			var cid2: String = String(d.get("unlock_character", ""))
 			if cid2 != "" and not Profile.has_character(cid2):
-				detail += "\nNEW EXPLORER: %s joins when you return." % GameData.CHARACTERS[cid2]["name"]
+				gains.append("NEW EXPLORER: %s — playable from your next expedition." % GameData.CHARACTERS[cid2]["name"])
+			if String(d.get("perk", "")) != "":
+				gains.append("PERMANENT PERK: applies to every future expedition.")
+			gains.append("FREE UPGRADE: pick one now.")
 			pending_levels += 1
 		"anomaly":
 			match String(d.get("effect", "")):
 				"memory_well":
 					pending_levels += 1
-					detail += "\nThe well offers an upgrade."
+					gains.append("FREE UPGRADE: the well offers a choice.")
+				"mirrorfold":
+					gains.append("SHORTCUT: fly into either fold to jump across the Reach.")
 		"fragment":
-			pending_levels += 0
+			gains.append("MYSTERY: log added to the Archive (%d found this run)." % discoveries.filter(func(x: String) -> bool: return String(GameData.DISCOVERIES[x]["kind"]) == "fragment").size())
+	if att != "":
+		gains.push_front(att.strip_edges())
 	if hud:
-		hud.discovery_card(heading, detail, p.color, first_time, String(p.kind))
+		hud.discovery_card(heading, detail, p.color, first_time, String(p.kind), gains)
 	_update_music(false)
 
 ## Broadcasting a signal draws attention: a raider pack homes in while you tune.
@@ -1171,8 +1226,8 @@ func _attune(force_id: String) -> String:
 		var primary: String = String(GameData.FORCES[force_id]["primary"])
 		if not weapons.has_base(primary):
 			weapons.add_weapon(primary)
-			return "\nNEW FORCE ATTUNED: %s — %s joins your loadout." % [GameData.FORCES[force_id]["name"], GameData.weapon_name(primary)]
-	return "\nNEW FORCE ATTUNED: its weapons now appear in upgrades."
+			return "FORCE ATTUNED: %s — new weapon %s joins your ship now." % [GameData.FORCES[force_id]["name"], GameData.weapon_name(primary)]
+	return "FORCE ATTUNED: %s — its weapons now appear when you level up." % GameData.FORCES[force_id]["name"]
 
 func on_mirrorfold(from: Dictionary, to: Dictionary) -> void:
 	var dest: Vector2 = Vector2(to.pos) + Vector2(0, 70)
@@ -1216,20 +1271,40 @@ func at_gate() -> bool:
 func _gate_logic(delta: float) -> void:
 	if not left_gate and player.position.distance_to(world.gate) > GATE_RADIUS + 120.0:
 		left_gate = true
-	var can_extract: bool = left_gate and at_gate() and not (boss_spawned and not boss_defeated) and victory_clock < 0.0
-	if can_extract:
+	# Leaving is an explicit choice (playtest: standing in the ring and being
+	# sent home by surprise was confusing). Arm it, then a short countdown;
+	# flying out of the ring cancels.
+	if not can_extract():
+		extract_armed = false
+	if extract_armed:
 		extract_progress += delta
 		if extract_progress >= EXTRACT_TIME:
 			end_run("extracted")
 	else:
-		extract_progress = maxf(0.0, extract_progress - delta * 2.0)
+		extract_progress = 0.0
+	if scripted_input:
+		return
+	if can_extract() and Input.is_action_just_pressed("extract"):
+		request_extract()
 	if at_gate() and climax_available() and left_gate and Input.is_action_just_pressed("interact"):
 		confront()
+
+func can_extract() -> bool:
+	return left_gate and at_gate() and not (boss_spawned and not boss_defeated) and victory_clock < 0.0 and not ended
+
+## Toggles the go-home countdown (pressing again cancels).
+func request_extract() -> void:
+	if not can_extract():
+		return
+	extract_armed = not extract_armed
+	if extract_armed:
+		Audio.play_sfx("extract", 1.0, -4.0)
 
 func confront() -> void:
 	if not climax_available():
 		return
 	extract_progress = 0.0
+	extract_armed = false
 	spawn_boss(world.gate + Vector2(0, -420))
 
 # ================================================================== music
@@ -1297,6 +1372,11 @@ func end_run(result: String) -> void:
 	ended = true
 	outcome = result
 	get_tree().paused = false
+	Audio.play_sfx("victory" if result != "defeat" else "defeat", 1.0, 0.0, 0.2)
+	finished.emit(build_result(result))
+
+## Result dictionary shared by the real ending and mid-run checkpoints.
+func build_result(result: String) -> Dictionary:
 	var found: int = discoveries.size()
 	var currency: float = kills / 8.0 + level * 3.0 + found * 15.0 + bonus_currency
 	match result:
@@ -1307,14 +1387,21 @@ func end_run(result: String) -> void:
 	if character_id == "jex_marrin":
 		currency *= 1.4 + (0.15 if mastery_level >= 2 else 0.0)
 	var mastery_xp: int = int(elapsed / 6.0 + found * 25 + kills / 12.0 + (150 if result == "complete" else (40 if result == "extracted" else 0)))
-	Audio.play_sfx("victory" if result != "defeat" else "defeat", 1.0, 0.0, 0.2)
-	finished.emit({
+	return {
 		"outcome": result, "time": elapsed, "kills": kills, "level": level, "character": character_id,
 		"destination": destination_id, "force": signature_force, "state": force_state,
 		"discoveries": discoveries.duplicate(), "new_discoveries": new_this_run.duplicate(),
 		"currency": int(currency), "mastery_xp": mastery_xp, "regions": visited_regions.duplicate(),
 		"weapons": weapons.weapons.duplicate(), "harmonies": weapons.harmonies.duplicate(), "damage": int(damage_dealt),
-	})
+	}
+
+## Saves the expedition so far. If the game closes or crashes, the next launch
+## commits it as an "interrupted" return (everything kept).
+func checkpoint() -> void:
+	if ended or quick_test:
+		return
+	last_checkpoint = elapsed
+	Profile.checkpoint_run(build_result("interrupted"))
 
 # ================================================================== debug (desktop only)
 

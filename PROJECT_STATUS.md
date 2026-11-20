@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-11-17 · branch `claude/star-splitter-forces-dev-gq8dto`_
+_Last updated: 2026-11-20 · branch `claude/star-splitter-forces-dev-gq8dto`_
 
 ## Summary
 
@@ -18,9 +18,14 @@ balance bot, not yet by human playtesters).
 - Departure screen: explorer + signature Force + destination. Two destinations: Black Drift Reach and Kaldr Rift (unlocked by first completion).
 - Expedition: six handcrafted regions with seeded variation, ~350 collision obstacles,
   parallax starfield, region banners, fog-of-war minimap, full map, edge compass.
-- Objective: tune 3 signals, then extract at the Array Gate *or* confront The Silence.
-  Extraction is available any time after leaving the gate (3 s hold). The Silence arrives
-  on its own at 19:00.
+- Objective: tune 3 signals, then return to the Array Gate and choose: GO HOME (keep
+  everything) *or* FACE THE SILENCE. Going home is available any time after leaving the
+  gate (explicit button / Q, 2 s countdown). The Silence arrives on its own at 19:00.
+- Progress is checkpointed every 45 s and on each discovery; a crashed or closed run is
+  recovered on next launch.
+- Field Guide: every encounter is classified (threats / pickups / discoveries / field
+  sites) with consistent colour + icon, first-sighting explainers, and a guide in the
+  pause menu and Archive.
 - Outcomes: complete / extracted / defeat. Defeat keeps discoveries, halves Signal.
 
 **Characters** (Rex Fleet canon identities; kits provisional) — Commodore Ella Venn,
