@@ -31,4 +31,5 @@ need confirmation from the Star Splitter team.
 | D-24 | **Gate is an explicit choice**: standing in the ring no longer extracts. A panel offers GO HOME (keep everything, Q / button, 2 s countdown, cancel by leaving) or FACE THE SILENCE (E / button), with rewards spelled out | D-21 | Done |
 | D-25 | **Mid-run checkpoints**: the expedition is saved every 45 s and on every discovery; an interrupted run (crash, closed tab) is committed on next launch as "interrupted" with everything kept | D-21 | Done |
 | D-26 | The Silence HP 30,000 → 24,000 | D-21: owner has never beaten it | Done — tune again after more playtests |
+| D-27 | Web build patches Emscripten `GL.getNewId` to reuse freed WebGL names per table | Forced-GC browser soak: retained JS heap +16 MB/min, all in GL object tables (heap sampler). After patch: flat ~8 MB. Also: one AudioStreamPlayer per SFX, music volumes only set on change | Done — re-verify on each Godot upgrade (build asserts) |
 

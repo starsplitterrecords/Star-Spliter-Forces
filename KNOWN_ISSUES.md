@@ -18,6 +18,6 @@ Severity: **S1** blocks release · **S2** important · **S3** polish.
 | 11 | S3 | Bot pathing (BalanceSim) can wedge on rock clusters; it detours randomly | Tool limitation, not game. |
 | 12 | S3 | "36 resources still in use at exit" warning when tests quit | Harmless teardown warning in headless runs. |
 | 13 | S3 | Kaldr Rift has no unique enemies, boss variant or character unlock yet | Reuses Reach enemy roster and The Silence. |
-| 15 | S2 | Owner saw a browser crash after a long session; cause not reproduced | Game state is bounded in a 13-min sim and a long headless-browser soak. Possibly the browser tab/GPU process on the owner's device. Mitigated by mid-run checkpoints (D-25). Ask: which browser/device, and how long? |
+| 15 | S3 | ~~Browser crash after long sessions~~ **Fixed** (D-27) | Cause: WebGL name tables in the Emscripten glue grew ~16 MB/min. Patched in `tools/build_web_artifact.py`; forced-GC soak now flat at ~8 MB. Re-check on owner's device. |
 | 16 | S3 | Hazard mines (pink flowers) don't carry the red threat ring | They are environment hazards; consider their own Field Guide entry. |
 

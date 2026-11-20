@@ -47,7 +47,7 @@ weapons, music). Problems reported and responses:
 |---|---|
 | Text still too small; clicked through cards unread | UI text ×1.3, larger world labels, cards stay longer and list concrete gains (D-22, D-23) |
 | Can't tell pickups from enemies | Red threat rings on every hostile, warm enemy palette, Field Guide + first-sighting explainers (D-23) |
-| Crashed after a long session | Long-run soak: game state bounded (≈280 nodes, ≈47 MB over 13 min sim; browser renderer memory flat). Earlier node growth was a simulator artifact. Mid-run checkpoints added so a crash no longer loses progress (D-25) |
+| Crashed after a long session | **Found and fixed:** the web build's WebGL name tables leaked ~16 MB/min of browser memory (D-27); now flat. Game state itself was bounded. Mid-run checkpoints also added so a crash can't lose progress (D-25) |
 | Save my progress | Checkpoints every 45 s + every discovery; recovered on next launch (D-25) |
 | Never beat a boss | Silence HP −20 %; gate panel now explains how to call it out (D-24, D-26) |
 | Going back through the gate is confusing | Gate is an explicit two-button choice; no accidental extraction (D-24) |
