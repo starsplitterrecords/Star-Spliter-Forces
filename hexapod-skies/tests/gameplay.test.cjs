@@ -78,7 +78,7 @@ async function open(browser, ctxOpts) {
   await start('hedgerow', 'ladybird');
   const unreachable = await H(() => { const w = __hexapod.world; return w.aphidSpots.filter((p) => w.sph.some((o) => o.r > 2 && p.distanceTo(o) < o.r + 0.6)).length; });
   check('no aphids buried in logs or rocks', unreachable === 0, String(unreachable));
-  await H(() => { const x = __hexapod, p = x.world.prey.find((p) => p.kind === 'aphid' && p.alive); window.__a = p; x.player.pos.copy(p.pos).add(new x.player.pos.constructor(0, 0, -12)); x.player.vel.set(0, 0, 0); x.player.aimYaw = x.player.yaw = 0; x.player.aimPitch = x.player.pitch = 0; });
+  await H(() => { const x = __hexapod, p = x.world.prey.find((p) => p.kind === 'aphid' && p.alive); window.__a = p; x.world.prey.forEach((q) => { if (q !== p && q.alive && q.kind === 'aphid') { q.alive = false; q.respawn = 99; q.m.root.visible = false; } }); x.player.pos.copy(p.pos).add(new x.player.pos.constructor(0, 0, -12)); x.player.vel.set(0, 0, 0); x.player.aimYaw = x.player.yaw = 0; x.player.aimPitch = x.player.pitch = 0; });
   await simUntil('__hexapod.player.lock && __hexapod.player.lock.ref === window.__a', 2);
   await page.keyboard.press('Space');
   check('ladybird swoops onto an aphid', await simUntil('!window.__a.alive', 3));
@@ -94,13 +94,13 @@ async function open(browser, ctxOpts) {
 
   // stages → win → results
   await H(() => { const x = __hexapod; x.setStage(2); x.game.obj.forEach((o) => { o.count = o.target - 1; }); x.game.obj[1].count = x.game.obj[1].target; x.game.obj[1].done = true; const f = x.world.flowers.find((f) => !x.game.nectarSeen.has(f.idx)); x.player.pos.copy(f.head); x.player.vel.set(0, 0, 0); });
-  check('clearing the last stage starts overtime', await simUntil('!!__hexapod.game.overtime', 8));
-  await H(() => __hexapod.endRun('finish'));
-  check('finishing from overtime ends the run', await H(() => __hexapod.game.state === 'end'));
+  check('a fast clear offers overtime', await simUntil('__hexapod.game.state === "offer"', 8));
+  await H(() => __hexapod.answerOffer(false));
+  check('declining overtime ends the run', await H(() => __hexapod.game.state === 'end'));
   await H(() => { __hexapod.game.headless = false; });
   await page.waitForSelector('#results:not([hidden])', { timeout: 5000 });
   check('results screen shows', (await page.textContent('#resTitle')) === 'Habitat mastered');
-  await page.click('#menuBtn');
+  await page.$eval('#menuBtn', (b) => { b.scrollIntoView(); b.click(); });
   check('back to title', await H(() => __hexapod.game.state === 'title'));
   check('no page errors (desktop)', errs.length === 0, errs.join(' | '));
 

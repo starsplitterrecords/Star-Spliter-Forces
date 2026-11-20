@@ -57,7 +57,8 @@ Stars: clear all three stages, finish with at least half your wings intact, and 
 
 - **Habitat run**: every run grows a fresh layout and rolls a weather twist (fair, breezy, heatwave, rain shower,
   swarm day, dusk). An optional risk dial (hungry birds, angry wasps, sticky webs, no lock-on) multiplies your score.
-  After stage 3 your stars are banked and **Overtime** begins: escalating timed waves until one beats you.
+  Clear all three stages within 80 seconds (the Swift medal pace) and you're offered **Overtime**: three optional
+  30-second bonus waves, with 1,000 extra points for clearing all three. Your stars are banked either way.
 - **Daily flight**: one habitat, insect, twist and layout per date, the same for everyone, with a guaranteed rare
   sighting, your best and a day streak. On the published page there is a shared board for today.
 - **Ring race**: a fixed 14-ring course per habitat with bronze, silver and gold times. Your best run is saved and

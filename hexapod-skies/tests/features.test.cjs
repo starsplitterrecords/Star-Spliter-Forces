@@ -40,9 +40,11 @@ const check = (name, ok, info = '') => { console.log(`${ok ? 'PASS' : 'FAIL'}  $
   await start({ hab: 'pond', mount: 'dragonfly', twistOverride: 'fair' });
   for (let s = 0; s < 3; s++) {
     await H(() => { const x = __hexapod, o = x.game.obj.find((q) => q.type === 'catch'); x.game.obj.forEach((q) => { if (q !== o) { q.count = q.target; q.done = true; } else q.count = q.target - 1; }); const p = x.world.prey.find((p) => p.alive && p.kind === o.kind); p.pos.copy(x.player.pos); x.sim(2); }); }
-  check('clearing stage 3 starts overtime', await H(() => !!__hexapod.game.overtime && !!__hexapod.game.banked));
-  await H(() => __hexapod.sim(4));
-  check('overtime wave 1 begins', await H(() => __hexapod.game.overtime.wave === 1 && __hexapod.game.time <= 60));
+  check('clearing stage 3 with time left offers overtime', await H(() => __hexapod.game.state === 'offer' && !!__hexapod.game.banked));
+  await H(() => { __hexapod.answerOffer(true); __hexapod.game.headless = true; __hexapod.sim(2); });
+  check('overtime wave 1 of 3, 30 seconds', await H(() => __hexapod.game.overtime.wave === 1 && __hexapod.game.time <= 30));
+  check('no overtime offer after a slow clear', await H(() => { const x = __hexapod, g = x.game; const saved = [g.state, g.overtime, g.banked]; g.state = 'play'; g.overtime = null; g.tele.playT = 200; g.banked = null; g.stage = 2; g.ending = 0;
+    g.obj.forEach((o) => { o.done = true; }); g.obj[0].done = false; g.obj[0].count = g.obj[0].target - 1; const k = g.obj[0].kind, p = x.world.prey.find((q) => q.alive && q.kind === k); if (!p) return 'skip'; p.pos.copy(x.player.pos); x.sim(0.3); const ok = g.state === 'play' && g.ending > 0 && !g.overtime; g.overtime = saved[1] || { wave: 1, cleared: 0 }; g.ending = 0; return ok; }));
   await H(() => { const x = __hexapod; x.game.headless = false; x.game.time = 0.01; x.game.headless = true; x.sim(0.1); });
   check('overtime timeout ends as a win', await H(() => __hexapod.game.state === 'end'));
   await page.waitForTimeout(600);

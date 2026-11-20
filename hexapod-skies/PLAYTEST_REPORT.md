@@ -153,7 +153,9 @@ Raw data: `playtests/2026-11-20-v4-twists.json` (64 habitat runs with random twi
 - **Medals** were retuned from the data: Swift was earned in 30/32 skilled runs at 2 minutes, so it is now 80 s
   (13/32 skilled, 5/32 novice). Combo ×5 became Triple ×5 (17/32 skilled, 14/32 novice). Untouched: 6/32 skilled,
   1/32 novice. Freehand (no swoops) is never earned by the bots, which always swoop; it is meant as a human challenge.
-- **Overtime:** waves now ramp faster (more targets, shorter timers). The skilled bot reaches a median of 6 waves and the novice 4.
+- **Overtime** (revised after human feedback: too long, too common, too many waves): it is now offered only after a
+  clear within 80 seconds of flying (in this data, 13/32 skilled runs and 5/32 novice runs; people will be slower),
+  it is optional, and it is capped at three 30-second waves with smaller targets and a 1,000-point bonus for clearing all three.
 - **Races:** the hawk-moth bot circled rings forever until it learned to ease off for tight turns, as a person would.
   Medal times are set from course length and insect speed: skilled runs earn mostly silver with some gold, and novice
   runs earn bronze.

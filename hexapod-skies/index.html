@@ -209,8 +209,8 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 #touchUI{position:absolute;inset:0;pointer-events:none}
 
 /* ---------- Pause / results ---------- */
-.modal{display:grid;place-items:center;background:rgba(6,12,9,.55);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
-.sheet{background:var(--glass-hi);border:1px solid var(--line);border-radius:18px;padding:22px 22px 18px;width:min(440px,100%);max-height:100%;overflow-y:auto;display:grid;gap:14px}
+.modal{display:grid;place-items:safe center;overflow-y:auto;background:rgba(6,12,9,.55);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
+.sheet{background:var(--glass-hi);border:1px solid var(--line);border-radius:18px;padding:22px 22px 18px;width:min(440px,100%);display:grid;gap:14px}
 .sheet h2{margin:0;font-family:var(--display);font-weight:800;font-size:1.8rem;line-height:1}
 .sheet .sub{margin:-6px 0 0;color:var(--muted)}
 .toggles{display:grid;gap:8px}
@@ -352,6 +352,18 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
     <div class="row">
       <button id="againBtn" class="btn-primary">Fly again</button>
       <button id="menuBtn" class="btn-ghost">Back to menu</button>
+    </div>
+  </div>
+</section>
+
+<section id="offer" class="screen modal" hidden>
+  <div class="sheet">
+    <h2>Habitat mastered!</h2>
+    <p class="sub" id="otSub"></p>
+    <p>Fly overtime? Three 30-second bonus waves, plus 1,000 points if you clear all three.</p>
+    <div class="row">
+      <button id="otGo" class="btn-primary">Fly overtime</button>
+      <button id="otSkip" class="btn-ghost">Finish here</button>
     </div>
   </div>
 </section>
@@ -1843,7 +1855,8 @@ function onEvent(type, kind, n = 1) {
   renderObjectives();
   if (finishedNow && game.obj.every((x) => x.done) && !game.ending && game.stageT <= 0 && !(game.otT > 0)) {
     game.tele.stageAt.push(Math.round(game.tele.playT));
-    if (game.overtime) { const w = game.overtime.wave; game.overtime.cleared = w; addScore(300 * w, player.pos.clone().add(new V3(0, 2, 0))); toast(`Wave ${w} clear!`, 'Next wave incoming', 1.6); game.otT = 1.6; FX.burst(player.pos, '#ffd34a', 30, 10, 1, 0.7); }
+    if (game.overtime) { const w = game.overtime.wave; game.overtime.cleared = w; addScore(300 * w, player.pos.clone().add(new V3(0, 2, 0))); FX.burst(player.pos, '#ffd34a', 30, 10, 1, 0.7);
+      if (w >= OT_WAVES) { addScore(1000, player.pos.clone().add(new V3(0, 3, 0))); game.ending = 2.6; Sound.sfx.win(); toast('Overtime complete!', '+1,000 bonus', 2.6); } else { toast(`Wave ${w} clear!`, 'Next wave incoming', 1.6); game.otT = 1.6; } }
     else if (game.stage < game.stages.length - 1) { game.stageT = 1.6; toast(`Stage ${game.stage + 1} clear!`, '+20 seconds', 1.6); FX.burst(player.pos, '#ffd34a', 30, 10, 1, 0.7); }
     else if (run.mode === 'race') finishRace();
     else if (run.campaign) { bankWin(); game.ending = 2.6; Sound.sfx.win(); toast(`Leg ${run.campaign.i + 1} complete!`, run.campaign.i < 3 ? 'Choose an upgrade for the next leg' : 'The migration is complete!', 2.6); FX.burst(player.pos, '#ffd34a', 40, 12, 1.2, 0.8); }
@@ -2384,7 +2397,7 @@ const cache = {};
 function setText(el, key, v) { if (cache[key] !== v) { cache[key] = v; el.textContent = v; } }
 function renderObjectives() {
   const ul = $('#objList'); ul.innerHTML = '';
-  if (game.stages.length) hud.stage.textContent = game.overtime ? `Overtime · wave ${game.overtime.wave}` : run.mode === 'race' ? 'Ring race' : `Stage ${game.stage + 1} of ${game.stages.length} · ${game.stages[game.stage].name}`;
+  if (game.stages.length) hud.stage.textContent = game.overtime ? `Overtime · wave ${game.overtime.wave} of ${OT_WAVES}` : run.mode === 'race' ? 'Ring race' : `Stage ${game.stage + 1} of ${game.stages.length} · ${game.stages[game.stage].name}`;
   const focus = game.obj.find((o) => !o.done);
   for (const o of game.obj) {
     const li = document.createElement('li'); if (o.done) li.className = 'done'; if (o === focus) li.classList.add('focus');
@@ -2533,8 +2546,8 @@ function drawMinimap() {
 /* ============================================================
    Flow: title, play, pause, results
    ============================================================ */
-const screens = { title: $('#title'), pause: $('#pause'), results: $('#results'), hud: $('#hud'), upgrades: $('#upgrades') };
-function show(name) { for (const [k, el] of Object.entries(screens)) el.hidden = k !== name && !(name === 'pause' && k === 'hud'); document.body.classList.toggle('flying', name === 'hud'); }
+const screens = { title: $('#title'), pause: $('#pause'), results: $('#results'), hud: $('#hud'), upgrades: $('#upgrades'), offer: $('#offer') };
+function show(name) { for (const [k, el] of Object.entries(screens)) el.hidden = k !== name && !((name === 'pause' || name === 'offer') && k === 'hud'); document.body.classList.toggle('flying', name === 'hud'); }
 
 function buildTitleCards() {
   if (!sel.mode) sel.mode = 'run'; if (!sel.risk) sel.risk = {};
@@ -2576,6 +2589,8 @@ $('#optSound').addEventListener('change', (e) => { settings.sound = e.target.che
 $('#optMusic').addEventListener('change', (e) => { settings.music = e.target.checked; applySettings(); });
 $('#optSens').addEventListener('input', (e) => { settings.sens = +e.target.value; applySettings(); });
 $('#startBtn').addEventListener('click', () => startRunUI(true));
+$('#otGo').addEventListener('click', () => answerOffer(true));
+$('#otSkip').addEventListener('click', () => answerOffer(false));
 $('#finishBtn').addEventListener('click', () => { game.state = 'play'; show('hud'); endRun('finish'); });
 $('#helpBtn').addEventListener('click', (e) => { const h = $('#controlsHelp'); h.hidden = !h.hidden; e.currentTarget.setAttribute('aria-expanded', String(!h.hidden)); });
 $('#pauseBtn').addEventListener('click', pauseGame);
@@ -2851,19 +2866,29 @@ function bankWin() {
 function startOvertime() {
   bankWin(); Sound.sfx.win();
   FX.burst(player.pos, '#ffd34a', 40, 12, 1.2, 0.8); FX.burst(player.pos, '#41d8c6', 30, 10, 1.2, 0.7);
-  game.overtime = { wave: 0 }; game.otT = 3;
-  toast('All three stages clear!', 'Stars banked. Overtime: keep flying for score until a wave beats you', 3);
+  // Overtime is a reward for a fast clear, and always optional
+  if (game.tele.playT > OT_FAST_CLEAR || game.headlessSkipOffer) { game.ending = 2.6; toast('Habitat mastered!', `${Math.ceil(game.time)} seconds to spare`, 2.6); return; }
+  game.state = 'offer'; Sound.stopEngine(); releaseLock(); mouse.left = false;
+  $('#otSub').textContent = `A fast clear: all three stages in ${Math.round(game.tele.playT)} seconds. Your stars are banked either way.`;
+  setTimeout(() => { if (game.state === 'offer') show('offer'); }, 700);
+}
+const OT_FAST_CLEAR = 80, OT_WAVES = 3; // offered only for a clear as fast as the Swift medal
+function answerOffer(go) {
+  if (game.state !== 'offer') return;
+  game.state = 'play'; screens.offer.hidden = true;
+  if (!go) { endRun('win'); return; }
+  show('hud'); Sound.startEngine(player.mount); requestLock();
+  game.overtime = { wave: 0, cleared: 0 }; game.otT = 1.2; toast('Overtime', `${OT_WAVES} short waves for bonus points`, 1.6);
 }
 function startWave() {
   const ot = game.overtime; ot.wave++; game.nectarSeen.clear();
   const M = player.mount, base = M.base || M.key, H = world.H, n = ot.wave;
-  const obj = base === 'dragonfly' ? [J.catch(H.flyer, 6 + 3 * n)] : base === 'honeybee' ? [J.deliver(10 + 5 * n)] : base === 'hawkmoth' ? [J.nectar(4 + 2 * n)] : [J.catch(M.eats[0], 8 + 3 * n)];
-  if (n % 2 === 0 && H.wasps && M.fights) obj.push(J.defeat(1 + (n >> 1)));
+  const obj = base === 'dragonfly' ? [J.catch(H.flyer, 3 + 2 * n)] : base === 'honeybee' ? [J.deliver(5 + 3 * n)] : base === 'hawkmoth' ? [J.nectar(1 + n)] : [J.catch(M.eats[0], 4 + 2 * n)];
   game.obj = obj.map((o) => ({ ...o, count: 0, done: false }));
-  game.time = Math.max(40, 62 - 2 * n); for (const b of world.birds) b.attackT = Math.min(b.attackT, MR(4, 8));
-  if (n % 2 === 1) spawnSwarm(base === 'ladybird' ? M.eats[0] : H.flyer);
+  game.time = 30; for (const b of world.birds) b.attackT = Math.min(b.attackT, MR(4, 8));
+  if (n === 1) spawnSwarm(base === 'ladybird' ? M.eats[0] : H.flyer);
   renderObjectives(); Sound.sfx.objective();
-  toast(`Overtime wave ${n}`, game.obj.map((o) => `${o.label} ×${o.target}`).join(' · ') + ` in ${Math.round(game.time)} s`, 2.6);
+  toast(`Overtime wave ${n} of ${OT_WAVES}`, game.obj.map((o) => `${o.label} ×${o.target}`).join(' · ') + ` in ${Math.round(game.time)} s`, 2.6);
 }
 
 /* ---------- title: modes, mounts, habitats, risk, journal, rider ---------- */
@@ -3173,7 +3198,7 @@ function endRun(reason) {
       title = complete ? 'Habitat mastered' : reason === 'downed' ? 'Downed' : H.night ? 'Dawn broke' : 'Out of daylight';
       if (run.mode === 'daily') sub = `Daily flight ${run.daily} · ${H.name} on a ${M.name}`;
       rows.push(['Score', final.toLocaleString() + (run.mult > 1 ? ` (risk ×${run.mult.toFixed(2)})` : ''), 'big'], ['Stages cleared', `${complete ? 3 : game.stage}/3`]);
-      if (game.overtime) rows.push(['Overtime waves', String(game.overtime.cleared || 0)]);
+      if (game.overtime) rows.push(['Overtime waves', `${game.overtime.cleared || 0}/${OT_WAVES}`]);
       if (!complete) rows.push(...game.obj.map((o) => [o.label, `${o.count}/${o.target}`]));
       rows.push(['Twist', TWISTS[run.twist].name], [run.mode === 'daily' ? "Today's best" : 'Best', isBest ? 'New best!' : prevBest.toLocaleString()]);
     }
@@ -3286,7 +3311,7 @@ function boot(data) {
 }
 window.claude?.hot?.snapshot?.(() => ({ sel: { ...sel } }));
 if (window.claude?.hot?.ready) window.claude.hot.ready(boot); else boot(window.claude?.hot?.data ?? {});
-window.__hexapod = { game, player, get world() { return world; }, startRun, endRun, setStage, thumb, run, Prog, dailySpec, spawnRare, computeFx, MOUNTS, HABITATS, PREY, sel, input, settings, goalTarget, SWOOP_RANGE, LOCK_RANGE,
+window.__hexapod = { answerOffer, game, player, get world() { return world; }, startRun, endRun, setStage, thumb, run, Prog, dailySpec, spawnRare, computeFx, MOUNTS, HABITATS, PREY, sel, input, settings, goalTarget, SWOOP_RANGE, LOCK_RANGE,
   // fixed-timestep simulation for automated playtests (no rendering)
   sim(seconds, step = 1 / 30) { const n = Math.round(seconds / step); for (let i = 0; i < n && game.state === 'play'; i++) { let dt = step; if (game.hitStop > 0) { game.hitStop -= step; dt = step * 0.12; } uTime.value += dt; simulatePlay(dt, step); FX.update(dt); } },
   render() { renderer.render(scene, camera); } };

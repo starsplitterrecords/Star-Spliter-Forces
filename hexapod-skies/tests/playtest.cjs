@@ -83,7 +83,7 @@ function installBot([kind, seed]) {
     await page.waitForFunction(() => window.__hexapod?.game.state === 'title', null, { timeout: 60000 });
     while (jobs.length) {
       const j = jobs.shift(); const t0 = Date.now();
-      await page.evaluate(([h, m, mode]) => { const x = __hexapod; Object.assign(x.sel, { hab: h, mount: m, mode, risk: {}, twistOverride: null }); x.startRun(); x.game.headless = true; x.settings.sens = 1; }, [j.h, j.m, MODE]);
+      await page.evaluate(([h, m, mode]) => { const x = __hexapod; Object.assign(x.sel, { hab: h, mount: m, mode, risk: {}, twistOverride: null }); x.startRun(); x.game.headless = true; x.game.headlessSkipOffer = true; x.settings.sens = 1; }, [j.h, j.m, MODE]);
       await page.evaluate(installBot, [j.bot, j.s]);
       let state = 'play', snaps = [];
       for (let k = 0; k < 60 && state === 'play'; k++) {
