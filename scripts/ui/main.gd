@@ -230,10 +230,17 @@ func show_chart(focus: String = "") -> void:
 	head.add_child(hs)
 	var sc: ScrollContainer = ScrollContainer.new()
 	sc.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	sc.custom_minimum_size = Vector2(0, 342)
+	# The lane shrinks on short screens so the briefing always fits below it.
+	var vh: float = get_viewport().get_visible_rect().size.y
+	var k: float = clampf((vh - 392.0) / 342.0, 0.5, 1.0)
+	sc.custom_minimum_size = Vector2(0, 342.0 * k)
 	v.add_child(sc)
+	var holder: Control = Control.new()
+	sc.add_child(holder)
 	var chart: ChartView = ChartView.new()
-	sc.add_child(chart)
+	chart.scale = Vector2(k, k)
+	holder.add_child(chart)
+	holder.custom_minimum_size = chart.custom_minimum_size * k
 	var brief: PanelContainer = PanelContainer.new()
 	brief.add_theme_stylebox_override("panel", UiTheme.box(UiTheme.PANEL, UiTheme.LINE, 1, 12, 16))
 	brief.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -250,7 +257,7 @@ func show_chart(focus: String = "") -> void:
 	# Bring the chosen beacon into view.
 	await get_tree().process_frame
 	if is_instance_valid(sc) and chart.positions.has(pick):
-		sc.scroll_horizontal = int(maxf(0.0, Vector2(chart.positions[pick]).x - sc.size.x * 0.45))
+		sc.scroll_horizontal = int(maxf(0.0, Vector2(chart.positions[pick]).x * k - sc.size.x * 0.45))
 
 func _fill_briefing(panel: PanelContainer, id: String) -> void:
 	for c: Node in panel.get_children():
@@ -274,19 +281,20 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 		col.add_child(UiTheme.label("Still dark. Relight \"%s\" first." % need, 15, UiTheme.DIM))
 		col.add_child(UiTheme.label("REWARD WAITING: " + "  •  ".join(st["reward"]), 14, Color(UiTheme.GOLD, 0.7)))
 	else:
-		col.add_child(UiTheme.label(String(st["brief"]), 13, UiTheme.TEXT))
+		if get_viewport().get_visible_rect().size.y >= 600.0:
+			col.add_child(UiTheme.label(String(st["brief"]), 13, UiTheme.TEXT))
 		col.add_child(UiTheme.label("OBJECTIVE: " + GameData.chart_objective_text(st), 15, Color("a8f7ff"), "bold"))
-		col.add_child(UiTheme.label("NEW HERE — %s: %s" % [String(st["new_title"]), String(st["new"])], 12, Color("bfe9ff")))
 		col.add_child(UiTheme.label(("EARNED: " if done else "REWARD: ") + "  •  ".join(st["reward"]), 15, UiTheme.GOLD, "bold"))
+		col.add_child(UiTheme.label("NEW HERE — %s: %s" % [String(st["new_title"]), String(st["new"])], 12, Color("bfe9ff")))
 	var side: VBoxContainer = VBoxContainer.new()
 	side.add_theme_constant_override("separation", 8)
 	side.alignment = BoxContainer.ALIGNMENT_CENTER
 	h.add_child(side)
-	var go: Button = UiTheme.button("CHOOSE EXPLORER  →" if not done else "PLAY AGAIN  →", show_departure, 280.0, 58.0)
+	var go: Button = UiTheme.button("CHOOSE EXPLORER  →" if not done else "PLAY AGAIN  →", show_departure, 250.0, 54.0)
 	go.disabled = not open and not done
 	go.add_theme_color_override("font_color", UiTheme.ACCENT)
 	side.add_child(go)
-	side.add_child(UiTheme.button("BACK", show_title, 280.0, 46.0))
+	side.add_child(UiTheme.button("BACK", show_title, 250.0, 42.0))
 	if not go.disabled:
 		go.grab_focus()
 
@@ -463,7 +471,11 @@ func show_results() -> void:
 		var label: String = ("STOP %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
 		title = ("BEACON RELIT — " if stop_won else "STILL DARK — ") + label
 		sub = "The corridor reaches one beacon further." if stop_won else "Objective not met: %s. Nothing is lost; try again with what you learned." % GameData.chart_objective_text(stop)
-	_heading(v, title, sub)
+	if stop.is_empty():
+		_heading(v, title, sub)
+	else:
+		v.add_child(UiTheme.label(title, 30, Color("68ecff") if stop_won else UiTheme.GOLD, "display"))
+		v.add_child(UiTheme.label(sub, 15, UiTheme.DIM))
 	if not stop.is_empty() and stop_won:
 		var won: PanelContainer = PanelContainer.new()
 		won.add_theme_stylebox_override("panel", UiTheme.box(Color("0c1c2a"), Color("68ecff"), 2, 12, 14))
@@ -488,7 +500,7 @@ func show_results() -> void:
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(row)
 	var left: VBoxContainer = VBoxContainer.new()
-	left.custom_minimum_size = Vector2(420, 0)
+	left.custom_minimum_size = Vector2(340, 0)
 	left.add_theme_constant_override("separation", 4)
 	row.add_child(left)
 	var rp: TextureRect = _portrait(String(r["character"]), 96.0)
@@ -539,8 +551,9 @@ func show_results() -> void:
 			"destination":
 				text = "NEW DESTINATION: " + String(GameData.DESTINATIONS[String(u["id"])]["name"])
 		right.add_child(UiTheme.label(text, 15, Color("9ff7d0"), "bold"))
-	var buttons: HBoxContainer = HBoxContainer.new()
-	buttons.add_theme_constant_override("separation", 12)
+	var buttons: HFlowContainer = HFlowContainer.new()
+	buttons.add_theme_constant_override("h_separation", 12)
+	buttons.add_theme_constant_override("v_separation", 8)
 	v.add_child(buttons)
 	var again: Button
 	if stop.is_empty():

@@ -219,6 +219,7 @@ func _process(delta: float) -> void:
 	if card:
 		# Never on top of an upgrade choice; it comes back afterwards.
 		card.visible = not level_panel.visible and pause_panel == null
+		_fit_panel(card, true)
 	for i in range(alerts.size() - 1, -1, -1):
 		alerts[i][2] -= delta
 		if alerts[i][2] <= 0.0:
@@ -378,20 +379,27 @@ func discovery_card(title: String, text: String, color: Color, first_time: bool,
 		var tl: Label = UiTheme.label(text, 14, UiTheme.DIM)
 		tl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		v.add_child(tl)
+	# Give every wrapped line its width up front, so the card's height never
+	# depends on a layout pass (a hidden card gets none and used to come back
+	# as a screen-filling blank panel).
+	var text_w: float = card.custom_minimum_size.x - 64.0 - 14.0 - 44.0
+	for ch: Node in v.get_children():
+		if ch is Label:
+			(ch as Label).custom_minimum_size.x = text_w
 	root.add_child(card)
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	card.modulate.a = 0.0
 	card_clock = 6.5 + 1.5 * gains.size()
-	# Autowrapped labels only know their height after a layout pass.
-	var c: PanelContainer = card
-	await get_tree().process_frame
-	if not is_instance_valid(c):
-		return
-	c.size = Vector2(c.custom_minimum_size.x, 0)
-	c.reset_size()
-	# Sit low on screen, clear of the ship at the centre and the HUD at the top.
-	c.position = Vector2(safe.position.x + (safe.size.x - c.size.x) * 0.5, safe.end.y - c.size.y - 96)
-	c.modulate.a = 1.0
+	_fit_panel(card, true)
+
+## Shrinks a floating panel to its content and keeps it on screen. Safe to
+## call every frame.
+func _fit_panel(panel: Control, low: bool) -> void:
+	var want: Vector2 = panel.get_combined_minimum_size()
+	if panel.size != want:
+		panel.size = want
+	if low:
+		# Low on screen, clear of the ship at the centre and the HUD at the top.
+		panel.position = Vector2(safe.position.x + (safe.size.x - want.x) * 0.5, maxf(safe.position.y + 8.0, safe.end.y - want.y - 96.0))
 
 # ================================================================== field guide
 
@@ -405,7 +413,7 @@ func teach(cat: String) -> void:
 		teach_queue.append(cat)
 
 func _update_teach(delta: float) -> void:
-	if not get_tree().paused:
+	if not get_tree().paused and card == null:
 		teach_clock -= delta
 	if teach_panel and teach_clock <= 0.0:
 		teach_panel.queue_free()
@@ -414,7 +422,8 @@ func _update_teach(delta: float) -> void:
 		_show_teach(teach_queue.pop_front())
 	if teach_panel:
 		teach_panel.modulate.a = clampf(teach_clock * 2.0, 0.0, 1.0)
-		teach_panel.visible = not level_panel.visible and pause_panel == null and not run.ended
+		teach_panel.visible = not level_panel.visible and pause_panel == null and not run.ended and card == null
+		_fit_panel(teach_panel, false)
 
 func _show_teach(cat: String) -> void:
 	var def: Dictionary = GameData.CATEGORIES[cat]
@@ -440,13 +449,7 @@ func _show_teach(cat: String) -> void:
 	root.add_child(teach_panel)
 	teach_panel.position = Vector2(safe.position.x, safe.position.y + UiTheme.fs(160))
 	teach_clock = 7.0 + String(def["why"]).length() / 40.0
-	# Autowrapped labels only know their height after a layout pass.
-	var tp: PanelContainer = teach_panel
-	tp.modulate.a = 0.0
-	await get_tree().process_frame
-	if is_instance_valid(tp):
-		tp.size = Vector2.ZERO
-		tp.reset_size()
+	_fit_panel(teach_panel, false)
 
 # ================================================================== level up
 

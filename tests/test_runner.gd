@@ -726,6 +726,12 @@ func test_corridor_chart() -> void:
 	run._claim_discovery(target)
 	check(run.stop_complete and Profile.stop_done("gravefire"), "claiming the target did not complete the stop")
 	check(Profile.stop_available("s_stardust"), "side stop did not open")
+	# The discovery card must stay card-sized even while a level-up hides it
+	# (it once came back as a blank panel covering the screen).
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var vp_size: Vector2 = get_viewport().get_visible_rect().size
+	check(run.hud.card != null and run.hud.card.size.y < vp_size.y * 0.7 and run.hud.card.size.x <= vp_size.x, "discovery card overfills the screen: %s" % str(run.hud.card.size if run.hud.card else Vector2.ZERO))
 	# Banked even if the explorer is then lost.
 	run.end_run("defeat")
 	check(bool(finished_result.get("stop_complete", false)), "result does not report the stop complete")

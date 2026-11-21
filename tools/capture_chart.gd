@@ -56,6 +56,10 @@ func _ready() -> void:
 			run._claim_discovery(q)
 	await _wait(0.8)
 	await _shot("c10_stop_complete")
+	if run.choosing:
+		run.hud._pick(run.hud.level_options[0])
+	await _wait(0.5)
+	await _shot("c10b_card_after_levelup")
 	run.player.position = run.world.gate + Vector2(30, 30)
 	run.camera.position = run.player.position
 	run.camera.reset_smoothing()
