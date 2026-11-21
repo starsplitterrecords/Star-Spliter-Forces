@@ -298,22 +298,6 @@
   }
  },
  {
-  "id": "practice.tallchairs",
-  "category": "practice",
-  "label": "Sitting in very tall chairs",
-  "noun": "tall chair",
-  "phrase": "sitting in very tall chairs",
-  "root": "Tallchair",
-  "props": {
-   "visibility": 75,
-   "commitment": 55,
-   "friction": 40,
-   "appeal": 55,
-   "commerce": 60,
-   "ambiguity": 35
-  }
- },
- {
   "id": "practice.puddles",
   "category": "practice",
   "label": "Jumping in puddles",

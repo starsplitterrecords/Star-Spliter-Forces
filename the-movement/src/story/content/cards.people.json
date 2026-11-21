@@ -147,7 +147,7 @@
     }
    }
   },
-  "weight": 0.9,
+  "weight": 0.32,
   "cooldown": 30,
   "spacing": 16,
   "text": "I am compiling the year’s minutes. Under “Things {title} Said”, I have: “{mQuote}”, said to {mWho} {mWhen}, {mWhere}. Do you stand by it? I ask because it will be bound.",
@@ -770,7 +770,7 @@
    }
   },
   "once": true,
-  "weight": 1.3,
+  "weight": 0.45,
   "text": "Before anyone votes on fixing the roof, every member must re-read the founding minutes. It is the only way to be sure the roof is consistent with our principles. At current reading speeds this will take eleven weeks. The roof is leaking now. I am aware.",
   "choices": [
    {
@@ -1059,7 +1059,7 @@
   },
   "once": true,
   "weight": 1.2,
-  "text": "Membership cards. Numbered, laminated, checked at the door. It’s only sensible. We don’t know who half these people are. I have the laminator warming up.",
+  "text": "Membership cards! Numbered, laminated, with a little photo of each member looking their best. Everyone loves a card. I’ve got the laminator warming up and a queue already forming.",
   "choices": [
    {
     "label": "Cards at the door.",
@@ -1473,6 +1473,347 @@
      "flags": [
       "{ctx.departed}_gone_for_good"
      ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.bev_arrives",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "logistics",
+  "setting": "private",
+  "topic": "the rota",
+  "requires": {
+   "decisions": ">=8",
+   "chars": {
+    "bev": {
+     "present": false
+    }
+   },
+   "notFlags": [
+    "bev_declined"
+   ]
+  },
+  "once": true,
+  "priority": 4,
+  "weight": 4,
+  "text": "Hello, love. Bev. I’ve been watching your lot wander about. Gary went to the wrong town twice last week, and one of them doesn’t exist. Give me the rota. I’ll have everyone where they’re needed by {day}, and home when they need to be.",
+  "choices": [
+   {
+    "label": "The rota is yours, Bev.",
+    "hint": "A scheduler · You set the focus",
+    "reaction": "Bev pins a rota to the fridge. By the end of the day everyone knows where they’re going, what they’re taking, and that there will be sandwiches.",
+    "effects": {
+     "join": [
+      "bev"
+     ],
+     "gauges": {
+      "unity": 4,
+      "enthusiasm": 3
+     },
+     "flags": [
+      "scheduler"
+     ]
+    }
+   },
+   {
+    "label": "We like the chaos, thanks.",
+    "hint": "Everyone keeps going where they like",
+    "reaction": "Bev says “suit yourself” in a tone that makes it clear she’ll be back. She leaves you a sandwich anyway.",
+    "effects": {
+     "flags": [
+      "bev_declined"
+     ],
+     "gauges": {
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.bev_again",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "callback",
+  "setting": "private",
+  "topic": "the rota",
+  "requires": {
+   "chars": {
+    "bev": {
+     "present": false
+    }
+   },
+   "flags": [
+    "bev_declined"
+   ],
+   "decisions": ">=25"
+  },
+  "once": true,
+  "priority": 3,
+  "weight": 3,
+  "text": "Me again. Dez has opened four towns this month and paid for the petrol with the biscuit tin. Priya’s been in the same town so long they’ve given her a key to it. I’m only saying. The offer stands.",
+  "choices": [
+   {
+    "label": "All right, Bev. Take the rota.",
+    "hint": "A scheduler · You set the focus",
+    "reaction": "Bev takes the rota, the biscuit tin and Dez’s car keys, in that order.",
+    "effects": {
+     "join": [
+      "bev"
+     ],
+     "gauges": {
+      "unity": 5
+     },
+     "flags": [
+      "scheduler"
+     ]
+    }
+   },
+   {
+    "label": "Still chaos, Bev.",
+    "hint": "Everyone goes where they like",
+    "reaction": "Bev nods. She adds you to her own private rota, under “ones to keep an eye on”.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "bev.sandwiches",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "logistics",
+  "setting": "private",
+  "topic": "the sandwiches",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "chars": {
+    "bev": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.5,
+  "text": "Everyone I send out gets a sandwich. It’s not in the budget. It’s in my handbag. The handbag is getting very heavy, love. Can the sandwiches be in the budget?",
+  "choices": [
+   {
+    "label": "Sandwiches are in the budget.",
+    "hint": "Costs money · Everyone’s happier",
+    "reaction": "The Sandwich Line is added to the accounts. Recruitment rises in every town, which Bev attributes entirely to egg and cress.",
+    "effects": {
+     "gauges": {
+      "resources": -5,
+      "enthusiasm": 5,
+      "unity": 3
+     },
+     "loyalty": {
+      "bev": 5
+     },
+     "modifiers": [
+      {
+       "stat": "recruitment",
+       "mult": 1.1,
+       "days": 30,
+       "label": "Bev’s sandwiches"
+      }
+     ]
+    }
+   },
+   {
+    "label": "The handbag has been working well.",
+    "hint": "Thrifty · Bev’s shoulder suffers",
+    "reaction": "Bev buys a bigger handbag. It has wheels. It becomes, in its way, famous.",
+    "effects": {
+     "gauges": {
+      "resources": 1
+     },
+     "loyalty": {
+      "bev": -3
+     }
+    }
+   }
+  ],
+  "twist": "right_wrong_reasons"
+ },
+ {
+  "id": "bev.gary_bus",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "vindication",
+  "setting": "private",
+  "topic": "Gary’s bus",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "chars": {
+    "bev": {
+     "present": true
+    },
+    "gary": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.5,
+  "text": "I’ve worked out a route for Gary where he can sleep on the bus between towns. He arrives everywhere refreshed. He has also, without waking up, recruited eleven bus drivers.",
+  "choices": [
+   {
+    "label": "Keep Gary on the bus.",
+    "hint": "Gary’s calling",
+    "reaction": "Gary becomes the movement’s travelling ambassador, mostly horizontal. The bus drivers start a branch that only meets at terminuses.",
+    "effects": {
+     "followersPct": 0.02,
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": 2
+     },
+     "loyalty": {
+      "gary": 6,
+      "bev": 3
+     }
+    }
+   },
+   {
+    "label": "Gary should be awake for some of it.",
+    "hint": "Ambitious",
+    "reaction": "Gary tries. He stays awake for a whole route, waves at everyone, and recruits nine people and a dog. Then he sleeps for two days.",
+    "effects": {
+     "followers": 20,
+     "gauges": {
+      "enthusiasm": 2
+     },
+     "loyalty": {
+      "gary": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "bev.petrol",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "overpromise",
+  "setting": "private",
+  "topic": "the petrol money",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "chars": {
+    "bev": {
+     "present": true
+    },
+    "dez": {
+     "present": true
+    }
+   }
+  },
+  "cooldown": 60,
+  "weight": 1.4,
+  "text": "Dez has spent the petrol money opening another town nobody asked him to open. The town is delighted, mind. They’ve given him a sash. I need a ruling, love: does Dez get a petrol budget, or does Dez walk?",
+  "choices": [
+   {
+    "label": "Give Dez a proper petrol budget.",
+    "hint": "More new towns · Costs money",
+    "reaction": "Dez receives a petrol budget and a laminated map from Martin. He opens two towns that week and sends Bev a postcard from each.",
+    "effects": {
+     "gauges": {
+      "resources": -6,
+      "enthusiasm": 4
+     },
+     "loyalty": {
+      "dez": 6
+     },
+     "reveal": 2
+    }
+   },
+   {
+    "label": "Dez walks.",
+    "hint": "Thrifty · Dez sulks, briefly",
+    "reaction": "Dez walks. He walks surprisingly far. He opens a town on foot and arrives so tired and sincere that they make him an honorary citizen.",
+    "effects": {
+     "gauges": {
+      "resources": 3
+     },
+     "loyalty": {
+      "dez": -4
+     },
+     "reveal": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "bev.day_off",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "logistics",
+  "setting": "private",
+  "topic": "a week off",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "chars": {
+    "bev": {
+     "present": true
+    }
+   },
+   "gauges": {
+    "attention": ">=60"
+   }
+  },
+  "cooldown": 30,
+  "weight": 2,
+  "text": "There’s a man from the paper outside the garage with a long lens, and everyone’s knackered. I’d like to give the whole lot of them a week off. Not a holiday. A lie-down. The papers can’t write about people having a lie-down.",
+  "choices": [
+   {
+    "label": "A week off for everyone.",
+    "hint": "Lie low · Attention falls",
+    "reaction": "Bev sends everyone home with a sandwich. The man with the long lens photographs a week of closed curtains and gives up.",
+    "effects": {
+     "gauges": {
+      "attention": -10,
+      "unity": 3,
+      "enthusiasm": -2
+     },
+     "flags": [
+      "bev_rest"
+     ]
+    }
+   },
+   {
+    "label": "Keep everyone working.",
+    "hint": "Momentum · The papers circle",
+    "reaction": "Bev says “on your head be it” and hands out the rota, and a spare sandwich for the man with the long lens.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3,
+      "attention": 3
+     }
     }
    }
   ]

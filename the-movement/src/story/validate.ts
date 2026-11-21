@@ -249,7 +249,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
   for (const c of lib.cards) if (c.shape) shapes[c.shape] = (shapes[c.shape] ?? 0) + 1;
   const twists: Record<string, number> = {};
   for (const c of lib.cards) if (c.twist && typeof c.speaker === 'string') twists[c.speaker] = (twists[c.speaker] ?? 0) + 1;
-  for (const c of lib.characters) if (!twists[c.id]) warnings.push(`character ${c.id}: never right for the wrong reasons or wrong for reasonable ones (no twist cards)`);
+  for (const c of lib.characters) if (!c.shelved && !twists[c.id]) warnings.push(`character ${c.id}: never right for the wrong reasons or wrong for reasonable ones (no twist cards)`);
 
   // crisis coverage
   for (const g of GAUGES) for (const hl of ['high', 'low']) {
@@ -257,7 +257,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
     if (!ENDINGS[`${g}.${hl}`]) errors.push(`missing ending ${g}.${hl}`);
   }
   // balance of speakers
-  const named = Object.entries(perSpeaker).filter(([k]) => charIds.has(k));
+  const named = Object.entries(perSpeaker).filter(([k]) => charIds.has(k) && !lib.characters.find((c) => c.id === k)?.shelved);
   const max = Math.max(...named.map(([, v]) => v));
   // characters who join late naturally have fewer cards; flag only the truly neglected
   for (const [k, v] of named) if (v < max / 5) warnings.push(`speaker ${k} has only ${v} cards (max ${max}); consider more`);

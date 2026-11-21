@@ -206,7 +206,8 @@ describe('simulation', () => {
       expect(s.ended).toBeNull();
       expect(s.era).toBe('national');
       // starved = nothing left that could be drawn (the original bug); quiet = ordinary gaps between arrivals
-      expect(track.starvedDays / (s.day - start)).toBeLessThan(0.04);
+      // continuous mode is now only for older saves; retiring Lionel thinned its regional deck a little
+      expect(track.starvedDays / (s.day - start)).toBeLessThan(0.07);
       expect(track.emptyDays / (s.day - start)).toBeLessThan(0.25);
     }
   });

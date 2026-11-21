@@ -22,7 +22,7 @@ await page.getByLabel('What is your name?').fill('Jeff');
 await page.getByLabel('Your hometown (optional)').fill('Hartf');
 await page.getByRole('option', { name: /Hartford, United States/ }).click();
 await page.getByRole('button', { name: 'Open the garage' }).click();
-await page.getByText('Your people this week').waitFor();
+await page.getByText(/everyone goes where they like|Bev’s rota/).first().waitFor();
 assert(await page.locator('svg g[role=button]').count() >= 5, 'the map shows real towns to send people to');
 assert(!(await page.getByRole('button', { name: /Call a meeting/ }).count()), 'no Call a meeting button');
 await page.screenshot({ path: `${OUT}/w1-map.png` });
@@ -37,12 +37,18 @@ await page.getByRole('button', { name: 'Back to the map' }).click();
 log('answered Gary’s problem in the garage');
 
 // send Priya to another town
-await page.getByRole('button', { name: /Priya/ }).first().click();
+await page.locator('section button[aria-pressed]', { hasText: 'Priya' }).first().click();
 await page.getByText('Tap a town to send Priya').waitFor();
 await page.locator('svg g[role=button]').nth(2).locator('circle').first().click({ force: true });
 await page.getByText(/Priya will spend next week in/).waitFor();
 const where = (await page.getByText(/Priya will spend next week in/).innerText()).replace(/.*in (.*)\./, '$1');
-log(`sent Priya to ${where}`);
+assert((await page.locator('section button[aria-pressed]', { hasText: 'Priya' }).first().innerText()).includes('your call'), 'Priya’s chip shows the override');
+log(`overruled Priya: sent her to ${where}`);
+// zoom in and out
+await page.getByRole('button', { name: 'Zoom in' }).click();
+await page.getByRole('button', { name: 'Zoom in' }).click();
+await page.getByRole('button', { name: 'Show everything' }).click();
+log('map zooms');
 
 // answer the rest, naming the movement in our own words if asked
 for (let k = 0; k < 6; k++) {
@@ -59,13 +65,11 @@ for (let k = 0; k < 6; k++) {
 }
 
 await page.getByRole('button', { name: /End the week/ }).click();
-await page.getByRole('dialog', { name: 'Week 1' }).waitFor();
-const report = await page.getByRole('dialog', { name: 'Week 1' }).innerText();
-assert(report.includes(`Priya spent the week in ${where}`), 'the week report says where Priya went');
-await page.screenshot({ path: `${OUT}/w1-report.png` });
-await page.getByRole('button', { name: 'To the map' }).click();
+await page.getByText(/Last week: \+/).waitFor();
 assert((await page.locator('header').innerText()).includes('week 2'), 'it is week 2');
-log('ended the week; report shows the dispatch');
+assert(!(await page.getByRole('dialog').count()), 'no report dialog to dismiss');
+await page.screenshot({ path: `${OUT}/w2-map.png` });
+log('ended the week: a short strip, no report to dismiss');
 
 // play a few more weeks quickly
 for (let w = 0; w < 4; w++) {
@@ -81,7 +85,6 @@ for (let w = 0; w < 4; w++) {
   const end = page.getByRole('button', { name: /End the week/ });
   if (await end.isDisabled()) continue;
   await end.click();
-  await page.getByRole('button', { name: 'To the map' }).click();
 }
 log('played five weeks');
 
@@ -89,8 +92,10 @@ log('played five weeks');
 await page.locator('svg g[role=button]').first().locator('circle').first().click({ force: true });
 const townDialog = page.locator('[role=dialog]').first();
 await townDialog.waitFor();
-await page.keyboard.press('Escape');
-await page.mouse.click(5, 5);
+// tapping a town opens either its panel or, if one problem is waiting there, the problem itself
+const notNow = page.getByRole('button', { name: /Not now/ });
+if (await notNow.count()) await notNow.click();
+else await page.getByRole('button', { name: 'Close' }).first().click();
 for (const [tab, text] of [['People', 'Martin'], ['Customs', 'Name'], ['History', 'Day']]) {
   await page.getByRole('navigation').getByRole('button', { name: tab }).click();
   await page.getByRole('dialog').getByText(text).first().waitFor();
@@ -102,7 +107,7 @@ log('town panel, people, customs and history');
 await page.waitForTimeout(800);
 await page.reload();
 await page.getByRole('button', { name: /Continue the Movement/ }).click();
-await page.getByText('Your people this week').waitFor();
+await page.getByText(/everyone goes where they like|Bev’s rota/).first().waitFor();
 assert((await page.locator('header').innerText()).includes('week 6'), 'reload keeps the week');
 await page.setViewportSize({ width: 390, height: 844 });
 await page.screenshot({ path: `${OUT}/w6-mobile.png`, fullPage: true });

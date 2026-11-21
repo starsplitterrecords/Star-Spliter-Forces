@@ -39,6 +39,7 @@ export interface CharacterDef {
   bio: string;
   emoji: string; // their token on the map
   flavour: string; // how they do things, appended to whatever they spread ("with soup", "lying down")
+  shelved?: boolean; // kept in the files, never joins
   travel: number; // how they feel about being sent away from home each week: + likes it, − misses home
   exit: string; // first-person goodbye, used in their exit scene ({exit})
   habit: string; // what they always do, in the third person ("brings soup nobody asked for"): missed when they go ({habit}, {departedHabit})
@@ -312,6 +313,7 @@ export interface RivalState {
 export interface WeekReport {
   week: number;
   lines: { icon: string; text: string }[];
+  gains?: Record<number, number>; // members gained per town this week, for the map
   joined: number;
   lost: number;
 }
@@ -387,6 +389,10 @@ export interface StoryState {
   weekly?: boolean;
   week: number;
   assign: Record<string, number>; // unit (character id, or org:N) -> city id
+  manual: Record<string, boolean>; // units the player placed by hand this week (the planner leaves them alone)
+  away: Record<string, number>; // consecutive weeks each unit has been away from home
+  planned?: number; // the week the rota was last drawn up
+  focus?: 'spread' | 'grow' | 'rest'; // the scheduler's priority this week
   rivals: Record<string, RivalState>;
   lastWeek?: WeekReport;
   memory: MemoryRecord[]; // what characters remember about you, newest last

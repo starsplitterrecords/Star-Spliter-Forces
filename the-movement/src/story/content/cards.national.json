@@ -131,7 +131,8 @@
      }
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.juniper_arrives",
@@ -1040,7 +1041,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.north_pass",
@@ -1124,7 +1126,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.north_senior",
@@ -1184,7 +1187,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.history_draft",
@@ -2404,7 +2408,7 @@
    ]
   },
   "once": true,
-  "weight": 1.5,
+  "weight": 0.52,
   "topic": "the forty-one points",
   "text": "As Keeper of the Record I have compared the Official History with my minutes. They disagree on forty-one points. On thirty-nine, the minutes are right. On two, I was asleep. I would like the History corrected.",
   "choices": [
@@ -2836,7 +2840,8 @@
      }
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.juniper_myth",
@@ -3914,7 +3919,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "nat.juniper_asks",

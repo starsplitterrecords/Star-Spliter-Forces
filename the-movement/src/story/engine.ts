@@ -271,8 +271,8 @@ export const BINDERS: Record<string, Binder> = {
   suggestedName: (s, rng) => {
     const b = centralBelief(s);
     const day = s.customs.weekly_meeting?.values.day;
-    const opts = b?.root ? [`${b.root}ism`, `The ${b.root} Collective`, `The ${b.root} Fellowship`] : [day ? `The ${day} Society` : 'The Garage Society', 'The Folding Chair Fellowship'];
-    return rng.pick(opts);
+    if (b?.root) return `${b.root}ism`;
+    return rng.pick([day ? `${day}ism` : 'Garageism', 'Chairism']);
   },
   anonName: (_s, rng) => `${rng.pick(FIRST_NAMES)} ${rng.pick(LAST_NAMES)}`,
   symbolThing: (_s, rng) => rng.pick(['capybara', 'lamp', 'heron', 'very confident pear', 'spoon with a face', 'sun, or possibly an egg']),
@@ -396,6 +396,8 @@ export function newStory(founderName: string, hometown: number, seed: number, no
     weekly: opts.weekly ?? false,
     week: 1,
     assign: {},
+    manual: {},
+    away: {},
     rivals: {},
     memory: [],
     nextMemoryId: 1,
@@ -799,7 +801,7 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
   const campaigns = s.region.reduce((a, id) => a + s.cities[id].organizers, 0) * (s.weekly ? 0.25 : 1);
   drift(s, 'enthusiasm', 42 + agg.commitment * 0.2 + groupShare(s, 'enthusiasts') * 35 - groupShare(s, 'casuals') * 12, 0.03, dt);
   drift(s, 'unity', 66 - agg.ambiguity * 0.06 - factional * 40 - disgruntled * 7 + groupShare(s, 'founders') * 15 - groupShare(s, 'opportunists') * 20, 0.025, dt);
-  drift(s, 'attention', 14 + Math.log10(f2 + 1) * 9 + agg.visibility * 0.06 + campaigns * 2, 0.04, dt);
+  drift(s, 'attention', (s.weekly ? 8 + Math.log10(f2 + 1) * 7 : 14 + Math.log10(f2 + 1) * 9) + agg.visibility * 0.06 + campaigns * 2 - (s.focus === 'rest' && s.weekly ? 15 : 0), s.weekly ? 0.05 : 0.04, dt);
   drift(s, 'resources', 36 + groupShare(s, 'opportunists') * 50 + agg.commerce * 0.05 + (s.flags.dues ? 12 : 0) * mod(s, 'income') - campaigns * 1.5 - (s.flags.departments ?? 0) * 0, 0.03, dt);
 
   // people: influence follows their base of support and their role
@@ -1152,7 +1154,7 @@ export function applyEffects(s: StoryState, e: Effects, inst: CardInstance, rng:
   }
   for (const id of e.join ?? []) {
     const c = s.chars[id];
-    if (c && !c.present) {
+    if (c && !c.present && !CHAR_BY_ID.get(id)?.shelved) {
       c.present = true;
       c.status = 'active';
       c.joinedDay = s.day;
@@ -1398,6 +1400,8 @@ export function loadStory(json: string): StoryState {
   s.provenance ??= { flags: {}, customs: {} };
   s.week ??= 1;
   s.assign ??= {};
+  s.manual ??= {};
+  s.away ??= {};
   s.rivals ??= {};
   s.echoes ??= {};
   s.nextMemoryId ??= 1;

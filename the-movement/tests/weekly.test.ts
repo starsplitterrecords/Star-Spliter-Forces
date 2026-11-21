@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { CITIES, city } from '../src/engine/geo';
 import { Rng } from '../src/engine/rng';
 import { CARD_BY_ID, choose, currentCard, loadStory, newStory, serializeStory } from '../src/story/engine';
-import { assignUnit, endWeek, isOurs, pins, reachable, units, whereIs } from '../src/story/campaign';
+import { assignUnit, claim, endWeek, hasScheduler, isOurs, pins, planWeek, reachable, units, whereIs } from '../src/story/campaign';
 import { playWeeks } from '../src/story/autoplay';
 import type { StoryState } from '../src/story/types';
 
@@ -29,7 +29,7 @@ describe('weekly dispatch', () => {
     }
     const r = endWeek(s);
     expect(s.week).toBe(2);
-    expect(r.lines.some((l) => l.text.includes(`Priya spent the week in ${city(town).name}`))).toBe(true);
+    expect(r.lines.some((l) => l.text.includes('Priya') && l.text.includes(`spent the week in ${city(town).name}`))).toBe(true);
     expect(s.cities[town].followers).toBeGreaterThan(0);
     for (const i of s.inbox) expect(i.city).toBeDefined();
     // a character's problem is pinned wherever that character is
@@ -53,25 +53,52 @@ describe('weekly dispatch', () => {
   });
 
   it('rivals hold real towns; your people can win them over', () => {
-    let s = weekly(4);
-    let seed = 4;
-    // play until the Knitting Circle has dug in somewhere (it arrives with the grassroots era)
-    while (!s.rivals.knitters && seed < 12) {
-      s = weekly(seed);
-      playWeeks(s, 8, 'pleaser', new Rng(seed++));
-    }
-    const knitters = s.rivals.knitters;
-    expect(knitters).toBeDefined();
-    const target = knitters.towns[0];
-    expect(s.cities[target].rival).toBe('knitters');
+    const s = weekly(4);
+    playWeeks(s, 6, 'pleaser', new Rng(4));
+    const target = reachable(s).find((id) => id !== s.hometown && s.cities[id].followers === 0) ?? reachable(s)[1];
+    claim(s, 'original', [target]);
     expect(isOurs(s, target)).toBe(false);
     for (const u of units(s).slice(0, 3)) assignUnit(s, u.id, target);
     for (let w = 0; w < 3; w++) {
       s.inbox = [];
+      for (const u of units(s).slice(0, 3)) assignUnit(s, u.id, target);
       endWeek(s);
     }
     expect(s.cities[target].rival).toBeUndefined();
-    expect(s.flags.won_from_knitters).toBeDefined();
+    expect(s.flags.won_from_original).toBeDefined();
+  });
+
+  it('without a scheduler people go where their nature takes them; homesick people go home', () => {
+    const s = weekly(14);
+    playWeeks(s, 3, 'pleaser', new Rng(14));
+    expect(hasScheduler(s)).toBe(false);
+    // Gary has been away two weeks: he goes home
+    s.away.gary = 2;
+    s.manual = {};
+    planWeek(s);
+    expect(whereIs(s, 'gary')).toBe(s.hometown);
+    // someone sent home by a choice goes home
+    s.flags.priya_go_home = s.day;
+    planWeek(s);
+    expect(whereIs(s, 'priya')).toBe(s.hometown);
+  });
+
+  it('Bev’s rota: a focus for the week, and a week off lowers attention', () => {
+    const s = weekly(15);
+    s.chars.bev.present = true;
+    s.chars.bev.status = 'active';
+    s.focus = 'spread';
+    planWeek(s);
+    const dez = whereIs(s, 'dez');
+    expect(dez === s.hometown || s.cities[dez].followers === 0).toBe(true);
+    s.focus = 'rest';
+    s.gauges.attention = 80;
+    planWeek(s);
+    for (const u of units(s)) expect(whereIs(s, u.id)).toBe(s.hometown);
+    s.inbox = [];
+    endWeek(s);
+    expect(s.gauges.attention).toBeLessThan(80);
+    expect(s.focus).toBe('grow');
   });
 
   it('customs mutate by place: towns take on the habits of whoever you send', () => {

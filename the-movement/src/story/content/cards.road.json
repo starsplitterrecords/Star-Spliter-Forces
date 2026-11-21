@@ -652,7 +652,8 @@
      }
     }
    }
-  ]
+  ],
+  "weight": 0.35
  },
  {
   "id": "road.agnes_corrects",
@@ -702,7 +703,8 @@
      }
     }
    }
-  ]
+  ],
+  "weight": 0.35
  },
  {
   "id": "road.rolf_bridge",
@@ -945,7 +947,8 @@
      }
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "road.juniper_verse",
@@ -1194,14 +1197,17 @@
   "text": "Can I be honest? {city} is lovely, and the members here are lovely, and I would give anything to be back in {hometown} on {day}.",
   "choices": [
    {
-    "label": "Come home next week.",
+    "label": "Come home. Next week.",
     "hint": "Kind",
-    "reaction": "They thank you, a bit too quickly. Next week you can bring them home, or not; they will notice either way.",
+    "reaction": "They thank you, a bit too quickly. Next week they are on the first bus home, and the bus is somehow more cheerful for it.",
     "effects": {
      "speakerLoyalty": 5,
      "gauges": {
       "unity": 1
-     }
+     },
+     "flags": [
+      "{speakerId}_go_home"
+     ]
     }
    },
    {
@@ -1338,7 +1344,8 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  },
  {
   "id": "terr.knitters_banner",
@@ -1393,6 +1400,7 @@
      ]
     }
    }
-  ]
+  ],
+  "shelved": true
  }
 ]

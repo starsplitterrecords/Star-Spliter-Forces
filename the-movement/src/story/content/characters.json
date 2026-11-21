@@ -6,7 +6,7 @@
   "role": "Co-founder",
   "agenda": "order",
   "ally": "organizers",
-  "bio": "Former assistant manager at a laminating shop. Believes most problems are scheduling problems, and most scheduling problems can be laminated. Your oldest friend. Wants the movement to function.",
+  "bio": "Your oldest friend, and the best host in any room he walks into. Plans a meeting the way other people plan a party, and a party the way other people plan a wedding. Owns a laminator and uses it exclusively for joy.",
   "competence": 72,
   "startsPresent": true,
   "startLoyalty": 25,
@@ -19,10 +19,10 @@
    "mood": "worried",
    "prop": "📋"
   },
-  "exit": "I’ve laminated my resignation. It’s in the orange pouch. I’d like the pouch back eventually.",
-  "habit": "laminates the agenda",
+  "exit": "I’ve made you a seating plan for after I’m gone. You’re next to Gary. You’ll like it there.",
+  "habit": "greets everyone at the door by name",
   "emoji": "📋",
-  "flavour": "with a sign-in sheet",
+  "flavour": "with name badges and a warm welcome",
   "travel": -1
  },
  {
@@ -208,7 +208,8 @@
   "habit": "turns arguments into departments",
   "emoji": "🗂",
   "flavour": "by department",
-  "travel": 0
+  "travel": 0,
+  "shelved": true
  },
  {
   "id": "constance",
@@ -262,7 +263,8 @@
   "habit": "issues edicts nobody asked him to issue",
   "emoji": "🧭",
   "flavour": "the northern way",
-  "travel": 1
+  "travel": 1,
+  "shelved": true
  },
  {
   "id": "juniper",
@@ -289,5 +291,32 @@
   "emoji": "🎶",
   "flavour": "set to a song everyone knows",
   "travel": 1
+ },
+ {
+  "id": "bev",
+  "name": "Bev Okoro",
+  "short": "Bev",
+  "role": "Scheduler",
+  "agenda": "joy",
+  "ally": "organizers",
+  "bio": "Ran the number 9 bus depot for thirty-one years. Never lost a bus, never lost her temper, never once let anyone leave without a sandwich. Believes there is a perfect town for every person, and that she knows which one.",
+  "competence": 85,
+  "startsPresent": false,
+  "startLoyalty": 30,
+  "startInfluence": 20,
+  "portrait": {
+   "skin": "#8d5a3b",
+   "hair": "#b8b8c0",
+   "coat": "#e67e22",
+   "hat": "none",
+   "glasses": true,
+   "mood": "smile",
+   "prop": "🗓️"
+  },
+  "emoji": "🗓️",
+  "flavour": "on time, with a packed lunch",
+  "travel": 0,
+  "exit": "I’ve done you a rota for after I’m gone. It’s on the fridge. Don’t let Dez near the petrol money.",
+  "habit": "knows where everyone is, and whether they’ve eaten"
  }
 ]

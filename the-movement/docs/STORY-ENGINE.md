@@ -51,6 +51,20 @@ The core loop is now **weekly dispatch** (`src/story/campaign.ts`, `src/componen
 
 Older saves continue in the original continuous mode, described below.
 
+### Second playtest: what changed
+
+| Verdict | Change |
+|---|---|
+| "Deploying people individually isn't that fun." | **Nobody has to be placed by hand.** Without a scheduler, people follow their nature (`planWeek`): Dez and Ophelia spend the petrol money (−3 resources) opening towns nobody has heard of, Priya goes where the people are, Gary stays near home, Martin goes to the biggest party, Juniper and Rolf to the big towns. You can still overrule anyone (tap them, then a town). |
+| "Recruit a scheduler to do it for you." | **Bev Okoro**, a retired bus dispatcher, offers to take the rota early in the game. With Bev, you pick a weekly focus (*Open new towns*, *Build up our towns*, *Lie low*) and she places everyone. *Lie low* sends everyone home for a week: attention falls and there are no road incidents. |
+| "People that want to go home should actually go home." | Anyone who dislikes travel goes home after two weeks away; anyone sulking goes home; "Come home next week" on the homesick card is honoured. |
+| "You can't zoom the map; the cities are on top of each other." | The map zooms (pinch, scroll, + / −) and pans (drag). Labels are placed most-important-first and never overlap; markers stay the same size at any zoom. |
+| "I don't read the report." | The week report dialog is gone. A three-line strip shows last week's best moments (local versions first), and the map shows "+members" on each town. |
+| "The knitting and the north are weird; the north is not a real opponent." | The Knitting Circle and Tobias's North no longer appear on the map; Tobias and his cards are shelved. Rivals now only come from your own history (Agnes's or Ophelia's breakaways). |
+| "More like Gary, less like Lionel, Agnes and Martin. The founders should be fun and charismatic." | Lionel is shelved. Agnes's cards are drawn about a third as often. Martin is rewritten as the best host in any room: same laminator, used exclusively for joy. Bev joins as a new Gary-spirited character. |
+| "The tall chairs thing is weird. Soupism is more fun than custom." | Tall chairs removed. The naming card now always suggests an *-ism* (Soupism, Napism). |
+| "Attention is the thing that has ended my runs most often." | In weekly mode attention drifts to a lower level, and *Lie low* is a lever against it. Bev's week-off card appears when attention passes 60. In `content:weekly`, 0 of 12 automated games ended by week 70 (it had been 6 of 8). |
+
 ## 1. Loop (continuous mode, older saves)
 
 1. **Someone needs your attention.** The next card in your inbox comes from a co-founder, a member or an outsider.

@@ -44,8 +44,9 @@ export function whereIs(s: StoryState, unit: string): number {
   return id != null && s.cities[id]?.known ? id : s.hometown;
 }
 
-export function assignUnit(s: StoryState, unit: string, cityId: number) {
+export function assignUnit(s: StoryState, unit: string, cityId: number, byHand = true) {
   if (!s.cities[cityId]?.known) return false;
+  if (byHand) s.manual[unit] = true;
   if (cityId === s.hometown) delete s.assign[unit];
   else s.assign[unit] = cityId;
   return true;
@@ -54,6 +55,58 @@ export function assignUnit(s: StoryState, unit: string, cityId: number) {
 export function isOurs(s: StoryState, id: number): boolean {
   const c = s.cities[id];
   return !c.rival && (id === s.hometown || c.milestone || c.followers >= BRANCH);
+}
+
+// ------------------------------------------------------------------ the rota
+
+export const hasScheduler = (s: StoryState) => !!s.chars.bev?.present && s.chars.bev.status === 'active';
+
+/** Who wants to go where this week. Without a scheduler, everyone follows their own nature. */
+export function planWeek(s: StoryState, rng?: Rng) {
+  const r = rng ?? rngOf(s);
+  const known = reachable(s).filter((id) => id !== s.hometown && !s.cities[id].rival);
+  const members = known.filter((id) => s.cities[id].followers > 0).sort((a, b) => s.cities[b].followers - s.cities[a].followers);
+  const open = known.filter((id) => s.cities[id].followers === 0).sort((a, b) => distanceKm(city(s.hometown), city(a)) - distanceKm(city(s.hometown), city(b)));
+  const taken = new Set<number>();
+  const pick = (list: number[], spread = true) => {
+    const free = spread ? list.filter((id) => !taken.has(id)) : list;
+    const id = free[0] ?? list[0];
+    if (id != null) taken.add(id);
+    return id ?? s.hometown;
+  };
+  const scheduler = hasScheduler(s);
+  const focus = scheduler ? s.focus ?? 'grow' : undefined;
+  for (const u of units(s)) {
+    if (s.manual[u.id]) continue;
+    const id = u.charId;
+    const c = id ? s.chars[id] : undefined;
+    const def = id ? CHAR_BY_ID.get(id)! : undefined;
+    let to = s.hometown;
+    // people who need to go home, go home
+    const homesick = def && ((def.travel < 0 && (s.away[u.id] ?? 0) >= 2) || (c && c.loyalty <= -25) || s.flags[`${id}_go_home`] != null);
+    if (homesick || id === 'bev' || id === 'constance') to = s.hometown;
+    else if (focus === 'rest') to = s.hometown;
+    else if (focus === 'spread') to = id === 'gary' ? pick(members.slice(-3)) : pick(open.length ? open : members);
+    else if (focus === 'grow') to = id === 'dez' || id === 'ophelia' ? pick(open.length && s.gauges.resources >= 12 ? open : members) : pick(members.length ? [...members].reverse() : open);
+    else {
+      // everyone does what they do
+      switch (id) {
+        case 'gary': to = r.chance(0.6) ? s.hometown : pick(members.slice(-2), false); break; // somewhere quiet, nearby
+        case 'dez':
+        case 'ophelia': to = open.length && s.gauges.resources >= 12 ? pick(open) : pick(members); break; // somewhere nobody has been
+        case 'priya': to = pick(members); break; // wherever people are, there should be soup
+        case 'martin': to = r.chance(0.4) ? s.hometown : pick(members); break; // the biggest party going
+        case 'juniper':
+        case 'rolf': to = pick([...known].sort((a, b) => city(b).pop - city(a).pop)); break; // bright lights, big towns
+        case 'agnes': to = pick(members.filter((x) => s.cities[x].variant).concat(members)); break; // somewhere doing it wrong
+        default: to = r.chance(0.5) ? pick(open.length ? open : members) : pick(members.length ? members : open);
+      }
+    }
+    if (to == null || !s.cities[to]?.known) to = s.hometown;
+    assignUnit(s, u.id, to, false);
+  }
+  s.planned = s.week;
+  if (!rng) s.rng = r.state;
 }
 
 /** Problems on the map, by town. */
@@ -98,7 +151,7 @@ const RIVALS = {
 } as const;
 type RivalId = keyof typeof RIVALS;
 
-function claim(s: StoryState, rival: RivalId, towns: number[]) {
+export function claim(s: StoryState, rival: RivalId, towns: number[]) {
   const def = RIVALS[rival];
   const r = (s.rivals[rival] ??= { id: rival, name: def.name, color: def.color, leader: 'leader' in def ? def.leader : undefined, towns: [], since: s.week });
   s.flags[`${rival}_rival_active`] = s.day;
@@ -122,22 +175,6 @@ function release(s: StoryState, id: number) {
 function spawnRivals(s: StoryState, out: WeekReport) {
   const busy = new Set(Object.values(s.assign));
   const free = (ids: number[]) => ids.filter((id) => id !== s.hometown && !s.cities[id].rival && !isOurs(s, id) && !busy.has(id) && s.cities[id].followers < 20);
-  if (s.era !== 'founding' && !s.rivals.knitters) {
-    const towns = free(nearestOthers(s, s.hometown, 10)).slice(0, 2);
-    if (towns.length) {
-      claim(s, 'knitters', towns);
-      out.lines.push({ icon: '🧶', text: `The Knitting Circle has dug in at ${towns.map((t) => city(t).name).join(' and ')}. They were there first, they say. They have always been there first.` });
-    }
-  }
-  if ((s.era === 'regional' || s.era === 'national') && !s.rivals.north && !s.chars.tobias?.present && s.flags.north_joined == null) {
-    // the North is real: the most northerly towns of the region
-    const towns = free([...s.region].filter((id) => s.cities[id].followers === 0).sort((a, b) => city(b).lat - city(a).lat)).slice(0, 4);
-    if (towns.length >= 2) {
-      claim(s, 'north', towns);
-      s.flags.north_exists = s.day;
-      out.lines.push({ icon: '🧭', text: `A man called Tobias Wren has founded the Northern Fellowship in ${towns.map((t) => city(t).name).join(', ')}. It is like ${s.movementName ?? 'the group'}, but northern, and in his view correct.` });
-    }
-  }
   if ((s.flags.agnes_rival != null || s.flags.agnes_faction != null) && !s.rivals.original) {
     const towns = free(nearestOthers(s, s.hometown, 8)).slice(0, 2);
     if (towns.length) {
@@ -204,8 +241,29 @@ const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 
 /** End the week: your people do their work, the map changes, and new problems turn up where they are. */
 export function endWeek(s: StoryState): WeekReport {
+  if (s.flags.bev_rest != null) {
+    s.focus = 'rest';
+    delete s.flags.bev_rest;
+    planWeek(s);
+  }
+  if (s.planned !== s.week) planWeek(s);
   const rng = rngOf(s);
-  const out: WeekReport = { week: s.week, lines: [], joined: 0, lost: 0 };
+  const out: WeekReport = { week: s.week, lines: [], joined: 0, lost: 0, gains: {} };
+  const scheduler = hasScheduler(s);
+  const resting = scheduler && s.focus === 'rest';
+  if (resting) {
+    s.gauges.attention = Math.max(4, s.gauges.attention - 8);
+    s.gauges.unity = Math.min(96, s.gauges.unity + 3);
+    out.lines.push({ icon: '🛋️', text: 'Bev gave everyone the week off. Nobody was in the papers. Several people were in the bath.' });
+  }
+  // opening a new town costs the petrol money
+  for (const u of units(s)) {
+    const at = whereIs(s, u.id);
+    if ((u.charId === 'dez' || u.charId === 'ophelia') && at !== s.hometown && s.cities[at].followers === 0) {
+      s.gauges.resources = Math.max(0, s.gauges.resources - 3);
+      out.lines.push({ icon: u.emoji, text: `${u.label} spent the petrol money getting to ${city(at).name}, where nobody has heard of ${s.movementName ?? 'us'}. Yet.` });
+    }
+  }
 
   // 1. problems nobody answered for a whole week get worse
   const stale = s.inbox.filter((i) => (i.week ?? s.week) < s.week && i.priority < 50 && CARD_BY_ID.get(i.cardId)?.type !== 'crisis');
@@ -247,8 +305,19 @@ export function endWeek(s: StoryState): WeekReport {
   }
   for (const id of s.region) {
     const d = s.cities[id].followers - (before[id] ?? 0);
-    if (d > 0) out.joined += d;
-    else out.lost -= d;
+    if (d > 0) {
+      out.joined += d;
+      out.gains![id] = d;
+    } else out.lost -= d;
+  }
+  // who has been away, and who came home
+  for (const u of units(s)) {
+    const at = whereIs(s, u.id);
+    if (at === s.hometown) {
+      if ((s.away[u.id] ?? 0) >= 2 && u.charId) out.lines.push({ icon: '🏠', text: `${u.label} is home, and very pleased about it.` });
+      s.away[u.id] = 0;
+    } else s.away[u.id] = (s.away[u.id] ?? 0) + 1;
+    if (u.charId) delete s.flags[`${u.charId}_go_home`];
   }
 
   // 4. what each person did
@@ -273,7 +342,7 @@ export function endWeek(s: StoryState): WeekReport {
     // how they feel about being away
     const c = s.chars[u.charId];
     c.loyalty = Math.max(-100, Math.min(100, c.loyalty + def.travel));
-    if (def.travel <= -2 && rng.chance(0.4)) out.lines.push({ icon: '🏠', text: `${def.short} misses home.` });
+    if (def.travel < 0 && (s.away[u.id] ?? 0) >= 1) out.lines.push({ icon: '🏠', text: `${def.short} misses home, and will be going back next week.` });
     // the movement in that town starts to look like them
     const redundant = belief && [belief.noun, belief.root].some((w) => w && def.flavour.toLowerCase().includes(w.toLowerCase()));
     if (belief && !redundant && !changed.has(at) && s.cities[at].followers > 0 && s.cities[at].variantBy !== u.charId && rng.chance(0.45)) {
@@ -313,11 +382,14 @@ export function endWeek(s: StoryState): WeekReport {
 
   // 6. next week's problems turn up where your people are
   s.week++;
+  s.manual = {};
+  if (resting) s.focus = 'grow'; // a week off is a week off
+  planWeek(s, rng);
   const newOnes: CardInstance[] = [];
   const road = units(s).filter((u) => u.charId && whereIs(s, u.id) !== s.hometown);
   let roadCount = 0;
   for (const u of rng.shuffle([...road])) {
-    if (roadCount >= 2) break;
+    if (roadCount >= 2 || resting) break;
     if (!rng.chance(s.era === 'founding' ? 0.2 : 0.35)) continue;
     const inst = drawRoad(s, rng, u.charId!, whereIs(s, u.id));
     if (inst) {

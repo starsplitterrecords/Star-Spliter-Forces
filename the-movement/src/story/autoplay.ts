@@ -106,13 +106,11 @@ export function fastForwardTo(s: StoryState, era: StoryState['era'], seed = 1): 
 /** Weekly mode: send everyone somewhere sensible, answer the problems on the map, end the week. */
 export function playWeeks(s: StoryState, weeks: number, policy: Policy, rng: Rng, answerShare = 1): void {
   for (let w = 0; w < weeks && !s.ended; w++) {
-    const towns = camp.reachable(s).filter((id) => id !== s.hometown);
-    for (const u of camp.units(s)) {
-      if (!towns.length) break;
-      // prefer contested and growing towns; keep some people at home
-      if (rng.chance(0.25)) camp.assignUnit(s, u.id, s.hometown);
-      else camp.assignUnit(s, u.id, rng.weighted(towns, (id) => 1 + (s.cities[id].rival ? 2 : 0) + s.cities[id].followers / 500)!);
-    }
+    // the rota draws itself up; with a scheduler, pick a focus (lie low when the papers are circling)
+    if (camp.hasScheduler(s)) {
+      s.focus = s.gauges.attention >= 75 ? 'rest' : rng.chance(0.5) ? 'spread' : 'grow';
+      camp.planWeek(s);
+    } else if (s.planned !== s.week) camp.planWeek(s);
     let guard = 0;
     while (s.inbox.length && !s.ended && guard++ < 30) {
       if (!rng.chance(answerShare) && currentCard(s)?.priority! < 50) break;

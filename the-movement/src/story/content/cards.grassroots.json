@@ -605,7 +605,8 @@
      }
     }
    }
-  ]
+  ],
+  "weight": 0.35
  },
  {
   "id": "grass.gazette",
@@ -671,7 +672,7 @@
    },
    "followers": ">=40"
   },
-  "text": "The soup situation needs governance. Who decides the soup? Who stirs? I propose a Soup Committee: four members, two-year terms and a stirring rota.",
+  "text": "The soup has become an event. People queue. People cheer. One man brought a folding stool to queue on. I’d like to give it the ceremony it deserves: a Soup Committee, a stirring rota and a small bell.",
   "choices": [
    {
     "label": "Establish the Soup Committee.",
@@ -962,7 +963,8 @@
      ]
     }
    }
-  ]
+  ],
+  "weight": 0.35
  },
  {
   "id": "grass.agnes_minutes",
@@ -1100,7 +1102,7 @@
    },
    "decisions": ">=20"
   },
-  "text": "Dez and I aren’t speaking. He says I’m “killing the vibe with paperwork”. I say paperwork is the vibe. You need to decide who’s right.",
+  "text": "Dez and I have fallen out. He says I’m “killing the vibe with paperwork”. I say the paperwork is the vibe. Have you seen my clipboards? They have flowers on. You decide.",
   "choices": [
    {
     "label": "Martin is right.",

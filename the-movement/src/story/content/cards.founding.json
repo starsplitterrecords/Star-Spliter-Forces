@@ -66,7 +66,7 @@
   "once": true,
   "followUpOnly": true,
   "priority": 15,
-  "text": "Our first gathering was a tremendous success. Seven people attended. Unfortunately, four of them thought it was a book club. I think we need to establish a regular meeting.",
+  "text": "Our first gathering was a triumph! Seven people! Four of them thought it was a book club, and honestly, they were the life of the party. Shall we make this a regular thing? I’ve already picked a day. I’ve picked several.",
   "choices": [
    {
     "label": "“Every Tuesday. Attendance is mandatory.”",
@@ -146,7 +146,7 @@
     "meeting_mandatory"
    ]
   },
-  "text": "It’s {day}. Eight people didn’t come. One sent a note saying her cat “needed her”. What does mandatory mean, exactly?",
+  "text": "It’s {day}, and eight people didn’t come. One sent a note saying her cat “needed her”. I’ve decided to take that as a compliment to the cat. Do we make coming compulsory, or just make it impossible to miss?",
   "choices": [
    {
     "label": "Mandatory means mandatory.",
@@ -215,7 +215,7 @@
   "once": true,
   "followUpOnly": true,
   "priority": 3,
-  "text": "Dez called a meeting at 4 a.m. because he “had a thought”. Fourteen people came. Nobody knows when the next one is. Can we please have a schedule?",
+  "text": "Dez called a meeting at 4 a.m. because he “had a thought”. Fourteen people came! I brought croissants. It was magnificent. It also cannot happen again. Can it?",
   "choices": [
    {
     "label": "Fine. Every Thursday, optional.",
@@ -814,7 +814,8 @@
      "memory": "Agnes Thimble joined, uninvited, with a notebook."
     }
    }
-  ]
+  ],
+  "weight": 0.35
  },
  {
   "id": "found.symbol",
@@ -1319,7 +1320,7 @@
   "requires": {
    "decisions": ">=7"
   },
-  "text": "I’ve drafted some simple rules. Rule one: no shouting. Rule two: no shouting about rule one. There are fourteen more.",
+  "text": "I’ve written some house rules! Rule one: everyone gets a chair. Rule two: Gary gets the good chair. There are fourteen more, and they’re mostly about snacks.",
   "choices": [
    {
     "label": "Adopt Martin’s rules.",
