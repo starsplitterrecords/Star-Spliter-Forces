@@ -194,7 +194,9 @@ func _build() -> void:
 	if not mission.is_empty():
 		var num: int = GameData.chart_number(stop_id)
 		hud.banner(("STOP %d — " % num if num > 0 else "SIDE SIGNAL — ") + String(mission["name"]).to_upper(), GameData.chart_objective_text(mission), Color("68ecff"), 4.0)
-		hint_queue.push_front(["stop_new_" + stop_id, "NEW — %s: %s" % [String(mission["new_title"]), String(mission["new"])]])
+		if not Profile.seen("stop_new_" + stop_id):
+			Profile.mark_seen("stop_new_" + stop_id)
+			hud.teach_custom("NEW  •  " + String(mission["new_title"]), String(mission["new"]), "OBJECTIVE: " + GameData.chart_objective_text(mission), Color("68ecff"), String(mission.get("icon", "signal")))
 
 func _apply_start_bonuses() -> void:
 	var def: Dictionary = GameData.CHARACTERS[character_id]
@@ -429,13 +431,13 @@ func _scan_categories(delta: float) -> void:
 	_scan_clock = 0.4
 	var pp: Vector2 = player.position
 	for e: ForceEnemy in enemies:
-		if is_instance_valid(e) and not e.dead and not e.disguised and e.position.distance_squared_to(pp) < 650.0 * 650.0:
+		if is_instance_valid(e) and not e.dead and not e.disguised and e.position.distance_squared_to(pp) < 460.0 * 460.0:
 			_teach("elite" if (e.elite or e.boss) else "hostile")
 	for it: Dictionary in pickups.items:
-		if Vector2(it.pos).distance_squared_to(pp) < 520.0 * 520.0:
+		if Vector2(it.pos).distance_squared_to(pp) < 300.0 * 300.0:
 			_teach("xp" if String(it.kind) == "mote" else "supply")
 	for p: Dictionary in pois.items:
-		if bool(p.known) and not bool(p.claimed) and String(p.get("hidden", "")) in ["", force_state] and Vector2(p.pos).distance_squared_to(pp) < 720.0 * 720.0:
+		if bool(p.known) and not bool(p.claimed) and String(p.get("hidden", "")) in ["", force_state] and Vector2(p.pos).distance_squared_to(pp) < 420.0 * 420.0:
 			var cat: String = GameData.poi_category(String(p.kind), p.get("data", {}))
 			if cat != "":
 				_teach(cat)
@@ -445,11 +447,16 @@ func _scan_categories(delta: float) -> void:
 func _teach(cat: String) -> void:
 	if taught.has(cat):
 		return
-	taught[cat] = true
 	if Profile.seen("cat_" + cat) or quick_test:
+		taught[cat] = true
 		return
-	Profile.mark_seen("cat_" + cat)
-	hud.teach(cat)
+	if not mission.is_empty() and String(mission.get("icon", "")) == cat and Profile.seen("stop_new_" + stop_id):
+		Profile.mark_seen("cat_" + cat)
+		taught[cat] = true
+		return # this stop's own briefing just explained it
+	# Only counts once the card is really shown; otherwise try again later.
+	if hud.teach(cat):
+		taught[cat] = true
 
 func _explore_mark() -> void:
 	var cell: Vector2i = Vector2i(floori(player.position.x / 400.0), floori(player.position.y / 400.0))

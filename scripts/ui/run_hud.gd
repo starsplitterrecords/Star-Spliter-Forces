@@ -99,7 +99,7 @@ func _layout() -> void:
 	banner_title.size.x = safe.size.x
 	banner_sub.position = banner_title.position + Vector2(0, UiTheme.fs(44))
 	banner_sub.size.x = safe.size.x
-	toast_label.position = Vector2(safe.position.x, safe.end.y - 150)
+	toast_label.position = Vector2(safe.position.x, get_viewport().get_visible_rect().size.y * 0.5 - 118.0)
 	toast_label.size.x = safe.size.x
 	hint_label.position = Vector2(safe.position.x + safe.size.x * 0.2, safe.end.y - 70)
 	hint_label.size.x = safe.size.x * 0.6
@@ -398,58 +398,136 @@ func _fit_panel(panel: Control, low: bool) -> void:
 	if panel.size != want:
 		panel.size = want
 	if low:
-		# Low on screen, clear of the ship at the centre and the HUD at the top.
-		panel.position = Vector2(safe.position.x + (safe.size.x - want.x) * 0.5, maxf(safe.position.y + 8.0, safe.end.y - want.y - 96.0))
+		# Just below the ship at the centre of the screen: where the eyes are.
+		var vp: Vector2 = get_viewport().get_visible_rect().size
+		panel.position = Vector2((vp.x - want.x) * 0.5, minf(vp.y * 0.5 + 70.0, maxf(safe.position.y + 8.0, safe.end.y - want.y - 8.0)))
 
 # ================================================================== field guide
 
-var teach_queue: Array[String] = []
+var teach_queue: Array = [] # category ids, or {"title", "what", "why", "color", "icon"}
 var teach_panel: PanelContainer
+var teach_button: Button
 var teach_clock: float = 0.0
+var teach_blocking: bool = false
+var teach_open_time: float = 0.0
+var teach_gap: float = 0.0 # seconds of play owed before the next card
 
-## Shows a "first sighting" card for a Field Guide category.
-func teach(cat: String) -> void:
-	if not cat in teach_queue:
-		teach_queue.append(cat)
+## Shows a "first sighting" card for a Field Guide category, if one can be
+## shown right now. Sightings are never queued: a card that appears after you
+## have flown past the thing it explains is worse than no card. Returns
+## whether it was shown (the caller tries again at the next sighting).
+func teach(cat: String) -> bool:
+	if not _can_teach() or not teach_queue.is_empty():
+		return false
+	_show_teach(cat)
+	return true
 
+func _can_teach() -> bool:
+	return teach_panel == null and not level_panel.visible and pause_panel == null and card == null and not run.ended and not run.choosing and not get_tree().paused and run.elapsed >= 0.8 and teach_gap <= 0.0
+
+## Queues a custom explainer (a Corridor stop's "NEW —" idea).
+func teach_custom(title: String, what: String, why: String, color: Color, icon: String) -> void:
+	teach_queue.append({"title": title, "what": what, "why": why, "color": color, "icon": icon})
+
+## Explainers stop the game and sit just above the ship until dismissed
+## (playtest: notifications at the screen edge are easy to miss). Bots and
+## tests drive the run with scripted input and get a timed, non-blocking card.
 func _update_teach(delta: float) -> void:
-	if not get_tree().paused and card == null:
-		teach_clock -= delta
-	if teach_panel and teach_clock <= 0.0:
-		teach_panel.queue_free()
-		teach_panel = null
-	if teach_panel == null and not teach_queue.is_empty():
-		_show_teach(teach_queue.pop_front())
 	if teach_panel:
-		teach_panel.modulate.a = clampf(teach_clock * 2.0, 0.0, 1.0)
-		teach_panel.visible = not level_panel.visible and pause_panel == null and not run.ended and card == null
-		_fit_panel(teach_panel, false)
+		_place_teach()
+		if teach_blocking:
+			teach_open_time += delta
+			return
+		teach_clock -= delta
+		if teach_clock <= 0.0:
+			teach_panel.queue_free()
+			teach_panel = null
+		return
+	if not get_tree().paused:
+		teach_gap -= delta
+	if teach_queue.is_empty() or not _can_teach():
+		return
+	_show_teach(teach_queue.pop_front())
 
-func _show_teach(cat: String) -> void:
-	var def: Dictionary = GameData.CATEGORIES[cat]
+func _place_teach() -> void:
+	var want: Vector2 = teach_panel.get_combined_minimum_size()
+	if teach_panel.size != want:
+		teach_panel.size = want
+	var vp: Vector2 = get_viewport().get_visible_rect().size
+	# The ship sits at the centre of the screen; the card hangs just above it.
+	teach_panel.position = Vector2((vp.x - want.x) * 0.5, maxf(safe.position.y + 6.0, vp.y * 0.5 - 56.0 - want.y))
+
+func _show_teach(item: Variant) -> void:
+	var def: Dictionary = {}
+	var cat: String = ""
+	if item is String:
+		cat = String(item)
+		# Counted as seen only once it is actually on screen.
+		Profile.mark_seen("cat_" + cat)
+		var c: Dictionary = GameData.CATEGORIES[cat]
+		def = {"title": "NEW SIGHTING  •  " + String(c["name"]), "what": String(c["what"]), "why": String(c["why"]), "color": c["color"], "icon": cat}
+	else:
+		def = item
+		cat = String(def["icon"])
+	var text_w: float = minf(470.0, safe.size.x - 150.0)
 	teach_panel = PanelContainer.new()
-	teach_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	teach_panel.add_theme_stylebox_override("panel", UiTheme.box(Color(0.03, 0.05, 0.1, 0.9), Color(def["color"], 0.8), 2, 12, 12))
+	teach_panel.process_mode = Node.PROCESS_MODE_ALWAYS
+	teach_panel.add_theme_stylebox_override("panel", UiTheme.box(Color(0.03, 0.05, 0.1, 0.97), def["color"], 3, 14, 14))
+	var v: VBoxContainer = VBoxContainer.new()
+	v.add_theme_constant_override("separation", 8)
+	teach_panel.add_child(v)
 	var h: HBoxContainer = HBoxContainer.new()
 	h.add_theme_constant_override("separation", 12)
-	teach_panel.add_child(h)
-	var icon: CategoryIcon = CategoryIcon.new(cat, 56.0)
+	v.add_child(h)
+	var icon: CategoryIcon = CategoryIcon.new(cat, 60.0)
+	icon.process_mode = Node.PROCESS_MODE_ALWAYS
 	icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	h.add_child(icon)
-	var v: VBoxContainer = VBoxContainer.new()
-	v.add_theme_constant_override("separation", 2)
-	h.add_child(v)
-	v.add_child(UiTheme.label("NEW SIGHTING  •  " + String(def["name"]), 14, def["color"], "bold"))
-	var what: Label = UiTheme.label(String(def["what"]), 13, UiTheme.TEXT)
-	what.custom_minimum_size = Vector2(380, 0)
-	v.add_child(what)
-	var why: Label = UiTheme.label(String(def["why"]), 13, UiTheme.GOLD)
-	why.custom_minimum_size = Vector2(380, 0)
-	v.add_child(why)
+	var col: VBoxContainer = VBoxContainer.new()
+	col.add_theme_constant_override("separation", 3)
+	h.add_child(col)
+	var tl: Label = UiTheme.label(String(def["title"]), 16, def["color"], "bold")
+	tl.custom_minimum_size = Vector2(text_w, 0)
+	col.add_child(tl)
+	var what: Label = UiTheme.label(String(def["what"]), 14, UiTheme.TEXT)
+	what.custom_minimum_size = Vector2(text_w, 0)
+	col.add_child(what)
+	if String(def["why"]) != "":
+		var why: Label = UiTheme.label(String(def["why"]), 14, UiTheme.GOLD)
+		why.custom_minimum_size = Vector2(text_w, 0)
+		col.add_child(why)
+	teach_blocking = not run.scripted_input
+	if teach_blocking:
+		teach_button = UiTheme.button("GOT IT   [Space]", _dismiss_teach, 220.0, 46.0)
+		teach_button.process_mode = Node.PROCESS_MODE_ALWAYS
+		teach_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		v.add_child(teach_button)
+		release_touch()
+		get_tree().paused = true
+		teach_open_time = 0.0
+		Audio.play_sfx("ping", 1.0, -6.0, 0.1)
+	else:
+		teach_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		teach_clock = 3.0
 	root.add_child(teach_panel)
-	teach_panel.position = Vector2(safe.position.x, safe.position.y + UiTheme.fs(160))
-	teach_clock = 7.0 + String(def["why"]).length() / 40.0
-	_fit_panel(teach_panel, false)
+	_place_teach()
+	if teach_blocking:
+		teach_button.grab_focus()
+
+func _dismiss_teach() -> void:
+	# A short guard so a tap meant for steering cannot skip the card unread.
+	if teach_panel == null or not teach_blocking or teach_open_time < 0.5:
+		return
+	teach_panel.queue_free()
+	teach_panel = null
+	teach_blocking = false
+	teach_gap = 7.0 # let the player fly for a while before the next card
+	# Resume two frames later so the dismissing key press (Space is also the
+	# ability key) is not read by the game as well.
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if teach_panel == null and not run.choosing and pause_panel == null and not level_panel.visible:
+		get_tree().paused = false
 
 # ================================================================== level up
 
@@ -590,7 +668,7 @@ func _do_reroll() -> void:
 # ================================================================== pause & map
 
 func toggle_pause() -> void:
-	if run.choosing or run.ended:
+	if run.choosing or run.ended or (teach_panel != null and teach_blocking):
 		return
 	if pause_panel:
 		pause_panel.queue_free()
@@ -716,6 +794,19 @@ func release_touch() -> void:
 
 func _input(event: InputEvent) -> void:
 	if run == null:
+		return
+	if teach_panel and teach_blocking:
+		# The explainer owns all input until it is dismissed.
+		var hit: bool = false
+		if event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed:
+			hit = teach_button.get_global_rect().grow(10.0).has_point((event as InputEventScreenTouch).position)
+		elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
+			hit = teach_button.get_global_rect().grow(10.0).has_point((event as InputEventMouseButton).position)
+		elif event.is_action_pressed("ability") or event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
+			hit = true
+		if hit:
+			_dismiss_teach()
+		get_viewport().set_input_as_handled()
 		return
 	# Releases must always be seen, even while paused, or the stick sticks.
 	if event is InputEventScreenTouch and not (event as InputEventScreenTouch).pressed and (event as InputEventScreenTouch).index == touch_id:
