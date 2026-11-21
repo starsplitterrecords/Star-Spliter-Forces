@@ -84,7 +84,7 @@
    {
     "label": "Five dollars a month.",
     "hint": "Resources · Some casual members leave",
-    "reaction": "Forty people pay. Eleven leave. Rolf calls this “a healthy correction”.",
+    "reaction": "Forty people pay. Eleven leave. Rolf calls this “a healthy correction.”",
     "effects": {
      "serves": [
       "money",
@@ -115,7 +115,7 @@
    {
     "label": "Free forever.",
     "hint": "Openness · Tight budget",
-    "reaction": "Priya hugs you. Rolf makes a note in a spreadsheet tab labelled REGRETS.",
+    "reaction": "Priya hugs you. Rolf makes a note in a spreadsheet tab labeled REGRETS.",
     "effects": {
      "serves": [
       "joy",
@@ -147,7 +147,7 @@
   "choices": [
    {
     "label": "Sell the mugs.",
-    "hint": "Money · Commercialisation begins",
+    "hint": "Money · Commercialization begins",
     "reaction": "The mugs sell out in a weekend. Agnes refuses to drink from one on principle, then quietly buys two.",
     "effects": {
      "serves": [
@@ -231,7 +231,7 @@
    {
     "label": "Just the podcast.",
     "hint": "Moderation",
-    "reaction": "Episode one is called “Soup, Margins and You”.",
+    "reaction": "Episode one is called “Soup, Margins and You.”",
     "effects": {
      "loyalty": {
       "rolf": -4
@@ -321,10 +321,10 @@
     }
    }
   },
-  "text": "I’ve been patient. This organisation could be a business, and a good one. Either we professionalise, or I take my spreadsheets elsewhere.",
+  "text": "I’ve been patient. This organization could be a business, and a good one. Either we professionalize, or I take my spreadsheets elsewhere.",
   "choices": [
    {
-    "label": "Professionalise.",
+    "label": "Professionalize.",
     "hint": "Order and money · Joy suffers",
     "reaction": "Rolf becomes Chief Financial Officer. He orders business cards for everyone, including Gary, whose says VICE PRESIDENT (DEPUTY).",
     "effects": {
@@ -346,7 +346,7 @@
      "flags": [
       "professional"
      ],
-     "memory": "{Movement} professionalised. Rolf Ledger became Chief Financial Officer."
+     "memory": "{Movement} professionalize. Rolf Ledger became Chief Financial Officer."
     }
    },
    {
@@ -587,7 +587,7 @@
    {
     "label": "Side with Agnes. Principles matter.",
     "hint": "Unity · Dez will remember",
-    "reaction": "The {day} {meeting} remains for members. Dez recruits on the pavement outside, which the minutes do not cover.",
+    "reaction": "The {day} {meeting} remains for members. Dez recruits on the sidewalk outside, which the minutes do not cover.",
     "effects": {
      "serves": [
       "purity",
@@ -631,7 +631,7 @@
    {
     "label": "Give a full interview.",
     "hint": "Attention · Risk of misquotes",
-    "reaction": "The headline reads “Local Group Insists It Is Not a Book Club”. Membership enquiries triple.",
+    "reaction": "The headline reads “Local Group Insists It Is Not a Book Club.” Membership enquiries triple.",
     "effects": {
      "gauges": {
       "attention": 10,
@@ -649,7 +649,7 @@
    {
     "label": "“No comment.”",
     "hint": "Mystery",
-    "reaction": "The headline reads “Mysterious Group Declines to Comment”. Membership enquiries double.",
+    "reaction": "The headline reads “Mysterious Group Declines to Comment.” Membership enquiries double.",
     "effects": {
      "gauges": {
       "attention": 4,
@@ -672,7 +672,7 @@
    },
    "followers": ">=40"
   },
-  "text": "The soup has become an event. People queue. People cheer. One man brought a folding stool to queue on. I’d like to give it the ceremony it deserves: a Soup Committee, a stirring rota and a small bell.",
+  "text": "The soup has become an event. People line up. People cheer. One man brought a folding stool to wait in line on. I’d like to give it the ceremony it deserves: a Soup Committee, a stirring schedule and a small bell.",
   "choices": [
    {
     "label": "Establish the Soup Committee.",
@@ -726,7 +726,7 @@
     "grassroots"
    ]
   },
-  "text": "The blanket corner is full. I’d like a proper nap room. With a sign. The sign would say NAP ROOM.",
+  "text": "The blanket corner is full. I’d like a real nap room. With a sign. The sign would say NAP ROOM.",
   "choices": [
    {
     "label": "Build the nap room.",
@@ -841,19 +841,19 @@
   "speaker": {
    "anon": {
     "name": "Tasha Merriweather",
-    "role": "Organiser, younger members"
+    "role": "Organizer, younger members"
    }
   },
   "shape": "procedure",
   "setting": "meeting",
   "once": true,
   "followUpOnly": true,
-  "text": "Respectfully: some of us work on {day}s. Could {meetings} also happen at weekends? There’s a petition. It has stickers.",
+  "text": "Respectfully: some of us work on {day}s. Could {meetings} also happen on weekends? There’s a petition. It has stickers.",
   "choices": [
    {
     "label": "Add weekend {meetings}.",
     "hint": "Retention · Traditionalists upset",
-    "reaction": "Weekend {meetings} are popular, loud and attended by people Agnes describes as “the weekend element”.",
+    "reaction": "Weekend {meetings} are popular, loud and attended by people Agnes describes as “the weekend element.”",
     "effects": {
      "serves": [
       "joy",
@@ -1102,7 +1102,7 @@
    },
    "decisions": ">=20"
   },
-  "text": "Dez and I have fallen out. He says I’m “killing the vibe with paperwork”. I say the paperwork is the vibe. Have you seen my clipboards? They have flowers on. You decide.",
+  "text": "Dez and I have fallen out. He says I’m “killing the vibe with paperwork.” I say the paperwork is the vibe. Have you seen my clipboards? They have flowers on. You decide.",
   "choices": [
    {
     "label": "Martin is right.",
@@ -1158,8 +1158,8 @@
   "choices": [
    {
     "label": "Recruit a soup team.",
-    "hint": "Organisation · Costs resources",
-    "reaction": "The soup team has nine members, matching aprons and, inevitably, a rota.",
+    "hint": "Organization · Costs resources",
+    "reaction": "The soup team has nine members, matching aprons and, inevitably, a schedule.",
     "effects": {
      "serves": [
       "joy",
@@ -1397,7 +1397,7 @@
    {
     "label": "Knit a longer banner.",
     "hint": "Escalation · Attention",
-    "reaction": "The banner war makes the regional news. Wool shops report a record month.",
+    "reaction": "The banner war makes the regional news. Yarn stores report a record month.",
     "effects": {
      "gauges": {
       "attention": 8,
@@ -1411,7 +1411,7 @@
     }
    },
    {
-    "label": "Apologise with {beliefNoun}.",
+    "label": "Apologize with {beliefNoun}.",
     "hint": "Peace",
     "reaction": "Mildred accepts the apology. The banner stays up, but someone adds “(sorry)” in different wool.",
     "effects": {
@@ -1469,7 +1469,7 @@
    {
     "label": "I am the board.",
     "hint": "Control · Martin sidelined",
-    "reaction": "Martin nods, and adds “The Board (one person)” to the organisation chart.",
+    "reaction": "Martin nods, and adds “The Board (one person)” to the organization chart.",
     "effects": {
      "flags": [
       "founder_rule"
@@ -1553,7 +1553,7 @@
    {
     "label": "Backward march through {hometown}.",
     "hint": "Huge attention · Some friction",
-    "reaction": "Four hundred people walk backward down the high street. Two walk into a bakery. The bakery joins.",
+    "reaction": "Four hundred people walk backward down the Main Street. Two walk into a bakery. The bakery joins.",
     "effects": {
      "serves": [
       "expansion"
@@ -1624,7 +1624,7 @@
    {
     "label": "Once a month.",
     "hint": "Compromise",
-    "reaction": "Gary accepts. The slides are reorganised into a monthly epic.",
+    "reaction": "Gary accepts. The slides are reorganized into a monthly epic.",
     "effects": {
      "loyalty": {
       "gary": 2
@@ -1697,7 +1697,7 @@
    {
     "label": "Pins for everyone.",
     "hint": "Enthusiasm · Cost",
-    "reaction": "Pins are distributed. A secondary market in rare pins emerges within a fortnight.",
+    "reaction": "Pins are distributed. A secondary market in rare pins emerges within two weeks.",
     "effects": {
      "gauges": {
       "resources": -8,
@@ -1800,7 +1800,7 @@
   "setting": "public",
   "once": true,
   "followUpOnly": true,
-  "text": "My memoir is out. It’s called “I Invented {belief}”. Chapter nine is about you. It is not kind.",
+  "text": "My memoir is out. It’s called “I Invented {belief}.” Chapter nine is about you. It is not kind.",
   "choices": [
    {
     "label": "Buy every copy.",
@@ -1900,10 +1900,10 @@
     }
    }
   },
-  "text": "Some members want to do more. I’d like to run an organiser course: how to start a chapter, how to book a hall, how to stop Dez promising lunch.",
+  "text": "Some members want to do more. I’d like to run an organizer course: how to start a chapter, how to book a hall, how to stop Dez promising lunch.",
   "choices": [
    {
-    "label": "Train organisers.",
+    "label": "Train organizers.",
     "hint": "Organizers · Costs resources",
     "reaction": "The course has twelve graduates. Their final project is a laminated guide to lamination.",
     "effects": {
@@ -1951,12 +1951,12 @@
     "resources": ">=45"
    }
   },
-  "text": "Odd thing. The petty cash buys a lot of biscuits. More biscuits than we have members. Someone is eating a great many biscuits.",
+  "text": "Odd thing. The petty cash buys a lot of cookies. More cookies than we have members. Someone is eating a great many cookies.",
   "choices": [
    {
     "label": "Investigate.",
     "hint": "Integrity · Somebody will be embarrassed",
-    "reaction": "The investigation finds that Gary has been feeding the biscuits to a family of foxes. The foxes are now considered members.",
+    "reaction": "The investigation finds that Gary has been feeding the cookies to a family of foxes. The foxes are now considered members.",
     "effects": {
      "loyalty": {
       "gary": -3,
@@ -1972,9 +1972,9 @@
     }
    },
    {
-    "label": "Biscuits are morale.",
+    "label": "Cookies are morale.",
     "hint": "Let it go",
-    "reaction": "The biscuit budget doubles. Nobody asks where they go.",
+    "reaction": "The cookie budget doubles. Nobody asks where they go.",
     "effects": {
      "gauges": {
       "resources": -5,
@@ -2005,7 +2005,7 @@
    {
     "label": "Build a regional structure.",
     "hint": "Order · Regional era",
-    "reaction": "Martin unrolls a map of the region. He has already drawn on it, in three colours.",
+    "reaction": "Martin unrolls a map of the region. He has already drawn on it, in three colors.",
     "effects": {
      "serves": [
       "order"
@@ -2014,7 +2014,7 @@
      "flags": [
       "regional_structure"
      ],
-     "memory": "{Movement} became a regional organisation, with a map in three colours."
+     "memory": "{Movement} became a regional organization, with a map in three colors."
     }
    },
    {

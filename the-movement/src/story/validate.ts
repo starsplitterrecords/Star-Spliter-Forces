@@ -19,6 +19,8 @@ const STATS = ['recruitment', 'retention', 'awareness', 'campaign', 'income', 'r
 const ENGINE_FLAGS = ['regional_ready', 'national_ready', 'international_ready', 'north_exists', 'north_joined', ...['knitters', 'north', 'original', 'ophelia'].flatMap((r) => [`${r}_rival_active`, `won_from_${r}`, `lost_to_${r}`])];
 const CHAR_FLAG_SUFFIXES = ['_disgruntled', '_devoted', '_left', '_rival', '_retired'];
 const CMP = /^(>=|<=|>|<|=)?\s*-?[\d.]+$/;
+// player-facing text is American English; these are the British forms that slip in most often
+const BRITISH = /\b(colour\w*|favour\w*|neighbour\w*|honour\w*|rumour\w*|behaviour|organis(?:e|ed|es|ing|er|ers|ation|ations|ational)|apologis(?:e|ed|es|ing)|recognis(?:e|ed|es|ing|able)|realis(?:e|ed|es|ing|ation)|authoris(?:e|ed|es|ing|ation)|monetis(?:e|ed|es|ing|ation)|professionalis(?:e|ed|es|ing|ation)|practis(?:e|ed|es|ing)|labelled|cancelled|travell\w*|licence|defence|centre|metres?|programme|grey|catalogue|towards|whilst|amongst|learnt|rota|petrol|car parks?|queue\w*|biscuits?|crisps|fortnight|motorway|high street|pavement|knackered|solicitors?|constable|mum|your lot|lie-down|on your head be it)\b/i;
 
 function strings(e: Effects): string[] {
   const out: string[] = [];
@@ -173,6 +175,10 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
       for (const m of s.matchAll(/\{([\w.]+)\}/g)) if (!allowed(m[1])) errors.push(`${where}: unknown token {${m[1]}} in ${what}`);
     };
     if (!card.text || card.text.length > LIMITS.text) errors.push(`${where}: text missing or longer than ${LIMITS.text}`);
+    for (const t of [card.text, ...(card.variants ?? []), ...card.choices.flatMap((c) => [c.label, c.hint ?? '', c.reaction])]) {
+      const b = BRITISH.exec(t);
+      if (b) errors.push(`${where}: British English “${b[0]}” (the game is written in American English)`);
+    }
     checkTokens(card.text, 'text');
     for (const [vi, v] of (card.variants ?? []).entries()) {
       if (v.length > LIMITS.text) errors.push(`${where}: variant ${vi} longer than ${LIMITS.text}`);

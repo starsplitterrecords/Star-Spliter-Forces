@@ -151,7 +151,7 @@
    {
     "label": "Some things should just happen.",
     "hint": "Tolerate · Order objects",
-    "reaction": "{speaker} says “just happen” the way other people say “mould”. It carries on happening.",
+    "reaction": "{speaker} says “just happen” the way other people say “mold.” It carries on happening.",
     "effects": {
      "stance": "tolerated",
      "serves": [
@@ -259,7 +259,7 @@
    {
     "label": "It’s gone too far. End it.",
     "hint": "Condemn · It may go underground",
-    "reaction": "The ban is announced. A smaller, more committed group carries on in the car park, with a lookout.",
+    "reaction": "The ban is announced. A smaller, more committed group carries on in the parking lot, with a lookout.",
     "effects": {
      "stance": "condemned",
      "gauges": {
@@ -318,7 +318,7 @@
    {
     "label": "One version. The one I approved.",
     "hint": "Reform · Order",
-    "reaction": "The advanced version is retired. Its practitioners describe themselves as “between versions”.",
+    "reaction": "The advanced version is retired. Its practitioners describe themselves as “between versions.”",
     "effects": {
      "stance": "reformed",
      "serves": [
@@ -352,7 +352,7 @@
   "weight": 2,
   "cooldown": 12,
   "spacing": 8,
-  "text": "It’s still going on: {emergent}. Quietly, after the {meeting}, in the car park. They have a lookout. The lookout is asleep, but the principle stands.",
+  "text": "It’s still going on: {emergent}. Quietly, after the {meeting}, in the parking lot. They have a lookout. The lookout is asleep, but the principle stands.",
   "choices": [
    {
     "label": "Fine. Bring it back inside.",
@@ -370,7 +370,7 @@
    {
     "label": "A ban is a ban.",
     "hint": "Condemn again · Resentment",
-    "reaction": "The car park is patrolled. The practice moves to a different car park. There are a lot of car parks.",
+    "reaction": "The parking lot is patrolled. The practice moves to a different parking lot. There are a lot of parking lots.",
     "effects": {
      "stance": "condemned",
      "gauges": {

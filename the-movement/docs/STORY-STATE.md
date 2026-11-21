@@ -43,15 +43,15 @@ interface MemoryRecord {
 }
 ```
 
-These fields support a line like Martin's: *"You rejected it **publicly**, **in favour of Dez**, **three meetings ago**: '**Let Dez keep his 4 a.m. meetings.**'"* Each bold detail comes from one field: `setting`, `other`, `meeting`, and `quote`.
+These fields support a line like Martin's: *"You rejected it **publicly**, **in favor of Dez**, **three meetings ago**: '**Let Dez keep his 4 a.m. meetings.**'"* Each bold detail comes from one field: `setting`, `other`, `meeting`, and `quote`.
 
 ### 2.2 When memories are written
 
 Writers don't need to remember to create memories. Every choice runs these rules:
 
 1. **The speaker.** If the speaker's loyalty moved by 4 or more, they remember being *backed* (positive) or *overruled* (negative).
-2. **Who you chose instead.** If you overruled the speaker and someone else's loyalty rose by 4 or more, the speaker's memory names them as `other`. That person remembers being *favoured* over the speaker. In the reverse case (you backed the speaker and someone lost out), the loser remembers being *passed over* for the speaker.
-3. **Bystanders.** Anyone else whose loyalty moved by 8 or more remembers being favoured or passed over.
+2. **Who you chose instead.** If you overruled the speaker and someone else's loyalty rose by 4 or more, the speaker's memory names them as `other`. That person remembers being *favored* over the speaker. In the reverse case (you backed the speaker and someone lost out), the loser remembers being *passed over* for the speaker.
+3. **Bystanders.** Anyone else whose loyalty moved by 8 or more remembers being favored or passed over.
 4. **Weight.** A change of less than 10 is weight 1, 10 or more is weight 2, and 18 or more is weight 3. **A witnessed slight counts one step heavier**: being overruled at a meeting hurts more than being overruled privately.
 5. **Doctrine.** When you take a stance on a custom someone started, they remember it (§4).
 6. **Authored memories.** `effects.remember` adds anything the rules can't infer. Examples are a *promise*, being *credited* or *blamed*, being proven right (*vindicated*), or being *embarrassed*.
@@ -107,15 +107,15 @@ A choice decides what happens to the memory:
 |---|---|
 | `resolve` | Settled. It fades and won't be called back again. |
 | `deepen` | +1 weight. The grudge grows. |
-| `forget` | Struck from the record (Agnes's favourite). |
+| `forget` | Struck from the record (Agnes's favorite). |
 
 `otherLoyalty` changes loyalty for `{mOther}`, so standing by a decision can please the person you sided with.
 
 ### 2.5 Writing callbacks well
 
-- **Quote, don't summarise.** `{mQuote}` is the player's own words. Make them the punchline.
+- **Quote, don't summarize.** `{mQuote}` is the player's own words. Make them the punchline.
 - **Callbacks need distance.** Use `minAgo` of at least 2. A grudge from last week is a complaint; a grudge from three meetings ago is a character.
-- **Give the player a real choice.** Apologising should cost something (unity, momentum, or the other person's goodwill), and standing firm should gain something.
+- **Give the player a real choice.** Apologizing should cost something (unity, momentum, or the other person's goodwill), and standing firm should gain something.
 - **Different people remember differently.** Martin keeps a laminated record. Agnes quotes the minutes. Gary forgets, then remembers at the worst moment. Write the voice; the mechanics supply the facts.
 
 ## 3. Story chains
@@ -169,7 +169,7 @@ Customs have an **origin**: `founder` (the default, decided at your desk) or `me
 
 - **Cards** bind a custom with `emergent:<stance>[:starter|:grown]`. Examples are `emergent:none` (not yet addressed), `emergent:tolerated:grown` (grown big while you looked away) and `emergent:underground`. The cards supply `{emergent}` and `{emergentBy}`. Choices set `stance` and can change `starterLoyalty`.
 - **The doctrine cards** cover the whole life of such a custom:
-  - noticed: by its starter, a purist, an organiser, or a confused member;
+  - noticed: by its starter, a purist, an organizer, or a confused member;
   - grown while tolerated;
   - mutated after you endorsed it;
   - carried on underground;
@@ -268,7 +268,7 @@ Losing power should not end the game. The movement continues, with all its custo
 2. **Endings become transitions.** The eight endings (Out-believed, The Split, Under Investigation and the rest) become the *cause* of a succession, not the end. The game ends only when the movement itself ends: membership collapses, a final schism happens, or the player chooses to retire and see an epilogue.
 3. **The succession scene.** Candidates are drawn from present characters with the highest influence, weighted by their ally group's share and their loyalty to the movement, plus "someone nobody expected" (an anonymous member). The player chooses whom to continue as, or, in a contested succession, the factions choose and the player inherits the result.
 4. **Memory carries a subject.** `MemoryRecord.about` is the leader the memory concerns. Characters keep their memories of the founder: grudges, debts, the time you were overruled at the meeting. A new leader starts with loyalty seeded from each character's *relationship with the new leader*, not with the old one. Old grudges against the founder become material: *"You sound exactly like {founder}."*
-5. **The founder becomes a character.** At succession, a dynamic character `founder` is added. Their agenda is the one the player served most often (a computed history), their influence comes from founders and traditionalists, and their speaker cards come from a dedicated set: the memoir, the interview, the unauthorised convention, the statue they want moved. They can be consulted, sidelined, honoured or exiled. Their exit line is written from their own history.
+5. **The founder becomes a character.** At succession, a dynamic character `founder` is added. Their agenda is the one the player served most often (a computed history), their influence comes from founders and traditionalists, and their speaker cards come from a dedicated set: the memoir, the interview, the unauthorized convention, the statue they want moved. They can be consulted, sidelined, honored or exiled. Their exit line is written from their own history.
 6. **Institutions persist.** Customs, flags, chains, the national office, the North, the Charter and the Official History all carry over unchanged. A new leader's first cards are the institution testing them: Constance's memo, Tobias's edict, Juniper asking what the new leader thinks of the mountain.
 7. **Saves.** One migration: wrap the existing `founder` and `founderTitle` into `leader` generation 1.
 
@@ -276,7 +276,7 @@ Batch 1 seeds this. The flags `founder_figurehead`, `emeritus_rumour`, `chair_el
 
 ## 9. Open questions (next steps)
 
-- **Memory and selection.** Memories currently surface through recall cards. A natural next step is to let heavy, unresolved memories raise a character's chance of presenting `unhappy` or `devoted` cards, and colour their reactions.
+- **Memory and selection.** Memories currently surface through recall cards. A natural next step is to let heavy, unresolved memories raise a character's chance of presenting `unhappy` or `devoted` cards, and color their reactions.
 - **A topic registry.** At 1,000 cards, `topic` should come from a shared vocabulary (`the meeting day`, `the soup`, `money`) so callbacks can target themes, not just cards.
 - **Promises as obligations.** A `promise` memory could carry a due date and turn into `broken_promise` automatically when it lapses.
 - **Content backlog from the novelty report.**

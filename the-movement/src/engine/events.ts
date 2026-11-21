@@ -311,7 +311,7 @@ export const EVENT_DEFS: EventDef[] = [
       const who = fictionalPerson(rng);
       return {
         headline: 'Former Member Claims the Movement Has Lost Its Way',
-        body: fill(`${who}, an early {f}, says the movement "used to be about {original}" and now "is mostly about forms." The current doctrine reads: “{doctrine}”.`, ctx),
+        body: fill(`${who}, an early {f}, says the movement "used to be about {original}" and now "is mostly about forms." The current doctrine reads: “{doctrine}.”`, ctx),
         effects: [{ k: 'cohesion', v: -2 }],
         quote: `“I was there at the ${s.movement.headquarters.type.toLowerCase()}. It was different then.” — ${who}`,
       };
@@ -342,7 +342,7 @@ export const EVENT_DEFS: EventDef[] = [
       const ctx = makeCtx(s, { doctrine: d, cityId: pickCity(s, rng, (id) => city(id).cc === cc) });
       return {
         headline: headlineCase(
-          fill(rng.pick(['Parliament of {country} Adopts {Adj} Customs for Official Functions', 'Schools in {country} Add {Plural} to Curriculum', '{day} Declared a Public Holiday in {country}', 'Architects in {city} Now Required to Consult a {f}']), ctx),
+          fill(rng.pick(['Lawmakers in {country} Adopt {Adj} Customs for Official Functions', 'Schools in {country} Add {Plural} to Curriculum', '{day} Declared a Public Holiday in {country}', 'Architects in {city} Now Required to Consult a {f}']), ctx),
         ),
         body: fill('What began in a {hq} has become, for millions, simply how things are done.', ctx),
         effects: [{ k: 'resistance', v: -0.05, scope: 'country', target: cc }, { k: 'boost', kind: 'passive', mult: 1.3, duration: 300, scope: cc, label: `Cultural adoption in ${countryName(cc)}` }],

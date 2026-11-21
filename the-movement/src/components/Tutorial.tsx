@@ -40,7 +40,7 @@ const STEPS: Step[] = [
   {
     id: 'news',
     when: (g) => !!g.milestones.firstNews && g.totals.citiesEver85 < 4,
-    text: () => 'We are in the news! Headlines appear in the ticker below and the News panel (N). Some events will require your judgement.',
+    text: () => 'We are in the news! Headlines appear in the ticker below and the News panel (N). Some events will require your judgment.',
   },
   {
     id: 'slots',

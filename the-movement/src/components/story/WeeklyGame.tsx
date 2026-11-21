@@ -400,7 +400,7 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
               {/* your people */}
               <section className="mt-3">
                 <div className="flex items-baseline justify-between">
-                  <div className="label">{hasScheduler(s) ? 'Bev’s rota this week' : 'This week, everyone goes where they like'}</div>
+                  <div className="label">{hasScheduler(s) ? 'Bev’s schedule this week' : 'This week, everyone goes where they like'}</div>
                 </div>
                 {hasScheduler(s) && (
                   <div className="mt-1 flex flex-wrap gap-2" role="radiogroup" aria-label="This week’s focus">
@@ -452,7 +452,7 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                 <p className="mt-2 text-xs text-ink-400">
                   {hasScheduler(s)
                     ? 'Bev sends everyone where the focus needs them, and sends people home when they need it. You can still move someone yourself: tap them, then a town.'
-                    : 'Everyone follows their nature: Dez spends the petrol money opening new towns, Priya goes where the people are, Gary stays near home, and anyone homesick goes home. Tap someone, then a town, to overrule them.'}
+                    : 'Everyone follows their nature: Dez spends the gas money opening new towns, Priya goes where the people are, Gary stays near home, and anyone homesick goes home. Tap someone, then a town, to overrule them.'}
                 </p>
               </section>
 

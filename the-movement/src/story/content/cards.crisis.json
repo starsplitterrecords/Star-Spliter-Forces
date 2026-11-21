@@ -11,7 +11,7 @@
    {
     "label": "Cool things down.",
     "hint": "Calm · Some leave",
-    "reaction": "You cancel two {meetings} and announce a “gentle week”. It is the most controversial thing you have ever done.",
+    "reaction": "You cancel two {meetings} and announce a “gentle week.” It is the most controversial thing you have ever done.",
     "effects": {
      "gauges": {
       "enthusiasm": -30,
@@ -249,9 +249,9 @@
     }
    },
    {
-    "label": "Invest it in organisers.",
+    "label": "Invest it in organizers.",
     "hint": "Growth",
-    "reaction": "Three paid organisers are hired. Volunteers wonder why they are not paid. The question will not go away.",
+    "reaction": "Three paid organizers are hired. Volunteers wonder why they are not paid. The question will not go away.",
     "effects": {
      "gauges": {
       "resources": -30,
@@ -272,7 +272,7 @@
   "shape": "crisis",
   "setting": "meeting",
   "priority": 100,
-  "text": "We are out of money. The hall wants rent, the urn needs descaling, and someone has been paying for the biscuits personally. It is Gary.",
+  "text": "We are out of money. The hall wants rent, the coffee urn needs descaling, and someone has been paying for the cookies personally. It is Gary.",
   "choices": [
    {
     "label": "Pass the hat.",

@@ -1319,7 +1319,7 @@ export const ENDINGS: Record<string, { title: string; text: string }> = {
   'enthusiasm.low': { title: 'Nobody Came', text: 'One {day}, nobody came. Not {c.martin}, not {c.priya}, not even {c.gary}, whose garage it was. {title} sat alone with the soup and understood that the movement had moved on without them.' },
   'unity.high': { title: 'Total Agreement', text: 'Everyone agreed about everything, including that {title} was no longer necessary. The vote was unanimous. Nobody discussed it, because nobody ever discussed anything anymore.' },
   'unity.low': { title: 'The Split', text: '{Movement} split into four groups, each claiming to be the real one. {title} was not invited to any of them.' },
-  'attention.high': { title: 'Under Investigation', text: 'Three news vans, a council inquiry and a documentary crew later, {title} agreed to “step back for a while”. The while has not ended.' },
+  'attention.high': { title: 'Under Investigation', text: 'Three news vans, a council inquiry and a documentary crew later, {title} agreed to “step back for a while.” The while has not ended.' },
   'attention.low': { title: 'Forgotten', text: '{Movement} became so quiet that the world forgot it existed, and then so did the members. {title} still meets on {day}s, sometimes with {c.gary}.' },
   'resources.high': { title: 'The Foundation', text: '{Movement} accumulated so much money that it became a foundation with a board, a logo and lawyers. The board thanked {title} for their service.' },
   'resources.low': { title: 'Bankrupt', text: 'The hall was repossessed, the urn was sold, and {title} was asked to return the megaphone. {Movement} survives as a group chat.' },

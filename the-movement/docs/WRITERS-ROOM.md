@@ -13,10 +13,10 @@ This is the working document for the creative production of THE MOVEMENT. The wr
 **The rules from now on:**
 
 1. **Every card happens somewhere.** It is about a real town, a real room, a real object. A national-era card is still about one hall, one bridge, one sea lion.
-2. **Write the person on the road, not the policy.** The best comedy comes from *who you sent where*: Gary in a cathedral, Dez in a town with a noise ordinance, Agnes taking the minutes of a whole high street.
+2. **Write the person on the road, not the policy.** The best comedy comes from *who you sent where*: Gary in a cathedral, Dez in a town with a noise ordinance, Agnes taking the minutes of a whole Main Street.
 3. **Customs mutate, they don't get ruled on.** Let towns warp the belief ("they do it lying down"), and let the quarrels between versions be the jokes.
 4. **No bureaucracy without a body.** A memo is only funny if Constance is standing outside the garage, unable to come in. The shelved cards (`"shelved": true`) are waiting for rewrites that obey this.
-5. **Rivals are neighbours with grudges and addresses.** The Knitting Circle has a banner across the main road in Bingley; the North is Sunderland and Carlisle.
+5. **Rivals are neighbors with grudges and addresses.** The Knitting Circle has a banner across the main road in Bingley; the North is Sunderland and Carlisle.
 
 **The next writing priority** is *more road incidents*: per character, per era, and some per kind of town (rival turf, a big city, somewhere that does it differently). They carry the weekly loop. Today each character has 1–3; the target is 8–10 for the core cast.
 
@@ -44,12 +44,12 @@ For each character: the engine everyone knows, the surprising-but-true moves sti
 
 | Character | Known engine | Surprising but true (used ✓ / in reserve) | Relationships |
 |---|---|---|---|
-| **Martin** | Procedure, lamination, scheduling, your oldest friend | ✓ his evacuation plan saves you; ✓ a slow romance with Constance conducted entirely by memo; *reserve:* the one who wants to abolish a rule; Martin taking a holiday and being unable to stop | Rival-twin with Lionel; pen pal and then more with Constance; protective of you |
+| **Martin** | Procedure, lamination, scheduling, your oldest friend | ✓ his evacuation plan saves you; ✓ a slow romance with Constance conducted entirely by memo; *reserve:* the one who wants to abolish a rule; Martin taking a vacation and being unable to stop | Rival-twin with Lionel; pen pal and then more with Constance; protective of you |
 | **Priya** | Soup, a nice time, quietly stubborn | ✓ the picnic over the council vote; ✓ runs an unlicensed soup line outside the Convention that becomes its real heart; *reserve:* Priya being ruthless, once, for a good reason | Mothers everyone; at odds with Constance's catering contract; protective of Juniper |
 | **Dez** | Promises, megaphone, breathless sincerity | ✓ the parade, the weather presenter; ✓ on live TV, asked what the movement stands for, he tells the truth; *reserve:* Dez being asked to keep a secret | Fights Martin; adores the cameras; nervous around Tobias |
 | **Gary** | Kind, literal, sleepy, the garage, **whales** | ✓ the biologists; ✓ becomes a heritage exhibit and has never been so rested; *reserve:* Gary angry, exactly once | The garage connects him to everyone. Whales are never explained. |
 | **Agnes** | Minutes everything, devastating precision | ✓ wrong for reasonable reasons (the roof); ✓ Keeper of the Record, finds the minutes contradict the Official History; *reserve:* Agnes discovering she was wrong in the minutes | Natural enemy of Juniper's mythology |
-| **Rolf** | Everything is a revenue stream | ✓ the potato mug; ✓ has monetised everything and wants to give something away, but doesn't know how; *reserve:* Rolf's secret hobby is unprofitable | Rival to Constance over reserves |
+| **Rolf** | Everything is a revenue stream | ✓ the potato mug; ✓ has monetized everything and wants to give something away, but doesn't know how; *reserve:* Rolf's secret hobby is unprofitable | Rival to Constance over reserves |
 | **Ophelia** | Ambition, warm in public, precise in private | ✓ "one night everywhere"; ✓ runs for National Chair, a role that shouldn't exist; *reserve:* Ophelia needs your help | Your successor-in-waiting (held for succession) |
 | **Lionel** | Departments, restructuring | ✓ the double-booking; ✓ goes native, defends informality against Constance's office; *reserve:* Lionel's own boss shows up | Martin's twin, then Martin's opposite |
 | **Constance** *(new)* | Memos; has never met you; continuity | ✓ her refusal to change anything prevents a disastrous rebrand; *reserve:* we finally meet her (she's tiny, or enormous, or exactly as expected) | Martin; Rolf; the founder as an abstract concept |
@@ -60,14 +60,14 @@ For each character: the engine everyone knows, the surprising-but-true moves sti
 
 ## 4. The National era: the movement becomes an institution
 
-**The premise.** Somewhere around twenty thousand members, the movement stops being a group of people and becomes an *organisation*, with a national office, officers, regions, a convention and a brand. Everything the player decided in a garage now has a department.
+**The premise.** Somewhere around twenty thousand members, the movement stops being a group of people and becomes an *organization*, with a national office, officers, regions, a convention and a brand. Everything the player decided in a garage now has a department.
 
 **The four pressures**, from the brief:
 
 1. **Local leaders decide without the founder.** Tobias's Northern Edicts; the regions; things you find out from the newsletter.
 2. **National officers have competing priorities.** Constance (continuity) against Rolf (revenue) against Ophelia (growth) against Juniper (the culture).
 3. **Members care more about their particular customs than the original purpose.** The custom lobbies, the Charter, and the mission statement that says only "To continue."
-4. **Founders become figureheads.** Ribbon-cutting, the statue, finding out from the newsletter, the Emeritus rumour.
+4. **Founders become figureheads.** Ribbon-cutting, the statue, finding out from the newsletter, the Emeritus rumor.
 
 **Scale of absurdity.** The garage and laminated signs become television, bureaucracy, lanyards, conventions and the Heritage Register. The stakes on a card are larger: gauge moves of ±6–15, and growth by percentages, not handfuls. The motive behind each card stays as small as ever.
 
@@ -77,7 +77,7 @@ For each character: the engine everyone knows, the surprising-but-true moves sti
 |---|---|---|---|
 | The Convention | `nat.convention_called` → `nat.convention_motion` → `nat.convention_floor` → `nat.convention_annual` | A venue → Motion 14 on `{day}` → the delegates won't leave → it becomes a tradition | `{day}`, `{tradition}`, `hq_hall` |
 | The Figurehead | `nat.ribbons` → `nat.not_consulted` → `nat.statue` → `nat.emeritus_rumour` | Your diary fills with ceremonies → decisions are made without you → a statue (with Martin's face) → the word "Emeritus" | `{title}`, `title_master` |
-| Memos | `nat.memo_reply` → `nat.memo_romance` → `nat.memo_wedding` | Martin answers a memo → they've been corresponding for weeks → the wedding is a procedural motion | Cancelled if either leaves |
+| Memos | `nat.memo_reply` → `nat.memo_romance` → `nat.memo_wedding` | Martin answers a memo → they've been corresponding for weeks → the wedding is a procedural motion | Canceled if either leaves |
 | The North | `nat.north_thursday` → `nat.north_pass` → `nat.north_senior` | The North moves its meetings → a Northern Pass → "the Senior Region" | `{day}`, `local_autonomy` |
 | The Official History | `nat.history_draft` → `nat.history_gary` → `nat.history_corrects_you` | You founded it on a mountain → Gary written in as a hermit → members correct your own memories | `{hometown}`, `{c.gary}`, Agnes's archive |
 | Heritage Garage | `nat.garage_heritage` → `nat.garage_tours` → `nat.gary_exhibit` | The garage is listed → tours explain napping to Gary → Gary is an exhibit, and happy | `hq_hall`, `{c.gary}` |
@@ -85,7 +85,7 @@ For each character: the engine everyone knows, the surprising-but-true moves sti
 | Soup at scale | `nat.soup_contract` → `nat.soup_line` | Catering contract → Priya's illegal soup line is the real convention | `soup_*` flags |
 | The Chair | `nat.ophelia_chair` → `nat.chair_vs_founder` | An elected role that shouldn't exist → who speaks for the movement? | `shared_leadership`, `ophelia_split` |
 
-**Payoffs to earlier decisions** (each requires its flag): the weather presenter forecasts in terms of `{belief}`; the whale position is quoted in Parliament; the bus stop is renamed; the fire inspector returns, now a member; the constable is promoted; the knitters propose a merger; the shelved rulebook is found and treated as lost scripture; Dez's original megaphone is in a museum case and he wants it back.
+**Payoffs to earlier decisions** (each requires its flag): the weather presenter forecasts in terms of `{belief}`; the whale position is quoted in Congress; the bus stop is renamed; the fire inspector returns, now a member; the police officer is promoted; the knitters propose a merger; the shelved rulebook is found and treated as lost scripture; Dez's original megaphone is in a museum case and he wants it back.
 
 ## 6. Premise bank and editorial record
 

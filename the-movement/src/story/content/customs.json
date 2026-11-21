@@ -572,7 +572,7 @@
  {
   "id": "emergent.applause_urn",
   "category": "ritual",
-  "label": "Applauding the urn when it boils",
+  "label": "Applauding the coffee urn when it boils",
   "emergent": true,
   "props": {
    "visibility": 40,

@@ -294,7 +294,7 @@
    {
     "label": "Keep {day}. Everywhere.",
     "hint": "Unity of practice · The regions grumble",
-    "reaction": "Motion fourteen fails. A delegate stands on a chair and shouts “{day} forever”, which becomes a chant, then a badge.",
+    "reaction": "Motion fourteen fails. A delegate stands on a chair and shouts “{day} forever,” which becomes a chant, then a badge.",
     "effects": {
      "serves": [
       "purity",
@@ -324,7 +324,7 @@
    },
    {
     "label": "Let each region choose.",
-    "hint": "Local freedom · The centre weakens",
+    "hint": "Local freedom · The center weakens",
     "reaction": "Motion fourteen passes. Within a month there are meetings on every day of the week, and a small but devoted group that meets on all of them.",
     "effects": {
      "serves": [
@@ -370,7 +370,7 @@
    {
     "label": "Hold the vote. Now.",
     "hint": "Give them their moment",
-    "reaction": "The vote is unanimous and takes ninety seconds. The celebration takes four hours. The venue sends an invoice titled “Regarding the Song”.",
+    "reaction": "The vote is unanimous and takes ninety seconds. The celebration takes four hours. The venue sends an invoice titled “Regarding the Song.”",
     "effects": {
      "custom": [
       {
@@ -395,7 +395,7 @@
    {
     "label": "Close the convention.",
     "hint": "Order · They feel cheated",
-    "reaction": "You close the convention. The delegates sing on the pavement until two, which the local paper calls “the real convention”.",
+    "reaction": "You close the convention. The delegates sing on the sidewalk until two, which the local paper calls “the real convention.”",
     "effects": {
      "serves": [
       "order"
@@ -428,7 +428,7 @@
   },
   "followUpOnly": true,
   "topic": "the Convention",
-  "text": "Everyone’s asking when the next Convention is. Some people want it annual. Some people want it monthly. One delegate has been living in the car park since the last one, “so as not to miss it”.",
+  "text": "Everyone’s asking when the next Convention is. Some people want it annual. Some people want it monthly. One delegate has been living in the parking lot since the last one, “so as not to miss it.”",
   "choices": [
    {
     "label": "Annual. Make it a tradition.",
@@ -576,7 +576,7 @@
    {
     "label": "Let them. It’s their movement too.",
     "hint": "Let go · The institution grows",
-    "reaction": "The video is shown in four hundred halls. It is quite good. You watch it once, alone, and recognise almost nothing.",
+    "reaction": "The video is shown in four hundred halls. It is pretty good. You watch it once, alone, and recognize almost nothing.",
     "effects": {
      "serves": [
       "comfort"
@@ -646,7 +646,7 @@
    {
     "label": "Recast the face. It’s my statue.",
     "hint": "Vanity · Costly",
-    "reaction": "The face is recast. The new face looks like nobody. Members call it “the Founder”, and say it has your expression exactly.",
+    "reaction": "The face is recast. The new face looks like nobody. Members call it “the Founder,” and say it has your expression exactly.",
     "effects": {
      "gauges": {
       "resources": -8,
@@ -691,7 +691,7 @@
   "once": true,
   "weight": 1.5,
   "topic": "the word Emeritus",
-  "text": "I wasn’t going to tell you this. There’s a word going round the national office. The word is “Emeritus”. Nobody has said it to your face. Several people have said it to the photocopier.",
+  "text": "I wasn’t going to tell you this. There’s a word going around the national office. The word is “Emeritus.” Nobody has said it to your face. Several people have said it to the photocopier.",
   "choices": [
    {
     "label": "Find out who started it.",
@@ -935,7 +935,7 @@
    {
     "label": "Not at the Convention. Somewhere private.",
     "hint": "Discretion · Martin understands",
-    "reaction": "They marry in a registry office on a {day}. Afterwards they exchange memos about how it went. Both give it top marks.",
+    "reaction": "They marry in a registry office on a {day}. Afterwards they exchange memos about how it went. Both give it five stars.",
     "effects": {
      "loyalty": {
       "martin": 6,
@@ -977,8 +977,8 @@
   "choices": [
    {
     "label": "Overrule it. One movement, one way.",
-    "hint": "The centre holds · The North sulks",
-    "reaction": "The North complies, technically. It meets on {day}, then again on Thursday, “for the North”.",
+    "hint": "The center holds · The North sulks",
+    "reaction": "The North complies, technically. It meets on {day}, then again on Thursday, “for the North.”",
     "effects": {
      "serves": [
       "-purity",
@@ -1142,7 +1142,7 @@
   },
   "followUpOnly": true,
   "topic": "the Senior Region",
-  "text": "The North has grown. It is, by membership, a third of {movement}. We would like to be recognised as the Senior Region. Not because we are better. Because we are older, by about four weeks, and more correct.",
+  "text": "The North has grown. It is, by membership, a third of {movement}. We would like to be recognized as the Senior Region. Not because we are better. Because we are older, by about four weeks, and more correct.",
   "choices": [
    {
     "label": "There are no senior regions.",
@@ -1280,12 +1280,12 @@
   },
   "followUpOnly": true,
   "topic": "the Hermit of the Garage",
-  "text": "I read the History. I’m in it. I’m “the Hermit of the Garage”. It says I spoke only in riddles. I didn’t. I mostly asked if anyone wanted tea. Is it all right if I’m a bit hurt?",
+  "text": "I read the History. I’m in it. I’m “the Hermit of the Garage.” It says I spoke only in riddles. I didn’t. I mostly asked if anyone wanted tea. Is it all right if I’m a bit hurt?",
   "choices": [
    {
     "label": "Have Gary’s chapter rewritten.",
     "hint": "Gary first",
-    "reaction": "The new chapter calls him “the Keeper of the Chairs, who asked if anyone wanted tea”. Gary reads it nine times and says it’s the best thing anyone has written about him.",
+    "reaction": "The new chapter calls him “the Keeper of the Chairs, who asked if anyone wanted tea.” Gary reads it nine times and says it’s the best thing anyone has written about him.",
     "effects": {
      "loyalty": {
       "gary": 10,
@@ -1551,7 +1551,7 @@
    {
     "label": "You were always more than that.",
     "hint": "Tell him something bigger",
-    "reaction": "Gary thinks about it for a long time, then falls asleep. When he wakes he says, “More than resting?”, as if it had never occurred to anyone.",
+    "reaction": "Gary thinks about it for a long time, then falls asleep. When he wakes he says, “More than resting?,” as if it had never occurred to anyone.",
     "effects": {
      "loyalty": {
       "gary": 8
@@ -1584,7 +1584,7 @@
   "once": true,
   "weight": 1.6,
   "topic": "the debate",
-  "text": "Live television. A debate programme wants someone from {movement} on the panel opposite a professor who calls us “a fad with a filing system”. I’ve said yes on your behalf. I’ve said I’ll do it. Or you. Mostly me.",
+  "text": "Live television. A debate program wants someone from {movement} on the panel opposite a professor who calls us “a fad with a filing system.” I’ve said yes on your behalf. I’ve said I’ll do it. Or you. Mostly me.",
   "choices": [
    {
     "label": "Send Dez.",
@@ -1653,7 +1653,7 @@
    {
     "label": "It was the best thing you’ve ever said.",
     "hint": "Dez was right · for once by accident",
-    "reaction": "The clip runs on every channel. Membership enquiries triple. The national office, which had prepared talking points, is alarmed. Dez is offered his own programme and turns it down, which nobody has ever seen him do.",
+    "reaction": "The clip runs on every channel. Membership enquiries triple. The national office, which had prepared talking points, is alarmed. Dez is offered his own program and turns it down, which nobody has ever seen him do.",
     "effects": {
      "serves": [
       "expansion"
@@ -1724,7 +1724,7 @@
    {
     "label": "Ask for a cameo.",
     "hint": "Play along",
-    "reaction": "You appear in episode six as “Man at Bus Stop”. Your one line gets the biggest laugh of the series.",
+    "reaction": "You appear in episode six as “Man at Bus Stop.” Your one line gets the biggest laugh of the series.",
     "effects": {
      "gauges": {
       "attention": 8,
@@ -1739,7 +1739,7 @@
    {
     "label": "Complain to the network.",
     "hint": "Dignity · Streisand effect",
-    "reaction": "The network apologises and commissions a second series, specifically about the complaint.",
+    "reaction": "The network apologizes and commissions a second series, specifically about the complaint.",
     "effects": {
      "gauges": {
       "attention": 10,
@@ -1774,12 +1774,12 @@
   "once": true,
   "weight": 1.4,
   "topic": "the lanyards",
-  "text": "Further to my last memo: the office has introduced colour-coded lanyards. Blue for staff, green for officers, gold for regional leaders. The founder’s lanyard is “Visitor”. This is an oversight. Correcting it requires Form 7B.",
+  "text": "Further to my last memo: the office has introduced color-coded lanyards. Blue for staff, green for officers, gold for regional leaders. The founder’s lanyard is “Visitor.” This is an oversight. Correcting it requires Form 7B.",
   "choices": [
    {
     "label": "Fill in Form 7B.",
     "hint": "Comply · Wait six weeks",
-    "reaction": "You fill in Form 7B. It is returned asking which form authorised you to request the form. You receive a gold lanyard after six weeks. It says “Visitor (Gold)”.",
+    "reaction": "You fill in Form 7B. It is returned asking which form authorized you to request the form. You receive a gold lanyard after six weeks. It says “Visitor (Gold).”",
     "effects": {
      "serves": [
       "comfort"
@@ -1833,7 +1833,7 @@
   "once": true,
   "weight": 1.3,
   "topic": "the app",
-  "text": "The official {movement} app is live. To reset your password, you answer a security question: “What is the founder’s favourite {beliefNoun}?” Forty thousand members are locked out. Including the founder.",
+  "text": "The official {movement} app is live. To reset your password, you answer a security question: “What is the founder’s favorite {beliefNoun}?” Forty thousand members are locked out. Including the founder.",
   "choices": [
    {
     "label": "Publish the answer.",
@@ -1890,7 +1890,7 @@
    {
     "label": "Give him a script.",
     "hint": "Consistency",
-    "reaction": "The script is accurate and nobody calls any more. Members miss the old answers, which they write down and circulate as “the Lost Teachings”.",
+    "reaction": "The script is accurate and nobody calls any more. Members miss the old answers, which they write down and circulate as “the Lost Teachings.”",
     "effects": {
      "serves": [
       "order",
@@ -2071,7 +2071,7 @@
   },
   "followUpOnly": true,
   "topic": "the Charter",
-  "text": "We need a written Charter. Article One has to say what {movement} is for. Draft A says “{belief}”. Draft B says “whatever its members decide, by majority, on {day}s”. Draft C is blank and was submitted by {c.gary}.",
+  "text": "We need a written Charter. Article One has to say what {movement} is for. Draft A says “{belief}.” Draft B says “whatever its members decide, by majority, on {day}s.” Draft C is blank and was submitted by {c.gary}.",
   "choices": [
    {
     "label": "Draft A: {belief}.",
@@ -2140,7 +2140,7 @@
   "once": true,
   "weight": 1.5,
   "topic": "Community Broth",
-  "text": "The national office has signed a catering contract. Soup now comes from a company. It arrives in sealed tubs labelled “Community Broth”. I tasted it. {title}, I want to be calm about this. I am not calm.",
+  "text": "The national office has signed a catering contract. Soup now comes from a company. It arrives in sealed tubs labeled “Community Broth.” I tasted it. {title}, I want to be calm about this. I am not calm.",
   "choices": [
    {
     "label": "Cancel the contract. Priya runs the soup.",
@@ -2220,12 +2220,12 @@
   },
   "followUpOnly": true,
   "topic": "the soup line",
-  "text": "There’s a woman with a car boot full of soup outside the Convention. There’s a queue. The queue is longer than the Convention. Several delegates have left the hall “for air” and are now in the queue. Should we move her on?",
+  "text": "There’s a woman with a car trunk full of soup outside the Convention. There’s a line. The line is longer than the Convention. Several delegates have left the hall “for air” and are now in the line. Should we make her move along?",
   "choices": [
    {
-    "label": "Move her on.",
+    "label": "Make her move along.",
     "hint": "The rules · You’ll regret it",
-    "reaction": "Priya is moved on. She sets up across the road. The queue crosses the road with her, in an orderly fashion, carrying their lanyards.",
+    "reaction": "Priya is asked to move along. She sets up across the street. The line crosses the street with her, in an orderly fashion, carrying their lanyards.",
     "effects": {
      "loyalty": {
       "priya": -10
@@ -2280,8 +2280,8 @@
   },
   "once": true,
   "weight": 1.4,
-  "topic": "the crisps",
-  "text": "A crisp company wants to license {movement}. The flavour would be “{beliefNoun} and Vinegar”. I have tasted the prototype. It is not good. The money, however, is very good, and the money has no flavour.",
+  "topic": "the chips",
+  "text": "A chip company wants to license {movement}. The flavor would be “{beliefNoun} and Vinegar.” I have tasted the prototype. It is not good. The money, however, is very good, and the money has no flavor.",
   "choices": [
    {
     "label": "License it.",
@@ -2303,7 +2303,7 @@
     }
    },
    {
-    "label": "Some things shouldn’t be crisps.",
+    "label": "Some things shouldn’t be chips.",
     "hint": "Dignity · Rolf sighs",
     "reaction": "Rolf declines the deal by letter. He then spends an evening, alone, eating the prototype and thinking about what might have been.",
     "effects": {
@@ -2345,7 +2345,7 @@
   "weight": 1.3,
   "twist": "wrong_reasonable",
   "topic": "giving something away",
-  "text": "I’ve monetised everything. The customs, the meetings, the mugs, the potato. There is nothing left. So I had an idea, and I don’t like it: I would like to give something away. For free. I don’t know how. Could you show me?",
+  "text": "I’ve monetized everything. The customs, the meetings, the mugs, the potato. There is nothing left. So I had an idea, and I don’t like it: I would like to give something away. For free. I don’t know how. Could you show me?",
   "choices": [
    {
     "label": "Give away the {meeting}. Free, forever.",
@@ -2370,7 +2370,7 @@
    {
     "label": "You’re good at money, Rolf. Stay good at it.",
     "hint": "Keep him as he is",
-    "reaction": "Rolf is relieved and a little disappointed. He finds a way to charge for the relief, then refunds it, which he describes as “a start”.",
+    "reaction": "Rolf is relieved and a little disappointed. He finds a way to charge for the relief, then refunds it, which he describes as “a start.”",
     "effects": {
      "serves": [
       "money"
@@ -2459,8 +2459,8 @@
   "type": "organization",
   "speaker": {
    "anon": {
-    "name": "Ms Fairweather",
-    "role": "Solicitor"
+    "name": "Ms. Fairweather",
+    "role": "Lawyer"
    }
   },
   "shape": "feud",
@@ -2477,7 +2477,7 @@
   "once": true,
   "weight": 1.5,
   "topic": "the lawsuit",
-  "text": "Letter from the solicitors for the Original {movement}. They claim the name, the customs, the folding chairs and “the true memory of {day}”. They enclose minutes as evidence. The minutes are extremely good.",
+  "text": "Letter from the lawyers for the Original {movement}. They claim the name, the customs, the folding chairs and “the true memory of {day}.” They enclose minutes as evidence. The minutes are extremely good.",
   "choices": [
    {
     "label": "Settle. Let them have the chairs.",
@@ -2670,7 +2670,7 @@
   },
   "followUpOnly": true,
   "topic": "who speaks for us",
-  "text": "Ophelia gave an interview saying {movement} is “moving beyond {practice}”. You gave one last week saying it never would. A reporter has put both quotes side by side. Members are asking who actually speaks for us.",
+  "text": "Ophelia gave an interview saying {movement} is “moving beyond {practice}.” You gave one last week saying it never would. A reporter has put both quotes side by side. Members are asking who actually speaks for us.",
   "choices": [
    {
     "label": "Issue a joint statement with Ophelia.",
@@ -2764,7 +2764,7 @@
    {
     "label": "Let’s at least hear the agency out.",
     "hint": "Novelty · A risk",
-    "reaction": "The agency presents for three hours. At the end, the only thing anyone remembers is the word “MVMNT”, which members begin using sarcastically, then affectionately, then unironically.",
+    "reaction": "The agency presents for three hours. At the end, the only thing anyone remembers is the word “MVMNT,” which members begin using sarcastically, then affectionately, then unironically.",
     "effects": {
      "serves": [
       "-comfort",
@@ -2809,7 +2809,7 @@
    {
     "label": "Adopt the standard nationally.",
     "hint": "Clarity · Something dies",
-    "reaction": "The standard is adopted. Newcomers do {practice} perfectly and with no apparent joy. Old members start doing it wrong on purpose, in the car park.",
+    "reaction": "The standard is adopted. Newcomers do {practice} perfectly and with no apparent joy. Old members start doing it wrong on purpose, in the parking lot.",
     "effects": {
      "serves": [
       "purity",
@@ -2828,7 +2828,7 @@
    {
     "label": "Some of it should stay unwritten.",
     "hint": "Mystery · Tobias is wounded",
-    "reaction": "Tobias takes the forty pages home. He reads them every evening, he says, “for the North”.",
+    "reaction": "Tobias takes the forty pages home. He reads them every evening, he says, “for the North.”",
     "effects": {
      "serves": [
       "-purity"
@@ -2926,12 +2926,12 @@
   "once": true,
   "weight": 1.5,
   "topic": "the forecasts",
-  "text": "The weather presenter, the one who joined because of Gary’s whale flyer, now forecasts entirely in terms of {belief}. “Lovely day for it.” “Not a day for it.” The network has received complaints and four thousand membership enquiries.",
+  "text": "The weather presenter, the one who joined because of Gary’s whale flyer, now forecasts entirely in terms of {belief}. “Great day for it.” “Not a day for it.” The network has received complaints and four thousand membership enquiries.",
   "choices": [
    {
     "label": "Send her flowers.",
     "hint": "Gratitude",
-    "reaction": "She reads your card out on air, before the shipping forecast. Fishermen begin asking about {movement}.",
+    "reaction": "She reads your card out on air, before the marine forecast. Fishermen begin asking about {movement}.",
     "effects": {
      "gauges": {
       "attention": 6,
@@ -2977,8 +2977,8 @@
   },
   "once": true,
   "weight": 1.5,
-  "topic": "whales in Parliament",
-  "text": "Our position on whales was quoted in Parliament! The forty-page one. A minister called it “the most thorough document on whales ever produced by an organisation that is not about whales”. {c.gary} has had it framed.",
+  "topic": "whales and the lawmakers",
+  "text": "Our position on whales was quoted by lawmakers! The forty-page one. One of them called it “the most thorough document on whales ever produced by an organization that is not about whales.” {c.gary} has had it framed.",
   "choices": [
    {
     "label": "Issue a statement: we are, in a sense, about whales.",
@@ -2998,7 +2998,7 @@
    {
     "label": "No comment.",
     "hint": "Mystery",
-    "reaction": "“No comment” is interpreted as a deep and principled position on whales. The minister quotes that too.",
+    "reaction": "“No comment” is interpreted as a deep and principled position on whales. The lawmakers quote that too.",
     "effects": {
      "gauges": {
       "attention": 4,
@@ -3013,7 +3013,7 @@
   "type": "organization",
   "speaker": {
    "anon": {
-    "name": "Mr Okafor",
+    "name": "Mr. Okafor",
     "role": "Regional Bus Company"
    }
   },
@@ -3030,7 +3030,7 @@
   "once": true,
   "weight": 1.5,
   "topic": "the bus shelter",
-  "text": "The bus company is renaming the stop where you held {meeting}s after you lost the hall. It will be called “{movement} Shelter”. The timetable will say it. Do you object, or would you like to attend the unveiling?",
+  "text": "The bus company is renaming the stop where you held {meeting}s after you lost the hall. It will be called “{movement} Shelter.” The timetable will say it. Do you object, or would you like to attend the unveiling?",
   "choices": [
    {
     "label": "Attend the unveiling.",
@@ -3051,7 +3051,7 @@
    {
     "label": "Decline. It was a bad week.",
     "hint": "Modesty",
-    "reaction": "The stop is renamed anyway. Your absence is noted in the local paper as “characteristically humble”.",
+    "reaction": "The stop is renamed anyway. Your absence is noted in the local paper as “characteristically humble.”",
     "effects": {
      "gauges": {
       "unity": 3
@@ -3082,7 +3082,7 @@
   "once": true,
   "weight": 1.5,
   "topic": "the evacuation plan",
-  "text": "Remember the fire inspector? He’s joined. He’s now our National Safety Officer. He’s asked to see my original evacuation plan. Apparently it’s taught on a course. I’ve been asked to sign copies. {title}, people are queueing.",
+  "text": "Remember the fire inspector? He’s joined. He’s now our National Safety Officer. He’s asked to see my original evacuation plan. Apparently it’s taught in a class. I’ve been asked to sign copies. {title}, people are lining up.",
   "choices": [
    {
     "label": "Sign them, Martin.",
@@ -3120,7 +3120,7 @@
   "type": "organization",
   "speaker": {
    "anon": {
-    "name": "Chief Supt. Rennick",
+    "name": "Chief Rennick",
     "role": "Police"
    }
   },
@@ -3137,7 +3137,7 @@
   "once": true,
   "weight": 1.5,
   "topic": "the posters",
-  "text": "Afternoon. You won’t remember me. I was the constable who asked about the posters, back when it was a garage. I’m Chief Superintendent now. I’d like to ask about the march on Saturday. Is something happening?",
+  "text": "Afternoon. You won’t remember me. I was the police officer who asked about the posters, back when it was a garage. I’m Chief of Police now. I’d like to ask about the march on Saturday. Is something happening?",
   "choices": [
    {
     "label": "Something is happening.",
@@ -3155,7 +3155,7 @@
    {
     "label": "Nothing is happening, officer.",
     "hint": "Discretion · Lost charm",
-    "reaction": "He nods slowly. On Saturday, eighty thousand people do nothing in an orderly fashion, and he writes in his report that he has never seen nothing so well organised.",
+    "reaction": "He nods slowly. On Saturday, eighty thousand people do nothing in an orderly fashion, and he writes in his report that he has never seen nothing so well organized.",
     "effects": {
      "gauges": {
       "unity": 4
@@ -3169,7 +3169,7 @@
   "type": "organization",
   "speaker": {
    "anon": {
-    "name": "Mrs Penhallow",
+    "name": "Mrs. Penhallow",
     "role": "Chair, the Knitting Circle"
    }
   },
@@ -3186,12 +3186,12 @@
   "once": true,
   "weight": 1.5,
   "topic": "the knitters",
-  "text": "The Knitting Circle would like to merge. Thirty-one years in the hall, nine branches, and, since our truce, rather fond of you. We would bring our banners and our grudges. We would want {day}s off.",
+  "text": "The Knitting Circle would like to merge. Thirty-one years in the hall, nine branches, and, since our truce, pretty fond of you. We would bring our banners and our grudges. We would want {day}s off.",
   "choices": [
    {
     "label": "Merge. Welcome, knitters.",
     "hint": "Growth · New customs",
-    "reaction": "The merger brings forty thousand knitters and a thousand-metre banner, which is unrolled at the Convention and turns out to be about you, fondly.",
+    "reaction": "The merger brings forty thousand knitters and a thousand-meter banner, which is unrolled at the Convention and turns out to be about you, fondly.",
     "effects": {
      "followersPct": 0.05,
      "gauges": {
@@ -3209,7 +3209,7 @@
    {
     "label": "Stay friends. Stay separate.",
     "hint": "Identity",
-    "reaction": "The knitters accept graciously and knit you a scarf in the movement’s colours, which neither group officially has.",
+    "reaction": "The knitters accept graciously and knit you a scarf in the movement’s colors, which neither group officially has.",
     "effects": {
      "gauges": {
       "unity": 3,
@@ -3259,7 +3259,7 @@
    {
     "label": "Put it in a museum.",
     "hint": "History · Contained",
-    "reaction": "The Lost Book is displayed under glass. Queues form to read page ninety-four. Nobody will tell you what it says.",
+    "reaction": "The Lost Book is displayed under glass. Lines form to read page ninety-four. Nobody will tell you what it says.",
     "effects": {
      "gauges": {
       "attention": 5,
@@ -3429,7 +3429,7 @@
   "type": "organization",
   "speaker": {
    "anon": {
-    "name": "Mrs Doyle",
+    "name": "Mrs. Doyle",
     "role": "National Lost Property"
    }
   },
@@ -3443,7 +3443,7 @@
   "once": true,
   "weight": 1.1,
   "topic": "the goose",
-  "text": "National Lost Property. We currently hold four hundred identical {item}, nine hundred umbrellas, a pram, a framed photograph of {c.gary}, and a goose. The goose is alive and seems to be a member. Instructions?",
+  "text": "National Lost Property. We currently hold four hundred identical {item}, nine hundred umbrellas, a stroller, a framed photograph of {c.gary}, and a goose. The goose is alive and seems to be a member. Instructions?",
   "choices": [
    {
     "label": "The goose may stay.",
@@ -3493,7 +3493,7 @@
    {
     "label": "Expose him.",
     "hint": "Truth · Awkward",
-    "reaction": "You confront him at a town hall. He is gracious, apologises, and asks for your autograph. The branches are disappointed, specifically with you.",
+    "reaction": "You confront him at a town hall. He is gracious, apologizes, and asks for your autograph. The branches are disappointed, specifically with you.",
     "effects": {
      "gauges": {
       "unity": 3,
@@ -3524,7 +3524,7 @@
   "type": "organization",
   "speaker": {
    "anon": {
-    "name": "Mr Gethin",
+    "name": "Mr. Gethin",
     "role": "National Census Office"
    }
   },
@@ -3538,12 +3538,12 @@
   "once": true,
   "weight": 1.1,
   "topic": "the census",
-  "text": "Census office. We’re updating the form. Under “Religion or belief”, forty thousand people wrote “{movement}”. Under “Hobby”, eighty thousand wrote the same. We need to know which box you belong in.",
+  "text": "Census office. We’re updating the form. Under “Religion or belief,” forty thousand people wrote “{movement}.” Under “Hobby,” eighty thousand wrote the same. We need to know which box you belong in.",
   "choices": [
    {
     "label": "A way of life, not a belief.",
     "hint": "Gentle",
-    "reaction": "The census adds a box: “A way of life”. It is ticked by four million people, most of whom have never heard of you.",
+    "reaction": "The census adds a box: “A way of life.” It is ticked by four million people, most of whom have never heard of you.",
     "effects": {
      "gauges": {
       "attention": 6,
@@ -3694,10 +3694,10 @@
   "weight": 1.4,
   "topic": "the regions",
   "variants": [
-   "The {city} region has replaced {practice} with “a shorter version for busy people”. Nobody asked you. It’s in the newsletter, page eleven, under Good News.",
+   "The {city} region has replaced {practice} with “a shorter version for busy people.” Nobody asked you. It’s in the newsletter, page eleven, under Good News.",
    "{city} has elected its own founder. Not to replace you, they say. As a local equivalent. He is a retired dentist. They say he has your energy.",
-   "{city} has started charging a small fee for {practice}. The money goes to a fund for more {practice}. The newsletter calls it “sustainable”.",
-   "The {city} branch has written its own history. You appear in chapter four, briefly, as “a friend of the movement”."
+   "{city} has started charging a small fee for {practice}. The money goes to a fund for more {practice}. The newsletter calls it “sustainable.”",
+   "The {city} branch has written its own history. You appear in chapter four, briefly, as “a friend of the movement.”"
   ],
   "text": "You find out from the newsletter, again.",
   "choices": [
@@ -3761,7 +3761,7 @@
   "topic": "motions",
   "variants": [
    "Motion from the floor: that {practice} be performed twice on special occasions, and that every occasion be declared special.",
-   "Motion from the floor: that the founder’s chair at the Convention be kept empty “in their honour”, even while they are sitting in it.",
+   "Motion from the floor: that the founder’s chair at the Convention be kept empty “in their honor,” even while they are sitting in it.",
    "Motion from the floor: that the minutes of the last Convention be read aloud before this one may begin. They are nine hours long.",
    "Motion from the floor: that {practice} be accompanied by a short song. A song has been written. It is not short."
   ],
@@ -3827,7 +3827,7 @@
    {
     "label": "They join us.",
     "hint": "One movement · The International era",
-    "reaction": "{Movement} becomes international overnight. The translators’ first task is the word “{meeting}”, which turns out not to translate. They keep it.",
+    "reaction": "{Movement} becomes international overnight. The translators’ first task is the word “{meeting},” which turns out not to translate. They keep it.",
     "effects": {
      "era": "international",
      "gauges": {
@@ -3880,7 +3880,7 @@
   },
   "once": true,
   "weight": 1.4,
-  "text": "The youth newsletter has a comic strip. The villain is a man from the North with a moustache and a minibus called “the Northern Fleet”. I would like it known that I have feelings. They are northern feelings, so they are very deep and I will not be discussing them.",
+  "text": "The youth newsletter has a comic strip. The villain is a man from the North with a moustache and a minibus called “the Northern Fleet.” I would like it known that I have feelings. They are northern feelings, so they are very deep and I will not be discussing them.",
   "choices": [
    {
     "label": "Juniper will drop the strip.",
@@ -4030,7 +4030,7 @@
    {
     "label": "Send Martin out instead.",
     "hint": "Romance, possibly",
-    "reaction": "Martin goes out. They stand on the pavement, about a metre apart, and talk about the agenda for forty minutes. Neither of them comes in. Both of them describe it, separately, as the best meeting they have ever attended.",
+    "reaction": "Martin goes out. They stand on the sidewalk, about a meter apart, and talk about the agenda for forty minutes. Neither of them comes in. Both of them describe it, separately, as the best meeting they have ever attended.",
     "effects": {
      "loyalty": {
       "constance": 6,

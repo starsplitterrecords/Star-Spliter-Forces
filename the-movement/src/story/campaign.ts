@@ -254,14 +254,14 @@ export function endWeek(s: StoryState): WeekReport {
   if (resting) {
     s.gauges.attention = Math.max(4, s.gauges.attention - 8);
     s.gauges.unity = Math.min(96, s.gauges.unity + 3);
-    out.lines.push({ icon: '🛋️', text: 'Bev gave everyone the week off. Nobody was in the papers. Several people were in the bath.' });
+    out.lines.push({ icon: '🛋️', text: 'Bev gave everyone the week off. Nobody was in the papers. Several people were in the tub.' });
   }
   // opening a new town costs the petrol money
   for (const u of units(s)) {
     const at = whereIs(s, u.id);
     if ((u.charId === 'dez' || u.charId === 'ophelia') && at !== s.hometown && s.cities[at].followers === 0) {
       s.gauges.resources = Math.max(0, s.gauges.resources - 3);
-      out.lines.push({ icon: u.emoji, text: `${u.label} spent the petrol money getting to ${city(at).name}, where nobody has heard of ${s.movementName ?? 'us'}. Yet.` });
+      out.lines.push({ icon: u.emoji, text: `${u.label} spent the gas money getting to ${city(at).name}, where nobody has heard of ${s.movementName ?? 'us'}. Yet.` });
     }
   }
 

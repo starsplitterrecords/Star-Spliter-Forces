@@ -26,7 +26,7 @@ The core loop is now **weekly dispatch** (`src/story/campaign.ts`, `src/componen
 
    Local versions spread to the next town along. When two of them each hold ground, the towns quarrel (`terr.variant_clash`): make one official everywhere, or live with both. The map's rings and legend show who does what, and how.
 3. **Problems turn up where your people are**, pinned to towns on the map.
-   - **Road incidents** (`cards.road.json`) are written for each character in the town you sent them to. Gary falls asleep in the library, Dez promises a sea lion, Priya is fined for soup without a licence, Martin laminates a town.
+   - **Road incidents** (`cards.road.json`) are written for each character in the town you sent them to. Gary falls asleep in the library, Dez promises a sea lion, Priya is fined for soup without a license, Martin laminates a town.
    - The written story still arrives: about 3 cards a week, pinned to wherever the speaker is.
    - A problem left unanswered for a whole week goes away badly. Whoever raised it remembers being ignored (memory kind `ignored`) and loses loyalty.
 4. **Rivals hold real towns.**
@@ -36,7 +36,7 @@ The core loop is now **weekly dispatch** (`src/story/campaign.ts`, `src/componen
    - Rivals push into towns you leave alone. Your people win towns back by working there for three weeks, or by building enough members.
 5. **End the week.** A week of simulation runs, and a week report lists where everyone was, what they recruited, how customs changed, and what rivals did. There is no *Call a meeting* and no real-time clock: nothing happens while you are away.
 
-**Tuning (weekly mode).** Growth per simulated day is scaled to 0.32, and campaigns' effect on attention and resources to 0.25, so a week is a walking pace. The founding era lasts until at least 20 decisions. One-off written cards are favoured ×2.5 over recurring filler.
+**Tuning (weekly mode).** Growth per simulated day is scaled to 0.32, and campaigns' effect on attention and resources to 0.25, so a week is a walking pace. The founding era lasts until at least 20 decisions. One-off written cards are favored ×2.5 over recurring filler.
 
 `npm run content:weekly` plays automated weekly games. Its current numbers within the written story (70 weeks):
 
@@ -55,9 +55,9 @@ Older saves continue in the original continuous mode, described below.
 
 | Verdict | Change |
 |---|---|
-| "Deploying people individually isn't that fun." | **Nobody has to be placed by hand.** Without a scheduler, people follow their nature (`planWeek`): Dez and Ophelia spend the petrol money (−3 resources) opening towns nobody has heard of, Priya goes where the people are, Gary stays near home, Martin goes to the biggest party, Juniper and Rolf to the big towns. You can still overrule anyone (tap them, then a town). |
-| "Recruit a scheduler to do it for you." | **Bev Okoro**, a retired bus dispatcher, offers to take the rota early in the game. With Bev, you pick a weekly focus (*Open new towns*, *Build up our towns*, *Lie low*) and she places everyone. *Lie low* sends everyone home for a week: attention falls and there are no road incidents. |
-| "People that want to go home should actually go home." | Anyone who dislikes travel goes home after two weeks away; anyone sulking goes home; "Come home next week" on the homesick card is honoured. |
+| "Deploying people individually isn't that fun." | **Nobody has to be placed by hand.** Without a scheduler, people follow their nature (`planWeek`): Dez and Ophelia spend the gas money (−3 resources) opening towns nobody has heard of, Priya goes where the people are, Gary stays near home, Martin goes to the biggest party, Juniper and Rolf to the big towns. You can still overrule anyone (tap them, then a town). |
+| "Recruit a scheduler to do it for you." | **Bev Okoro**, a retired bus dispatcher, offers to take the schedule early in the game. With Bev, you pick a weekly focus (*Open new towns*, *Build up our towns*, *Lie low*) and she places everyone. *Lie low* sends everyone home for a week: attention falls and there are no road incidents. |
+| "People that want to go home should actually go home." | Anyone who dislikes travel goes home after two weeks away; anyone sulking goes home; "Come home next week" on the homesick card is honored. |
 | "You can't zoom the map; the cities are on top of each other." | The map zooms (pinch, scroll, + / −) and pans (drag). Labels are placed most-important-first and never overlap; markers stay the same size at any zoom. |
 | "I don't read the report." | The week report dialog is gone. A three-line strip shows last week's best moments (local versions first), and the map shows "+members" on each town. |
 | "The knitting and the north are weird; the north is not a real opponent." | The Knitting Circle and Tobias's North no longer appear on the map; Tobias and his cards are shelved. Rivals now only come from your own history (Agnes's or Ophelia's breakaways). |
@@ -72,14 +72,14 @@ Older saves continue in the original continuous mode, described below.
 3. **The movement responds.** You see the reaction text, which gauges moved, who was pleased or hurt, which member groups gained ground and which customs changed.
 4. **The world changes.** The simulation keeps running: people recruit, churn and mature into new groups, cities convert, and new people and problems arrive.
 
-Decisions don't cost time. When nobody needs you, **Call a meeting** moves time forward until someone does, so active play never waits on a timer. While the game is open, one game day passes every two real minutes. While you're away, up to 14 game days are simulated (about 28 hours). Decisions that arrive while you're away wait for you; none are made for you. When you return, a short report summarises what happened.
+Decisions don't cost time. When nobody needs you, **Call a meeting** moves time forward until someone does, so active play never waits on a timer. While the game is open, one game day passes every two real minutes. While you're away, up to 14 game days are simulated (about 28 hours). Decisions that arrive while you're away wait for you; none are made for you. When you return, a short report summarizes what happened.
 
 ## 2. People: the core simulation
 
 **A. Named characters** (`characters.json`). Each has an **agenda** (expansion, purity, order, joy, money, comfort), an **ally group**, competence and a bio. At runtime each has loyalty (−100 to 100), influence (0 to 100), a role, a status (active, left, retired, rival, absent) and **memories**: short notes of decisions that hurt or pleased them.
 
-- Every choice can declare `serves`, the agendas it helps or opposes. Loyalty changes automatically for everyone with that agenda: +4 when helped, −6 when opposed, because slights are remembered longer than favours. Authored `loyalty` changes add personal stakes on top.
-- Influence drifts toward the size of the character's ally group in the membership, plus a bonus for holding a new role. **Influential people bring more of the cards**, so who reaches your desk changes as the organisation does.
+- Every choice can declare `serves`, the agendas it helps or opposes. Loyalty changes automatically for everyone with that agenda: +4 when helped, −6 when opposed, because slights are remembered longer than favors. Authored `loyalty` changes add personal stakes on top.
+- Influence drifts toward the size of the character's ally group in the membership, plus a bonus for holding a new role. **Influential people bring more of the cards**, so who reaches your desk changes as the organization does.
 - Loyalty thresholds set flags that cards can require: `<id>_disgruntled` (≤ −40), `<id>_devoted` (≥ 60). At ≤ −90 the character walks out. Authored arcs also let characters retire, leave as rivals, be promoted or come back.
 
 **B. Member groups:** founders, casuals, enthusiasts, organizers, traditionalists, reformers, opportunists. These are counts that always sum to total followers.
@@ -138,13 +138,13 @@ Each card (`CardDef` in `src/story/types.ts`) has:
 | `weight`, `cooldown` (days), `spacing` (decisions), `once`, `priority`, `followUpOnly` | Frequency and repetition control |
 | `setting`, `topic`, `recall`, `shape`, `twist` | Memory, callbacks and editorial novelty (see `STORY-STATE.md`) |
 
-**Selection.** Follow-ups are scheduled at a specific day. Otherwise a card is drawn roughly every 0.4–0.9 game days, depending on era, from all eligible cards. A card is eligible when its requirements are met, it isn't on cooldown or spacing, and its speaker is present. Each card's weight is multiplied by its speaker's influence, and recent speakers are down-weighted. Crises jump the queue. Everything is seeded, so the same choices produce the same story.
+**Selection.** Follow-ups are scheduled at a specific day. Otherwise a card is drawn roughly every 0.4–0.9 game days, depending on era, from all eligible cards. A card is eligible when its requirements are met, it isn't on cooldown or spacing, and its speaker is present. Each card's weight is multiplied by its speaker's influence, and recent speakers are down-weighted. Crises jump the line. Everything is seeded, so the same choices produce the same story.
 
 **Eras:** Founding → Grassroots → Regional (→ National → International → World Order, for later production). Era changes come from authored cards, such as "We've outgrown the garage". If those cards never come, safety nets advance the era anyway.
 
 ## 6. Geography
 
-The map is the arena; it isn't the screen you play on. Campaigns (organizers sent to a city by a decision), word of mouth, passive awareness and the 85% milestone (which earns organizers and reveals neighbouring cities) all survive from the original design. Cards decide where and how the movement spreads ("There's real interest in {city}…"). The slice is limited to the home region; growth beyond it belongs to later eras.
+The map is the arena; it isn't the screen you play on. Campaigns (organizers sent to a city by a decision), word of mouth, passive awareness and the 85% milestone (which earns organizers and reveals neighboring cities) all survive from the original design. Cards decide where and how the movement spreads ("There's real interest in {city}…"). The slice is limited to the home region; growth beyond it belongs to later eras.
 
 ## 7. No AI at runtime
 
@@ -172,14 +172,14 @@ Character memory, story chains with windows and cancellation, and customs the me
   - 9 doctrine cards
   - 8 crises
 - **Arcs:**
-  - Grassroots: Rolf's commercialisation, Agnes's minutes leading to a schism, Priya's burnout, the Knitting Circle feud, Kevin's memoir, soup in the boot of a car, and the Tuesday that becomes sacred.
+  - Grassroots: Rolf's commercialization, Agnes's minutes leading to a schism, Priya's burnout, the Knitting Circle feud, Kevin's memoir, soup in the trunk of a car, and the Tuesday that becomes sacred.
   - Regional: Martin versus Lionel, Ophelia's rise (shared leadership or a breakaway), pilgrimages to Gary's garage, and payoffs for characters who left earlier (Agnes's *Original* movement, Rolf's subscription-box company).
 - **The recurring layer** (`cards.recurring.json`) keeps the desk busy between authored beats. These are templated situations with several text variants, drawn again whenever their cooldowns allow:
   - whoever is influential pushing their agenda;
   - an *unhappy* co-leader airing grievances, or a *devoted* one asking for more responsibility;
   - someone reopening a decision you made earlier, quoted back to you;
   - newcomers and members with requests;
-  - neighbours complaining;
+  - neighbors complaining;
   - the press;
   - towns feeling forgotten, branch leaders, rival towns;
   - money running tight, or a windfall.
@@ -198,7 +198,7 @@ Character memory, story chains with windows and cancellation, and customs the me
 - **Consequential callback coverage:** 23% before the National batch and 26% after, in 600-day runs (about 60 decisions per playthrough that later events refer back to). See `STORY-STATE.md` §6.
 - **Relationships:** see `STORY-STATE.md` §7 (`npm run content:relationships`).
 - **Character memory:** each run writes about 170 memories. About a third were witnessed and about 40% name a rival; about 18 get called back.
-- **Story chains:** 101 delivered, 1 expired and 6 cancelled across 15 runs.
+- **Story chains:** 101 delivered, 1 expired and 6 canceled across 15 runs.
 - **Members' customs:** about 5 per run. The automated players mostly reform or condemn them; tolerating is rare.
 - **Editorial novelty:**
   - the same comic shape twice running about 6 times per run;

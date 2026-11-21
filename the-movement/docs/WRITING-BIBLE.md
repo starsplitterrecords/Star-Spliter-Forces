@@ -11,10 +11,45 @@ The jokes aren't absurd things happening *to* a movement. They come from absurd 
 - **Deadpan.** Characters take ridiculous things completely seriously. Nobody winks at the player.
 - **Specific.** Write "fourteen dollars, two buttons and a bus token", not "some money". Write "Martin is already making a laminated sign", not "Martin approves".
 - **Short.** A card's text is one or two short paragraphs, under 420 characters. Choice labels are something the player would say aloud, under 80 characters. Reactions are one or two sentences.
-- **Escalation through callbacks.** The best card pays off something the player decided 20 cards ago: the book club, Tuesday, Gary's garage, the soup in the boot of Priya's car.
+- **Escalation through callbacks.** The best card pays off something the player decided 20 cards ago: the book club, Tuesday, Gary's garage, the soup in the trunk of Priya's car.
 - **No meanness to real groups.** Everything is fictional. No real people, parties, religions or hatred. Conflict is petty, procedural and theatrical.
 
-## What makes a good card
+## American English only
+
+All player-facing text is American English, in both spelling and vocabulary. The validator rejects the common British forms.
+
+- **Spelling:** color, favor, neighbor, organize, apologize, practice (as a verb too), license, canceled, traveling, center, meter, gray, program.
+- **Words:**
+
+  | Write | Not |
+  |---|---|
+  | schedule | rota |
+  | gas | petrol |
+  | parking lot | car park |
+  | trunk | boot |
+  | line | queue |
+  | cookies | biscuits |
+  | chips | crisps |
+  | two weeks | fortnight |
+  | vacation | holiday |
+  | sidewalk | pavement |
+  | highway | motorway |
+  | Main Street | high street |
+  | trash cans | bins |
+  | stroller | pram |
+  | lawyer | solicitor |
+  | police officer | constable |
+  | mom | mum |
+  | around | round, as in "a line round the square" |
+  | toward | towards |
+  | real or actual | proper, as in "a proper hall" |
+  | just saying | only saying |
+  | pretty good | quite good |
+
+- **Address and idiom:** Bev says "hon", not "love". Nobody says "your lot", "mind", "a lie-down" or "on your head be it".
+- **Punctuation:** periods and commas go inside closing quotation marks (“like this.”). Titles take a period: Mr., Mrs., Ms., Dr.
+
+
 
 1. **Someone with an agenda wants something.** The speaker's agenda is visible in what they ask for.
 2. **Both choices are tempting,** and each costs something different. A choice that is obviously right is a waste of a card.
@@ -41,9 +76,9 @@ Characters can be competent, idiots, or both. They remember. Write their lines s
 
 **Characters must sometimes be right for the wrong reasons, and wrong for entirely reasonable ones.**
 
-- Martin's obsession with procedure should occasionally save the organisation. He laminated an evacuation plan in week two because he wanted to try the orange pouches, and when the fire inspector arrives it is the only reason you pass.
+- Martin's obsession with procedure should occasionally save the organization. He laminated an evacuation plan in week two because he wanted to try the orange pouches, and when the fire inspector arrives it is the only reason you pass.
 - Dez's reckless promotional promises should occasionally produce extraordinary successes. He promised the mayor a parade, and you become the front of the carnival.
-- Priya's insistence on having a nice time should sometimes undermine an important organisational objective. She scheduled the picnic at the same hour as the council vote on the hall.
+- Priya's insistence on having a nice time should sometimes undermine an important organizational objective. She scheduled the picnic at the same hour as the council vote on the hall.
 - Agnes's purity can be wrong for the best reasons: everyone must re-read the founding minutes before voting on the roof, and the roof is leaking now.
 
 Without this, the cast becomes six predictable buttons for six agendas, and the player stops reading the cards and starts reading the speaker. Tag these cards with `twist: "right_wrong_reasons"` or `"wrong_reasonable"`. The validator warns about any character who has none. The stress test flags any character whose agenda moves the gauges the same way more than 85% of the time.
@@ -68,7 +103,7 @@ Some details exist only to make the characters feel like people. **Gary likes wh
 
 Characters remember automatically:
 
-- who you overruled and who you favoured instead;
+- who you overruled and who you favored instead;
 - whether it happened in front of everyone;
 - the exact words you chose;
 - how many meetings ago it was.
@@ -77,7 +112,7 @@ A callback card declares `recall` and quotes the memory with `{mQuote}`, `{mAgo}
 
 - Quote the player's words; they are the punchline.
 - Callbacks need distance: three meetings ago is a grudge, last week is a complaint.
-- Apologising should cost something, and standing firm should gain something.
+- Apologizing should cost something, and standing firm should gain something.
 
 ### Chains
 

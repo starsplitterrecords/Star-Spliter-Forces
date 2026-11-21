@@ -17,7 +17,7 @@ const GAUGE_INFO: Record<Gauge, { label: string; short: string; blurb: string }>
   enthusiasm: { label: 'Enthusiasm', short: 'Zeal', blurb: 'How intensely members participate and recruit.' },
   unity: { label: 'Unity', short: 'Unity', blurb: 'How well followers and leaders agree.' },
   attention: { label: 'Public Attention', short: 'Attention', blurb: 'How much the outside world notices you.' },
-  resources: { label: 'Resources', short: 'Means', blurb: 'How much organisational capacity you can sustain.' },
+  resources: { label: 'Resources', short: 'Means', blurb: 'How much organizational capacity you can sustain.' },
 };
 const ERA_LABEL: Record<string, string> = { founding: 'Founding Era', grassroots: 'Grassroots Era', regional: 'Regional Era', national: 'National Era', international: 'International Era', world: 'World Era' };
 const HOMETOWNS = CITIES.filter((c) => c.pop > 80_000 && c.pop < 900_000);

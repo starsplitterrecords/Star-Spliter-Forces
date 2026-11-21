@@ -106,7 +106,7 @@ export function CustomsSheet({ s }: { s: StoryState }) {
               {c.origin === 'members' ? (
                 <div className="mt-1 text-[11px] text-ink-300">
                   Started by {c.startedBy ? charName(s, c.startedBy) : 'the members'}, not you · {c.stance && c.stance !== 'none' ? `you ${({ endorsed: 'endorsed', tolerated: 'tolerate', reformed: 'reformed', condemned: 'condemned' } as Record<string, string>)[c.stance]} it` : 'you have not taken a position'}
-                  {c.underground && ' · still practised quietly'}
+                  {c.underground && ' · still practiced quietly'}
                 </div>
               ) : (
                 def?.champion && <div className="mt-1 text-[11px] text-ink-400">Champion: {charName(s, def.champion)}</div>

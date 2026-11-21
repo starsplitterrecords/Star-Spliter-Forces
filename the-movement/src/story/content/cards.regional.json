@@ -119,7 +119,7 @@
       "enthusiasm": -4,
       "resources": -6
      },
-     "memory": "Lionel Fitch reorganised {movement} into seven departments."
+     "memory": "Lionel Fitch reorganized {movement} into seven departments."
     }
    },
    {
@@ -277,9 +277,9 @@
     "national"
    ]
   },
-  "text": "The Department of Refreshments has requested budget to form a Department of Biscuits. The Department of Biscuits has, in turn, requested a Deputy.",
+  "text": "The Department of Refreshments has requested budget to form a Department of Cookies. The Department of Cookies has, in turn, requested a Deputy.",
   "variants": [
-   "The Department of Refreshments has requested budget to form a Department of Biscuits. The Department of Biscuits has, in turn, requested a Deputy.",
+   "The Department of Refreshments has requested budget to form a Department of Cookies. The Department of Cookies has, in turn, requested a Deputy.",
    "Form 14-B, the form for requesting Form 14-A, now has a waiting list. I propose a Form 14-C to manage the list.",
    "Two departments have discovered they are doing the same job. Both would like the other one abolished."
   ],
@@ -340,7 +340,7 @@
    {
     "label": "Let {city} have its local version.",
     "hint": "Growth · Regional variation · Less unity",
-    "reaction": "The {city} version spreads to two neighbouring towns within a month. Nobody can say which is the original any more.",
+    "reaction": "The {city} version spreads to two neighboring towns within a month. Nobody can say which is the original any more.",
     "effects": {
      "serves": [
       "expansion",
@@ -607,7 +607,7 @@
   "bind": {
    "city": "activeCity"
   },
-  "text": "Agnes’s Original {movement} has opened a branch in {city}. Their leaflet says we have “lost the minutes, and with them our way”.",
+  "text": "Agnes’s Original {movement} has opened a branch in {city}. Their leaflet says we have “lost the minutes, and with them our way.”",
   "choices": [
    {
     "label": "Invite Agnes to talks.",
@@ -793,7 +793,7 @@
     }
    }
   },
-  "text": "A publisher wants a cookbook. “The Soups of {movement}”. They want me to write it, and they want you to write the foreword.",
+  "text": "A publisher wants a cookbook. “The Soups of {movement}.” They want me to write it, and they want you to write the foreword.",
   "choices": [
    {
     "label": "Write the foreword.",
@@ -810,7 +810,7 @@
       "attention": 6,
       "resources": 5
      },
-     "memory": "Priya Moss published “The Soups of {movement}”."
+     "memory": "Priya Moss published “The Soups of {movement}.”"
     }
    },
    {
@@ -845,10 +845,10 @@
     }
    }
   },
-  "text": "Hear me out. Motorway billboard. Forty feet wide. Your face, the word {movement}, and the phrase “Obviously.” I’ve put down a deposit.",
+  "text": "Hear me out. Highway billboard. Forty feet wide. Your face, the word {movement}, and the phrase “Obviously.” I’ve put down a deposit.",
   "choices": [
    {
-    "label": "Put my face on the motorway.",
+    "label": "Put my face on the highway.",
     "hint": "Huge attention · Cost",
     "reaction": "The billboard causes a minor traffic incident and a major surge in enquiries. Your face is now a landmark.",
     "effects": {
@@ -920,7 +920,7 @@
    },
    {
     "label": "Smaller {meetings}, more of them.",
-    "hint": "Spread out · Harder to organise",
+    "hint": "Spread out · Harder to organize",
     "reaction": "Forty small {meetings} spring up in living rooms across the region. It feels, people say, like the garage days.",
     "effects": {
      "serves": [
@@ -1114,12 +1114,12 @@
     "reformers": ">=0.08"
    }
   },
-  "text": "We’d like to propose “{movement} Lite”. All the community, none of the mandatory anything. People would join who never would otherwise.",
+  "text": "We’d like to propose “{movement} Lite.” All the community, none of the mandatory anything. People would join who never would otherwise.",
   "choices": [
    {
     "label": "Allow a lighter membership.",
     "hint": "Much growth · Purists outraged",
-    "reaction": "Lite membership is enormously popular. The traditionalists refer to Lite members exclusively as “tourists”.",
+    "reaction": "Lite membership is enormously popular. The traditionalists refer to Lite members exclusively as “tourists.”",
     "effects": {
      "serves": [
       "expansion",
@@ -1147,7 +1147,7 @@
    {
     "label": "Membership means something.",
     "hint": "Purity · Reformers restless",
-    "reaction": "The proposal is declined. The reformers start meeting on a different night, “just to talk”.",
+    "reaction": "The proposal is declined. The reformers start meeting on a different night, “just to talk.”",
     "effects": {
      "serves": [
       "purity"
@@ -1191,7 +1191,7 @@
    {
     "label": "Propose a truce. And a joint event.",
     "hint": "Peace · Attention",
-    "reaction": "The joint event is a craft fair with soup. It is the most peaceful afternoon either organisation has ever had.",
+    "reaction": "The joint event is a craft fair with soup. It is the most peaceful afternoon either organization has ever had.",
     "effects": {
      "gauges": {
       "unity": 3,
@@ -1205,7 +1205,7 @@
    {
     "label": "This is war.",
     "hint": "Rivalry · Energy",
-    "reaction": "Both organisations recruit furiously. Wool sales and {movement} membership rise together.",
+    "reaction": "Both organizations recruit furiously. Wool sales and {movement} membership rise together.",
     "effects": {
      "gauges": {
       "enthusiasm": 5,
@@ -1241,7 +1241,7 @@
     "regional"
    ]
   },
-  "text": "I’ve reviewed the founding decisions. Some of them are, with respect, not scalable. “{belief}” for example. Have you considered a pilot programme?",
+  "text": "I’ve reviewed the founding decisions. Some of them are, with respect, not scalable. “{belief}” for example. Have you considered a pilot program?",
   "choices": [
    {
     "label": "Our founding customs are not up for review.",
@@ -1266,7 +1266,7 @@
    {
     "label": "Run the pilot.",
     "hint": "Efficiency · Founders uneasy",
-    "reaction": "The pilot programme for {belief} has a steering group, three phases and a launch event. It is, somehow, still {belief}.",
+    "reaction": "The pilot program for {belief} has a steering group, three phases and a launch event. It is, somehow, still {belief}.",
     "effects": {
      "serves": [
       "order",

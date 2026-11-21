@@ -120,7 +120,7 @@
   "text": "I may have laminated {city}. Not all of it. The bus timetables, the café menus, one dog’s name tag. The dog seemed pleased. The café is less pleased.",
   "choices": [
    {
-    "label": "Apologise to the café.",
+    "label": "Apologize to the café.",
     "hint": "Repair",
     "reaction": "You buy the café new menus. They keep one laminated one behind the till, as a curiosity. Tourists ask about it.",
     "effects": {
@@ -133,7 +133,7 @@
    {
     "label": "Laminate the rest of it.",
     "hint": "Commit · Notoriety",
-    "reaction": "{city} becomes the most durable town in the country. A local paper calls it “wipe-clean”. Membership enquiries rise among the very tidy.",
+    "reaction": "{city} becomes the most durable town in the country. A local paper calls it “wipe-clean.” Membership enquiries rise among the very tidy.",
     "effects": {
      "gauges": {
       "attention": 6,
@@ -168,12 +168,12 @@
   },
   "cooldown": 140,
   "topic": "the soup stall",
-  "text": "I set up one pot in the {city} market, just to say hello. There’s now a queue round the square and a man from the council asking for my licence. I have a ladle. Is a ladle a licence?",
+  "text": "I set up one pot in the {city} market, just to say hello. There’s now a line around the block and a man from the council asking for my license. I have a ladle. Is a ladle a license?",
   "choices": [
    {
-    "label": "Pay for a proper licence.",
+    "label": "Pay for an actual license.",
     "hint": "Legit · Costs money",
-    "reaction": "The licence is laminated (Martin insisted, by post). The soup stall becomes a fixture. Nobody in {city} remembers the market before it.",
+    "reaction": "The license is laminated (Martin insisted, by mail). The soup stall becomes a fixture. Nobody in {city} remembers the market before it.",
     "effects": {
      "gauges": {
       "resources": -5
@@ -325,7 +325,7 @@
    {
     "label": "Find a sea lion.",
     "hint": "Spectacle · Expensive",
-    "reaction": "A sea lion is hired from a seaside zoo. It leads the parade. It is the most beloved thing that has ever happened in {city}, and it would like to join.",
+    "reaction": "A sea lion is rented from a seaside zoo. It leads the parade. It is the most beloved thing that has ever happened in {city}, and it would like to join.",
     "effects": {
      "gauges": {
       "resources": -10,
@@ -372,7 +372,7 @@
   },
   "cooldown": 140,
   "topic": "the mayor",
-  "text": "The mayor of {city} asked what we stand for. I said “yes”. He said “yes to what?” I said “exactly”. He’s joined. I don’t know what he thinks he’s joined.",
+  "text": "The mayor of {city} asked what we stand for. I said “yes.” He said “yes to what?” I said “exactly.” He’s joined. I don’t know what he thinks he’s joined.",
   "choices": [
    {
     "label": "Make him an honorary something.",
@@ -389,7 +389,7 @@
    {
     "label": "Explain to him what we actually stand for.",
     "hint": "Clarity · He may leave",
-    "reaction": "You explain. The mayor listens carefully, says “oh”, and leaves. He comes back a week later and says he’s thought about it, and “yes”.",
+    "reaction": "You explain. The mayor listens carefully, says “oh,” and leaves. He comes back a week later and says he’s thought about it, and “yes.”",
     "effects": {
      "followers": 8,
      "gauges": {
@@ -417,7 +417,7 @@
   },
   "cooldown": 140,
   "topic": "the Dez Ordinance",
-  "text": "Small issue. {city} has a noise ordinance. I’ve broken it eleven times. It’s now known locally as “the Dez Ordinance”. People are weirdly proud of it.",
+  "text": "Small issue. {city} has a noise ordinance. I’ve broken it eleven times. It’s now known locally as “the Dez Ordinance.” People are weirdly proud of it.",
   "choices": [
    {
     "label": "Pay the fines.",
@@ -622,7 +622,7 @@
   },
   "cooldown": 140,
   "topic": "the town minutes",
-  "text": "I have taken the minutes of {city}. Not of a meeting: of the town. Everything said on the high street on Thursday. It is very revealing. The butcher has been contradicting himself for years.",
+  "text": "I have taken the minutes of {city}. Not of a meeting: of the town. Everything said on the Main Street on Thursday. It is very revealing. The butcher has been contradicting himself for years.",
   "choices": [
    {
     "label": "Publish them.",
@@ -782,7 +782,7 @@
    {
     "label": "Merge them into one.",
     "hint": "Order · Some sulking",
-    "reaction": "The three branches merge into one, which immediately splits into two, which Ophelia says is “a much more stable number”.",
+    "reaction": "The three branches merge into one, which immediately splits into two, which Ophelia says is “a much more stable number.”",
     "effects": {
      "gauges": {
       "unity": 3
@@ -842,7 +842,7 @@
    {
     "label": "Let the town find out naturally.",
     "hint": "Mystery",
-    "reaction": "The town finds out from its own bins, which now have a colour code. Nobody complains, because the colour code is very good.",
+    "reaction": "The town finds out from its own trash cans, which now have a color code. Nobody complains, because the color code is very good.",
     "effects": {
      "gauges": {
       "unity": -1,
@@ -889,7 +889,7 @@
    {
     "label": "We need you back in the office.",
     "hint": "The office · She’s relieved, a bit",
-    "reaction": "Constance returns and processes a fortnight of memos in an afternoon. She keeps a pebble from {city} on her desk, and does not explain it.",
+    "reaction": "Constance returns and processes two weeks of memos in an afternoon. She keeps a pebble from {city} on her desk, and does not explain it.",
     "effects": {
      "loyalty": {
       "constance": -2
@@ -1060,7 +1060,7 @@
   },
   "cooldown": 70,
   "topic": "the ballroom",
-  "text": "The only hall in {city} is booked every night by a ballroom dancing club. I could share with them. Or I could learn to ballroom dance. I’m leaning towards learning to ballroom dance.",
+  "text": "The only hall in {city} is booked every night by a ballroom dancing club. I could share with them. Or I could learn to ballroom dance. I’m leaning toward learning to ballroom dance.",
   "choices": [
    {
     "label": "Learn to ballroom dance.",
@@ -1149,12 +1149,12 @@
   },
   "cooldown": 70,
   "topic": "the Gazette",
-  "text": "The {city} Gazette has put me on the front page. The headline is “WHO IS THIS”. There’s a photograph. I look surprised in it. I was surprised.",
+  "text": "The {city} Gazette has put me on the front page. The headline is “WHO IS THIS.” There’s a photograph. I look surprised in it. I was surprised.",
   "choices": [
    {
     "label": "Give them an interview.",
     "hint": "Attention",
-    "reaction": "The interview runs under “OH, IT’S THEM”. {city} reads it over breakfast and several hundred people come to see what the fuss is.",
+    "reaction": "The interview runs under “OH, IT’S THEM.” {city} reads it over breakfast and several hundred people come to see what the fuss is.",
     "effects": {
      "followers": 40,
      "gauges": {
@@ -1166,7 +1166,7 @@
    {
     "label": "Lie low.",
     "hint": "Mystery",
-    "reaction": "Nobody says anything. The Gazette runs a follow-up: “STILL WHO”. Interest, if anything, doubles.",
+    "reaction": "Nobody says anything. The Gazette runs a follow-up: “STILL WHO.” Interest, if anything, doubles.",
     "effects": {
      "followers": 20,
      "gauges": {
@@ -1370,7 +1370,7 @@
    "rivalCity": "rivalTowns:knitters:one"
   },
   "topic": "the Knitting Circle",
-  "text": "The Knitting Circle has knitted a banner across the main road in {rivalCity}. It says KNITTERS WERE HERE FIRST. It is eleven metres long and frankly beautiful. Our members there want to knit a reply.",
+  "text": "The Knitting Circle has knitted a banner across the main road in {rivalCity}. It says KNITTERS WERE HERE FIRST. It is eleven meters long and frankly beautiful. Our members there want to knit a reply.",
   "choices": [
    {
     "label": "Knit a reply.",

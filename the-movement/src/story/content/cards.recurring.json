@@ -116,10 +116,10 @@
   "bind": {
    "past": "pastDecision"
   },
-  "text": "On day {pastDay}, when {pastWho} raised it, you decided: “{pastText}”. Not everyone has made peace with that.",
+  "text": "On day {pastDay}, when {pastWho} raised it, you decided: “{pastText}.” Not everyone has made peace with that.",
   "variants": [
-   "On day {pastDay}, when {pastWho} raised it, you decided: “{pastText}”. Not everyone has made peace with that.",
-   "People are still talking about day {pastDay}. You said “{pastText}”. Some of them have started quoting it back at each other.",
+   "On day {pastDay}, when {pastWho} raised it, you decided: “{pastText}.” Not everyone has made peace with that.",
+   "People are still talking about day {pastDay}. You said “{pastText}.” Some of them have started quoting it back at each other.",
    "A member asked me whether “{pastText}” is still the rule, or whether it was more of a mood. I didn’t know what to tell her."
   ],
   "choices": [
@@ -322,7 +322,7 @@
   ],
   "choices": [
    {
-    "label": "Apologise and fix it.",
+    "label": "Apologize and fix it.",
     "hint": "Reputation · Costs a little",
     "reaction": "A sincere apology and a small gift. {ctx.anon} is unconvinced but noticeably softer.",
     "effects": {
@@ -335,7 +335,7 @@
        "stat": "reputation",
        "mult": 1.08,
        "days": 14,
-       "label": "Good neighbours in {city}"
+       "label": "Good neighbors in {city}"
       }
      ]
     }
@@ -389,7 +389,7 @@
   "variants": [
    "I’m doing a piece on {movement}. My editor wants to know if it’s true that your members spend their evenings {belief}. Is it?",
    "We’re running a feature: “Who Are the {Members}?” I have two hundred words and one photograph of a pebble. Help me out.",
-   "Quick one. A reader says your organisation has more committees than members. Comment?"
+   "Quick one. A reader says your organization has more committees than members. Comment?"
   ],
   "choices": [
    {
@@ -410,7 +410,7 @@
    {
     "label": "No comment.",
     "hint": "Mystery",
-    "reaction": "The piece runs anyway, under the headline “Group Declines to Comment”. Enquiries rise.",
+    "reaction": "The piece runs anyway, under the headline “Group Declines to Comment.” Enquiries rise.",
     "effects": {
      "gauges": {
       "attention": 2,
@@ -439,7 +439,7 @@
   "text": "We need a sign-in sheet. Not for any sinister reason. Just so we know who was here, when, and why.",
   "variants": [
    "We need a sign-in sheet. Not for any sinister reason. Just so we know who was here, when, and why.",
-   "I’ve drafted a rota. It covers chairs, cups, keys and the emotional support of whoever is doing the cups.",
+   "I’ve drafted a schedule. It covers chairs, cups, keys and the emotional support of whoever is doing the cups.",
    "Can we agree, formally, on who is allowed to change the thermostat? It has become a matter of faith for some people."
   ],
   "choices": [
@@ -609,8 +609,8 @@
   "text": "Hear me out. “{tradition}” is beloved. Beloved things can be sold. Tastefully.",
   "variants": [
    "Hear me out. “{tradition}” is beloved. Beloved things can be sold. Tastefully.",
-   "We could charge a small fee for “{tradition}”. A suggested donation. A strongly suggested donation.",
-   "A company has offered to sponsor “{tradition}”. Their logo would be very small. Initially."
+   "We could charge a small fee for “{tradition}.” A suggested donation. A strongly suggested donation.",
+   "A company has offered to sponsor “{tradition}.” Their logo would be very small. Initially."
   ],
   "choices": [
    {
@@ -634,7 +634,7 @@
    {
     "label": "Some things aren’t for sale.",
     "hint": "Integrity",
-    "reaction": "{speaker} accepts this with the expression of someone filing it under “not yet”.",
+    "reaction": "{speaker} accepts this with the expression of someone filing it under “not yet.”",
     "effects": {
      "serves": [
       "-money",
@@ -782,16 +782,16 @@
     "national"
    ]
   },
-  "text": "Money’s tight. The {meeting} costs more than it brings in, the urn needs replacing and somebody has been buying very expensive biscuits.",
+  "text": "Money’s tight. The {meeting} costs more than it brings in, the coffee urn needs replacing and somebody has been buying very expensive cookies.",
   "variants": [
-   "Money’s tight. The {meeting} costs more than it brings in, the urn needs replacing and somebody has been buying very expensive biscuits.",
+   "Money’s tight. The {meeting} costs more than it brings in, the coffee urn needs replacing and somebody has been buying very expensive cookies.",
    "We can either cut costs or raise money. Those are the options. I checked twice."
   ],
   "choices": [
    {
     "label": "Cut costs.",
     "hint": "Resources · Morale dips",
-    "reaction": "Cheaper biscuits are introduced. They are noticed immediately.",
+    "reaction": "Cheaper cookies are introduced. They are noticed immediately.",
     "effects": {
      "gauges": {
       "resources": 7,
@@ -834,13 +834,13 @@
   "text": "We have money left over this month. Actual money. Nobody knows what to do with it, and everyone has a suggestion.",
   "variants": [
    "We have money left over this month. Actual money. Nobody knows what to do with it, and everyone has a suggestion.",
-   "An anonymous donor has given us a cheque and a note that just says “Keep going”. What do we do with it?"
+   "An anonymous donor has given us a check and a note that just says “Keep going.” What do we do with it?"
   ],
   "choices": [
    {
     "label": "Spend it on the members.",
     "hint": "Enthusiasm",
-    "reaction": "New chairs, a better urn and a banner that does not sag. Morale soars.",
+    "reaction": "New chairs, a better coffee urn and a banner that does not sag. Morale soars.",
     "effects": {
      "gauges": {
       "resources": -10,
@@ -894,7 +894,7 @@
   "text": "The traditionalists and the reformers have started sitting on opposite sides of the room. Nobody planned it. Now everyone knows which side is which.",
   "variants": [
    "The traditionalists and the reformers have started sitting on opposite sides of the room. Nobody planned it. Now everyone knows which side is which.",
-   "There are now two newsletters. One says we’ve changed too much. The other says we haven’t changed enough. Both are quite good."
+   "There are now two newsletters. One says we’ve changed too much. The other says we haven’t changed enough. Both are pretty good."
   ],
   "choices": [
    {
@@ -988,9 +988,9 @@
     "national"
    ]
   },
-  "text": "The {city} branch has outgrown its room. We could rent a proper hall, or split into two smaller groups. The members can’t agree, so they sent me.",
+  "text": "The {city} branch has outgrown its room. We could rent a real hall, or split into two smaller groups. The members can’t agree, so they sent me.",
   "variants": [
-   "The {city} branch has outgrown its room. We could rent a proper hall, or split into two smaller groups. The members can’t agree, so they sent me.",
+   "The {city} branch has outgrown its room. We could rent a real hall, or split into two smaller groups. The members can’t agree, so they sent me.",
    "Our {city} branch wants a budget of its own. Not much. Enough for chairs, {beliefNoun} and a banner that isn’t hand-me-down from {hometown}.",
    "People in {city} keep asking for {title}’s opinion on local matters, such as parking. What do I tell them?"
   ],
@@ -1016,7 +1016,7 @@
    {
     "label": "{city} must make do for now.",
     "hint": "Save resources · Local grumbling",
-    "reaction": "{city} makes do. Its {meeting} becomes famous for being cosy, which is a polite word for cramped.",
+    "reaction": "{city} makes do. Its {meeting} becomes famous for being cozy, which is a polite word for cramped.",
     "effects": {
      "serves": [
       "-expansion"
@@ -1057,9 +1057,9 @@
   ],
   "choices": [
    {
-    "label": "Give the organizers proper support.",
+    "label": "Give the organizers real support.",
     "hint": "Retention · Costs resources",
-    "reaction": "Organizers get a rota, an expenses form and, crucially, an evening off. Burnout drops noticeably.",
+    "reaction": "Organizers get a schedule, an expenses form and, crucially, an evening off. Burnout drops noticeably.",
     "effects": {
      "serves": [
       "order",
@@ -1177,7 +1177,7 @@
   "text": "Our readers in {city} want to know what {members} actually do on a {day}. Can we send a photographer?",
   "variants": [
    "Our readers in {city} want to know what {members} actually do on a {day}. Can we send a photographer?",
-   "We’re ranking the region’s most unusual organisations. You’re currently third, behind a choir for dogs and a man who collects traffic cones."
+   "We’re ranking the region’s most unusual organizations. You’re currently third, behind a choir for dogs and a man who collects traffic cones."
   ],
   "choices": [
    {

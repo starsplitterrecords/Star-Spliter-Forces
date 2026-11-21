@@ -66,7 +66,7 @@
   "once": true,
   "followUpOnly": true,
   "priority": 15,
-  "text": "Our first gathering was a triumph! Seven people! Four of them thought it was a book club, and honestly, they were the life of the party. Shall we make this a regular thing? I’ve already picked a day. I’ve picked several.",
+  "text": "Our first gathering was a triumph! Seven people! Four of them thought it was a book club, and honestly, they were the life of the party. Should we make this a regular thing? I’ve already picked a day. I’ve picked several.",
   "choices": [
    {
     "label": "“Every Tuesday. Attendance is mandatory.”",
@@ -146,7 +146,7 @@
     "meeting_mandatory"
    ]
   },
-  "text": "It’s {day}, and eight people didn’t come. One sent a note saying her cat “needed her”. I’ve decided to take that as a compliment to the cat. Do we make coming compulsory, or just make it impossible to miss?",
+  "text": "It’s {day}, and eight people didn’t come. One sent a note saying her cat “needed her.” I’ve decided to take that as a compliment to the cat. Do we make coming compulsory, or just make it impossible to miss?",
   "choices": [
    {
     "label": "Mandatory means mandatory.",
@@ -215,7 +215,7 @@
   "once": true,
   "followUpOnly": true,
   "priority": 3,
-  "text": "Dez called a meeting at 4 a.m. because he “had a thought”. Fourteen people came! I brought croissants. It was magnificent. It also cannot happen again. Can it?",
+  "text": "Dez called a meeting at 4 a.m. because he “had a thought.” Fourteen people came! I brought croissants. It was magnificent. It also cannot happen again. Can it?",
   "choices": [
    {
     "label": "Fine. Every Thursday, optional.",
@@ -331,12 +331,12 @@
   "shape": "drift",
   "once": true,
   "followUpOnly": true,
-  "text": "Small confession. There has been soup. In the boot of my car. Every week. Attendance at the car is now higher than attendance at the meeting.",
+  "text": "Small confession. There has been soup. In the trunk of my car. Every week. Attendance at the car is now higher than attendance at the meeting.",
   "choices": [
    {
     "label": "Fine. Soup is a thing.",
     "hint": "Priya vindicated",
-    "reaction": "The soup comes in from the car park like a returning hero.",
+    "reaction": "The soup comes in from the parking lot like a returning hero.",
     "effects": {
      "serves": [
       "joy"
@@ -357,9 +357,9 @@
     }
    },
    {
-    "label": "Shut down the boot soup.",
+    "label": "Shut down the trunk soup.",
     "hint": "Order · Resentment",
-    "reaction": "Priya closes the boot. Somewhere, a lentil weeps.",
+    "reaction": "Priya closes the trunk. Somewhere, a lentil weeps.",
     "effects": {
      "serves": [
       "order",
@@ -595,7 +595,7 @@
   "bind": {
    "name": "suggestedName"
   },
-  "text": "We need a name. Everyone keeps calling us “the garage people”. I’ve workshopped something: “{name}”. It tested extremely well with me.",
+  "text": "We need a name. Everyone keeps calling us “the garage people.” I’ve workshopped something: “{name}.” It tested extremely well with me.",
   "choices": [
    {
     "label": "“{name}” it is.",
@@ -653,7 +653,7 @@
     "title_decided"
    ]
   },
-  "text": "People don’t know what to call you. I’ve started saying “Master {initial}”. Martin thinks it’s “a bit much”.",
+  "text": "People don’t know what to call you. I’ve started saying “Master {initial}.” Martin thinks it’s “a bit much.”",
   "choices": [
    {
     "label": "“Master {initial}” is fine.",
@@ -706,12 +706,12 @@
   "requires": {
    "decisions": ">=5"
   },
-  "text": "Some of the newer members invented a handshake. It has forty-one steps and ends with a small bow. People are practising it in the car park.",
+  "text": "Some of the newer members invented a handshake. It has forty-one steps and ends with a small bow. People are practicing it in the parking lot.",
   "choices": [
    {
     "label": "Make it our handshake.",
     "hint": "Belonging · Visibility",
-    "reaction": "The first official forty-one-step handshake takes four minutes. Both participants describe it as “worth it”.",
+    "reaction": "The first official forty-one-step handshake takes four minutes. Both participants describe it as “worth it.”",
     "effects": {
      "serves": [
       "joy"
@@ -930,7 +930,7 @@
   "speaker": {
    "anon": {
     "name": "Mr. Hedges",
-    "role": "Next-door neighbour"
+    "role": "Next-door neighbor"
    }
   },
   "shape": "outsider",
@@ -983,7 +983,7 @@
   "speaker": {
    "anon": {
     "name": "Mr. Hedges",
-    "role": "Next-door neighbour"
+    "role": "Next-door neighbor"
    }
   },
   "shape": "outsider",
@@ -994,7 +994,7 @@
   "choices": [
    {
     "label": "“It’s an advanced book club.”",
-    "hint": "Mystery · Rumours",
+    "hint": "Mystery · Rumors",
     "reaction": "By Friday, the street believes the garage is an advanced book club, which is somehow worse.",
     "effects": {
      "gauges": {
@@ -1035,7 +1035,7 @@
    {
     "label": "Buy the megaphone.",
     "hint": "Expansion · Noise",
-    "reaction": "Dez’s first announcement through the megaphone is “testing”. His second is “TESTING”.",
+    "reaction": "Dez’s first announcement through the megaphone is “testing.” His second is “TESTING.”",
     "effects": {
      "serves": [
       "expansion",
@@ -1051,7 +1051,7 @@
     }
    },
    {
-    "label": "Start a proper fund.",
+    "label": "Start a real fund.",
     "hint": "Order · Prudence",
     "reaction": "Martin opens a spreadsheet titled FUND. It has one row.",
     "effects": {
@@ -1084,7 +1084,7 @@
   "requires": {
    "followers": ">=12"
   },
-  "text": "My husband thinks this is a cult. I told him it’s just {belief}. He asked what that means. I realised I don’t know.",
+  "text": "My husband thinks this is a cult. I told him it’s just {belief}. He asked what that means. I realized I don’t know.",
   "choices": [
    {
     "label": "Bring him to a {meeting}.",
@@ -1131,7 +1131,7 @@
   "bind": {
    "practice1": "practice1"
   },
-  "text": "Members keep asking what we actually believe. The most common answer is “{practice1}”. The second most common is “I thought this was a book club”. Should we write something down?",
+  "text": "Members keep asking what we actually believe. The most common answer is “{practice1}.” The second most common is “I thought this was a book club.” Should we write something down?",
   "choices": [
    {
     "label": "Write it down. Make it official.",
@@ -1204,7 +1204,7 @@
   "bind": {
    "practice": "newPractice"
   },
-  "text": "Something is catching on. After every {meeting}, a few members have started {practice}. Nobody organised it. It just happened. People seem to love it.",
+  "text": "Something is catching on. After every {meeting}, a few members have started {practice}. Nobody organized it. It just happened. People seem to love it.",
   "choices": [
    {
     "label": "Encourage it.",
@@ -1231,7 +1231,7 @@
    {
     "label": "Gently discourage it.",
     "hint": "Focus",
-    "reaction": "It continues in the car park, where it is technically not our responsibility.",
+    "reaction": "It continues in the parking lot, where it is technically not our responsibility.",
     "effects": {
      "serves": [
       "order"
@@ -1259,12 +1259,12 @@
    "practice1": "practice1",
    "practice2": "practice2"
   },
-  "text": "The {practice1Noun} people and the {practice2Noun} people both want the last half hour of every {meeting}. There have been words. One of the words was “heresy”.",
+  "text": "The {practice1Noun} people and the {practice2Noun} people both want the last half hour of every {meeting}. There have been words. One of the words was “heresy.”",
   "choices": [
    {
     "label": "Put {practice1} first.",
     "hint": "One custom rises · The other side sulks",
-    "reaction": "The losing side announces an “informal extension” in the car park.",
+    "reaction": "The losing side announces an “informal extension” in the parking lot.",
     "effects": {
      "gauges": {
       "unity": -3
@@ -1287,7 +1287,7 @@
    {
     "label": "Put {practice2} first.",
     "hint": "The underdog rises",
-    "reaction": "The losing side announces an “informal extension” in the car park.",
+    "reaction": "The losing side announces an “informal extension” in the parking lot.",
     "effects": {
      "gauges": {
       "unity": -3
@@ -1412,7 +1412,7 @@
   "type": "follower",
   "speaker": {
    "anon": {
-    "name": "Constable Haversham",
+    "name": "Officer Haversham",
     "role": "Local police"
    }
   },
@@ -1423,9 +1423,9 @@
   "text": "Afternoon. Someone has covered the station noticeboard in posters saying something is happening. Is something happening? We’d like to know in advance.",
   "choices": [
    {
-    "label": "Invite the constable to a {meeting}.",
+    "label": "Invite the police officer to a {meeting}.",
     "hint": "Goodwill",
-    "reaction": "Constable Haversham attends in uniform, stays out of uniform, and leaves humming.",
+    "reaction": "Officer Haversham attends in uniform, stays out of uniform, and leaves humming.",
     "effects": {
      "gauges": {
       "attention": 3,
@@ -1439,7 +1439,7 @@
    {
     "label": "“Nothing is happening.”",
     "hint": "Low profile · Dez disagrees",
-    "reaction": "The constable writes “NOTHING HAPPENING” in a notebook and underlines it.",
+    "reaction": "The police officer writes “NOTHING HAPPENING” in a notebook and underlines it.",
     "effects": {
      "gauges": {
       "attention": -4,
@@ -1530,7 +1530,7 @@
    {
     "label": "The cold builds character.",
     "hint": "A hardy custom · Traditionalists",
-    "reaction": "Within a month, members describe being slightly cold as “the {movement} way”.",
+    "reaction": "Within a month, members describe being slightly cold as “the {movement} way.”",
     "effects": {
      "serves": [
       "purity",
@@ -1646,7 +1646,7 @@
    {
     "label": "We stay in the garage. It’s where it began.",
     "hint": "Tradition · Limited space · Grassroots era",
-    "reaction": "People start queuing down the driveway. Gary sets out snacks for the queue.",
+    "reaction": "People start lining up down the driveway. Gary sets out snacks for the line.",
     "effects": {
      "serves": [
       "comfort",
@@ -1671,10 +1671,10 @@
        "stat": "recruitment",
        "mult": 0.85,
        "days": 30,
-       "label": "Queue down the driveway"
+       "label": "Line down the driveway"
       }
      ],
-     "memory": "{Movement} refused to leave Gary’s garage. People queued down the driveway."
+     "memory": "{Movement} refused to leave Gary’s garage. People lined up down the driveway."
     }
    }
   ]

@@ -90,7 +90,7 @@ export function describeMemory(m: MemoryRecord, name: (id: string) => string): s
   const other = m.other ? name(m.other) : null;
   const where = m.setting === 'private' ? '' : m.setting === 'meeting' ? ' in front of everyone' : ' in public';
   const lead: Record<MemoryKind, string> = {
-    overruled: `Overruled${where}${other ? `, in favour of ${other}` : ''}`,
+    overruled: `Overruled${where}${other ? `, in favor of ${other}` : ''}`,
     backed: `Backed${where}`,
     passed_over: `Passed over${other ? ` for ${other}` : ''}${where}`,
     favoured: `Chosen${other ? ` over ${other}` : ''}${where}`,

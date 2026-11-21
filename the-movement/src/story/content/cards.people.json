@@ -30,7 +30,7 @@
   "choices": [
    {
     "label": "I shouldn’t have done it in front of everyone.",
-    "hint": "Apologise · Settles it",
+    "hint": "Apologize · Settles it",
     "reaction": "{speaker} accepts the apology formally, then informally, then formally again for the minutes.",
     "effects": {
      "recall": "resolve",
@@ -150,7 +150,7 @@
   "weight": 0.32,
   "cooldown": 30,
   "spacing": 16,
-  "text": "I am compiling the year’s minutes. Under “Things {title} Said”, I have: “{mQuote}”, said to {mWho} {mWhen}, {mWhere}. Do you stand by it? I ask because it will be bound.",
+  "text": "I am compiling the year’s minutes. Under “Things {title} Said,” I have: “{mQuote},” said to {mWho} {mWhen}, {mWhere}. Do you stand by it? I ask because it will be bound.",
   "choices": [
    {
     "label": "Every word.",
@@ -432,12 +432,12 @@
   },
   "once": true,
   "weight": 1.5,
-  "text": "Small update. On local radio this morning I may have promised that the weather presenter from Channel Four will be at our next {meeting}. I haven’t asked her. But I said it with total confidence, which is half the battle.",
+  "text": "Small update. On local radio this morning I may have promised that the weather presenter from Channel 4 will be at our next {meeting}. I haven’t asked her. But I said it with total confidence, which is half the battle.",
   "choices": [
    {
     "label": "Then we’d better be ready for her.",
     "hint": "Expansion · Dez on the hook",
-    "reaction": "Chairs are added. Someone irons a tablecloth. Dez practises a handshake that is both warm and meteorological.",
+    "reaction": "Chairs are added. Someone irons a tablecloth. Dez practices a handshake that is both warm and meteorological.",
     "effects": {
      "serves": [
       "expansion"
@@ -650,7 +650,7 @@
   },
   "once": true,
   "weight": 1.5,
-  "text": "The council votes on our hall booking at three o’clock today. I’ve also organised a picnic at three o’clock, because it’s the first sunny day in five weeks and everyone is exhausted. I think the picnic matters more. I know how that sounds.",
+  "text": "The council votes on our hall booking at three o’clock today. I’ve also organized a picnic at three o’clock, because it’s the first sunny day in five weeks and everyone is exhausted. I think the picnic matters more. I know how that sounds.",
   "choices": [
    {
     "label": "Everyone to the council.",
@@ -685,7 +685,7 @@
        "stat": "recruitment",
        "mult": 0.85,
        "days": 10,
-       "label": "No hall for a fortnight"
+       "label": "No hall for two weeks"
       }
      ],
      "followUps": [
@@ -791,7 +791,7 @@
    {
     "label": "Fix the roof. Read later.",
     "hint": "Practical · Agnes objects",
-    "reaction": "The roof is fixed in an afternoon. Agnes notes in the minutes that the roof is now “unprincipled, but dry”.",
+    "reaction": "The roof is fixed in an afternoon. Agnes notes in the minutes that the roof is now “unprincipled, but dry.”",
     "effects": {
      "serves": [
       "-purity"
@@ -882,7 +882,7 @@
   "type": "follower",
   "speaker": {
    "anon": {
-    "name": "Dr Wren Okafor",
+    "name": "Dr. Wren Okafor",
     "role": "Marine biologist, member"
    }
   },
@@ -950,7 +950,7 @@
    {
     "label": "Lean into the potato.",
     "hint": "Money · The image wobbles",
-    "reaction": "The worried potato appears on tea towels and badges. Members adopt it as a sort of mascot; it unites people in a way the logo never did. Rolf calls it “the most profitable mistake of my career”, with visible discomfort.",
+    "reaction": "The worried potato appears on dish towels and badges. Members adopt it as a sort of mascot; it unites people in a way the logo never did. Rolf calls it “the most profitable mistake of my career,” with visible discomfort.",
     "effects": {
      "serves": [
       "money"
@@ -1059,12 +1059,12 @@
   },
   "once": true,
   "weight": 1.2,
-  "text": "Membership cards! Numbered, laminated, with a little photo of each member looking their best. Everyone loves a card. I’ve got the laminator warming up and a queue already forming.",
+  "text": "Membership cards! Numbered, laminated, with a little photo of each member looking their best. Everyone loves a card. I’ve got the laminator warming up and a line already forming.",
   "choices": [
    {
     "label": "Cards at the door.",
-    "hint": "Order · The queue grows",
-    "reaction": "Everyone gets a card. The queue at the door reaches the bus stop, where three people waiting to join give up and go home.",
+    "hint": "Order · The line grows",
+    "reaction": "Everyone gets a card. The line at the door reaches the bus stop, where three people waiting to join give up and go home.",
     "effects": {
      "serves": [
       "order"
@@ -1078,7 +1078,7 @@
        "stat": "recruitment",
        "mult": 0.8,
        "days": 10,
-       "label": "Queue at the door"
+       "label": "Line at the door"
       }
      ]
     }
@@ -1121,7 +1121,7 @@
    {
     "label": "Walk in front of the carnival.",
     "hint": "Expansion · Enormous, if it works",
-    "reaction": "It works. Thirty thousand people cheer you for eleven minutes before anyone checks the programme. The carnival’s collection buckets end up with you. The paper calls you “the surprise opening act”.",
+    "reaction": "It works. Thirty thousand people cheer you for eleven minutes before anyone checks the program. The carnival’s collection buckets end up with you. The paper calls you “the surprise opening act.”",
     "effects": {
      "serves": [
       "expansion"
@@ -1235,7 +1235,7 @@
   },
   "once": true,
   "weight": 1.2,
-  "text": "We need a proper external auditor. Not because anything is wrong. Because one day something will be, and I want it found by a professional. The good ones charge by the hour. They have a lot of hours.",
+  "text": "We need a real outside auditor. Not because anything is wrong. Because one day something will be, and I want it found by a professional. The good ones charge by the hour. They have a lot of hours.",
   "choices": [
    {
     "label": "Hire the auditor.",
@@ -1254,7 +1254,7 @@
    {
     "label": "Rolf can audit us himself.",
     "hint": "Cheap · Rolf is uneasy",
-    "reaction": "Rolf audits himself and finds two biscuits unaccounted for. He reports himself to himself and is, reluctantly, cleared.",
+    "reaction": "Rolf audits himself and finds two cookies unaccounted for. He reports himself to himself and is, reluctantly, cleared.",
     "effects": {
      "serves": [
       "-money"
@@ -1483,7 +1483,7 @@
   "speaker": "bev",
   "shape": "logistics",
   "setting": "private",
-  "topic": "the rota",
+  "topic": "the schedule",
   "requires": {
    "decisions": ">=8",
    "chars": {
@@ -1498,12 +1498,12 @@
   "once": true,
   "priority": 4,
   "weight": 4,
-  "text": "Hello, love. Bev. I’ve been watching your lot wander about. Gary went to the wrong town twice last week, and one of them doesn’t exist. Give me the rota. I’ll have everyone where they’re needed by {day}, and home when they need to be.",
+  "text": "Hi, hon. Bev. I’ve been watching your crew wander around. Gary went to the wrong town twice last week, and one of them doesn’t exist. Give me the schedule. I’ll have everyone where they’re needed by {day}, and home when they need to be.",
   "choices": [
    {
-    "label": "The rota is yours, Bev.",
+    "label": "The schedule is yours, Bev.",
     "hint": "A scheduler · You set the focus",
-    "reaction": "Bev pins a rota to the fridge. By the end of the day everyone knows where they’re going, what they’re taking, and that there will be sandwiches.",
+    "reaction": "Bev pins a schedule to the fridge. By the end of the day everyone knows where they’re going, what they’re taking, and that there will be sandwiches.",
     "effects": {
      "join": [
       "bev"
@@ -1538,7 +1538,7 @@
   "speaker": "bev",
   "shape": "callback",
   "setting": "private",
-  "topic": "the rota",
+  "topic": "the schedule",
   "requires": {
    "chars": {
     "bev": {
@@ -1553,12 +1553,12 @@
   "once": true,
   "priority": 3,
   "weight": 3,
-  "text": "Me again. Dez has opened four towns this month and paid for the petrol with the biscuit tin. Priya’s been in the same town so long they’ve given her a key to it. I’m only saying. The offer stands.",
+  "text": "Me again. Dez has opened four towns this month and paid for the gas with the cookie jar. Priya’s been in the same town so long they’ve given her a key to it. I’m just saying. The offer stands.",
   "choices": [
    {
-    "label": "All right, Bev. Take the rota.",
+    "label": "All right, Bev. Take the schedule.",
     "hint": "A scheduler · You set the focus",
-    "reaction": "Bev takes the rota, the biscuit tin and Dez’s car keys, in that order.",
+    "reaction": "Bev takes the schedule, the cookie jar and Dez’s car keys, in that order.",
     "effects": {
      "join": [
       "bev"
@@ -1574,7 +1574,7 @@
    {
     "label": "Still chaos, Bev.",
     "hint": "Everyone goes where they like",
-    "reaction": "Bev nods. She adds you to her own private rota, under “ones to keep an eye on”.",
+    "reaction": "Bev nods. She adds you to her own private schedule, under “ones to keep an eye on.”",
     "effects": {
      "gauges": {
       "enthusiasm": 2
@@ -1605,12 +1605,12 @@
   },
   "once": true,
   "weight": 1.5,
-  "text": "Everyone I send out gets a sandwich. It’s not in the budget. It’s in my handbag. The handbag is getting very heavy, love. Can the sandwiches be in the budget?",
+  "text": "Everyone I send out gets a sandwich. It’s not in the budget. It’s in my handbag. The handbag is getting very heavy, hon. Can the sandwiches be in the budget?",
   "choices": [
    {
     "label": "Sandwiches are in the budget.",
     "hint": "Costs money · Everyone’s happier",
-    "reaction": "The Sandwich Line is added to the accounts. Recruitment rises in every town, which Bev attributes entirely to egg and cress.",
+    "reaction": "The Sandwich Line is added to the accounts. Recruitment rises in every town, which Bev attributes entirely to egg salad.",
     "effects": {
      "gauges": {
       "resources": -5,
@@ -1676,7 +1676,7 @@
    {
     "label": "Keep Gary on the bus.",
     "hint": "Gary’s calling",
-    "reaction": "Gary becomes the movement’s travelling ambassador, mostly horizontal. The bus drivers start a branch that only meets at terminuses.",
+    "reaction": "Gary becomes the movement’s traveling ambassador, mostly horizontal. The bus drivers start a branch that only meets at bus terminals.",
     "effects": {
      "followersPct": 0.02,
      "gauges": {
@@ -1711,7 +1711,7 @@
   "speaker": "bev",
   "shape": "overpromise",
   "setting": "private",
-  "topic": "the petrol money",
+  "topic": "the gas money",
   "requires": {
    "era": [
     "grassroots",
@@ -1730,12 +1730,12 @@
   },
   "cooldown": 60,
   "weight": 1.4,
-  "text": "Dez has spent the petrol money opening another town nobody asked him to open. The town is delighted, mind. They’ve given him a sash. I need a ruling, love: does Dez get a petrol budget, or does Dez walk?",
+  "text": "Dez has spent the gas money opening another town nobody asked him to open. The town is delighted, mind. They’ve given him a sash. I need a ruling, hon: does Dez get a gas budget, or does Dez walk?",
   "choices": [
    {
-    "label": "Give Dez a proper petrol budget.",
+    "label": "Give Dez a real gas budget.",
     "hint": "More new towns · Costs money",
-    "reaction": "Dez receives a petrol budget and a laminated map from Martin. He opens two towns that week and sends Bev a postcard from each.",
+    "reaction": "Dez receives a gas budget and a laminated map from Martin. He opens two towns that week and sends Bev a postcard from each.",
     "effects": {
      "gauges": {
       "resources": -6,
@@ -1788,7 +1788,7 @@
   },
   "cooldown": 30,
   "weight": 2,
-  "text": "There’s a man from the paper outside the garage with a long lens, and everyone’s knackered. I’d like to give the whole lot of them a week off. Not a holiday. A lie-down. The papers can’t write about people having a lie-down.",
+  "text": "There’s a man from the paper outside the garage with a long lens, and everyone’s exhausted. I’d like to give the whole lot of them a week off. Not a vacation. A nap. The papers can’t write about people taking a nap.",
   "choices": [
    {
     "label": "A week off for everyone.",
@@ -1808,7 +1808,7 @@
    {
     "label": "Keep everyone working.",
     "hint": "Momentum · The papers circle",
-    "reaction": "Bev says “on your head be it” and hands out the rota, and a spare sandwich for the man with the long lens.",
+    "reaction": "Bev says “your call, hon” and hands out the schedule, and a spare sandwich for the man with the long lens.",
     "effects": {
      "gauges": {
       "enthusiasm": 3,
