@@ -314,6 +314,7 @@ export interface WeekReport {
   week: number;
   lines: { icon: string; text: string }[];
   gains?: Record<number, number>; // members gained per town this week, for the map
+  income?: number; // dues collected this week
   joined: number;
   lost: number;
 }
@@ -331,6 +332,7 @@ export interface CityState {
   variantBy?: string; // character whose flavour it came from
   rival?: string; // rival group holding this town
   bloc?: string; // a named part of the map that keeps its identity ('north')
+  assembly?: number; // the local assembly's level (1 Circle … 6 Capital); assemblies grow on their own
   contest?: number; // weeks your people have spent contesting a rival town
 }
 
@@ -393,6 +395,12 @@ export interface StoryState {
   away: Record<string, number>; // consecutive weeks each unit has been away from home
   planned?: number; // the week the rota was last drawn up
   focus?: 'spread' | 'grow' | 'rest'; // the scheduler's priority this week
+  // the idle layer
+  money?: number; // the treasury, in dollars: dues from members
+  upgrades?: Record<string, number>; // investments by id -> level
+  auto?: boolean; // Bev keeps the weeks moving on her own
+  lastTick?: number; // real time (ms) the last week ended, for the automatic clock and time away
+  away_report?: { weeks: number; joined: number; money: number; handled: number };
   rivals: Record<string, RivalState>;
   lastWeek?: WeekReport;
   memory: MemoryRecord[]; // what characters remember about you, newest last

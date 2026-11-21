@@ -715,7 +715,7 @@ function drift(s: StoryState, g: Gauge, target: number, rate: number, dt: number
   const v = s.gauges[g];
   const next = v + (target - v) * (1 - Math.exp(-rate * dt));
   // the passage of time never pushes a gauge over the edge; only decisions do
-  s.gauges[g] = v < 4 || v > 96 ? next : clamp(next, 4, 96);
+  s.gauges[g] = v < 4 || v > 96 ? clamp(next, 0, 100) : clamp(next, 4, 96);
 }
 
 /** Advance the world by dt game days (dt <= 0.5 recommended). */
@@ -728,8 +728,9 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
   const attF = 0.55 + s.gauges.attention / 100;
   const appealMult = Math.max(0.6, 1 + agg.appeal / 300);
   const gf = 1 + groupShare(s, 'enthusiasts') * 1.2 + groupShare(s, 'organizers') * 0.8 - groupShare(s, 'casuals') * 0.3;
-  const baseR = 0.032 * enthF * attF * appealMult * gf * mod(s, 'recruitment');
-  const churnRate = (0.0025 + groupShare(s, 'casuals') * 0.005 + Math.max(0, 35 - s.gauges.unity) / 35 * 0.006 + (s.gauges.enthusiasm > 88 ? 0.006 : 0) + (s.gauges.resources < 10 ? 0.004 : 0)) / mod(s, 'retention');
+  const up = (id: string) => s.upgrades?.[id] ?? 0;
+  const baseR = 0.032 * enthF * attF * appealMult * gf * mod(s, 'recruitment') * (1 + 0.1 * up('billboards'));
+  const churnRate = (0.0025 + groupShare(s, 'casuals') * 0.005 + Math.max(0, 35 - s.gauges.unity) / 35 * 0.006 + (s.gauges.enthusiasm > 88 ? 0.006 : 0) + (s.gauges.resources < 10 ? 0.004 : 0)) / mod(s, 'retention') * Math.pow(0.9, up('soup'));
   const repTarget = clamp(0.15 + agg.appeal / 250 - (agg.friction / 400) * (s.gauges.attention / 60), -1, 1) * mod(s, 'reputation');
   let gained = 0;
   let lost = 0;
@@ -800,8 +801,8 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
   // in weekly mode everyone you send out counts as a campaign; there are many more of them, each one quieter
   const campaigns = s.region.reduce((a, id) => a + s.cities[id].organizers, 0) * (s.weekly ? 0.25 : 1);
   drift(s, 'enthusiasm', 42 + agg.commitment * 0.2 + groupShare(s, 'enthusiasts') * 35 - groupShare(s, 'casuals') * 12, 0.03, dt);
-  drift(s, 'unity', 66 - agg.ambiguity * 0.06 - factional * 40 - disgruntled * 7 + groupShare(s, 'founders') * 15 - groupShare(s, 'opportunists') * 20, 0.025, dt);
-  drift(s, 'attention', (s.weekly ? 8 + Math.log10(f2 + 1) * 7 : 14 + Math.log10(f2 + 1) * 9) + agg.visibility * 0.06 + campaigns * 2 - (s.focus === 'rest' && s.weekly ? 15 : 0), s.weekly ? 0.05 : 0.04, dt);
+  drift(s, 'unity', 66 + up('naps') * 2 - agg.ambiguity * 0.06 - factional * 40 - disgruntled * 7 + groupShare(s, 'founders') * 15 - groupShare(s, 'opportunists') * 20, 0.025, dt);
+  drift(s, 'attention', (s.weekly ? 8 + Math.log10(f2 + 1) * 7 : 14 + Math.log10(f2 + 1) * 9) + agg.visibility * 0.06 + campaigns * 2 - (s.focus === 'rest' && s.weekly ? 15 : 0) - up('naps') * 3, s.weekly ? 0.05 : 0.04, dt);
   drift(s, 'resources', 36 + groupShare(s, 'opportunists') * 50 + agg.commerce * 0.05 + (s.flags.dues ? 12 : 0) * mod(s, 'income') - campaigns * 1.5 - (s.flags.departments ?? 0) * 0, 0.03, dt);
 
   // people: influence follows their base of support and their role
@@ -821,13 +822,14 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
 
   // era progression safety nets (cards normally move eras)
   if (s.era === 'founding' && s.movementName && f2 >= 80 && (!s.weekly || s.decisions >= 20)) setEra(s, 'grassroots');
-  if (s.era === 'grassroots' && (f2 >= TIME.regionalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 2) && s.flags.regional_ready == null) {
+  const paced = (n: number) => !s.weekly || s.decisions >= n;
+  if (s.era === 'grassroots' && paced(55) && (f2 >= TIME.regionalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 2) && s.flags.regional_ready == null) {
     s.flags.regional_ready = s.day;
   }
-  if (s.era === 'regional' && (f2 >= TIME.nationalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 4) && s.flags.national_ready == null) {
+  if (s.era === 'regional' && paced(120) && (f2 >= TIME.nationalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 4) && s.flags.national_ready == null) {
     s.flags.national_ready = s.day;
   }
-  if (s.era === 'national' && (f2 >= TIME.internationalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 10) && s.flags.international_ready == null) {
+  if (s.era === 'national' && paced(200) && (f2 >= TIME.internationalFollowers || s.region.filter((id) => s.cities[id].milestone).length >= 10) && s.flags.international_ready == null) {
     s.flags.international_ready = s.day;
   }
 

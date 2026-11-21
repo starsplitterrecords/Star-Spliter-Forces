@@ -11,6 +11,7 @@ import { BRANCH, assignUnit, hasScheduler, pinAll, planWeek, endWeek, isOurs, pi
 import { CARD_BY_ID, CHAR_BY_ID, cardText, centralBelief, charName, choose, followers, render } from '@/story/engine';
 import { type CardInstance, type ChoiceOutcome, type Gauge, GAUGES, type StoryState } from '@/story/types';
 import { Portrait, anonSpec } from './Portrait';
+import { IDLE, UPGRADES, assemblyName, blocked, buy, canAuto, canBuy, lvl, upgradeCost, weeklyIncome } from '@/story/idle';
 import { CustomsSheet, HistorySheet, PeopleSheet, land } from './StorySheets';
 
 const ERA_LABEL: Record<string, string> = { founding: 'Founding Era', grassroots: 'Grassroots Era', regional: 'Regional Era', national: 'National Era', international: 'International Era', world: 'World Era' };
@@ -54,10 +55,10 @@ function Gauges({ s, preview, delta }: { s: StoryState; preview?: Partial<Record
   );
 }
 
-type Sheet = 'people' | 'customs' | 'history' | 'menu' | null;
+type Sheet = 'people' | 'customs' | 'history' | 'treasury' | 'menu' | null;
 
 // what the weekly strip shows first: the funny bits, then gains and losses
-const rank = (icon: string) => ({ '✨': 0, '🏳️': 1, '⚑': 1, '🕳️': 2, '🏠': 3, '🛋️': 3, '↪': 4 } as Record<string, number>)[icon] ?? 5;
+const rank = (icon: string) => ({ '✨': 0, '🏛️': 0.5, '🚌': 1, '🏳️': 1, '⚑': 1, '🕳️': 2, '🏠': 3, '🛋️': 3, '↪': 4 } as Record<string, number>)[icon] ?? 5;
 
 export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; onAbandon: () => void; onExit: () => void }) {
   const [, setV] = useState(0);
@@ -253,19 +254,60 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
     bump();
   };
 
-  const doEndWeek = () => {
+  const doEndWeek = (quiet = false) => {
     endWeek(s);
-    play('news');
+    s.lastTick = Date.now();
+    if (!quiet) {
+      play('news');
+      setTown(null);
+      setSelected(null);
+    }
     setShowWeek(true);
-    setTown(null);
-    setSelected(null);
     save();
     bump();
   };
 
+  // Bev keeps the weeks moving: one every IDLE.weekMs while the game is open, and some while you were away
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    if (s.auto && s.lastTick && !s.ended) {
+      const missed = Math.min(IDLE.offlineWeeks, Math.floor((Date.now() - s.lastTick) / IDLE.weekMs));
+      if (missed >= 2) {
+        const f0 = followers(s);
+        const m0 = s.money ?? 0;
+        const d0 = s.decisions;
+        let n = 0;
+        while (n < missed && !blocked(s)) {
+          endWeek(s);
+          n++;
+        }
+        s.away_report = { weeks: n, joined: followers(s) - f0, money: Math.round((s.money ?? 0) - m0), handled: s.decisions - d0 };
+        s.lastTick = Date.now();
+        save();
+        setV((v) => v + 1);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const clockRef = useRef(() => {});
+  clockRef.current = () => {
+    setNow(Date.now());
+    if (!s.auto || s.ended || open || outcome || blocked(s)) return;
+    s.lastTick ??= Date.now();
+    if (Date.now() - s.lastTick >= IDLE.weekMs) doEndWeek(true);
+  };
+  useEffect(() => {
+    const t = setInterval(() => clockRef.current(), 500);
+    return () => clearInterval(t);
+  }, []);
+
   const f = followers(s);
   const waiting = s.inbox.length;
   const urgent = s.inbox.filter((i) => i.priority >= 50 || CARD_BY_ID.get(i.cardId)?.type === 'crisis');
+  const income = weeklyIncome(s, f);
+  const growth = s.lastWeek && s.lastWeek.week === s.week - 1 ? s.lastWeek.joined - s.lastWeek.lost : 0;
+  const clockPct = s.auto && s.lastTick ? Math.min(100, ((now - s.lastTick) / IDLE.weekMs) * 100) : 0;
+  const paused = s.auto && blocked(s);
 
   // ------------------------------------------------ the card in front of you
   const speakerId = outcome ? outcome.speaker : inst?.speaker;
@@ -280,7 +322,11 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
           <Gauges s={s} preview={hover != null && card ? card.choices[hover].effects.gauges : undefined} delta={outcome?.gaugeDelta} />
           <div className="mt-1 flex items-center justify-between pb-2 text-xs text-ink-300">
             <span>{s.customs.weekly_meeting?.values.day ?? 'Tuesday'}, week {s.week} · {ERA_LABEL[s.era] ?? s.era}</span>
-            <span className="tabular">{s.movementName ?? 'The group'} · {fmt(f)} members · {known.filter((id) => isOurs(s, id) && s.cities[id].followers > 0).length} towns</span>
+            <span className="tabular" title={`${f.toLocaleString()} members`}>
+              {s.movementName ?? 'The group'} · <b className="text-ink-100">{fmt(f)}</b> members{growth > 0 ? <span className="text-emerald-300"> +{fmt(growth)}/wk</span> : null} ·{' '}
+              <button className="text-brass-300 underline-offset-2 hover:underline" onClick={() => setSheet('treasury')}>${fmt(Math.floor(s.money ?? 0))}</button>
+              <span className="text-ink-400"> +${fmt(income)}/wk</span>
+            </span>
           </div>
         </div>
       </header>
@@ -335,7 +381,7 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                       <g key={id} onClick={() => tapTown(id)} style={{ cursor: 'pointer' }} role="button" aria-label={`${city(id).name}${pinsHere.length ? `, ${pinsHere.length} problem${pinsHere.length > 1 ? 's' : ''}` : ''}`}>
                         <circle cx={x} cy={y} r={r + 10 / k} fill="transparent" />
                         {c.variant && c.followers > 0 && <circle cx={x} cy={y} r={r + 3.5 / k} fill="none" stroke={variantColor(c.variant)} strokeWidth={2.5 / k} opacity="0.9" />}
-                        <circle cx={x} cy={y} r={r} fill={fill} stroke={id === s.hometown ? '#f4eedf' : selected ? '#5ec8a0' : 'none'} strokeWidth={(id === s.hometown ? 2.5 : 1.5) / k} strokeDasharray={selected && id !== s.hometown ? `${3 / k} ${2 / k}` : undefined} />
+                        <circle cx={x} cy={y} r={r} fill={fill} stroke={id === s.hometown ? '#f4eedf' : selected ? '#5ec8a0' : c.assembly ? '#f4d27a' : 'none'} strokeWidth={(id === s.hometown ? 2.5 : selected ? 1.5 : 0.6 + (c.assembly ?? 0) * 0.6) / k} strokeDasharray={selected && id !== s.hometown ? `${3 / k} ${2 / k}` : undefined} />
                         {labelled.has(id) && (
                           <text x={x + r + 5 / k} y={y + 4 / k} fontSize={12 / k} fill={rival ? rival.color : '#d0d5df'} style={{ pointerEvents: 'none' }}>
                             {city(id).name}
@@ -368,6 +414,19 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                   </div>
                 )}
               </div>
+
+              {/* while you were away */}
+              {s.away_report && (
+                <div className="mt-2 rounded-lg border border-brass-500/50 bg-brass-400/10 px-3 py-2 text-sm" role="status">
+                  <div className="flex items-start justify-between gap-2">
+                    <span>
+                      While you were away, Bev ran {s.away_report.weeks} week{s.away_report.weeks === 1 ? '' : 's'}: <b>+{fmt(s.away_report.joined)}</b> members, <b>+${fmt(s.away_report.money)}</b> in dues
+                      {s.away_report.handled ? `, and ${s.away_report.handled} problems were handled for you` : ''}.
+                    </span>
+                    <button className="text-xs text-ink-400" onClick={() => { s.away_report = undefined; save(); bump(); }} aria-label="Dismiss">✕</button>
+                  </div>
+                </div>
+              )}
 
               {/* last week, in brief */}
               {showWeek && s.lastWeek && s.lastWeek.week === s.week - 1 && (
@@ -478,17 +537,49 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                 </section>
               )}
 
-              <button className="btn-primary mt-4 w-full py-3 text-base" onClick={doEndWeek} disabled={urgent.length > 0}>
-                {urgent.length ? 'Deal with the urgent matter first' : `End the week →`}
+              {canAuto(s) && (
+                <div className="mt-4 rounded-lg border border-ink-700 bg-ink-900 p-3">
+                  <label className="flex items-center justify-between gap-3 text-sm">
+                    <span>
+                      <b>Let Bev run the weeks</b>
+                      <span className="block text-xs text-ink-400">A week every {IDLE.weekMs / 1000} seconds while you watch, and up to {IDLE.offlineWeeks} weeks while you are away. She stops for anything only you can decide.</span>
+                    </span>
+                    <input
+                      type="checkbox"
+                      className="h-5 w-5 accent-[#e8cf8a]"
+                      checked={!!s.auto}
+                      onChange={(e) => {
+                        s.auto = e.target.checked;
+                        s.lastTick = Date.now();
+                        save();
+                        bump();
+                      }}
+                      aria-label="Let Bev run the weeks"
+                    />
+                  </label>
+                  {s.auto && (
+                    <div className="mt-2">
+                      <div className="h-1.5 rounded-full bg-ink-700"><div className="h-1.5 rounded-full bg-brass-400 transition-[width] duration-500" style={{ width: `${paused ? 0 : clockPct}%` }} /></div>
+                      <div className="mt-1 text-[11px] text-ink-400">{paused ? 'Paused: something is waiting that only you can decide.' : `Next week in ${Math.max(0, Math.ceil((IDLE.weekMs - (now - (s.lastTick ?? now))) / 1000))}s`}</div>
+                    </div>
+                  )}
+                </div>
+              )}
+              <button className="btn-primary mt-3 w-full py-3 text-base" onClick={() => doEndWeek()} disabled={urgent.length > 0}>
+                {urgent.length ? 'Deal with the urgent matter first' : s.auto ? 'Skip to next week →' : 'End the week →'}
               </button>
-              {waiting > 0 && !urgent.length && <p className="mt-1 text-center text-[11px] text-ink-400">Problems left for more than a week get worse, and people remember who kept them waiting.</p>}
+              {waiting > 0 && !urgent.length && (
+                <p className="mt-1 text-center text-[11px] text-ink-400">
+                  {s.auto || lvl(s, 'records') ? 'Routine problems you leave are handled by your administrators. Story moments wait for you.' : 'Problems left for more than a week go to an administrator if you have one, or get worse if you don’t.'}
+                </p>
+              )}
             </>
           )}
         </div>
       </main>
 
-      <nav className="grid grid-cols-4 border-t border-ink-800 bg-ink-900" aria-label="Movement">
-        {([['people', 'People', '👥'], ['customs', 'Customs', '📜'], ['history', 'History', '📖'], ['menu', 'Menu', '⋯']] as const).map(([id, label, icon]) => (
+      <nav className="grid grid-cols-5 border-t border-ink-800 bg-ink-900" aria-label="Movement">
+        {([['people', 'People', '👥'], ['treasury', 'Treasury', '💰'], ['customs', 'Customs', '📜'], ['history', 'History', '📖'], ['menu', 'Menu', '⋯']] as const).map(([id, label, icon]) => (
           <button key={id} className="flex min-h-[52px] flex-col items-center justify-center text-[11px] text-ink-200 hover:text-brass-300" onClick={() => setSheet(id)}>
             <span className="text-lg" aria-hidden>{icon}</span>
             {label}
@@ -514,7 +605,7 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                     <button className="btn-ghost btn-sm" onClick={() => setTown(null)} aria-label="Close">✕</button>
                   </div>
                   <ul className="mt-3 space-y-1 text-sm">
-                    <li>{c.followers ? `${fmt(c.followers)} members` : 'Nobody here has joined yet.'}</li>
+                    <li>{c.followers ? `${fmt(c.followers)} members` : 'Nobody here has joined yet.'}{c.assembly ? ` · local ${assemblyName(c.assembly)}` : ''}</li>
                     {rival && <li style={{ color: rival.color }}>Held by {rival.name}.{(c.contest ?? 0) > 0 ? ` Your people have contested it for ${c.contest} week${c.contest === 1 ? '' : 's'}.` : ' Send people here to win it over.'}</li>}
                     {belief && c.followers > 0 && <li className="text-ink-300">Here they do {belief.phrase} {c.variant ?? 'the way you started it'}.</li>}
                     <li className="text-ink-300">{here.length ? `This week: ${here.map((u) => `${u.emoji} ${u.label}`).join(', ')}` : 'None of your people are here.'}</li>
@@ -600,12 +691,44 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
         <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/60 sm:items-center" onMouseDown={(e) => e.target === e.currentTarget && setSheet(null)}>
           <div className="fadeup max-h-[88vh] w-full overflow-y-auto rounded-t-2xl border border-ink-700 bg-ink-900 p-5 scroll-thin sm:max-w-2xl sm:rounded-2xl" role="dialog" aria-modal="true" aria-label={sheet}>
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="font-serif text-xl font-bold">{{ people: 'People', customs: 'Customs & Beliefs', history: 'History', menu: 'Menu' }[sheet]}</h2>
+              <h2 className="font-serif text-xl font-bold">{{ people: 'People', treasury: 'Treasury', customs: 'Customs & Beliefs', history: 'History', menu: 'Menu' }[sheet]}</h2>
               <button className="btn-ghost btn-sm" onClick={() => setSheet(null)} aria-label="Close">✕</button>
             </div>
             {sheet === 'people' && <PeopleSheet s={s} />}
             {sheet === 'customs' && <CustomsSheet s={s} />}
             {sheet === 'history' && <HistorySheet s={s} />}
+            {sheet === 'treasury' && (
+              <div>
+                <p className="text-sm text-ink-300">
+                  <b className="text-brass-300">${fmt(Math.floor(s.money ?? 0))}</b> in the treasury. Members pay dues of about ${fmt(income)} a week{s.chars.rolf?.present ? ', which Rolf makes go further' : ''}. Invest in what your people are good at.
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {UPGRADES.map((u) => {
+                    const ok = canBuy(s, u);
+                    const level = lvl(s, u.id);
+                    const who = CHAR_BY_ID.get(u.who);
+                    return (
+                      <li key={u.id} className="flex items-center gap-3 rounded-lg border border-ink-700 p-3">
+                        <span className="text-2xl" aria-hidden>{who?.emoji}</span>
+                        <div className="min-w-0 flex-1">
+                          <div className="font-semibold">{u.name} <span className="text-xs text-ink-400">level {level}/{u.max}</span></div>
+                          <div className="text-xs text-ink-400">{u.blurb}</div>
+                        </div>
+                        <button
+                          className={ok.ok ? 'btn-primary btn-sm whitespace-nowrap' : 'btn-ghost btn-sm whitespace-nowrap opacity-60'}
+                          disabled={!ok.ok}
+                          title={ok.why}
+                          onClick={() => { if (buy(s, u.id)) { play('click'); save(); bump(); } }}
+                        >
+                          {level >= u.max ? 'Built' : ok.why && ok.why.startsWith('Needs') ? ok.why : `$${fmt(upgradeCost(s, u))}`}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <p className="mt-3 text-xs text-ink-400">Local assemblies grow on their own once a town has {50} members: Circle, Assembly, Chapter, Society, Institute, Capital. From Assembly upward they send people to start the next town over.</p>
+              </div>
+            )}
             {sheet === 'menu' && (
               <div className="flex flex-col gap-2">
                 <button className="btn-ghost" onClick={() => setSheet(null)}>Resume</button>

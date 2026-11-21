@@ -10,6 +10,7 @@ import {
   requirementsMet, revealNext, rngOf,
 } from './engine';
 import { recordMemory } from './memory';
+import { delegate, growAssemblies, lvl, needsYou, weeklyIncome } from './idle';
 import type { CardDef, CardInstance, StoryState, WeekReport } from './types';
 
 export const BRANCH = 25; // members that make a town one of ours on the map
@@ -241,6 +242,10 @@ const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 
 /** End the week: your people do their work, the map changes, and new problems turn up where they are. */
 export function endWeek(s: StoryState): WeekReport {
+  // routine problems go to an administrator: the ones left from last week, or all of them once Agnes keeps
+  // records or the weeks are running on their own
+  const handled: WeekReport = { week: s.week, lines: [], joined: 0, lost: 0 };
+  delegate(s, handled, lvl(s, 'records') > 0 || !!s.auto);
   if (s.flags.bev_rest != null) {
     s.focus = 'rest';
     delete s.flags.bev_rest;
@@ -248,7 +253,7 @@ export function endWeek(s: StoryState): WeekReport {
   }
   if (s.planned !== s.week) planWeek(s);
   const rng = rngOf(s);
-  const out: WeekReport = { week: s.week, lines: [], joined: 0, lost: 0, gains: {} };
+  const out: WeekReport = { week: s.week, lines: [...handled.lines], joined: 0, lost: 0, gains: {} };
   const scheduler = hasScheduler(s);
   const resting = scheduler && s.focus === 'rest';
   if (resting) {
@@ -266,7 +271,8 @@ export function endWeek(s: StoryState): WeekReport {
   }
 
   // 1. problems nobody answered for a whole week get worse
-  const stale = s.inbox.filter((i) => (i.week ?? s.week) < s.week && i.priority < 50 && CARD_BY_ID.get(i.cardId)?.type !== 'crisis');
+  // (story moments and emergencies wait for you instead)
+  const stale = s.inbox.filter((i) => (i.week ?? s.week) < s.week && !needsYou(CARD_BY_ID.get(i.cardId), i));
   for (const i of stale) {
     s.inbox = s.inbox.filter((x) => x !== i);
     const where = city(i.city ?? s.hometown).name;
@@ -373,6 +379,12 @@ export function endWeek(s: StoryState): WeekReport {
       }
     }
   }
+
+  // the assemblies get on with it, and the dues come in
+  growAssemblies(s, rng, out);
+  const income = weeklyIncome(s, followers(s));
+  s.money = (s.money ?? 0) + income;
+  out.income = income;
 
   // 5. territory
   spawnRivals(s, out);

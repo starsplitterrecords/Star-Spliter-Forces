@@ -65,6 +65,24 @@ Older saves continue in the original continuous mode, described below.
 | "The tall chairs thing is weird. Soupism is more fun than custom." | Tall chairs removed. The naming card now always suggests an *-ism* (Soupism, Napism). |
 | "Attention is the thing that has ended my runs most often." | In weekly mode attention drifts to a lower level, and *Lie low* is a lever against it. Bev's week-off card appears when attention passes 60. In `content:weekly`, 0 of 12 automated games ended by week 70 (it had been 6 of 8). |
 
+### The idle layer: the movement starts to run itself (`src/story/idle.ts`)
+
+Each character has a job in the machine.
+
+| Who | Job | In the game |
+|---|---|---|
+| Bev | Runs the weeks | Once she runs the schedule, *Let Bev run the weeks* makes a week pass every 30 seconds while the game is open. Up to 48 weeks pass while you are away, and a one-line summary greets you when you return. The clock stops for anything only you can decide. |
+| Dez | Recruits | Opens new towns with the gas money. *Dez's billboards* add +10% recruitment per level. |
+| Priya and Gary | The heart and soul | *Priya's soup kitchens* make people stay (−10% drift-away per level). *Gary's nap rooms* keep things calm (lower attention, higher unity). |
+| Martin, Rolf, Agnes (and Constance) | Administer | Routine problems you leave waiting are handled by the most influential administrator, in their own style. Rolf favors money, Agnes purity, Martin order. Story moments, naming choices, crises and exit scenes always wait for you. *Martin's welcome committees* make assemblies grow faster. *Rolf's dues collection* raises income. *Agnes's record keeping* has routine problems handled the week they arrive, more evenly. |
+| The local assemblies | Develop on their own | Any town with 50 members forms a local **Circle**. It levels up with membership: Assembly at 300, Chapter at 1,500, Society at 8,000, Institute at 40,000, Capital at 200,000. Each assembly compounds its own membership every week (faster at higher levels, slowing as the town fills). From Assembly level up, assemblies send people to start the next empty town over. That is the exponential spread you see on the map. |
+
+**The treasury.** Members pay dues (about $0.05 a week each, ×1.5 with Rolf, plus his upgrades). Investments cost 3.2× more at each level.
+
+**The story keeps its pace.** Growth can go exponential, but each era transition also needs enough decisions behind it in weekly mode (55 for regional, 120 for national, 200 for international). That way the written story isn't skipped.
+
+`content:weekly` shows the current numbers. Eras start at about weeks 5, 16, 32 and 51. Membership roughly doubles every few weeks once assemblies take hold, and the region fills before each era widens the map. All 8 automated games survived to week 70.
+
 ## 1. Loop (continuous mode, older saves)
 
 1. **Someone needs your attention.** The next card in your inbox comes from a co-founder, a member or an outsider.

@@ -2,6 +2,7 @@
 import { CARD_BY_ID, callMeeting, choose, currentCard, advanceDays, eligibleCards } from './engine';
 import { Rng } from './rng-shim';
 import * as camp from './campaign';
+import * as idle from './idle';
 import { CHAR_BY_ID } from './engine';
 import type { StoryState } from './types';
 
@@ -10,6 +11,8 @@ export type Policy = 'random' | 'pleaser' | 'order' | 'expansion' | 'stubborn';
 export function pickChoice(s: StoryState, policy: Policy, rng: Rng): 0 | 1 {
   const inst = currentCard(s)!;
   const card = CARD_BY_ID.get(inst.cardId)!;
+  // an accommodating leader always takes Bev up on the schedule
+  if (policy === 'pleaser' && card.id.startsWith('grass.bev_')) return 0;
   const score = (i: 0 | 1) => {
     const e = card.choices[i].effects;
     const serves = e.serves ?? [];
@@ -120,5 +123,11 @@ export function playWeeks(s: StoryState, weeks: number, policy: Policy, rng: Rng
       choose(s, inst.uid, i, card.choices[i].input ? 'The Lentil Fellowship' : undefined);
     }
     if (!s.ended) camp.endWeek(s);
+    // the idle layer: let Bev run the clock, and invest whatever the treasury allows
+    if (idle.canAuto(s)) s.auto = true;
+    for (let k = 0; k < 4; k++) {
+      const next = idle.UPGRADES.filter((u) => idle.canBuy(s, u).ok).sort((a, b) => idle.upgradeCost(s, a) - idle.upgradeCost(s, b))[0];
+      if (!next || !idle.buy(s, next.id)) break;
+    }
   }
 }

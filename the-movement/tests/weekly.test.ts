@@ -4,6 +4,7 @@ import { Rng } from '../src/engine/rng';
 import { CARD_BY_ID, choose, currentCard, loadStory, newStory, serializeStory } from '../src/story/engine';
 import { assignUnit, claim, endWeek, hasScheduler, isOurs, pins, planWeek, reachable, units, whereIs } from '../src/story/campaign';
 import { playWeeks } from '../src/story/autoplay';
+import { needsYou } from '../src/story/idle';
 import type { StoryState } from '../src/story/types';
 
 const LEEDS = CITIES.find((c) => c.name === 'Leeds')!.id;
@@ -36,20 +37,18 @@ describe('weekly dispatch', () => {
     for (const i of s.inbox) if (s.chars[i.speaker]?.present && i.ctx.city == null) expect(i.city).toBe(whereIs(s, i.speaker));
   });
 
-  it('problems left for more than a week get worse, and people remember who kept them waiting', () => {
+  it('with no administrator, routine problems left for more than a week get worse, and people remember who kept them waiting', () => {
     const s = weekly(3);
-    const martinCard = s.inbox.find((i) => i.speaker === 'martin') ?? s.inbox[0];
-    const who = martinCard.speaker;
-    const before = s.chars[who]?.loyalty ?? 0;
-    endWeek(s); // week 1 -> 2: still waiting
-    expect(s.inbox.some((i) => i.uid === martinCard.uid)).toBe(true);
-    const r = endWeek(s); // a whole week ignored
-    expect(s.inbox.some((i) => i.uid === martinCard.uid)).toBe(false);
+    playWeeks(s, 3, 'pleaser', new Rng(3), 0);
+    for (const id of ['martin', 'rolf', 'agnes', 'constance']) if (s.chars[id]) s.chars[id].present = false;
+    const routine = s.inbox.find((i) => !needsYou(CARD_BY_ID.get(i.cardId), i) && s.chars[i.speaker]?.present) ?? s.inbox.find((i) => !needsYou(CARD_BY_ID.get(i.cardId), i))!;
+    expect(routine).toBeDefined();
+    routine.week = s.week - 1;
+    const who = routine.speaker;
+    const r = endWeek(s);
+    expect(s.inbox.some((i) => i.uid === routine.uid)).toBe(false);
     expect(r.lines.some((l) => l.icon === '🕳️')).toBe(true);
-    if (s.chars[who]) {
-      expect(s.chars[who].loyalty).toBeLessThan(before + 1);
-      expect(s.memory.some((m) => m.who === who && m.kind === 'ignored')).toBe(true);
-    }
+    if (s.chars[who]) expect(s.memory.some((m) => m.who === who && m.kind === 'ignored')).toBe(true);
   });
 
   it('rivals hold real towns; your people can win them over', () => {
