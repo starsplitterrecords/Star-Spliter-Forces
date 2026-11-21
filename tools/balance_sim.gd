@@ -11,12 +11,16 @@ func _ready() -> void:
 	var seed_value: int = int(args[2]) if args.size() > 2 else 7
 	var plan: String = args[3] if args.size() > 3 else "explore"
 	var destination: String = args[4] if args.size() > 4 else "black_drift_reach"
+	var stop: String = args[5] if args.size() > 5 else ""
+	var attuned: PackedStringArray = (args[6] if args.size() > 6 else "").split(",", false)
 	Profile.save_path = "user://balance_profile.json"
 	Profile.data = Profile.defaults()
 	Profile.data["forces_attuned"] = [force, "pulse_width_codex"]
+	for extra: String in attuned:
+		Profile.data["forces_attuned"].append(extra)
 	Profile.data["unlocked_characters"] = GameData.CHARACTERS.keys()
 	var run: GameRun = GameRun.new()
-	run.setup({"character": character, "force": force, "seed": seed_value, "destination": destination})
+	run.setup({"character": character, "force": force, "seed": seed_value, "destination": destination, "stop": stop})
 	run.scripted_input = true
 	run.debug_enabled = false
 	add_child(run)
@@ -35,7 +39,11 @@ func _ready() -> void:
 	var boss_t: float = -1.0
 	var boss_end: float = -1.0
 	print("t     lvl kills enemies hp      state      region            target")
+	var stop_t: float = -1.0
 	while not run.ended and run.elapsed < 1500.0:
+		if run.stop_complete and stop_t < 0.0:
+			stop_t = run.elapsed
+			print("  STOP COMPLETE at %s (level %d, hull %d/%d)" % [GameData.format_time(run.elapsed), run.level, int(run.player.hp), int(run.player.max_hp)])
 		if run.choosing:
 			var opts: Array = run.hud.level_options
 			# Prefer evolutions, then weapons, then passives — like a typical player.
@@ -99,6 +107,8 @@ func _ready() -> void:
 	keys.sort_custom(func(a: String, b: String) -> bool: return hist[a] > hist[b])
 	for k: String in keys.slice(0, 8):
 		print("   NODES ", hist[k], "  ", k)
+	if stop != "":
+		print("STOP %s: %s%s" % [stop, "COMPLETE at " + GameData.format_time(stop_t) if stop_t >= 0.0 else "NOT COMPLETE", "" if run.player.alive else "  (explorer lost)"])
 	print("RESULT %s at %s, level %d, kills %d, discoveries %s, lowest hull %d, weapons %s, harmonies %s" % [String(result.get("outcome", "timeout")), GameData.format_time(run.elapsed), run.level, run.kills, str(run.discoveries), int(hp_min), str(run.weapons.weapons), str(run.weapons.harmonies)])
 	get_tree().quit()
 
@@ -107,6 +117,8 @@ func _goal(run: GameRun, plan: String) -> Vector2:
 		# Kite around the boss at medium range.
 		var away: Vector2 = run.boss.position.direction_to(run.player.position)
 		return run.boss.position + away.rotated(0.6) * 300.0
+	if not run.mission.is_empty():
+		return _stop_goal(run)
 	var enough: bool = run.signals_found() >= run.goal_signals() and (plan == "extract" or run.elapsed > 720.0)
 	if enough or run.player.hp < run.player.max_hp * 0.25:
 		if run.at_gate() and run.climax_available() and plan == "explore" and run.player.hp > run.player.max_hp * 0.5:
@@ -147,3 +159,40 @@ func _goal(run: GameRun, plan: String) -> Vector2:
 		# Everything charted: patrol the drift, waiting for echoes.
 		return run.world.gate * 0.4 + Vector2(cos(run.elapsed * 0.05) * run.world.half_size.x * 0.5, sin(run.elapsed * 0.05) * run.world.half_size.y * 0.5)
 	return best
+
+## Bot behaviour on a Corridor stop: do the one objective, then go home.
+func _stop_goal(run: GameRun) -> Vector2:
+	var pp: Vector2 = run.player.position
+	if run.stop_complete:
+		if run.at_gate() and not run.extract_armed:
+			run.request_extract()
+		return run.world.gate
+	var o: Dictionary = run.mission["objective"]
+	match String(o["type"]):
+		"survive", "boss":
+			# Circle the home beacon, sweeping up shards.
+			return run.world.gate + Vector2.from_angle(run.elapsed * 0.35) * 420.0
+		"elite":
+			for e: ForceEnemy in run.enemies:
+				if is_instance_valid(e) and not e.dead and e.kind == String(o["enemy"]):
+					var away: Vector2 = e.position.direction_to(pp)
+					return e.position + away.rotated(0.5) * 360.0
+			return run.world.gate + Vector2.from_angle(run.elapsed * 0.35) * 420.0
+	if run.power_needed() > 0:
+		# Charge the tuner near home first.
+		return run.world.gate + Vector2.from_angle(run.elapsed * 0.35) * 420.0
+	var relay: Dictionary = run.pois.nearest_unclaimed(pp, ["relay"], true)
+	if not relay.is_empty():
+		return relay.pos
+	var d: Dictionary = GameData.DISCOVERIES[String(o["id"])]
+	var want: String = String(d.get("hidden", ""))
+	if want == "" and String(d.get("lock", "")) == "resonance":
+		want = "RESONANCE"
+	if want in ["FRACTURE", "RESONANCE"] and run.force_state != want:
+		var site: Dictionary = run.pois.nearest_unclaimed(pp, ["rift" if want == "FRACTURE" else "resonator"], false)
+		if not site.is_empty():
+			return site.pos
+	var t: Array = run.objective_target()
+	if not t.is_empty():
+		return t[0]
+	return run.world.gate

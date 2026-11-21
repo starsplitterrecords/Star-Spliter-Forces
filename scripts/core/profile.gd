@@ -58,6 +58,7 @@ static func defaults() -> Dictionary:
 		"mastery": {},
 		"workshop": {},
 		"seen": {},
+		"chart": {"done": {}},
 		"last_character": "ella_venn",
 		"last_destination": "black_drift_reach",
 		"settings": default_settings(),
@@ -173,6 +174,21 @@ static func migrate(raw: Dictionary) -> Dictionary:
 		if out["mastery"].has(old_id) and not out["mastery"].has(retired[old_id]):
 			out["mastery"][retired[old_id]] = out["mastery"][old_id]
 		out["mastery"].erase(old_id)
+	# Saves from before the Corridor Chart: credit every stop whose objective
+	# was already achieved, so nothing earned is taken away.
+	if not raw.is_empty() and not raw.has("chart"):
+		var done: Dictionary = out["chart"]["done"]
+		for st: Dictionary in GameData.CHART:
+			var o: Dictionary = st["objective"]
+			if String(o["type"]) == "discover" and out["discovered"].has(String(o["id"])):
+				done[String(st["id"])] = true
+		if int(out["stats"]["expeditions"]) > 0:
+			done["first_light"] = true
+			done["hold_the_lane"] = true
+		if "abby_saville" in out["unlocked_characters"]:
+			done["dreadnought"] = true
+		if int(out["stats"]["completions"]) > 0:
+			done["the_silence"] = true
 	if typeof(raw.get("active_run")) == TYPE_DICTIONARY:
 		out["active_run"] = raw["active_run"]
 	if not "ella_venn" in out["unlocked_characters"]:
@@ -320,6 +336,58 @@ func record_expedition(result: Dictionary) -> Dictionary:
 	data.erase("active_run")
 	save()
 	return {"currency": currency, "unlocks": unlocks, "new_discoveries": new_discoveries, "mastery_levels": int(m["level"]) - before}
+
+# ---------------------------------------------------------------- corridor chart
+
+func stop_done(id: String) -> bool:
+	return bool((data["chart"]["done"] as Dictionary).get(id, false))
+
+func stop_available(id: String) -> bool:
+	var st: Dictionary = GameData.chart_stop(id)
+	if st.is_empty():
+		return false
+	if st.has("side_of"):
+		return stop_done(String(st["side_of"]))
+	var n: int = GameData.chart_number(id)
+	return n <= 1 or stop_done(String(GameData.chart_main()[n - 2]["id"]))
+
+## First main stop not yet relit ("" when the corridor is fully open).
+func next_stop() -> String:
+	for st: Dictionary in GameData.chart_main():
+		if not stop_done(String(st["id"])):
+			return String(st["id"])
+	return ""
+
+func stops_done_count() -> int:
+	var n: int = 0
+	for st: Dictionary in GameData.CHART:
+		if stop_done(String(st["id"])):
+			n += 1
+	return n
+
+func has_feature(feature: String) -> bool:
+	for st: Dictionary in GameData.CHART:
+		if feature in (st["grants"] as Dictionary).get("features", []) and stop_done(String(st["id"])):
+			return true
+	return false
+
+## Relights a stop's beacon: marks it done, applies its grants and saves at
+## once (a stop stays won even if the explorer is lost on the way home).
+## Returns true the first time.
+func complete_stop(id: String) -> bool:
+	var st: Dictionary = GameData.chart_stop(id)
+	if st.is_empty() or stop_done(id):
+		return false
+	data["chart"]["done"][id] = true
+	var grants: Dictionary = st["grants"]
+	for c: Variant in grants.get("characters", []):
+		if not String(c) in data["unlocked_characters"]:
+			data["unlocked_characters"].append(String(c))
+	for d: Variant in grants.get("destinations", []):
+		if not String(d) in data["unlocked_destinations"]:
+			data["unlocked_destinations"].append(String(d))
+	save()
+	return true
 
 ## Mid-run checkpoint: a result-shaped snapshot of the expedition in progress.
 func checkpoint_run(snapshot: Dictionary) -> void:

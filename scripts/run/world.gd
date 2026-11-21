@@ -17,6 +17,7 @@ var beacons: Array = [] # corridor safe-volume beacons: {pos, r}
 var chunk_items: Dictionary = {} # Vector2i -> Array of draw ops
 var region_ids: Array = []
 var gate: Vector2 = Vector2.ZERO
+var gate_override: Variant = null # a Corridor stop's home beacon position
 var anim: float = 0.0
 
 class Chunk:
@@ -84,7 +85,7 @@ func build(dest_id: String) -> void:
 	destination_id = dest_id
 	dest = GameData.DESTINATIONS[dest_id]
 	half_size = dest["half_size"]
-	gate = dest["gate"]
+	gate = dest["gate"] if gate_override == null else Vector2(gate_override)
 	region_ids = dest["regions"]
 	rng.seed = int(dest["seed"])
 	_add_starfield()

@@ -31,6 +31,11 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 		var rid: String = String(d.get("region", ""))
 		if not GameData.discovery_in_destination(id, world.destination_id):
 			continue
+		# A Corridor stop carries only its own discoveries: one clear goal.
+		var mission: Dictionary = run.mission if run else {}
+		if not mission.is_empty() and not id in mission["discoveries"]:
+			continue
+		var is_target: bool = not mission.is_empty() and String(mission["objective"].get("id", "")) == id
 		var col: Color = Color("cfe9ff")
 		if d.has("color"):
 			col = d["color"]
@@ -46,14 +51,19 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 		var pos: Vector2 = GameData.discovery_position(id)
 		# Seeded variation: regional discoveries move within their region each
 		# expedition, so the landmarks stay familiar but the hunt is new.
-		if rid != "" and not bool(d.get("fixed", false)) and not bool(d.get("moving", false)) and rid != gate_region:
+		if rid != "" and not bool(d.get("fixed", false)) and not bool(d.get("moving", false)) and (rid != gate_region or (not mission.is_empty() and rid != "array_gate")):
 			var region3: Dictionary = GameData.REGIONS[rid]
 			if String(region3["shape"]) == "circle":
 				pos = world.random_open_point_near(region3["center"], 120.0, float(region3["radius"]) * 0.7, rng)
+				# Keep a stop's sites a real flight away from its home beacon.
+				for attempt in 12:
+					if pos.distance_to(world.gate) > 650.0:
+						break
+					pos = world.random_open_point_near(region3["center"], 120.0, float(region3["radius"]) * 0.7, rng)
 		var poi: Dictionary = add({"id": id, "kind": String(d["kind"]), "pos": world.resolve(pos, 10.0),
 			"title": String(d["title"]), "hidden": String(d.get("hidden", "")), "color": col, "data": d,
 			"radius": 70.0 if String(d["kind"]) in ["signal", "character"] else 56.0,
-			"repeat": known_before, "known": rid == gate_region and String(d["kind"]) == "signal", "lock": String(d.get("lock", ""))})
+			"repeat": known_before, "known": (rid == gate_region and String(d["kind"]) == "signal") or (is_target and String(d.get("hidden", "")) == ""), "lock": String(d.get("lock", ""))})
 		if bool(d.get("moving", false)):
 			var region: Dictionary = GameData.REGIONS[rid]
 			poi["path_a"] = poi.pos
@@ -142,6 +152,10 @@ func step(delta: float, player: ForcePlayer, scanner_range: float) -> void:
 		if String(p.kind) == "resonator" and bool(p.claimed):
 			continue
 		if String(p.kind) == "camp":
+			continue
+		if inside and run.is_stop_target(String(p.id)) and run.power_needed() > 0:
+			# The tuner is not charged yet: nothing starts, nothing is spent.
+			p.blocked = "TUNER NEEDS POWER — collect %d more shards" % run.power_needed()
 			continue
 		if inside:
 			if tune > 0.0 and not bool(p.get("tuning_started", false)) and String(p.kind) in ["signal", "character"]:
@@ -273,6 +287,21 @@ func _draw() -> void:
 		draw_arc(bp, float(b.r), anim * 0.5, anim * 0.5 + TAU, 40, Color(0.3, 1.0, 0.55, 0.25), 2.0)
 		draw_rect(Rect2(bp - Vector2(5, 14), Vector2(10, 28)), Color("1b3a2a"))
 		draw_circle(bp + Vector2(0, -16), 5.0 + sin(anim * 3.0 + bp.x) * 1.5, Color(0.4, 1.0, 0.6, 0.9))
+	if run.stop_id != "" and run.world.gate.length() > 10.0 and view.has_point(run.world.gate):
+		# A Corridor stop's home beacon: the last light on the reopened lane.
+		var g: Vector2 = run.world.gate
+		var hc: Color = Color("68ecff")
+		draw_circle(g, 170.0, Color(hc, 0.04))
+		draw_arc(g, 150.0, 0.0, TAU, 48, Color(hc, 0.4), 5.0)
+		draw_arc(g, 170.0, anim * 0.3, anim * 0.3 + PI * 0.8, 24, Color(hc, 0.3), 3.0)
+		draw_arc(g, 170.0, anim * 0.3 + PI, anim * 0.3 + PI * 1.8, 24, Color(hc, 0.3), 3.0)
+		draw_rect(Rect2(g + Vector2(-8, -30), Vector2(16, 60)), Color("1c3148"))
+		draw_circle(g + Vector2(0, -34), 7.0 + sin(anim * 3.0) * 1.5, Color(hc, 0.95))
+		draw_line(g + Vector2(0, -34), g + Vector2(0, -300), Color(hc, 0.18), 4.0)
+		var hl: String = "HOME BEACON"
+		var hw: float = font.get_string_size(hl, HORIZONTAL_ALIGNMENT_LEFT, -1, 18).x
+		draw_string_outline(font, g + Vector2(-hw / 2.0, 205.0), hl, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, 5, Color(0, 0, 0, 0.7))
+		draw_string(font, g + Vector2(-hw / 2.0, 205.0), hl, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, hc)
 	for p: Dictionary in items:
 		if not view.has_point(p.pos):
 			continue

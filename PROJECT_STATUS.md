@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-11-20 · branch `claude/star-splitter-forces-dev-gq8dto`_
+_Last updated: 2026-11-21 · branch `claude/star-splitter-forces-dev-gq8dto`_
 
 ## Summary
 
@@ -13,6 +13,17 @@ start to finish without developer intervention (verified by tests and the
 balance bot, not yet by human playtesters).
 
 ## Implemented (verified by automated tests or rendered captures)
+
+**Structure — the Corridor Chart (2026-11-21)**
+- The game is a path of 12 main stops and 7 side signals along the Black Drift corridor.
+  Each stop: one objective (tune / answer / recover / hold / destroy / defeat), one new
+  idea introduced by name, a reward shown up front. Finishing a stop relights its beacon,
+  is saved at once, and opens the next. Side signals (Visions guests, extra Forces) branch
+  off the stop that reveals them.
+- Discovery stops first ask the player to charge the tuner with shards, so every stop
+  contains the fight / level-up loop.
+- Open Expedition (the whole Reach at once) and Kaldr Rift unlock by beating The Silence
+  at stop 12. Everything under "Core loop" below describes Open Expedition.
 
 **Core loop**
 - Departure screen: explorer + signature Force + destination. Two destinations: Black Drift Reach and Kaldr Rift (unlocked by first completion).

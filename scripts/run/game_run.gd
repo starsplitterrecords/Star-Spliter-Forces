@@ -54,6 +54,11 @@ var force_state: String = "DRIFT"
 var attuned: Array = []
 var discoveries: Array = []
 var new_this_run: Array = []
+## Corridor Chart stop being played ({} in Open Expedition).
+var stop_id: String = ""
+var mission: Dictionary = {}
+var stop_complete: bool = false
+var stop_first_time: bool = false
 var last_checkpoint: float = 0.0
 var checkpoint_due: bool = false
 var current_region: String = ""
@@ -111,6 +116,10 @@ func setup(config: Dictionary) -> void:
 	destination_id = String(config.get("destination", "black_drift_reach"))
 	signature_force = String(config.get("force", GameData.FORCES.keys()[0]))
 	quick_test = bool(config.get("quick_test", false))
+	stop_id = String(config.get("stop", ""))
+	mission = GameData.chart_stop(stop_id)
+	if not mission.is_empty():
+		destination_id = "black_drift_reach"
 	if config.has("seed"):
 		rng.seed = int(config["seed"])
 	else:
@@ -126,6 +135,8 @@ func _ready() -> void:
 func _build() -> void:
 	world = ExpeditionWorld.new()
 	add_child(world)
+	if not mission.is_empty():
+		world.gate_override = GameData.chart_start(mission)
 	world.build(destination_id)
 	pois = PointsOfInterest.new()
 	pois.run = self
@@ -180,6 +191,10 @@ func _build() -> void:
 	if bool(start_bonuses.get("head_start", false)):
 		pending_levels += 1
 	_queue_onboarding()
+	if not mission.is_empty():
+		var num: int = GameData.chart_number(stop_id)
+		hud.banner(("STOP %d — " % num if num > 0 else "SIDE SIGNAL — ") + String(mission["name"]).to_upper(), GameData.chart_objective_text(mission), Color("68ecff"), 4.0)
+		hint_queue.push_front(["stop_new_" + stop_id, "NEW — %s: %s" % [String(mission["new_title"]), String(mission["new"])]])
 
 func _apply_start_bonuses() -> void:
 	var def: Dictionary = GameData.CHARACTERS[character_id]
@@ -272,9 +287,9 @@ func _spawn_echo() -> void:
 func _queue_onboarding() -> void:
 	if not Profile.seen("hint_move"):
 		hint_queue.append(["hint_move", "Drag anywhere on the left of the screen — or use WASD / stick — to fly. Weapons fire on their own."])
-	if not Profile.seen("hint_signal"):
+	if not Profile.seen("hint_signal") and mission.is_empty():
 		hint_queue.append(["hint_signal", "Columns of light are SIGNALS. Fly into the ring and hold still to tune them in."])
-	if not Profile.seen("hint_extract"):
+	if not Profile.seen("hint_extract") and mission.is_empty():
 		hint_queue.append(["hint_extract", "Fly back into the %s ring any time to go home with everything you've found." % gate_name()])
 
 # ================================================================== loop
@@ -594,7 +609,11 @@ func _spawn_director(delta: float) -> void:
 	if not elite_times.is_empty() and elapsed >= float(elite_times[0]) * (0.25 if quick_test else 1.0):
 		elite_times.pop_front()
 		spawn_elite()
-	if not dreadnought_spawned and elapsed >= (480.0 if not quick_test else 40.0):
+	var dread_at: float = 480.0 if not quick_test else 40.0
+	if not mission.is_empty():
+		var mo: Dictionary = mission["objective"]
+		dread_at = float(mo.get("at", 60.0)) if String(mo["type"]) == "elite" else INF
+	if not dreadnought_spawned and elapsed >= dread_at:
 		dreadnought_spawned = true
 		var dp: Vector2 = world.random_open_point_near(player.position, 700.0, 820.0, rng)
 		spawn_enemy("dreadnought", dp, true)
@@ -603,6 +622,10 @@ func _spawn_director(delta: float) -> void:
 			hud.banner("SPLINTER DREADNOUGHT", "A salvage hulk has picked up your trail. Watch its broadsides.", Color("e0a060"), 2.6)
 		Audio.stinger("boss_phase", -2.0)
 	var climax_time: float = float(GameData.DESTINATIONS[destination_id]["climax_time"]) * (0.08 if quick_test else 1.0)
+	if not mission.is_empty():
+		# Stops have one objective; The Silence only comes to its own stop.
+		climax_time = float(mission["objective"].get("at", 300.0)) if is_boss_stop() else INF
+	_check_objective()
 	if not boss_spawned and not climax_warned and elapsed >= climax_time - 90.0 * (0.1 if quick_test else 1.0):
 		climax_warned = true
 		hud.banner("THE HUSH IS SPREADING", "Signals are going quiet. Finish what you came for — The Silence is coming.", Color("ff376f"), 3.0)
@@ -662,6 +685,9 @@ func spawn_boss(pos: Vector2) -> void:
 		return
 	boss_spawned = true
 	boss = spawn_enemy("the_silence", world.random_open_point_near(pos, 0.0, 60.0, rng), true)
+	if boss and is_boss_stop():
+		boss.hp *= float(mission["objective"].get("hp", 1.0))
+		boss.max_hp = boss.hp
 	if boss and quick_test:
 		boss.hp *= 0.2
 		boss.max_hp = boss.hp
@@ -732,6 +758,8 @@ func damage_enemy(e: ForceEnemy, amount: float, dir: Vector2, knock: float, weap
 
 func _on_enemy_died(e: ForceEnemy) -> void:
 	enemies.erase(e)
+	if not mission.is_empty() and String(mission["objective"]["type"]) == "elite" and e.kind == String(mission["objective"]["enemy"]):
+		complete_stop()
 	kills += 1
 	weapons.on_kill()
 	var glow: int = int(weapons.passives.get("afterglow", 0))
@@ -772,6 +800,8 @@ func _on_enemy_died(e: ForceEnemy) -> void:
 
 func _on_boss_defeated(e: ForceEnemy) -> void:
 	boss_defeated = true
+	if is_boss_stop():
+		complete_stop()
 	projectiles.clear_hostile()
 	hazards.clear()
 	for i in 20:
@@ -872,6 +902,10 @@ func player_hit(amount: float, from: Vector2) -> bool:
 
 func gain_xp(value: int) -> void:
 	motes_collected += 1
+	if not mission.is_empty() and not stop_complete and motes_collected == int(mission.get("power", 0)) and String(mission["objective"]["type"]) == "discover":
+		Audio.stinger("discovery", -4.0)
+		if hud:
+			hud.banner("TUNER CHARGED", GameData.chart_objective_text(mission) + " — follow the gold arrow.", Color("ffd75e"), 3.0)
 	add_resonance(0.06)
 	if character_id == "tessa_banks":
 		var every: int = 30 if mastery_level >= 1 else 40
@@ -1239,6 +1273,8 @@ func _claim_discovery(p: Dictionary) -> void:
 	if not id in discoveries:
 		discoveries.append(id)
 		checkpoint_due = true
+		if not mission.is_empty() and String(mission["objective"]["type"]) == "discover" and String(mission["objective"]["id"]) == id:
+			complete_stop()
 		if not Profile.is_discovered(id):
 			new_this_run.append(id)
 	var first_time: bool = id in new_this_run
@@ -1262,8 +1298,9 @@ func _claim_discovery(p: Dictionary) -> void:
 				heading = "%s — %s" % [String(t["project"]).to_upper(), String(t["title"])]
 				gains.append("TRACK FILED: \"%s\" — listen in the Archive after you return." % String(t["title"]))
 			att = _attune(String(d.get("force", "")))
-			var left: int = goal_signals() - signals_found()
-			gains.append("SIGNALS %d / %d — %s" % [signals_found(), goal_signals(), ("%d more to call out The Silence." % left) if left > 0 else "The Silence can be called out at the gate."])
+			if mission.is_empty():
+				var left: int = goal_signals() - signals_found()
+				gains.append("SIGNALS %d / %d — %s" % [signals_found(), goal_signals(), ("%d more to call out The Silence." % left) if left > 0 else "The Silence can be called out at the gate."])
 		"character":
 			var cid: String = String(d.get("unlock_character", ""))
 			if cid != "" and not Profile.has_character(cid):
@@ -1353,7 +1390,93 @@ func on_harmony(hid: String) -> void:
 # ================================================================== gate / extraction
 
 func gate_name() -> String:
+	if not mission.is_empty():
+		return "HOME BEACON"
 	return String(world.region_def(world.region_at(world.gate))["name"])
+
+# ------------------------------------------------------------------ corridor stop
+
+func is_stop_target(id: String) -> bool:
+	return id != "" and not mission.is_empty() and String(mission["objective"].get("id", "")) == id
+
+## Shards still needed before this stop's signal will tune. Clearing raiders
+## and collecting what they drop is what charges the tuner.
+func power_needed() -> int:
+	if mission.is_empty() or stop_complete:
+		return 0
+	return maxi(0, int(mission.get("power", 0)) - motes_collected)
+
+func is_boss_stop() -> bool:
+	return not mission.is_empty() and String(mission["objective"]["type"]) == "boss"
+
+func _check_objective() -> void:
+	if mission.is_empty() or stop_complete:
+		return
+	var o: Dictionary = mission["objective"]
+	if String(o["type"]) == "survive" and elapsed >= float(o["seconds"]) * (0.1 if quick_test else 1.0):
+		complete_stop()
+
+## The stop's objective is met: relight the beacon. Banked at once, so it
+## stays won whatever happens on the way home.
+func complete_stop() -> void:
+	if mission.is_empty() or stop_complete:
+		return
+	stop_complete = true
+	stop_first_time = Profile.complete_stop(stop_id)
+	bonus_currency += 40.0 if stop_first_time else 10.0
+	Audio.stinger("victory", -2.0)
+	fx.ring(player.position, 30.0, 520.0, Color("68ecff"), 1.2, 10.0)
+	if hud:
+		hud.banner("BEACON RELIT", "%s — stop complete. Fly back to the home beacon when you are ready." % String(mission["name"]), Color("68ecff"), 4.0)
+
+## Short text for the HUD objective line.
+func objective_text() -> String:
+	if mission.is_empty():
+		return ""
+	if stop_complete:
+		return "✓ STOP COMPLETE   Fly to the HOME BEACON to go home (or keep collecting)"
+	var o: Dictionary = mission["objective"]
+	var base: String = GameData.chart_objective_text(mission).to_upper()
+	match String(o["type"]):
+		"survive":
+			return "%s   %s left" % [base, GameData.format_time(maxf(0.0, float(o["seconds"]) - elapsed))]
+		"elite":
+			return base if dreadnought_spawned else "%s   It arrives in %s. Collect shards and level up." % [base, GameData.format_time(maxf(0.0, float(o.get("at", 60.0)) - elapsed))]
+		"boss":
+			if boss_spawned:
+				return base
+			return "%s   It arrives in %s, or call it at the HOME BEACON" % [base, GameData.format_time(maxf(0.0, float(o.get("at", 300.0)) - elapsed))]
+		"discover":
+			var d: Dictionary = GameData.DISCOVERIES[String(o["id"])]
+			var total: int = int(mission.get("power", 0))
+			if power_needed() > 0:
+				return "CHARGE YOUR TUNER  %d / %d shards   Clear raiders, collect their shards" % [motes_collected, total]
+			var hint: String = ""
+			var hidden: String = String(d.get("hidden", ""))
+			if hidden == "FRACTURE" and force_state != "FRACTURE":
+				hint = "   Hidden until you are in FRACTURE: fly through a Phase Rift"
+			elif hidden == "RESONANCE" and force_state != "RESONANCE":
+				hint = "   Hidden until you are in RESONANCE: use a Resonator"
+			elif hidden == "SCAN":
+				hint = "   Hidden: sweep the search area"
+			elif String(d.get("lock", "")) != "":
+				hint = "   " + String(GameData.LOCKS[String(d["lock"])]).split(".")[0]
+			return base + hint
+	return base
+
+## Where the compass should point for the stop: [pos, label, color] or [].
+func objective_target() -> Array:
+	if mission.is_empty():
+		return []
+	if stop_complete:
+		return [world.gate, "HOME BEACON", Color("68ecff")]
+	var o: Dictionary = mission["objective"]
+	if String(o["type"]) == "discover":
+		for p: Dictionary in pois.items:
+			if String(p.id) == String(o["id"]) and not bool(p.claimed):
+				var visible: bool = String(p.hidden) in ["", force_state] or bool(p.known)
+				return [p.pos, String(p.title) if visible else "SEARCH AREA", Color("ffd75e")]
+	return []
 
 func signals_found() -> int:
 	var n: int = 0
@@ -1366,6 +1489,8 @@ func goal_signals() -> int:
 	return int(GameData.DESTINATIONS[destination_id]["goal_signals"])
 
 func climax_available() -> bool:
+	if not mission.is_empty():
+		return is_boss_stop() and not boss_spawned
 	return signals_found() >= goal_signals() and not boss_spawned
 
 func at_gate() -> bool:
@@ -1496,6 +1621,7 @@ func build_result(result: String) -> Dictionary:
 		"discoveries": discoveries.duplicate(), "new_discoveries": new_this_run.duplicate(),
 		"currency": int(currency), "mastery_xp": mastery_xp, "regions": visited_regions.duplicate(),
 		"weapons": weapons.weapons.duplicate(), "harmonies": weapons.harmonies.duplicate(), "damage": int(damage_dealt),
+		"stop": stop_id, "stop_complete": stop_complete, "stop_first_time": stop_first_time,
 	}
 
 ## Saves the expedition so far. If the game closes or crashes, the next launch

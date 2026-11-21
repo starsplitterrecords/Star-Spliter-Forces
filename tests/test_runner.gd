@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries", "test_checkpoint_recovery",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_new_content", "test_visions_guests", "test_review_regressions", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	for t: String in tests:
 		current = t
@@ -46,6 +46,8 @@ func _dispatch(t: String) -> void:
 			await test_second_destination()
 		"test_review_regressions":
 			await test_review_regressions()
+		"test_corridor_chart":
+			await test_corridor_chart()
 		"test_visions_guests":
 			await test_visions_guests()
 		"test_new_content":
@@ -226,7 +228,31 @@ func test_data_integrity() -> void:
 		for dest: String in GameData.DESTINATIONS.keys():
 			if cid2 in GameData.DESTINATIONS[dest].get("completion_unlocks", []):
 				reachable = true
+		for st0: Dictionary in GameData.CHART:
+			if cid2 in (st0["grants"] as Dictionary).get("characters", []):
+				reachable = true
 		check(reachable, "character %s cannot be unlocked" % cid2)
+	# Corridor Chart: every stop is well-formed and its reward is reachable.
+	var seen_ids: Dictionary = {}
+	for st: Dictionary in GameData.CHART:
+		var sid: String = String(st["id"])
+		check(not seen_ids.has(sid), "duplicate chart stop %s" % sid)
+		seen_ids[sid] = true
+		for key: String in ["name", "place", "objective", "discoveries", "new_title", "new", "brief", "reward", "grants", "prize", "icon"]:
+			check(st.has(key), "chart stop %s lacks %s" % [sid, key])
+		check(st.has("start") or st.has("region"), "chart stop %s has no start" % sid)
+		check(GameData.CATEGORIES.has(String(st["icon"])), "chart stop %s icon unknown" % sid)
+		var o: Dictionary = st["objective"]
+		if String(o["type"]) == "discover":
+			check(GameData.DISCOVERIES.has(String(o["id"])), "chart stop %s targets unknown discovery" % sid)
+			check(String(o["id"]) in st["discoveries"], "chart stop %s does not spawn its own target" % sid)
+			check(GameData.discovery_in_destination(String(o["id"]), "black_drift_reach"), "chart stop %s target is outside the Reach" % sid)
+		for did3: String in st["discoveries"]:
+			check(GameData.DISCOVERIES.has(did3), "chart stop %s lists unknown discovery %s" % [sid, did3])
+		if st.has("side_of"):
+			check(not GameData.chart_stop(String(st["side_of"])).is_empty(), "side stop %s has no parent" % sid)
+		check(GameData.chart_objective_text(st) != "", "chart stop %s has no objective text" % sid)
+	check(GameData.chart_main().size() >= 10, "main corridor too short")
 	# Canon gate: every explorer has a faction palette and a released portrait.
 	for cid3: String in GameData.CHARACTERS.keys():
 		var c3: Dictionary = GameData.CHARACTERS[cid3]
@@ -485,7 +511,7 @@ func test_boss_completion_and_unlocks() -> void:
 	_sim(run, 6.0)
 	check(String(finished_result.get("outcome", "")) == "complete", "completion not reached: %s" % str(finished_result.get("outcome")))
 	var commit: Dictionary = Profile.record_expedition(finished_result)
-	check(Profile.has_character("abby_saville"), "completion unlock (Abby Saville) not granted")
+	check(Profile.has_destination("kaldr_rift"), "completion unlock (Kaldr Rift) not granted")
 	check(int(commit["currency"]) > 100, "completion currency too low")
 	check(int(Profile.data["stats"]["completions"]) == 1, "completion not counted")
 
@@ -664,6 +690,89 @@ func test_abilities() -> void:
 		check(run.ability_cd > 0.0 or cid == "naomi_sol", "%s ability has no cooldown" % cid)
 		_cleanup_runs()
 		await get_tree().process_frame
+
+## Corridor Chart: stops open in order, each objective type completes, the
+## reward is banked at once, and a stop carries only its own discoveries.
+func test_corridor_chart() -> void:
+	_reset_profile()
+	check(Profile.next_stop() == "first_light", "fresh profile does not start at stop 1")
+	check(Profile.stop_available("first_light") and not Profile.stop_available("hold_the_lane"), "stop 2 open before stop 1")
+	check(not Profile.stop_available("s_stardust"), "side stop open before its parent")
+	check(not Profile.has_feature("workshop") and not Profile.has_feature("open_reach"), "features open on a fresh profile")
+	# Discover-type stop: only its own discoveries exist; claiming completes it.
+	var run: GameRun = _make_run({"stop": "gravefire"})
+	await get_tree().process_frame
+	run.player.god_mode = true
+	check(run.world.gate.distance_to(GameData.chart_start(GameData.chart_stop("gravefire"))) < 1.0, "stop does not start at its home beacon")
+	check(run.player.position.distance_to(run.world.gate) < 200.0, "player not at the home beacon")
+	var ids: Array = []
+	var target: Dictionary = {}
+	for q: Dictionary in run.pois.items:
+		if String(q.id) != "":
+			ids.append(String(q.id))
+		if String(q.id) == "char_gravefire":
+			target = q
+	check("char_gravefire" in ids and not "sig_ignition" in ids and not "sig_now_or_never" in ids, "stop carries other stops' discoveries: %s" % str(ids))
+	check(not target.is_empty() and Vector2(target.pos).distance_to(run.world.gate) > 500.0, "target sits on top of the home beacon")
+	check(not run.objective_target().is_empty(), "no compass target for the objective")
+	check(not run.climax_available(), "The Silence can be called on an ordinary stop")
+	# The tuner must be charged with shards before the target will tune.
+	check(run.power_needed() > 0, "stop target needs no power")
+	run.player.position = Vector2(target.pos)
+	_sim(run, 6.0, func(r: GameRun) -> void: r.player.position = Vector2(target.pos))
+	check(not run.stop_complete and String(target.get("blocked", "")).find("POWER") != -1, "target tuned without power: %s" % str(target.get("blocked", "")))
+	run.motes_collected = int(run.mission["power"])
+	check(run.power_needed() == 0, "power not satisfied by collected shards")
+	run._claim_discovery(target)
+	check(run.stop_complete and Profile.stop_done("gravefire"), "claiming the target did not complete the stop")
+	check(Profile.stop_available("s_stardust"), "side stop did not open")
+	# Banked even if the explorer is then lost.
+	run.end_run("defeat")
+	check(bool(finished_result.get("stop_complete", false)), "result does not report the stop complete")
+	Profile.record_expedition(finished_result)
+	check(Profile.stop_done("gravefire") and Profile.has_character("tessa_banks"), "stop reward lost after defeat")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# Survive-type stop.
+	run = _make_run({"stop": "hold_the_lane"})
+	await get_tree().process_frame
+	run.player.god_mode = true
+	run.elapsed = 179.0
+	_sim(run, 2.0)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	check(run.stop_complete and Profile.has_feature("workshop"), "survive stop did not complete / open the Workshop")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# Elite-type stop.
+	run = _make_run({"stop": "dreadnought"})
+	await get_tree().process_frame
+	run.player.god_mode = true
+	var hulk: ForceEnemy = run.spawn_enemy("dreadnought", run.player.position + Vector2(300, 0), true)
+	run.damage_enemy(hulk, 999999.0, Vector2.RIGHT, 0.0, "environment", true)
+	check(run.stop_complete and Profile.has_character("abby_saville"), "destroying the dreadnought did not unlock Abby Saville")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# Boss stop: The Silence can be called at once, and beating it opens the rest.
+	run = _make_run({"stop": "the_silence"})
+	await get_tree().process_frame
+	run.player.god_mode = true
+	check(run.climax_available(), "The Silence cannot be called on its own stop")
+	run.left_gate = true
+	run.confront()
+	check(run.boss != null and run.boss.max_hp < float(GameData.ENEMIES["the_silence"]["hp"]), "boss stop does not scale The Silence")
+	run.damage_enemy(run.boss, 9999999.0, Vector2.ZERO, 0.0, "environment", true)
+	check(run.stop_complete and Profile.has_feature("open_reach") and Profile.has_destination("kaldr_rift"), "beating The Silence did not open the Reach / Kaldr Rift")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# Old saves keep what they earned.
+	var old: Dictionary = Profile.defaults()
+	old.erase("chart")
+	old["stats"]["expeditions"] = 4
+	old["discovered"] = {"sig_green_echo": {}, "char_gravefire": {}}
+	var mig: Dictionary = Profile.migrate(old)
+	check(bool(mig["chart"]["done"].get("green_echo", false)) and bool(mig["chart"]["done"].get("gravefire", false)) and bool(mig["chart"]["done"].get("hold_the_lane", false)), "old save not credited on the chart: %s" % str(mig["chart"]))
+	_reset_profile()
 
 ## Star Splitter Visions guests: each ability does its job, each crossover
 ## landmark unlocks its explorer and opens its Archive page.

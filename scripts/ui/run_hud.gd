@@ -216,6 +216,9 @@ func _process(delta: float) -> void:
 	if card and card_clock <= 0.0:
 		card.queue_free()
 		card = null
+	if card:
+		# Never on top of an upgrade choice; it comes back afterwards.
+		card.visible = not level_panel.visible and pause_panel == null
 	for i in range(alerts.size() - 1, -1, -1):
 		alerts[i][2] -= delta
 		if alerts[i][2] <= 0.0:
@@ -250,7 +253,7 @@ func _update_hint(delta: float) -> void:
 		if not run.hint_queue.is_empty() and run.elapsed > 1.0:
 			var h: Array = run.hint_queue.pop_front()
 			hint_label.text = String(h[1])
-			hint_clock = 7.0
+			hint_clock = 7.0 + String(h[1]).length() / 30.0
 			Profile.mark_seen(String(h[0]))
 	hint_label.modulate.a = clampf(hint_clock, 0.0, 1.0)
 
@@ -266,7 +269,9 @@ func _update_labels() -> void:
 	state_label.add_theme_color_override("font_color", _state_color())
 	var obj: String = ""
 	var found: int = run.signals_found()
-	if run.boss_spawned and not run.boss_defeated:
+	if not run.mission.is_empty() and not (run.boss_spawned and not run.boss_defeated):
+		obj = run.objective_text()
+	elif run.boss_spawned and not run.boss_defeated:
 		obj = "Defeat THE SILENCE"
 	elif run.boss_defeated:
 		obj = "Signal restored — returning home"
@@ -298,7 +303,14 @@ func _update_gate() -> void:
 	else:
 		gate_label.text = run.gate_name().to_upper() + " — YOUR WAY HOME"
 		var lines: Array[String] = ["Go home now: keep all %d discoveries and about +%d Signal. The expedition ends safely." % [found, est]]
-		if run.climax_available():
+		if not run.mission.is_empty():
+			if run.stop_complete:
+				lines = ["Stop complete and saved. Go home now with about +%d Signal, or stay out and keep collecting." % est]
+			elif run.is_boss_stop():
+				lines = ["Call The Silence now, or keep building your loadout: it arrives on its own. Going home now leaves this stop unfinished."]
+			else:
+				lines = ["This stop is NOT finished yet: %s. Going home now keeps your Signal but leaves the beacon dark." % GameData.chart_objective_text(run.mission)]
+		elif run.climax_available():
 			lines.append("Or face The Silence: beat it to complete the Reach — +120 Signal bonus and new explorers / routes.")
 		else:
 			var need: int = run.goal_signals() - run.signals_found()
@@ -940,13 +952,16 @@ class HudCanvas:
 		if run.boss_spawned and not run.boss_defeated and run.boss and is_instance_valid(run.boss):
 			targets.append([run.boss.position, "THE SILENCE", Color("ff376f")])
 		else:
-			if run.climax_available() or run.elapsed > 900.0 or (run.player.hp < run.player.max_hp * 0.3):
+			var goal: Array = run.objective_target()
+			if not goal.is_empty():
+				targets.append(goal)
+			elif run.climax_available() or run.elapsed > 900.0 or (run.player.hp < run.player.max_hp * 0.3):
 				targets.append([run.world.gate, "GATE", Color("68ecff")])
 			var echo: Dictionary = run.pois.nearest_unclaimed(p, ["echo"], true)
 			if not echo.is_empty():
 				targets.append([echo.pos, "ECHO %ds" % int(float(echo.life)), echo.color])
 			var sig: Dictionary = run.pois.nearest_unclaimed(p, ["signal", "character"], true)
-			if not sig.is_empty() and (assist or p.distance_to(sig.pos) < 1400.0):
+			if not sig.is_empty() and goal.is_empty() and (assist or p.distance_to(sig.pos) < 1400.0):
 				targets.append([sig.pos, String(sig.title), sig.color])
 			if assist:
 				var other: Dictionary = run.pois.nearest_unclaimed(p, ["artifact", "fragment", "anomaly", "mirror"], true)

@@ -9,7 +9,47 @@ Describes the game **as implemented**. Proposed-but-unbuilt items are marked _(p
 3. **Calm with spikes.** Wandering enemies ignore you until you come close; pressure arrives as readable events (patrols, tuning raids, guardians, the climax).
 4. **One thumb.** Auto-fire, analog movement, one optional ability button.
 
-## 2. Expedition structure
+## 1a. The Corridor Chart (the spine)
+
+Design principles (D-31), from owner playtest 3:
+
+1. **One path.** The player always knows the next step: the gold beacon on the chart.
+2. **One objective per expedition**, stated before launch and on the HUD throughout.
+3. **One new idea per stop**, named ("NEW — RESONANCE: …") in the briefing and again as
+   the expedition starts. Nothing appears in the world before its stop introduces it:
+   a stop only spawns its own discoveries.
+4. **The reward is promised first, then paid.** The chart shows the prize under every
+   stop; the results screen shows what was unlocked and what comes next.
+5. **Every unlock has one source**, on the chart: explorers, Forces, the Workshop,
+   Open Expedition and the next corridor.
+6. **Progress is never lost.** A stop is saved the moment its objective is met.
+7. **The fiction is the structure.** After the Shattering the corridors went dark; you
+   relight this one beacon by beacon, each expedition leaving from the last beacon lit.
+
+| # | Stop | Objective | Introduces | Reward |
+|---|---|---|---|---|
+| 1 | First Light (Array Gate) | Tune the Opening Carrier | flying, shards, tuning | first track |
+| 2 | Hold the Lane | Hold for 3:00 | raiders, level-ups | Fleet Workshop |
+| 3 | Gravefire (Silver Wrecks) | Answer the distress call | explorer contacts, lurkers | Tessa Banks |
+| 4 | Green Echo (Quiet Basin) | Tune in Resonance | Resonance, resonators | Force: Resonant Currents |
+| 5 | The Escort (Night Corridor) | Answer the Verge beacon | hazards / mines | Naomi Sol |
+| 6 | Shelf Beacon (Thunderbreak Shelf) | Tune; beat its guardian | elites / guardians | Force: Star Splitter Rex |
+| 7 | Night Trace | Tune a moving signal | moving signals | Force: Ghost Driver Unit |
+| 8 | Ignition Chorus | Bring three relays online, tune | relays | Force: Ion Drive Orchestra |
+| 9 | Hexagonal Haze (Fracture Bloom) | Tune in stillness | Fracture, rifts | Force: Minor Collapse |
+| 10 | The Hulk | Destroy the Dreadnought | the Dreadnought | Abby Saville |
+| 11 | The Token | Recover a Fracture-hidden token | hidden sites | Jex Marrin |
+| 12 | The Silence | Defeat The Silence | the boss | Kaldr Rift, Open Expedition |
+
+Side signals (optional, appear when their parent is relit): Mandatory Proximity → Jax
+Orien; After Hours → Night Motion Archives; Now Serving G-53 → Bjorn; OCHRE-9 → Lucia;
+Spectacle → Supersonic Being; Analog Campfire → Warm Circuits Rise; The Sunforge →
+Brandon Mack. Data: `GameData.CHART`.
+
+Next corridors (not built): Kaldr Rift as a second chart (Robots Sing Love Songs, Before
+the Reboot, new enemies and its own boss).
+
+## 2. Expedition structure (Open Expedition)
 
 | Phase | Implementation |
 |-------|----------------|

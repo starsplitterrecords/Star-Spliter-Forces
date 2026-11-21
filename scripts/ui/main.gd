@@ -159,10 +159,19 @@ func show_title() -> void:
 	var menu: VBoxContainer = VBoxContainer.new()
 	menu.add_theme_constant_override("separation", 10)
 	row.add_child(menu)
-	var begin: Button = UiTheme.button("BEGIN EXPEDITION", show_departure, 340.0, 60.0)
+	var nxt: String = Profile.next_stop()
+	var begin_text: String = "CORRIDOR CHART"
+	if nxt != "":
+		begin_text = ("BEGIN — " if Profile.stops_done_count() == 0 else "CONTINUE — ") + "STOP %d" % GameData.chart_number(nxt)
+	var begin: Button = UiTheme.button(begin_text, func() -> void: show_chart(), 340.0, 60.0)
 	menu.add_child(begin)
+	if Profile.has_feature("open_reach"):
+		menu.add_child(UiTheme.button("OPEN EXPEDITION", func() -> void:
+			selected_stop = ""
+			show_departure(), 340.0))
 	menu.add_child(UiTheme.button("STAR SPLITTER ARCHIVE", show_archive, 340.0))
-	menu.add_child(UiTheme.button("FLEET WORKSHOP", show_workshop, 340.0))
+	if Profile.has_feature("workshop"):
+		menu.add_child(UiTheme.button("FLEET WORKSHOP", show_workshop, 340.0))
 	menu.add_child(UiTheme.button("SETTINGS", show_settings, 340.0))
 	menu.add_child(UiTheme.button("CREDITS", show_credits, 340.0))
 	if OS.is_debug_build():
@@ -174,7 +183,7 @@ func show_title() -> void:
 	var s: Dictionary = Profile.data["stats"]
 	var discovered: int = Profile.discovered_count()
 	var total: int = GameData.DISCOVERIES.size()
-	info.add_child(UiTheme.label("ARCHIVE %d / %d DISCOVERIES" % [discovered, total], 15, UiTheme.GOLD, "bold"))
+	info.add_child(UiTheme.label("CORRIDOR: %d / %d BEACONS RELIT   •   ARCHIVE %d / %d" % [Profile.stops_done_count(), GameData.CHART.size(), discovered, total], 15, UiTheme.GOLD, "bold"))
 	info.add_child(UiTheme.label("Expeditions %d   •   Completed %d   •   Extracted %d   •   Signal %d" % [int(s["expeditions"]), int(s["completions"]), int(s["extractions"]), int(Profile.data["currency"])], 15, UiTheme.DIM))
 	var forces: Array = []
 	for f: String in Profile.data["forces_attuned"]:
@@ -187,6 +196,10 @@ func show_title() -> void:
 	begin.grab_focus()
 
 func _next_goal_text() -> String:
+	var nxt: String = Profile.next_stop()
+	if nxt != "":
+		var st: Dictionary = GameData.chart_stop(nxt)
+		return "NEXT — Stop %d, %s: %s. Reward: %s." % [GameData.chart_number(nxt), String(st["name"]), GameData.chart_objective_text(st), String(st["reward"][0])]
 	if int(Profile.data["stats"]["expeditions"]) == 0:
 		return "Your first expedition: follow the columns of light, tune three signals, and come home."
 	var unseen_signals: int = 0
@@ -196,6 +209,86 @@ func _next_goal_text() -> String:
 	if unseen_signals > 0:
 		return "%d signal%s still unheard somewhere in the Reach." % [unseen_signals, "" if unseen_signals == 1 else "s"]
 	return "Every signal in the Reach is charted. Hunt the hidden sites — some only show themselves in Fracture or Resonance."
+
+# ================================================================== corridor chart
+
+var selected_stop: String = ""
+
+## The spine of the game: pick the next beacon to relight.
+func show_chart(focus: String = "") -> void:
+	var v: VBoxContainer = _new_screen()
+	_menu_music()
+	var head: HBoxContainer = HBoxContainer.new()
+	head.add_theme_constant_override("separation", 18)
+	v.add_child(head)
+	var ht: Label = UiTheme.label("CORRIDOR CHART", 26, Color.WHITE, "display")
+	ht.autowrap_mode = TextServer.AUTOWRAP_OFF
+	head.add_child(ht)
+	var hs: Label = UiTheme.label("Black Drift Reach — relight the corridor one beacon at a time. %d of %d lit." % [Profile.stops_done_count(), GameData.CHART.size()], 14, UiTheme.DIM)
+	hs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hs.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	head.add_child(hs)
+	var sc: ScrollContainer = ScrollContainer.new()
+	sc.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	sc.custom_minimum_size = Vector2(0, 342)
+	v.add_child(sc)
+	var chart: ChartView = ChartView.new()
+	sc.add_child(chart)
+	var brief: PanelContainer = PanelContainer.new()
+	brief.add_theme_stylebox_override("panel", UiTheme.box(UiTheme.PANEL, UiTheme.LINE, 1, 12, 16))
+	brief.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	v.add_child(brief)
+	chart.stop_selected.connect(func(id: String) -> void:
+		selected_stop = id
+		_fill_briefing(brief, id))
+	var pick: String = focus
+	if pick == "" or GameData.chart_stop(pick).is_empty():
+		pick = Profile.next_stop()
+	if pick == "":
+		pick = String(GameData.chart_main()[-1]["id"])
+	chart.select(pick)
+	# Bring the chosen beacon into view.
+	await get_tree().process_frame
+	if is_instance_valid(sc) and chart.positions.has(pick):
+		sc.scroll_horizontal = int(maxf(0.0, Vector2(chart.positions[pick]).x - sc.size.x * 0.45))
+
+func _fill_briefing(panel: PanelContainer, id: String) -> void:
+	for c: Node in panel.get_children():
+		c.queue_free()
+	var st: Dictionary = GameData.chart_stop(id)
+	var done: bool = Profile.stop_done(id)
+	var open: bool = Profile.stop_available(id)
+	var num: int = GameData.chart_number(id)
+	var h: HBoxContainer = HBoxContainer.new()
+	h.add_theme_constant_override("separation", 20)
+	panel.add_child(h)
+	var col: VBoxContainer = VBoxContainer.new()
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_theme_constant_override("separation", 3)
+	h.add_child(col)
+	var tag: String = ("STOP %d" % num if num > 0 else "SIDE SIGNAL") + "   •   " + String(st["place"]).to_upper() + ("   •   BEACON LIT" if done else "")
+	col.add_child(UiTheme.label(tag, 13, Color("68ecff") if done else UiTheme.GOLD, "bold"))
+	col.add_child(UiTheme.label(String(st["name"]).to_upper(), 20, Color.WHITE, "display"))
+	if not open and not done:
+		var need: String = String(GameData.chart_stop(String(st["side_of"]))["name"]) if st.has("side_of") else String(GameData.chart_main()[num - 2]["name"])
+		col.add_child(UiTheme.label("Still dark. Relight \"%s\" first." % need, 15, UiTheme.DIM))
+		col.add_child(UiTheme.label("REWARD WAITING: " + "  •  ".join(st["reward"]), 14, Color(UiTheme.GOLD, 0.7)))
+	else:
+		col.add_child(UiTheme.label(String(st["brief"]), 13, UiTheme.TEXT))
+		col.add_child(UiTheme.label("OBJECTIVE: " + GameData.chart_objective_text(st), 15, Color("a8f7ff"), "bold"))
+		col.add_child(UiTheme.label("NEW HERE — %s: %s" % [String(st["new_title"]), String(st["new"])], 12, Color("bfe9ff")))
+		col.add_child(UiTheme.label(("EARNED: " if done else "REWARD: ") + "  •  ".join(st["reward"]), 15, UiTheme.GOLD, "bold"))
+	var side: VBoxContainer = VBoxContainer.new()
+	side.add_theme_constant_override("separation", 8)
+	side.alignment = BoxContainer.ALIGNMENT_CENTER
+	h.add_child(side)
+	var go: Button = UiTheme.button("CHOOSE EXPLORER  →" if not done else "PLAY AGAIN  →", show_departure, 280.0, 58.0)
+	go.disabled = not open and not done
+	go.add_theme_color_override("font_color", UiTheme.ACCENT)
+	side.add_child(go)
+	side.add_child(UiTheme.button("BACK", show_title, 280.0, 46.0))
+	if not go.disabled:
+		go.grab_focus()
 
 # ================================================================== departure
 
@@ -291,11 +384,12 @@ func show_departure() -> void:
 		frow.add_child(fb)
 	var sf: Dictionary = GameData.FORCES[selected_force]
 	dv.add_child(UiTheme.label("%s — %s: %s  Starts with %s." % [String(sf["name"]), String(sf["mechanic"]), String(sf["desc"]), GameData.weapon_name(String(sf["primary"]))], 14, sf["color"]))
-	# Destination.
+	# Destination (Open Expedition only; a Corridor stop fixes the place).
+	var stop: Dictionary = GameData.chart_stop(selected_stop)
 	var unlocked_dests: Array = GameData.DESTINATIONS.keys().filter(func(d: String) -> bool: return Profile.has_destination(d))
 	if not selected_destination in unlocked_dests:
 		selected_destination = "black_drift_reach"
-	if unlocked_dests.size() > 1:
+	if unlocked_dests.size() > 1 and stop.is_empty():
 		dv.add_child(UiTheme.label("DESTINATION", 13, UiTheme.DIM, "bold"))
 		var drow: HFlowContainer = HFlowContainer.new()
 		drow.add_theme_constant_override("h_separation", 8)
@@ -323,12 +417,18 @@ func show_departure() -> void:
 	var launch: HBoxContainer = HBoxContainer.new()
 	launch.add_theme_constant_override("separation", 12)
 	v.add_child(launch)
-	launch.add_child(UiTheme.button("BACK", show_title, 180.0, 56.0))
+	launch.add_child(UiTheme.button("BACK", (func() -> void: show_chart(selected_stop)) if not stop.is_empty() else show_title, 180.0, 56.0))
 	var dest: Dictionary = GameData.DESTINATIONS[selected_destination]
-	var go: Button = UiTheme.button("LAUNCH — " + String(dest["name"]).to_upper(), func() -> void: start_expedition(false), 420.0, 56.0)
+	var launch_text: String = "LAUNCH — " + String(dest["name"]).to_upper()
+	var launch_note: String = String(dest["desc"])
+	if not stop.is_empty():
+		var sn: int = GameData.chart_number(selected_stop)
+		launch_text = "LAUNCH — " + ("STOP %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
+		launch_note = "OBJECTIVE: %s.   REWARD: %s" % [GameData.chart_objective_text(stop), String(stop["reward"][0])]
+	var go: Button = UiTheme.button(launch_text, func() -> void: start_expedition(false), 420.0, 56.0)
 	go.add_theme_color_override("font_color", UiTheme.ACCENT)
 	launch.add_child(go)
-	var dl: Label = UiTheme.label(String(dest["desc"]), 13, UiTheme.DIM)
+	var dl: Label = UiTheme.label(launch_note, 13, UiTheme.DIM if stop.is_empty() else UiTheme.GOLD)
 	dl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	launch.add_child(dl)
 	go.grab_focus()
@@ -340,7 +440,7 @@ func start_expedition(quick: bool) -> void:
 		screen.queue_free()
 		screen = null
 	current_run = GameRun.new()
-	current_run.setup({"character": selected_character, "destination": selected_destination, "force": selected_force, "quick_test": quick})
+	current_run.setup({"character": selected_character, "destination": selected_destination, "force": selected_force, "quick_test": quick, "stop": "" if quick else selected_stop})
 	current_run.finished.connect(_on_run_finished)
 	add_child(current_run)
 
@@ -356,7 +456,33 @@ func show_results() -> void:
 	var r: Dictionary = last_result
 	var title: String = {"complete": "EXPEDITION COMPLETE", "extracted": "SAFE RETURN", "defeat": "LOST SIGNAL"}.get(String(r["outcome"]), "EXPEDITION ENDED")
 	var sub: String = {"complete": "The Silence is broken and the Reach can hear itself again.", "extracted": "You came home with what you found.", "defeat": "Your logs reached the gate relays before the signal dropped."}.get(String(r["outcome"]), "")
+	var stop: Dictionary = GameData.chart_stop(String(r.get("stop", "")))
+	var stop_won: bool = bool(r.get("stop_complete", false))
+	if not stop.is_empty():
+		var sn: int = GameData.chart_number(String(stop["id"]))
+		var label: String = ("STOP %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
+		title = ("BEACON RELIT — " if stop_won else "STILL DARK — ") + label
+		sub = "The corridor reaches one beacon further." if stop_won else "Objective not met: %s. Nothing is lost; try again with what you learned." % GameData.chart_objective_text(stop)
 	_heading(v, title, sub)
+	if not stop.is_empty() and stop_won:
+		var won: PanelContainer = PanelContainer.new()
+		won.add_theme_stylebox_override("panel", UiTheme.box(Color("0c1c2a"), Color("68ecff"), 2, 12, 14))
+		v.add_child(won)
+		var wv: VBoxContainer = VBoxContainer.new()
+		wv.add_theme_constant_override("separation", 4)
+		won.add_child(wv)
+		wv.add_child(UiTheme.label("UNLOCKED" if bool(r.get("stop_first_time", false)) else "ALREADY EARNED", 13, Color("68ecff"), "bold"))
+		for line: String in stop["reward"]:
+			wv.add_child(UiTheme.label("+ " + line, 18, UiTheme.GOLD, "bold"))
+		for side_stop: Dictionary in GameData.chart_sides(String(stop["id"])):
+			if bool(r.get("stop_first_time", false)):
+				wv.add_child(UiTheme.label("+ Side signal found on the chart: %s (%s)" % [String(side_stop["name"]), String(side_stop["prize"])], 15, Color("bfe9ff")))
+		var nxt: String = Profile.next_stop()
+		if nxt != "":
+			var ns: Dictionary = GameData.chart_stop(nxt)
+			wv.add_child(UiTheme.label("NEXT — Stop %d, %s: %s" % [GameData.chart_number(nxt), String(ns["name"]), GameData.chart_objective_text(ns)], 15, UiTheme.TEXT))
+		else:
+			wv.add_child(UiTheme.label("Every beacon on the corridor is lit.", 15, UiTheme.TEXT))
 	var row: HBoxContainer = HBoxContainer.new()
 	row.add_theme_constant_override("separation", 24)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -393,7 +519,7 @@ func show_results() -> void:
 	right.add_child(UiTheme.label("DISCOVERIES", 13, UiTheme.DIM, "bold"))
 	var discs: Array = r["discoveries"]
 	if discs.is_empty():
-		right.add_child(UiTheme.label("None this time. Columns of light are signals — fly into the ring and hold still.", 15, UiTheme.TEXT))
+		right.add_child(UiTheme.label("None this time." if not stop.is_empty() else "None this time. Columns of light are signals — fly into the ring and hold still.", 15, UiTheme.TEXT))
 	for did: String in discs:
 		var d: Dictionary = GameData.DISCOVERIES[did]
 		var is_new: bool = did in (last_commit.get("new_discoveries", []) as Array)
@@ -416,10 +542,20 @@ func show_results() -> void:
 	var buttons: HBoxContainer = HBoxContainer.new()
 	buttons.add_theme_constant_override("separation", 12)
 	v.add_child(buttons)
-	var again: Button = UiTheme.button("EXPLORE AGAIN", show_departure, 260.0)
-	buttons.add_child(again)
-	buttons.add_child(UiTheme.button("OPEN ARCHIVE", show_archive, 240.0))
-	buttons.add_child(UiTheme.button("WORKSHOP", show_workshop, 200.0))
+	var again: Button
+	if stop.is_empty():
+		again = UiTheme.button("EXPLORE AGAIN", show_departure, 260.0)
+	elif stop_won:
+		again = UiTheme.button("CORRIDOR CHART  →", func() -> void: show_chart(), 300.0)
+	else:
+		again = UiTheme.button("TRY AGAIN", show_departure, 220.0)
+		buttons.add_child(again)
+		buttons.add_child(UiTheme.button("CHART", func() -> void: show_chart(selected_stop), 160.0))
+	if again.get_parent() == null:
+		buttons.add_child(again)
+	buttons.add_child(UiTheme.button("ARCHIVE", show_archive, 180.0))
+	if Profile.has_feature("workshop"):
+		buttons.add_child(UiTheme.button("WORKSHOP", show_workshop, 200.0))
 	buttons.add_child(UiTheme.button("TITLE", show_title, 160.0))
 	var saved_label: Label = UiTheme.label("Progress saved." if Profile.last_save_ok else "WARNING: progress could not be saved.", 13, UiTheme.DIM if Profile.last_save_ok else Color("ff8fa8"))
 	saved_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL

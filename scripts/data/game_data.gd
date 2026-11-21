@@ -99,7 +99,7 @@ const CHARACTERS: Dictionary = {
 		"ability": "call_the_captains",
 		"trait": "Commands Through Stillness: +20% weapon damage while holding position.",
 		"weakness": "A command ship, not a fighter: weapons recharge 10% slower.",
-		"unlock": "Complete an expedition in the Black Drift Reach.",
+		"unlock": "Destroy the Splinter Dreadnought (Corridor stop 10).",
 	},
 	"jex_marrin": {
 		"name": "Jex Marrin",
@@ -500,7 +500,7 @@ const DESTINATIONS: Dictionary = {
 		"background": Color("070a15"),
 		"drift_name": "BLACK DRIFT",
 		"regions": ["array_gate", "silver_wrecks", "thunderbreak_shelf", "quiet_basin", "night_corridor", "fracture_bloom"],
-		"completion_unlocks": ["abby_saville", "kaldr_rift"],
+		"completion_unlocks": ["kaldr_rift"],
 		"seed": 7741,
 	},
 	"kaldr_rift": {
@@ -756,6 +756,162 @@ const SFX_NAMES: Array[String] = [
 	"extract", "boss_appear", "boss_phase", "boss_die", "ui_click", "ui_back", "harmony", "enemy_shot",
 	"victory", "defeat", "ping", "evolve",
 ]
+
+# ============================================================== corridor chart
+## The spine of the game (D-31). The Black Drift corridor is reopened one
+## beacon at a time. Every stop is one expedition with ONE objective, ONE new
+## idea ("new"), and a reward shown before launch. Finishing a stop relights
+## its beacon and opens the next. Side stops branch off a main stop.
+##
+## objective: {"type": "discover", "id"} | {"type": "survive", "seconds"}
+##          | {"type": "elite", "enemy"} | {"type": "boss"}
+## start: where the home beacon stands for this stop (world position).
+## reward: what the player gets, in words; "grants" holds the non-discovery
+##         unlocks (features, characters, destinations).
+const CHART: Array = [
+	{"id": "first_light", "power": 15, "prize": "First track", "icon": "signal", "name": "First Light", "place": "Array Gate", "start": Vector2(0, 0),
+		"objective": {"type": "discover", "id": "sig_now_or_never"}, "discoveries": ["sig_now_or_never", "frag_gate"],
+		"new_title": "FLYING AND SIGNALS", "new": "Drag to fly; your weapons fire on their own. Cleared raiders drop shards: collect them to charge your tuner. Then fly into the column of light and hold still to tune it in.",
+		"brief": "The corridor gate at Black Drift has been reblazed, but everything past it is dark. One carrier is still broadcasting. Tune it.",
+		"reward": ["First track for your Archive: Now or Never", "Relights the gate beacon"], "grants": {}},
+	{"id": "hold_the_lane", "prize": "Workshop", "icon": "hostile", "name": "Hold the Lane", "place": "Black Drift", "start": Vector2(1500, 700),
+		"objective": {"type": "survive", "seconds": 180.0}, "discoveries": [],
+		"new_title": "RAIDERS AND LEVEL-UPS", "new": "Red-ringed ships hunt anything that broadcasts. Cleared ships drop shards; shards fill the top bar; every level-up is a new weapon or system. Build a loadout.",
+		"brief": "The first beacon is lit and raiders have noticed. Hold the lane open for three minutes.",
+		"reward": ["Fleet Workshop opens: spend Signal on permanent refits"], "grants": {"features": ["workshop"]}},
+	{"id": "gravefire", "power": 45, "prize": "Tessa Banks", "icon": "explorer", "name": "Gravefire", "place": "Silver Wrecks", "region": "silver_wrecks",
+		"objective": {"type": "discover", "id": "char_gravefire"}, "discoveries": ["char_gravefire", "frag_wrecks"],
+		"new_title": "EXPLORER CONTACTS", "new": "Gold-tagged beacons are people. Answer one and that explorer joins you, with their own ship and ability. Careful in the wrecks: some debris is not debris.",
+		"brief": "A Shard working cutter, the Gravefire, is dark in the wreckage with a sealed breach. Her captain is still transmitting.",
+		"reward": ["New explorer: Tessa Banks"], "grants": {}},
+	{"id": "green_echo", "power": 55, "prize": "Resonant Currents", "icon": "signal", "name": "Green Echo", "place": "Quiet Basin", "region": "quiet_basin",
+		"objective": {"type": "discover", "id": "sig_green_echo"}, "discoveries": ["sig_green_echo", "anom_memory_well", "art_beacon_core"],
+		"new_title": "RESONANCE", "new": "The meter under your hull. Green resonators push it up into RESONANCE: stronger weapons, and some signals only resolve there. This one does.",
+		"brief": "A delayed signal repeats through still water, a little deeper each time. It will not resolve until you are in Resonance.",
+		"reward": ["New Force: Resonant Currents (Echo & Space weapons join your level-ups)", "Track: Meaningless Dub"], "grants": {}},
+	{"id": "verge_escort", "power": 65, "prize": "Naomi Sol", "icon": "explorer", "name": "The Escort", "place": "Night Corridor", "region": "night_corridor",
+		"objective": {"type": "discover", "id": "char_verge_escort"}, "discoveries": ["char_verge_escort", "frag_corridor"],
+		"new_title": "HAZARDS", "new": "Mine haulers seed the lane with charges. Pink blooms on the ground are mines: fly around them, or lead raiders through them.",
+		"brief": "A Verge escort beacon is logging a convoy report in a half-reblazed lane. Captain Naomi Sol is still out there.",
+		"reward": ["New explorer: Captain Naomi Sol"], "grants": {}},
+	{"id": "shelf_beacon", "power": 100, "prize": "Star Splitter Rex", "icon": "signal", "name": "Shelf Beacon", "place": "Thunderbreak Shelf", "region": "thunderbreak_shelf",
+		"objective": {"type": "discover", "id": "sig_thunderbreak_beacon"}, "discoveries": ["sig_thunderbreak_beacon", "art_survey_chart"],
+		"new_title": "GUARDIANS", "new": "Some broadcasts are defended. Start tuning and an elite captain answers (thick red-and-gold ring, health bar). Defeat it to finish.",
+		"brief": "A beacon on the crystal shelves is carrying something heavy. Something else is listening to it.",
+		"reward": ["New Force: Star Splitter Rex (Impact weapons)", "Track: Signals and Shadows"], "grants": {}},
+	{"id": "night_trace", "power": 120, "prize": "Ghost Driver Unit", "icon": "signal", "name": "Night Trace", "place": "Night Corridor", "region": "night_corridor",
+		"objective": {"type": "discover", "id": "sig_night_trace"}, "discoveries": ["sig_night_trace"],
+		"new_title": "MOVING SIGNALS", "new": "This signal travels the lane. Match its pace and stay inside its ring to tune it.",
+		"brief": "Something is running the Night Corridor end to end and will not stop for anyone.",
+		"reward": ["New Force: Ghost Driver Unit (Momentum weapons)", "Track: Watch Out"], "grants": {}},
+	{"id": "ignition", "power": 140, "prize": "Ion Drive Orchestra", "icon": "signal", "name": "Ignition Chorus", "place": "Silver Wrecks", "region": "silver_wrecks",
+		"objective": {"type": "discover", "id": "sig_ignition"}, "discoveries": ["sig_ignition"],
+		"new_title": "RELAYS", "new": "Three relay sections stand around this signal. Fly through each to bring it online; only then can the signal play together and be tuned.",
+		"brief": "An orchestra is trying to start in the wreckage, one section at a time.",
+		"reward": ["New Force: Ion Drive Orchestra (Ensemble weapons)", "Track: Ignition Sequence"], "grants": {}},
+	{"id": "hexagonal_haze", "power": 160, "prize": "Minor Collapse", "icon": "signal", "name": "Hexagonal Haze", "place": "Fracture Bloom", "region": "fracture_bloom",
+		"objective": {"type": "discover", "id": "sig_hexagonis"}, "discoveries": ["sig_hexagonis"],
+		"new_title": "FRACTURE", "new": "Red rifts drain Resonance into FRACTURE: you hit harder and so does everything else. This signal needs the opposite of a fight: hold completely still inside it.",
+		"brief": "A wall of sound at the heart of a phase anomaly, so quiet at its centre you can hear yourself.",
+		"reward": ["New Force: Minor Collapse (Wall of Sound weapons)", "Track: Hexagonis"], "grants": {}},
+	{"id": "dreadnought", "prize": "Abby Saville", "icon": "elite", "name": "The Hulk", "place": "Black Drift", "start": Vector2(-1800, -600),
+		"objective": {"type": "elite", "enemy": "dreadnought", "at": 150.0}, "discoveries": [],
+		"new_title": "THE DREADNOUGHT", "new": "A salvage hulk with broadside guns. The wide beams along its flanks are the telegraph: stay ahead of or behind it, never beside it.",
+		"brief": "A Splinter Dreadnought has been stripping every beacon you relight. The Shards want it gone as much as you do.",
+		"reward": ["New explorer: Abby Saville, warlord of the Scythe of Saville"], "grants": {"characters": ["abby_saville"]}},
+	{"id": "veil_token", "power": 180, "prize": "Jex Marrin", "icon": "artifact", "name": "The Token", "place": "Fracture Bloom", "region": "fracture_bloom",
+		"objective": {"type": "discover", "id": "art_route_token"}, "discoveries": ["art_route_token"],
+		"new_title": "HIDDEN SITES", "new": "Some things only exist in Fracture. Fly through a Phase Rift (torn red star) to tip the meter, then look again.",
+		"brief": "A Veil Market courier left a route token in the Bloom, where nobody sane would look for it.",
+		"reward": ["New explorer: Jex Marrin, Veil Market broker"], "grants": {}},
+	{"id": "the_silence", "prize": "Kaldr Rift", "icon": "elite", "name": "The Silence", "place": "Array Gate", "start": Vector2(0, 0),
+		"objective": {"type": "boss", "at": 300.0, "hp": 0.6}, "discoveries": [],
+		"new_title": "THE SILENCE", "new": "It is not hunting ships. It is hunting songs. It arrives at 5:00, or call it at the beacon when you are ready. Build your loadout first.",
+		"brief": "Every beacon on the corridor is lit, and the thing that put them out is coming to do it again.",
+		"reward": ["The Kaldr Rift corridor opens", "Open Expedition: the whole Reach at once, every signal live"], "grants": {"features": ["open_reach"], "destinations": ["kaldr_rift"]}},
+	# ---- side stops: optional branches that open when their parent is relit.
+	{"id": "s_stardust", "power": 70, "prize": "Jax Orien", "icon": "visions", "side_of": "gravefire", "name": "Mandatory Proximity", "place": "Silver Wrecks", "region": "silver_wrecks",
+		"objective": {"type": "discover", "id": "vis_stardust_dock"}, "discoveries": ["vis_stardust_dock"],
+		"new_title": "VISIONS CROSSOVERS", "new": "Some things in Signal Space come from other Star Splitter Visions series. Each one brings a guest explorer.",
+		"brief": "An orbital workplace that is on nobody's chart has appeared in the wrecks. The inspection is still running.",
+		"reward": ["Guest explorer: Jax Orien (Stardust Station)"], "grants": {}},
+	{"id": "s_after_hours", "power": 70, "prize": "Night Motion", "icon": "signal", "side_of": "gravefire", "name": "After Hours", "place": "Silver Wrecks", "region": "silver_wrecks",
+		"objective": {"type": "discover", "id": "sig_after_hours"}, "discoveries": ["sig_after_hours"],
+		"new_title": "THE SCANNER", "new": "Faint sites only show when you pass close. Sweep the area; your scanner calls out what it finds.",
+		"brief": "A carrier that only plays when nobody is looking for it.",
+		"reward": ["New Force: Night Motion Archives (Afterimage weapons)", "Track: Hanging on the Edge"], "grants": {}},
+	{"id": "s_dti", "power": 70, "prize": "Bjorn", "icon": "visions", "side_of": "green_echo", "name": "Now Serving G-53", "place": "Quiet Basin", "region": "quiet_basin",
+		"objective": {"type": "discover", "id": "vis_dti_beacon"}, "discoveries": ["vis_dti_beacon"],
+		"new_title": "A TIME SLIP", "new": "A municipal intake beacon from somewhere else entirely. Answer it like any contact.",
+		"brief": "A Department of Temporal Integration beacon is adrift in the Basin, still calling numbers.",
+		"reward": ["Guest explorer: Bjorn, with Gunnar (Vikings 2026!)"], "grants": {}},
+	{"id": "s_ochre", "power": 110, "prize": "Lucia", "icon": "visions", "side_of": "shelf_beacon", "name": "OCHRE-9", "place": "Thunderbreak Shelf", "region": "thunderbreak_shelf",
+		"objective": {"type": "discover", "id": "vis_ochre_relay"}, "discoveries": ["vis_ochre_relay"],
+		"new_title": "BUILD ANOTHER WAY", "new": "A homemade relay rocket. Its builder plants relays that fight for you.",
+		"brief": "A rocket built from salvaged aerospace parts has come down on the Shelf, relay still running.",
+		"reward": ["Guest explorer: Lucia (Backyard Rockets)"], "grants": {}},
+	{"id": "s_spectacle", "power": 110, "prize": "Supersonic Being", "icon": "signal", "side_of": "shelf_beacon", "name": "Spectacle", "place": "Thunderbreak Shelf", "region": "thunderbreak_shelf",
+		"objective": {"type": "discover", "id": "sig_spectacle"}, "discoveries": ["sig_spectacle"],
+		"new_title": "A SIGNAL THAT WANTS A CROWD", "new": "This one only resolves while enemies are close. Let them gather, then tune it in front of them.",
+		"brief": "A frequency that refuses to play to an empty room.",
+		"reward": ["New Force: Supersonic Being (Hype weapons)", "Track: Give It Up, Let’s Go"], "grants": {}},
+	{"id": "s_campfire", "power": 130, "prize": "Warm Circuits", "icon": "signal", "side_of": "night_trace", "name": "Analog Campfire", "place": "The Far Drift", "start": Vector2(-4500, 3200),
+		"objective": {"type": "discover", "id": "sig_campfire"}, "discoveries": ["sig_campfire"],
+		"new_title": "THE FAR DRIFT", "new": "Open space, far from any landmark. Follow the compass arrow at the screen edge.",
+		"brief": "Far out in the drift, a warm improvised groove circles a ring of old beacons.",
+		"reward": ["New Force: Warm Circuits Rise (Improvisation weapons)", "Track: This Path’s for You"], "grants": {}},
+	{"id": "s_sunforge", "power": 160, "prize": "Brandon Mack", "icon": "visions", "side_of": "hexagonal_haze", "name": "The Sunforge", "place": "Fracture Bloom", "region": "fracture_bloom",
+		"objective": {"type": "discover", "id": "vis_sunforge"}, "discoveries": ["vis_sunforge"],
+		"new_title": "HEAT", "new": "A star burning close enough to forge. Someone is standing in its light.",
+		"brief": "The relays log three different names for the man at the Sunforge. He answers to none of them.",
+		"reward": ["Guest explorer: Brandon Mack (Sunforge Outlaw)"], "grants": {}},
+]
+
+static func chart_stop(id: String) -> Dictionary:
+	for st: Dictionary in CHART:
+		if String(st["id"]) == id:
+			return st
+	return {}
+
+static func chart_main() -> Array:
+	return CHART.filter(func(st: Dictionary) -> bool: return not st.has("side_of"))
+
+static func chart_sides(parent_id: String) -> Array:
+	return CHART.filter(func(st: Dictionary) -> bool: return String(st.get("side_of", "")) == parent_id)
+
+## 1-based number of a main stop, or 0 for a side stop.
+static func chart_number(id: String) -> int:
+	var main: Array = chart_main()
+	for i in main.size():
+		if String(main[i]["id"]) == id:
+			return i + 1
+	return 0
+
+## Where a stop's home beacon stands: explicit, or the corridor-side edge of
+## its region (the side facing the gate the corridor is growing from).
+static func chart_start(st: Dictionary) -> Vector2:
+	if st.has("start"):
+		return st["start"]
+	var region: Dictionary = REGIONS[String(st["region"])]
+	var c: Vector2 = region_anchor(region)
+	if String(region.get("shape", "circle")) == "capsule":
+		return Vector2(region["a"]) - (Vector2(region["b"]) - Vector2(region["a"])).normalized() * 260.0
+	return c - c.normalized() * float(region["radius"]) * 0.98
+
+static func chart_objective_text(st: Dictionary) -> String:
+	var o: Dictionary = st["objective"]
+	match String(o["type"]):
+		"discover":
+			var d: Dictionary = DISCOVERIES[String(o["id"])]
+			var verb: String = {"signal": "Tune", "character": "Answer", "artifact": "Recover"}.get(String(d["kind"]), "Find")
+			return "%s the %s" % [verb, String(d["title"])]
+		"survive":
+			return "Hold the lane for %s" % format_time(float(o["seconds"]))
+		"elite":
+			return "Destroy the %s" % String(ENEMIES[String(o["enemy"])]["name"])
+		"boss":
+			return "Defeat The Silence"
+	return ""
 
 # ============================================================== star splitter visions
 ## Other Star Splitter Visions series, as published on the Visions site (SSV

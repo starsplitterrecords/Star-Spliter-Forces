@@ -53,3 +53,18 @@ weapons, music). Problems reported and responses:
 | Going back through the gate is confusing | Gate is an explicit two-button choice; no accidental extraction (D-24) |
 | Not clear what I'm picking up or why to care | Category tags, "why it matters", discovery "+ gained" lines, level-up card types (D-23) |
 
+## Owner playtest 3 — 2026-11-21 (web build)
+
+"The gameplay IS fun. And the lore is great, but only because I already know it."
+Problem: no organising structure. "A pile of stuff… no progression… bouncing in and
+out of the same place… the same signals in the same places… a sense of collecting
+but not why… very random." Asked for a Vampire Survivors-style unlock chain or a
+Candy Crush-style path, maybe corridor themed, feeding each new thing in deliberately.
+
+Response: the Corridor Chart (D-31 – D-34). Questions for the next session:
+1. After stop 1, can the player say what they are trying to do next and what they get?
+2. Do the "NEW —" explainers get read, or skipped? Which stop first felt confusing?
+3. Is the tuner charge (shards) understood as part of the goal, or as a chore?
+4. Stop length: too short early / too long late?
+5. Does relighting a beacon feel like progress? Does the chart make them want the next one?
+
