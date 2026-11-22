@@ -52,6 +52,22 @@ Brandon Mack. Data: `GameData.CHART`.
 Next corridors (not built): Kaldr Rift as a second chart (Robots Sing Love Songs, Before
 the Reboot, new enemies and its own boss).
 
+### Chapter II — The Green Corridor (Kaldr Rift)
+
+Opens when The Silence falls. Stages: Light on the Water · Grain Freighter (contacts:
+Luminara mother and boy) · Grind Trace · Luminara Fields (place) · Away Away · Convoy
+Lane (hold 4:00) · Frozen Frame · Foundry Crescendo · Machine Duet (Robots Sing Love
+Songs) · Tracker Module (Before the Reboot) · Auric Bazaar (contacts: Governor Chris
+Halev, Brent Wallace) · The Long Way Round (The Silence). Side signals: four Records
+projects (Phase Redux, Daisy Grohs, Milo Bright, The Arthur Vaughn Octet), Convoy
+Manifest, Mach Point Five.
+
+Candidates for later chapters (released material, see content research): Black Drift
+interiors (repair yard, hangar, command room, assembly orbit), Core Admiralty, Thunderbreak
+bridge; Visions settings in Signal Space (Vikings harbour and Bushwick, Stardust bullpen and
+break room, the Backyard Rockets Mojave towns, all 13 Azure Reach settings); the remaining
+Records projects and titles.
+
 ## 2. Expedition structure (Open Expedition)
 
 | Phase | Implementation |

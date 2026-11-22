@@ -65,6 +65,17 @@ would go. Status today for all: **title verified, audio not supplied**.
 | mc_hexagonis, mc_mach_point_five | Minor Collapse — Hexagonis / Mach Point Five | Mach Point Five ✓ (Hexagonis excluded) |
 | wcr_this_paths_for_you, wcr_shine | Warm Circuits Rise — This Path’s for You / Shine (feat. Cheddr) | both ✓ |
 
+### Records signals (added 2026-11-22; projects heard as music, not Forces)
+
+| Transmission id | Project — Title (verbatim) · meta (verbatim) | Source |
+|---|---|---|
+| pr_sail_west | Phase Redux — Sail West · Selected catalog | SSV `sites/records/content/artists/phase-redux.json` |
+| dg_for_all_creative_habits | Daisy Grohs — For All Creative Habits · Upcoming · September 9, 2026 | SSV `daisy-grohs.json` |
+| mb_figure_it_out | Milo Bright — Figure It Out · Upcoming · August 23, 2026 | SSV `milo-bright.json` |
+| avo_all_i_am | The Arthur Vaughn Octet — All I Am · Selected catalog | SSV `arthur-vaughn-octet.json` |
+
+Project pages for these four use the verbatim field, catalogRole and oneSentenceBio from the same JSON. No audio is bundled; the Archive shows no preview for them until a master exists.
+
 **Distinguished from real tracks:** signal names in the world ("GREEN ECHO", "SHELF
 BEACON", "ECHO TRANSMISSION" …) are **game location names**, never presented as
 track titles. The in-game score and the Archive "Force motif" previews are

@@ -512,7 +512,7 @@ const DESTINATIONS: Dictionary = {
 		"climax_time": 1200.0,
 		"background": Color("080a12"),
 		"drift_name": "OPEN RIFT",
-		"regions": ["rift_mouth", "grain_convoy", "fragment_belt", "broken_foundry", "shear_window", "echo_shallows"],
+		"regions": ["rift_mouth", "grain_convoy", "fragment_belt", "broken_foundry", "shear_window", "echo_shallows", "luminara_fields", "auric_bazaar"],
 		"completion_unlocks": [],
 		"seed": 9152,
 	},
@@ -553,6 +553,12 @@ const REGIONS: Dictionary = {
 	"shear_window": {"name": "SHEAR WINDOW", "shape": "capsule", "a": Vector2(3600, -1900), "b": Vector2(6600, -700), "radius": 400.0,
 		"color": Color("b07cff"), "floor": Color("0c0918"), "props": "corridor", "density": 0.8, "music": "region_corridor",
 		"enemies": {"skiff": 0.8, "mine_hauler": 0.6, "rail_picket": 0.4}, "blurb": "A timing window through the shear. Beacons hold it open.", "threat": 2},
+	"luminara_fields": {"name": "LUMINARA FIELDS", "shape": "circle", "center": Vector2(-4000, -2200), "radius": 700.0,
+		"color": Color("c6e27a"), "floor": Color("0d120a"), "props": "pools", "density": 0.5, "music": "region_basin",
+		"enemies": {"skiff": 1.0, "ram_cutter": 0.4}, "blurb": "A Verge farm port among cultivated fields.", "threat": 1},
+	"auric_bazaar": {"name": "AURIC BAZAAR", "shape": "circle", "center": Vector2(6500, 600), "radius": 620.0,
+		"color": Color("e0b46a"), "floor": Color("120d08"), "props": "wreck", "density": 0.5, "music": "region_wrecks",
+		"enemies": {"skiff": 0.8, "rail_picket": 0.6, "gunship": 0.3}, "blurb": "A Verge freeport and dock ring, reachable again.", "threat": 2},
 	"echo_shallows": {"name": "ECHO SHALLOWS", "shape": "circle", "center": Vector2(5800, 1900), "radius": 950.0,
 		"color": Color("71cda0"), "floor": Color("08130f"), "props": "pools", "density": 0.5, "music": "region_basin",
 		"enemies": {"echo_mote": 1.0, "swarm_tender": 0.3, "leech": 0.4}, "blurb": "Gravitic echoes pool here. Quiet, mostly.", "threat": 1},
@@ -640,6 +646,29 @@ const DISCOVERIES: Dictionary = {
 		"text": "Lattice Research shear maps of the Reach. Future expeditions start with the full map charted.", "perk": "full_map"},
 	"art_beacon_core": {"kind": "artifact", "region": "quiet_basin", "offset": Vector2(330, -280), "title": "BHA BEACON CORE",
 		"text": "A High Era harmonization beacon core, from before the Shattering — still warm. Future expeditions begin with +15 Resonance.", "perk": "resonance_start"},
+	# Rex Fleet places and people (released Issue 01; Chapter II).
+	"rf_grain_freighter": {"kind": "character", "region": "grain_convoy", "offset": Vector2(300, -200), "title": "LUMINARA GRAIN FREIGHTER",
+		"landmark": "freighter", "color": Color("c6e27a"), "contacts": ["luminara_mother", "luminara_boy"], "place": "grain_freighter",
+		"text": "A long tan-and-green Verge farm freighter. Civilian passengers share the hold with the grain."},
+	"rf_luminara_dock": {"kind": "character", "region": "luminara_fields", "offset": Vector2(0, 0), "title": "LUMINARA FIELDS DOCK",
+		"landmark": "dock", "color": Color("c6e27a"), "place": "luminara_fields",
+		"text": "A bright, productive Verge port set in cultivated land, farm freighters waiting at the dock."},
+	"rf_auric_bazaar": {"kind": "character", "region": "auric_bazaar", "offset": Vector2(0, 0), "title": "AURIC BAZAAR",
+		"landmark": "bazaar", "color": Color("e0b46a"), "contacts": ["chris_halev", "brent_wallace"], "place": "auric_bazaar",
+		"text": "A dense Verge freeport and dock ring: cargo, food, route trade, civic relief and family life, all in one place."},
+	# Records signals: Star Splitter Records projects heard as music, not Forces.
+	"rec_phase_redux": {"kind": "signal", "region": "grain_convoy", "offset": Vector2(-400, 300), "title": "SUNSET CARRIER",
+		"transmission": "pr_sail_west", "color": Color("f4a628"),
+		"text": "A restrained groove drifting down the convoy lane, every sound placed just so."},
+	"rec_daisy_grohs": {"kind": "signal", "region": "luminara_fields", "offset": Vector2(250, 200), "title": "FIELD VOICE",
+		"transmission": "dg_for_all_creative_habits", "color": Color("c9c6c0"),
+		"text": "A single clear voice carrying over the fields."},
+	"rec_milo_bright": {"kind": "signal", "region": "echo_shallows", "offset": Vector2(300, -250), "title": "BRIGHT CARRIER",
+		"transmission": "mb_figure_it_out", "color": Color("2850ff"),
+		"text": "A pop hook, played clean and confident, bouncing off the shallows."},
+	"rec_avo": {"kind": "signal", "region": "auric_bazaar", "offset": Vector2(-250, 250), "title": "PORCH BROADCAST",
+		"transmission": "avo_all_i_am", "color": Color("c85b28"),
+		"text": "Fiddle runs and close harmonies from somewhere on the dock ring."},
 	# Star Splitter Visions crossovers (Signal Space; noncanonical for every series).
 	"vis_dti_beacon": {"kind": "character", "region": "quiet_basin", "offset": Vector2(-300, -260), "title": "DTI INTAKE BEACON",
 		"crossover": "vikings_2026", "landmark": "dti", "color": Color("baff00"), "unlock_character": "bjorn",
@@ -705,6 +734,10 @@ const TRANSMISSIONS: Dictionary = {
 	"sb_give_it_up": {"project": "Supersonic Being", "force": "supersonic_being", "title": "Give It Up, Let’s Go", "meta": "Released · 2025", "master_file": "sb_give_it_up.ogg"},
 	"nma_hanging_on_the_edge": {"project": "Night Motion Archives", "force": "night_motion_archives", "title": "Hanging on the Edge", "meta": "Selected catalog", "master_file": "nma_hanging_on_the_edge.ogg"},
 	"rsls_magnetic": {"project": "Robots Sing Love Songs", "force": "robots_sing_love_songs", "title": "Magnetic", "meta": "Selected catalog", "master_file": "rsls_magnetic.ogg"},
+	"pr_sail_west": {"project": "Phase Redux", "force": "", "title": "Sail West", "meta": "Selected catalog", "master_file": "pr_sail_west.ogg"},
+	"dg_for_all_creative_habits": {"project": "Daisy Grohs", "force": "", "title": "For All Creative Habits", "meta": "Upcoming · September 9, 2026", "master_file": "dg_for_all_creative_habits.ogg"},
+	"mb_figure_it_out": {"project": "Milo Bright", "force": "", "title": "Figure It Out", "meta": "Upcoming · August 23, 2026", "master_file": "mb_figure_it_out.ogg"},
+	"avo_all_i_am": {"project": "The Arthur Vaughn Octet", "force": "", "title": "All I Am", "meta": "Selected catalog", "master_file": "avo_all_i_am.ogg"},
 	"wcr_shine": {"project": "Warm Circuits Rise", "force": "warm_circuits_rise", "title": "Shine (feat. Cheddr)", "meta": "Selected catalog", "master_file": "wcr_shine.ogg"},
 	"wcr_this_paths_for_you": {"project": "Warm Circuits Rise", "force": "warm_circuits_rise", "title": "This Path’s for You", "meta": "Selected catalog", "master_file": "wcr_this_paths_for_you.ogg"},
 }
@@ -720,6 +753,10 @@ const PROJECTS: Dictionary = {
 	"Supersonic Being": {"field": "Hip-hop / pop spectacle", "role": "Personality-driven hybrid", "accent": Color("f9268d"), "bio": "Fearless, funny, personality-driven music where hip-hop, pop spectacle, dance-rock, electronic energy, and left-field storytelling collide without asking permission.", "url": "https://distrokid.com/hyperfollow/supersonicbeing/give-it-up-let-go-feat-cheddr"},
 	"Night Motion Archives": {"field": "Indie / alternative", "role": "Nocturnal alternative songs", "accent": Color("c8c3d6"), "bio": "Nocturnal indie and alternative songs where durable melodies, lived-in details, and emotional weight remain stronger than the surrounding atmosphere.", "url": ""},
 	"Robots Sing Love Songs": {"field": "Speculative pop", "role": "Narrative song project", "accent": Color("ffb3c7"), "bio": "Electronic pop, spoken passages, and character-driven writing exploring memory, creativity, inheritance, and machine consciousness.", "url": ""},
+	"Phase Redux": {"field": "Electronic", "role": "Restrained electronic language", "accent": Color("f4a628"), "bio": "Phase Redux creates restrained electronic music where effortless groove, elegant detail, and sunset melancholy replace excess with impeccable selection and proportion.", "url": ""},
+	"Daisy Grohs": {"field": "Contemporary pop", "role": "Voice-led contemporary project", "accent": Color("c9c6c0"), "bio": "Daisy Grohs is a female-led contemporary project centered on distinctive character, emotional presence, and songs shaped around the voice they genuinely require.", "url": ""},
+	"Milo Bright": {"field": "Contemporary pop", "role": "Musician-led contemporary pop", "accent": Color("2850ff"), "bio": "Milo Bright brings visible musicianship, melodic precision, confident performance, and emotional warmth into contemporary male pop without sacrificing immediacy, accessibility, or polish.", "url": ""},
+	"The Arthur Vaughn Octet": {"field": "Americana / bluegrass", "role": "Country ensemble", "accent": Color("c85b28"), "bio": "The Arthur Vaughn Octet brings fiddle runs, close harmonies, country storytelling, and modern rhythmic drive together for back porches, festival stages, and open roads.", "url": ""},
 	"Warm Circuits Rise": {"field": "Jamtronica / psychedelic", "role": "Long-form improvisational language", "accent": Color("fbb040"), "bio": "Improvised grooves through psychedelic guitars, drifting analog synths, ambient space, and patient long-form journeys.", "url": ""},
 }
 
@@ -755,6 +792,32 @@ const SFX_NAMES: Array[String] = [
 	"ability", "wave", "lance", "mine", "chord", "drop", "strike", "heal", "magnet", "state_up", "state_down",
 	"extract", "boss_appear", "boss_phase", "boss_die", "ui_click", "ui_back", "harmony", "enemy_shot",
 	"victory", "defeat", "ping", "evolve",
+]
+
+# ============================================================== contacts & places
+## Rex Fleet people met on the chart (not playable). Role lines from RP
+## rex-fleet-s1/characters.json; portraits cropped from the released Issue 01
+## cast plate (SSV page 003).
+const CONTACTS: Dictionary = {
+	"luminara_mother": {"name": "Luminara Mother", "faction": "The Verge", "role": "Verge civilian parent.", "portrait": "luminara_mother"},
+	"luminara_boy": {"name": "Luminara Boy", "faction": "The Verge", "role": "Verge civilian child. His questions expose what adults leave out.", "portrait": "luminara_boy"},
+	"chris_halev": {"name": "Governor Chris Halev", "faction": "The Verge", "role": "Civil leader of Auric Bazaar. Speaks in cargo, heat, food, docks and people.", "portrait": "chris_halev"},
+	"brent_wallace": {"name": "Brent Wallace", "faction": "The Verge", "role": "Trader guild elder. Dry, muttering, sarcastic.", "portrait": "brent_wallace"},
+}
+
+## Places charted (an atlas of Star Splitter Visions settings). Descriptions
+## follow RP rex-fleet-s1/settings.json and the released pages cited.
+const PLACES: Dictionary = {
+	"kaldr_rift": {"name": "Kaldr Rift", "series": "Rex Fleet", "text": "A hazardous convoy passage through asteroid fragments, broken industry and old hull wreckage.", "source": "Rex Fleet Issue 01, page 005"},
+	"grain_freighter": {"name": "Luminara Grain Freighter", "series": "Rex Fleet", "text": "A farm freighter's working hold, shared by cargo and civilian passengers.", "source": "Rex Fleet Issue 01, page 008"},
+	"luminara_fields": {"name": "Luminara Fields", "series": "Rex Fleet", "text": "A bright Verge port embedded in cultivated land.", "source": "Rex Fleet Issue 01, page 004"},
+	"auric_bazaar": {"name": "Auric Bazaar", "series": "Rex Fleet", "text": "A dense Verge freeport and dock ring.", "source": "Rex Fleet Issue 01, pages 010-012"},
+}
+
+## Corridor Chart chapters: each is one destination with its own path.
+const CHAPTERS: Array = [
+	{"id": 1, "name": "Black Drift", "numeral": "I", "destination": "black_drift_reach", "subtitle": "Relight the Black Drift corridor."},
+	{"id": 2, "name": "The Green Corridor", "numeral": "II", "destination": "kaldr_rift", "subtitle": "The Kaldr Rift convoy lane, out to Auric."},
 ]
 
 # ============================================================== corridor chart
@@ -865,6 +928,98 @@ const CHART: Array = [
 		"new_title": "HEAT", "new": "Someone is standing in its light.",
 		"brief": "A star burning close enough to forge.",
 		"reward": ["Guest explorer: Brandon Mack (Sunforge Outlaw)"], "grants": {}},
+	# ================= CHAPTER II — THE GREEN CORRIDOR (Kaldr Rift) =================
+	{"id": "k_light", "chapter": 2, "power": 60, "prize": "Track", "icon": "signal", "name": "Light on the Water", "place": "Rift Mouth", "region": "rift_mouth",
+		"objective": {"type": "discover", "id": "sig_light_water"}, "discoveries": ["sig_light_water"],
+		"new_title": "KALDR RIFT", "new": "A convoy passage: long lanes, dense rock. Further to fly.",
+		"brief": "The Green Corridor runs through the Kaldr Rift. A signal waits at its mouth.",
+		"reward": ["Track: Where the Light Meets the Water"], "grants": {}},
+	{"id": "k_freighter", "chapter": 2, "power": 70, "prize": "Contacts", "icon": "explorer", "name": "Grain Freighter", "place": "Green Corridor Approach", "region": "grain_convoy",
+		"objective": {"type": "discover", "id": "rf_grain_freighter"}, "discoveries": ["rf_grain_freighter"],
+		"new_title": "CONTACTS", "new": "Not everyone out here is a pilot. People you meet go into the Archive.",
+		"brief": "A Luminara farm freighter is running the approach with passengers aboard.",
+		"reward": ["Contacts: the Luminara mother and boy", "Place: the grain freighter"], "grants": {}},
+	{"id": "k_grind", "chapter": 2, "power": 90, "prize": "Track", "icon": "signal", "name": "Grind Trace", "place": "Green Corridor Approach", "region": "grain_convoy",
+		"objective": {"type": "discover", "id": "sig_grind"}, "discoveries": ["sig_grind"],
+		"new_title": "GUARDED AGAIN", "new": "Another guarded broadcast. The captain answers when you start tuning.",
+		"brief": "A riff looping through a salvage crew's comms.",
+		"reward": ["Track: It’s a Grind (Ghost Mode Remix)"], "grants": {}},
+	{"id": "k_luminara", "chapter": 2, "power": 90, "prize": "Place", "icon": "explorer", "name": "Luminara Fields", "place": "Luminara Fields", "region": "luminara_fields",
+		"objective": {"type": "discover", "id": "rf_luminara_dock"}, "discoveries": ["rf_luminara_dock"],
+		"new_title": "PLACES", "new": "Places you reach are charted in the Archive atlas.",
+		"brief": "The freighter came from here: a farm port in the fields.",
+		"reward": ["Place: Luminara Fields"], "grants": {}},
+	{"id": "k_away", "chapter": 2, "power": 100, "prize": "Track", "icon": "signal", "name": "Away Away", "place": "Echo Shallows", "region": "echo_shallows",
+		"objective": {"type": "discover", "id": "sig_away"}, "discoveries": ["sig_away"],
+		"new_title": "RESONANCE AGAIN", "new": "This one only tunes in Resonance. Find a pylon first.",
+		"brief": "A bassline arriving long after the drums.",
+		"reward": ["Track: Away Away"], "grants": {}},
+	{"id": "k_hold", "chapter": 2, "prize": "+150 Signal", "icon": "hostile", "name": "Convoy Lane", "place": "Kaldr Rift", "start": Vector2(-2200, 600),
+		"objective": {"type": "survive", "seconds": 240.0}, "discoveries": [],
+		"new_title": "HOLD LONGER", "new": "Four minutes this time. Raiders here hit harder.",
+		"brief": "The convoy needs the lane open a little longer.",
+		"reward": ["+150 Signal"], "grants": {"signal": 150}},
+	{"id": "k_freeze", "chapter": 2, "power": 120, "prize": "Track", "icon": "signal", "name": "Frozen Frame", "place": "Fragment Belt", "region": "fragment_belt",
+		"objective": {"type": "discover", "id": "sig_freeze"}, "discoveries": ["sig_freeze"],
+		"new_title": "STILLNESS", "new": "Hold perfectly still to tune it. Clear the area first.",
+		"brief": "An orchestral hit frozen mid-note in the rock.",
+		"reward": ["Track: Freeze Frame"], "grants": {}},
+	{"id": "k_foundry", "chapter": 2, "power": 130, "prize": "Track", "icon": "signal", "name": "Foundry Crescendo", "place": "Broken Foundry", "region": "broken_foundry",
+		"objective": {"type": "discover", "id": "sig_dominion"}, "discoveries": ["sig_dominion"],
+		"new_title": "RELAYS AGAIN", "new": "Three relays, then tune.",
+		"brief": "A huge sound building inside the broken foundry.",
+		"reward": ["Track: Dominion’s Reach"], "grants": {}},
+	{"id": "k_duet", "chapter": 2, "power": 140, "prize": "Robots Sing", "icon": "signal", "name": "Machine Duet", "place": "Broken Foundry", "region": "broken_foundry",
+		"objective": {"type": "discover", "id": "sig_magnetic"}, "discoveries": ["sig_magnetic"],
+		"new_title": "A DUET", "new": "Two machines answering each other. Tune them in.",
+		"brief": "Two foundry machines singing a song neither was built for.",
+		"reward": ["New Force: Robots Sing Love Songs", "Track: Magnetic"], "grants": {}},
+	{"id": "k_tracker", "chapter": 2, "power": 150, "prize": "Before the Reboot", "icon": "artifact", "name": "Tracker Module", "place": "Fragment Belt", "region": "fragment_belt",
+		"objective": {"type": "discover", "id": "art_tracker_module"}, "discoveries": ["art_tracker_module"],
+		"new_title": "HIDDEN AGAIN", "new": "Only visible in Fracture. Use a rift.",
+		"brief": "Sixteen-step patterns hidden in the belt.",
+		"reward": ["New Force: Before the Reboot"], "grants": {}},
+	{"id": "k_auric", "chapter": 2, "power": 160, "prize": "Contacts", "icon": "explorer", "name": "Auric Bazaar", "place": "Auric Bazaar", "region": "auric_bazaar",
+		"objective": {"type": "discover", "id": "rf_auric_bazaar"}, "discoveries": ["rf_auric_bazaar"],
+		"new_title": "THE FREEPORT", "new": "The end of the corridor. Busy, and well defended.",
+		"brief": "The newly reblazed crossing makes Auric reachable again.",
+		"reward": ["Contacts: Governor Chris Halev, Brent Wallace", "Place: Auric Bazaar"], "grants": {}},
+	{"id": "k_silence", "chapter": 2, "prize": "+300 Signal", "icon": "elite", "name": "The Long Way Round", "place": "Kaldr Rift", "start": Vector2(1200, -400),
+		"objective": {"type": "boss", "at": 420.0, "hp": 0.55}, "discoveries": [],
+		"new_title": "THE SILENCE RETURNS", "new": "It arrives at 7:00, or call it at the beacon. Build up first.",
+		"brief": "The corridor is open end to end. The hush follows the music here too.",
+		"reward": ["+300 Signal", "Chapter II complete"], "grants": {"signal": 300}},
+	# Chapter II side signals.
+	{"id": "ks_phase", "chapter": 2, "side_of": "k_light", "power": 60, "prize": "Phase Redux", "icon": "signal", "name": "Sunset Carrier", "place": "Green Corridor Approach", "region": "grain_convoy",
+		"objective": {"type": "discover", "id": "rec_phase_redux"}, "discoveries": ["rec_phase_redux"],
+		"new_title": "RECORDS", "new": "Some signals are records, not Forces. They fill the Archive.",
+		"brief": "A restrained groove drifting down the convoy lane.",
+		"reward": ["Record: Phase Redux — Sail West"], "grants": {}},
+	{"id": "ks_manifest", "chapter": 2, "side_of": "k_freighter", "power": 70, "prize": "Log", "icon": "fragment", "name": "Convoy Manifest", "place": "Green Corridor Approach", "region": "grain_convoy",
+		"objective": {"type": "discover", "id": "frag_convoy"}, "discoveries": ["frag_convoy"],
+		"new_title": "SCANNING", "new": "Hidden until you pass close. Sweep the area.",
+		"brief": "A manifest with a note nobody can explain.",
+		"reward": ["Log for the Archive"], "grants": {}},
+	{"id": "ks_daisy", "chapter": 2, "side_of": "k_luminara", "power": 80, "prize": "Daisy Grohs", "icon": "signal", "name": "Field Voice", "place": "Luminara Fields", "region": "luminara_fields",
+		"objective": {"type": "discover", "id": "rec_daisy_grohs"}, "discoveries": ["rec_daisy_grohs"],
+		"new_title": "A VOICE", "new": "One clear voice over the fields.",
+		"brief": "Someone is singing out here.",
+		"reward": ["Record: Daisy Grohs — For All Creative Habits"], "grants": {}},
+	{"id": "ks_milo", "chapter": 2, "side_of": "k_away", "power": 90, "prize": "Milo Bright", "icon": "signal", "name": "Bright Carrier", "place": "Echo Shallows", "region": "echo_shallows",
+		"objective": {"type": "discover", "id": "rec_milo_bright"}, "discoveries": ["rec_milo_bright"],
+		"new_title": "A HOOK", "new": "A clean pop hook bouncing off the shallows.",
+		"brief": "Something catchy is echoing out here.",
+		"reward": ["Record: Milo Bright — Figure It Out"], "grants": {}},
+	{"id": "ks_mach", "chapter": 2, "side_of": "k_freeze", "power": 120, "prize": "Track", "icon": "signal", "name": "Mach Point Five", "place": "Shear Window", "region": "shear_window",
+		"objective": {"type": "discover", "id": "sig_mach"}, "discoveries": ["sig_mach"],
+		"new_title": "THE SHEAR", "new": "A narrow timing window through the shear.",
+		"brief": "Something fast is holding the window open.",
+		"reward": ["Track: Mach Point Five", "Track: Shine"], "grants": {}},
+	{"id": "ks_avo", "chapter": 2, "side_of": "k_auric", "power": 120, "prize": "Arthur Vaughn Octet", "icon": "signal", "name": "Porch Broadcast", "place": "Auric Bazaar", "region": "auric_bazaar",
+		"objective": {"type": "discover", "id": "rec_avo"}, "discoveries": ["rec_avo"],
+		"new_title": "A BAND", "new": "Eight players somewhere on the dock ring.",
+		"brief": "Fiddle runs on the freeport.",
+		"reward": ["Record: The Arthur Vaughn Octet — All I Am"], "grants": {}},
 ]
 
 static func chart_stop(id: String) -> Dictionary:
@@ -873,15 +1028,41 @@ static func chart_stop(id: String) -> Dictionary:
 			return st
 	return {}
 
-static func chart_main() -> Array:
-	return CHART.filter(func(st: Dictionary) -> bool: return not st.has("side_of"))
+## Main stages, in path order: all chapters (chapter 0) or one chapter.
+static func chart_main(chapter: int = 0) -> Array:
+	return CHART.filter(func(st: Dictionary) -> bool: return not st.has("side_of") and (chapter == 0 or int(st.get("chapter", 1)) == chapter))
+
+## "STAGE 3", or "II · STAGE 3" past the first chapter; "SIDE SIGNAL" for sides.
+static func stage_tag(id: String) -> String:
+	var n: int = chart_number(id)
+	if n <= 0:
+		return "SIDE SIGNAL"
+	var ch: int = chart_chapter(id)
+	return ("STAGE %d" % n) if ch == 1 else ("%s · STAGE %d" % [String(chapter_def(ch)["numeral"]), n])
+
+static func chart_chapter(id: String) -> int:
+	return int(chart_stop(id).get("chapter", 1))
+
+static func chapter_def(chapter: int) -> Dictionary:
+	for c: Dictionary in CHAPTERS:
+		if int(c["id"]) == chapter:
+			return c
+	return CHAPTERS[0]
+
+## The main stage before this one on the whole path ("" for the very first).
+static func chart_prev_main(id: String) -> String:
+	var all: Array = chart_main()
+	for i in all.size():
+		if String(all[i]["id"]) == id:
+			return String(all[i - 1]["id"]) if i > 0 else ""
+	return ""
 
 static func chart_sides(parent_id: String) -> Array:
 	return CHART.filter(func(st: Dictionary) -> bool: return String(st.get("side_of", "")) == parent_id)
 
-## 1-based number of a main stop, or 0 for a side stop.
+## 1-based number of a main stage within its chapter, or 0 for a side signal.
 static func chart_number(id: String) -> int:
-	var main: Array = chart_main()
+	var main: Array = chart_main(chart_chapter(id))
 	for i in main.size():
 		if String(main[i]["id"]) == id:
 			return i + 1

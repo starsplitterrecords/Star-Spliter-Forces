@@ -348,8 +348,8 @@ func stop_available(id: String) -> bool:
 		return false
 	if st.has("side_of"):
 		return stop_done(String(st["side_of"]))
-	var n: int = GameData.chart_number(id)
-	return n <= 1 or stop_done(String(GameData.chart_main()[n - 2]["id"]))
+	var prev: String = GameData.chart_prev_main(id)
+	return prev == "" or stop_done(prev)
 
 ## First main stop not yet relit ("" when the corridor is fully open).
 func next_stop() -> String:
@@ -364,6 +364,23 @@ func stops_done_count() -> int:
 		if stop_done(String(st["id"])):
 			n += 1
 	return n
+
+## Contacts met and places charted come from discoveries already made.
+func contacts_met() -> Array:
+	var out: Array = []
+	for did: String in data["discovered"].keys():
+		for c: Variant in GameData.DISCOVERIES.get(did, {}).get("contacts", []):
+			if not String(c) in out:
+				out.append(String(c))
+	return out
+
+func places_charted() -> Array:
+	var out: Array = ["kaldr_rift"] if "kaldr_rift" in data["unlocked_destinations"] else []
+	for did: String in data["discovered"].keys():
+		var pl: String = String(GameData.DISCOVERIES.get(did, {}).get("place", ""))
+		if pl != "" and not pl in out:
+			out.append(pl)
+	return out
 
 func has_feature(feature: String) -> bool:
 	for st: Dictionary in GameData.CHART:
@@ -386,6 +403,7 @@ func complete_stop(id: String) -> bool:
 	for d: Variant in grants.get("destinations", []):
 		if not String(d) in data["unlocked_destinations"]:
 			data["unlocked_destinations"].append(String(d))
+	data["currency"] = int(data["currency"]) + int(grants.get("signal", 0))
 	save()
 	return true
 

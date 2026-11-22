@@ -454,6 +454,41 @@ func _draw_landmark(kind: String, pos: Vector2, c: Color) -> void:
 			draw_colored_polygon(PackedVector2Array([b + Vector2(12, -30), b + Vector2(26, -4), b + Vector2(12, -10)]), c)
 			draw_string(font, b + Vector2(-9, -60), "O", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("2f6fb0"))
 			draw_string(font, b + Vector2(-9, -76), "9", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("2f6fb0"))
+		"freighter":
+			# A long Verge farm freighter: tan hull, muted-green cargo pods.
+			var f0: Vector2 = pos + Vector2(-260, -150)
+			draw_rect(Rect2(f0, Vector2(360, 54)), Color("b9a27a"))
+			for k in 5:
+				draw_rect(Rect2(f0 + Vector2(20 + k * 64, -16), Vector2(52, 86)), Color("6f8a4e"))
+				draw_rect(Rect2(f0 + Vector2(20 + k * 64, -16), Vector2(52, 86)), Color("3e4f2c"), false, 2.0)
+			draw_colored_polygon(PackedVector2Array([f0 + Vector2(360, 0), f0 + Vector2(410, 27), f0 + Vector2(360, 54)]), Color("b9a27a"))
+			draw_rect(Rect2(f0 + Vector2(-26, 10), Vector2(26, 34)), Color("8a7656"))
+			draw_circle(f0 + Vector2(-34, 27), 9.0 + sin(anim * 8.0), Color(c, 0.6))
+			for k2 in 4:
+				draw_circle(f0 + Vector2(372 - k2 * 12, 27), 2.5, Color("ffe9b0", 0.6 + 0.4 * sin(anim * 3.0 + k2)))
+		"dock":
+			# Luminara Fields: green field strips around a bright dock.
+			var d0: Vector2 = pos + Vector2(-230, -40)
+			for k in 6:
+				draw_rect(Rect2(d0 + Vector2(-60 + k * 22, -140), Vector2(16, 120)), Color("6f8a4e", 0.5 + 0.1 * (k % 2)))
+				draw_rect(Rect2(d0 + Vector2(-60 + k * 22, 60), Vector2(16, 90)), Color("8fb062", 0.45))
+			draw_rect(Rect2(d0 + Vector2(-80, -14), Vector2(200, 60)), Color("d8c9a6"))
+			draw_rect(Rect2(d0 + Vector2(-80, -14), Vector2(200, 60)), Color("6f8a4e"), false, 2.0)
+			for k3 in 3:
+				draw_rect(Rect2(d0 + Vector2(-60 + k3 * 62, 4), Vector2(40, 24)), Color("3e4f2c"))
+				draw_circle(d0 + Vector2(-40 + k3 * 62, -22), 4.0, Color("ffe9b0", 0.8))
+		"bazaar":
+			# Auric Bazaar: a crowded dock ring with lit market berths.
+			var bc: Vector2 = pos + Vector2(240, -60)
+			draw_arc(bc, 120.0, 0.0, TAU, 48, Color("8a6a3a"), 18.0)
+			draw_arc(bc, 120.0, 0.0, TAU, 48, Color(c, 0.6), 3.0)
+			for k in 12:
+				var a3: float = TAU * k / 12.0 + anim * 0.03
+				var bp: Vector2 = bc + Vector2.from_angle(a3) * 120.0
+				draw_rect(Rect2(bp - Vector2(10, 10), Vector2(20, 20)), [Color("e0b46a"), Color("c85b28"), Color("6f8a4e"), Color("b9a27a")][k % 4])
+				draw_circle(bp, 3.0, Color("fff1c8", 0.5 + 0.5 * sin(anim * 2.0 + k)))
+			draw_circle(bc, 46.0, Color("2a1f12"))
+			draw_circle(bc, 30.0, Color(c, 0.5))
 		"sunforge":
 			# A star burning close enough to forge.
 			var fc: Vector2 = pos + Vector2(-250, -50)

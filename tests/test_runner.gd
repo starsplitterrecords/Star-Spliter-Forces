@@ -250,13 +250,22 @@ func test_data_integrity() -> void:
 		if String(o["type"]) == "discover":
 			check(GameData.DISCOVERIES.has(String(o["id"])), "chart stop %s targets unknown discovery" % sid)
 			check(String(o["id"]) in st["discoveries"], "chart stop %s does not spawn its own target" % sid)
-			check(GameData.discovery_in_destination(String(o["id"]), "black_drift_reach"), "chart stop %s target is outside the Reach" % sid)
+			var dest_id: String = String(GameData.chapter_def(int(st.get("chapter", 1)))["destination"])
+			check(GameData.discovery_in_destination(String(o["id"]), dest_id), "chart stop %s target is outside %s" % [sid, dest_id])
 		for did3: String in st["discoveries"]:
 			check(GameData.DISCOVERIES.has(did3), "chart stop %s lists unknown discovery %s" % [sid, did3])
 		if st.has("side_of"):
 			check(not GameData.chart_stop(String(st["side_of"])).is_empty(), "side stop %s has no parent" % sid)
 		check(GameData.chart_objective_text(st) != "", "chart stop %s has no objective text" % sid)
 	check(GameData.chart_main().size() >= 10, "main corridor too short")
+	for d4: String in GameData.DISCOVERIES.keys():
+		for c4: Variant in GameData.DISCOVERIES[d4].get("contacts", []):
+			check(GameData.CONTACTS.has(String(c4)), "%s names unknown contact %s" % [d4, c4])
+			check(ResourceLoader.exists("res://assets/characters/%s_96.png" % String(GameData.CONTACTS[String(c4)]["portrait"])), "contact %s has no portrait" % c4)
+		var pl4: String = String(GameData.DISCOVERIES[d4].get("place", ""))
+		check(pl4 == "" or GameData.PLACES.has(pl4), "%s names unknown place %s" % [d4, pl4])
+	for t4: String in GameData.TRANSMISSIONS.keys():
+		check(GameData.PROJECTS.has(String(GameData.TRANSMISSIONS[t4]["project"])), "transmission %s has no project page" % t4)
 	# Canon gate: every explorer has a faction palette and a released portrait.
 	for cid3: String in GameData.CHARACTERS.keys():
 		var c3: Dictionary = GameData.CHARACTERS[cid3]
@@ -815,6 +824,29 @@ func test_corridor_chart() -> void:
 	check(String(run.objective_target()[1]).begins_with("SEARCH"), "compass points at the exact target before charging")
 	_cleanup_runs()
 	await get_tree().process_frame
+	# Chapter II opens after The Silence and plays in the Kaldr Rift.
+	_reset_profile()
+	check(not Profile.stop_available("k_light"), "Chapter II open before Chapter I is finished")
+	for st5: Dictionary in GameData.chart_main(1):
+		Profile.complete_stop(String(st5["id"]))
+	check(Profile.stop_available("k_light") and Profile.next_stop() == "k_light", "Chapter II did not open after The Silence")
+	run = _make_run({"stop": "k_auric"})
+	await get_tree().process_frame
+	check(run.destination_id == "kaldr_rift", "Chapter II stage not played in the Kaldr Rift")
+	var bz: Dictionary = {}
+	for q5: Dictionary in run.pois.items:
+		if String(q5.id) == "rf_auric_bazaar":
+			bz = q5
+	check(not bz.is_empty(), "Auric Bazaar landmark missing")
+	run.motes_collected = 999
+	run._claim_discovery(bz)
+	check(run.stop_complete, "Auric Bazaar did not complete its stage")
+	run.end_run("extracted")
+	Profile.record_expedition(finished_result)
+	check("chris_halev" in Profile.contacts_met() and "auric_bazaar" in Profile.places_charted(), "contacts / place not recorded")
+	_cleanup_runs()
+	await get_tree().process_frame
+	_reset_profile()
 	# Old saves keep what they earned.
 	var old: Dictionary = Profile.defaults()
 	old.erase("chart")

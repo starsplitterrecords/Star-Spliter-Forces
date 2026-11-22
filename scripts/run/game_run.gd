@@ -121,7 +121,7 @@ func setup(config: Dictionary) -> void:
 	stop_id = String(config.get("stop", ""))
 	mission = GameData.chart_stop(stop_id)
 	if not mission.is_empty():
-		destination_id = "black_drift_reach"
+		destination_id = String(GameData.chapter_def(int(mission.get("chapter", 1)))["destination"])
 	if config.has("seed"):
 		rng.seed = int(config["seed"])
 	else:
@@ -195,7 +195,7 @@ func _build() -> void:
 	_queue_onboarding()
 	if not mission.is_empty():
 		var num: int = GameData.chart_number(stop_id)
-		hud.banner(("STAGE %d — " % num if num > 0 else "SIDE SIGNAL — ") + String(mission["name"]).to_upper(), GameData.chart_objective_text(mission), Color("68ecff"), 4.0)
+		hud.banner(String(mission["name"]).to_upper(), (("Stage %d  •  " % num) if num > 0 else "Side signal  •  ") + GameData.chart_objective_text(mission), Color("68ecff"), 4.0)
 		if not Profile.seen("stop_new_" + stop_id):
 			Profile.mark_seen("stop_new_" + stop_id)
 			hud.teach_custom("NEW  •  " + String(mission["new_title"]), String(mission["new"]), "OBJECTIVE: " + GameData.chart_objective_text(mission), Color("68ecff"), String(mission.get("icon", "signal")))
@@ -1310,6 +1310,8 @@ func _claim_discovery(p: Dictionary) -> void:
 			var t: Dictionary = GameData.TRANSMISSIONS.get(String(d.get("transmission", "")), {})
 			if not t.is_empty():
 				heading = "%s — %s" % [String(t["project"]).to_upper(), String(t["title"])]
+				if String(d.get("force", "")) == "":
+					gains.append("Record: %s" % String(t["project"]))
 				gains.append("Track: %s" % String(t["title"]))
 			att = _attune(String(d.get("force", "")))
 			if mission.is_empty():
@@ -1319,6 +1321,10 @@ func _claim_discovery(p: Dictionary) -> void:
 			var cid: String = String(d.get("unlock_character", ""))
 			if cid != "" and not Profile.has_character(cid):
 				gains.append("Explorer: %s (next expedition)" % GameData.CHARACTERS[cid]["name"])
+			for ct: Variant in d.get("contacts", []):
+				gains.append("Contact: %s" % String(GameData.CONTACTS[String(ct)]["name"]))
+			if String(d.get("place", "")) != "":
+				gains.append("Place: %s" % String(GameData.PLACES[String(d["place"])]["name"]))
 			gains.append("Free upgrade")
 			pending_levels += 1
 		"artifact":

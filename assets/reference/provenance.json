@@ -1141,6 +1141,198 @@
           "sha256": "4b8ea3f028ed35f74e7834c26e85f603e770d81065505e9e442e79a0d930aca9"
         }
       ]
+    },
+    {
+      "id": "portrait_brent_wallace",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Rex Fleet contact portrait cropped from the released Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/brent_wallace_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "8cb82c57e126629d21e271e23ae0529e362310485eaa98f7a9fcf8e16dbf251f"
+        },
+        {
+          "out": "assets/characters/brent_wallace_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "fb0512df17ab398dd628e1dfa756a77107d2eeab449964ffba942bb4e1086a61"
+        }
+      ]
+    },
+    {
+      "id": "portrait_luminara_mother",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Rex Fleet contact portrait cropped from the released Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/luminara_mother_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "bf784f575381011532cd7d8039771221d9572029688960e54e3188317434db39"
+        },
+        {
+          "out": "assets/characters/luminara_mother_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "08a7b09ce83dc469f75e2e85811f7ab0bc0638bf2a228edf5f95c9e4bf5f0217"
+        }
+      ]
+    },
+    {
+      "id": "portrait_luminara_boy",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Rex Fleet contact portrait cropped from the released Issue 01 cast plate (page 003)",
+      "source_sha256": "2ecb42381abd511ec91134d337ebf715ca54633da67bc7563197a4e9aabf7b32",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/luminara_boy_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "66d82230152cc7164e99025acd27cebf947042127f026cea380dc946c7d70339"
+        },
+        {
+          "out": "assets/characters/luminara_boy_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "691c0abc9f6ab778072437bd578be3a10b2ab6748741dbfc04b867315269c1c7"
+        }
+      ]
+    },
+    {
+      "id": "identity_phase_redux",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/phase-redux.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "9db14ffc33846a16d530b48b5f5bd6e1f4c65bdd3ddc0729ae99714b7b06a879",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/phase_redux.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "eb14e87cddc579f9a104b253bc46f0bce98122bb186c00ef1d08fa88b3889bd1"
+        }
+      ]
+    },
+    {
+      "id": "identity_daisy_grohs",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/daisy-grohs.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "898c1473de941eea7b337520ee0bf81803e70e1dc479d01c2c88fe8418d67f04",
+      "review_required": false,
+      "source_size": [
+        2048,
+        2048
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/daisy_grohs.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "751545dd93d3b7aa670cbf0540a4129137026c845502105288c25e598b2c8afe"
+        }
+      ]
+    },
+    {
+      "id": "identity_milo_bright",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/artists/milo-bright.webp",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "30d0304bb8e8e505f6b283701cef651301d21b27553525d61ca5c4fd88b8437f",
+      "review_required": false,
+      "source_size": [
+        2048,
+        2048
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/milo_bright.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "9b9754da5e356a627b80c5c08f94189ad8ed3385fa51e7332bba8a7ca4e8dac5"
+        }
+      ]
+    },
+    {
+      "id": "identity_the_arthur_vaughn_octet",
+      "repo": "StarSplitterVisions",
+      "path": "sites/records/public/images/records/chatgpt-image-jun-24-2025-080626-am.png",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Archive record page identity art (artist JSON identityImage)",
+      "source_sha256": "62fd89e2f44be99d96576855bcc92f894bb82794e239bef7672a3c538c744dea",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/music/identity/the_arthur_vaughn_octet.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "43e4bb8711ba555ce33ce97c96f9ef5206647f2b3fe7d19c1f6e233c94f5a994"
+        }
+      ]
     }
   ]
 }

@@ -209,7 +209,7 @@ func show_title() -> void:
 	var nxt: String = Profile.next_stop()
 	var begin_text: String = "CORRIDOR CHART"
 	if nxt != "":
-		begin_text = ("BEGIN — " if Profile.stops_done_count() == 0 else "CONTINUE — ") + "STAGE %d" % GameData.chart_number(nxt)
+		begin_text = ("BEGIN — " if Profile.stops_done_count() == 0 else "CONTINUE — ") + GameData.stage_tag(nxt)
 	var begin: Button = UiTheme.button(begin_text, func() -> void: show_chart(), 340.0, 60.0)
 	menu.add_child(begin)
 	if Profile.has_feature("open_reach"):
@@ -262,18 +262,43 @@ func _next_goal_text() -> String:
 var selected_stop: String = ""
 
 ## The spine of the game: pick the next beacon to relight.
-func show_chart(focus: String = "") -> void:
+func show_chart(focus: String = "", chapter: int = 0) -> void:
 	var v: VBoxContainer = _new_screen()
 	_menu_music()
+	var pick: String = focus
+	if pick == "" or GameData.chart_stop(pick).is_empty():
+		pick = Profile.next_stop()
+	if pick == "":
+		pick = String(GameData.chart_main()[-1]["id"])
+	if chapter <= 0:
+		chapter = GameData.chart_chapter(pick)
+	elif GameData.chart_chapter(pick) != chapter:
+		pick = ""
+		for st0: Dictionary in GameData.chart_main(chapter):
+			if pick == "" and not Profile.stop_done(String(st0["id"])):
+				pick = String(st0["id"])
+		if pick == "":
+			pick = String(GameData.chart_main(chapter)[-1]["id"])
 	var head: BoxContainer = UiTheme.row(4 if UiTheme.is_narrow() else 18)
 	v.add_child(head)
 	var ht: Label = UiTheme.label("CORRIDOR CHART", 26, Color.WHITE, "display")
 	ht.autowrap_mode = TextServer.AUTOWRAP_OFF
 	head.add_child(ht)
-	var hs: Label = UiTheme.label("Black Drift Reach — relight the corridor one beacon at a time. %d of %d lit." % [Profile.stops_done_count(), GameData.CHART.size()], 14, UiTheme.DIM)
-	hs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	hs.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	head.add_child(hs)
+	# Chapter switch: a chapter opens when the one before it is finished.
+	var tabs_row: HBoxContainer = HBoxContainer.new()
+	tabs_row.add_theme_constant_override("separation", 8)
+	tabs_row.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	head.add_child(tabs_row)
+	for cdef: Dictionary in GameData.CHAPTERS:
+		var cid: int = int(cdef["id"])
+		var first: Array = GameData.chart_main(cid)
+		var open_ch: bool = not first.is_empty() and (Profile.stop_available(String(first[0]["id"])) or Profile.stop_done(String(first[0]["id"])))
+		var tb: Button = UiTheme.button(("%s  %s" % [String(cdef["numeral"]), String(cdef["name"]).to_upper()]) if open_ch else "%s  ?" % String(cdef["numeral"]), func() -> void: show_chart("", cid), 0.0, 40.0)
+		tb.disabled = not open_ch
+		tb.add_theme_font_size_override("font_size", UiTheme.fs(13))
+		if cid == chapter:
+			tb.add_theme_stylebox_override("normal", UiTheme.box(UiTheme.PANEL_HI, UiTheme.ACCENT, 2, 10, 10))
+		tabs_row.add_child(tb)
 	var sc: ScrollContainer = ScrollContainer.new()
 	sc.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	# The lane shrinks on short screens so the briefing always fits below it.
@@ -283,7 +308,7 @@ func show_chart(focus: String = "") -> void:
 	v.add_child(sc)
 	var holder: Control = Control.new()
 	sc.add_child(holder)
-	var chart: ChartView = ChartView.new()
+	var chart: ChartView = ChartView.new(chapter)
 	chart.scale = Vector2(k, k)
 	holder.add_child(chart)
 	holder.custom_minimum_size = chart.custom_minimum_size * k
@@ -293,11 +318,6 @@ func show_chart(focus: String = "") -> void:
 	chart.stop_selected.connect(func(id: String) -> void:
 		selected_stop = id
 		_fill_briefing(brief, id))
-	var pick: String = focus
-	if pick == "" or GameData.chart_stop(pick).is_empty():
-		pick = Profile.next_stop()
-	if pick == "":
-		pick = String(GameData.chart_main()[-1]["id"])
 	chart.select(pick)
 	# Bring the chosen beacon into view.
 	await get_tree().process_frame
@@ -319,16 +339,16 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 	h.add_child(col)
 	if not open and not done:
 		# Past the next beacon the corridor is still dark: no spoilers.
-		col.add_child(UiTheme.label("STAGE %d" % num, 13, UiTheme.DIM, "bold"))
+		col.add_child(UiTheme.label(GameData.stage_tag(id), 13, UiTheme.DIM, "bold"))
 		col.add_child(UiTheme.label("UNCHARTED", 20, UiTheme.DIM, "display"))
 		col.add_child(UiTheme.label("Further down the corridor. Relight the beacon before it to see what waits here.", 14, UiTheme.DIM))
 		col.add_child(UiTheme.button("BACK", show_title, 250.0, 42.0))
 		return
-	var tag: String = ("STAGE %d" % num if num > 0 else "SIDE SIGNAL") + "   •   " + String(st["place"]).to_upper() + ("   •   BEACON LIT" if done else "")
+	var tag: String = GameData.stage_tag(id) + "   •   " + String(st["place"]).to_upper() + ("   •   LIT" if done else "")
 	col.add_child(UiTheme.label(tag, 13, Color("68ecff") if done else UiTheme.GOLD, "bold"))
 	col.add_child(UiTheme.label(String(st["name"]).to_upper(), 20, Color.WHITE, "display"))
 	if not open and not done:
-		var need: String = String(GameData.chart_stop(String(st["side_of"]))["name"]) if st.has("side_of") else String(GameData.chart_main()[num - 2]["name"])
+		var need: String = String(GameData.chart_stop(String(st["side_of"]) if st.has("side_of") else GameData.chart_prev_main(id))["name"])
 		col.add_child(UiTheme.label("Still dark. Relight \"%s\" first." % need, 15, UiTheme.DIM))
 		col.add_child(UiTheme.label("REWARD WAITING: " + "  •  ".join(st["reward"]), 14, Color(UiTheme.GOLD, 0.7)))
 	else:
@@ -503,7 +523,7 @@ func show_departure() -> void:
 	var launch_note: String = String(dest["desc"])
 	if not stop.is_empty():
 		var sn: int = GameData.chart_number(selected_stop)
-		launch_text = "LAUNCH — " + ("STAGE %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
+		launch_text = "LAUNCH — " + String(stop["name"]).to_upper()
 		launch_note = "OBJECTIVE: %s.   REWARD: %s" % [GameData.chart_objective_text(stop), String(stop["reward"][0])]
 	var go: Button = UiTheme.button(launch_text, func() -> void: start_expedition(false), 420.0 if not UiTheme.is_narrow() else _content_width() - 192.0, 56.0)
 	go.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -543,7 +563,7 @@ func show_results() -> void:
 	var stop_won: bool = bool(r.get("stop_complete", false))
 	if not stop.is_empty():
 		var sn: int = GameData.chart_number(String(stop["id"]))
-		var label: String = ("STAGE %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
+		var label: String = String(stop["name"]).to_upper()
 		title = ("BEACON RELIT — " if stop_won else "STILL DARK — ") + label
 		sub = "" if stop_won else "Not done: %s. Nothing is lost." % GameData.chart_objective_text(stop)
 	if stop.is_empty():
@@ -733,9 +753,11 @@ func _archive_projects() -> Control:
 			if cover:
 				tr.add_child(cover)
 			var has_master: bool = Audio.has_master(tid2)
-			tr.add_child(UiTheme.button("▶ PLAY" if has_master else "▶ FORCE MOTIF", func() -> void:
-				var mode: String = Audio.play_catalog(tid2)
-				_toast("Now playing: %s — %s" % [String(t["project"]), String(t["title"])] if mode == "master" else "Master not yet supplied — playing the in-game %s motif (original placeholder, not the release)." % String(GameData.FORCES[String(t["force"])]["name"])), 190.0, 42.0))
+			# Records without a Force have no motif to preview until a master exists.
+			if has_master or String(t.get("force", "")) != "":
+				tr.add_child(UiTheme.button("▶ PLAY" if has_master else "▶ FORCE MOTIF", func() -> void:
+					var mode: String = Audio.play_catalog(tid2)
+					_toast("Now playing: %s — %s" % [String(t["project"]), String(t["title"])] if mode == "master" else "Master not yet supplied — playing the in-game %s motif (original placeholder, not the release)." % String(GameData.FORCES[String(t["force"])]["name"])), 190.0, 42.0))
 			var tl: Label = UiTheme.label("%s   (%s)" % [String(t["title"]), String(t["meta"])], 15, UiTheme.TEXT, "bold")
 			tl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			tl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -776,6 +798,32 @@ func _archive_universe() -> Control:
 		if pc:
 			pc.tooltip_text = key.replace("_", " ").capitalize()
 			cast.add_child(pc)
+	# People met and places charted on the Corridor Chart.
+	var met: Array = Profile.contacts_met()
+	inner.add_child(UiTheme.label("CONTACTS MET", 14, UiTheme.GOLD, "bold"))
+	for ck: String in met:
+		var cdef: Dictionary = GameData.CONTACTS[ck]
+		var crow: HBoxContainer = HBoxContainer.new()
+		crow.add_theme_constant_override("separation", 10)
+		inner.add_child(crow)
+		var cp: TextureRect = _art("res://assets/characters/%s_96.png" % String(cdef["portrait"]), Vector2(56, 56))
+		if cp:
+			crow.add_child(cp)
+		var cv: VBoxContainer = VBoxContainer.new()
+		cv.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		crow.add_child(cv)
+		cv.add_child(UiTheme.label("%s  •  %s" % [String(cdef["name"]), String(cdef["faction"])], 15, Color.WHITE, "bold"))
+		cv.add_child(UiTheme.label(String(cdef["role"]), 13, UiTheme.DIM))
+	if met.size() < GameData.CONTACTS.size():
+		inner.add_child(_more_line("%d more contact%s on the Corridor Chart." % [GameData.CONTACTS.size() - met.size(), "" if GameData.CONTACTS.size() - met.size() == 1 else "s"]))
+	var charted: Array = Profile.places_charted()
+	inner.add_child(UiTheme.label("PLACES CHARTED", 14, UiTheme.GOLD, "bold"))
+	for pk: String in charted:
+		var pdef2: Dictionary = GameData.PLACES[pk]
+		inner.add_child(UiTheme.label("%s  •  %s" % [String(pdef2["name"]), String(pdef2["series"])], 15, Color.WHITE, "bold"))
+		inner.add_child(UiTheme.label("%s  (%s)" % [String(pdef2["text"]), String(pdef2["source"])], 13, UiTheme.DIM))
+	if charted.size() < GameData.PLACES.size():
+		inner.add_child(_more_line("%d more place%s to chart." % [GameData.PLACES.size() - charted.size(), "" if GameData.PLACES.size() - charted.size() == 1 else "s"]))
 	inner.add_child(UiTheme.label("ABOUT THIS GAME'S SIGNALS", 14, UiTheme.GOLD, "bold"))
 	inner.add_child(UiTheme.label("The characters, factions and places come from Rex Fleet. The signals do not: Star Splitter Records music reaching the frontier, the Forces, and the hush that hunts it are original to Star Splitter Forces and are not part of Rex Fleet canon.", 14, UiTheme.TEXT))
 	return s[0]

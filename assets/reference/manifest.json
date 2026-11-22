@@ -1281,6 +1281,222 @@
      ]
     }
    ]
+  },
+  {
+   "id": "portrait_brent_wallace",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Rex Fleet contact portrait cropped from the released Issue 01 cast plate (page 003)",
+   "outputs": [
+    {
+     "out": "assets/characters/brent_wallace_256.png",
+     "size": [
+      256,
+      256
+     ],
+     "crop": [
+      0.632,
+      0.261,
+      0.808,
+      0.371
+     ],
+     "display": [
+      96,
+      96
+     ]
+    },
+    {
+     "out": "assets/characters/brent_wallace_96.png",
+     "size": [
+      96,
+      96
+     ],
+     "crop": [
+      0.632,
+      0.261,
+      0.808,
+      0.371
+     ],
+     "display": [
+      48,
+      48
+     ]
+    }
+   ]
+  },
+  {
+   "id": "portrait_luminara_mother",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Rex Fleet contact portrait cropped from the released Issue 01 cast plate (page 003)",
+   "outputs": [
+    {
+     "out": "assets/characters/luminara_mother_256.png",
+     "size": [
+      256,
+      256
+     ],
+     "crop": [
+      0.29,
+      0.385,
+      0.466,
+      0.495
+     ],
+     "display": [
+      96,
+      96
+     ]
+    },
+    {
+     "out": "assets/characters/luminara_mother_96.png",
+     "size": [
+      96,
+      96
+     ],
+     "crop": [
+      0.29,
+      0.385,
+      0.466,
+      0.495
+     ],
+     "display": [
+      48,
+      48
+     ]
+    }
+   ]
+  },
+  {
+   "id": "portrait_luminara_boy",
+   "repo": "StarSplitterVisions",
+   "path": "sites/visions/public/images/pages/rex-fleet/issue-01/page-003.jpg",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Rex Fleet contact portrait cropped from the released Issue 01 cast plate (page 003)",
+   "outputs": [
+    {
+     "out": "assets/characters/luminara_boy_256.png",
+     "size": [
+      256,
+      256
+     ],
+     "crop": [
+      0.533,
+      0.385,
+      0.709,
+      0.495
+     ],
+     "display": [
+      96,
+      96
+     ]
+    },
+    {
+     "out": "assets/characters/luminara_boy_96.png",
+     "size": [
+      96,
+      96
+     ],
+     "crop": [
+      0.533,
+      0.385,
+      0.709,
+      0.495
+     ],
+     "display": [
+      48,
+      48
+     ]
+    }
+   ]
+  },
+  {
+   "id": "identity_phase_redux",
+   "repo": "StarSplitterVisions",
+   "path": "sites/records/public/images/records/artists/phase-redux.webp",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Archive record page identity art (artist JSON identityImage)",
+   "outputs": [
+    {
+     "out": "assets/music/identity/phase_redux.png",
+     "size": [
+      256,
+      256
+     ],
+     "display": [
+      128,
+      128
+     ]
+    }
+   ]
+  },
+  {
+   "id": "identity_daisy_grohs",
+   "repo": "StarSplitterVisions",
+   "path": "sites/records/public/images/records/artists/daisy-grohs.webp",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Archive record page identity art (artist JSON identityImage)",
+   "outputs": [
+    {
+     "out": "assets/music/identity/daisy_grohs.png",
+     "size": [
+      256,
+      256
+     ],
+     "display": [
+      128,
+      128
+     ]
+    }
+   ]
+  },
+  {
+   "id": "identity_milo_bright",
+   "repo": "StarSplitterVisions",
+   "path": "sites/records/public/images/records/artists/milo-bright.webp",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Archive record page identity art (artist JSON identityImage)",
+   "outputs": [
+    {
+     "out": "assets/music/identity/milo_bright.png",
+     "size": [
+      256,
+      256
+     ],
+     "display": [
+      128,
+      128
+     ]
+    }
+   ]
+  },
+  {
+   "id": "identity_the_arthur_vaughn_octet",
+   "repo": "StarSplitterVisions",
+   "path": "sites/records/public/images/records/chatgpt-image-jun-24-2025-080626-am.png",
+   "commit": "b35d7d8f298c",
+   "status": "released",
+   "use": "Archive record page identity art (artist JSON identityImage)",
+   "outputs": [
+    {
+     "out": "assets/music/identity/the_arthur_vaughn_octet.png",
+     "size": [
+      256,
+      256
+     ],
+     "display": [
+      128,
+      128
+     ]
+    }
+   ]
   }
  ]
 }

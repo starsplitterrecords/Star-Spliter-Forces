@@ -14,8 +14,11 @@ var selected: String = ""
 var anim: float = 0.0
 var buttons: Dictionary = {}
 
-func _init() -> void:
-	var main: Array = GameData.chart_main()
+var chapter: int = 1
+
+func _init(chapter_id: int = 1) -> void:
+	chapter = chapter_id
+	var main: Array = GameData.chart_main(chapter)
 	for i in main.size():
 		var id: String = String(main[i]["id"])
 		var pos: Vector2 = Vector2(96.0 + i * STEP, 156.0 + sin(i * 1.15) * 26.0)
@@ -40,7 +43,7 @@ func _visible(id: String) -> bool:
 	return n - 1 <= reveal
 
 func _ready() -> void:
-	var main: Array = GameData.chart_main()
+	var main: Array = GameData.chart_main(chapter)
 	reveal = 0
 	for i in main.size():
 		if Profile.stop_available(String(main[i]["id"])) or Profile.stop_done(String(main[i]["id"])):
@@ -51,7 +54,7 @@ func _ready() -> void:
 	for st: Dictionary in GameData.CHART:
 		var id: String = String(st["id"])
 		var side: bool = st.has("side_of")
-		if not _visible(id):
+		if int(st.get("chapter", 1)) != chapter or not _visible(id):
 			continue # still dark: not on the chart yet
 		var b: Button = Button.new()
 		b.flat = true
@@ -81,7 +84,7 @@ func _state(id: String) -> String:
 
 func _draw() -> void:
 	var font: Font = UiTheme.font("bold")
-	var main: Array = GameData.chart_main()
+	var main: Array = GameData.chart_main(chapter)
 	var lit: Color = Color("68ecff")
 	# The lane itself: lit as far as the last relit beacon.
 	for i in main.size() - 1:
@@ -101,7 +104,7 @@ func _draw() -> void:
 			draw_circle(a.lerp(b, t), 4.0, Color(1, 1, 1, 0.8))
 	for st: Dictionary in GameData.CHART:
 		var id: String = String(st["id"])
-		if not buttons.has(id):
+		if not buttons.has(id) or not positions.has(id):
 			continue
 		var pos: Vector2 = positions[id]
 		var side: bool = st.has("side_of")
