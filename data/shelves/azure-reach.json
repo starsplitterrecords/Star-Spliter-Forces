@@ -194,73 +194,10 @@
    "first_issue": 1,
    "tier": "released"
   },
-  "AZR_Parent": {
-   "name": "Parent",
-   "role": "Guest / parent",
-   "visual": "",
-   "first_issue": 1,
-   "tier": "released"
-  },
-  "AZR_Guest1": {
-   "name": "Guest 1",
-   "role": "Guest",
-   "visual": "",
-   "first_issue": 1,
-   "tier": "released"
-  },
-  "AZR_Guest2": {
-   "name": "Guest 2",
-   "role": "Guest",
-   "visual": "",
-   "first_issue": 1,
-   "tier": "released"
-  },
-  "AZR_Guest3": {
-   "name": "Guest 3",
-   "role": "Guest",
-   "visual": "",
-   "first_issue": 1,
-   "tier": "released"
-  },
-  "AZR_Guest": {
-   "name": "Guest",
-   "role": "Guest",
-   "visual": "",
-   "first_issue": 1,
-   "tier": "released"
-  },
   "AZR_Father": {
    "name": "Father",
    "role": "Guest / parent",
    "visual": "Use the established released Issue 1 father likeness when this returning guest recurs. Practical visitor clothing, warm but slightly tired parent energy; never caricatured or styled as staff.",
-   "first_issue": 1,
-   "tier": "released"
-  },
-  "AZR_Child": {
-   "name": "Child",
-   "role": "Guest / child",
-   "visual": "",
-   "first_issue": 1,
-   "tier": "released"
-  },
-  "AZR_VIP": {
-   "name": "VIP Guest",
-   "role": "VIP guest",
-   "visual": "",
-   "first_issue": 1,
-   "tier": "released"
-  },
-  "AZR_Sponsor": {
-   "name": "Sponsor Representative",
-   "role": "Pelagic Pure sponsor representative",
-   "visual": "",
-   "first_issue": 1,
-   "tier": "released"
-  },
-  "AZR_Staffer": {
-   "name": "Staffer",
-   "role": "Azure Reach staff",
-   "visual": "",
    "first_issue": 1,
    "tier": "released"
   },
@@ -270,27 +207,6 @@
    "visual": "",
    "first_issue": 1,
    "tier": "released"
-  },
-  "AZR_Everyone": {
-   "name": "Everyone",
-   "role": "Ensemble chorus",
-   "visual": "",
-   "first_issue": 1,
-   "tier": "released"
-  },
-  "AZR_Comments": {
-   "name": "Live Comment Bubbles",
-   "role": "On-screen live audience comments",
-   "visual": "",
-   "first_issue": 2,
-   "tier": "draft"
-  },
-  "AZR_EditorialCaption": {
-   "name": "Editorial Caption",
-   "role": "Non-diegetic editorial voice for opening frontispieces and closing teasers",
-   "visual": "Non-diegetic editorial caption only. Never depict as a person, figure, face, silhouette, narrator, or speaker.",
-   "first_issue": null,
-   "tier": "working"
   }
  },
  "settings": {

@@ -188,6 +188,11 @@ def main():
             "keeper": [{"name": k.get("name"), "type": k.get("type"), "image": k.get("image")} for k in keeper if k.get("seriesId") == sid],
         }
         for cid, c in chars.items():
+            notes = str(c.get("notes", "")).lower()
+            if "functional" in notes or "ensemble" in notes or "lettered" in notes or "non-diegetic" in str(c.get("visualAnchor", "")).lower():
+                continue  # crowd roles and lettering ("Guest 2", "Everyone", captions), not characters
+            if not c.get("visualAnchor") and re.match(r"^(guest|crew|staffer|parent|child|father|everyone|vip guest|sponsor)", str(c.get("name", "")), re.I):
+                continue
             fi = first_char.get(cid)
             out["characters"][cid] = {"name": c.get("name", cid), "role": c.get("role", ""), "visual": c.get("visualAnchor", ""),
                                       "first_issue": fi, "tier": tier(fi)}

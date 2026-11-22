@@ -51,6 +51,7 @@ static func default_settings() -> Dictionary:
 		"edge_padding": 0.0,
 		"playtest_invincible": false,
 		"playtest_short": true,
+		"playtest_review": false,
 	}
 
 static func defaults() -> Dictionary:
@@ -401,6 +402,10 @@ func places_charted() -> Array:
 
 func is_playtest() -> bool:
 	return save_path == PLAYTEST_PATH
+
+## Review (playtest only): every locked thing is shown, tagged, for evaluation.
+func review() -> bool:
+	return is_playtest() and bool(setting("playtest_review"))
 
 ## Switches between the real save and the playtest save. Settings travel along.
 func set_playtest(on: bool) -> void:

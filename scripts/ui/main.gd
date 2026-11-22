@@ -513,6 +513,8 @@ func show_departure() -> void:
 		for did: String in GameData.DESTINATIONS.keys():
 			var dd: Dictionary = GameData.DESTINATIONS[did]
 			var open: bool = did in unlocked_dests
+			if not open:
+				continue # only places you have charted
 			var db: Button = UiTheme.button(String(dd["name"]) if open else "?  UNCHARTED", func() -> void:
 				selected_destination = did
 				show_departure(), 240.0, 40.0)
@@ -710,12 +712,27 @@ func show_archive() -> void:
 	tabs.add_child(_archive_mystery())
 	tabs.add_child(_archive_log())
 	tabs.add_child(_archive_visions())
+	if Profile.review():
+		tabs.add_child(_archive_shelves())
 	var fg: Array = _scroll("Field Guide")
 	FieldGuide.fill(fg[1], minf(1080.0, _content_width() - 40.0))
 	tabs.add_child(fg[0])
 	_back_row(v, func() -> void:
 		Audio.stop_catalog()
 		show_title())
+
+## Review mode shows locked things; this says whether to show one.
+func _shown(known: bool) -> bool:
+	return known or Profile.review()
+
+## A small review tag ("LOCKED — Stage: X", a source); nothing outside review.
+func _tag(parent: Control, text: String, locked: bool = false) -> void:
+	if not Profile.review() or text == "":
+		return
+	parent.add_child(UiTheme.label(("◆ LOCKED · " if locked else "◆ ") + text, 12, Color("ffb86b") if locked else Color("8fb8ff"), "bold"))
+
+func _stage_hint(st: Dictionary) -> String:
+	return "" if st.is_empty() else "%s — %s" % [GameData.stage_tag(String(st["id"])), String(st["name"])]
 
 func _scroll(name: String) -> Array:
 	var sc: ScrollContainer = ScrollContainer.new()
@@ -736,7 +753,7 @@ func _archive_projects() -> Control:
 		var pdef: Dictionary = GameData.PROJECTS[pname]
 		var owned: Array = []
 		for tid: String in GameData.TRANSMISSIONS.keys():
-			if String(GameData.TRANSMISSIONS[tid]["project"]) == pname and tid in transmissions:
+			if String(GameData.TRANSMISSIONS[tid]["project"]) == pname and (tid in transmissions or Profile.review()):
 				owned.append(tid)
 		var known: bool = not owned.is_empty()
 		if not known:
@@ -823,7 +840,7 @@ func _archive_universe() -> Control:
 	# People met and places charted on the Corridor Chart.
 	var met: Array = Profile.contacts_met()
 	inner.add_child(UiTheme.label("CONTACTS MET", 14, UiTheme.GOLD, "bold"))
-	for ck: String in met:
+	for ck: String in (GameData.CONTACTS.keys() if Profile.review() else met):
 		var cdef: Dictionary = GameData.CONTACTS[ck]
 		var crow: HBoxContainer = HBoxContainer.new()
 		crow.add_theme_constant_override("separation", 10)
@@ -836,15 +853,18 @@ func _archive_universe() -> Control:
 		crow.add_child(cv)
 		cv.add_child(UiTheme.label("%s  •  %s" % [String(cdef["name"]), String(cdef["faction"])], 15, Color.WHITE, "bold"))
 		cv.add_child(UiTheme.label(String(cdef["role"]), 13, UiTheme.DIM))
-	if met.size() < GameData.CONTACTS.size():
+		_tag(cv, _stage_hint(GameData.stage_for_contact(ck)), not ck in met)
+	if met.size() < GameData.CONTACTS.size() and not Profile.review():
 		inner.add_child(_more_line("%d more contact%s on the Corridor Chart." % [GameData.CONTACTS.size() - met.size(), "" if GameData.CONTACTS.size() - met.size() == 1 else "s"]))
 	var charted: Array = Profile.places_charted()
 	inner.add_child(UiTheme.label("PLACES CHARTED", 14, UiTheme.GOLD, "bold"))
-	for pk: String in charted:
+	for pk: String in (GameData.PLACES.keys() if Profile.review() else charted):
 		var pdef2: Dictionary = GameData.PLACES[pk]
 		inner.add_child(UiTheme.label("%s  •  %s" % [String(pdef2["name"]), String(pdef2["series"])], 15, Color.WHITE, "bold"))
 		inner.add_child(UiTheme.label("%s  (%s)" % [String(pdef2["text"]), String(pdef2["source"])], 13, UiTheme.DIM))
-	if charted.size() < GameData.PLACES.size():
+		if not pk in charted:
+			_tag(inner, "not charted yet", true)
+	if charted.size() < GameData.PLACES.size() and not Profile.review():
 		inner.add_child(_more_line("%d more place%s to chart." % [GameData.PLACES.size() - charted.size(), "" if GameData.PLACES.size() - charted.size() == 1 else "s"]))
 	inner.add_child(UiTheme.label("ABOUT THIS GAME'S SIGNALS", 14, UiTheme.GOLD, "bold"))
 	inner.add_child(UiTheme.label("The characters, factions and places come from Rex Fleet. The signals do not: Star Splitter Records music reaching the frontier, the Forces, and the hush that hunts it are original to Star Splitter Forces and are not part of Rex Fleet canon.", 14, UiTheme.TEXT))
@@ -853,11 +873,12 @@ func _archive_universe() -> Control:
 func _archive_forces() -> Control:
 	var s: Array = _scroll("Forces")
 	var inner: VBoxContainer = s[1]
+	var unheard: int = 0
 	for fid: String in GameData.FORCES.keys():
 		var f: Dictionary = GameData.FORCES[fid]
 		var att: bool = Profile.is_attuned(fid)
-		if not att:
-			inner.add_child(UiTheme.label("? — an unheard Force", 16, UiTheme.DIM, "bold"))
+		if not _shown(att):
+			unheard += 1
 			continue
 		inner.add_child(UiTheme.label("%s   •   %s" % [String(f["name"]).to_upper(), String(f["mechanic"])], 20, f["color"], "display"))
 		inner.add_child(UiTheme.label("“%s”  %s" % [String(f["tagline"]), String(f["desc"])], 14, UiTheme.TEXT))
@@ -866,13 +887,31 @@ func _archive_forces() -> Control:
 			if String(GameData.WEAPONS[wid]["force"]) == fid:
 				ws.append("%s → %s" % [GameData.WEAPONS[wid]["name"], GameData.EVOLUTIONS[String(GameData.WEAPONS[wid]["evolution"])]["name"]])
 		inner.add_child(UiTheme.label("Weapons: " + ", ".join(ws), 13, UiTheme.DIM))
-	inner.add_child(UiTheme.label("HARMONIES", 16, UiTheme.GOLD, "bold"))
+		if not att:
+			var fst: Dictionary = {}
+			for did: String in GameData.DISCOVERIES.keys():
+				if String(GameData.DISCOVERIES[did].get("force", "")) == fid:
+					fst = GameData.stage_for_discovery(did)
+			_tag(inner, _stage_hint(fst) if not fst.is_empty() else "found by exploring", true)
+	if unheard > 0:
+		inner.add_child(_more_line("%d more Force%s to find." % [unheard, "" if unheard == 1 else "s"]))
+	var hidden_h: int = 0
+	var any_h: bool = false
 	for hid: String in GameData.HARMONIES.keys():
 		var h: Dictionary = GameData.HARMONIES[hid]
 		var seen: bool = Profile.seen("harmony_" + hid)
+		if not _shown(seen):
+			hidden_h += 1
+			continue
+		if not any_h:
+			inner.add_child(UiTheme.label("HARMONIES", 16, UiTheme.GOLD, "bold"))
+			any_h = true
 		var a: String = String(GameData.FORCES[String(h["forces"][0])]["name"])
 		var b: String = String(GameData.FORCES[String(h["forces"][1])]["name"])
-		inner.add_child(UiTheme.label(("%s (%s + %s): %s" % [h["name"], a, b, h["desc"]]) if seen else "??? — raise two Forces together to level 3 to discover a harmony.", 14, UiTheme.TEXT if seen else UiTheme.DIM))
+		inner.add_child(UiTheme.label("%s (%s + %s): %s" % [h["name"], a, b, h["desc"]], 14, UiTheme.TEXT))
+		_tag(inner, "raise both Forces to level 3 together", not seen)
+	if hidden_h > 0:
+		inner.add_child(_more_line("%d harmon%s to discover: two Forces at level 3 together." % [hidden_h, "y" if hidden_h == 1 else "ies"]))
 	return s[0]
 
 func _archive_explorers() -> Control:
@@ -881,7 +920,7 @@ func _archive_explorers() -> Control:
 	var unknown_contacts: int = 0
 	for cid: String in GameData.CHARACTERS.keys():
 		var c: Dictionary = GameData.CHARACTERS[cid]
-		if not Profile.has_character(cid):
+		if not _shown(Profile.has_character(cid)):
 			unknown_contacts += 1
 			continue
 		var m: Dictionary = Profile.mastery(cid)
@@ -897,6 +936,12 @@ func _archive_explorers() -> Control:
 		ev.add_child(UiTheme.label(String(c["name"]).to_upper(), 20, c["accent"], "display"))
 		ev.add_child(UiTheme.label(String(c["origin"]) + "   •   " + String(c["tagline"]), 13, UiTheme.DIM))
 		ev.add_child(UiTheme.label(String(c["bio"]), 14, UiTheme.TEXT))
+		if not Profile.has_character(cid):
+			var ust: Dictionary = {}
+			for did: String in GameData.DISCOVERIES.keys():
+				if String(GameData.DISCOVERIES[did].get("unlock_character", "")) == cid:
+					ust = GameData.stage_for_discovery(did)
+			_tag(ev, _stage_hint(ust) if not ust.is_empty() else String(c.get("unlock", "")), true)
 		var perks: Array = GameData.MASTERY[cid]
 		var lines: Array = []
 		for i in perks.size():
@@ -917,7 +962,7 @@ func _archive_visions() -> Control:
 	var unseen_series: int = 0
 	for sid: String in GameData.VISIONS_SERIES.keys():
 		var v: Dictionary = GameData.VISIONS_SERIES[sid]
-		var found: bool = Profile.is_discovered(String(v["discovery"]))
+		var found: bool = _shown(Profile.is_discovered(String(v["discovery"])))
 		if not found:
 			unseen_series += 1
 			continue
@@ -963,6 +1008,45 @@ func _archive_visions() -> Control:
 		inner.add_child(_more_line("%d more series still out in Signal Space. They show up as side signals on the Corridor Chart." % unseen_series))
 	return s[0]
 
+## Review only: the imported RexPrompt shelves, by series and first issue,
+## marking what the game already uses. For deciding what to build next.
+func _archive_shelves() -> Control:
+	var s: Array = _scroll("Shelves")
+	var inner: VBoxContainer = s[1]
+	var used_names: Dictionary = {}
+	for c: Dictionary in GameData.CONTACTS.values():
+		used_names[String(c["name"]).to_lower()] = true
+	for c2: Dictionary in GameData.CHARACTERS.values():
+		used_names[String(c2["name"]).to_lower()] = true
+	for p: Dictionary in GameData.PLACES.values():
+		used_names[String(p["name"]).to_lower()] = true
+	var all: Dictionary = GameData.shelves()
+	var keys: Array = all.keys()
+	keys.sort()
+	for sid: String in keys:
+		var sh: Dictionary = all[sid]
+		inner.add_child(UiTheme.label(String(sh["name"]).to_upper(), 20, UiTheme.GOLD, "display"))
+		inner.add_child(UiTheme.label("Released issues: %s  •  %s" % [", ".join((sh["released_issues"] as Array).map(func(x: Variant) -> String: return str(int(x)))) if not (sh["released_issues"] as Array).is_empty() else "none", String(sh["source"])], 12, UiTheme.DIM))
+		for kind: String in ["characters", "settings"]:
+			var rows: Array = []
+			for k: String in (sh[kind] as Dictionary).keys():
+				var it: Dictionary = sh[kind][k]
+				var nm: String = String(it["name"])
+				var used: bool = false
+				for un: String in used_names.keys():
+					if un == nm.to_lower() or (nm.length() > 5 and (un.find(nm.to_lower()) != -1 or nm.to_lower().find(un) != -1)):
+						used = true
+						break
+				var fi: Variant = it.get("first_issue")
+				rows.append([int(fi) if fi != null else 99, "%s %s  ·  %s  ·  %s" % ["●" if used else "○", nm, ("issue %d" % int(fi)) if fi != null else "not in an issue", String(it["tier"])]])
+			rows.sort_custom(func(x: Array, y: Array) -> bool: return x[0] < y[0])
+			inner.add_child(UiTheme.label(kind.to_upper() + "  (● in game)", 13, Color("8fb8ff"), "bold"))
+			var lines: PackedStringArray = PackedStringArray()
+			for r: Array in rows:
+				lines.append(String(r[1]))
+			inner.add_child(UiTheme.label("\n".join(lines), 12, UiTheme.TEXT))
+	return s[0]
+
 func _archive_mystery() -> Control:
 	var s: Array = _scroll("Mystery")
 	var inner: VBoxContainer = s[1]
@@ -972,8 +1056,10 @@ func _archive_mystery() -> Control:
 	var keys: Array = GameData.FRAGMENTS.keys()
 	keys.sort()
 	for fid: String in keys:
-		if fid in have:
+		if _shown(fid in have):
 			inner.add_child(UiTheme.label("• " + String(GameData.FRAGMENTS[fid]), 16, UiTheme.TEXT))
+			if not fid in have:
+				_tag(inner, "fragment not recovered", true)
 
 	if have.size() == GameData.FRAGMENTS.size():
 		inner.add_child(UiTheme.label("Every fragment points the same way: the quiet is drawn to music. So keep playing.", 16, UiTheme.GOLD))
@@ -996,9 +1082,11 @@ func _archive_log() -> Control:
 			var d: Dictionary = GameData.DISCOVERIES[id2]
 			if String(d["kind"]) != k:
 				continue
-			if Profile.is_discovered(id2):
+			if _shown(Profile.is_discovered(id2)):
 				var region: String = String(GameData.REGIONS[String(d["region"])]["name"]) if String(d.get("region", "")) != "" else "OPEN DRIFT"
 				inner.add_child(UiTheme.label("%s — %s\n%s" % [String(d["title"]), region, String(d["text"])], 14, UiTheme.TEXT))
+				if not Profile.is_discovered(id2):
+					_tag(inner, _stage_hint(GameData.stage_for_discovery(id2)) if not GameData.stage_for_discovery(id2).is_empty() else "roaming", true)
 	return s[0]
 
 # ================================================================== workshop
@@ -1089,6 +1177,7 @@ func show_settings() -> void:
 	if Profile.is_playtest():
 		_toggle(grid, "Invincible", "playtest_invincible")
 		_toggle(grid, "Short timers (holds and bosses 4x sooner)", "playtest_short")
+		_toggle(grid, "Review: show locked content, tagged", "playtest_review")
 		_setting_label(grid, "Playtest save")
 		grid.add_child(UiTheme.button("RESET", func() -> void:
 			Profile.reset_playtest()

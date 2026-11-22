@@ -1293,6 +1293,36 @@ static func _static_init() -> void:
 const REALMS_DIR: String = "res://data/realms"
 static var realms: Dictionary = {}
 
+## The stage that finds a discovery (by its objective or its list), or {}.
+static func stage_for_discovery(did: String) -> Dictionary:
+	for st: Dictionary in CHART:
+		if did in st.get("discoveries", []):
+			return st
+	return {}
+
+## The stage where a contact is first met, or {}.
+static func stage_for_contact(cid: String) -> Dictionary:
+	for did: String in DISCOVERIES.keys():
+		if cid in DISCOVERIES[did].get("contacts", []):
+			var st: Dictionary = stage_for_discovery(did)
+			if not st.is_empty():
+				return st
+	return {}
+
+## Imported RexPrompt shelves (data/shelves), for Review mode.
+static func shelves() -> Dictionary:
+	var out: Dictionary = {}
+	for fn: String in DirAccess.get_files_at("res://data/shelves"):
+		fn = fn.trim_suffix(".import").trim_suffix(".remap")
+		if not fn.ends_with(".json") or out.has(fn.get_basename()):
+			continue
+		var f: FileAccess = FileAccess.open("res://data/shelves".path_join(fn), FileAccess.READ)
+		if f:
+			var d: Variant = JSON.parse_string(f.get_as_text())
+			if typeof(d) == TYPE_DICTIONARY:
+				out[fn.get_basename()] = d
+	return out
+
 static func load_realms() -> void:
 	var files: PackedStringArray = DirAccess.get_files_at(REALMS_DIR)
 	var loaded: Array = []
