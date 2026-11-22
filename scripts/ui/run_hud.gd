@@ -316,7 +316,7 @@ func _update_labels() -> void:
 	if not run.mission.is_empty() and not (run.boss_spawned and not run.boss_defeated):
 		obj = run.objective_text()
 	elif run.boss_spawned and not run.boss_defeated:
-		obj = "Defeat The Silence"
+		obj = "Defeat " + run.boss_name().capitalize()
 	elif run.boss_defeated:
 		obj = "Signal restored — returning home"
 	elif run.climax_available():
@@ -1136,7 +1136,7 @@ class HudCanvas:
 		var assist: bool = bool(Profile.setting("nav_assist"))
 		var p: Vector2 = run.player.position
 		if run.boss_spawned and not run.boss_defeated and run.boss and is_instance_valid(run.boss):
-			targets.append([run.boss.position, "THE SILENCE", Color("ff376f")])
+			targets.append([run.boss.position, run.boss_name(), Color("ff376f")])
 		else:
 			var goal: Array = run.objective_target()
 			if not goal.is_empty():

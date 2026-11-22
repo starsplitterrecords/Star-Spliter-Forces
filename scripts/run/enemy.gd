@@ -54,6 +54,7 @@ var visible_on_screen: bool = true
 var damage_taken_mult: float = 1.0
 
 var skin_name: String = ""
+var decor: String = ""
 
 func configure(enemy_kind: String, run_node: Node, scale: float, region: String) -> void:
 	kind = enemy_kind
@@ -69,6 +70,7 @@ func configure(enemy_kind: String, run_node: Node, scale: float, region: String)
 	radius = float(def["radius"])
 	tint = def["color"]
 	var skin: Array = GameData.BIOMES.get(run_node.world.biome if "world" in run_node and run_node.world else "space", {}).get("skins", {}).get(kind, [])
+	decor = String(GameData.biome_get(run_node.world.biome if "world" in run_node and run_node.world else "space", "decor", ""))
 	if skin.size() == 2:
 		skin_name = String(skin[0])
 		tint = skin[1]
@@ -439,10 +441,56 @@ func _draw() -> void:
 				draw_circle(look, radius * 0.16, Color(1, 1, 1, 0.85))
 		_:
 			draw_circle(Vector2.ZERO, radius, c)
+	if decor != "":
+		_draw_decor(c)
 	if (elite or boss) and not boss:
 		var w: float = radius * 2.4
 		draw_rect(Rect2(-w / 2.0, -radius - 14.0, w, 5.0), Color("211d32"))
 		draw_rect(Rect2(-w / 2.0, -radius - 14.0, w * clampf(hp / max_hp, 0.0, 1.0), 5.0), c)
+
+## Realm features on top of the behaviour silhouette, so a raider still reads
+## as what it does but clearly belongs to the realm it is in.
+func _draw_decor(c: Color) -> void:
+	var fwd: Vector2 = Vector2.from_angle((run.player.position - position).angle()) if run and run.player else Vector2.UP
+	var side: Vector2 = fwd.orthogonal()
+	var r: float = radius
+	match decor:
+		"fin":
+			# A sail fin above and a wake behind.
+			draw_colored_polygon(PackedVector2Array([Vector2(-r * 0.2, -r * 0.9), Vector2(r * 0.35, -r * 1.7), Vector2(r * 0.45, -r * 0.8)]), Color("e8ecf5", 0.85))
+			for k in 2:
+				draw_line(-fwd * r * (1.1 + k * 0.4) + side * r * (0.5 - k), -fwd * r * (1.6 + k * 0.4) + side * r * (0.8 - k * 1.6), Color(0.8, 0.95, 1.0, 0.35), 2.0)
+		"dust":
+			# Two wheels and a dust trail.
+			draw_circle(side * r * 0.85, r * 0.28, Color("2a2018"))
+			draw_circle(-side * r * 0.85, r * 0.28, Color("2a2018"))
+			for k in 3:
+				draw_circle(-fwd * r * (1.3 + k * 0.45) + side * sin(age * 6.0 + k) * 4.0, r * (0.35 - k * 0.08), Color(0.85, 0.7, 0.5, 0.3 - k * 0.08))
+		"antenna":
+			# An antenna and two small panels.
+			draw_line(Vector2(0, -r * 0.8), Vector2(r * 0.3, -r * 1.6), Color("c8ccd6"), 2.0)
+			draw_circle(Vector2(r * 0.3, -r * 1.6), 2.5, Color("ffce5c", 0.6 + 0.4 * sin(age * 5.0)))
+			draw_rect(Rect2(side * r * 1.05 - Vector2(r * 0.25, r * 0.15), Vector2(r * 0.5, r * 0.3)), Color("23305a"))
+			draw_rect(Rect2(-side * r * 1.05 - Vector2(r * 0.25, r * 0.15), Vector2(r * 0.5, r * 0.3)), Color("23305a"))
+		"balloon":
+			# A tethered balloon bobbing above.
+			var bp: Vector2 = Vector2(r * 0.4, -r * 1.9 + sin(age * 2.0) * 3.0)
+			draw_line(Vector2(0, -r * 0.6), bp + Vector2(0, r * 0.4), Color(1, 1, 1, 0.5), 1.0)
+			draw_circle(bp, r * 0.42, Color("ff7ac8") if int(position.x) % 2 == 0 else Color("4fd8ff"))
+		"horns":
+			# Curled horns (small raiders get bat wings instead).
+			if r >= 20.0:
+				draw_line(Vector2(-r * 0.5, -r * 0.7), Vector2(-r * 0.9, -r * 1.4), Color("e8dcc0"), 4.0)
+				draw_line(Vector2(r * 0.5, -r * 0.7), Vector2(r * 0.9, -r * 1.4), Color("e8dcc0"), 4.0)
+			else:
+				var flap: float = sin(age * 10.0) * r * 0.3
+				draw_colored_polygon(PackedVector2Array([side * r * 0.6, side * r * 1.6 - fwd * flap, side * r * 1.1 + fwd * r * 0.5]), Color(c, 0.7))
+				draw_colored_polygon(PackedVector2Array([-side * r * 0.6, -side * r * 1.6 - fwd * flap, -side * r * 1.1 + fwd * r * 0.5]), Color(c, 0.7))
+	if boss:
+		# The realm's crown on the Silence.
+		for k in 5:
+			var a: float = -PI * 0.5 + (k - 2) * 0.28
+			draw_line(Vector2.from_angle(a) * r * 1.05, Vector2.from_angle(a) * r * 1.45, Color("ffd36b"), 5.0)
 
 func _draw_telegraph(c: Color) -> void:
 	var t: float = clampf(telegraph, 0.0, 1.0)

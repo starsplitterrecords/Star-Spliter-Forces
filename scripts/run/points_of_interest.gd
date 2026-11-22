@@ -384,7 +384,7 @@ func _draw() -> void:
 				# Unmarked raider salvage pile: mismatched plating, no faction marks.
 				draw_circle(pos, r, Color(c, 0.05))
 				draw_arc(pos, r, 0.0, TAU, 32, Color(c, 0.25), 2.0)
-				var salvage: Array = [Color("8a8f99"), Color("7d7f4a"), Color("b0683a"), Color("5f6670")]
+				var salvage: Array = GameData.biome_get(run.world.biome, "camp_colors", [Color("8a8f99"), Color("7d7f4a"), Color("b0683a"), Color("5f6670")])
 				for k in 4:
 					var a: float = TAU * k / 4.0 + 0.4
 					draw_rect(Rect2(pos + Vector2.from_angle(a) * 22.0 - Vector2(10, 7), Vector2(20, 14)), salvage[k])

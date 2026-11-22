@@ -547,27 +547,27 @@ static var DESTINATIONS: Dictionary = {
 ## raiders look there (same behaviours, the place's shapes and colours).
 static var BIOMES: Dictionary = {
 	"space": {},
-	"sea": {"surface": Color(0.55, 0.85, 1.0, 0.16), "rock": Color("22303a"),
+	"sea": {"boss_name": "THE UNDERTOW", "camp_name": "RAFT FLOTILLA", "camp_colors": [Color("6b5640"), Color("3a2e22"), Color("c8462e"), Color("8fa3b0")], "decor": "fin", "surface": Color(0.55, 0.85, 1.0, 0.16), "rock": Color("22303a"),
 		"skins": {"skiff": ["Fog Skiff", Color("8fa3b0")], "ram_cutter": ["Squall Ram", Color("b07a5a")], "rail_picket": ["Spray Picket", Color("d0a060")],
 			"mine_hauler": ["Buoy Layer", Color("c86a7a")], "wreck_lurker": ["Flotsam Lurker", Color("8a8070")], "leech": ["Barnacle Leech", Color("9a9a60")],
 			"gunship": ["Breaker Gunship", Color("a88a5a")], "splinter_captain": ["Storm Captain", Color("e0c060")], "dreadnought": ["Undertow Hulk", Color("6a7a8a")],
 			"echo_mote": ["Sea Glow", Color("d07090")], "swarm_tender": ["Gull Tender", Color("c87a5a")], "shield_tug": ["Harbor Tug", Color("a88aa0")], "blink": ["Fog Flicker", Color("c060a0")]}},
-	"desert": {"surface": Color(1.0, 0.82, 0.55, 0.13), "rock": Color("5a4030"),
+	"desert": {"boss_name": "THE HEAT HAZE", "camp_name": "SCRAP CAMP", "camp_colors": [Color("8a8f99"), Color("c87a4a"), Color("6a5a48"), Color("e0b060")], "decor": "dust", "surface": Color(1.0, 0.82, 0.55, 0.13), "rock": Color("5a4030"),
 		"skins": {"skiff": ["Dust Skiff", Color("b09070")], "ram_cutter": ["Sand Ram", Color("c87a4a")], "rail_picket": ["Mirage Picket", Color("e0b060")],
 			"mine_hauler": ["Caltrop Layer", Color("c86a5a")], "wreck_lurker": ["Scrap Lurker", Color("9a8060")], "leech": ["Tick Leech", Color("a89a5a")],
 			"gunship": ["Heat Gunship", Color("d08a4a")], "splinter_captain": ["Dust Captain", Color("f0c050")], "dreadnought": ["Dune Hulk", Color("8a6a4a")],
 			"echo_mote": ["Heat Shimmer", Color("e08070")], "swarm_tender": ["Vulture Tender", Color("b87050")], "shield_tug": ["Hauler Tug", Color("b09080")], "blink": ["Mirage Flicker", Color("e070a0")]}},
-	"fantasy": {"surface": Color(0.7, 1.0, 0.6, 0.10), "rock": Color("3a3440"),
+	"fantasy": {"boss_name": "THE QUARTERLY REVIEW", "camp_name": "CURSED CAMP", "camp_colors": [Color("7a1428"), Color("5a4030"), Color("8a6440"), Color("3a3440")], "decor": "horns", "surface": Color(0.7, 1.0, 0.6, 0.10), "rock": Color("3a3440"),
 		"skins": {"skiff": ["Gloom Bat", Color("8a7aa0")], "ram_cutter": ["Shadow Boar", Color("a06a5a")], "rail_picket": ["Hex Archer", Color("d0b060")],
 			"mine_hauler": ["Curse Layer", Color("c86aa0")], "wreck_lurker": ["Mimic Chest", Color("a08050")], "leech": ["Shade Leech", Color("8a9a60")],
 			"gunship": ["Wraith Ballista", Color("9a8ab0")], "splinter_captain": ["Blight Captain", Color("e0c060")], "dreadnought": ["Hush Golem", Color("6a6a7a")],
 			"echo_mote": ["Will-o'-Wisp", Color("c080ff")], "swarm_tender": ["Crow Tender", Color("7a6a8a")], "shield_tug": ["Stone Troll", Color("8a9aa0")], "blink": ["Blink Imp", Color("e060c0")]}},
-	"park": {"surface": Color(0.6, 0.95, 1.0, 0.09), "rock": Color("1e3a4a"),
+	"park": {"boss_name": "CLOSING TIME", "camp_name": "POP-UP KIOSK", "camp_colors": [Color("4fd8ff"), Color("ff7ac8"), Color("ffd36b"), Color("e8ecf5")], "decor": "balloon", "surface": Color(0.6, 0.95, 1.0, 0.09), "rock": Color("1e3a4a"),
 		"skins": {"skiff": ["Gift-Shop Skiff", Color("8fb8d0")], "ram_cutter": ["Turnstile Ram", Color("b08ac8")], "rail_picket": ["Ring-Light Picket", Color("e0c070")],
 			"mine_hauler": ["Balloon Layer", Color("e07aa0")], "wreck_lurker": ["Plush Lurker", Color("a08870")], "leech": ["Lanyard Leech", Color("80b0a0")],
 			"gunship": ["Jumbotron Gunship", Color("a0a0d0")], "splinter_captain": ["VIP Captain", Color("f0c860")], "dreadnought": ["Parade Float Hulk", Color("6a8aaa")],
 			"echo_mote": ["Bubble Mote", Color("e080c0")], "swarm_tender": ["Gull Tender", Color("c88a7a")], "shield_tug": ["Cart Tug", Color("a0b0c0")], "blink": ["Flash Flicker", Color("e070e0")]}},
-	"orbit": {"skins": {"skiff": ["Static Skiff", Color("8fa0d0")], "ram_cutter": ["Hull Ram", Color("b08ac8")], "rail_picket": ["Laser Picket", Color("d0b060")],
+	"orbit": {"boss_name": "OVERTIME", "camp_name": "DRONE DOCK", "camp_colors": [Color("23305a"), Color("6a7ab0"), Color("c8ccd6"), Color("ffce5c")], "decor": "antenna", "skins": {"skiff": ["Static Skiff", Color("8fa0d0")], "ram_cutter": ["Hull Ram", Color("b08ac8")], "rail_picket": ["Laser Picket", Color("d0b060")],
 			"mine_hauler": ["Memo Layer", Color("c86a9a")], "wreck_lurker": ["Debris Lurker", Color("8a88a0")], "leech": ["Cable Leech", Color("9aa060")],
 			"gunship": ["Patrol Gunship", Color("a88ac0")], "splinter_captain": ["Overtime Captain", Color("e0c060")], "dreadnought": ["Compliance Hulk", Color("6a6a9a")],
 			"echo_mote": ["Static Mote", Color("d070c0")], "swarm_tender": ["Drone Tender", Color("c07a9a")], "shield_tug": ["Tow Tug", Color("a8a0c0")], "blink": ["Glitch Flicker", Color("a060e0")]}},
@@ -1332,6 +1332,10 @@ const REALMS_DIR: String = "res://data/realms"
 static var realms: Dictionary = {}
 
 ## Crew: a contact rides along with their captain once found, giving a perk.
+## The Silence takes each realm's shape and name; camps follow the realm too.
+static func biome_get(biome: String, key: String, default: Variant) -> Variant:
+	return BIOMES.get(biome, {}).get(key, default)
+
 static func perk_text(perk: Dictionary) -> String:
 	var v: float = float(perk.get("value", 0))
 	match String(perk.get("kind", "")):

@@ -272,7 +272,7 @@ func _place_camps() -> void:
 		for i in count:
 			var pos: Vector2 = world.random_open_point_near(GameData.region_anchor(r), 200.0, float(r.get("radius", 600.0)) * 0.85, rng)
 			camps.append({"pos": pos, "region": rid, "remaining": 5 + threat * 2, "active": false, "members": [], "cleared": false})
-			pois.add({"kind": "camp", "pos": pos, "title": "RAIDER CAMP", "color": Color("d0743c"), "radius": 70.0, "camp": camps.size() - 1})
+			pois.add({"kind": "camp", "pos": pos, "title": String(GameData.biome_get(world.biome, "camp_name", "RAIDER CAMP")), "color": Color("d0743c"), "radius": 70.0, "camp": camps.size() - 1})
 
 func _step_camps() -> void:
 	for i in camps.size():
@@ -744,6 +744,9 @@ func spawn_elite() -> void:
 		hud.alert("SPLINTER CAPTAIN", p)
 	Audio.play_sfx("boss_phase", 1.3, -4.0, 0.5)
 
+func boss_name() -> String:
+	return String(GameData.biome_get(world.biome if world else "space", "boss_name", "THE SILENCE"))
+
 func route_depth() -> float:
 	return 1.0 + minf(DEPTH_MAX, DEPTH_PER_STAGE * float(Profile.stops_done_count()))
 
@@ -759,7 +762,7 @@ func spawn_boss(pos: Vector2) -> void:
 		boss.hp *= 0.2
 		boss.max_hp = boss.hp
 	if hud:
-		hud.banner("THE SILENCE", "It isn't hunting ships. It's hunting songs. Keep playing.", Color("ff376f"), 3.2)
+		hud.banner(boss_name(), "It isn't hunting ships. It's hunting songs. Keep playing." if boss_name() == "THE SILENCE" else "The Silence, in this realm's shape. Keep playing.", Color("ff376f"), 3.2)
 	Audio.stinger("boss_appear", 0.0)
 	shake(12.0)
 	_update_music(false)
@@ -925,7 +928,7 @@ func on_boss_phase(e: ForceEnemy, phase: int) -> void:
 	Audio.stinger("boss_phase", -2.0)
 	var text: Array = ["", "", "It learns the rhythm of your weapons.", "It reaches for the quiet between notes — weapons fall silent in its zones."]
 	if hud:
-		hud.banner("THE SILENCE — PHASE %d" % phase, String(text[phase]), Color("ff376f"), 2.4)
+		hud.banner("%s — PHASE %d" % [boss_name(), phase], String(text[phase]), Color("ff376f"), 2.4)
 	fx.ring(e.position, e.radius, 400.0, e.tint, 0.8, 8.0)
 	shake(10.0)
 
