@@ -199,6 +199,8 @@ func test_data_integrity() -> void:
 			check(GameData.CHARACTERS.has(String(d["unlock_character"])), "discovery %s character" % did)
 		if d.has("fragment"):
 			check(GameData.FRAGMENTS.has(String(d["fragment"])), "discovery %s fragment" % did)
+		if bool(d.get("roaming", false)):
+			continue # catalogue records are placed per expedition
 		var p: Vector2 = GameData.discovery_position(did)
 		var dest_id: String = GameData.discovery_destination(did)
 		check(dest_id != "", "discovery %s belongs to no destination" % did)
@@ -844,6 +846,30 @@ func test_corridor_chart() -> void:
 	run.end_run("extracted")
 	Profile.record_expedition(finished_result)
 	check("chris_halev" in Profile.contacts_met() and "auric_bazaar" in Profile.places_charted(), "contacts / place not recorded")
+	_cleanup_runs()
+	await get_tree().process_frame
+	_reset_profile()
+	# Catalogue records: loaded from data/catalog.json, one hidden per stage,
+	# found by roaming, and filed in the Archive.
+	_reset_profile()
+	var roaming: Array = GameData.unheard_roaming({})
+	check(roaming.size() >= 10, "catalogue records did not load (%d)" % roaming.size())
+	run = _make_run({"stop": "gravefire"})
+	await get_tree().process_frame
+	var rec: Dictionary = {}
+	for q6: Dictionary in run.pois.items:
+		if bool(q6.get("roaming", false)):
+			rec = q6
+	check(not rec.is_empty(), "no unheard record hidden on the stage")
+	if not rec.is_empty():
+		check(Vector2(rec.pos).distance_to(run.world.gate) > 1000.0, "record hidden next to home")
+		run._claim_discovery(rec)
+		check(not run.stop_complete, "a record completed the stage")
+		run.end_run("extracted")
+		Profile.record_expedition(finished_result)
+		var tid6: String = String(GameData.DISCOVERIES[String(rec.id)]["transmission"])
+		check(tid6 in Profile.data["transmissions"], "found record not filed in the Archive")
+		check(not String(rec.id) in GameData.unheard_roaming(Profile.data["discovered"]), "found record still counted as unheard")
 	_cleanup_runs()
 	await get_tree().process_frame
 	_reset_profile()

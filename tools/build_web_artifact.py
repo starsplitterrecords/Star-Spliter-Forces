@@ -97,7 +97,35 @@ def main():
     head = re.search(r"<head>(.*)</head>", html, re.S).group(1)
     body = re.search(r"<body>(.*)</body>", html, re.S).group(1)
     styles = "".join(re.findall(r"<style>.*?</style>", head, re.S))
-    fragment = "<title>Star Splitter Forces</title>\n" + styles + "\n" + body
+    # Hosts can lay bars over the page (the Claude app's header, mobile browser
+    # chrome). Expose what is really visible so the game can keep its UI clear
+    # of it: safe-area insets plus any part of the window the visual viewport
+    # does not cover. Read from Godot via JavaScriptBridge (ScreenInsets).
+    insets = """<div id="ssf-safe" style="position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)"></div>
+<script>
+(function () {
+	// Phone-width layout and safe-area insets need a viewport tag; add one if
+	// the host page has none (without it phones lay the page out 980px wide).
+	if (!document.querySelector('meta[name="viewport"]')) {
+		const m = document.createElement('meta');
+		m.name = 'viewport';
+		m.content = 'width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover';
+		document.head.appendChild(m);
+	}
+}());
+window.__ssfInsets = function () {
+	const d = document.getElementById('ssf-safe');
+	const cs = d ? getComputedStyle(d) : null;
+	const vv = window.visualViewport;
+	const t = (cs ? parseFloat(cs.paddingTop) || 0 : 0) + (vv ? Math.max(0, vv.offsetTop) : 0);
+	const b = (cs ? parseFloat(cs.paddingBottom) || 0 : 0) + (vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0);
+	const l = cs ? parseFloat(cs.paddingLeft) || 0 : 0;
+	const r = cs ? parseFloat(cs.paddingRight) || 0 : 0;
+	return JSON.stringify({t: t, b: b, l: l, r: r, w: window.innerWidth, h: window.innerHeight});
+};
+</script>
+"""
+    fragment = "<title>Star Splitter Forces</title>\n" + styles + "\n" + insets + body
     open(os.path.join(OUT, "index.html"), "w").write(fragment)
     # Everything the page needs besides index.html. Publish exactly this map;
     # chunk counts change as the game grows (a missing chunk = load failure).

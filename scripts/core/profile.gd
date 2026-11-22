@@ -42,6 +42,7 @@ static func default_settings() -> Dictionary:
 		"handedness": "right",
 		"fps_cap": 60,
 		"high_contrast": false,
+		"edge_padding": 0.0,
 	}
 
 static func defaults() -> Dictionary:

@@ -5,3 +5,19 @@
 - `catalog/` — *empty by design.* Authorised Star Splitter masters go here, named by the `master_file` field in `GameData.TRANSMISSIONS` (e.g. `rc_meaningless_dub.ogg`). When present they play in the Archive instead of the Force motif preview.
 
 Stems: future per-track stems should follow `catalog/<transmission_id>/<stem>.ogg` and be registered in `AUDIO_DESIGN.md` before use. Do not add any recording without confirmed distribution rights.
+
+## Adding music (no code)
+
+1. **New titles from the Records site:** run
+   `python3 tools/sync_catalog.py <path to a StarSplitterVisions clone>`.
+   Every release on the Records site that the game doesn't have yet is written to
+   `data/catalog.json` with its verbatim title, meta and source file, and listed in
+   `MUSIC_CATALOG_MANIFEST.md`. New projects get an Archive page automatically.
+2. **Each catalogue track becomes findable:** one unheard record is hidden somewhere on
+   every stage run (three in an Open Expedition), with no pointer — it is found by
+   roaming. Projects with the fewest tracks heard come up first.
+3. **Masters:** drop the authorised audio at `audio/catalog/<track id>.ogg` (ids are in
+   `data/catalog.json`). The Archive then plays the real track.
+4. **Making a project a Force** (weapons, mechanic) still needs code; records do not.
+
+Projects that need owner consent are skipped by the tool (`BLOCKED` in the script).

@@ -571,7 +571,7 @@ const DRIFT_REGION: Dictionary = {"name": "BLACK DRIFT", "color": Color("5b6b8a"
 # region-relative `offset`; `hidden`: "" | "FRACTURE" | "RESONANCE" | "SCAN"
 # (visible only in that state / once scanned). `moving` signals flee along a path.
 
-const DISCOVERIES: Dictionary = {
+static var DISCOVERIES: Dictionary = {
 	"sig_now_or_never": {"kind": "signal", "region": "array_gate", "offset": Vector2(260, -170), "title": "OPENING CARRIER",
 		"force": "pulse_width_codex", "transmission": "pwc_now_or_never",
 		"text": "A bright carrier wave just outside the gate — a melody strong enough to cross broken corridors."},
@@ -718,7 +718,7 @@ const FRAGMENT_TITLE: String = "THE HUSH (game original — not Rex Fleet canon)
 # Titles and dates are verbatim catalog metadata [CATALOG]. No masters are
 # bundled; drop authorised files into res://audio/catalog/<master_file>.
 
-const TRANSMISSIONS: Dictionary = {
+static var TRANSMISSIONS: Dictionary = {
 	"pwc_now_or_never": {"project": "Pulse Width Codex", "force": "pulse_width_codex", "title": "Now or Never", "meta": "Released · November 19, 2025", "master_file": "pwc_now_or_never.ogg"},
 	"rc_meaningless_dub": {"project": "Resonant Currents", "force": "resonant_currents", "title": "Meaningless Dub", "meta": "Upcoming · September 18, 2026", "master_file": "rc_meaningless_dub.ogg"},
 	"rex_signals_and_shadows": {"project": "Star Splitter Rex", "force": "star_splitter_rex", "title": "Signals and Shadows", "meta": "Upcoming · August 2, 2026", "master_file": "rex_signals_and_shadows.ogg"},
@@ -743,7 +743,7 @@ const TRANSMISSIONS: Dictionary = {
 }
 
 ## Project pages in the Archive [CATALOG].
-const PROJECTS: Dictionary = {
+static var PROJECTS: Dictionary = {
 	"Pulse Width Codex": {"field": "Melodic dance", "role": "Open-hearted dance language", "accent": Color("f0327f"), "bio": "Uplifting electronic anthems built around memorable melody, expansive builds, and the communal release of a drop that feels emotionally earned.", "url": "https://music.apple.com/gb/artist/pulse-width-codex/1853956207"},
 	"Resonant Currents": {"field": "Dub", "role": "Modern dub language", "accent": Color("da3929"), "bio": "Composes with bass, drums, echo, and empty space — modern dub that feels deep, suspended, physical, and alive.", "url": ""},
 	"Star Splitter Rex": {"field": "Cinematic rock instrumentals", "role": "Cinematic electronic scale", "accent": Color("71e8f5"), "bio": "Massive electronic structures with integrated guitar force — cinematic music built for adrenaline, danger, triumph, and screen-sized momentum.", "url": ""},
@@ -1228,6 +1228,57 @@ static func poi_category(kind: String, data: Dictionary = {}) -> String:
 			return "camp"
 	return ""
 
+# ============================================================== music catalog
+## The catalogue scales without code: data/catalog.json lists Star Splitter
+## Records tracks (verbatim titles, with their source). Each becomes a
+## transmission and a "roaming" record signal hidden somewhere in the world on
+## a later expedition, so every replay has unheard music to find until the
+## catalogue is complete. Regenerate the file with tools/sync_catalog.py.
+const CATALOG_PATH: String = "res://data/catalog.json"
+static var catalog_loaded: bool = false
+
+static func _static_init() -> void:
+	load_catalog()
+
+static func load_catalog() -> void:
+	if catalog_loaded or not ResourceLoader.exists(CATALOG_PATH):
+		return
+	catalog_loaded = true
+	var res: Resource = load(CATALOG_PATH)
+	var data: Variant = (res as JSON).data if res is JSON else null
+	if typeof(data) != TYPE_DICTIONARY:
+		return
+	var projects: Dictionary = data.get("projects", {})
+	for pname: String in projects.keys():
+		if not PROJECTS.has(pname):
+			var pj: Dictionary = projects[pname]
+			PROJECTS[pname] = {"field": String(pj.get("field", "")), "role": String(pj.get("role", "")), "accent": Color(String(pj.get("accent", "#cfe9ff"))), "bio": String(pj.get("bio", "")), "url": ""}
+	for t: Variant in data.get("tracks", []):
+		var td: Dictionary = t
+		var tid: String = String(td["id"])
+		if TRANSMISSIONS.has(tid) or not PROJECTS.has(String(td["project"])):
+			continue
+		TRANSMISSIONS[tid] = {"project": String(td["project"]), "force": "", "title": String(td["title"]), "meta": String(td.get("meta", "")), "master_file": tid + ".ogg", "catalog": true}
+		DISCOVERIES["trk_" + tid] = {"kind": "signal", "roaming": true, "transmission": tid, "title": "UNHEARD CARRIER",
+			"color": PROJECTS[String(td["project"])]["accent"], "text": ""}
+
+## Catalogue records not yet heard (discovery ids), fewest-heard projects first.
+static func unheard_roaming(discovered: Dictionary) -> Array:
+	var heard_per_project: Dictionary = {}
+	var out: Array = []
+	for did: String in DISCOVERIES.keys():
+		var d: Dictionary = DISCOVERIES[did]
+		if not bool(d.get("roaming", false)):
+			continue
+		var proj: String = String(TRANSMISSIONS[String(d["transmission"])]["project"])
+		if discovered.has(did):
+			heard_per_project[proj] = int(heard_per_project.get(proj, 0)) + 1
+		else:
+			out.append(did)
+	out.sort_custom(func(a: String, b: String) -> bool:
+		return int(heard_per_project.get(String(TRANSMISSIONS[String(DISCOVERIES[a]["transmission"])]["project"]), 0)) < int(heard_per_project.get(String(TRANSMISSIONS[String(DISCOVERIES[b]["transmission"])]["project"]), 0)))
+	return out
+
 # ============================================================== helpers
 
 static func xp_required(level: int) -> int:
@@ -1274,6 +1325,8 @@ static func region_anchor(region: Dictionary) -> Vector2:
 ## an explicit "destination" tag for open-drift sites).
 static func discovery_in_destination(id: String, destination_id: String) -> bool:
 	var d: Dictionary = DISCOVERIES[id]
+	if bool(d.get("roaming", false)):
+		return false # placed per expedition, not tied to a region
 	var rid: String = String(d.get("region", ""))
 	if rid != "":
 		return rid in DESTINATIONS[destination_id]["regions"]
@@ -1287,6 +1340,8 @@ static func discovery_destination(id: String) -> String:
 
 static func discovery_position(id: String) -> Vector2:
 	var d: Dictionary = DISCOVERIES[id]
+	if bool(d.get("roaming", false)):
+		return Vector2.ZERO # placed per expedition
 	if d.has("world"):
 		return d["world"]
 	var region: Dictionary = REGIONS[String(d["region"])]

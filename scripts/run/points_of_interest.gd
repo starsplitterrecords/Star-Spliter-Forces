@@ -75,6 +75,7 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 			add({"id": id + "_pair", "kind": "mirror_pair", "pos": world.resolve(Vector2(d["pair"]), 10.0), "title": "MIRRORFOLD", "color": col, "radius": 48.0, "data": d})
 			poi["kind"] = "mirror"
 			poi["radius"] = 48.0
+	_place_roaming_records(world, rng, profile_discovered)
 	# Seeded variation: caches, resonators and rifts move between expeditions.
 	var region_list: Array = world.region_ids
 	for i in 24:
@@ -413,6 +414,42 @@ func _draw() -> void:
 			draw_string(font, pos + Vector2(-w / 2.0, y0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(c, 0.95))
 
 ## Visions crossover landmarks, each in its own series' visual language.
+## Unheard catalogue records, hidden somewhere off the beaten path. No pointer
+## leads to them: they are found by roaming (playtest: replays need a reason,
+## and there will be a lot of music to find). One on a stage, three in an
+## Open Expedition.
+const ROAMING_PER_STAGE: int = 1
+const ROAMING_OPEN: int = 3
+
+func _place_roaming_records(world: ExpeditionWorld, world_rng: RandomNumberGenerator, profile_discovered: Dictionary) -> void:
+	# Its own random stream: the rest of the seeded world (camps, caches,
+	# raiders) stays identical however many records the catalogue holds.
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	rng.seed = world_rng.seed ^ 0x5EC0
+	var pool: Array = GameData.unheard_roaming(profile_discovered)
+	if pool.is_empty():
+		return
+	var want: int = ROAMING_PER_STAGE if (run and not run.mission.is_empty()) else ROAMING_OPEN
+	# A little shuffle inside the fewest-heard group keeps replays varied.
+	var head: Array = pool.slice(0, mini(pool.size(), want * 4))
+	for k in range(head.size() - 1, 0, -1):
+		var j: int = rng.randi() % (k + 1)
+		var tmp: Variant = head[k]
+		head[k] = head[j]
+		head[j] = tmp
+	for i in mini(want, head.size()):
+		var id: String = String(head[i])
+		var d: Dictionary = GameData.DISCOVERIES[id]
+		var rid: String = String(world.region_ids[rng.randi() % world.region_ids.size()])
+		var region: Dictionary = GameData.REGIONS[rid]
+		var pos: Vector2 = world.random_open_point_near(GameData.region_anchor(region), 100.0, float(region.get("radius", 500.0)) * 0.9, rng)
+		for attempt in 20:
+			if pos.distance_to(world.gate) > 1200.0:
+				break
+			pos = world.random_open_point_near(Vector2.ZERO, 600.0, maxf(world.half_size.x, world.half_size.y) * 0.9, rng)
+		add({"id": id, "kind": "signal", "pos": world.resolve(pos, 10.0), "title": String(d["title"]), "hidden": "", "color": d["color"],
+			"data": d, "radius": 70.0, "repeat": false, "known": false, "lock": "", "roaming": true})
+
 func _draw_landmark(kind: String, pos: Vector2, c: Color) -> void:
 	match kind:
 		"dti":

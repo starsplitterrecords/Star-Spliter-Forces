@@ -87,3 +87,29 @@ Project name, field, catalog role, verbatim tagline/bio from SSV; identity art
 via the pipeline; transmissions with verbatim title + meta; "Listen" opens only
 links present in SSV JSON; no claim of availability where the meta says
 "Upcoming"; no audio played as a release unless an authorised master exists.
+
+<!-- BEGIN GENERATED CATALOG (tools/sync_catalog.py) -->
+
+### Catalogue records (generated)
+
+Each becomes a record signal hidden somewhere on a later expedition.
+
+| Track id | Project — Title · meta (verbatim) | Source |
+|---|---|---|
+| the_arthur_enduring_the_endearing | The Arthur Vaughn Octet — Enduring the Endearing · Selected catalog | `sites/records/content/artists/arthur-vaughn-octet.json` |
+| daisy_groh_ten_to_pretend | Daisy Grohs — Ten to Pretend · Upcoming · October 25, 2026 | `sites/records/content/artists/daisy-grohs.json` |
+| ion_drive__unification_theory | Ion Drive Orchestra — Unification Theory · Released · January 16, 2026 | `sites/records/content/artists/ion-drive-orchestra.json` |
+| milo_brigh_say_something | Milo Bright — Say Something · Upcoming · October 16, 2026 | `sites/records/content/artists/milo-bright.json` |
+| night_moti_be_somebody | Night Motion Archives — Be Somebody · Selected catalog | `sites/records/content/artists/night-motion-archives.json` |
+| night_moti_leave_the_past_behind | Night Motion Archives — Leave the Past Behind · Selected catalog | `sites/records/content/artists/night-motion-archives.json` |
+| phase_redu_if_we_remember_it_fondly | Phase Redux — If We Remember It Fondly · Upcoming · September 6, 2026 | `sites/records/content/artists/phase-redux.json` |
+| phase_redu_forward_now_feat_cheddr | Phase Redux — Forward Now (feat. Cheddr) · Selected catalog | `sites/records/content/artists/phase-redux.json` |
+| pulse_widt_i_never_want_to_not_do_this | Pulse Width Codex — I Never Want to Not Do This · Catalog release · July 14, 2026 | `sites/records/content/artists/pulse-width-codex.json` |
+| pulse_widt_free_mode_feat_cheddr | Pulse Width Codex — Free Mode (feat. Cheddr) · Selected catalog | `sites/records/content/artists/pulse-width-codex.json` |
+| pulse_widt_edge_spaces_epsilon_version | Pulse Width Codex — Edge Spaces (Epsilon Version) · Selected catalog | `sites/records/content/artists/pulse-width-codex.json` |
+| robots_sin_perception | Robots Sing Love Songs — Perception · Selected catalog | `sites/records/content/artists/robots-sing-love-songs.json` |
+| star_split_slip_knife_feat_cheddr | Star Splitter Rex — Slip Knife (feat. Cheddr) · Released · August 15, 2025 | `sites/records/content/artists/star-splitter-rex.json` |
+| star_split_say_what_feat_cheddr | Star Splitter Rex — Say What (feat. Cheddr) · Released · July 14, 2025 | `sites/records/content/artists/star-splitter-rex.json` |
+| star_split_graphite | Star Splitter Rex — Graphite · Upcoming · November 11, 2026 | `sites/records/content/artists/star-splitter-rex.json` |
+
+<!-- END GENERATED CATALOG -->

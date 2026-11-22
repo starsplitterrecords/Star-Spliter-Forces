@@ -55,10 +55,12 @@ func _new_screen() -> VBoxContainer:
 	screen.add_child(bg)
 	var margin: MarginContainer = MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	for side: String in ["left", "right"]:
-		margin.add_theme_constant_override("margin_" + side, 20 if UiTheme.is_narrow() else 48)
-	for side2: String in ["top", "bottom"]:
-		margin.add_theme_constant_override("margin_" + side2, 28)
+	var ins: Vector4 = ScreenInsets.get_insets(get_viewport().get_visible_rect().size)
+	var side_m: int = 20 if UiTheme.is_narrow() else 48
+	margin.add_theme_constant_override("margin_left", side_m + int(ins.x))
+	margin.add_theme_constant_override("margin_right", side_m + int(ins.z))
+	margin.add_theme_constant_override("margin_top", 28 + int(ins.y))
+	margin.add_theme_constant_override("margin_bottom", 28 + int(ins.w))
 	screen.add_child(margin)
 	# Short windows (phones, browser panels) scroll instead of clipping.
 	var scroll: ScrollContainer = ScrollContainer.new()
@@ -218,7 +220,11 @@ func show_title() -> void:
 			show_departure(), 340.0))
 	menu.add_child(UiTheme.button("STAR SPLITTER ARCHIVE", show_archive, 340.0))
 	if Profile.has_feature("workshop"):
-		menu.add_child(UiTheme.button("FLEET WORKSHOP", show_workshop, 340.0))
+		var ready_n: int = workshop_affordable()
+		var wb: Button = UiTheme.button("FLEET WORKSHOP" + ("  •  %d READY" % ready_n if ready_n > 0 else ""), show_workshop, 340.0)
+		if ready_n > 0:
+			wb.add_theme_color_override("font_color", UiTheme.GOLD)
+		menu.add_child(wb)
 	if can_fullscreen():
 		menu.add_child(UiTheme.button("FULL SCREEN" if not is_fullscreen() else "EXIT FULL SCREEN", func() -> void:
 			toggle_fullscreen()
@@ -235,7 +241,7 @@ func show_title() -> void:
 	var discovered: int = Profile.discovered_count()
 	var total: int = GameData.DISCOVERIES.size()
 	info.add_child(UiTheme.label("CORRIDOR: %d / %d BEACONS RELIT   •   ARCHIVE %d / %d" % [Profile.stops_done_count(), GameData.CHART.size(), discovered, total], 15, UiTheme.GOLD, "bold"))
-	info.add_child(UiTheme.label("Signal %d" % int(Profile.data["currency"]), 15, UiTheme.DIM))
+	info.add_child(UiTheme.label("Records heard %d / %d   •   Signal %d" % [(Profile.data["transmissions"] as Array).size(), GameData.TRANSMISSIONS.size(), int(Profile.data["currency"])], 15, UiTheme.DIM))
 	var next: String = _next_goal_text()
 	if next != "":
 		info.add_child(UiTheme.label(next, 16, Color("bfe9ff")))
@@ -260,6 +266,7 @@ func _next_goal_text() -> String:
 # ================================================================== corridor chart
 
 var selected_stop: String = ""
+var workshop_after: String = ""
 
 ## The spine of the game: pick the next beacon to relight.
 func show_chart(focus: String = "", chapter: int = 0) -> void:
@@ -356,6 +363,9 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 			col.add_child(UiTheme.label(String(st["brief"]), 13, UiTheme.TEXT))
 		col.add_child(UiTheme.label("OBJECTIVE: " + GameData.chart_objective_text(st), 15, Color("a8f7ff"), "bold"))
 		col.add_child(UiTheme.label(("EARNED: " if done else "REWARD: ") + "  •  ".join(st["reward"]), 15, UiTheme.GOLD, "bold"))
+		var unheard: int = GameData.unheard_roaming(Profile.data["discovered"]).size()
+		if unheard > 0:
+			col.add_child(UiTheme.label("♪ One unheard record is hidden somewhere on every run (%d left to find)." % unheard, 13, Color("bfe9ff")))
 	var side: BoxContainer = BoxContainer.new()
 	side.vertical = true
 	side.add_theme_constant_override("separation", 8)
@@ -650,7 +660,12 @@ func show_results() -> void:
 	buttons.add_theme_constant_override("v_separation", 8)
 	v.add_child(buttons)
 	var again: Button
-	if stop.is_empty():
+	if workshop_affordable() > 0:
+		# Coming home with Signal to spend: the Workshop first (playtest: "I
+		# always forget about the workshop").
+		again = UiTheme.button("WORKSHOP: %d REFIT%s READY  →" % [workshop_affordable(), "" if workshop_affordable() == 1 else "S"], func() -> void: show_workshop("chart"), 360.0)
+		again.add_theme_color_override("font_color", UiTheme.GOLD)
+	elif stop.is_empty():
 		again = UiTheme.button("EXPLORE AGAIN", show_departure, 260.0)
 	elif stop_won:
 		again = UiTheme.button("CORRIDOR CHART  →", func() -> void: show_chart(), 300.0)
@@ -981,7 +996,20 @@ func _archive_log() -> Control:
 
 # ================================================================== workshop
 
-func show_workshop() -> void:
+## Refits the player can afford right now.
+func workshop_affordable() -> int:
+	if not Profile.has_feature("workshop"):
+		return 0
+	var n: int = 0
+	for wid: String in GameData.WORKSHOP.keys():
+		var rank: int = Profile.workshop_rank(wid)
+		if rank < int(GameData.WORKSHOP[wid]["max"]) and int(Profile.data["currency"]) >= GameData.workshop_cost(wid, rank):
+			n += 1
+	return n
+
+## after: where the Workshop's main button goes ("chart" after a stage).
+func show_workshop(after: String = "") -> void:
+	workshop_after = after
 	var v: VBoxContainer = _new_screen()
 	_heading(v, "FLEET WORKSHOP", "Spend Signal on permanent refits. You have %d Signal." % int(Profile.data["currency"]))
 	var grid: GridContainer = GridContainer.new()
@@ -1000,7 +1028,7 @@ func show_workshop() -> void:
 		var b: Button = UiTheme.button(text, func() -> void:
 			if Profile.buy_workshop(wid):
 				Audio.play_sfx("choose")
-			show_workshop(), 520.0 if not UiTheme.is_narrow() else _content_width(), 92.0)
+			show_workshop(workshop_after), 520.0 if not UiTheme.is_narrow() else _content_width(), 92.0)
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		b.disabled = maxed or int(Profile.data["currency"]) < cost
@@ -1008,7 +1036,12 @@ func show_workshop() -> void:
 		grid.add_child(b)
 		if first == null and not b.disabled:
 			first = b
-	_back_row(v, show_title)
+	if workshop_after == "chart":
+		var cont: Button = UiTheme.button("CONTINUE TO THE CHART  →", func() -> void: show_chart(selected_stop), 340.0, 54.0)
+		cont.add_theme_color_override("font_color", UiTheme.ACCENT)
+		v.add_child(cont)
+	else:
+		_back_row(v, show_title)
 	if first:
 		first.grab_focus()
 
@@ -1027,6 +1060,7 @@ func show_settings() -> void:
 	_slider(grid, "Effects volume", "sfx_volume", 0.0, 1.0, 0.05)
 	_slider(grid, "Screen shake", "screen_shake", 0.0, 1.0, 0.25)
 	_slider(grid, "Text size", "text_scale", 0.8, 1.4, 0.1)
+	_slider(grid, "Screen edge padding (if the top or bottom is hidden)", "edge_padding", 0.0, 90.0, 5.0)
 	_toggle(grid, "Reduced flashes & hit-stop", "reduced_flashes")
 	_toggle(grid, "Damage numbers", "damage_numbers")
 	_toggle(grid, "Navigation assist (edge compass)", "nav_assist")

@@ -40,6 +40,7 @@ var gate_info: Label
 var extract_button: Button
 var confront_button: Button
 var _gate_state: String = ""
+var _inset_clock: float = 0.0
 const CARD_PAD: float = 12.0
 const CARD_W: float = 312.0
 const CARD_H: float = 134.0
@@ -74,7 +75,8 @@ func _ready() -> void:
 
 func _compute_safe() -> void:
 	var vp: Vector2 = get_viewport().get_visible_rect().size
-	safe = Rect2(Vector2(16, 12), vp - Vector2(32, 24))
+	var ins: Vector4 = ScreenInsets.get_insets(vp)
+	safe = Rect2(Vector2(16 + ins.x, 12 + ins.y), vp - Vector2(32 + ins.x + ins.z, 24 + ins.y + ins.w))
 	var screen_safe: Rect2i = DisplayServer.get_display_safe_area()
 	var screen_size: Vector2i = DisplayServer.screen_get_size()
 	if screen_size.x > 0 and screen_safe.size.x > 0 and OS.has_feature("mobile"):
@@ -84,7 +86,7 @@ func _compute_safe() -> void:
 		var top: float = maxf(12.0, screen_safe.position.y * sy)
 		var right: float = maxf(16.0, (screen_size.x - screen_safe.end.x) * sx)
 		var bottom: float = maxf(12.0, (screen_size.y - screen_safe.end.y) * sy)
-		safe = Rect2(Vector2(left, top), vp - Vector2(left + right, top + bottom))
+		safe = Rect2(Vector2(left + ins.x, top + ins.y), vp - Vector2(left + right + ins.x + ins.z, top + bottom + ins.y + ins.w))
 
 func _on_resize() -> void:
 	_compute_safe()
@@ -225,6 +227,14 @@ func _build_gate_panel() -> void:
 func _process(delta: float) -> void:
 	if run == null or run.player == null:
 		return
+	# Browser bars can appear or vanish without a resize event.
+	_inset_clock -= delta
+	if _inset_clock <= 0.0:
+		_inset_clock = 1.0
+		var before: Rect2 = safe
+		_compute_safe()
+		if safe != before:
+			_layout()
 	banner_clock = maxf(0.0, banner_clock - delta)
 	var ba: float = clampf(minf(banner_clock, banner_total - banner_clock) * 3.0, 0.0, 1.0)
 	banner_title.modulate.a = ba
