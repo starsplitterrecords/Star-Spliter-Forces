@@ -1192,6 +1192,13 @@ func test_sea_branch() -> void:
 	check(run2.world.biome == "desert", "Desert biome not set")
 	var e2: ForceEnemy = run2.spawn_enemy("skiff", run2.player.position + Vector2(300, 0))
 	check(e2 != null and e2.skin_name == "Dust Skiff", "desert skin not applied")
+	run2.queue_free()
+	# Orbit: opens from Mandatory Proximity (Jax Orien).
+	check(GameData.chart_prev_main("orb_branch") == "s_stardust", "Orbit branch should open from s_stardust")
+	for st3: Dictionary in GameData.CHART:
+		if int(st3.get("chapter", 1)) == 12:
+			for did3: String in st3.get("discoveries", []):
+				check(GameData.discovery_in_destination(did3, "stardust_orbit"), "%s not in Stardust Orbit" % did3)
 	# A stage track counts as heard for roaming.
 	var before: int = GameData.unheard_roaming({}).size()
 	check(GameData.unheard_roaming({"des_launch_signal": {}}).size() == before - 1, "stage track still roaming")

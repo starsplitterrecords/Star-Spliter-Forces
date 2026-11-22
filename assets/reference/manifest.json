@@ -1629,6 +1629,358 @@
           ]
         }
       ]
+    },
+    {
+      "id": "portrait_brick_talos",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/brick_talos_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.09,
+            0.2221,
+            0.31,
+            0.3779
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/brick_talos_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.09,
+            0.2221,
+            0.31,
+            0.3779
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_noola_vaneel",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/noola_vaneel_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.33,
+            0.2792,
+            0.53,
+            0.4208
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/noola_vaneel_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.33,
+            0.2792,
+            0.53,
+            0.4208
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_glorp",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/glorp_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.57,
+            0.2492,
+            0.77,
+            0.3908
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/glorp_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.57,
+            0.2492,
+            0.77,
+            0.3908
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_kreeb",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/kreeb_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.82,
+            0.3348,
+            0.99,
+            0.4552
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/kreeb_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.82,
+            0.3348,
+            0.99,
+            0.4552
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_pixa",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/pixa_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.07,
+            0.3992,
+            0.27,
+            0.5408
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/pixa_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.07,
+            0.3992,
+            0.27,
+            0.5408
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_zib",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/zib_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.1,
+            0.6392,
+            0.3,
+            0.7808
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/zib_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.1,
+            0.6392,
+            0.3,
+            0.7808
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_mira_klare",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/mira_klare_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.36,
+            0.4642,
+            0.56,
+            0.6058
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/mira_klare_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.36,
+            0.4642,
+            0.56,
+            0.6058
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_astra_vega",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/stardust-station/issue-01/page-001.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/astra_vega_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.11,
+            0.035,
+            0.28,
+            0.148
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/astra_vega_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.11,
+            0.035,
+            0.28,
+            0.148
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
     }
   ]
 }

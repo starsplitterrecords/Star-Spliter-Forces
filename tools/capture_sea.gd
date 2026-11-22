@@ -7,6 +7,8 @@ const BRANCHES: Dictionary = {
 		"regions": ["north_atlantic", "east_river", "dti_building", "bushwick_rooftop", "harbor_phase", "harbor_pier"]},
 	"desert": {"chapter": 11, "done": ["shelf_beacon", "s_ochre", "des_lakebed", "des_shop"], "focus": "des_esperanza", "stage": "des_red_mesa",
 		"regions": ["dry_lakebed", "launch_shop", "esperanza", "ridge_relay", "red_mesa", "two_suns", "the_forge", "coyote_wells"]},
+	"orbit": {"chapter": 12, "done": ["gravefire", "s_stardust", "orb_branch"], "focus": "orb_bullpen", "stage": "orb_break",
+		"regions": ["station_approach", "main_bullpen", "west_corridor", "break_room", "supply_store"]},
 }
 
 var out_dir: String = "user://captures_sea"

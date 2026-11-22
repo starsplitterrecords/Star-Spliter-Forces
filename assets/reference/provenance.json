@@ -1429,6 +1429,262 @@
           "sha256": "43e4bb8711ba555ce33ce97c96f9ef5206647f2b3fe7d19c1f6e233c94f5a994"
         }
       ]
+    },
+    {
+      "id": "portrait_brick_talos",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "7c0bd4917db561cd3894664a081f3e63b6258f42200fb0c872d919da251b048f",
+      "review_required": false,
+      "source_size": [
+        700,
+        989
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/brick_talos_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "774930d9579bd7a0beeca5148228a8c78fa46b0ed1819deef4664d2c8dd4007b"
+        },
+        {
+          "out": "assets/characters/brick_talos_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "030267f2eb7de6228cc430e4a5a84370a1bfcf43882f98f84154ce06c83404c4"
+        }
+      ]
+    },
+    {
+      "id": "portrait_noola_vaneel",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "7c0bd4917db561cd3894664a081f3e63b6258f42200fb0c872d919da251b048f",
+      "review_required": false,
+      "source_size": [
+        700,
+        989
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/noola_vaneel_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "19c24d5d5fa9dfc90d9b144afd803bfcad51d6104263aa76658c19b3c58cd0e0"
+        },
+        {
+          "out": "assets/characters/noola_vaneel_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "fca055ee608c4b6eccf6a88fb5608a2c032e2a909351635ab297e416577f6feb"
+        }
+      ]
+    },
+    {
+      "id": "portrait_glorp",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "7c0bd4917db561cd3894664a081f3e63b6258f42200fb0c872d919da251b048f",
+      "review_required": false,
+      "source_size": [
+        700,
+        989
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/glorp_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "8b59be63df15c93cbecd3cf922225183123d4b2e18315ce93102d6ac1894d14d"
+        },
+        {
+          "out": "assets/characters/glorp_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "d612cc3f8efcd55c45b59c2e687d27ce5d644984c66950a5d96be5ec498a8ceb"
+        }
+      ]
+    },
+    {
+      "id": "portrait_kreeb",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "7c0bd4917db561cd3894664a081f3e63b6258f42200fb0c872d919da251b048f",
+      "review_required": false,
+      "source_size": [
+        700,
+        989
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/kreeb_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "6f64b97d217bbf043a7e2a81f889b2e651051e70d945e0ceab112330454e6a31"
+        },
+        {
+          "out": "assets/characters/kreeb_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "bbf3cc7ce3dafa16e3080b9dd7aadb4a5edcf67ee87a35e66e32166ff15b657a"
+        }
+      ]
+    },
+    {
+      "id": "portrait_pixa",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "7c0bd4917db561cd3894664a081f3e63b6258f42200fb0c872d919da251b048f",
+      "review_required": false,
+      "source_size": [
+        700,
+        989
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/pixa_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "654fd36bf6ecc1f5147fc6a4b2115ca1cbfc9eb19df2bdd831291e787e64b9ab"
+        },
+        {
+          "out": "assets/characters/pixa_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "6bde1b5c2a3ada156f4932cb29fcd0c203ef7dc1ded89382b3d9b34ca0497500"
+        }
+      ]
+    },
+    {
+      "id": "portrait_zib",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "7c0bd4917db561cd3894664a081f3e63b6258f42200fb0c872d919da251b048f",
+      "review_required": false,
+      "source_size": [
+        700,
+        989
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/zib_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "1cd494a53d8a04a9297eb85a54b8011803fc158a8a7d485f215b0ad08bdce763"
+        },
+        {
+          "out": "assets/characters/zib_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "807052630c18b6003625ad01f8775d1c3148f0fcf630306a41fd4eba7892cd38"
+        }
+      ]
+    },
+    {
+      "id": "portrait_mira_klare",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "7c0bd4917db561cd3894664a081f3e63b6258f42200fb0c872d919da251b048f",
+      "review_required": false,
+      "source_size": [
+        700,
+        989
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/mira_klare_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "d4d80581502aee518b4f4e3a94c30f9abb29296f05b6e4edf24c0b50dda9c875"
+        },
+        {
+          "out": "assets/characters/mira_klare_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "6e62a7499367c8167d47f7125e4085cadac716f4d71c8fcf4edb44ab0d892722"
+        }
+      ]
+    },
+    {
+      "id": "portrait_astra_vega",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/stardust-station/issue-01/page-001.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Stardust Station Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "4adc67bb3173342bd38cbdb5232cf83b819f2b75137f089a73e12a422ce04875",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1536
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/astra_vega_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "9670b479a7fb7619ba7ac4ee53d18130f82a11c771c71b8aaac6ecfd1af65ee1"
+        },
+        {
+          "out": "assets/characters/astra_vega_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "ce9b94579b3e7c4a92c8bced5332462bdc479e8c9bc45966fdb64b4a179b4247"
+        }
+      ]
     }
   ]
 }

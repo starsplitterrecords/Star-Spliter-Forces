@@ -357,6 +357,8 @@ func _build_region(rid: String, r: Dictionary) -> void:
 				_op(fp, ["poly", PackedVector2Array([fp, fp + Vector2(fw, 0), fp + Vector2(fw, fw * 0.7), fp + Vector2(0, fw * 0.7)]), Color("26333a")])
 				_op(fp, ["line", PackedVector2Array([fp + Vector2(0, fw * 0.7), fp + Vector2(fw, fw * 0.7)]), Color(acc, 0.35), 3.0])
 				_obstacle(fp + Vector2(fw, fw * 0.7) * 0.5, fw * 0.35)
+		"station_hull", "station_corridor", "bullpen", "break_room", "supply":
+			_station_region(String(r["props"]), r, acc, density)
 		"lakebed":
 			# Cracked flat clay: polygon crack lines, open ground for a launch.
 			for k in int(16 * density + 6):
@@ -496,6 +498,80 @@ func _build_drift() -> void:
 		_drift_prop(p, rng.randf_range(16.0, 46.0), rng.randf() < 0.6)
 		placed += 1
 
+## Stardust Station interiors: deck plating with the room's furniture.
+func _station_region(kind: String, r: Dictionary, acc: Color, density: float) -> void:
+	var c: Vector2 = GameData.region_anchor(r)
+	match kind:
+		"station_hull":
+			# Ring segments, spokes and solar wings around the branch office.
+			for k in 6:
+				var a0: float = TAU * k / 6.0 + rng.randf_range(-0.2, 0.2)
+				_op(c, ["arc", c, float(r["radius"]) * 0.75, a0, a0 + 0.6, Color("4a5a90"), 18.0])
+				_op(c, ["arc", c, float(r["radius"]) * 0.75, a0, a0 + 0.6, Color(acc, 0.25), 3.0])
+				var wp: Vector2 = c + Vector2.from_angle(a0 + 0.3) * float(r["radius"]) * 0.75
+				if _clear_of_discoveries(wp, 200.0):
+					_obstacle(wp, 22.0)
+			for k in 4:
+				var sp: Vector2 = _scatter_point(r)
+				if sp.x != INF and _clear_of_discoveries(sp, 180.0):
+					_op(sp, ["poly", PackedVector2Array([sp, sp + Vector2(90, 0), sp + Vector2(90, 34), sp + Vector2(0, 34)]), Color("23305a")])
+					for q in 4:
+						_op(sp, ["line", PackedVector2Array([sp + Vector2(q * 22 + 11, 0), sp + Vector2(q * 22 + 11, 34)]), Color("6a7ab0", 0.5), 1.0])
+					_obstacle(sp + Vector2(45, 17), 24.0)
+		"station_corridor":
+			# Two long walls with access panels and a sign.
+			var a: Vector2 = r["a"]
+			var b: Vector2 = r["b"]
+			var ax: Vector2 = (b - a).normalized()
+			var sd: Vector2 = ax.orthogonal() * (float(r["radius"]) * 0.85)
+			_op(a, ["poly", PackedVector2Array([a - sd * 1.1, b - sd * 1.1, b + sd * 1.1, a + sd * 1.1]), Color("161c3a", 0.9)])
+			for side in [-1.0, 1.0]:
+				_op(a, ["line", PackedVector2Array([a + sd * side, b + sd * side]), Color("5a6aa0"), 10.0])
+				var n: int = int(a.distance_to(b) / 220.0)
+				for k in n:
+					var pp: Vector2 = a + ax * (110.0 + k * 220.0) + sd * side * 0.92
+					_op(pp, ["poly", PackedVector2Array([pp - ax * 30, pp + ax * 30, pp + ax * 30 - sd.normalized() * side * 22, pp - ax * 30 - sd.normalized() * side * 22]), Color("2a3460")])
+					_op(pp, ["circle", pp - sd.normalized() * side * 11, 3.0, Color(acc, 0.7)])
+		"bullpen", "break_room", "supply":
+			var rad: float = float(r["radius"]) * 0.8
+			var deck: PackedVector2Array = PackedVector2Array()
+			for q in 8:
+				deck.append(c + Vector2.from_angle(TAU * q / 8.0 + PI / 8.0) * rad)
+			_op(c, ["poly", deck, Color("161c3a", 0.9)])
+			var edge: PackedVector2Array = deck.duplicate()
+			edge.append(deck[0])
+			_op(c, ["line", edge, Color(acc, 0.35), 4.0])
+			for k in int(9 * density + 3):
+				var fp: Vector2 = c + Vector2(rng.randf_range(-1, 1), rng.randf_range(-1, 1)) * rad * 0.6
+				if not _clear_of_discoveries(fp, 170.0):
+					continue
+				match kind:
+					"bullpen":
+						# A desk with a monitor and a chair.
+						_op(fp, ["poly", PackedVector2Array([fp, fp + Vector2(70, 0), fp + Vector2(70, 34), fp + Vector2(0, 34)]), Color("3a4470")])
+						_op(fp, ["poly", PackedVector2Array([fp + Vector2(22, 4), fp + Vector2(48, 4), fp + Vector2(48, 18), fp + Vector2(22, 18)]), Color(acc, 0.55)])
+						_op(fp, ["circle", fp + Vector2(35, 48), 9.0, Color("252c50")])
+						_obstacle(fp + Vector2(35, 17), 30.0)
+					"break_room":
+						if k % 3 == 0:
+							# Vending machine.
+							_op(fp, ["poly", PackedVector2Array([fp, fp + Vector2(44, 0), fp + Vector2(44, 70), fp + Vector2(0, 70)]), Color("2a3a6a")])
+							for q in 6:
+								_op(fp, ["circle", fp + Vector2(12 + (q % 2) * 20, 14 + int(q / 2) * 18), 4.0, [Color("ff8a6a"), Color("ffd86a"), Color("8ae0ff")][q % 3]])
+							_obstacle(fp + Vector2(22, 35), 28.0)
+						else:
+							# A round table and folding chairs.
+							_op(fp, ["circle", fp, 22.0, Color("3a4470")])
+							for q in 3:
+								_op(fp, ["circle", fp + Vector2.from_angle(q * TAU / 3.0) * 36.0, 8.0, Color("5a6070")])
+							_obstacle(fp, 22.0)
+					"supply":
+						# A shelf row with boxes.
+						_op(fp, ["poly", PackedVector2Array([fp, fp + Vector2(120, 0), fp + Vector2(120, 24), fp + Vector2(0, 24)]), Color("2e3658")])
+						for q in 5:
+							_op(fp, ["poly", PackedVector2Array([fp + Vector2(6 + q * 23, 4), fp + Vector2(24 + q * 23, 4), fp + Vector2(24 + q * 23, 20), fp + Vector2(6 + q * 23, 20)]), [Color("c8a46a"), Color("7fe0c0"), Color("e0a0c0")][q % 3]])
+						_obstacle(fp + Vector2(60, 12), 30.0)
+
 ## Open-ground scatter in the biome's own language.
 func _drift_prop(p: Vector2, r: float, solid: bool) -> void:
 	match biome:
@@ -510,6 +586,18 @@ func _drift_prop(p: Vector2, r: float, solid: bool) -> void:
 			else:
 				# Pilings / drifting debris.
 				_rock(p, r * 0.7, Color("22303a"), solid)
+		"orbit":
+			if rng.randf() < 0.3:
+				# A loose solar panel or hull plate.
+				var ang: float = rng.randf() * TAU
+				var ax: Vector2 = Vector2.from_angle(ang) * r * 0.8
+				var sd: Vector2 = ax.orthogonal() * 0.5
+				_op(p, ["poly", PackedVector2Array([p - ax - sd, p + ax - sd, p + ax + sd, p - ax + sd]), Color("23305a")])
+				_op(p, ["line", PackedVector2Array([p - ax, p + ax]), Color("6a7ab0", 0.6), 1.5])
+				if solid:
+					_obstacle(p, r * 0.6)
+			else:
+				_rock(p, r * 0.8, Color("1e2240"), solid)
 		"desert":
 			if rng.randf() < 0.45:
 				# Creosote scrub: a low cluster you fly over.

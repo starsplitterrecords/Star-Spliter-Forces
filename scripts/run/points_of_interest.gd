@@ -576,6 +576,24 @@ func _draw_landmark(kind: String, pos: Vector2, c: Color) -> void:
 			for k2 in 4:
 				var wy2: float = 40.0 + k2 * 14.0 + 3.0 * sin(anim * 1.5 + k2)
 				draw_line(gc + Vector2(-30, wy2), gc + Vector2(220, wy2), Color(c, 0.25), 2.0)
+		"bullpen":
+			# A cluster of desks under a TEAMWORK sign.
+			var bp: Vector2 = pos + Vector2(-300, -90)
+			draw_rect(Rect2(bp + Vector2(0, -40), Vector2(170, 30)), Color("2a3460"))
+			draw_string(font, bp + Vector2(10, -20), "TEAMWORK", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, c)
+			for k in 4:
+				var dp: Vector2 = bp + Vector2((k % 2) * 96, int(k / 2) * 70)
+				draw_rect(Rect2(dp, Vector2(80, 40)), Color("3a4470"))
+				draw_rect(Rect2(dp + Vector2(24, 4), Vector2(32, 18)), Color(c, 0.4 + 0.3 * sin(anim * 2.0 + k)))
+		"break_room":
+			# The appliance, at a safe minimum distance.
+			var mw: Vector2 = pos + Vector2(-290, -70)
+			draw_rect(Rect2(mw, Vector2(90, 56)), Color("8a90a0"))
+			draw_rect(Rect2(mw + Vector2(8, 8), Vector2(56, 40)), Color("1a1e2a"))
+			draw_rect(Rect2(mw + Vector2(8, 8), Vector2(56, 40)), Color(c, 0.3 + 0.3 * sin(anim * 5.0)), false, 2.0)
+			draw_circle(mw + Vector2(76, 18), 5.0, Color("ff6a4a"))
+			draw_arc(mw + Vector2(45, 28), 90.0, 0.0, TAU, 40, Color("ffd36b", 0.5), 2.0)
+			draw_string(font, mw + Vector2(-20, 140), "SAFE MINIMUM DISTANCE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("ffd36b"))
 		"launch_shop":
 			# A tanker workshop with a launch rail and a dish.
 			var ts: Vector2 = pos + Vector2(-300, -40)

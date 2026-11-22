@@ -79,7 +79,7 @@ series). A branch appears on the chart only once the side stage that opens it is
 |---|---|---|---|---|
 | **SEA — Harbor Signal** | Vikings 2026! + Low Tide Signal | Open sea, East River, pier, DTI building, Bushwick rooftop, Harbor Phase, flooded coast | Now Serving G-53 (Bjorn) | **Built**: 8 stages + 3 side signals, contacts Gunnar and Carrie |
 | **DESERT — Dryline** | Backyard Rockets + Sunforge Outlaw | Dry lakebed, Launch-Shop, Esperanza, La Suerte, Ridge Relay, Red Mesa, Coyote Wells; Under Two Suns and the Forge (Sunforge cover) | OCHRE-9 (Lucia) | **Built**: 9 stages + 2 side signals, contacts Arvin and Milo |
-| ORBIT | Stardust Station | Bullpen, break room, the station ring | Jax Orien side stage | Planned |
+| **ORBIT — Stardust Orbit** | Stardust Station | Regional Branch, Main Bullpen, West Corridor, Break Room, Supply Store B-17 | Mandatory Proximity (Jax Orien) | **Built**: 7 stages + 2 side signals, 8 contacts (Astra Vega, Mira Klare, Zib, Glorp, Kreeb, Noola Vaneel, Pixa, Brick Talos) |
 | FANTASY | Forces of Darkness LLC | A corporate dark empire on land | — | On hold (owner, 2026-11-22) |
 | PARK | Azure Reach | Marine theme park settings | — | Planned |
 | COSMIC | Echoes of a Forgotten War | Olyria-Prime excavation colony | — | On hold (owner, 2026-11-22) |
@@ -99,6 +99,13 @@ Forge (Graphite) · Heat Haze (the Silence, 6:00). Sides: Pump House (La Suerte;
 Pretend), Free Mode (Ridge Relay). Tethergrid stays named in text only; raiders are hush
 forms (Dust Skiff, Sand Ram, Mirage Picket, Heat Shimmer…). "Under Two Suns" is a
 descriptive, game-original name for what the Sunforge cover shows.
+
+Stardust Orbit stages: Regional Branch (Astra Vega) · Morale-and-Safety (Main Bullpen;
+Mira Klare, Zib) · Sealed In (West Corridor, hold 3:00) · Break Room (Glorp, Kreeb) ·
+Mandatory Proximity (Say Something; Noola Vaneel, Pixa, Brick Talos) · Supply Store
+(Enduring the Endearing) · Overtime (the Silence). Sides: Docking Carrier (If We Remember
+It Fondly), Open Plan (Say What). Station interiors are deck plates in orbit with each
+room's furniture; raiders become Static Skiffs, Memo Layers, Overtime Captains…
 
 Stage tracks also stay in the roaming pool until heard, so players who never reach a
 branch can still find every record.
