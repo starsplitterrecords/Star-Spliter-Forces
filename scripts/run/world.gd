@@ -357,6 +357,8 @@ func _build_region(rid: String, r: Dictionary) -> void:
 				_op(fp, ["poly", PackedVector2Array([fp, fp + Vector2(fw, 0), fp + Vector2(fw, fw * 0.7), fp + Vector2(0, fw * 0.7)]), Color("26333a")])
 				_op(fp, ["line", PackedVector2Array([fp + Vector2(0, fw * 0.7), fp + Vector2(fw, fw * 0.7)]), Color(acc, 0.35), 3.0])
 				_obstacle(fp + Vector2(fw, fw * 0.7) * 0.5, fw * 0.35)
+		"plaza", "queue", "aquarium", "backstage", "suite":
+			_park_region(String(r["props"]), r, acc, density)
 		"station_hull", "station_corridor", "bullpen", "break_room", "supply":
 			_station_region(String(r["props"]), r, acc, density)
 		"lakebed":
@@ -498,6 +500,83 @@ func _build_drift() -> void:
 		_drift_prop(p, rng.randf_range(16.0, 46.0), rng.randf() < 0.6)
 		placed += 1
 
+## Azure Reach: glass, water, queues and the backstage that keeps it running.
+func _park_region(kind: String, r: Dictionary, acc: Color, density: float) -> void:
+	match kind:
+		"aquarium":
+			# Big glass tanks: water panels with a bright rim and a few fish.
+			for k in int(6 * density + 3):
+				var tp: Vector2 = _scatter_point(r)
+				if tp.x == INF or not _clear_of_discoveries(tp, 220.0):
+					continue
+				var w: float = rng.randf_range(160.0, 260.0)
+				var h: float = rng.randf_range(70.0, 110.0)
+				_op(tp, ["poly", PackedVector2Array([tp, tp + Vector2(w, 0), tp + Vector2(w, h), tp + Vector2(0, h)]), Color("0e4a70", 0.85)])
+				_op(tp, ["line", PackedVector2Array([tp, tp + Vector2(w, 0), tp + Vector2(w, h), tp + Vector2(0, h), tp]), Color(acc, 0.6), 3.0])
+				for q in 4:
+					var fp: Vector2 = tp + Vector2(rng.randf_range(20, w - 20), rng.randf_range(15, h - 15))
+					_op(fp, ["poly", PackedVector2Array([fp + Vector2(-8, 0), fp + Vector2(4, -4), fp + Vector2(8, 0), fp + Vector2(4, 4)]), [Color("ffd36b"), Color("ff8a6a"), Color("bfefff")][q % 3]])
+				_obstacle(tp + Vector2(w, h) * 0.5, h * 0.5)
+		"plaza":
+			# Fountains, palms and planters on a tiled plaza.
+			for k in int(8 * density + 3):
+				var pp: Vector2 = _scatter_point(r)
+				if pp.x == INF or not _clear_of_discoveries(pp, 180.0):
+					continue
+				if k % 3 == 0:
+					_op(pp, ["circle", pp, 46.0, Color("1a4a6a")])
+					_op(pp, ["arc", pp, 46.0, 0.0, TAU, Color(acc, 0.6), 4.0])
+					_op(pp, ["circle", pp, 12.0, Color("bfefff", 0.7)])
+					_obstacle(pp, 46.0)
+				else:
+					# Palm in a planter.
+					_op(pp, ["circle", pp, 18.0, Color("2a3a44")])
+					for q in 5:
+						var fr: Vector2 = Vector2.from_angle(q * TAU / 5.0 + rng.randf()) * 34.0
+						_op(pp, ["line", PackedVector2Array([pp, pp + fr]), Color("3a8a5a"), 6.0])
+					_obstacle(pp, 18.0)
+		"queue":
+			# Switchback stanchion lines.
+			var qc: Vector2 = GameData.region_anchor(r)
+			for row in 5:
+				var y: float = -200.0 + row * 90.0
+				var x0: float = -320.0
+				var x1: float = 320.0
+				_op(qc, ["line", PackedVector2Array([qc + Vector2(x0, y), qc + Vector2(x1, y)]), Color(acc, 0.45), 3.0])
+				for k in 9:
+					var sp: Vector2 = qc + Vector2(x0 + k * 80.0, y)
+					if _clear_of_discoveries(sp, 120.0):
+						_op(sp, ["circle", sp, 6.0, Color("c8ccd6")])
+		"backstage":
+			# Crates, cable runs and work lights.
+			for k in int(9 * density + 3):
+				var bp: Vector2 = _scatter_point(r)
+				if bp.x == INF or not _clear_of_discoveries(bp, 170.0):
+					continue
+				if k % 3 == 0:
+					_op(bp, ["circle", bp, 14.0, Color("2a2e36")])
+					_op(bp, ["circle", bp, 8.0, Color(acc, 0.8)])
+					_op(bp, ["arc", bp, 60.0, -0.6, 0.6, Color(acc, 0.15), 30.0])
+				else:
+					_op(bp, ["poly", PackedVector2Array([bp, bp + Vector2(50, 0), bp + Vector2(50, 40), bp + Vector2(0, 40)]), Color("34404c")])
+					_op(bp, ["line", PackedVector2Array([bp, bp + Vector2(50, 40)]), Color("4a5664"), 2.0])
+					_obstacle(bp + Vector2(25, 20), 26.0)
+				var cable: Vector2 = bp + Vector2(rng.randf_range(-120, 120), rng.randf_range(-120, 120))
+				_op(bp, ["line", PackedVector2Array([bp, (bp + cable) * 0.5 + Vector2(20, 20), cable]), Color("1a1e24"), 3.0])
+		"suite":
+			# Lounge sofas around low tables.
+			var sc: Vector2 = GameData.region_anchor(r)
+			_op(sc, ["circle", sc, float(r["radius"]) * 0.7, Color("142a44", 0.8)])
+			for k in 5:
+				var lp: Vector2 = sc + Vector2.from_angle(k * TAU / 5.0) * float(r["radius"]) * 0.45
+				if not _clear_of_discoveries(lp, 150.0):
+					continue
+				_op(lp, ["circle", lp, 24.0, Color("3a4a6a")])
+				for q in 2:
+					var so: Vector2 = lp + Vector2.from_angle(q * PI + k) * 46.0
+					_op(so, ["poly", PackedVector2Array([so + Vector2(-30, -12), so + Vector2(30, -12), so + Vector2(30, 12), so + Vector2(-30, 12)]), Color("bcd4ff", 0.5)])
+				_obstacle(lp, 30.0)
+
 ## Stardust Station interiors: deck plating with the room's furniture.
 func _station_region(kind: String, r: Dictionary, acc: Color, density: float) -> void:
 	var c: Vector2 = GameData.region_anchor(r)
@@ -586,6 +665,15 @@ func _drift_prop(p: Vector2, r: float, solid: bool) -> void:
 			else:
 				# Pilings / drifting debris.
 				_rock(p, r * 0.7, Color("22303a"), solid)
+		"park":
+			if rng.randf() < 0.5:
+				# A bench or a bin on the promenade.
+				_op(p, ["poly", PackedVector2Array([p + Vector2(-r * 0.6, -6), p + Vector2(r * 0.6, -6), p + Vector2(r * 0.6, 6), p + Vector2(-r * 0.6, 6)]), Color("3a5a6a")])
+			else:
+				_op(p, ["circle", p, r * 0.35, Color("2a4a5a")])
+				_op(p, ["circle", p, r * 0.18, Color("4fd8ff", 0.4)])
+				if solid:
+					_obstacle(p, r * 0.35)
 		"orbit":
 			if rng.randf() < 0.3:
 				# A loose solar panel or hull plate.

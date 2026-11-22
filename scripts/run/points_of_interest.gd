@@ -576,6 +576,38 @@ func _draw_landmark(kind: String, pos: Vector2, c: Color) -> void:
 			for k2 in 4:
 				var wy2: float = 40.0 + k2 * 14.0 + 3.0 * sin(anim * 1.5 + k2)
 				draw_line(gc + Vector2(-30, wy2), gc + Vector2(220, wy2), Color(c, 0.25), 2.0)
+		"azure_fountain":
+			# The Azure Reach fountain and its wave logo.
+			var fc2: Vector2 = pos + Vector2(-270, 0)
+			draw_circle(fc2, 90.0, Color("0e3a5a"))
+			draw_arc(fc2, 90.0, 0.0, TAU, 48, Color(c, 0.8), 5.0)
+			for k in 8:
+				var a5: float = TAU * k / 8.0 + anim * 0.4
+				draw_line(fc2, fc2 + Vector2.from_angle(a5) * (40.0 + 8.0 * sin(anim * 3.0 + k)), Color("bfefff", 0.6), 3.0)
+			draw_circle(fc2, 20.0, Color("bfefff", 0.8))
+			draw_arc(fc2 + Vector2(0, -150), 30.0, PI * 0.2, PI * 1.6, 20, c, 6.0)
+			draw_arc(fc2 + Vector2(6, -146), 16.0, PI * 0.4, PI * 1.5, 14, c, 4.0)
+		"turtle_banner":
+			# A big screen: SEA TURTLE THURSDAYS, a turtle swimming across it.
+			var tb2: Vector2 = pos + Vector2(-320, -130)
+			draw_rect(Rect2(tb2, Vector2(220, 130)), Color("0a3050"))
+			draw_rect(Rect2(tb2, Vector2(220, 130)), Color(c, 0.8), false, 3.0)
+			draw_string(font, tb2 + Vector2(14, 26), "SEA TURTLE", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color.WHITE)
+			draw_string(font, tb2 + Vector2(14, 46), "THURSDAYS", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color.WHITE)
+			var tt: Vector2 = tb2 + Vector2(110 + 40.0 * sin(anim * 0.6), 90)
+			draw_circle(tt, 20.0, Color("5a8a5a"))
+			draw_circle(tt + Vector2(24, -4), 8.0, Color("7aa07a"))
+			for q in 4:
+				draw_circle(tt + Vector2(-14 + (q % 2) * 28, -14 + int(q / 2) * 28), 6.0, Color("7aa07a"))
+		"ring_lights":
+			# Ring lights around a sponsor backdrop.
+			var rl: Vector2 = pos + Vector2(-280, -60)
+			draw_rect(Rect2(rl + Vector2(40, -20), Vector2(140, 100)), Color("1a3050"))
+			draw_arc(rl + Vector2(110, 30), 30.0, 0.0, TAU, 24, Color("4fd8ff", 0.5), 4.0)
+			for k in 2:
+				var lc: Vector2 = rl + Vector2(k * 220.0, 20)
+				draw_arc(lc, 26.0, 0.0, TAU, 24, Color("fff6e0", 0.7 + 0.3 * sin(anim * 4.0 + k)), 6.0)
+				draw_line(lc + Vector2(0, 26), lc + Vector2(0, 110), Color("6a6a70"), 3.0)
 		"bullpen":
 			# A cluster of desks under a TEAMWORK sign.
 			var bp: Vector2 = pos + Vector2(-300, -90)

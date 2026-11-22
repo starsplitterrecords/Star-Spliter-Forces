@@ -1685,6 +1685,134 @@
           "sha256": "ce9b94579b3e7c4a92c8bced5332462bdc479e8c9bc45966fdb64b4a179b4247"
         }
       ]
+    },
+    {
+      "id": "portrait_maya_serrano",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/azure-reach-issue-01-cover.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Azure Reach Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "47b4e564c8b5635bc60c629a85af9f446b81bf02f6c878d9860f74bcb799f444",
+      "review_required": false,
+      "source_size": [
+        1200,
+        1600
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/maya_serrano_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "ea73571a1aa183dadce818ca0975bf99d52300853f63f73a915bc49db9e200f4"
+        },
+        {
+          "out": "assets/characters/maya_serrano_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "9a6ff5d0eab1b5690363d19871b2568a9f2139f599450f9507adc7c891fe07ab"
+        }
+      ]
+    },
+    {
+      "id": "portrait_beatrice_halstead",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/azure-reach-issue-01-cover.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Azure Reach Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "47b4e564c8b5635bc60c629a85af9f446b81bf02f6c878d9860f74bcb799f444",
+      "review_required": false,
+      "source_size": [
+        1200,
+        1600
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/beatrice_halstead_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "ce892158e629544c7426504c7a77ca05541da37e2eb23affa450d3bc5952f43e"
+        },
+        {
+          "out": "assets/characters/beatrice_halstead_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "f895969d48173cb7bf29546f65b8086a1a20ae336c3342047b471d339382949d"
+        }
+      ]
+    },
+    {
+      "id": "portrait_kyler_chen",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/azure-reach-issue-01-cover.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Azure Reach Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "47b4e564c8b5635bc60c629a85af9f446b81bf02f6c878d9860f74bcb799f444",
+      "review_required": false,
+      "source_size": [
+        1200,
+        1600
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/kyler_chen_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "283fe6c4da67c25691c708b23206f08d2b51d7de3ca3797c0c7e2e9b6daf114c"
+        },
+        {
+          "out": "assets/characters/kyler_chen_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "675668d2e17c86612923cace9de82c3fea7ee0423a16916f047aeb2d9e96623d"
+        }
+      ]
+    },
+    {
+      "id": "portrait_pip_omally",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/azure-reach/issue-01/page-006.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Azure Reach Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "314584e1fc919832b8940d75b46f26ab63c9fcaf11786fb97fe2fdfd2c99259c",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1536
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/pip_omally_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "767176bebcc4bd5fb09d8fa334ff33506baaa8c69fd3fd1a4eb325d974f6e772"
+        },
+        {
+          "out": "assets/characters/pip_omally_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "3618d4bb8d8fdb1ff4ac01c6b0754d81eb44f353e0a220a650109648a19f91eb"
+        }
+      ]
     }
   ]
 }

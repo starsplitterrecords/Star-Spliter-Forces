@@ -80,7 +80,10 @@ Versioned atomic saves with backup recovery and prototype migration.
 8 stages + 3 sides, contacts Gunnar and Carrie. Bot clears stage 1, the pier hold and
 the sea boss (`test_sea_branch`, `tools/CaptureSea.tscn`). Dryline (desert; Backyard
 Rockets + Sunforge Outlaw): 9 regions, 5 new landmarks, 9 stages + 2 sides, contacts
-Arvin and Milo; bot clears the lakebed, ridge hold, forge and boss (Ella).
+Arvin and Milo; bot clears the lakebed, ridge hold, forge and boss (Ella). Stardust Orbit (7 stages + 2
+sides, 8 crew contacts) and Azure Reach (8 stages + 2 sides, 4 contacts; opened by a new
+Chapter I side signal) also built; bot clears their first stage, hold and boss. Playtest
+mode in Settings (D-57).
 
 ## Measured
 

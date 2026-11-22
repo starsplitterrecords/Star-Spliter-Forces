@@ -1199,6 +1199,12 @@ func test_sea_branch() -> void:
 		if int(st3.get("chapter", 1)) == 12:
 			for did3: String in st3.get("discoveries", []):
 				check(GameData.discovery_in_destination(did3, "stardust_orbit"), "%s not in Stardust Orbit" % did3)
+	# Park: opens from Sea Turtle Thursdays, a Chapter I side signal.
+	check(GameData.chart_prev_main("az_entrance") == "s_azure", "Park branch should open from s_azure")
+	for st4: Dictionary in GameData.CHART:
+		if int(st4.get("chapter", 1)) == 13:
+			for did4: String in st4.get("discoveries", []):
+				check(GameData.discovery_in_destination(did4, "azure_reach"), "%s not in Azure Reach" % did4)
 	# A stage track counts as heard for roaming.
 	var before: int = GameData.unheard_roaming({}).size()
 	check(GameData.unheard_roaming({"des_launch_signal": {}}).size() == before - 1, "stage track still roaming")

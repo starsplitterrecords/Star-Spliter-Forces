@@ -1981,6 +1981,182 @@
           ]
         }
       ]
+    },
+    {
+      "id": "portrait_maya_serrano",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/azure-reach-issue-01-cover.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Azure Reach Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/maya_serrano_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.37,
+            0.3,
+            0.67,
+            0.525
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/maya_serrano_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.37,
+            0.3,
+            0.67,
+            0.525
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_beatrice_halstead",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/azure-reach-issue-01-cover.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Azure Reach Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/beatrice_halstead_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.7,
+            0.465,
+            0.825,
+            0.559
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/beatrice_halstead_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.7,
+            0.465,
+            0.825,
+            0.559
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_kyler_chen",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/azure-reach-issue-01-cover.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Azure Reach Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/kyler_chen_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.228,
+            0.47,
+            0.353,
+            0.564
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/kyler_chen_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.228,
+            0.47,
+            0.353,
+            0.564
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_pip_omally",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/pages/azure-reach/issue-01/page-006.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Azure Reach Issue 01 art (owner direction 2026-11-20: Visions art is canonical)",
+      "outputs": [
+        {
+          "out": "assets/characters/pip_omally_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.4,
+            0.0586,
+            0.596,
+            0.189
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/pip_omally_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.4,
+            0.0586,
+            0.596,
+            0.189
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
     }
   ]
 }
