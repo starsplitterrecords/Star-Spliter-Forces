@@ -13,6 +13,7 @@ var last_commit: Dictionary = {}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(TouchScroll.new())
 	ui_layer = CanvasLayer.new()
 	ui_layer.layer = 5
 	add_child(ui_layer)
@@ -234,11 +235,7 @@ func show_title() -> void:
 	var discovered: int = Profile.discovered_count()
 	var total: int = GameData.DISCOVERIES.size()
 	info.add_child(UiTheme.label("CORRIDOR: %d / %d BEACONS RELIT   •   ARCHIVE %d / %d" % [Profile.stops_done_count(), GameData.CHART.size(), discovered, total], 15, UiTheme.GOLD, "bold"))
-	info.add_child(UiTheme.label("Expeditions %d   •   Completed %d   •   Extracted %d   •   Signal %d" % [int(s["expeditions"]), int(s["completions"]), int(s["extractions"]), int(Profile.data["currency"])], 15, UiTheme.DIM))
-	var forces: Array = []
-	for f: String in Profile.data["forces_attuned"]:
-		forces.append(String(GameData.FORCES[f]["name"]))
-	info.add_child(UiTheme.label("Forces attuned: " + ", ".join(forces), 15, UiTheme.DIM))
+	info.add_child(UiTheme.label("Signal %d" % int(Profile.data["currency"]), 15, UiTheme.DIM))
 	var next: String = _next_goal_text()
 	if next != "":
 		info.add_child(UiTheme.label(next, 16, Color("bfe9ff")))
@@ -249,7 +246,7 @@ func _next_goal_text() -> String:
 	var nxt: String = Profile.next_stop()
 	if nxt != "":
 		var st: Dictionary = GameData.chart_stop(nxt)
-		return "NEXT — Stage %d, %s: %s. Reward: %s." % [GameData.chart_number(nxt), String(st["name"]), GameData.chart_objective_text(st), String(st["reward"][0])]
+		return "NEXT: %s — %s" % [String(st["name"]), String(st["reward"][0])]
 	if int(Profile.data["stats"]["expeditions"]) == 0:
 		return "Your first expedition: follow the columns of light, tune three signals, and come home."
 	var unseen_signals: int = 0
@@ -339,7 +336,6 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 			col.add_child(UiTheme.label(String(st["brief"]), 13, UiTheme.TEXT))
 		col.add_child(UiTheme.label("OBJECTIVE: " + GameData.chart_objective_text(st), 15, Color("a8f7ff"), "bold"))
 		col.add_child(UiTheme.label(("EARNED: " if done else "REWARD: ") + "  •  ".join(st["reward"]), 15, UiTheme.GOLD, "bold"))
-		col.add_child(UiTheme.label("NEW HERE — %s: %s" % [String(st["new_title"]), String(st["new"])], 12, Color("bfe9ff")))
 	var side: BoxContainer = BoxContainer.new()
 	side.vertical = true
 	side.add_theme_constant_override("separation", 8)
@@ -549,7 +545,7 @@ func show_results() -> void:
 		var sn: int = GameData.chart_number(String(stop["id"]))
 		var label: String = ("STAGE %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
 		title = ("BEACON RELIT — " if stop_won else "STILL DARK — ") + label
-		sub = "The corridor reaches one beacon further." if stop_won else "Objective not met: %s. Nothing is lost; try again with what you learned." % GameData.chart_objective_text(stop)
+		sub = "" if stop_won else "Not done: %s. Nothing is lost." % GameData.chart_objective_text(stop)
 	if stop.is_empty():
 		_heading(v, title, sub)
 	else:
@@ -673,7 +669,7 @@ func show_archive() -> void:
 	tabs.add_child(_archive_log())
 	tabs.add_child(_archive_visions())
 	var fg: Array = _scroll("Field Guide")
-	FieldGuide.fill(fg[1], 1080.0)
+	FieldGuide.fill(fg[1], minf(1080.0, _content_width() - 40.0))
 	tabs.add_child(fg[0])
 	_back_row(v, func() -> void:
 		Audio.stop_catalog()

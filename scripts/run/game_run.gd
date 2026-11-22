@@ -138,7 +138,7 @@ func _build() -> void:
 	world = ExpeditionWorld.new()
 	add_child(world)
 	if not mission.is_empty():
-		world.gate_override = GameData.chart_start(mission)
+		world.gate_override = GameData.chart_start_random(mission, rng, GameData.DESTINATIONS[destination_id]["half_size"])
 	world.build(destination_id)
 	pois = PointsOfInterest.new()
 	pois.run = self
@@ -215,7 +215,7 @@ func _apply_start_bonuses() -> void:
 	player.hp = player.max_hp
 	if character_id == "jex_marrin":
 		player.damage_taken_mult = 1.15
-	rerolls = Profile.workshop_rank("reroll")
+	rerolls = Profile.workshop_rank("reroll") + 2 * Profile.workshop_rank("insight")
 	ability_charges = 2 if character_id == "naomi_sol" and mastery_level >= 1 else 1
 	if Profile.data["discovered"].has("art_beacon_core"):
 		resonance = 65.0
@@ -290,7 +290,7 @@ func _spawn_echo() -> void:
 
 func _queue_onboarding() -> void:
 	if not Profile.seen("hint_move"):
-		hint_queue.append(["hint_move", "Drag anywhere to fly (or WASD / stick). Weapons fire on their own. The round button is your explorer's ability."])
+		hint_queue.append(["hint_move", "Drag anywhere to fly. Guns fire on their own."])
 	if not Profile.seen("hint_signal") and mission.is_empty():
 		hint_queue.append(["hint_signal", "Columns of light are SIGNALS. Fly into the ring and hold still to tune them in."])
 	if not Profile.seen("hint_extract") and mission.is_empty():
@@ -919,7 +919,7 @@ func gain_xp(value: int) -> void:
 			if is_stop_target(String(p.id)) and String(p.hidden) == "":
 				p.known = true
 		if hud:
-			hud.banner("SIGNAL LOCATED", GameData.chart_objective_text(mission) + " — follow the gold arrow.", Color("ffd75e"), 3.0)
+			hud.banner("SIGNAL LOCATED", "Follow the gold arrow", Color("ffd75e"), 2.5)
 	add_resonance(0.06)
 	if character_id == "tessa_banks":
 		var every: int = 30 if mastery_level >= 1 else 40
@@ -939,7 +939,7 @@ func _open_level_up() -> void:
 		return
 	pending_levels -= 1
 	upgrades_offered += 1
-	var count: int = 4 if Profile.workshop_rank("insight") > 0 else 3
+	var count: int = 3 # always three (playtest: four was too many)
 	var options: Array = weapons.choices(count, attuned)
 	if options.is_empty():
 		player.heal(20.0)
@@ -959,7 +959,7 @@ func reroll_choices() -> Array:
 		hud.free_reroll_used = true
 	else:
 		rerolls -= 1
-	var count: int = 4 if Profile.workshop_rank("insight") > 0 else 3
+	var count: int = 3 # always three (playtest: four was too many)
 	return weapons.choices(count, attuned)
 
 func choose_upgrade(option: Dictionary) -> void:
@@ -1310,7 +1310,7 @@ func _claim_discovery(p: Dictionary) -> void:
 			var t: Dictionary = GameData.TRANSMISSIONS.get(String(d.get("transmission", "")), {})
 			if not t.is_empty():
 				heading = "%s — %s" % [String(t["project"]).to_upper(), String(t["title"])]
-				gains.append("TRACK FILED: \"%s\" — listen in the Archive after you return." % String(t["title"]))
+				gains.append("Track: %s" % String(t["title"]))
 			att = _attune(String(d.get("force", "")))
 			if mission.is_empty():
 				var left: int = goal_signals() - signals_found()
@@ -1318,33 +1318,32 @@ func _claim_discovery(p: Dictionary) -> void:
 		"character":
 			var cid: String = String(d.get("unlock_character", ""))
 			if cid != "" and not Profile.has_character(cid):
-				gains.append("NEW EXPLORER: %s — playable from your next expedition." % GameData.CHARACTERS[cid]["name"])
-			if d.has("crossover"):
-				gains.append("ARCHIVE: %s opens in Star Splitter Visions." % String(GameData.VISIONS_SERIES[String(d["crossover"])]["title"]))
-			gains.append("FREE UPGRADE: pick one now.")
+				gains.append("Explorer: %s (next expedition)" % GameData.CHARACTERS[cid]["name"])
+			gains.append("Free upgrade")
 			pending_levels += 1
 		"artifact":
 			att = _attune(String(d.get("force", "")))
 			var cid2: String = String(d.get("unlock_character", ""))
 			if cid2 != "" and not Profile.has_character(cid2):
-				gains.append("NEW EXPLORER: %s — playable from your next expedition." % GameData.CHARACTERS[cid2]["name"])
+				gains.append("Explorer: %s (next expedition)" % GameData.CHARACTERS[cid2]["name"])
 			if String(d.get("perk", "")) != "":
-				gains.append("PERMANENT PERK: applies to every future expedition.")
-			gains.append("FREE UPGRADE: pick one now.")
+				gains.append("Permanent perk")
+			gains.append("Free upgrade")
 			pending_levels += 1
 		"anomaly":
 			match String(d.get("effect", "")):
 				"memory_well":
 					pending_levels += 1
-					gains.append("FREE UPGRADE: the well offers a choice.")
+					gains.append("Free upgrade")
 				"mirrorfold":
-					gains.append("SHORTCUT: fly into either fold to jump across the Reach.")
+					gains.append("Shortcut: fly into either fold")
 		"fragment":
-			gains.append("MYSTERY: log added to the Archive (%d found this run)." % discoveries.filter(func(x: String) -> bool: return String(GameData.DISCOVERIES[x]["kind"]) == "fragment").size())
+			gains.append("Log added to the Archive")
 	if att != "":
 		gains.push_front(att.strip_edges())
 	if hud:
-		hud.discovery_card(heading, detail, p.color, first_time, GameData.poi_category(String(p.kind), d), gains)
+		# Flavour text lives in the Archive; the card says what you got.
+		hud.discovery_card(heading, "" if not gains.is_empty() else detail, p.color, first_time, GameData.poi_category(String(p.kind), d), gains)
 	_update_music(false)
 
 ## Broadcasting a signal draws attention: a raider pack homes in while you tune.
@@ -1367,7 +1366,7 @@ func _step_stage(delta: float) -> void:
 	if not was:
 		stage_clock = 0.0
 		if hud:
-			hud.toast("ON STAGE — weapons hold fire. Let the crowd gather.")
+			hud.toast("ON STAGE — guns hold fire")
 	stage_clock -= delta
 	if stage_clock <= 0.0:
 		stage_clock = 3.5
@@ -1414,8 +1413,8 @@ func _attune(force_id: String) -> String:
 		var primary: String = String(GameData.FORCES[force_id]["primary"])
 		if not weapons.has_base(primary):
 			weapons.add_weapon(primary)
-			return "FORCE ATTUNED: %s — new weapon %s joins your ship now." % [GameData.FORCES[force_id]["name"], GameData.weapon_name(primary)]
-	return "FORCE ATTUNED: %s — its weapons now appear when you level up." % GameData.FORCES[force_id]["name"]
+			return "Force: %s (+%s)" % [GameData.FORCES[force_id]["name"], GameData.weapon_name(primary)]
+	return "Force: %s" % GameData.FORCES[force_id]["name"]
 
 func on_mirrorfold(from: Dictionary, to: Dictionary) -> void:
 	var dest: Vector2 = Vector2(to.pos) + Vector2(0, 70)
@@ -1475,41 +1474,33 @@ func complete_stop() -> void:
 	Audio.stinger("victory", -2.0)
 	fx.ring(player.position, 30.0, 520.0, Color("68ecff"), 1.2, 10.0)
 	if hud:
-		hud.banner("BEACON RELIT", "%s — stage complete. Fly back to the home beacon when you are ready." % String(mission["name"]), Color("68ecff"), 4.0)
+		hud.banner("BEACON RELIT", String(mission["name"]), Color("68ecff"), 3.0)
 
-## Short text for the HUD objective line.
+## Short text for the HUD objective line (playtest: fewer words).
 func objective_text() -> String:
 	if mission.is_empty():
 		return ""
 	if stop_complete:
-		return "✓ STAGE COMPLETE   Fly to the HOME BEACON to go home (or keep collecting)"
+		return "✓ Stage complete  •  home beacon when ready"
 	var o: Dictionary = mission["objective"]
-	var base: String = GameData.chart_objective_text(mission).to_upper()
+	var base: String = GameData.chart_objective_text(mission)
 	match String(o["type"]):
 		"survive":
-			return "%s   %s left" % [base, GameData.format_time(maxf(0.0, float(o["seconds"]) - elapsed))]
+			return "%s  •  %s" % [base, GameData.format_time(maxf(0.0, float(o["seconds"]) - elapsed))]
 		"elite":
-			return base if dreadnought_spawned else "%s   It arrives in %s. Collect shards and level up." % [base, GameData.format_time(maxf(0.0, float(o.get("at", 60.0)) - elapsed))]
+			return base if dreadnought_spawned else "%s  •  arrives %s" % [base, GameData.format_time(maxf(0.0, float(o.get("at", 60.0)) - elapsed))]
 		"boss":
-			if boss_spawned:
-				return base
-			return "%s   It arrives in %s, or call it at the HOME BEACON" % [base, GameData.format_time(maxf(0.0, float(o.get("at", 300.0)) - elapsed))]
+			return base if boss_spawned else "%s  •  arrives %s" % [base, GameData.format_time(maxf(0.0, float(o.get("at", 300.0)) - elapsed))]
 		"discover":
 			var d: Dictionary = GameData.DISCOVERIES[String(o["id"])]
-			var total: int = int(mission.get("power", 0))
 			if power_needed() > 0:
-				return "SEARCH %s  •  CHARGE TUNER %d / %d shards (clear raiders)" % [String(mission["place"]).to_upper(), motes_collected, total]
-			var hint: String = ""
+				return "Explore  •  tuner %d / %d" % [motes_collected, int(mission.get("power", 0))]
 			var hidden: String = String(d.get("hidden", ""))
 			if hidden == "FRACTURE" and force_state != "FRACTURE":
-				hint = "   Hidden until you are in FRACTURE: fly through a Phase Rift"
-			elif hidden == "RESONANCE" and force_state != "RESONANCE":
-				hint = "   Hidden until you are in RESONANCE: use a Resonator"
-			elif hidden == "SCAN":
-				hint = "   Hidden: sweep the search area"
-			elif String(d.get("lock", "")) != "":
-				hint = "   " + String(GameData.LOCKS[String(d["lock"])]).split(".")[0]
-			return base + hint
+				return base + "  •  only in Fracture"
+			if hidden == "RESONANCE" and force_state != "RESONANCE":
+				return base + "  •  only in Resonance"
+			return base
 	return base
 
 ## Where the compass should point for the stop: [pos, label, color] or [].
@@ -1523,13 +1514,19 @@ func objective_target() -> Array:
 		for p: Dictionary in pois.items:
 			if String(p.id) == String(o["id"]) and not bool(p.claimed):
 				if power_needed() > 0 and not bool(p.known):
-					# Until the tuner is charged you only know roughly where.
+					# Explore first: no pointer at all for the first two
+					# minutes, then only the rough area until the tuner is
+					# charged (playtest: pointers came too early).
+					if elapsed < SEARCH_HINT_AFTER:
+						return []
 					return [search_area(), "SEARCH: " + String(mission["place"]).to_upper(), Color("ffd75e", 0.8)]
 				var visible: bool = String(p.hidden) in ["", force_state] or bool(p.known)
 				return [p.pos, String(p.title) if visible else "SEARCH AREA", Color("ffd75e")]
 	return []
 
 ## Centre of the stop's search area (its region, or near an open-drift site).
+const SEARCH_HINT_AFTER: float = 120.0
+
 func search_area() -> Vector2:
 	if mission.has("region"):
 		return GameData.region_anchor(GameData.REGIONS[String(mission["region"])])

@@ -40,6 +40,9 @@ var gate_info: Label
 var extract_button: Button
 var confront_button: Button
 var _gate_state: String = ""
+const CARD_PAD: float = 12.0
+const CARD_W: float = 312.0
+const CARD_H: float = 134.0
 var ability_button: Button
 var pause_button: Button
 var pause_panel: Control
@@ -91,26 +94,34 @@ func _layout() -> void:
 	if gate_panel == null or ability_button == null:
 		return
 	var narrow: bool = UiTheme.is_narrow()
-	hull_label.position = safe.position + Vector2(0, 26)
-	level_label.position = safe.position + Vector2(0, 52)
-	state_label.position = safe.position + Vector2(0, 84)
+	# Status card (top left): name + hull, level + XP, state + Resonance.
+	var card_o: Vector2 = safe.position + Vector2(CARD_PAD, CARD_PAD)
+	hull_label.position = card_o + Vector2(0, -2)
+	level_label.position = card_o + Vector2(0, 44)
+	state_label.position = card_o + Vector2(0, 80)
+	var below_card: float = safe.position.y + CARD_H + 10.0
 	if narrow:
-		# Portrait: one column on the left, minimap tucked under the pause button.
-		top_label.position = safe.position + Vector2(0, 126)
-		objective_label.position = safe.position + Vector2(0, 186)
-		objective_label.size.x = safe.size.x - 8.0
+		# Portrait: minimap under the pause button, time + region beneath it.
+		top_label.position = Vector2(safe.end.x - top_label.size.x, safe.position.y + 172)
+		objective_label.position = Vector2(safe.position.x + 14.0, maxf(below_card + 34.0, safe.position.y + 216.0))
+		objective_label.size.x = safe.size.x - 28.0
 	else:
-		top_label.position = Vector2(safe.position.x + safe.size.x * 0.5 - 220, safe.position.y + 14)
-		objective_label.position = safe.position + Vector2(0, 132)
-		objective_label.size.x = 520.0
+		top_label.position = Vector2(safe.position.x + safe.size.x * 0.5 - top_label.size.x * 0.5, safe.position.y + 6)
+		objective_label.position = Vector2(safe.position.x + 14.0, below_card + 8.0)
+		objective_label.size.x = 470.0
+	objective_label.size.y = 0.0
 	banner_title.position = Vector2(safe.position.x, safe.position.y + safe.size.y * 0.2)
 	banner_title.size.x = safe.size.x
 	banner_sub.position = banner_title.position + Vector2(0, UiTheme.fs(44))
 	banner_sub.size.x = safe.size.x
 	toast_label.position = Vector2(safe.position.x, get_viewport().get_visible_rect().size.y * 0.5 - 118.0)
 	toast_label.size.x = safe.size.x
-	hint_label.position = Vector2(safe.position.x + safe.size.x * 0.2, safe.end.y - 70)
-	hint_label.size.x = safe.size.x * 0.6
+	if UiTheme.is_narrow():
+		hint_label.position = Vector2(safe.position.x, safe.end.y - 250)
+		hint_label.size.x = safe.size.x
+	else:
+		hint_label.position = Vector2(safe.position.x + safe.size.x * 0.2, safe.end.y - 70)
+		hint_label.size.x = safe.size.x * 0.6
 	var ab_x: float = safe.position.x + 22 if steers_right() else safe.end.x - 150
 	ability_button.position = Vector2(ab_x, safe.end.y - 150)
 	pause_button.position = Vector2(safe.end.x - 64, safe.position.y)
@@ -124,15 +135,15 @@ func _layout() -> void:
 func _build_labels() -> void:
 	hull_label = UiTheme.label("", 17, UiTheme.TEXT, "bold")
 	root.add_child(hull_label)
-	top_label = UiTheme.label("", 16, UiTheme.DIM)
-	top_label.size = Vector2(440, 30)
+	top_label = UiTheme.label("", 15, UiTheme.TEXT)
+	top_label.size = Vector2(300, 28)
 	top_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(top_label)
-	level_label = UiTheme.label("", 15, UiTheme.DIM)
+	level_label = UiTheme.label("", 13, UiTheme.DIM)
 	root.add_child(level_label)
-	state_label = UiTheme.label("", 16, UiTheme.TEXT, "bold")
+	state_label = UiTheme.label("", 13, UiTheme.TEXT, "bold")
 	root.add_child(state_label)
-	objective_label = UiTheme.label("", 15, Color("a8f7ff"))
+	objective_label = UiTheme.label("", 15, Color("dff8ff"), "bold")
 	objective_label.size = Vector2(520, 60)
 	root.add_child(objective_label)
 	banner_title = UiTheme.label("", 38, Color.WHITE, "display")
@@ -201,7 +212,7 @@ func _build_gate_panel() -> void:
 	gate_info.custom_minimum_size = Vector2(minf(448.0, safe.size.x - 60.0), 0)
 	v.add_child(gate_info)
 	var gbw: float = minf(448.0, safe.size.x - 60.0)
-	extract_button = UiTheme.button("GO HOME — KEEP EVERYTHING  [Q]", func() -> void: run.request_extract(), gbw, 54.0)
+	extract_button = UiTheme.button("GO HOME  [Q]", func() -> void: run.request_extract(), gbw, 54.0)
 	extract_button.add_theme_color_override("font_color", Color("a8f7ff"))
 	v.add_child(extract_button)
 	confront_button = UiTheme.button("FACE THE SILENCE  [E]", func() -> void: run.confront(), gbw, 54.0)
@@ -273,10 +284,10 @@ func _update_hint(delta: float) -> void:
 func _update_labels() -> void:
 	var p: ForcePlayer = run.player
 	var ch: Dictionary = GameData.CHARACTERS[run.character_id]
-	hull_label.text = "%s   %d / %d%s" % [String(ch["short"]), int(ceil(p.hp)), int(p.max_hp), ("   +%d SHIELD" % int(p.shield)) if p.shield > 1.0 else ""]
+	hull_label.text = "%s   %d%s" % [String(ch["short"]), int(ceil(p.hp)), ("  +%d" % int(p.shield)) if p.shield > 1.0 else ""]
 	var region_name: String = String(run.current_region_def()["name"])
-	top_label.text = "%s   •   %s" % [GameData.format_time(run.elapsed), region_name]
-	level_label.text = "LEVEL %d   •   %d CLEARED" % [run.level, run.kills]
+	top_label.text = "%s  •  %s" % [GameData.format_time(run.elapsed), region_name]
+	level_label.text = "LEVEL %d   •   %d cleared" % [run.level, run.kills]
 	var glyph: String = {"RESONANCE": "◆", "DRIFT": "◇", "FRACTURE": "✕"}.get(run.force_state, "")
 	state_label.text = "%s %s" % [glyph, run.force_state]
 	state_label.add_theme_color_override("font_color", _state_color())
@@ -285,13 +296,13 @@ func _update_labels() -> void:
 	if not run.mission.is_empty() and not (run.boss_spawned and not run.boss_defeated):
 		obj = run.objective_text()
 	elif run.boss_spawned and not run.boss_defeated:
-		obj = "Defeat THE SILENCE"
+		obj = "Defeat The Silence"
 	elif run.boss_defeated:
 		obj = "Signal restored — returning home"
 	elif run.climax_available():
-		obj = "SIGNALS %d/%d ✓   Fly to the %s: go home, or face The Silence" % [found, run.goal_signals(), run.gate_name()]
+		obj = "Signals %d/%d ✓  •  %s: home or The Silence" % [found, run.goal_signals(), run.gate_name()]
 	else:
-		obj = "SIGNALS %d/%d   Tune signals to call out The Silence • Go home at the %s any time" % [found, run.goal_signals(), run.gate_name()]
+		obj = "Signals %d/%d  •  then call out The Silence" % [found, run.goal_signals()]
 	objective_label.text = obj
 
 func _state_color() -> Color:
@@ -310,26 +321,26 @@ func _update_gate() -> void:
 	var found: int = run.discoveries.size()
 	var est: int = int(run.build_result("extracted")["currency"])
 	if run.extract_armed:
-		gate_label.text = "LEAVING THE REACH IN %.1fs" % maxf(0.0, GameRun.EXTRACT_TIME - run.extract_progress)
-		gate_info.text = "Fly out of the ring, or press again, to stay."
+		gate_label.text = "LEAVING IN %.1f" % maxf(0.0, GameRun.EXTRACT_TIME - run.extract_progress)
+		gate_info.text = "Leave the ring to stay."
 		extract_button.text = "STAY  [Q]"
 	else:
-		gate_label.text = run.gate_name().to_upper() + " — YOUR WAY HOME"
-		var lines: Array[String] = ["Go home now: keep all %d discoveries and about +%d Signal. The expedition ends safely." % [found, est]]
+		gate_label.text = run.gate_name().to_upper()
+		var lines: Array[String] = ["Go home: keep everything (+%d Signal)." % est]
 		if not run.mission.is_empty():
 			if run.stop_complete:
-				lines = ["Stage complete and saved. Go home now with about +%d Signal, or stay out and keep collecting." % est]
+				lines = ["Stage complete. Go home (+%d Signal) or keep collecting." % est]
 			elif run.is_boss_stop():
-				lines = ["Call The Silence now, or keep building your loadout: it arrives on its own. Going home now leaves this stage unfinished."]
+				lines = ["Call The Silence now, or build up first."]
 			else:
-				lines = ["This stage is NOT finished yet: %s. Going home now keeps your Signal but leaves the beacon dark." % GameData.chart_objective_text(run.mission)]
+				lines = ["Not done yet: %s." % GameData.chart_objective_text(run.mission)]
 		elif run.climax_available():
-			lines.append("Or face The Silence: beat it to complete the Reach — +120 Signal bonus and new explorers / routes.")
+			lines.append("Or face The Silence (+120 Signal).")
 		else:
 			var need: int = run.goal_signals() - run.signals_found()
-			lines.append("Tune %d more signal%s to call out The Silence and finish the expedition. Or keep exploring — the gate will be here." % [need, "" if need == 1 else "s"])
+			lines.append("%d more signal%s to call out The Silence." % [need, "" if need == 1 else "s"])
 		gate_info.text = "\n".join(lines)
-		extract_button.text = "GO HOME — KEEP EVERYTHING  [Q]"
+		extract_button.text = "GO HOME  [Q]"
 	confront_button.visible = run.climax_available() and not run.extract_armed
 	_layout()
 
@@ -376,10 +387,10 @@ func discovery_card(title: String, text: String, color: Color, first_time: bool,
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(v)
 	var tag: String = String(cdef.get("name", "DISCOVERY"))
-	v.add_child(UiTheme.label(tag + ("   •   NEW TO THE ARCHIVE" if first_time else ""), 13, cdef.get("color", color), "bold"))
+	v.add_child(UiTheme.label(tag + ("  •  NEW" if first_time else ""), 13, cdef.get("color", color), "bold"))
 	v.add_child(UiTheme.label(title, 22, Color.WHITE, "display"))
 	for g: Variant in gains:
-		var gl: Label = UiTheme.label("+ " + String(g), 15, UiTheme.GOLD, "bold")
+		var gl: Label = UiTheme.label("+ " + String(g), 16, UiTheme.GOLD, "bold")
 		gl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		v.add_child(gl)
 	if text != "":
@@ -553,7 +564,7 @@ func _build_level_panel() -> void:
 	center.alignment = BoxContainer.ALIGNMENT_CENTER
 	center.add_theme_constant_override("separation", 16)
 	level_panel.add_child(center)
-	var title: Label = UiTheme.label("LEVEL UP — CHOOSE WHAT TO CARRY FORWARD", 26, UiTheme.GOLD, "display")
+	var title: Label = UiTheme.label("LEVEL UP", 28, UiTheme.GOLD, "display")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.custom_minimum_size = Vector2(minf(1100.0, get_viewport().get_visible_rect().size.x - 32.0), 0)
 	center.add_child(title)
@@ -585,7 +596,7 @@ func show_level_up(options: Array) -> void:
 	level_panel.visible = true
 	await get_tree().process_frame
 	# Grow every card to fit its wrapped text, all to the same height.
-	var tallest: float = 236.0 if not level_box.vertical else 120.0
+	var tallest: float = 190.0 if not level_box.vertical else 100.0
 	for c: Node in level_box.get_children():
 		if c.get_child_count() > 0:
 			tallest = maxf(tallest, (c.get_child(0) as Control).get_combined_minimum_size().y + 34.0)
@@ -594,17 +605,18 @@ func show_level_up(options: Array) -> void:
 	if level_box.get_child_count() > 0:
 		(level_box.get_child(0) as Control).grab_focus()
 
+## A level-up choice. Kept short (playtest: "less words"): what kind of
+## thing it is, its name and level pips, and one line on what it does now.
 func _choice_card(option: Dictionary, index: int, width: float) -> Button:
 	var b: Button = Button.new()
-	b.custom_minimum_size = Vector2(width, 236)
+	var narrow: bool = UiTheme.is_narrow()
+	b.custom_minimum_size = Vector2(width, 120 if narrow else 190)
 	b.process_mode = Node.PROCESS_MODE_ALWAYS
 	var type: String = String(option["type"])
 	var id: String = String(option["id"])
 	var color: Color = UiTheme.ACCENT
 	var name: String = ""
-	var origin: String = ""
-	var desc: String = ""
-	var note: String = ""
+	var line: String = ""
 	var kind_tag: String = ""
 	var lvl: int = int(option["level"])
 	match type:
@@ -613,53 +625,55 @@ func _choice_card(option: Dictionary, index: int, width: float) -> Button:
 			var f: Dictionary = GameData.FORCES[String(w["force"])]
 			color = f["color"]
 			name = String(w["name"])
-			origin = "Force: " + String(f["name"]) + " (" + String(f["mechanic"]) + ")"
-			kind_tag = "NEW WEAPON" if lvl == 1 else "WEAPON UPGRADE"
-			desc = String(w["desc"])
-			note = "Adds a new gun to your ship." if lvl == 1 else "LEVEL %d: %s" % [lvl, String(w["notes"][lvl - 1])]
-			if lvl == 1 and run.weapons.force_level(String(w["force"])) == 0:
-				note += "\nAdds the %s mechanic: %s" % [String(f["mechanic"]), String(f["desc"])]
+			kind_tag = ("NEW WEAPON" if lvl == 1 else "UPGRADE") + "  •  " + String(f["name"])
+			line = String(w["desc"]) if lvl == 1 else String(w["notes"][lvl - 1])
 		"passive":
 			var pdef: Dictionary = GameData.PASSIVES[id]
 			color = Color("cfd9ff")
 			name = String(pdef["name"])
-			origin = "Boosts your whole ship"
 			kind_tag = "SHIP SYSTEM"
-			desc = String(pdef["desc"])
-			note = "RANK %d / %d" % [lvl, int(pdef["max"])]
+			line = String(pdef["desc"])
 			for wid: String in run.weapons.weapons.keys():
 				if not run.weapons.is_evolved(wid) and String(GameData.WEAPONS[wid].get("evolve_with", "")) == id:
-					note += "\nEvolves %s at level 5" % GameData.weapon_name(wid)
+					line += "  Evolves %s." % GameData.weapon_name(wid)
 		"evolution":
 			var ev: Dictionary = GameData.EVOLUTIONS[id]
 			color = UiTheme.GOLD
 			name = String(ev["name"])
-			origin = "Your weapon transforms"
 			kind_tag = "EVOLUTION"
-			desc = String(ev["desc"])
-			note = "Transforms " + GameData.weapon_name(String(ev["from"]))
-	b.add_theme_stylebox_override("normal", UiTheme.box(Color("0d1428", 0.96), Color(color, 0.7), 2, 14, 16))
-	b.add_theme_stylebox_override("hover", UiTheme.box(Color("15203d"), color, 3, 14, 16))
-	b.add_theme_stylebox_override("focus", UiTheme.box(Color("15203d", 0.0), UiTheme.GOLD, 3, 14, 16))
-	b.add_theme_stylebox_override("pressed", UiTheme.box(Color("1b2a50"), color, 3, 14, 16))
+			line = String(ev["desc"])
+	b.add_theme_stylebox_override("normal", UiTheme.box(Color("0d1428", 0.96), Color(color, 0.7), 2, 14, 14))
+	b.add_theme_stylebox_override("hover", UiTheme.box(Color("15203d"), color, 3, 14, 14))
+	b.add_theme_stylebox_override("focus", UiTheme.box(Color("15203d", 0.0), UiTheme.GOLD, 3, 14, 14))
+	b.add_theme_stylebox_override("pressed", UiTheme.box(Color("1b2a50"), color, 3, 14, 14))
 	var v: VBoxContainer = VBoxContainer.new()
-	v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 16)
-	v.add_theme_constant_override("separation", 8)
+	v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 14)
+	v.add_theme_constant_override("separation", 4)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(v)
-	var key: Label = UiTheme.label("[%d]  %s" % [index + 1, kind_tag], 14, color, "bold")
+	var text_w: float = width - 28.0
+	var key: Label = UiTheme.label("%d  %s" % [index + 1, kind_tag], 12, color, "bold")
+	key.custom_minimum_size.x = text_w
 	v.add_child(key)
-	v.add_child(UiTheme.label(origin, 11, UiTheme.DIM))
-	v.add_child(UiTheme.label(name, 23, Color.WHITE, "display"))
+	var head: HBoxContainer = HBoxContainer.new()
+	head.add_theme_constant_override("separation", 10)
+	v.add_child(head)
+	var nl: Label = UiTheme.label(name, 20, Color.WHITE, "display")
+	nl.autowrap_mode = TextServer.AUTOWRAP_OFF
+	head.add_child(nl)
 	if type == "weapon" or type == "passive":
 		var maxl: int = 5 if type == "weapon" else int(GameData.PASSIVES[id]["max"])
 		var pips: String = ""
 		for k in maxl:
 			pips += "●" if k < lvl else "○"
-		v.add_child(UiTheme.label(pips, 14, color))
-	v.add_child(UiTheme.label(desc, 15, UiTheme.TEXT))
-	v.add_child(UiTheme.label(note, 14, UiTheme.GOLD if type == "evolution" else Color("bfe9ff")))
-	for c: Node in v.get_children():
+		var pl: Label = UiTheme.label(pips, 13, color)
+		pl.autowrap_mode = TextServer.AUTOWRAP_OFF
+		pl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		head.add_child(pl)
+	var dl: Label = UiTheme.label(line, 14, UiTheme.TEXT)
+	dl.custom_minimum_size.x = text_w
+	v.add_child(dl)
+	for c: Node in v.find_children("*", "Control", true, false):
 		(c as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.pressed.connect(_pick.bind(option))
 	return b
@@ -911,32 +925,45 @@ class HudCanvas:
 			var a: float = hud.damage_flash
 			for k in 6:
 				draw_rect(Rect2(Vector2(k * 6, k * 6), vp - Vector2(k * 12, k * 12)), Color(1, 0.2, 0.3, a * 0.08), false, 12.0)
-		# Hull bar.
-		var hb: Rect2 = Rect2(safe.position, Vector2(300, 18))
-		var p: ForcePlayer = run.player
-		draw_rect(hb, Color("0b1120"))
-		var hp_ratio: float = p.hp / maxf(1.0, p.max_hp)
-		var hp_col: Color = Color("7dffb2") if hp_ratio > 0.5 else (Color("ffd36b") if hp_ratio > 0.25 else Color("ff5f7f"))
-		draw_rect(Rect2(hb.position, Vector2(hb.size.x * hp_ratio, hb.size.y)), hp_col)
-		if p.shield > 1.0:
-			draw_rect(Rect2(hb.position + Vector2(0, hb.size.y - 4), Vector2(hb.size.x * clampf(p.shield / maxf(1.0, p.max_shield), 0.0, 1.0), 4)), Color("bff6ff"))
-		draw_rect(hb, Color(1, 1, 1, 0.25), false, 1.0)
-		# XP bar across the top.
 		var narrow: bool = UiTheme.is_narrow()
-		var xb: Rect2 = Rect2(Vector2(safe.position.x + 320, safe.position.y + 4), Vector2(safe.size.x - 320 - 220 - 80, 8))
-		if narrow:
-			xb = Rect2(Vector2(safe.position.x, safe.position.y - 8), Vector2(safe.size.x - 70.0, 6))
-		draw_rect(xb, Color("0b1120"))
-		draw_rect(Rect2(xb.position, Vector2(xb.size.x * float(run.xp) / float(maxi(1, run.xp_need)), xb.size.y)), Color("ffe08a"))
-		# Resonance meter with zone markers.
-		var rb: Rect2 = Rect2(safe.position + Vector2(0, 112), Vector2(300, 10))
-		draw_rect(rb, Color("0b1120"))
-		draw_rect(Rect2(rb.position, Vector2(rb.size.x * 0.28, rb.size.y)), Color(1.0, 0.35, 0.5, 0.25))
-		draw_rect(Rect2(rb.position + Vector2(rb.size.x * 0.72, 0), Vector2(rb.size.x * 0.28, rb.size.y)), Color(0.5, 1.0, 0.8, 0.25))
+		var p: ForcePlayer = run.player
+		var accent: Color = GameData.CHARACTERS[run.character_id]["accent"]
+		# Status card.
+		var card: Rect2 = Rect2(safe.position, Vector2(hud.CARD_W, hud.CARD_H))
+		draw_style_box(_panel(Color(0.02, 0.04, 0.09, 0.72), Color(accent, 0.35), 12), card)
+		var inner: float = hud.CARD_W - hud.CARD_PAD * 2.0
+		var o: Vector2 = card.position + Vector2(hud.CARD_PAD, hud.CARD_PAD)
+		# Hull bar (rounded), shield as a pale strip on top.
+		var hb: Rect2 = Rect2(o + Vector2(0, 24), Vector2(inner, 12))
+		var hp_ratio: float = clampf(p.hp / maxf(1.0, p.max_hp), 0.0, 1.0)
+		var hp_col: Color = Color("7dffb2") if hp_ratio > 0.5 else (Color("ffd36b") if hp_ratio > 0.25 else Color("ff5f7f"))
+		_bar(hb, hp_ratio, hp_col)
+		if p.shield > 1.0:
+			_bar(Rect2(hb.position + Vector2(0, -5), Vector2(inner, 3)), clampf(p.shield / maxf(1.0, p.max_shield), 0.0, 1.0), Color("bff6ff"))
+		# XP under the level line.
+		_bar(Rect2(o + Vector2(0, 66), Vector2(inner, 5)), float(run.xp) / float(maxi(1, run.xp_need)), Color("ffe08a"))
+		# Resonance meter with its zones.
+		var rb: Rect2 = Rect2(o + Vector2(0, 104), Vector2(inner, 8))
+		draw_style_box(_panel(Color("0b1120"), Color(0, 0, 0, 0), 4), rb)
+		draw_rect(Rect2(rb.position, Vector2(rb.size.x * 0.28, rb.size.y)), Color(1.0, 0.35, 0.5, 0.3))
+		draw_rect(Rect2(rb.position + Vector2(rb.size.x * 0.72, 0), Vector2(rb.size.x * 0.28, rb.size.y)), Color(0.5, 1.0, 0.8, 0.3))
 		var rx: float = rb.position.x + rb.size.x * run.resonance / 100.0
-		draw_rect(Rect2(Vector2(rx - 3, rb.position.y - 4), Vector2(6, rb.size.y + 8)), Color.WHITE)
+		draw_rect(Rect2(Vector2(rx - 2, rb.position.y - 4), Vector2(4, rb.size.y + 8)), Color.WHITE)
+		# Time + region pill.
+		var tl: Label = hud.top_label
+		var tw0: float = font.get_string_size(tl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(15)).x + 28.0
+		var tc: Vector2 = tl.position + tl.size * 0.5
+		if narrow:
+			tc.x = tl.position.x + tl.size.x - tw0 * 0.5
+		draw_style_box(_panel(Color(0.02, 0.04, 0.09, 0.6), Color(1, 1, 1, 0.12), 14), Rect2(tc - Vector2(tw0 * 0.5, 15), Vector2(tw0, 30)))
+		# Objective pill with an accent edge.
+		var ol: Label = hud.objective_label
+		if ol.text != "":
+			var orect: Rect2 = Rect2(ol.position - Vector2(12, 8), Vector2(ol.size.x + 24, ol.size.y + 16))
+			draw_style_box(_panel(Color(0.02, 0.05, 0.1, 0.72), Color(0, 0, 0, 0), 10), orect)
+			draw_rect(Rect2(orect.position + Vector2(0, 6), Vector2(4, orect.size.y - 12)), Color("68ecff"))
 		# Force mechanic meters.
-		_draw_force_meters(run, safe.position + (Vector2(0, 156) if narrow else Vector2(320, 44)), font)
+		_draw_force_meters(run, (Vector2(safe.position.x + 4, safe.position.y + hud.CARD_H + 6) if narrow else Vector2(safe.position.x + hud.CARD_W + 16, safe.position.y + 40)), font)
 		# Minimap.
 		_draw_minimap(run, Rect2(Vector2(safe.end.x - 160, safe.position.y + 58), Vector2(160, 110)) if narrow else Rect2(Vector2(safe.end.x - 220 - 70, safe.position.y), Vector2(220, 150)))
 		# Compass markers at screen edge.
@@ -955,6 +982,19 @@ class HudCanvas:
 		if run.extract_progress > 0.0:
 			var sp: Vector2 = run.get_viewport().get_canvas_transform() * run.player.position
 			draw_arc(sp, 52.0, -PI / 2.0, -PI / 2.0 + TAU * run.extract_progress / GameRun.EXTRACT_TIME, 48, Color("68ecff"), 6.0)
+
+	func _panel(bg: Color, border: Color, radius: int) -> StyleBoxFlat:
+		var sb: StyleBoxFlat = StyleBoxFlat.new()
+		sb.bg_color = bg
+		sb.border_color = border
+		sb.set_border_width_all(1 if border.a > 0.0 else 0)
+		sb.set_corner_radius_all(radius)
+		return sb
+
+	func _bar(r: Rect2, ratio: float, col: Color) -> void:
+		draw_style_box(_panel(Color("0b1120"), Color(0, 0, 0, 0), int(r.size.y * 0.5)), r)
+		if ratio > 0.01:
+			draw_style_box(_panel(col, Color(0, 0, 0, 0), int(r.size.y * 0.5)), Rect2(r.position, Vector2(maxf(r.size.y, r.size.x * ratio), r.size.y)))
 
 	func _draw_force_meters(run: GameRun, origin: Vector2, font: Font) -> void:
 		var x: float = origin.x
@@ -993,7 +1033,7 @@ class HudCanvas:
 		var hs: Vector2 = world.half_size
 		var sc: float = minf(rect.size.x / (hs.x * 2.0), rect.size.y / (hs.y * 2.0))
 		var center: Vector2 = rect.get_center()
-		draw_rect(rect, Color(0.02, 0.03, 0.07, 0.75))
+		draw_style_box(_panel(Color(0.02, 0.03, 0.07, 0.8), Color(1, 1, 1, 0.18), 10), rect.grow(4.0))
 		var to_map: Callable = func(p: Vector2) -> Vector2: return center + p * sc
 		for rid: String in world.region_ids:
 			var r: Dictionary = GameData.REGIONS[rid]
@@ -1071,16 +1111,19 @@ class HudCanvas:
 				targets.append(goal)
 			elif run.climax_available() or run.elapsed > 900.0 or (run.player.hp < run.player.max_hp * 0.3):
 				targets.append([run.world.gate, "GATE", Color("68ecff")])
+			# On a stage only the stage's own pointer is shown (playtest:
+			# generic pointers gave the goal away the moment you launched).
 			var echo: Dictionary = run.pois.nearest_unclaimed(p, ["echo"], true)
 			if not echo.is_empty():
 				targets.append([echo.pos, "ECHO %ds" % int(float(echo.life)), echo.color])
-			var sig: Dictionary = run.pois.nearest_unclaimed(p, ["signal", "character"], true)
-			if not sig.is_empty() and goal.is_empty() and (assist or p.distance_to(sig.pos) < 1400.0):
-				targets.append([sig.pos, String(sig.title), sig.color])
-			if assist:
-				var other: Dictionary = run.pois.nearest_unclaimed(p, ["artifact", "fragment", "anomaly", "mirror"], true)
-				if not other.is_empty():
-					targets.append([other.pos, String(other.title), Color(other.color, 0.7)])
+			if run.mission.is_empty():
+				var sig: Dictionary = run.pois.nearest_unclaimed(p, ["signal", "character"], true)
+				if not sig.is_empty() and goal.is_empty() and (assist or p.distance_to(sig.pos) < 1400.0):
+					targets.append([sig.pos, String(sig.title), sig.color])
+				if assist:
+					var other: Dictionary = run.pois.nearest_unclaimed(p, ["artifact", "fragment", "anomaly", "mirror"], true)
+					if not other.is_empty():
+						targets.append([other.pos, String(other.title), Color(other.color, 0.7)])
 		for a: Array in hud.alerts:
 			targets.append([a[1], String(a[0]), Color("ffb35c")])
 		var xf: Transform2D = run.get_viewport().get_canvas_transform()

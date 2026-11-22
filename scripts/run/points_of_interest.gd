@@ -57,14 +57,12 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 				pos = world.random_open_point_near(region3["center"], 120.0, float(region3["radius"]) * 0.7, rng)
 				# A stop's sites sit a real flight from its home beacon: the
 				# target about 2000 px out, the rest about 1300.
-				var want: float = 2000.0 if is_target else 1300.0
-				var best_err: float = absf(pos.distance_to(world.gate) - want)
-				for attempt in 24:
-					var q: Vector2 = world.random_open_point_near(region3["center"], 120.0, float(region3["radius"]) * 0.8, rng)
-					var err: float = absf(q.distance_to(world.gate) - want)
-					if err < best_err:
-						best_err = err
-						pos = q
+				# Random within the region, but never close to home.
+				var lo: float = 1500.0 if is_target else 1000.0
+				for attempt in 30:
+					if pos.distance_to(world.gate) >= lo:
+						break
+					pos = world.random_open_point_near(region3["center"], 80.0, float(region3["radius"]) * 0.85, rng)
 		var poi: Dictionary = add({"id": id, "kind": String(d["kind"]), "pos": world.resolve(pos, 10.0),
 			"title": String(d["title"]), "hidden": String(d.get("hidden", "")), "color": col, "data": d,
 			"radius": 70.0 if String(d["kind"]) in ["signal", "character"] else 56.0,

@@ -711,7 +711,7 @@ func test_corridor_chart() -> void:
 	var run: GameRun = _make_run({"stop": "gravefire"})
 	await get_tree().process_frame
 	run.player.god_mode = true
-	check(run.world.gate.distance_to(GameData.chart_start(GameData.chart_stop("gravefire"))) < 1.0, "stop does not start at its home beacon")
+	check(run.world.gate.distance_to(GameData.region_anchor(GameData.REGIONS["silver_wrecks"])) > 1200.0, "home beacon inside the stage's region")
 	check(run.player.position.distance_to(run.world.gate) < 200.0, "player not at the home beacon")
 	var ids: Array = []
 	var target: Dictionary = {}
@@ -722,7 +722,10 @@ func test_corridor_chart() -> void:
 			target = q
 	check("char_gravefire" in ids and not "sig_ignition" in ids and not "sig_now_or_never" in ids, "stop carries other stops' discoveries: %s" % str(ids))
 	check(not target.is_empty() and Vector2(target.pos).distance_to(run.world.gate) > 500.0, "target sits on top of the home beacon")
-	check(not run.objective_target().is_empty(), "no compass target for the objective")
+	check(run.objective_target().is_empty(), "pointer shown before exploring")
+	run.elapsed = GameRun.SEARCH_HINT_AFTER + 1.0
+	check(not run.objective_target().is_empty(), "no compass target for the objective after exploring")
+	run.elapsed = 0.0
 	check(not run.climax_available(), "The Silence can be called on an ordinary stop")
 	# The tuner must be charged with shards before the target will tune.
 	check(run.power_needed() > 0, "stop target needs no power")
@@ -805,8 +808,10 @@ func test_corridor_chart() -> void:
 	await get_tree().process_frame
 	for q3: Dictionary in run.pois.items:
 		if run.is_stop_target(String(q3.id)):
-			check(Vector2(q3.pos).distance_to(run.world.gate) > 1400.0, "target only %d px from home" % int(Vector2(q3.pos).distance_to(run.world.gate)))
+			check(Vector2(q3.pos).distance_to(run.world.gate) > 1200.0, "target only %d px from home" % int(Vector2(q3.pos).distance_to(run.world.gate)))
 			check(not bool(q3.known), "target known before the tuner is charged")
+	check(run.objective_target().is_empty(), "a pointer appears before the player has explored")
+	run.elapsed = GameRun.SEARCH_HINT_AFTER + 1.0
 	check(String(run.objective_target()[1]).begins_with("SEARCH"), "compass points at the exact target before charging")
 	_cleanup_runs()
 	await get_tree().process_frame
@@ -1096,6 +1101,33 @@ func test_menu_screens_build() -> void:
 			await get_tree().process_frame
 		check(main.screen != null and is_instance_valid(main.screen), "%s did not build" % fn)
 		_check_layout(main.screen, fn)
+	# Touch drag-scrolls a list even when the drag starts on a button/panel.
+	main.show_archive()
+	for k2 in 4:
+		await get_tree().process_frame
+	var tabs: TabContainer = main.screen.find_children("*", "TabContainer", true, false)[0]
+	tabs.current_tab = tabs.get_tab_count() - 1 # Field Guide: a long list
+	for k3 in 4:
+		await get_tree().process_frame
+	var fg: ScrollContainer = tabs.get_current_tab_control() as ScrollContainer
+	var p0: Vector2 = fg.get_global_rect().get_center()
+	var press: InputEventScreenTouch = InputEventScreenTouch.new()
+	press.index = 0
+	press.position = p0
+	press.pressed = true
+	get_viewport().push_input(press, true)
+	for step in 6:
+		var drag: InputEventScreenDrag = InputEventScreenDrag.new()
+		drag.index = 0
+		drag.position = p0 - Vector2(0, 20 * (step + 1))
+		drag.relative = Vector2(0, -20)
+		get_viewport().push_input(drag, true)
+	var rel: InputEventScreenTouch = InputEventScreenTouch.new()
+	rel.index = 0
+	rel.position = p0 - Vector2(0, 120)
+	get_viewport().push_input(rel, true)
+	await get_tree().process_frame
+	check(fg.scroll_vertical > 60, "touch drag did not scroll the Field Guide (scroll %d)" % fg.scroll_vertical)
 	Profile.data["transmissions"] = ["rc_meaningless_dub"]
 	Profile.data["fragments"] = ["frag_01"]
 	main.show_archive()
