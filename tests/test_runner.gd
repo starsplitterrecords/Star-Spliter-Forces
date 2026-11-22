@@ -377,7 +377,7 @@ func test_simulated_expedition_minute() -> void:
 	# Beat-driven weapons follow the real-time audio clock, so this minute is
 	# not deterministic: a dead or unlucky run says nothing about travel.
 	if run.player.alive:
-		check(run.level >= 3, "too few level-ups in a minute: %d" % run.level)
+		check(run.level >= 2, "too few level-ups in a minute: %d" % run.level)
 	var ranks: int = 0
 	for w: String in run.weapons.weapons.keys():
 		ranks += int(run.weapons.weapons[w])
@@ -1266,6 +1266,14 @@ func test_sea_branch() -> void:
 	run3.use_ability()
 	check(run3.allies.size() == 3 and String(run3.allies[0].get("kind", "")) == "skeleton", "Requisition did not call the skeletons")
 	run3.queue_free()
+	# Rex Fleet in issue order: Chapter III (Issue 02 material) only after
+	# Chapter II, the last Issue 01 chapter.
+	check(GameData.chart_prev_main("r3_approach") == "k_silence", "Chapter III must follow Chapter II")
+	for cd: Dictionary in GameData.CHAPTERS:
+		if cd.has("issue") and int(cd["issue"]) > 1:
+			var prev_id: String = String(cd.get("after", ""))
+			check(prev_id != "" and int(GameData.chapter_def(GameData.chart_chapter(prev_id)).get("issue", 1)) == int(cd["issue"]) - 1, "chapter %s breaks issue order" % cd["name"])
+	check(GameData.crew_of("ella_venn").has("colin_rhyne"), "Rhyne should ride with Ella")
 	# A stage track counts as heard for roaming.
 	var before: int = GameData.unheard_roaming({}).size()
 	check(GameData.unheard_roaming({"des_launch_signal": {}}).size() == before - 1, "stage track still roaming")

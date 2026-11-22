@@ -680,10 +680,14 @@ func _spawn_director(delta: float) -> void:
 	if not dreadnought_spawned and elapsed >= dread_at:
 		dreadnought_spawned = true
 		var dp: Vector2 = world.random_open_point_near(player.position, view_radius() + 40.0, view_radius() + 160.0, rng)
-		spawn_enemy("dreadnought", dp, true)
+		var ekind: String = "dreadnought"
+		if not mission.is_empty() and String(mission["objective"]["type"]) == "elite":
+			ekind = String(mission["objective"].get("enemy", "dreadnought"))
+		spawn_enemy(ekind, dp, true)
 		if hud:
-			hud.alert("SPLINTER DREADNOUGHT", dp)
-			hud.banner("SPLINTER DREADNOUGHT", "A salvage hulk has picked up your trail. Watch its broadsides.", Color("e0a060"), 2.6)
+			var ename: String = String(GameData.ENEMIES[ekind]["name"]).to_upper()
+			hud.alert(ename, dp)
+			hud.banner(ename, "A salvage hulk has picked up your trail. Watch its broadsides." if ekind == "dreadnought" else "It has picked up your trail. Watch its broadsides.", Color("e0a060"), 2.6)
 		Audio.stinger("boss_phase", -2.0)
 	var climax_time: float = float(GameData.DESTINATIONS[destination_id]["climax_time"]) * (0.08 if quick_test else 1.0)
 	if not mission.is_empty():

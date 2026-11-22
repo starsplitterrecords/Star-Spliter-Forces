@@ -1,0 +1,564 @@
+{
+ "id": "shatterwake",
+ "chapter": {
+  "id": 3,
+  "name": "The Shatterwake",
+  "numeral": "III",
+  "destination": "shatterwake",
+  "subtitle": "Rex Fleet, Issue 02 territory.",
+  "after": "k_silence",
+  "issue": 2
+ },
+ "destination": {
+  "name": "The Shatterwake",
+  "desc": "Broken space past Auric, where the Shattering never healed.",
+  "half_size": "@v2:6000.0,4200.0",
+  "gate": "@v2:-5000.0,-400.0",
+  "goal_signals": 1,
+  "climax_time": 1260.0,
+  "background": "@c:06060fff",
+  "drift_name": "BROKEN DRIFT",
+  "biome": "space",
+  "regions": [
+   "auric_approach",
+   "mercy_lane",
+   "ashfang_run",
+   "the_shatterwake",
+   "shatterwake_mouth",
+   "admiralty_relay"
+  ],
+  "completion_unlocks": [],
+  "seed": 3303
+ },
+ "tier": "approved_draft",
+ "source": "RexPrompt rex-fleet shelf, Issue 02 first appearances; portraits from the released Issue 01 cast page",
+ "regions": {
+  "auric_approach": {
+   "name": "AURIC APPROACH",
+   "shape": "capsule",
+   "a": "@v2:-4300.0,-600.0",
+   "b": "@v2:-1200.0,-1400.0",
+   "radius": 520.0,
+   "color": "@c:e0b46aff",
+   "floor": "@c:0c0e18ff",
+   "props": "corridor",
+   "density": 0.7,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 1.0,
+    "ram_cutter": 0.4,
+    "echo_mote": 0.3
+   },
+   "blurb": "The lanes into Auric, crowded.",
+   "threat": 1
+  },
+  "mercy_lane": {
+   "name": "EVACUATION LANE",
+   "shape": "capsule",
+   "a": "@v2:-2200.0,1400.0",
+   "b": "@v2:1200.0,1800.0",
+   "radius": 560.0,
+   "color": "@c:8fd3ffff",
+   "floor": "@c:0a0e1aff",
+   "props": "corridor",
+   "density": 0.8,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.6,
+    "rail_picket": 0.4
+   },
+   "blurb": "An evacuation freighter, and everyone who wants it.",
+   "threat": 2
+  },
+  "ashfang_run": {
+   "name": "ASHFANG RUN",
+   "shape": "circle",
+   "center": "@v2:800.0,-2300.0",
+   "radius": 950.0,
+   "color": "@c:e0402aff",
+   "floor": "@c:140a0cff",
+   "props": "wreck",
+   "density": 0.9,
+   "music": "region_wrecks",
+   "enemies": {
+    "ram_cutter": 0.7,
+    "gunship": 0.4,
+    "splinter_captain": 0.08,
+    "skiff": 0.6
+   },
+   "blurb": "Red drive trails. Shard raiders.",
+   "threat": 3
+  },
+  "the_shatterwake": {
+   "name": "THE SHATTERWAKE",
+   "shape": "circle",
+   "center": "@v2:2900.0,600.0",
+   "radius": 1100.0,
+   "color": "@c:b48cffff",
+   "floor": "@c:0e0a18ff",
+   "props": "crystal",
+   "density": 1.0,
+   "music": "region_bloom",
+   "enemies": {
+    "blink": 0.6,
+    "echo_mote": 0.6,
+    "wreck_lurker": 0.4
+   },
+   "blurb": "Broken space left behind the Shattering.",
+   "threat": 3
+  },
+  "shatterwake_mouth": {
+   "name": "SHATTERWAKE MOUTH",
+   "shape": "circle",
+   "center": "@v2:5000.0,-1500.0",
+   "radius": 750.0,
+   "color": "@c:d7b8ffff",
+   "floor": "@c:100a1cff",
+   "props": "gate",
+   "density": 0.7,
+   "music": "region_gate",
+   "enemies": {
+    "blink": 0.5,
+    "gunship": 0.3,
+    "skiff": 0.6
+   },
+   "blurb": "Where the wake opens.",
+   "threat": 3
+  },
+  "admiralty_relay": {
+   "name": "ADMIRALTY RELAY",
+   "shape": "circle",
+   "center": "@v2:-600.0,-3200.0",
+   "radius": 600.0,
+   "color": "@c:8fb8ffff",
+   "floor": "@c:0a0e1cff",
+   "props": "pools",
+   "density": 0.6,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.8,
+    "shield_tug": 0.5
+   },
+   "blurb": "A Fleet channel back to the Core.",
+   "threat": 2
+  }
+ },
+ "discoveries": {
+  "r3_approach": {
+   "kind": "character",
+   "region": "auric_approach",
+   "offset": "@v2:0.0,0.0",
+   "title": "AURIC APPROACH",
+   "landmark": "bazaar",
+   "color": "@c:e0b46aff",
+   "place": "auric_approach",
+   "text": "Traffic stacked into Auric's lanes: freighters, escorts, too many ships for the berths."
+  },
+  "r3_ashfang_trace": {
+   "kind": "character",
+   "region": "ashfang_run",
+   "offset": "@v2:0.0,0.0",
+   "title": "ASHFANG MARAUDER",
+   "landmark": "freighter",
+   "color": "@c:e0402aff",
+   "contacts": [
+    "billie_rusk"
+   ],
+   "place": "ashfang_run",
+   "text": "Red drive trails and a raider's hull. Its commander answers to the Shards."
+  },
+  "r3_rhyne": {
+   "kind": "character",
+   "region": "admiralty_relay",
+   "offset": "@v2:0.0,0.0",
+   "title": "ADMIRALTY CHANNEL",
+   "landmark": "station",
+   "color": "@c:8fb8ffff",
+   "contacts": [
+    "colin_rhyne"
+   ],
+   "place": "admiralty_relay",
+   "text": "A Fleet Admiralty channel, holding. Aegis and defense are speaking."
+  },
+  "r3_wake": {
+   "kind": "anomaly",
+   "region": "the_shatterwake",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE SHATTERWAKE",
+   "color": "@c:b48cffff",
+   "place": "the_shatterwake",
+   "text": "Space that never healed. Signals here arrive twice, or late."
+  },
+  "r3_mouth": {
+   "kind": "character",
+   "region": "shatterwake_mouth",
+   "offset": "@v2:0.0,0.0",
+   "title": "SHATTERWAKE MOUTH",
+   "landmark": "sunforge",
+   "color": "@c:d7b8ffff",
+   "place": "shatterwake_mouth",
+   "text": "The wake opens here. Something on the far side is very bright."
+  },
+  "r3_echo_shadows": {
+   "kind": "signal",
+   "region": "the_shatterwake",
+   "offset": "@v2:-380.0,300.0",
+   "title": "ECHO: SIGNALS AND SHADOWS",
+   "transmission": "rex_signals_and_shadows",
+   "color": "@c:b48cffff",
+   "text": "A song you have heard before, arriving again, a little late."
+  },
+  "r3_echo_freeze": {
+   "kind": "signal",
+   "region": "auric_approach",
+   "offset": "@v2:300.0,-160.0",
+   "title": "ECHO: FREEZE FRAME",
+   "transmission": "ido_freeze_frame",
+   "color": "@c:b48cffff",
+   "text": "The same carrier twice, one a beat behind the other."
+  },
+  "r3_echo_edge": {
+   "kind": "signal",
+   "region": "shatterwake_mouth",
+   "offset": "@v2:-300.0,260.0",
+   "title": "ECHO: HANGING ON THE EDGE",
+   "transmission": "nma_hanging_on_the_edge",
+   "color": "@c:b48cffff",
+   "text": "Right at the mouth of the wake, played back from somewhere else."
+  }
+ },
+ "contacts": {
+  "billie_rusk": {
+   "name": "Billie Rusk",
+   "faction": "The Shards",
+   "role": "Raider commander of the Ashfang Marauder.",
+   "portrait": "billie_rusk",
+   "captain": "abby_saville",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
+  },
+  "colin_rhyne": {
+   "name": "Admiral Colin Rhyne",
+   "faction": "The Fleet",
+   "role": "Fleet Admiralty: Aegis and defense.",
+   "portrait": "colin_rhyne",
+   "captain": "ella_venn",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
+  }
+ },
+ "places": {
+  "auric_approach": {
+   "name": "Auric Approach",
+   "series": "Rex Fleet",
+   "text": "The crowded lanes into Auric.",
+   "source": "Rex Fleet (RexPrompt shelf; first appears in Issue 02, approved draft)"
+  },
+  "mercy_lane": {
+   "name": "Evacuation Lane",
+   "series": "Rex Fleet",
+   "text": "The lane an evacuation freighter must cross.",
+   "source": "Rex Fleet (RexPrompt shelf; first appears in Issue 02, approved draft)"
+  },
+  "ashfang_run": {
+   "name": "Ashfang Marauder",
+   "series": "Rex Fleet",
+   "text": "A Shard raider ship.",
+   "source": "Rex Fleet (RexPrompt shelf; first appears in Issue 02, approved draft)"
+  },
+  "the_shatterwake": {
+   "name": "The Shatterwake",
+   "series": "Rex Fleet",
+   "text": "Broken space left behind the Shattering.",
+   "source": "Rex Fleet (RexPrompt shelf; first appears in Issue 02, approved draft)"
+  },
+  "shatterwake_mouth": {
+   "name": "Shatterwake Mouth",
+   "series": "Rex Fleet",
+   "text": "Where the wake opens.",
+   "source": "Rex Fleet (RexPrompt shelf; first appears in Issue 02, approved draft)"
+  },
+  "admiralty_relay": {
+   "name": "Admiralty Relay",
+   "series": "Rex Fleet",
+   "text": "A Fleet channel to the Core Admiralty (Issue 01 cast; game-original relay).",
+   "source": "Rex Fleet Issue 01 (released) cast"
+  }
+ },
+ "stages": [
+  {
+   "id": "r3_approach",
+   "chapter": 3,
+   "power": 90,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "Auric Approach",
+   "place": "Auric Approach",
+   "region": "auric_approach",
+   "objective": {
+    "type": "discover",
+    "id": "r3_approach"
+   },
+   "discoveries": [
+    "r3_approach"
+   ],
+   "new_title": "CHAPTER III",
+   "new": "The Shatterwake. Further out, stranger space.",
+   "brief": "Auric's lanes are full.",
+   "reward": [
+    "Place: Auric Approach"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "r3_mercy",
+   "chapter": 3,
+   "prize": "+150 Signal",
+   "icon": "hostile",
+   "name": "Mercy of Dawn",
+   "place": "Evacuation Lane",
+   "region": "mercy_lane",
+   "objective": {
+    "type": "survive",
+    "seconds": 180.0
+   },
+   "discoveries": [],
+   "new_title": "HOLD THE LANE",
+   "new": "An evacuation freighter is coming through. Keep the lane open.",
+   "brief": "A freighter full of people.",
+   "reward": [
+    "+150 Signal"
+   ],
+   "grants": {
+    "signal": 150
+   }
+  },
+  {
+   "id": "r3_ashfang",
+   "chapter": 3,
+   "prize": "+200 Signal",
+   "icon": "elite",
+   "name": "Ashfang",
+   "place": "Ashfang Run",
+   "region": "ashfang_run",
+   "objective": {
+    "type": "elite",
+    "enemy": "ashfang_marauder",
+    "at": 120.0
+   },
+   "discoveries": [],
+   "new_title": "THE ASHFANG",
+   "new": "A Shard raider ship. Arrives at 2:00.",
+   "brief": "Red drive trails on the scope.",
+   "reward": [
+    "+200 Signal"
+   ],
+   "grants": {
+    "signal": 200
+   }
+  },
+  {
+   "id": "r3_billie",
+   "chapter": 3,
+   "power": 100,
+   "prize": "Billie Rusk",
+   "icon": "visions",
+   "name": "Raider Commander",
+   "place": "Ashfang Run",
+   "region": "ashfang_run",
+   "objective": {
+    "type": "discover",
+    "id": "r3_ashfang_trace"
+   },
+   "discoveries": [
+    "r3_ashfang_trace"
+   ],
+   "new_title": "THE SHARDS",
+   "new": "Its commander answers to the Shards.",
+   "brief": "Where the Ashfang went.",
+   "reward": [
+    "Crew: Billie Rusk (with Abby)",
+    "Place: Ashfang Marauder"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "r3_admiralty",
+   "chapter": 3,
+   "power": 100,
+   "prize": "Colin Rhyne",
+   "icon": "visions",
+   "name": "Admiralty Channel",
+   "place": "Admiralty Relay",
+   "region": "admiralty_relay",
+   "objective": {
+    "type": "discover",
+    "id": "r3_rhyne"
+   },
+   "discoveries": [
+    "r3_rhyne"
+   ],
+   "new_title": "THE ADMIRALTY",
+   "new": "A channel back to the Core.",
+   "brief": "The Fleet is calling.",
+   "reward": [
+    "Crew: Colin Rhyne (with Ella)",
+    "Place: Admiralty Relay"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "r3_wake",
+   "chapter": 3,
+   "power": 110,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "The Shatterwake",
+   "place": "The Shatterwake",
+   "region": "the_shatterwake",
+   "objective": {
+    "type": "discover",
+    "id": "r3_wake"
+   },
+   "discoveries": [
+    "r3_wake"
+   ],
+   "new_title": "BROKEN SPACE",
+   "new": "Signals here arrive twice, or late.",
+   "brief": "Space that never healed.",
+   "reward": [
+    "Place: The Shatterwake"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "r3_mouth",
+   "chapter": 3,
+   "power": 120,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "The Mouth",
+   "place": "Shatterwake Mouth",
+   "region": "shatterwake_mouth",
+   "objective": {
+    "type": "discover",
+    "id": "r3_mouth"
+   },
+   "discoveries": [
+    "r3_mouth"
+   ],
+   "new_title": "THE MOUTH",
+   "new": "Where the wake opens.",
+   "brief": "The far edge of the wake.",
+   "reward": [
+    "Place: Shatterwake Mouth"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "r3_silence",
+   "chapter": 3,
+   "prize": "+300 Signal",
+   "icon": "elite",
+   "name": "Past the Wake",
+   "place": "The Shatterwake",
+   "start": "@v2:-800.0,600.0",
+   "objective": {
+    "type": "boss",
+    "at": 420.0,
+    "hp": 0.6
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE",
+   "new": "It followed the music this far. Arrives at 7:00.",
+   "brief": "The whole wake is ringing. Something wants it quiet.",
+   "reward": [
+    "+300 Signal",
+    "Chapter III complete"
+   ],
+   "grants": {
+    "signal": 300
+   }
+  },
+  {
+   "id": "r3s_echo_shadows",
+   "chapter": 3,
+   "side_of": "r3_wake",
+   "power": 95,
+   "prize": "Echo",
+   "icon": "signal",
+   "name": "Signals and Shadows",
+   "place": "The Shatterwake",
+   "region": "the_shatterwake",
+   "objective": {
+    "type": "discover",
+    "id": "r3_echo_shadows"
+   },
+   "discoveries": [
+    "r3_echo_shadows"
+   ],
+   "new_title": "AN ECHO",
+   "new": "A signal you have heard before, arriving again.",
+   "brief": "Something familiar, playing late.",
+   "reward": [
+    "Echo: Signals and Shadows"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "r3s_echo_freeze",
+   "chapter": 3,
+   "side_of": "r3_approach",
+   "power": 95,
+   "prize": "Echo",
+   "icon": "signal",
+   "name": "Freeze Frame",
+   "place": "Auric Approach",
+   "region": "auric_approach",
+   "objective": {
+    "type": "discover",
+    "id": "r3_echo_freeze"
+   },
+   "discoveries": [
+    "r3_echo_freeze"
+   ],
+   "new_title": "AN ECHO",
+   "new": "A signal you have heard before, arriving again.",
+   "brief": "Something familiar, playing late.",
+   "reward": [
+    "Echo: Freeze Frame"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "r3s_echo_edge",
+   "chapter": 3,
+   "side_of": "r3_mouth",
+   "power": 95,
+   "prize": "Echo",
+   "icon": "signal",
+   "name": "Hanging on the Edge",
+   "place": "Shatterwake Mouth",
+   "region": "shatterwake_mouth",
+   "objective": {
+    "type": "discover",
+    "id": "r3_echo_edge"
+   },
+   "discoveries": [
+    "r3_echo_edge"
+   ],
+   "new_title": "AN ECHO",
+   "new": "A signal you have heard before, arriving again.",
+   "brief": "Something familiar, playing late.",
+   "reward": [
+    "Echo: Hanging on the Edge"
+   ],
+   "grants": {}
+  }
+ ]
+}

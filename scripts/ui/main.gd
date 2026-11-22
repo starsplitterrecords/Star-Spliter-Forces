@@ -294,8 +294,11 @@ func show_chart(focus: String = "", chapter: int = 0) -> void:
 	ht.autowrap_mode = TextServer.AUTOWRAP_OFF
 	head.add_child(ht)
 	# Chapter switch: a chapter opens when the one before it is finished.
-	var tabs_row: HBoxContainer = HBoxContainer.new()
-	tabs_row.add_theme_constant_override("separation", 8)
+	# Tabs wrap onto a second line rather than widening the screen.
+	var tabs_row: HFlowContainer = HFlowContainer.new()
+	tabs_row.add_theme_constant_override("h_separation", 6)
+	tabs_row.add_theme_constant_override("v_separation", 6)
+	tabs_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tabs_row.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	head.add_child(tabs_row)
 	for cdef: Dictionary in GameData.CHAPTERS:

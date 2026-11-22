@@ -508,6 +508,7 @@ const ENEMIES: Dictionary = {
 	"gunship": {"name": "Splinter Gunship", "min_time": 180.0, "hp": 80.0, "speed": 70.0, "damage": 11.0, "xp": 5, "radius": 22.0, "color": Color("c8a24a"), "behavior": "ranged", "shape": "gunship", "aggro": 600.0, "keep": 390.0, "fire_every": 3.8, "shot_speed": 280.0, "burst": 3},
 	"leech": {"name": "Drift Leech", "min_time": 120.0, "hp": 30.0, "speed": 135.0, "damage": 4.0, "xp": 3, "radius": 12.0, "color": Color("b0a050"), "behavior": "leech", "shape": "leech", "aggro": 420.0},
 	"blink": {"name": "Veil Flicker", "min_time": 150.0, "hp": 36.0, "speed": 60.0, "damage": 11.0, "xp": 3, "radius": 15.0, "color": Color("e05a9a"), "behavior": "blink", "shape": "blink", "aggro": 520.0},
+	"ashfang_marauder": {"name": "Ashfang Marauder", "hp": 3400.0, "speed": 56.0, "damage": 22.0, "xp": 70, "radius": 48.0, "color": Color("e0402a"), "behavior": "dreadnought", "shape": "dreadnought", "elite": true, "aggro": 99999.0},
 	"dreadnought": {"name": "Splinter Dreadnought", "hp": 3200.0, "speed": 48.0, "damage": 22.0, "xp": 60, "radius": 50.0, "color": Color("a8784a"), "behavior": "dreadnought", "shape": "dreadnought", "elite": true, "aggro": 99999.0},
 	"the_silence": {"name": "The Silence", "hp": 24000.0, "speed": 78.0, "damage": 26.0, "xp": 0, "radius": 72.0, "color": Color("ff376f"), "behavior": "boss", "shape": "silence", "boss": true, "aggro": 99999.0},
 }

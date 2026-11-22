@@ -68,6 +68,18 @@ bridge; Visions settings in Signal Space (Vikings harbour and Bushwick, Stardust
 break room, the Backyard Rockets Mojave towns, all 13 Azure Reach settings); the remaining
 Records projects and titles.
 
+### Chapter III — The Shatterwake (Issue 02 territory)
+
+Opens when Chapter II's Silence falls. Built only from places that **first appear in Rex
+Fleet Issue 02** (RexPrompt shelf; approved draft): Auric Approach, the evacuation lane,
+the Ashfang Marauder, the Shatterwake and its mouth; plus Issue 01 cast not yet used
+(Admiral Colin Rhyne — Ella's first crew; Billie Rusk — rides with Abby). No plot.
+Stages: Auric Approach · Mercy of Dawn (hold 3:00) · Ashfang (elite) · Raider Commander ·
+Admiralty Channel · The Shatterwake · The Mouth · Past the Wake (the Silence, 7:00).
+Sides: three **echoes** — earlier tracks arriving again, late (the Shatterwake's broken
+space). A test enforces issue order: a chapter built from issue N must follow the
+chapter built from issue N-1.
+
 ### Branch paths (crossover series)
 
 Owner direction (2026-11-22): each crossover series gets its **own path** branching off
