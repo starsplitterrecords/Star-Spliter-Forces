@@ -126,7 +126,7 @@ func _heading(parent: Control, text: String, sub: String = "") -> void:
 const DESIGN_SIZE: Vector2 = Vector2(1280, 720)
 const MIN_LAYOUT: Vector2 = Vector2(880, 500)
 const READABLE_SCALE: float = 1.0
-const PORTRAIT_WIDTH: float = 540.0
+const PORTRAIT_WIDTH: float = 620.0
 
 func _apply_ui_scale() -> void:
 	var win: Window = get_window()
@@ -140,7 +140,7 @@ func _apply_ui_scale() -> void:
 		# Portrait: a narrow layout, never wider than PORTRAIT_WIDTH units,
 		# so an upright phone shows text at a readable size (the landscape
 		# minimum of 880 shrank everything to ~44% on a 390-pt phone).
-		var w: float = clampf(css.x / READABLE_SCALE, PORTRAIT_WIDTH, 620.0)
+		var w: float = clampf(css.x / READABLE_SCALE, PORTRAIT_WIDTH, 700.0)
 		layout = Vector2(w, css.y * w / css.x)
 	elif fit < READABLE_SCALE:
 		layout = (css / READABLE_SCALE).max(MIN_LAYOUT)

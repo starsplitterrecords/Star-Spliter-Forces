@@ -1160,15 +1160,15 @@ class HudCanvas:
 			targets.append([a[1], String(a[0]), Color("ffb35c")])
 		var xf: Transform2D = run.get_viewport().get_canvas_transform()
 		var center: Vector2 = vp * 0.5
-		var radii: Vector2 = vp * 0.5 - Vector2(70, 70)
+		# Pointers ride a ring around the ship, well inside the HUD at the
+		# screen edges (playtest: edge pointers fell under the HUD).
+		var ring: float = minf(vp.x, vp.y) * 0.36
 		for t: Array in targets:
 			var sp: Vector2 = xf * Vector2(t[0])
-			if Rect2(Vector2(60, 60), vp - Vector2(120, 120)).has_point(sp):
-				continue
+			if sp.distance_to(center) < ring + 40.0:
+				continue # already close: no pointer needed
 			var dir: Vector2 = (sp - center).normalized()
-			var edge: Vector2 = center + Vector2(dir.x * radii.x, dir.y * radii.y)
-			# Keep compass markers below the top HUD band (bars, labels, minimap).
-			edge.y = maxf(edge.y, hud.safe.position.y + 200.0)
+			var edge: Vector2 = center + dir * ring
 			var col: Color = t[2]
 			draw_colored_polygon(PackedVector2Array([edge + dir * 14.0, edge + dir.rotated(2.5) * 10.0, edge + dir.rotated(-2.5) * 10.0]), col)
 			var dist: int = int(p.distance_to(Vector2(t[0])) / 10.0)
