@@ -1392,6 +1392,10 @@ func _claim_discovery(p: Dictionary) -> void:
 				var left: int = goal_signals() - signals_found()
 				gains.append("SIGNALS %d / %d — %s" % [signals_found(), goal_signals(), ("%d more to call out The Silence." % left) if left > 0 else "The Silence can be called out at the gate."])
 		"character":
+			if d.has("seam"):
+				var found_seams: int = 1 + GameData.seams().filter(func(sid: String) -> bool: return Profile.is_discovered(sid) and sid != String(p.id)).size()
+				gains.append(String(d["text"]))
+				gains.append("Seam %d / %d — logged in the Mystery" % [found_seams, GameData.seams().size()])
 			var cid: String = String(d.get("unlock_character", ""))
 			if cid != "" and not Profile.has_character(cid):
 				gains.append("Explorer: %s (next expedition)" % GameData.CHARACTERS[cid]["name"])

@@ -76,6 +76,7 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 			poi["kind"] = "mirror"
 			poi["radius"] = 48.0
 	_place_roaming_records(world, rng, profile_discovered)
+	_place_seam(world, rng, profile_discovered)
 	# Seeded variation: caches, resonators and rifts move between expeditions.
 	var region_list: Array = world.region_ids
 	for i in 24:
@@ -325,6 +326,15 @@ func _draw() -> void:
 		match String(p.kind):
 			"signal", "character", "echo":
 				if p.has("data") and (p.data as Dictionary).has("landmark"):
+					if (p.data as Dictionary).has("seam"):
+						# A seam arrives twice: a lagging copy, and a tear between.
+						var lag: Vector2 = Vector2(26.0 + 6.0 * sin(anim * 1.7), -18.0)
+						draw_set_transform(lag)
+						_draw_landmark(String(p.data["landmark"]), pos, c)
+						draw_set_transform(Vector2.ZERO)
+						for k in 5:
+							var y: float = -120.0 + k * 50.0
+							draw_line(pos + Vector2(-280 + 8.0 * sin(anim * 3.0 + k), y), pos + Vector2(-240 + 8.0 * sin(anim * 3.0 + k + 1.0), y + 50.0), Color("d7b8ff", 0.7), 3.0)
 					_draw_landmark(String(p.data["landmark"]), pos, c)
 				# A tall broadcast beam visible from far away.
 				for k in 6:
@@ -453,6 +463,23 @@ func _place_roaming_records(world: ExpeditionWorld, world_rng: RandomNumberGener
 			pos = world.random_open_point_near(Vector2.ZERO, 600.0, maxf(world.half_size.x, world.half_size.y) * 0.9, rng)
 		add({"id": id, "kind": "signal", "pos": world.resolve(pos, 10.0), "title": String(d["title"]), "hidden": "", "color": d["color"],
 			"data": d, "radius": 70.0, "repeat": false, "known": false, "lock": "", "roaming": true})
+
+## One unfound seam per run in its realm, out where you have to roam.
+func _place_seam(world: ExpeditionWorld, world_rng: RandomNumberGenerator, profile_discovered: Dictionary) -> void:
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	rng.seed = world_rng.seed ^ 0x5EA3
+	for id: String in GameData.seams():
+		var d: Dictionary = GameData.DISCOVERIES[id]
+		if String(d["seam"]) != world.destination_id or profile_discovered.has(id):
+			continue
+		var pos: Vector2 = Vector2.ZERO
+		for attempt in 30:
+			pos = world.random_open_point_near(Vector2.ZERO, 800.0, minf(world.half_size.x, world.half_size.y) * 0.85, rng)
+			if pos.distance_to(world.gate) > 2000.0:
+				break
+		add({"id": id, "kind": "character", "pos": world.resolve(pos, 10.0), "title": String(d["title"]), "hidden": "", "color": d["color"],
+			"data": d, "radius": 70.0, "repeat": false, "known": false, "lock": "", "roaming": true})
+		return
 
 func _draw_landmark(kind: String, pos: Vector2, c: Color) -> void:
 	match kind:

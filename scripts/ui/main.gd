@@ -1086,6 +1086,23 @@ func _archive_mystery() -> Control:
 
 	if have.size() == GameData.FRAGMENTS.size():
 		inner.add_child(UiTheme.label("Every fragment points the same way: the quiet is drawn to music. So keep playing.", 16, UiTheme.GOLD))
+	# The seams: places where one realm shows through into another.
+	var seams: Array = GameData.seams()
+	var seen_seams: Array = seams.filter(func(sid: String) -> bool: return Profile.is_discovered(sid))
+	if not seen_seams.is_empty() or Profile.review():
+		inner.add_child(UiTheme.label("THE SEAMS", 22, Color("d7b8ff"), "display"))
+		inner.add_child(UiTheme.label("%d / %d found" % [seen_seams.size(), seams.size()], 14, UiTheme.DIM))
+		for sid: String in seams:
+			var found_s: bool = sid in seen_seams
+			if not _shown(found_s):
+				continue
+			inner.add_child(UiTheme.label("• " + String(GameData.DISCOVERIES[sid]["text"]), 16, UiTheme.TEXT))
+			if not found_s:
+				_tag(inner, "roaming in " + String(GameData.DESTINATIONS[String(GameData.DISCOVERIES[sid]["seam"])]["name"]), true)
+		if seen_seams.size() >= 3:
+			inner.add_child(UiTheme.label("Arrival logs show ships twice. Signals arrive late. Splitting, or crashing together? Not yet known.", 15, Color("d7b8ff")))
+		if seen_seams.size() < seams.size() and not Profile.review():
+			inner.add_child(_more_line("%d more seam%s, one in each realm. Roam far from home." % [seams.size() - seen_seams.size(), "" if seams.size() - seen_seams.size() == 1 else "s"]))
 	return s[0]
 
 func _archive_log() -> Control:

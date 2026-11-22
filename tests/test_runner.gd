@@ -866,7 +866,7 @@ func test_corridor_chart() -> void:
 	await get_tree().process_frame
 	var rec: Dictionary = {}
 	for q6: Dictionary in run.pois.items:
-		if bool(q6.get("roaming", false)):
+		if bool(q6.get("roaming", false)) and String(q6.kind) == "signal":
 			rec = q6
 	check(not rec.is_empty(), "no unheard record hidden on the stage")
 	if not rec.is_empty():
@@ -1274,6 +1274,19 @@ func test_sea_branch() -> void:
 			var prev_id: String = String(cd.get("after", ""))
 			check(prev_id != "" and int(GameData.chapter_def(GameData.chart_chapter(prev_id)).get("issue", 1)) == int(cd["issue"]) - 1, "chapter %s breaks issue order" % cd["name"])
 	check(GameData.crew_of("ella_venn").has("colin_rhyne"), "Rhyne should ride with Ella")
+	# Seams: one per realm, placed by roaming, never on the chart.
+	check(GameData.seams().size() >= 8, "seams missing")
+	var realms_with_seam: Dictionary = {}
+	for sid: String in GameData.seams():
+		realms_with_seam[String(GameData.DISCOVERIES[sid]["seam"])] = true
+		check(GameData.DESTINATIONS.has(String(GameData.DISCOVERIES[sid]["seam"])), "seam %s realm" % sid)
+		check(GameData.stage_for_discovery(sid).is_empty(), "seam %s should not be a stage target" % sid)
+	for dest: String in GameData.DESTINATIONS.keys():
+		check(realms_with_seam.has(dest), "realm %s has no seam" % dest)
+	var run4: GameRun = _make_run({"stop": "fod_onboard"})
+	await get_tree().process_frame
+	check(run4.pois.items.any(func(q: Dictionary) -> bool: return String(q.id) == "seam_g53"), "seam not placed in its realm")
+	run4.queue_free()
 	# A stage track counts as heard for roaming.
 	var before: int = GameData.unheard_roaming({}).size()
 	check(GameData.unheard_roaming({"des_launch_signal": {}}).size() == before - 1, "stage track still roaming")

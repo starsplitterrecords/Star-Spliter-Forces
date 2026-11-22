@@ -726,6 +726,25 @@ static var DISCOVERIES: Dictionary = {
 	"rec_avo": {"kind": "signal", "region": "auric_bazaar", "offset": Vector2(-250, 250), "title": "PORCH BROADCAST",
 		"transmission": "avo_all_i_am", "color": Color("c85b28"),
 		"text": "Fiddle runs and close harmonies from somewhere on the dock ring."},
+	# SEAMS: one per realm, where another realm shows through. Found by
+	# roaming (one placed per run). The Shattering's corridor phenomena —
+	# echo-lag, double arrivals — and no explanation: not yet known.
+	"seam_longship": {"kind": "anomaly", "seam": "black_drift_reach", "roaming": true, "title": "SEAM: A LONGSHIP", "landmark": "longship", "color": Color("d7b8ff"),
+		"text": "A longship in the drift. There is no water for a very long way."},
+	"seam_vending": {"kind": "anomaly", "seam": "kaldr_rift", "roaming": true, "title": "SEAM: A VENDING MACHINE", "landmark": "break_room", "color": Color("d7b8ff"),
+		"text": "A vending machine, still lit, tumbling down the convoy lane."},
+	"seam_twice": {"kind": "anomaly", "seam": "shatterwake", "roaming": true, "title": "SEAM: ARRIVED TWICE", "landmark": "freighter", "color": Color("d7b8ff"),
+		"text": "The same freighter, logged twice. One copy is a beat behind the other."},
+	"seam_rocket": {"kind": "anomaly", "seam": "harbor_signal", "roaming": true, "title": "SEAM: A ROCKET", "landmark": "rocket", "color": Color("d7b8ff"),
+		"text": "A homemade rocket bobbing in the harbor, its relay still calling a desert."},
+	"seam_banner": {"kind": "anomaly", "seam": "dryline", "roaming": true, "title": "SEAM: A BANNER", "landmark": "fod_banner", "color": Color("d7b8ff"),
+		"text": "A maroon banner with one eye, half-buried in the sand."},
+	"seam_turtle": {"kind": "anomaly", "seam": "stardust_orbit", "roaming": true, "title": "SEAM: SEA TURTLE THURSDAYS", "landmark": "turtle_banner", "color": Color("d7b8ff"),
+		"text": "A marine park screen floating past the station, mid-broadcast."},
+	"seam_station": {"kind": "anomaly", "seam": "azure_reach", "roaming": true, "title": "SEAM: A STATION", "landmark": "station", "color": Color("d7b8ff"),
+		"text": "Behind the aquarium glass, a ring station turning in the dark."},
+	"seam_g53": {"kind": "anomaly", "seam": "fortress_darkness", "roaming": true, "title": "SEAM: NOW SERVING G-53", "landmark": "dti", "color": Color("d7b8ff"),
+		"text": "A municipal intake kiosk in the war camp. The orcs have taken numbers."},
 	# Opens the Fortress branch (Forces of Darkness LLC).
 	"vis_fod_requisition": {"kind": "character", "region": "quiet_basin", "offset": Vector2(-340, -260), "title": "REQUISITION (PENDING)",
 		"landmark": "fod_banner", "color": Color("b0243a"), "crossover": "forces_of_darkness", "unlock_character": "sir_eric",
@@ -1337,6 +1356,9 @@ static var realms: Dictionary = {}
 static func biome_get(biome: String, key: String, default: Variant) -> Variant:
 	return BIOMES.get(biome, {}).get(key, default)
 
+static func seams() -> Array:
+	return DISCOVERIES.keys().filter(func(d: String) -> bool: return DISCOVERIES[d].has("seam"))
+
 static func perk_text(perk: Dictionary) -> String:
 	var v: float = float(perk.get("value", 0))
 	match String(perk.get("kind", "")):
@@ -1449,7 +1471,7 @@ static func unheard_roaming(discovered: Dictionary) -> Array:
 			heard_tracks[String(DISCOVERIES[did0]["transmission"])] = true
 	for did: String in DISCOVERIES.keys():
 		var d: Dictionary = DISCOVERIES[did]
-		if not bool(d.get("roaming", false)):
+		if not bool(d.get("roaming", false)) or not d.has("transmission"):
 			continue
 		var proj: String = String(TRANSMISSIONS[String(d["transmission"])]["project"])
 		if discovered.has(did) or heard_tracks.has(String(d["transmission"])):
