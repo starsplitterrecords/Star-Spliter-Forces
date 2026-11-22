@@ -11,22 +11,25 @@ Describes the game **as implemented**. Proposed-but-unbuilt items are marked _(p
 
 ## 1a. The Corridor Chart (the spine)
 
+Player-facing name: **stages** (owner, 2026-11-22). Code and save data keep the
+older internal name `stop` (`GameData.CHART`, `Profile.stop_done`).
+
 Design principles (D-31), from owner playtest 3:
 
 1. **One path.** The player always knows the next step: the gold beacon on the chart.
 2. **One objective per expedition**, stated before launch and on the HUD throughout.
-3. **One new idea per stop**, named ("NEW — RESONANCE: …") in the briefing and again as
-   the expedition starts. Nothing appears in the world before its stop introduces it:
-   a stop only spawns its own discoveries.
+3. **One new idea per stage**, named ("NEW — RESONANCE: …") in the briefing and again as
+   the expedition starts. Nothing appears in the world before its stage introduces it:
+   a stage only spawns its own discoveries.
 4. **The reward is promised first, then paid.** The chart shows the prize under every
    stop; the results screen shows what was unlocked and what comes next.
 5. **Every unlock has one source**, on the chart: explorers, Forces, the Workshop,
    Open Expedition and the next corridor.
-6. **Progress is never lost.** A stop is saved the moment its objective is met.
+6. **Progress is never lost.** A stage is saved the moment its objective is met.
 7. **The fiction is the structure.** After the Shattering the corridors went dark; you
    relight this one beacon by beacon, each expedition leaving from the last beacon lit.
 
-| # | Stop | Objective | Introduces | Reward |
+| # | Stage | Objective | Introduces | Reward |
 |---|---|---|---|---|
 | 1 | First Light (Array Gate) | Tune the Opening Carrier | flying, shards, tuning | first track |
 | 2 | Hold the Lane | Hold for 3:00 | raiders, level-ups | Fleet Workshop |

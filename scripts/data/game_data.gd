@@ -99,7 +99,7 @@ const CHARACTERS: Dictionary = {
 		"ability": "call_the_captains",
 		"trait": "Commands Through Stillness: +20% weapon damage while holding position.",
 		"weakness": "A command ship, not a fighter: weapons recharge 10% slower.",
-		"unlock": "Destroy the Splinter Dreadnought (Corridor stop 10).",
+		"unlock": "Destroy the Splinter Dreadnought (Corridor stage 10).",
 	},
 	"jex_marrin": {
 		"name": "Jex Marrin",

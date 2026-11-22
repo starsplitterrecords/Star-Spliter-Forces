@@ -195,7 +195,7 @@ func _build() -> void:
 	_queue_onboarding()
 	if not mission.is_empty():
 		var num: int = GameData.chart_number(stop_id)
-		hud.banner(("STOP %d — " % num if num > 0 else "SIDE SIGNAL — ") + String(mission["name"]).to_upper(), GameData.chart_objective_text(mission), Color("68ecff"), 4.0)
+		hud.banner(("STAGE %d — " % num if num > 0 else "SIDE SIGNAL — ") + String(mission["name"]).to_upper(), GameData.chart_objective_text(mission), Color("68ecff"), 4.0)
 		if not Profile.seen("stop_new_" + stop_id):
 			Profile.mark_seen("stop_new_" + stop_id)
 			hud.teach_custom("NEW  •  " + String(mission["new_title"]), String(mission["new"]), "OBJECTIVE: " + GameData.chart_objective_text(mission), Color("68ecff"), String(mission.get("icon", "signal")))
@@ -290,7 +290,7 @@ func _spawn_echo() -> void:
 
 func _queue_onboarding() -> void:
 	if not Profile.seen("hint_move"):
-		hint_queue.append(["hint_move", "Drag anywhere on the left of the screen — or use WASD / stick — to fly. Weapons fire on their own."])
+		hint_queue.append(["hint_move", "Drag anywhere to fly (or WASD / stick). Weapons fire on their own. The round button is your explorer's ability."])
 	if not Profile.seen("hint_signal") and mission.is_empty():
 		hint_queue.append(["hint_signal", "Columns of light are SIGNALS. Fly into the ring and hold still to tune them in."])
 	if not Profile.seen("hint_extract") and mission.is_empty():
@@ -1475,14 +1475,14 @@ func complete_stop() -> void:
 	Audio.stinger("victory", -2.0)
 	fx.ring(player.position, 30.0, 520.0, Color("68ecff"), 1.2, 10.0)
 	if hud:
-		hud.banner("BEACON RELIT", "%s — stop complete. Fly back to the home beacon when you are ready." % String(mission["name"]), Color("68ecff"), 4.0)
+		hud.banner("BEACON RELIT", "%s — stage complete. Fly back to the home beacon when you are ready." % String(mission["name"]), Color("68ecff"), 4.0)
 
 ## Short text for the HUD objective line.
 func objective_text() -> String:
 	if mission.is_empty():
 		return ""
 	if stop_complete:
-		return "✓ STOP COMPLETE   Fly to the HOME BEACON to go home (or keep collecting)"
+		return "✓ STAGE COMPLETE   Fly to the HOME BEACON to go home (or keep collecting)"
 	var o: Dictionary = mission["objective"]
 	var base: String = GameData.chart_objective_text(mission).to_upper()
 	match String(o["type"]):

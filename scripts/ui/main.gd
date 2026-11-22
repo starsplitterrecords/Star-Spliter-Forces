@@ -70,6 +70,20 @@ func _new_screen() -> VBoxContainer:
 	scroll.add_child(v)
 	return v
 
+## Full screen. In a browser it needs the host page's permission, and iPhone
+## browsers only allow it for video, so the button only appears where the
+## browser reports it can work.
+static func can_fullscreen() -> bool:
+	if OS.has_feature("web"):
+		return bool(JavaScriptBridge.eval("!!(document.fullscreenEnabled || document.webkitFullscreenEnabled)", true))
+	return not OS.has_feature("mobile")
+
+static func is_fullscreen() -> bool:
+	return DisplayServer.window_get_mode() in [DisplayServer.WINDOW_MODE_FULLSCREEN, DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN]
+
+static func toggle_fullscreen() -> void:
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if is_fullscreen() else DisplayServer.WINDOW_MODE_FULLSCREEN)
+
 ## The next thing of a kind ("character" or "force") the Corridor Chart will
 ## give, in chart order: {"id", "stop"} or {} when none is waiting.
 func _next_unlock(kind: String) -> Dictionary:
@@ -194,7 +208,7 @@ func show_title() -> void:
 	var nxt: String = Profile.next_stop()
 	var begin_text: String = "CORRIDOR CHART"
 	if nxt != "":
-		begin_text = ("BEGIN — " if Profile.stops_done_count() == 0 else "CONTINUE — ") + "STOP %d" % GameData.chart_number(nxt)
+		begin_text = ("BEGIN — " if Profile.stops_done_count() == 0 else "CONTINUE — ") + "STAGE %d" % GameData.chart_number(nxt)
 	var begin: Button = UiTheme.button(begin_text, func() -> void: show_chart(), 340.0, 60.0)
 	menu.add_child(begin)
 	if Profile.has_feature("open_reach"):
@@ -204,6 +218,10 @@ func show_title() -> void:
 	menu.add_child(UiTheme.button("STAR SPLITTER ARCHIVE", show_archive, 340.0))
 	if Profile.has_feature("workshop"):
 		menu.add_child(UiTheme.button("FLEET WORKSHOP", show_workshop, 340.0))
+	if can_fullscreen():
+		menu.add_child(UiTheme.button("FULL SCREEN" if not is_fullscreen() else "EXIT FULL SCREEN", func() -> void:
+			toggle_fullscreen()
+			show_title(), 340.0))
 	menu.add_child(UiTheme.button("SETTINGS", show_settings, 340.0))
 	menu.add_child(UiTheme.button("CREDITS", show_credits, 340.0))
 	if OS.is_debug_build():
@@ -231,7 +249,7 @@ func _next_goal_text() -> String:
 	var nxt: String = Profile.next_stop()
 	if nxt != "":
 		var st: Dictionary = GameData.chart_stop(nxt)
-		return "NEXT — Stop %d, %s: %s. Reward: %s." % [GameData.chart_number(nxt), String(st["name"]), GameData.chart_objective_text(st), String(st["reward"][0])]
+		return "NEXT — Stage %d, %s: %s. Reward: %s." % [GameData.chart_number(nxt), String(st["name"]), GameData.chart_objective_text(st), String(st["reward"][0])]
 	if int(Profile.data["stats"]["expeditions"]) == 0:
 		return "Your first expedition: follow the columns of light, tune three signals, and come home."
 	var unseen_signals: int = 0
@@ -304,12 +322,12 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 	h.add_child(col)
 	if not open and not done:
 		# Past the next beacon the corridor is still dark: no spoilers.
-		col.add_child(UiTheme.label("STOP %d" % num, 13, UiTheme.DIM, "bold"))
+		col.add_child(UiTheme.label("STAGE %d" % num, 13, UiTheme.DIM, "bold"))
 		col.add_child(UiTheme.label("UNCHARTED", 20, UiTheme.DIM, "display"))
 		col.add_child(UiTheme.label("Further down the corridor. Relight the beacon before it to see what waits here.", 14, UiTheme.DIM))
 		col.add_child(UiTheme.button("BACK", show_title, 250.0, 42.0))
 		return
-	var tag: String = ("STOP %d" % num if num > 0 else "SIDE SIGNAL") + "   •   " + String(st["place"]).to_upper() + ("   •   BEACON LIT" if done else "")
+	var tag: String = ("STAGE %d" % num if num > 0 else "SIDE SIGNAL") + "   •   " + String(st["place"]).to_upper() + ("   •   BEACON LIT" if done else "")
 	col.add_child(UiTheme.label(tag, 13, Color("68ecff") if done else UiTheme.GOLD, "bold"))
 	col.add_child(UiTheme.label(String(st["name"]).to_upper(), 20, Color.WHITE, "display"))
 	if not open and not done:
@@ -375,7 +393,7 @@ func show_departure() -> void:
 		var nxt: Dictionary = _next_unlock("character")
 		var hint: String = "%d more explorer%s to find." % [locked_count, "" if locked_count == 1 else "s"]
 		if not nxt.is_empty():
-			hint += " Next: %s (stop \"%s\")." % [String(GameData.CHARACTERS[String(nxt["id"])]["name"]), String(nxt["stop"]["name"])]
+			hint += " Next: %s (stage \"%s\")." % [String(GameData.CHARACTERS[String(nxt["id"])]["name"]), String(nxt["stop"]["name"])]
 		var hl: Label = UiTheme.label(hint, 13, UiTheme.DIM)
 		hl.custom_minimum_size.x = 320.0 if not UiTheme.is_narrow() else _content_width()
 		list.add_child(hl)
@@ -445,7 +463,7 @@ func show_departure() -> void:
 		var nf: Dictionary = _next_unlock("force")
 		var ft: String = "%d more Force%s unheard." % [unheard, "" if unheard == 1 else "s"]
 		if not nf.is_empty():
-			ft += " Next: %s (stop \"%s\")." % [String(GameData.FORCES[String(nf["id"])]["name"]), String(nf["stop"]["name"])]
+			ft += " Next: %s (stage \"%s\")." % [String(GameData.FORCES[String(nf["id"])]["name"]), String(nf["stop"]["name"])]
 		dv.add_child(UiTheme.label(ft, 13, UiTheme.DIM))
 	var sf: Dictionary = GameData.FORCES[selected_force]
 	dv.add_child(UiTheme.label("%s — %s: %s  Starts with %s." % [String(sf["name"]), String(sf["mechanic"]), String(sf["desc"]), GameData.weapon_name(String(sf["primary"]))], 14, sf["color"]))
@@ -489,7 +507,7 @@ func show_departure() -> void:
 	var launch_note: String = String(dest["desc"])
 	if not stop.is_empty():
 		var sn: int = GameData.chart_number(selected_stop)
-		launch_text = "LAUNCH — " + ("STOP %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
+		launch_text = "LAUNCH — " + ("STAGE %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
 		launch_note = "OBJECTIVE: %s.   REWARD: %s" % [GameData.chart_objective_text(stop), String(stop["reward"][0])]
 	var go: Button = UiTheme.button(launch_text, func() -> void: start_expedition(false), 420.0 if not UiTheme.is_narrow() else _content_width() - 192.0, 56.0)
 	go.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -529,7 +547,7 @@ func show_results() -> void:
 	var stop_won: bool = bool(r.get("stop_complete", false))
 	if not stop.is_empty():
 		var sn: int = GameData.chart_number(String(stop["id"]))
-		var label: String = ("STOP %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
+		var label: String = ("STAGE %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
 		title = ("BEACON RELIT — " if stop_won else "STILL DARK — ") + label
 		sub = "The corridor reaches one beacon further." if stop_won else "Objective not met: %s. Nothing is lost; try again with what you learned." % GameData.chart_objective_text(stop)
 	if stop.is_empty():
@@ -553,7 +571,7 @@ func show_results() -> void:
 		var nxt: String = Profile.next_stop()
 		if nxt != "":
 			var ns: Dictionary = GameData.chart_stop(nxt)
-			wv.add_child(UiTheme.label("NEXT — Stop %d, %s: %s" % [GameData.chart_number(nxt), String(ns["name"]), GameData.chart_objective_text(ns)], 15, UiTheme.TEXT))
+			wv.add_child(UiTheme.label("NEXT — Stage %d, %s: %s" % [GameData.chart_number(nxt), String(ns["name"]), GameData.chart_objective_text(ns)], 15, UiTheme.TEXT))
 		else:
 			wv.add_child(UiTheme.label("Every beacon on the corridor is lit.", 15, UiTheme.TEXT))
 	var row: BoxContainer = UiTheme.row(24)
@@ -969,7 +987,7 @@ func show_settings() -> void:
 	_toggle(grid, "Damage numbers", "damage_numbers")
 	_toggle(grid, "Navigation assist (edge compass)", "nav_assist")
 	_choice(grid, "Movement stick", "joystick_mode", ["floating", "fixed"])
-	_choice(grid, "Handedness (stick side)", "handedness", ["right", "left"])
+	_choice(grid, "Steering hand (ability button goes on the other side)", "handedness", ["right", "left"])
 	_choice(grid, "Frame rate cap", "fps_cap", [60, 30])
 	var row: BoxContainer = BoxContainer.new()
 	row.add_theme_constant_override("separation", 12)

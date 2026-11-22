@@ -111,8 +111,7 @@ func _layout() -> void:
 	toast_label.size.x = safe.size.x
 	hint_label.position = Vector2(safe.position.x + safe.size.x * 0.2, safe.end.y - 70)
 	hint_label.size.x = safe.size.x * 0.6
-	var right_hand: bool = String(Profile.setting("handedness")) == "right"
-	var ab_x: float = safe.end.x - 150 if right_hand else safe.position.x + 22
+	var ab_x: float = safe.position.x + 22 if steers_right() else safe.end.x - 150
 	ability_button.position = Vector2(ab_x, safe.end.y - 150)
 	pause_button.position = Vector2(safe.end.x - 64, safe.position.y)
 	# The gate choice sits just below the ship, sized to its content.
@@ -319,11 +318,11 @@ func _update_gate() -> void:
 		var lines: Array[String] = ["Go home now: keep all %d discoveries and about +%d Signal. The expedition ends safely." % [found, est]]
 		if not run.mission.is_empty():
 			if run.stop_complete:
-				lines = ["Stop complete and saved. Go home now with about +%d Signal, or stay out and keep collecting." % est]
+				lines = ["Stage complete and saved. Go home now with about +%d Signal, or stay out and keep collecting." % est]
 			elif run.is_boss_stop():
-				lines = ["Call The Silence now, or keep building your loadout: it arrives on its own. Going home now leaves this stop unfinished."]
+				lines = ["Call The Silence now, or keep building your loadout: it arrives on its own. Going home now leaves this stage unfinished."]
 			else:
-				lines = ["This stop is NOT finished yet: %s. Going home now keeps your Signal but leaves the beacon dark." % GameData.chart_objective_text(run.mission)]
+				lines = ["This stage is NOT finished yet: %s. Going home now keeps your Signal but leaves the beacon dark." % GameData.chart_objective_text(run.mission)]
 		elif run.climax_available():
 			lines.append("Or face The Silence: beat it to complete the Reach — +120 Signal bonus and new explorers / routes.")
 		else:
@@ -714,6 +713,9 @@ func toggle_pause() -> void:
 		toggle_pause()
 		open_map(), 360.0))
 	v.add_child(UiTheme.button("FIELD GUIDE — WHAT IS EVERYTHING?", _open_field_guide, 360.0))
+	var main_script: GDScript = load("res://scripts/ui/main.gd")
+	if main_script.can_fullscreen():
+		v.add_child(UiTheme.button("TOGGLE FULL SCREEN", func() -> void: main_script.toggle_fullscreen(), 360.0))
 	var shake_btn: CheckButton = CheckButton.new()
 	shake_btn.text = "Screen shake"
 	shake_btn.button_pressed = float(Profile.setting("screen_shake")) > 0.0
@@ -850,13 +852,12 @@ func _input(event: InputEvent) -> void:
 		# Touch already handled above; ignore the emulated duplicate.
 		get_viewport().set_input_as_handled()
 		return
-	var vp: Vector2 = get_viewport().get_visible_rect().size
-	var right_hand: bool = String(Profile.setting("handedness")) == "right"
 	if event is InputEventScreenTouch:
 		var st: InputEventScreenTouch = event
 		if st.pressed and touch_id == -1:
-			var on_move_side: bool = st.position.x < vp.x * 0.55 if right_hand else st.position.x > vp.x * 0.45
-			if on_move_side:
+			# The stick starts wherever a thumb lands (HUD buttons were
+			# handled above), so either hand can steer from anywhere.
+			if true:
 				touch_id = st.index
 				touch_origin = st.position
 				if String(Profile.setting("joystick_mode")) == "fixed":
@@ -876,9 +877,13 @@ func _input(event: InputEvent) -> void:
 				touch_origin = touch_pos - (touch_pos - touch_origin).normalized() * radius * 1.6
 			_update_touch_vector()
 
+## "handedness" is the steering hand: a right-handed player steers with the
+## right thumb, so the fixed stick sits right and the ability button left.
+func steers_right() -> bool:
+	return String(Profile.setting("handedness")) == "right"
+
 func _fixed_stick_center() -> Vector2:
-	var right_hand: bool = String(Profile.setting("handedness")) == "right"
-	return Vector2(safe.position.x + 140.0, safe.end.y - 140.0) if right_hand else Vector2(safe.end.x - 140.0, safe.end.y - 140.0)
+	return Vector2(safe.end.x - 140.0, safe.end.y - 140.0) if steers_right() else Vector2(safe.position.x + 140.0, safe.end.y - 140.0)
 
 func _update_touch_vector() -> void:
 	var radius: float = 78.0
@@ -1114,11 +1119,18 @@ class HudCanvas:
 			var t: float = 1.0 - run.ability_cd / maxf(0.1, cd_total)
 			draw_arc(c, r, -PI / 2.0, -PI / 2.0 + TAU * t, 48, Color(accent, 0.6), 4.0)
 			draw_string(font, c + Vector2(-20, 8), "%d" % int(ceil(run.ability_cd)), HORIZONTAL_ALIGNMENT_CENTER, 40, UiTheme.fs(20), Color(1, 1, 1, 0.7))
+		# Labelled as what it is: the explorer's ability (not a Force).
 		var name: String = String(run.ability_def()["name"]).to_upper()
-		var w: float = font.get_string_size(name, HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(11)).x
-		draw_string(font, c + Vector2(-w * 0.5, r + 18.0), name, HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(11), Color(1, 1, 1, 0.65))
+		var nfs: int = UiTheme.fs(11)
+		var w: float = font.get_string_size(name, HORIZONTAL_ALIGNMENT_LEFT, -1, nfs).x
+		draw_string(font, c + Vector2(-w * 0.5, r + 8.0 + nfs), name, HORIZONTAL_ALIGNMENT_LEFT, -1, nfs, Color(1, 1, 1, 0.7))
+		var tag: String = "ABILITY"
+		var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(10)).x
+		draw_string(font, c + Vector2(-tw * 0.5, -10.0), tag, HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(10), Color(1, 1, 1, 0.55))
 		if ready:
-			draw_string(font, c + Vector2(-30, 6), "READY", HORIZONTAL_ALIGNMENT_CENTER, 60, UiTheme.fs(14), Color(accent, 0.95))
+			var rfs: int = UiTheme.fs(14)
+			var rw: float = font.get_string_size("READY", HORIZONTAL_ALIGNMENT_LEFT, -1, rfs).x
+			draw_string(font, c + Vector2(-rw * 0.5, rfs * 0.8), "READY", HORIZONTAL_ALIGNMENT_LEFT, -1, rfs, Color(accent, 0.95))
 
 class MapOverlay:
 	extends Control

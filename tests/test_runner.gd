@@ -1018,6 +1018,34 @@ func test_review_regressions() -> void:
 	check(run3.hud.touch_id == -1 and run3.hud.touch_vector == Vector2.ZERO, "touch not released when level-up opened")
 	# 8. Naomi halves every hazard type.
 	check(is_equal_approx(run3.hazard_damage_mult(), 1.0), "hazard mult should be 1 for Venn")
+	_cleanup_runs()
+	await get_tree().process_frame
+	# Touch: the stick starts wherever the thumb lands, on either side, and
+	# the ability button sits opposite the steering hand.
+	var run4: GameRun = _make_run()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var vp4: Vector2 = get_viewport().get_visible_rect().size
+	for x: float in [vp4.x * 0.85, vp4.x * 0.15]:
+		var t: InputEventScreenTouch = InputEventScreenTouch.new()
+		t.index = 3
+		t.position = Vector2(x, vp4.y * 0.45)
+		t.pressed = true
+		run4.hud._input(t)
+		check(run4.hud.touch_id == 3, "stick did not start at x=%d" % int(x))
+		var up: InputEventScreenTouch = InputEventScreenTouch.new()
+		up.index = 3
+		up.position = t.position
+		up.pressed = false
+		run4.hud._input(up)
+		check(run4.hud.touch_id == -1, "stick not released")
+	Profile.data["settings"]["handedness"] = "right"
+	run4.hud._layout()
+	check(run4.hud.ability_button.position.x < vp4.x * 0.5, "right-handed player: ability button should be on the left")
+	Profile.data["settings"]["handedness"] = "left"
+	run4.hud._layout()
+	check(run4.hud.ability_button.position.x > vp4.x * 0.5, "left-handed player: ability button should be on the right")
+	Profile.data["settings"]["handedness"] = "right"
 
 func test_second_destination() -> void:
 	var run: GameRun = _make_run({"destination": "kaldr_rift"})
