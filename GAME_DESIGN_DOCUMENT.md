@@ -78,11 +78,11 @@ series). A branch appears on the chart only once the side stage that opens it is
 | Branch | Series | World | Opens from | Status |
 |---|---|---|---|---|
 | **SEA — Harbor Signal** | Vikings 2026! + Low Tide Signal | Open sea, East River, pier, DTI building, Bushwick rooftop, Harbor Phase, flooded coast | Now Serving G-53 (Bjorn) | **Built**: 8 stages + 3 side signals, contacts Gunnar and Carrie |
-| DESERT | Backyard Rockets + Sunforge Outlaw | Mojave workshop towns, launch range, the Sunforge | Lucia / Brandon Mack side stage | Planned |
+| **DESERT — Dryline** | Backyard Rockets + Sunforge Outlaw | Dry lakebed, Launch-Shop, Esperanza, La Suerte, Ridge Relay, Red Mesa, Coyote Wells; Under Two Suns and the Forge (Sunforge cover) | OCHRE-9 (Lucia) | **Built**: 9 stages + 2 side signals, contacts Arvin and Milo |
 | ORBIT | Stardust Station | Bullpen, break room, the station ring | Jax Orien side stage | Planned |
-| FANTASY | Forces of Darkness LLC | A corporate dark empire on land | — | Planned; prototype-strip material only, needs owner OK |
+| FANTASY | Forces of Darkness LLC | A corporate dark empire on land | — | On hold (owner, 2026-11-22) |
 | PARK | Azure Reach | Marine theme park settings | — | Planned |
-| COSMIC | Echoes of a Forgotten War | Olyria-Prime excavation colony | — | Planned; no released art, needs owner OK |
+| COSMIC | Echoes of a Forgotten War | Olyria-Prime excavation colony | — | On hold (owner, 2026-11-22) |
 | (later) | Star Systems Splitter | — | — | Held for the future (owner) |
 
 Harbor Signal stages: The North Atlantic (track Unification Theory) · East River (longship;
@@ -91,6 +91,17 @@ Phase (Low Tide Signal flood gate) · The Water Took the City (track Perception)
 (the Silence at sea, 6:00). Side signals: River Carrier (Edge Spaces), Under the Crane
 (Leave the Past Behind), Rooftop Carrier (Be Somebody). Raiders keep their behaviours but
 take the sea's shapes and names (Fog Skiff, Squall Ram, Buoy Layer, Storm Captain…).
+
+Dryline stages: Launch Day (dry lakebed; Forward Now) · Launch-Shop (Arvin, Milo) ·
+Esperanza Node · Ridge Relay (hold 3:00) · Link Stable (Red Mesa controller) · Read-Only
+(Coyote Wells; I Never Want to Not Do This) · Under Two Suns (Sunforge cover) · Wake the
+Forge (Graphite) · Heat Haze (the Silence, 6:00). Sides: Pump House (La Suerte; Ten to
+Pretend), Free Mode (Ridge Relay). Tethergrid stays named in text only; raiders are hush
+forms (Dust Skiff, Sand Ram, Mirage Picket, Heat Shimmer…). "Under Two Suns" is a
+descriptive, game-original name for what the Sunforge cover shows.
+
+Stage tracks also stay in the roaming pool until heard, so players who never reach a
+branch can still find every record.
 
 ## 2. Expedition structure (Open Expedition)
 

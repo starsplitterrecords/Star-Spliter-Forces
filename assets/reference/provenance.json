@@ -1047,6 +1047,70 @@
       ]
     },
     {
+      "id": "portrait_arvin",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/backyard-rockets-issue-02.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Backyard Rockets Issue #2 cover (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "e4ddf1c08831cd2c520ba70517762273d75f5fb71925ef0375062b1a96e3bcc9",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1536
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/arvin_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "d823f671fcd19af22375ec2c5f4cee0c0fd75ebb0c729b1df337f37fb5260960"
+        },
+        {
+          "out": "assets/characters/arvin_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "2f3ad9583ccfcfc9d2312aa61b799d406a49a07eeb9f541c47ff0eb6acf9a90a"
+        }
+      ]
+    },
+    {
+      "id": "portrait_milo",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/covers/backyard-rockets-issue-02.jpg",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Backyard Rockets Issue #2 cover (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "e4ddf1c08831cd2c520ba70517762273d75f5fb71925ef0375062b1a96e3bcc9",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1536
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/milo_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "338dd9a8d56682beb9a257630e045909938968e5eb109ff019b69380f13fa8ad"
+        },
+        {
+          "out": "assets/characters/milo_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "68722335b1e2a6341eb4e345aadec8994f7d47205dc75ab0558ce90a9e4a7bc9"
+        }
+      ]
+    },
+    {
       "id": "portrait_brandon_mack",
       "repo": "StarSplitterVisions",
       "path": "sites/visions/public/images/covers/sunforge-outlaw-issue-01.png",

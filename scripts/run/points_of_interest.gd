@@ -576,6 +576,58 @@ func _draw_landmark(kind: String, pos: Vector2, c: Color) -> void:
 			for k2 in 4:
 				var wy2: float = 40.0 + k2 * 14.0 + 3.0 * sin(anim * 1.5 + k2)
 				draw_line(gc + Vector2(-30, wy2), gc + Vector2(220, wy2), Color(c, 0.25), 2.0)
+		"launch_shop":
+			# A tanker workshop with a launch rail and a dish.
+			var ts: Vector2 = pos + Vector2(-300, -40)
+			draw_rect(Rect2(ts, Vector2(200, 70)), Color("c8c0b0"))
+			draw_rect(Rect2(ts + Vector2(0, 26), Vector2(200, 8)), Color("b8462e"))
+			draw_rect(Rect2(ts + Vector2(0, 36), Vector2(200, 5)), Color("2e5aa0"))
+			draw_rect(Rect2(ts + Vector2(200, 14), Vector2(50, 56)), Color("8a8478"))
+			for wx in [20.0, 70.0, 160.0, 225.0]:
+				draw_circle(ts + Vector2(wx, 74), 12.0, Color("1a1612"))
+			draw_line(ts + Vector2(40, 0), ts + Vector2(140, -110), Color("6a6a70"), 8.0)
+			var rk: Vector2 = ts + Vector2(110, -80)
+			draw_line(rk, rk + Vector2(26, -22), Color("e8e4dc"), 9.0)
+			draw_circle(rk + Vector2(26, -22), 4.5, Color("e58a2b"))
+			draw_arc(ts + Vector2(20, -14), 14.0, PI, TAU, 10, Color("d8dce4"), 4.0)
+		"relay_tower":
+			# A lattice tower beside solar panels.
+			var rt: Vector2 = pos + Vector2(-230, 60)
+			draw_line(rt + Vector2(-30, 0), rt + Vector2(0, -220), Color("9aa0a8"), 4.0)
+			draw_line(rt + Vector2(30, 0), rt + Vector2(0, -220), Color("9aa0a8"), 4.0)
+			for k in 6:
+				var yy: float = -k * 36.0
+				var hw: float = 30.0 * (1.0 + yy / 220.0)
+				draw_line(rt + Vector2(-hw, yy), rt + Vector2(hw, yy - 36.0), Color("9aa0a8", 0.7), 2.0)
+			draw_circle(rt + Vector2(0, -224), 5.0, Color(c, 0.6 + 0.4 * sin(anim * 4.0)))
+			for k2 in 3:
+				var pp2: Vector2 = rt + Vector2(60 + k2 * 56, -20)
+				draw_colored_polygon(PackedVector2Array([pp2, pp2 + Vector2(48, -10), pp2 + Vector2(52, 16), pp2 + Vector2(4, 26)]), Color("23384a"))
+		"controller":
+			# A shed of screens; a green link line across the map.
+			var cc: Vector2 = pos + Vector2(-280, -80)
+			draw_rect(Rect2(cc, Vector2(200, 130)), Color("4a3426"))
+			draw_rect(Rect2(cc + Vector2(14, 14), Vector2(110, 70)), Color("0c1a12"))
+			var pts2: Array = [Vector2(24, 30), Vector2(50, 46), Vector2(80, 40), Vector2(112, 70)]
+			for k in 3:
+				draw_line(cc + pts2[k], cc + pts2[k + 1], Color(c, 0.9), 2.0)
+			for k in 4:
+				draw_circle(cc + pts2[k], 3.0, c)
+			draw_rect(Rect2(cc + Vector2(134, 14), Vector2(54, 70)), Color("0c1a12"))
+			draw_string(font, cc + Vector2(138, 40), "LINK", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, c)
+			draw_string(font, cc + Vector2(138, 56), "STABLE", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, c)
+		"armored_truck":
+			# A boxy armoured truck under two suns.
+			var tk: Vector2 = pos + Vector2(-300, -20)
+			draw_circle(tk + Vector2(40, -170), 26.0, Color("fff1c8", 0.85))
+			draw_circle(tk + Vector2(110, -150), 14.0, Color("fff1c8", 0.7))
+			draw_rect(Rect2(tk, Vector2(170, 70)), Color("3a2e24"))
+			draw_rect(Rect2(tk + Vector2(110, -34), Vector2(60, 40)), Color("3a2e24"))
+			draw_rect(Rect2(tk + Vector2(118, -26), Vector2(40, 18)), Color("e0a060", 0.5))
+			draw_line(tk + Vector2(0, -10), tk + Vector2(110, -10), Color("6a5a48"), 4.0)
+			for wx2 in [30.0, 130.0]:
+				draw_circle(tk + Vector2(wx2, 74), 20.0, Color("141210"))
+				draw_circle(tk + Vector2(wx2, 74), 8.0, Color("5a4a3a"))
 		"sunforge":
 			# A star burning close enough to forge.
 			var fc: Vector2 = pos + Vector2(-250, -50)

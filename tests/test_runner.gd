@@ -1148,6 +1148,21 @@ func test_sea_branch() -> void:
 	check(run.world.biome == "sea", "Sea biome not set")
 	var e: ForceEnemy = run.spawn_enemy("skiff", run.player.position + Vector2(300, 0))
 	check(e != null and e.skin_name == "Fog Skiff", "sea skin not applied")
+	run.queue_free()
+	# Desert: opens from OCHRE-9 (Lucia).
+	check(GameData.chart_prev_main("des_lakebed") == "s_ochre", "Desert branch should open from OCHRE-9")
+	for st2: Dictionary in GameData.CHART:
+		if int(st2.get("chapter", 1)) == 11:
+			for did2: String in st2.get("discoveries", []):
+				check(GameData.discovery_in_destination(did2, "dryline"), "%s not in Dryline" % did2)
+	var run2: GameRun = _make_run({"stop": "des_lakebed"})
+	await get_tree().process_frame
+	check(run2.world.biome == "desert", "Desert biome not set")
+	var e2: ForceEnemy = run2.spawn_enemy("skiff", run2.player.position + Vector2(300, 0))
+	check(e2 != null and e2.skin_name == "Dust Skiff", "desert skin not applied")
+	# A stage track counts as heard for roaming.
+	var before: int = GameData.unheard_roaming({}).size()
+	check(GameData.unheard_roaming({"des_launch_signal": {}}).size() == before - 1, "stage track still roaming")
 
 ## Lets the engine drive the run for real frames (queue_free, signals, HUD).
 func test_real_frames() -> void:

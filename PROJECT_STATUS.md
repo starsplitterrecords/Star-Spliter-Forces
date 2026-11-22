@@ -78,7 +78,9 @@ Versioned atomic saves with backup recovery and prototype migration.
 (surface, scatter, raider skins). Harbor Signal (sea; Vikings 2026! + Low Tide Signal):
 7 regions, 4 landmarks (longship, DTI building, rooftop dish, Harbor Phase flood gate),
 8 stages + 3 sides, contacts Gunnar and Carrie. Bot clears stage 1, the pier hold and
-the sea boss (`test_sea_branch`, `tools/CaptureSea.tscn`).
+the sea boss (`test_sea_branch`, `tools/CaptureSea.tscn`). Dryline (desert; Backyard
+Rockets + Sunforge Outlaw): 9 regions, 5 new landmarks, 9 stages + 2 sides, contacts
+Arvin and Milo; bot clears the lakebed, ridge hold, forge and boss (Ella).
 
 ## Measured
 

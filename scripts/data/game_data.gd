@@ -531,6 +531,20 @@ const DESTINATIONS: Dictionary = {
 		"completion_unlocks": [],
 		"seed": 4410,
 	},
+	"dryline": {
+		"name": "Dryline",
+		"desc": "Signal Space shaped like the Mojave: a launch range, water towns, relays, and two suns.",
+		"half_size": Vector2(6000.0, 4200.0),
+		"gate": Vector2(-5000.0, -200.0),
+		"goal_signals": 3,
+		"climax_time": 1140.0,
+		"background": Color("2a1e14"),
+		"drift_name": "OPEN DESERT",
+		"biome": "desert",
+		"regions": ["dry_lakebed", "launch_shop", "esperanza", "la_suerte", "ridge_relay", "red_mesa", "coyote_wells", "two_suns", "the_forge"],
+		"completion_unlocks": [],
+		"seed": 5120,
+	},
 }
 
 ## Branch worlds: ground colour, surface detail, scatter, and how the hush's
@@ -542,7 +556,11 @@ const BIOMES: Dictionary = {
 			"mine_hauler": ["Buoy Layer", Color("c86a7a")], "wreck_lurker": ["Flotsam Lurker", Color("8a8070")], "leech": ["Barnacle Leech", Color("9a9a60")],
 			"gunship": ["Breaker Gunship", Color("a88a5a")], "splinter_captain": ["Storm Captain", Color("e0c060")], "dreadnought": ["Undertow Hulk", Color("6a7a8a")],
 			"echo_mote": ["Sea Glow", Color("d07090")], "swarm_tender": ["Gull Tender", Color("c87a5a")], "shield_tug": ["Harbor Tug", Color("a88aa0")], "blink": ["Fog Flicker", Color("c060a0")]}},
-	"desert": {"surface": Color(1.0, 0.8, 0.5, 0.08), "rock": Color("4a3626")},
+	"desert": {"surface": Color(1.0, 0.82, 0.55, 0.13), "rock": Color("5a4030"),
+		"skins": {"skiff": ["Dust Skiff", Color("b09070")], "ram_cutter": ["Sand Ram", Color("c87a4a")], "rail_picket": ["Mirage Picket", Color("e0b060")],
+			"mine_hauler": ["Caltrop Layer", Color("c86a5a")], "wreck_lurker": ["Scrap Lurker", Color("9a8060")], "leech": ["Tick Leech", Color("a89a5a")],
+			"gunship": ["Heat Gunship", Color("d08a4a")], "splinter_captain": ["Dust Captain", Color("f0c050")], "dreadnought": ["Dune Hulk", Color("8a6a4a")],
+			"echo_mote": ["Heat Shimmer", Color("e08070")], "swarm_tender": ["Vulture Tender", Color("b87050")], "shield_tug": ["Hauler Tug", Color("b09080")], "blink": ["Mirage Flicker", Color("e070a0")]}},
 	"fantasy": {"surface": Color(0.6, 1.0, 0.6, 0.10), "rock": Color("2a3a26")},
 	"park": {"surface": Color(0.6, 0.95, 1.0, 0.07), "rock": Color("2a3a44")},
 	"orbit": {},
@@ -590,6 +608,34 @@ const REGIONS: Dictionary = {
 	"auric_bazaar": {"name": "AURIC BAZAAR", "shape": "circle", "center": Vector2(6500, 600), "radius": 620.0,
 		"color": Color("e0b46a"), "floor": Color("120d08"), "props": "wreck", "density": 0.5, "music": "region_wrecks",
 		"enemies": {"skiff": 0.8, "rail_picket": 0.6, "gunship": 0.3}, "blurb": "A Verge freeport and dock ring, reachable again.", "threat": 2},
+	# Dryline (Backyard Rockets released Issues 01-02; Sunforge Outlaw cover).
+	"dry_lakebed": {"name": "DRY LAKEBED", "shape": "circle", "center": Vector2(-3300, 1300), "radius": 1300.0,
+		"color": Color("e8c890"), "floor": Color("3a2a1c"), "props": "lakebed", "density": 0.7, "music": "region_basin",
+		"enemies": {"skiff": 1.0, "ram_cutter": 0.5, "echo_mote": 0.4}, "blurb": "A launch range at dawn.", "threat": 1},
+	"launch_shop": {"name": "LAUNCH-SHOP", "shape": "circle", "center": Vector2(-2600, -1900), "radius": 750.0,
+		"color": Color("e58a2b"), "floor": Color("33241a"), "props": "desert_camp", "density": 0.7, "music": "region_corridor",
+		"enemies": {"skiff": 0.9, "leech": 0.4, "ram_cutter": 0.3}, "blurb": "A mobile workshop in the Mojave.", "threat": 2},
+	"esperanza": {"name": "ESPERANZA", "shape": "circle", "center": Vector2(-300, -300), "radius": 850.0,
+		"color": Color("8fd0c0"), "floor": Color("30241a"), "props": "town", "density": 0.8, "music": "region_wrecks",
+		"enemies": {"skiff": 0.8, "mine_hauler": 0.5, "rail_picket": 0.4, "shield_tug": 0.3}, "blurb": "Clinic, purifier and the Esperanza Node.", "threat": 2},
+	"la_suerte": {"name": "LA SUERTE FARM CO-OP", "shape": "circle", "center": Vector2(300, 2500), "radius": 650.0,
+		"color": Color("b8d07a"), "floor": Color("2e2a18"), "props": "town", "density": 0.6, "music": "region_shelf",
+		"enemies": {"skiff": 0.8, "leech": 0.5, "swarm_tender": 0.3}, "blurb": "A farm co-op pump house.", "threat": 2},
+	"ridge_relay": {"name": "RIDGE RELAY", "shape": "circle", "center": Vector2(1700, -2500), "radius": 750.0,
+		"color": Color("9ad0ff"), "floor": Color("34261c"), "props": "mesa", "density": 0.8, "music": "region_gate",
+		"enemies": {"skiff": 0.8, "rail_picket": 0.6, "gunship": 0.25}, "blurb": "A relay tower on the northern ridge.", "threat": 2},
+	"red_mesa": {"name": "RED MESA", "shape": "circle", "center": Vector2(2500, 600), "radius": 850.0,
+		"color": Color("e0684a"), "floor": Color("3a2018"), "props": "mesa", "density": 1.0, "music": "region_bloom",
+		"enemies": {"ram_cutter": 0.6, "wreck_lurker": 0.5, "gunship": 0.3, "skiff": 0.6}, "blurb": "The Red Mesa controller.", "threat": 3},
+	"coyote_wells": {"name": "COYOTE WELLS", "shape": "circle", "center": Vector2(4500, -1100), "radius": 650.0,
+		"color": Color("d8b070"), "floor": Color("32261a"), "props": "town", "density": 0.7, "music": "region_shelf",
+		"enemies": {"skiff": 0.8, "blink": 0.4, "echo_mote": 0.5}, "blurb": "A pump room and a receiver dish.", "threat": 2},
+	"two_suns": {"name": "UNDER TWO SUNS", "shape": "circle", "center": Vector2(3800, 2800), "radius": 900.0,
+		"color": Color("ff9b3d"), "floor": Color("3a2410"), "props": "dunes", "density": 0.9, "music": "region_bloom",
+		"enemies": {"ram_cutter": 0.7, "gunship": 0.4, "splinter_captain": 0.1, "skiff": 0.6}, "blurb": "Heat. Pursuit. A life outside the law.", "threat": 3},
+	"the_forge": {"name": "THE FORGE", "shape": "circle", "center": Vector2(5100, 900), "radius": 650.0,
+		"color": Color("ffcf8a"), "floor": Color("3e2210"), "props": "dunes", "density": 0.7, "music": "region_gate",
+		"enemies": {"blink": 0.6, "gunship": 0.4, "echo_mote": 0.5}, "blurb": "Not all power is meant to be controlled.", "threat": 3},
 	# Harbor Signal (Vikings 2026! released Issue 01; Low Tide Signal cover).
 	"north_atlantic": {"name": "THE NORTH ATLANTIC", "shape": "circle", "center": Vector2(-3400, -1500), "radius": 1300.0,
 		"color": Color("7fb0c8"), "floor": Color("0d2430"), "props": "open_sea", "density": 0.8, "music": "region_basin",
@@ -722,6 +768,34 @@ static var DISCOVERIES: Dictionary = {
 	"rec_avo": {"kind": "signal", "region": "auric_bazaar", "offset": Vector2(-250, 250), "title": "PORCH BROADCAST",
 		"transmission": "avo_all_i_am", "color": Color("c85b28"),
 		"text": "Fiddle runs and close harmonies from somewhere on the dock ring."},
+	# Dryline branch.
+	"des_launch_signal": {"kind": "signal", "region": "dry_lakebed", "offset": Vector2(220, -140), "title": "LAUNCH CARRIER",
+		"transmission": "phase_redu_forward_now_feat_cheddr", "color": Color("e58a2b"), "place": "dry_lakebed",
+		"text": "A carrier climbing off the lakebed like a contrail."},
+	"des_launch_shop": {"kind": "character", "region": "launch_shop", "offset": Vector2(0, 0), "title": "MOBILE LAUNCH-SHOP",
+		"landmark": "launch_shop", "color": Color("e58a2b"), "contacts": ["arvin", "milo"], "place": "launch_shop", "crossover": "backyard_rockets",
+		"text": "A battered tanker workshop with a launch rail on its back. Arvin and Milo are working on something."},
+	"des_esperanza": {"kind": "character", "region": "esperanza", "offset": Vector2(0, 0), "title": "ESPERANZA NODE",
+		"landmark": "relay_tower", "color": Color("8fd0c0"), "place": "esperanza", "crossover": "backyard_rockets",
+		"text": "Solar panels, a lattice tower and a clinic wall. A node that keeps a town talking."},
+	"des_suerte_signal": {"kind": "signal", "region": "la_suerte", "offset": Vector2(-200, 160), "title": "PUMP HOUSE CARRIER",
+		"transmission": "daisy_groh_ten_to_pretend", "color": Color("b8d07a"), "place": "la_suerte",
+		"text": "A song humming along the pump house pipes."},
+	"des_ridge_signal": {"kind": "signal", "region": "ridge_relay", "offset": Vector2(260, 200), "title": "RIDGE CARRIER",
+		"transmission": "pulse_widt_free_mode_feat_cheddr", "color": Color("9ad0ff"), "place": "ridge_relay",
+		"text": "A carrier bouncing off the ridge relay, free of the grid."},
+	"des_controller": {"kind": "character", "region": "red_mesa", "offset": Vector2(0, 0), "title": "RED MESA CONTROLLER",
+		"landmark": "controller", "color": Color("9be7a0"), "place": "red_mesa", "crossover": "backyard_rockets",
+		"text": "A shed of screens on the mesa. LINK STABLE."},
+	"des_coyote_signal": {"kind": "signal", "region": "coyote_wells", "offset": Vector2(0, 0), "title": "COYOTE WELLS RECEIVER",
+		"transmission": "pulse_widt_i_never_want_to_not_do_this", "color": Color("d8b070"), "place": "coyote_wells",
+		"text": "The receiver is read-only. It is listening anyway."},
+	"sfo_truck": {"kind": "character", "region": "two_suns", "offset": Vector2(0, 0), "title": "UNDER TWO SUNS",
+		"landmark": "armored_truck", "color": Color("ff9b3d"), "place": "two_suns", "crossover": "sunforge_outlaw",
+		"text": "An armoured truck in the dust, a dark spired skyline, two suns overhead."},
+	"sfo_forge_signal": {"kind": "signal", "region": "the_forge", "offset": Vector2(0, 0), "title": "WAKE THE FORGE",
+		"transmission": "star_split_graphite", "color": Color("ffcf8a"), "place": "the_forge",
+		"text": "Not all power is meant to be controlled."},
 	# Harbor Signal branch.
 	"sea_storm_carrier": {"kind": "signal", "region": "north_atlantic", "offset": Vector2(200, -100), "title": "STORM CARRIER",
 		"transmission": "ion_drive__unification_theory", "color": Color("f1b826"), "place": "north_atlantic",
@@ -885,6 +959,8 @@ const CONTACTS: Dictionary = {
 	"chris_halev": {"name": "Governor Chris Halev", "faction": "The Verge", "role": "Civil leader of Auric Bazaar. Speaks in cargo, heat, food, docks and people.", "portrait": "chris_halev"},
 	"brent_wallace": {"name": "Brent Wallace", "faction": "The Verge", "role": "Trader guild elder. Dry, muttering, sarcastic.", "portrait": "brent_wallace"},
 	"gunnar": {"name": "Gunnar", "faction": "Vikings 2026!", "role": "Bjorn's companion; observant, concise, dryly funny.", "portrait": "gunnar"},
+	"arvin": {"name": "Arvin", "faction": "Backyard Rockets", "role": "Launch-Shop's aerospace engineer. Builds another way.", "portrait": "arvin"},
+	"milo": {"name": "Milo", "faction": "Backyard Rockets", "role": "Launch-Shop engineer. Broad, grounded, hands always busy.", "portrait": "milo"},
 	"carrie": {"name": "Carrie", "faction": "Vikings 2026!", "role": "DTI caseworker. Fast, sarcastic, fluent in forms and loopholes.", "portrait": "carrie"},
 }
 
@@ -899,6 +975,15 @@ const PLACES: Dictionary = {
 	"east_river": {"name": "The East River", "series": "Vikings 2026!", "text": "A longship moving toward the Lower Manhattan skyline.", "source": "Vikings 2026! Issue 01, pages 004-005"},
 	"dti_building": {"name": "Municipal Temporal Displacement Integration Department", "series": "Vikings 2026!", "text": "A plain mid-century municipal office slab at blue-purple dusk.", "source": "Vikings 2026! Issue 01, page 010"},
 	"bushwick_rooftop": {"name": "Bushwick Rooftop", "series": "Vikings 2026!", "text": "Sunlit Bushwick apartment rooftop: black tar membrane, low brick parapet.", "source": "Vikings 2026! Issue 01, pages 016-025"},
+	"dry_lakebed": {"name": "Dry Lakebed Launch Site", "series": "Backyard Rockets", "text": "A dry lakebed launch site at dawn.", "source": "Backyard Rockets Issues 01-02"},
+	"launch_shop": {"name": "Mobile Launch-Shop", "series": "Backyard Rockets", "text": "A mobile workshop in the Mojave where salvaged aerospace parts become rockets.", "source": "Backyard Rockets Issues 01-02 (pages 004, 021, 024, 031)"},
+	"esperanza": {"name": "Esperanza", "series": "Backyard Rockets", "text": "Community clinic, purification plant and the Esperanza Node.", "source": "Backyard Rockets Issues 01-02 (pages 020, 033, 045)"},
+	"la_suerte": {"name": "La Suerte Farm Co-op", "series": "Backyard Rockets", "text": "The co-op's pump house.", "source": "Backyard Rockets Issues 01-02 (page 033)"},
+	"ridge_relay": {"name": "Ridge Relay", "series": "Backyard Rockets", "text": "A relay tower and solar shed on the northern ridge.", "source": "Backyard Rockets Issues 01-02 (page 045)"},
+	"red_mesa": {"name": "Red Mesa Controller", "series": "Backyard Rockets", "text": "Controller screens on the mesa.", "source": "Backyard Rockets Issues 01-02 (page 045)"},
+	"coyote_wells": {"name": "Coyote Wells Receiver", "series": "Backyard Rockets", "text": "A receiver dish over the pump room. Status: read-only.", "source": "Backyard Rockets Issues 01-02 (page 045)"},
+	"two_suns": {"name": "Under Two Suns", "series": "Sunforge Outlaw", "text": "Two suns over a dark spired skyline; an armoured truck in the dust.", "source": "Sunforge Outlaw Issue 01 cover (descriptive name, game-original)"},
+	"the_forge": {"name": "The Forge", "series": "Sunforge Outlaw", "text": "\"Wake the forge. Change the world.\"", "source": "Sunforge Outlaw Issue 01 cover"},
 	"harbor_phase": {"name": "Harbor Phase", "series": "Low Tide Signal", "text": "A quiet coastal signal from a flooded edge of the future.", "source": "Low Tide Signal, Issue 01 cover"},
 	"flooded_coast": {"name": "The Flooded Coast", "series": "Low Tide Signal", "text": "On a flooded coast, abandoned infrastructure and an uneasy community.", "source": "Low Tide Signal series page"},
 }
@@ -909,6 +994,7 @@ const CHAPTERS: Array = [
 	{"id": 2, "name": "The Green Corridor", "numeral": "II", "destination": "kaldr_rift", "subtitle": "The Kaldr Rift convoy lane, out to Auric.", "after": "the_silence"},
 	# Branches: each crossover series gets its own path and its own world.
 	{"id": 10, "name": "Harbor Signal", "numeral": "SEA", "destination": "harbor_signal", "subtitle": "Vikings 2026! and Low Tide Signal, at sea.", "branch_from": "s_dti", "biome": "sea"},
+	{"id": 11, "name": "Dryline", "numeral": "DESERT", "destination": "dryline", "subtitle": "Backyard Rockets and Sunforge Outlaw, in the desert.", "branch_from": "s_ochre", "biome": "desert"},
 ]
 
 # ============================================================== corridor chart
@@ -1152,6 +1238,62 @@ const CHART: Array = [
 		"new_title": "THE SILENCE AT SEA", "new": "It follows the music here too. Arrives at 6:00.",
 		"brief": "The harbor is singing. Something wants it quiet.",
 		"reward": ["+250 Signal", "Harbor Signal complete"], "grants": {"signal": 250}},
+	# ================= BRANCH — DRYLINE (desert) =================
+	{"id": "des_lakebed", "chapter": 11, "power": 50, "prize": "Track", "icon": "signal", "name": "Launch Day", "place": "Dry Lakebed", "region": "dry_lakebed",
+		"objective": {"type": "discover", "id": "des_launch_signal"}, "discoveries": ["des_launch_signal"],
+		"new_title": "THE DESERT", "new": "Signal Space shaped like the Mojave. Mesas, scrub, heat.",
+		"brief": "Something just launched off the lakebed.",
+		"reward": ["Track: Forward Now (feat. Cheddr)", "Place: the dry lakebed"], "grants": {}},
+	{"id": "des_shop", "chapter": 11, "power": 70, "prize": "Arvin & Milo", "icon": "visions", "name": "Launch-Shop", "place": "Launch-Shop", "region": "launch_shop",
+		"objective": {"type": "discover", "id": "des_launch_shop"}, "discoveries": ["des_launch_shop"],
+		"new_title": "THE CREW", "new": "Lucia's crew: Arvin and Milo.",
+		"brief": "A tanker workshop parked out in the scrub.",
+		"reward": ["Contacts: Arvin, Milo", "Place: the Launch-Shop"], "grants": {}},
+	{"id": "des_esperanza", "chapter": 11, "power": 90, "prize": "Place", "icon": "visions", "name": "Esperanza Node", "place": "Esperanza", "region": "esperanza",
+		"objective": {"type": "discover", "id": "des_esperanza"}, "discoveries": ["des_esperanza"],
+		"new_title": "A TOWN ONLINE", "new": "A node that keeps a town talking.",
+		"brief": "Esperanza's node is up. Keep it up.",
+		"reward": ["Place: Esperanza"], "grants": {}},
+	{"id": "des_ridge", "chapter": 11, "prize": "+120 Signal", "icon": "hostile", "name": "Ridge Relay", "place": "Ridge Relay", "region": "ridge_relay",
+		"objective": {"type": "survive", "seconds": 180.0}, "discoveries": [],
+		"new_title": "HOLD THE RIDGE", "new": "Hold the relay for three minutes.",
+		"brief": "The relay on the ridge is the weak link.",
+		"reward": ["+120 Signal"], "grants": {"signal": 120}},
+	{"id": "des_red_mesa", "chapter": 11, "power": 100, "prize": "Place", "icon": "visions", "name": "Link Stable", "place": "Red Mesa", "region": "red_mesa",
+		"objective": {"type": "discover", "id": "des_controller"}, "discoveries": ["des_controller"],
+		"new_title": "THE CONTROLLER", "new": "Screens on the mesa, the whole link on one map.",
+		"brief": "Red Mesa holds the controller.",
+		"reward": ["Place: Red Mesa"], "grants": {}},
+	{"id": "des_coyote", "chapter": 11, "power": 110, "prize": "Track", "icon": "signal", "name": "Read-Only", "place": "Coyote Wells", "region": "coyote_wells",
+		"objective": {"type": "discover", "id": "des_coyote_signal"}, "discoveries": ["des_coyote_signal"],
+		"new_title": "READ-ONLY", "new": "Coyote Wells only listens. Bring it something.",
+		"brief": "The receiver at Coyote Wells.",
+		"reward": ["Track: I Never Want to Not Do This", "Place: Coyote Wells"], "grants": {}},
+	{"id": "des_two_suns", "chapter": 11, "power": 110, "prize": "Sunforge", "icon": "visions", "name": "Under Two Suns", "place": "Under Two Suns", "region": "two_suns",
+		"objective": {"type": "discover", "id": "sfo_truck"}, "discoveries": ["sfo_truck"],
+		"new_title": "SUNFORGE OUTLAW", "new": "Another series bleeds in: heat, pursuit, two suns.",
+		"brief": "Out past the mesas, the sky has two suns.",
+		"reward": ["Place: Under Two Suns"], "grants": {}},
+	{"id": "des_forge", "chapter": 11, "power": 130, "prize": "Track", "icon": "signal", "name": "Wake the Forge", "place": "The Forge", "region": "the_forge",
+		"objective": {"type": "discover", "id": "sfo_forge_signal"}, "discoveries": ["sfo_forge_signal"],
+		"new_title": "WAKE THE FORGE", "new": "Not all power is meant to be controlled.",
+		"brief": "Something hot is broadcasting out of the forge.",
+		"reward": ["Track: Graphite", "Place: the Forge"], "grants": {}},
+	{"id": "des_heat", "chapter": 11, "prize": "+250 Signal", "icon": "elite", "name": "Heat Haze", "place": "Open Desert", "start": Vector2(-900, 900),
+		"objective": {"type": "boss", "at": 360.0, "hp": 0.5}, "discoveries": [],
+		"new_title": "THE SILENCE IN THE HEAT", "new": "It follows the music here too. Arrives at 6:00.",
+		"brief": "The whole basin is talking. Something wants it quiet.",
+		"reward": ["+250 Signal", "Dryline complete"], "grants": {"signal": 250}},
+	{"id": "dess_suerte", "chapter": 11, "side_of": "des_esperanza", "power": 80, "prize": "Track", "icon": "signal", "name": "Pump House", "place": "La Suerte", "region": "la_suerte",
+		"objective": {"type": "discover", "id": "des_suerte_signal"}, "discoveries": ["des_suerte_signal"],
+		"new_title": "THE CO-OP", "new": "A song along the pump house pipes.",
+		"brief": "La Suerte's pumps are humming something.",
+		"reward": ["Track: Ten to Pretend", "Place: La Suerte Farm Co-op"], "grants": {}},
+	{"id": "dess_ridge", "chapter": 11, "side_of": "des_ridge", "power": 90, "prize": "Track", "icon": "signal", "name": "Free Mode", "place": "Ridge Relay", "region": "ridge_relay",
+		"objective": {"type": "discover", "id": "des_ridge_signal"}, "discoveries": ["des_ridge_signal"],
+		"new_title": "OFF THE GRID", "new": "A carrier bouncing off the relay.",
+		"brief": "The relay's quiet now. Listen to it.",
+		"reward": ["Track: Free Mode (feat. Cheddr)", "Place: Ridge Relay"], "grants": {}},
 	{"id": "seas_river", "chapter": 10, "side_of": "sea_river", "power": 70, "prize": "Track", "icon": "signal", "name": "River Carrier", "place": "The East River", "region": "east_river",
 		"objective": {"type": "discover", "id": "sea_river_carrier"}, "discoveries": ["sea_river_carrier"],
 		"new_title": "DOWNSTREAM", "new": "A carrier wave riding the current.",
@@ -1409,18 +1551,12 @@ static func load_catalog() -> void:
 		if not PROJECTS.has(pname):
 			var pj: Dictionary = projects[pname]
 			PROJECTS[pname] = {"field": String(pj.get("field", "")), "role": String(pj.get("role", "")), "accent": Color(String(pj.get("accent", "#cfe9ff"))), "bio": String(pj.get("bio", "")), "url": ""}
-	var placed: Dictionary = {}
-	for did0: String in DISCOVERIES.keys():
-		if DISCOVERIES[did0].has("transmission"):
-			placed[String(DISCOVERIES[did0]["transmission"])] = true
 	for t: Variant in data.get("tracks", []):
 		var td: Dictionary = t
 		var tid: String = String(td["id"])
 		if TRANSMISSIONS.has(tid) or not PROJECTS.has(String(td["project"])):
 			continue
 		TRANSMISSIONS[tid] = {"project": String(td["project"]), "force": "", "title": String(td["title"]), "meta": String(td.get("meta", "")), "master_file": tid + ".ogg", "catalog": true}
-		if placed.has(tid):
-			continue # a stage already places this track
 		DISCOVERIES["trk_" + tid] = {"kind": "signal", "roaming": true, "transmission": tid, "title": "UNHEARD CARRIER",
 			"color": PROJECTS[String(td["project"])]["accent"], "text": ""}
 
@@ -1428,12 +1564,17 @@ static func load_catalog() -> void:
 static func unheard_roaming(discovered: Dictionary) -> Array:
 	var heard_per_project: Dictionary = {}
 	var out: Array = []
+	# A track already found on a stage counts as heard here too.
+	var heard_tracks: Dictionary = {}
+	for did0: String in discovered.keys():
+		if DISCOVERIES.has(did0) and DISCOVERIES[did0].has("transmission"):
+			heard_tracks[String(DISCOVERIES[did0]["transmission"])] = true
 	for did: String in DISCOVERIES.keys():
 		var d: Dictionary = DISCOVERIES[did]
 		if not bool(d.get("roaming", false)):
 			continue
 		var proj: String = String(TRANSMISSIONS[String(d["transmission"])]["project"])
-		if discovered.has(did):
+		if discovered.has(did) or heard_tracks.has(String(d["transmission"])):
 			heard_per_project[proj] = int(heard_per_project.get(proj, 0)) + 1
 		else:
 			out.append(did)

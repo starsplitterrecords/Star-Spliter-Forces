@@ -357,6 +357,72 @@ func _build_region(rid: String, r: Dictionary) -> void:
 				_op(fp, ["poly", PackedVector2Array([fp, fp + Vector2(fw, 0), fp + Vector2(fw, fw * 0.7), fp + Vector2(0, fw * 0.7)]), Color("26333a")])
 				_op(fp, ["line", PackedVector2Array([fp + Vector2(0, fw * 0.7), fp + Vector2(fw, fw * 0.7)]), Color(acc, 0.35), 3.0])
 				_obstacle(fp + Vector2(fw, fw * 0.7) * 0.5, fw * 0.35)
+		"lakebed":
+			# Cracked flat clay: polygon crack lines, open ground for a launch.
+			for k in int(16 * density + 6):
+				var lp: Vector2 = _scatter_point(r)
+				if lp.x == INF:
+					continue
+				var crack: PackedVector2Array = PackedVector2Array([lp])
+				for s2 in 4:
+					crack.append(crack[-1] + Vector2.from_angle(rng.randf() * TAU) * rng.randf_range(30.0, 70.0))
+				_op(lp, ["line", crack, Color("1e150e", 0.55), 2.0])
+		"desert_camp":
+			# Solar panels and parts crates around the workshop.
+			for k in 8:
+				var cp: Vector2 = _scatter_point(r)
+				if cp.x == INF or not _clear_of_discoveries(cp, 180.0):
+					continue
+				if k % 2 == 0:
+					_op(cp, ["poly", PackedVector2Array([cp, cp + Vector2(60, -12), cp + Vector2(66, 18), cp + Vector2(6, 30)]), Color("23384a")])
+					_op(cp, ["line", PackedVector2Array([cp + Vector2(30, -6), cp + Vector2(36, 24)]), Color("6a8aa8", 0.6), 1.5])
+				else:
+					_op(cp, ["poly", PackedVector2Array([cp, cp + Vector2(34, 0), cp + Vector2(34, 26), cp + Vector2(0, 26)]), Color("6a4a2e")])
+				_obstacle(cp + Vector2(18, 10), 18.0)
+		"town":
+			# Adobe blocks and water tanks: solid.
+			var tc: Vector2 = GameData.region_anchor(r)
+			for k in 8:
+				var bp2: Vector2 = tc + Vector2(rng.randf_range(-1, 1), rng.randf_range(-1, 1)) * float(r["radius"]) * 0.7
+				if not _clear_of_discoveries(bp2, 200.0):
+					continue
+				if k % 3 == 0:
+					_op(bp2, ["circle", bp2, 26.0, Color("7a8a90")])
+					_op(bp2, ["arc", bp2, 26.0, 0.0, TAU, Color(acc, 0.5), 2.0])
+					_obstacle(bp2, 26.0)
+				else:
+					var w2: float = rng.randf_range(70.0, 130.0)
+					var h3: float = rng.randf_range(50.0, 90.0)
+					_op(bp2, ["poly", PackedVector2Array([bp2, bp2 + Vector2(w2, 0), bp2 + Vector2(w2, h3), bp2 + Vector2(0, h3)]), Color("8a6a4c")])
+					_op(bp2, ["poly", PackedVector2Array([bp2 + Vector2(w2 * 0.4, h3 * 0.4), bp2 + Vector2(w2 * 0.4 + 14, h3 * 0.4), bp2 + Vector2(w2 * 0.4 + 14, h3 * 0.4 + 18), bp2 + Vector2(w2 * 0.4, h3 * 0.4 + 18)]), Color("2a1e14")])
+					_obstacle(bp2 + Vector2(w2, h3) * 0.5, minf(w2, h3) * 0.5)
+		"mesa":
+			# Layered red rock plateaus.
+			for k in int(5 * density + 2):
+				var mp: Vector2 = _scatter_point(r)
+				if mp.x == INF or not _clear_of_discoveries(mp, 220.0):
+					continue
+				var mr: float = rng.randf_range(60.0, 120.0)
+				for layer in 3:
+					var lr: float = mr * (1.0 - layer * 0.22)
+					var pts: PackedVector2Array = PackedVector2Array()
+					for q in 9:
+						pts.append(mp + Vector2(0, -layer * 8) + Vector2.from_angle(TAU * q / 9.0) * lr * Vector2(1.3, 0.8) * rng.randf_range(0.85, 1.1))
+					_op(mp, ["poly", pts, [Color("6a3a26"), Color("8a4a30"), Color("a65a38")][layer]])
+				_obstacle(mp, mr * 0.9)
+		"dunes":
+			# Long dune crests and half-buried scrap.
+			for k in int(12 * density + 4):
+				var dp: Vector2 = _scatter_point(r)
+				if dp.x == INF:
+					continue
+				var dr: float = rng.randf_range(90.0, 220.0)
+				_op(dp, ["arc", dp, dr, PI * 1.15, PI * 1.85, Color("c88a4a", 0.35), 6.0])
+				_op(dp, ["arc", dp + Vector2(0, 8), dr, PI * 1.2, PI * 1.8, Color("1e140c", 0.4), 3.0])
+			for k in 5:
+				var sp: Vector2 = _scatter_point(r)
+				if sp.x != INF and _clear_of_discoveries(sp, 160.0):
+					_rock(sp, rng.randf_range(20.0, 34.0), Color("4a3a30"))
 		"corridor":
 			var a: Vector2 = r["a"]
 			var b: Vector2 = r["b"]
@@ -444,6 +510,13 @@ func _drift_prop(p: Vector2, r: float, solid: bool) -> void:
 			else:
 				# Pilings / drifting debris.
 				_rock(p, r * 0.7, Color("22303a"), solid)
+		"desert":
+			if rng.randf() < 0.45:
+				# Creosote scrub: a low cluster you fly over.
+				for k in 5:
+					_op(p, ["circle", p + Vector2.from_angle(k * 1.3) * r * 0.3, r * 0.22, Color("4a5a2e", 0.8)])
+			else:
+				_rock(p, r * 0.8, Color("5a4030"), solid)
 		_:
 			_rock(p, r, Color(GameData.BIOMES.get(biome, {}).get("rock", Color("1a2033"))), solid)
 
