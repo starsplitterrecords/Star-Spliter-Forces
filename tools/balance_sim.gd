@@ -19,6 +19,8 @@ func _ready() -> void:
 	for extra: String in attuned:
 		Profile.data["forces_attuned"].append(extra)
 	Profile.data["unlocked_characters"] = GameData.CHARACTERS.keys()
+	if OS.get_environment("SIM_STEADY") != "":
+		Profile.data["stage_losses"] = {stop: 2}
 	var run: GameRun = GameRun.new()
 	run.setup({"character": character, "force": force, "seed": seed_value, "destination": destination, "stop": stop})
 	run.scripted_input = true

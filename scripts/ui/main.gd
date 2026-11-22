@@ -368,6 +368,8 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 	else:
 		if get_viewport().get_visible_rect().size.y >= 600.0 or UiTheme.is_narrow():
 			col.add_child(UiTheme.label(String(st["brief"]), 13, UiTheme.TEXT))
+		if not done and Profile.stage_losses(id) >= 1:
+			col.add_child(UiTheme.label("STEADY: +30% hull" + (", weaker boss" if String(st["objective"]["type"]) == "boss" else ""), 13, Color("9be7a0"), "bold"))
 		col.add_child(UiTheme.label("OBJECTIVE: " + GameData.chart_objective_text(st), 15, Color("a8f7ff"), "bold"))
 		col.add_child(UiTheme.label(("EARNED: " if done else "REWARD: ") + "  •  ".join(st["reward"]), 15, UiTheme.GOLD, "bold"))
 		var unheard: int = GameData.unheard_roaming(Profile.data["discovered"]).size()

@@ -51,6 +51,7 @@ var state: String = "DRIFT"
 var anim: float = 0.0
 var alive: bool = true
 var god_mode: bool = false
+var damage_ease: float = 1.0
 var wake: PackedVector2Array = PackedVector2Array() # recent world positions
 var wake_clock: float = 0.0
 const WAKE_POINTS: int = 14
@@ -118,7 +119,7 @@ func step(delta: float) -> void:
 func hurt(amount: float) -> bool:
 	if invuln > 0.0 or not alive or god_mode:
 		return false
-	var dmg: float = maxf(1.0, amount * damage_taken_mult - armor)
+	var dmg: float = maxf(1.0, amount * damage_taken_mult * damage_ease - armor)
 	if shield > 0.0:
 		var absorbed: float = minf(shield, dmg)
 		shield -= absorbed

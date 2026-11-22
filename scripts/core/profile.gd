@@ -301,6 +301,15 @@ func record_expedition(result: Dictionary) -> Dictionary:
 	var outcome: String = String(result.get("outcome", "defeat"))
 	var time: float = float(result.get("time", 0.0))
 	stats["expeditions"] = int(stats["expeditions"]) + 1
+	# Losses per stage (for the Steady assist); a clear resets it.
+	var sid: String = String(result.get("stop", ""))
+	if sid != "":
+		var losses: Dictionary = data.get("stage_losses", {})
+		if bool(result.get("stop_complete", false)) or stop_done(sid):
+			losses.erase(sid)
+		elif outcome == "defeat":
+			losses[sid] = int(losses.get(sid, 0)) + 1
+		data["stage_losses"] = losses
 	stats["kills"] = int(stats["kills"]) + int(result.get("kills", 0))
 	stats["total_time"] = float(stats["total_time"]) + time
 	stats["best_time"] = maxf(float(stats["best_time"]), time)
@@ -404,6 +413,9 @@ func places_charted() -> Array:
 		if pl != "" and not pl in out:
 			out.append(pl)
 	return out
+
+func stage_losses(id: String) -> int:
+	return int((data.get("stage_losses", {}) as Dictionary).get(id, 0))
 
 func is_playtest() -> bool:
 	return save_path == PLAYTEST_PATH

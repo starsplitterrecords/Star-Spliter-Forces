@@ -64,6 +64,13 @@ var checkpoint_due: bool = false
 var current_region: String = ""
 var visited_regions: Array = []
 var boss: ForceEnemy = null
+const POWER_SCALE: float = 0.65
+## Boss fights are meant to be a spectacle, not a wall: 30% softer hits.
+const BOSS_EASE: float = 0.7
+## Enemies grow tougher with how far along the whole route you are (up to +40%).
+const DEPTH_PER_STAGE: float = 0.006
+const DEPTH_MAX: float = 0.4
+var steady: bool = false
 var boss_spawned: bool = false
 var boss_defeated: bool = false
 var victory_clock: float = -1.0
@@ -120,6 +127,12 @@ func setup(config: Dictionary) -> void:
 	quick_test = bool(config.get("quick_test", false))
 	stop_id = String(config.get("stop", ""))
 	mission = GameData.chart_stop(stop_id).duplicate(true)
+	# Gentle pacing: a stage's tuner charge is 65% of its listed power, so
+	# stages land around 4-8 minutes instead of up to 15.
+	if mission.has("power"):
+		mission["power"] = int(round(float(mission["power"]) * POWER_SCALE))
+	# A loss on a stage: the next try is steadier.
+	steady = not mission.is_empty() and Profile.stage_losses(stop_id) >= 1
 	if Profile.is_playtest() and bool(Profile.setting("playtest_short")) and mission.has("objective"):
 		# Playtest: holds and boss arrivals come four times sooner.
 		var o: Dictionary = mission["objective"]
@@ -234,6 +247,8 @@ func _apply_start_bonuses() -> void:
 				b["pickup"] = float(b["pickup"]) * (1.0 + v)
 			"reroll":
 				crew_rerolls += int(v)
+	if steady:
+		b["max_hp"] = float(b["max_hp"]) * 1.3
 	start_bonuses = b
 	player.max_hp = float(b["max_hp"])
 	player.hp = player.max_hp
@@ -338,6 +353,9 @@ func step(delta: float) -> void:
 		return
 	elapsed += delta
 	_read_input()
+	# While a boss is up, light hulls take proportionally less damage (as if
+	# every explorer had 130 hull): their weakness stays for the rest of a run.
+	player.damage_ease = BOSS_EASE * clampf(float(start_bonuses.get("max_hp", 130.0)) / 130.0, 0.6, 1.0) if boss_spawned and not boss_defeated else 1.0
 	player.step(delta)
 	var before: Vector2 = player.position
 	player.position = world.resolve(player.position, 18.0)
@@ -613,7 +631,7 @@ func spawn_enemy(kind: String, pos: Vector2, engaged: bool = false, camp_member:
 		return null
 	var e: ForceEnemy = ForceEnemy.new()
 	e.position = world.clamp_to_world(pos)
-	var scale: float = 1.0 + minf(1.6, elapsed / (420.0 if not quick_test else 60.0) * 0.35)
+	var scale: float = (1.0 + minf(1.6, elapsed / (420.0 if not quick_test else 60.0) * 0.35)) * route_depth()
 	e.configure(kind, self, scale, world.region_at(pos))
 	if engaged:
 		e.engaged = true
@@ -726,13 +744,16 @@ func spawn_elite() -> void:
 		hud.alert("SPLINTER CAPTAIN", p)
 	Audio.play_sfx("boss_phase", 1.3, -4.0, 0.5)
 
+func route_depth() -> float:
+	return 1.0 + minf(DEPTH_MAX, DEPTH_PER_STAGE * float(Profile.stops_done_count()))
+
 func spawn_boss(pos: Vector2) -> void:
 	if boss_spawned:
 		return
 	boss_spawned = true
 	boss = spawn_enemy("the_silence", world.random_open_point_near(pos, 0.0, 60.0, rng), true)
 	if boss and is_boss_stop():
-		boss.hp *= float(mission["objective"].get("hp", 1.0))
+		boss.hp *= float(mission["objective"].get("hp", 1.0)) * (0.75 if steady else 1.0)
 		boss.max_hp = boss.hp
 	if boss and quick_test:
 		boss.hp *= 0.2
