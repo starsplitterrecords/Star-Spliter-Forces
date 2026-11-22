@@ -1,0 +1,746 @@
+{
+ "id": "fortress_darkness",
+ "chapter": {
+  "id": 14,
+  "name": "The Fortress",
+  "numeral": "FANTASY",
+  "destination": "fortress_darkness",
+  "subtitle": "The Forces of Darkness, LLC.",
+  "branch_from": "s_fod",
+  "biome": "fantasy"
+ },
+ "destination": {
+  "name": "The Fortress",
+  "desc": "Signal Space shaped like a fantasy realm run as a company.",
+  "half_size": "@v2:6000.0,4200.0",
+  "gate": "@v2:-5000.0,0.0",
+  "goal_signals": 1,
+  "climax_time": 1140.0,
+  "background": "@c:1a1520ff",
+  "drift_name": "THE REALM",
+  "biome": "fantasy",
+  "regions": [
+   "war_camp",
+   "raid_depot",
+   "fortress_offices",
+   "occupied_villages",
+   "dragon_vault",
+   "elven_frontier",
+   "deadlands",
+   "ominous_hole"
+  ],
+  "completion_unlocks": [],
+  "seed": 8340
+ },
+ "biome": {},
+ "tier": "approved_draft",
+ "source": "Forces of Darkness LLC (RexPrompt shelf, Issue 1 approved prototype)",
+ "regions": {
+  "war_camp": {
+   "name": "WAR CAMP",
+   "shape": "circle",
+   "center": "@v2:-3200.0,-300.0",
+   "radius": 1000.0,
+   "color": "@c:b0243aff",
+   "floor": "@c:1e1418ff",
+   "props": "war_camp",
+   "density": 0.8,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 1.0,
+    "ram_cutter": 0.5,
+    "echo_mote": 0.3
+   },
+   "blurb": "Logistics and supply. Mostly logistics.",
+   "threat": 1
+  },
+  "raid_depot": {
+   "name": "RAID LOGISTICS DEPOT",
+   "shape": "circle",
+   "center": "@v2:-1400.0,-2200.0",
+   "radius": 700.0,
+   "color": "@c:c8a46aff",
+   "floor": "@c:1e1a16ff",
+   "props": "depot",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "mine_hauler": 0.5,
+    "leech": 0.3
+   },
+   "blurb": "Raiding and aid share one warehouse.",
+   "threat": 2
+  },
+  "fortress_offices": {
+   "name": "FORTRESS OFFICES",
+   "shape": "circle",
+   "center": "@v2:500.0,-400.0",
+   "radius": 1000.0,
+   "color": "@c:e8c050ff",
+   "floor": "@c:1a1620ff",
+   "props": "fortress",
+   "density": 0.9,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.8,
+    "shield_tug": 0.5,
+    "rail_picket": 0.4
+   },
+   "blurb": "Stone vaults, paper files, eye banners.",
+   "threat": 2
+  },
+  "occupied_villages": {
+   "name": "OCCUPIED VILLAGES",
+   "shape": "circle",
+   "center": "@v2:-1200.0,2300.0",
+   "radius": 850.0,
+   "color": "@c:c88a5aff",
+   "floor": "@c:1c1a14ff",
+   "props": "village",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.8,
+    "ram_cutter": 0.5,
+    "swarm_tender": 0.3
+   },
+   "blurb": "Markets, fields, a toll that should not be there.",
+   "threat": 2
+  },
+  "dragon_vault": {
+   "name": "DRAGON HOARD",
+   "shape": "circle",
+   "center": "@v2:2600.0,-2400.0",
+   "radius": 700.0,
+   "color": "@c:ffcf5aff",
+   "floor": "@c:221a10ff",
+   "props": "hoard",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.7,
+    "wreck_lurker": 0.6,
+    "gunship": 0.25
+   },
+   "blurb": "Gold, jewels, and labeled payroll chests.",
+   "threat": 2
+  },
+  "elven_frontier": {
+   "name": "ELVEN FRONTIER",
+   "shape": "circle",
+   "center": "@v2:3000.0,2400.0",
+   "radius": 900.0,
+   "color": "@c:6ad0a0ff",
+   "floor": "@c:12201aff",
+   "props": "elven",
+   "density": 0.9,
+   "music": "region_bloom",
+   "enemies": {
+    "skiff": 0.6,
+    "rail_picket": 0.5,
+    "gunship": 0.3
+   },
+   "blurb": "Pale stone, forest timber, very competent.",
+   "threat": 3
+  },
+  "deadlands": {
+   "name": "THE DEADLANDS",
+   "shape": "circle",
+   "center": "@v2:4600.0,-200.0",
+   "radius": 900.0,
+   "color": "@c:b070ffff",
+   "floor": "@c:1a1022ff",
+   "props": "deadlands",
+   "density": 0.9,
+   "music": "region_bloom",
+   "enemies": {
+    "blink": 0.6,
+    "echo_mote": 0.5,
+    "wreck_lurker": 0.4
+   },
+   "blurb": "Blighted frontier. Purple cracks.",
+   "threat": 3
+  },
+  "ominous_hole": {
+   "name": "OMINOUS HOLE OUTPOST",
+   "shape": "circle",
+   "center": "@v2:4800.0,-3100.0",
+   "radius": 520.0,
+   "color": "@c:8a7aa0ff",
+   "floor": "@c:141218ff",
+   "props": "deadlands",
+   "density": 0.5,
+   "music": "region_shelf",
+   "enemies": {
+    "blink": 0.5,
+    "skiff": 0.6
+   },
+   "blurb": "A rope barrier. No confirmed creature inside.",
+   "threat": 2
+  }
+ },
+ "discoveries": {
+  "fod_war_camp": {
+   "kind": "character",
+   "region": "war_camp",
+   "offset": "@v2:0.0,0.0",
+   "title": "WAR CAMP",
+   "landmark": "war_tent",
+   "color": "@c:b0243aff",
+   "contacts": [
+    "hork",
+    "fodder"
+   ],
+   "place": "war_camp",
+   "crossover": "forces_of_darkness",
+   "text": "Tents, a cookfire, a requisition board. An orc the size of a wagon is on shift."
+  },
+  "fod_depot": {
+   "kind": "character",
+   "region": "raid_depot",
+   "offset": "@v2:0.0,0.0",
+   "title": "RAID LOGISTICS DEPOT",
+   "landmark": "supply_cart",
+   "color": "@c:c8a46aff",
+   "contacts": [
+    "sweeps",
+    "burz"
+   ],
+   "place": "raid_depot",
+   "crossover": "forces_of_darkness",
+   "text": "Wagons, crates, relief packages. A goblin with very large glasses is counting all of it."
+  },
+  "fod_offices": {
+   "kind": "character",
+   "region": "fortress_offices",
+   "offset": "@v2:0.0,0.0",
+   "title": "FORTRESS CORPORATE OFFICES",
+   "landmark": "dark_fortress",
+   "color": "@c:e8c050ff",
+   "contacts": [
+    "grovlizar",
+    "dark_lord"
+   ],
+   "place": "fortress_offices",
+   "crossover": "forces_of_darkness",
+   "text": "Mandatory training is in session. HR is a necromancer. The regional general manager is watching."
+  },
+  "fod_grind_signal": {
+   "kind": "signal",
+   "region": "fortress_offices",
+   "offset": "@v2:-340.0,280.0",
+   "title": "OFFICE CARRIER",
+   "transmission": "gdu_its_a_grind",
+   "color": "@c:e8c050ff",
+   "text": "A song for the long afternoon, humming through the stone."
+  },
+  "fod_wizard": {
+   "kind": "character",
+   "region": "fortress_offices",
+   "offset": "@v2:420.0,-300.0",
+   "title": "WIZARD RESEARCH DEPARTMENT",
+   "landmark": "wizard_desk",
+   "color": "@c:9f7affff",
+   "contacts": [
+    "murray"
+   ],
+   "crossover": "forces_of_darkness",
+   "text": "One clear work surface, one very old wizard, several thick spectacles."
+  },
+  "fod_hoard": {
+   "kind": "character",
+   "region": "dragon_vault",
+   "offset": "@v2:0.0,0.0",
+   "title": "DRAGON HOARD AND COMPANY VAULT",
+   "landmark": "dragon_hoard",
+   "color": "@c:ffcf5aff",
+   "contacts": [
+    "smugesh"
+   ],
+   "place": "dragon_vault",
+   "crossover": "forces_of_darkness",
+   "text": "A mountain of gold beside labeled payroll chests. The local operations manager is a dragon. Call him Kevin."
+  },
+  "fod_ignition_signal": {
+   "kind": "signal",
+   "region": "dragon_vault",
+   "offset": "@v2:320.0,260.0",
+   "title": "HOARD CARRIER",
+   "transmission": "ido_ignition_sequence",
+   "color": "@c:ffcf5aff",
+   "text": "Something warm and rising from under the gold."
+  },
+  "fod_frontier": {
+   "kind": "character",
+   "region": "elven_frontier",
+   "offset": "@v2:0.0,0.0",
+   "title": "ELVEN DEFENSIVE FRONTIER",
+   "landmark": "elven_gate",
+   "color": "@c:6ad0a0ff",
+   "contacts": [
+    "lady_raindew"
+   ],
+   "place": "elven_frontier",
+   "crossover": "forces_of_darkness",
+   "text": "A competent and beautiful border fortress. The competitor's liaison is polite about it."
+  },
+  "fod_watch_signal": {
+   "kind": "signal",
+   "region": "elven_frontier",
+   "offset": "@v2:-320.0,260.0",
+   "title": "FRONTIER CARRIER",
+   "transmission": "gdu_watch_out",
+   "color": "@c:6ad0a0ff",
+   "text": "A warning carried along the pale walls."
+  },
+  "fod_hole": {
+   "kind": "character",
+   "region": "ominous_hole",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE OMINOUS HOLE",
+   "landmark": "ominous_hole",
+   "color": "@c:8a7aa0ff",
+   "place": "ominous_hole",
+   "crossover": "forces_of_darkness",
+   "text": "A stone ring around a hole that looks bottomless. A rope barrier. No confirmed creature inside."
+  }
+ },
+ "contacts": {
+  "hork": {
+   "name": "Hork",
+   "faction": "Forces of Darkness, LLC.",
+   "role": "Rank-and-file orc operations employee. Very large. Usually sleepy.",
+   "portrait": "hork",
+   "captain": "sir_eric",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
+  },
+  "fodder": {
+   "name": "Fodder",
+   "faction": "Forces of Darkness, LLC.",
+   "role": "Level-one skeleton dungeon guard. Dented helmet.",
+   "portrait": "fodder",
+   "captain": "sir_eric",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
+  },
+  "sweeps": {
+   "name": "Sweeps",
+   "faction": "Forces of Darkness, LLC.",
+   "role": "Facilities maintenance. Thick glasses, a mop.",
+   "portrait": "sweeps",
+   "captain": "sir_eric",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
+  },
+  "burz": {
+   "name": "Burz",
+   "faction": "Forces of Darkness, LLC.",
+   "role": "Goblin accountant. Huge round office glasses.",
+   "portrait": "burz",
+   "captain": "sir_eric",
+   "perk": {
+    "kind": "reroll",
+    "value": 1
+   }
+  },
+  "grovlizar": {
+   "name": "Grovlizar (Grov)",
+   "faction": "Forces of Darkness, LLC.",
+   "role": "Necromancer and HR director. Deadpan.",
+   "portrait": "grovlizar",
+   "captain": "sir_eric",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
+  },
+  "dark_lord": {
+   "name": "The Dark Lord",
+   "faction": "Forces of Darkness, LLC.",
+   "role": "Regional general manager.",
+   "portrait": "dark_lord",
+   "captain": "sir_eric",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
+  },
+  "murray": {
+   "name": "Murray",
+   "faction": "Forces of Darkness, LLC.",
+   "role": "Eccentric wizard leading magical research.",
+   "portrait": "murray",
+   "captain": "sir_eric",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
+  },
+  "smugesh": {
+   "name": "Smugesh (Kevin)",
+   "faction": "Forces of Darkness, LLC.",
+   "role": "Dragon. Local operations manager.",
+   "portrait": "smugesh",
+   "captain": "sir_eric",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
+  },
+  "lady_raindew": {
+   "name": "Lady Raindew",
+   "faction": "Free Peoples",
+   "role": "Elf leader and competing liaison. Not a company employee.",
+   "portrait": "lady_raindew",
+   "captain": "sir_eric",
+   "perk": {
+    "kind": "speed",
+    "value": 0.03
+   }
+  }
+ },
+ "places": {
+  "war_camp": {
+   "name": "War Camp",
+   "series": "Forces of Darkness LLC",
+   "text": "A working evil army base: banners, training yards, pallets of raiding supplies.",
+   "source": "RexPrompt shelf (Fortress Military Courtyard); Keeper battlefields sheet"
+  },
+  "raid_depot": {
+   "name": "Raid Logistics Depot",
+   "series": "Forces of Darkness LLC",
+   "text": "Raiding and aid share the same warehouse.",
+   "source": "RexPrompt shelf"
+  },
+  "fortress_offices": {
+   "name": "Fortress Corporate Offices",
+   "series": "Forces of Darkness LLC",
+   "text": "A medieval fortress converted to normal corporate work.",
+   "source": "RexPrompt shelf; Keeper characters sheet"
+  },
+  "dragon_vault": {
+   "name": "Dragon Hoard and Company Vault",
+   "series": "Forces of Darkness LLC",
+   "text": "Gold and jewels mixed with labeled payroll chests.",
+   "source": "RexPrompt shelf"
+  },
+  "elven_frontier": {
+   "name": "Elven Defensive Frontier",
+   "series": "Forces of Darkness LLC",
+   "text": "A competent and beautiful elven border fortress.",
+   "source": "RexPrompt shelf; Keeper battlefields sheet"
+  },
+  "ominous_hole": {
+   "name": "Ominous Hole Outpost",
+   "series": "Forces of Darkness LLC",
+   "text": "A stone-ringed, bottomless-looking hole. No confirmed creature inside.",
+   "source": "RexPrompt shelf"
+  }
+ },
+ "stages": [
+  {
+   "id": "fod_onboard",
+   "chapter": 14,
+   "power": 40,
+   "prize": "Hork & Fodder",
+   "icon": "visions",
+   "name": "Onboarding",
+   "place": "War Camp",
+   "region": "war_camp",
+   "objective": {
+    "type": "discover",
+    "id": "fod_war_camp"
+   },
+   "discoveries": [
+    "fod_war_camp"
+   ],
+   "new_title": "THE FORTRESS",
+   "new": "A fantasy realm run like a company. Sir Eric works here.",
+   "brief": "The war camp. Report for duty.",
+   "reward": [
+    "Crew: Hork, Fodder",
+    "Place: War Camp"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "fod_depot",
+   "chapter": 14,
+   "power": 55,
+   "prize": "Sweeps & Burz",
+   "icon": "visions",
+   "name": "Requisition Pending",
+   "place": "Raid Depot",
+   "region": "raid_depot",
+   "objective": {
+    "type": "discover",
+    "id": "fod_depot"
+   },
+   "discoveries": [
+    "fod_depot"
+   ],
+   "new_title": "SUPPLY",
+   "new": "Raiding and aid share one warehouse.",
+   "brief": "The depot. Someone is counting.",
+   "reward": [
+    "Crew: Sweeps, Burz",
+    "Place: Raid Logistics Depot"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "fod_training",
+   "chapter": 14,
+   "power": 65,
+   "prize": "Grov & Dark Lord",
+   "icon": "visions",
+   "name": "Mandatory Training",
+   "place": "Fortress Offices",
+   "region": "fortress_offices",
+   "objective": {
+    "type": "discover",
+    "id": "fod_offices"
+   },
+   "discoveries": [
+    "fod_offices"
+   ],
+   "new_title": "HR",
+   "new": "Training is mandatory. HR is a necromancer.",
+   "brief": "The fortress offices.",
+   "reward": [
+    "Crew: Grov, the Dark Lord",
+    "Place: Fortress Offices"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "fod_skirmish",
+   "chapter": 14,
+   "prize": "+100 Signal",
+   "icon": "hostile",
+   "name": "Routine Skirmish",
+   "place": "Occupied Villages",
+   "region": "occupied_villages",
+   "objective": {
+    "type": "survive",
+    "seconds": 150.0
+   },
+   "discoveries": [],
+   "new_title": "HOLD THE ROAD",
+   "new": "Hold the crossroads for two and a half minutes.",
+   "brief": "A routine skirmish at the crossroads.",
+   "reward": [
+    "+100 Signal"
+   ],
+   "grants": {
+    "signal": 100
+   }
+  },
+  {
+   "id": "fod_research",
+   "chapter": 14,
+   "power": 70,
+   "prize": "Murray",
+   "icon": "visions",
+   "name": "Wizard Research",
+   "place": "Fortress Offices",
+   "region": "fortress_offices",
+   "objective": {
+    "type": "discover",
+    "id": "fod_wizard"
+   },
+   "discoveries": [
+    "fod_wizard"
+   ],
+   "new_title": "RESEARCH",
+   "new": "One clear work surface. One very old wizard.",
+   "brief": "The research department.",
+   "reward": [
+    "Crew: Murray"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "fod_vault",
+   "chapter": 14,
+   "power": 80,
+   "prize": "Smugesh",
+   "icon": "visions",
+   "name": "Company Assets",
+   "place": "Dragon Hoard",
+   "region": "dragon_vault",
+   "objective": {
+    "type": "discover",
+    "id": "fod_hoard"
+   },
+   "discoveries": [
+    "fod_hoard"
+   ],
+   "new_title": "THE HOARD",
+   "new": "The local operations manager is a dragon.",
+   "brief": "The vault, guarded.",
+   "reward": [
+    "Crew: Smugesh (Kevin)",
+    "Place: Dragon Hoard"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "fod_frontier",
+   "chapter": 14,
+   "power": 90,
+   "prize": "Lady Raindew",
+   "icon": "visions",
+   "name": "Competitor Analysis",
+   "place": "Elven Frontier",
+   "region": "elven_frontier",
+   "objective": {
+    "type": "discover",
+    "id": "fod_frontier"
+   },
+   "discoveries": [
+    "fod_frontier"
+   ],
+   "new_title": "THE COMPETITION",
+   "new": "Free peoples, very competent.",
+   "brief": "The elven border.",
+   "reward": [
+    "Crew: Lady Raindew",
+    "Place: Elven Frontier"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "fod_hole",
+   "chapter": 14,
+   "power": 95,
+   "prize": "Place",
+   "icon": "visions",
+   "name": "The Ominous Hole",
+   "place": "Ominous Hole",
+   "region": "ominous_hole",
+   "objective": {
+    "type": "discover",
+    "id": "fod_hole"
+   },
+   "discoveries": [
+    "fod_hole"
+   ],
+   "new_title": "DO NOT LOOK IN",
+   "new": "A rope barrier. No confirmed creature inside.",
+   "brief": "An outpost at the edge of the deadlands.",
+   "reward": [
+    "Place: Ominous Hole Outpost"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "fod_review",
+   "chapter": 14,
+   "prize": "+250 Signal",
+   "icon": "elite",
+   "name": "Quarterly Review",
+   "place": "The Deadlands",
+   "start": "@v2:-900.0,800.0",
+   "objective": {
+    "type": "boss",
+    "at": 300.0,
+    "hp": 0.45
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE AT THE FORTRESS",
+   "new": "It follows the music here too. Arrives at 5:00.",
+   "brief": "The whole fortress is humming. Something wants it quiet.",
+   "reward": [
+    "+250 Signal",
+    "The Fortress complete"
+   ],
+   "grants": {
+    "signal": 250
+   }
+  },
+  {
+   "id": "fods_grind",
+   "chapter": 14,
+   "side_of": "fod_training",
+   "power": 60,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "It's a Grind",
+   "place": "Fortress Offices",
+   "region": "fortress_offices",
+   "objective": {
+    "type": "discover",
+    "id": "fod_grind_signal"
+   },
+   "discoveries": [
+    "fod_grind_signal"
+   ],
+   "new_title": "AFTERNOON",
+   "new": "A song for the long afternoon.",
+   "brief": "The offices, after training.",
+   "reward": [
+    "Track: It's a Grind"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "fods_ignition",
+   "chapter": 14,
+   "side_of": "fod_vault",
+   "power": 75,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Hoard Carrier",
+   "place": "Dragon Hoard",
+   "region": "dragon_vault",
+   "objective": {
+    "type": "discover",
+    "id": "fod_ignition_signal"
+   },
+   "discoveries": [
+    "fod_ignition_signal"
+   ],
+   "new_title": "UNDER THE GOLD",
+   "new": "Something warm, rising.",
+   "brief": "Beneath the hoard.",
+   "reward": [
+    "Track: Ignition Sequence"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "fods_watch",
+   "chapter": 14,
+   "side_of": "fod_frontier",
+   "power": 85,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Watch Out",
+   "place": "Elven Frontier",
+   "region": "elven_frontier",
+   "objective": {
+    "type": "discover",
+    "id": "fod_watch_signal"
+   },
+   "discoveries": [
+    "fod_watch_signal"
+   ],
+   "new_title": "ON THE WALLS",
+   "new": "A warning along the pale walls.",
+   "brief": "The frontier walls.",
+   "reward": [
+    "Track: Watch Out"
+   ],
+   "grants": {}
+  }
+ ]
+}

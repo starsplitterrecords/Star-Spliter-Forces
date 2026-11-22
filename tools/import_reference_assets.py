@@ -24,6 +24,10 @@ Statuses (manifest "status"):
   released          published on an official Star Splitter site/release
   approved          explicitly approved production asset
   pending_review    usable for internal builds; flagged for owner review
+  keeper            a RexPrompt Reference Keeper reference (owner direction
+                    2026-11-22: keeper art may be used in the game)
+  approved_draft    a RexPrompt approved production draft (production/drafts;
+                    same direction); never shown ahead of its issue's stages
   draft / unknown   NOT imported
 """
 import argparse
@@ -39,7 +43,7 @@ ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
 MANIFEST = os.path.join(ROOT, "assets", "reference", "manifest.json")
 PROVENANCE = os.path.join(ROOT, "assets", "reference", "provenance.json")
 CONTACT = os.path.join(ROOT, "assets", "reference", "contact_sheet.png")
-IMPORTABLE = {"released", "approved", "pending_review"}
+IMPORTABLE = {"released", "approved", "pending_review", "keeper", "approved_draft"}
 
 
 def sha256(path):

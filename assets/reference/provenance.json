@@ -1813,6 +1813,326 @@
           "sha256": "3618d4bb8d8fdb1ff4ac01c6b0754d81eb44f353e0a220a650109648a19f91eb"
         }
       ]
+    },
+    {
+      "id": "portrait_hork",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/hork_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "c0e39979d8a3d67c5ef6b7f8d1bd630142fd1d91a2f700c4d2b2f002c74bc353"
+        },
+        {
+          "out": "assets/characters/hork_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "cce8a23911ce13b82a2a2f23ad6920a0df2c8ecb09f1d0cb0a87e60b98fd0161"
+        }
+      ]
+    },
+    {
+      "id": "portrait_sir_eric",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/sir_eric_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "d1961465c8b63992056fc5e64fe3d471f292de699b2bce651012c13265559615"
+        },
+        {
+          "out": "assets/characters/sir_eric_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "7cb5171f80df3ea69c072f1ffe2f4fdea2302cc556318d7ce3eef4936402e481"
+        }
+      ]
+    },
+    {
+      "id": "portrait_smugesh",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/smugesh_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "09c9b6cfe7c860d82ea2761a6f9da58f7a110d15c227e94cf27148d413cdfce7"
+        },
+        {
+          "out": "assets/characters/smugesh_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "1b241e3172d27c15e82754a0aa44138ebab204f9c02d69abda13bddd5ecd76f3"
+        }
+      ]
+    },
+    {
+      "id": "portrait_grovlizar",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/grovlizar_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "35a2213d576be8ecedb5f55b8a136be644af3a32fb9f500d998f484c2eada5d5"
+        },
+        {
+          "out": "assets/characters/grovlizar_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "435c0890bf40c9026f08ebdb7c75a7f4bf010179db39ca9b7b4d233bbd91159f"
+        }
+      ]
+    },
+    {
+      "id": "portrait_burz",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/burz_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "27cc5c3c4f4a72cc6f84d8b7a0d2699874f3818a129ab8800fd09b7e902e2082"
+        },
+        {
+          "out": "assets/characters/burz_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "720efd5853712eac17a3bf70fa4cfbe54ab707fd76f49a32011ee022e1b19f10"
+        }
+      ]
+    },
+    {
+      "id": "portrait_lady_raindew",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/lady_raindew_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "0ef844bb3a64e658031650df0b273257c2f0cd052344bcbef8d3113d1c21b1f5"
+        },
+        {
+          "out": "assets/characters/lady_raindew_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "79b926cb3c4bf086f022c35201b6b04489e285bae5c3fc632b54d711d8c87354"
+        }
+      ]
+    },
+    {
+      "id": "portrait_murray",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/murray_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "7f2fcb20162cd2b0e5621a94abe13de38f133cd61b375327e7b4ddf01898b4fe"
+        },
+        {
+          "out": "assets/characters/murray_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "248163a6f4dc04dab7135838eac0f2113e39ce813d6362b010028844672dc65d"
+        }
+      ]
+    },
+    {
+      "id": "portrait_sweeps",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/sweeps_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "f1a6605de66f0cece988b21b8bacd948d9cf6eb572423aae5901467af27024ea"
+        },
+        {
+          "out": "assets/characters/sweeps_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "18a3e24b9e2b347ffbb166b83aea01d93bac402b2ba12dfdec70ce17b8236b4d"
+        }
+      ]
+    },
+    {
+      "id": "portrait_fodder",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/fodder_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "43c1de69a2f73ec656e4cc15ac7382c53202f0353dc364f9c49df1469f9fb81f"
+        },
+        {
+          "out": "assets/characters/fodder_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "7b8407bab416348cb87ea861c0aebffb109befe1cbafeecda058460b9018b5b5"
+        }
+      ]
+    },
+    {
+      "id": "portrait_dark_lord",
+      "repo": "RexPrompt",
+      "path": "production/references/forces-of-darkness-llc/keeper/character/characters_all.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper \"Characters_All\" sheet (Forces of Darkness LLC; owner direction 2026-11-22: keeper art in use)",
+      "source_sha256": "b83e5fdf1f504f50dc06f139975d7aa58fc533f8da6ffb0e81f8c54fd3dfa4ca",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/dark_lord_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "a77a648f3680b10264ee58c5187f978fadd0752f97b87c8fd48a6f29492fc855"
+        },
+        {
+          "out": "assets/characters/dark_lord_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "455d2bda4717603407ac0308943151642a7c736d94937487488cf35d74eca510"
+        }
+      ]
     }
   ]
 }

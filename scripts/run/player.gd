@@ -219,6 +219,18 @@ func _draw_hull(c: Color) -> void:
 			draw_colored_polygon(PackedVector2Array([Vector2(4, -30), Vector2(14, -6), Vector2(20, 10), Vector2(2, 16)]), c)
 			for k in 3:
 				draw_circle(Vector2(sin(anim * 2.0 + k * 2.1) * 6.0, -10.0 + k * 9.0), 1.8, Color(t, 0.6 + 0.3 * sin(anim * 4.0 + k)))
+		"requisition":
+			# Sir Eric: a company-issue transport — timber hull, iron bands,
+			# a maroon eye banner for a sail. Replacement still pending.
+			draw_circle(Vector2(0, 22), 5.0 * engine, Color(Color("e8c050"), 0.55))
+			pts = PackedVector2Array([Vector2(0, -28), Vector2(12, -14), Vector2(14, 14), Vector2(8, 24), Vector2(-8, 24), Vector2(-14, 14), Vector2(-12, -14)])
+			draw_colored_polygon(pts, c)
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color("2a1c10"), 1.5)
+			draw_line(Vector2(-13, -4), Vector2(13, -4), Color("4a4a50"), 2.5)
+			draw_line(Vector2(-14, 12), Vector2(14, 12), Color("4a4a50"), 2.5)
+			draw_colored_polygon(PackedVector2Array([Vector2(-8, -18), Vector2(8, -18), Vector2(8, 4), Vector2(0, 8), Vector2(-8, 4)]), accent)
+			draw_circle(Vector2(0, -7), 3.5, t)
+			draw_circle(Vector2(0, -7), 1.5, Color("1a1a1e"))
 		"longship":
 			# Bjorn: a DTI transit hull he insists is a longship — clinker
 			# planks, a dragon-curl prow, round shields along the gunwales.

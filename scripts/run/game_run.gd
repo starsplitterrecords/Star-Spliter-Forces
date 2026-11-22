@@ -228,7 +228,7 @@ func _apply_start_bonuses() -> void:
 		"max_hp": float(def["max_hp"]) + 10.0 * Profile.workshop_rank("plating") + (20.0 if character_id == "ella_venn" and mastery_level >= 3 else 0.0),
 		"speed_mult": 1.0 + 0.04 * Profile.workshop_rank("thrust") + (0.06 if character_id == "naomi_sol" and mastery_level >= 3 else 0.0),
 		"pickup": float(def["pickup"]) * (1.0 + 0.12 * Profile.workshop_rank("magnet")) * (1.15 if character_id == "jax_orien" and mastery_level >= 3 else 1.0),
-		"armor": float(def.get("armor", 0.0)) + (0.5 if character_id in ["tessa_banks", "bjorn", "brandon_mack"] and mastery_level >= 3 else 0.0),
+		"armor": float(def.get("armor", 0.0)) + (0.5 if character_id in ["tessa_banks", "bjorn", "brandon_mack", "sir_eric"] and mastery_level >= 3 else 0.0),
 		"head_start": Profile.workshop_rank("head_start") > 0 or (character_id == "jex_marrin" and mastery_level >= 4),
 	}
 	# Crew ride along with their captain.
@@ -254,7 +254,7 @@ func _apply_start_bonuses() -> void:
 	player.hp = player.max_hp
 	if character_id == "jex_marrin":
 		player.damage_taken_mult = 1.15
-	rerolls = Profile.workshop_rank("reroll") + 2 * Profile.workshop_rank("insight") + crew_rerolls
+	rerolls = Profile.workshop_rank("reroll") + 2 * Profile.workshop_rank("insight") + crew_rerolls + (1 if character_id == "sir_eric" else 0)
 	ability_charges = 2 if character_id == "naomi_sol" and mastery_level >= 1 else 1
 	if Profile.data["discovered"].has("art_beacon_core"):
 		resonance = 65.0
@@ -1050,7 +1050,7 @@ func ability_def() -> Dictionary:
 func ability_cooldown() -> float:
 	var cd: float = float(ability_def()["cooldown"])
 	match character_id:
-		"ella_venn", "bjorn", "lucia", "brandon_mack":
+		"ella_venn", "bjorn", "lucia", "brandon_mack", "sir_eric":
 			if mastery_level >= 4:
 				cd -= 4.0
 		"jax_orien":
@@ -1126,6 +1126,16 @@ func use_ability() -> bool:
 			fx.ring(player.position, 20.0, 160.0, Color("d8323a"), 0.6, 6.0)
 			if hud:
 				hud.toast("SHARD CAPTAINS ANSWER THE CALL")
+		"requisition":
+			# Fodder and the skeleton legion: a ring of spears around Sir Eric.
+			var nsk: int = 4 if mastery_level >= 2 else 3
+			allies.clear()
+			for i in nsk:
+				allies.append({"angle": TAU * i / nsk, "clock": 0.2 * i, "kind": "skeleton"})
+			ally_time = 8.0 + (2.0 if mastery_level >= 1 else 0.0)
+			fx.ring(player.position, 20.0, 160.0, Color("b0243a"), 0.6, 6.0)
+			if hud:
+				hud.toast("REQUISITION APPROVED")
 		"shield_wall":
 			ability_active = 6.0 + (2.0 if mastery_level >= 1 else 0.0)
 			allies.clear()

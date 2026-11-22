@@ -20,7 +20,7 @@ Sources and revisions: see `SOURCE_PROVENANCE.md`.
 | Low Tide Signal | cover only | Flooded-coast mystery | **Harbor Signal branch** (sea): Harbor Phase place + flood gate landmark and the flooded coast, from the cover and series page text only; no characters, no plot |
 | Division Threshold | in production, no art | "Who gets to count as a person…" — the Stack | Not used ("PX-7" not found in any source) |
 | Echoes of a Forgotten War | D only | Excavation colony Olyria-Prime uncovers an ancient war (RP `regions.json`) | Not used (no released/approved art) |
-| Forces of Darkness LLC | A (prototype strip) | Evil fantasy empire run like a corporation | Not used |
+| Forces of Darkness LLC | A (prototype strip) | Evil fantasy empire run like a corporation | **The Fortress realm**: Issue 1 shelf places and cast; Sir Eric playable; Keeper sheet portraits; Head Demon never shown (no approved design) |
 
 **Decision:** Star Splitter Forces is a Rex Fleet–era game. Other properties appear
 only as Signal Space guests (owner direction 2026-11-20: "all three [guest explorers,

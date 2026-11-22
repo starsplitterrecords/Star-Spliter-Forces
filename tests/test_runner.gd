@@ -1251,6 +1251,21 @@ func test_sea_branch() -> void:
 		if int(st4.get("chapter", 1)) == 13:
 			for did4: String in st4.get("discoveries", []):
 				check(GameData.discovery_in_destination(did4, "azure_reach"), "%s not in Azure Reach" % did4)
+	# Fantasy: The Fortress opens early, from a Chapter I side signal.
+	check(GameData.chart_prev_main("fod_onboard") == "s_fod", "Fortress branch should open from s_fod")
+	check(String(GameData.chart_stop("s_fod")["side_of"]) == "hold_the_lane", "Fortress should open early")
+	for st5: Dictionary in GameData.CHART:
+		if int(st5.get("chapter", 1)) == 14:
+			for did5: String in st5.get("discoveries", []):
+				check(GameData.discovery_in_destination(did5, "fortress_darkness"), "%s not in the Fortress" % did5)
+	check(GameData.crew_of("sir_eric").size() >= 8, "Sir Eric's crew missing")
+	var run3: GameRun = _make_run({"character": "sir_eric", "stop": "fod_onboard"})
+	await get_tree().process_frame
+	check(run3.world.biome == "fantasy", "Fantasy biome not set")
+	run3.ability_cd = 0.0
+	run3.use_ability()
+	check(run3.allies.size() == 3 and String(run3.allies[0].get("kind", "")) == "skeleton", "Requisition did not call the skeletons")
+	run3.queue_free()
 	# A stage track counts as heard for roaming.
 	var before: int = GameData.unheard_roaming({}).size()
 	check(GameData.unheard_roaming({"des_launch_signal": {}}).size() == before - 1, "stage track still roaming")

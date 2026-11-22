@@ -922,6 +922,16 @@ func _draw() -> void:
 	# Abby's answering Shard captains: pale hulls, red seams.
 	for a: Dictionary in run.allies:
 		var ap: Vector2 = run.ally_position(a)
+		if String(a.get("kind", "")) == "skeleton":
+			# A skeleton guard: dented helmet, bone body, a spear.
+			draw_circle(ap, 7.0, Color("e8e2d0"))
+			draw_arc(ap + Vector2(0, -3), 7.5, PI, TAU, 8, Color("6a6a70"), 3.0)
+			draw_circle(ap + Vector2(-2.5, 0), 1.5, Color("1a1a1e"))
+			draw_circle(ap + Vector2(2.5, 0), 1.5, Color("1a1a1e"))
+			var sp: Vector2 = Vector2.from_angle(player.facing)
+			draw_line(ap + sp * 4.0, ap + sp * 22.0, Color("8a6a40"), 2.0)
+			draw_circle(ap + sp * 22.0, 2.5, Color("c8ccd6"))
+			continue
 		if String(a.get("kind", "")) == "gunnar":
 			# Gunnar's smaller longship, round shield on the gunwale.
 			var gf: Vector2 = Vector2.from_angle(player.facing)

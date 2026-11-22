@@ -80,9 +80,9 @@ series). A branch appears on the chart only once the side stage that opens it is
 | **SEA — Harbor Signal** | Vikings 2026! + Low Tide Signal | Open sea, East River, pier, DTI building, Bushwick rooftop, Harbor Phase, flooded coast | Now Serving G-53 (Bjorn) | **Built**: 8 stages + 3 side signals, contacts Gunnar and Carrie |
 | **DESERT — Dryline** | Backyard Rockets + Sunforge Outlaw | Dry lakebed, Launch-Shop, Esperanza, La Suerte, Ridge Relay, Red Mesa, Coyote Wells; Under Two Suns and the Forge (Sunforge cover) | OCHRE-9 (Lucia) | **Built**: 9 stages + 2 side signals, contacts Arvin and Milo |
 | **ORBIT — Stardust Orbit** | Stardust Station | Regional Branch, Main Bullpen, West Corridor, Break Room, Supply Store B-17 | Mandatory Proximity (Jax Orien) | **Built**: 7 stages + 2 side signals, 8 contacts (Astra Vega, Mira Klare, Zib, Glorp, Kreeb, Noola Vaneel, Pixa, Brick Talos) |
-| FANTASY | Forces of Darkness LLC | A corporate dark empire on land | — | On hold (owner, 2026-11-22) |
+| **FANTASY — The Fortress** | Forces of Darkness LLC | War camp, raid depot, fortress offices, occupied villages, dragon hoard, elven frontier, deadlands, ominous hole | Requisition (Ch. I side signal off Hold the Lane: opens early) | **Built**: 9 stages + 3 side signals; new explorer **Sir Eric** (Requisition Approved: a skeleton ring); 9 crew |
 | **PARK — Azure Reach** | Azure Reach | Public Entrance, Turtle Pavilion queue and viewing, Media Prep, Glass Corridor, Backstage Ops, Guest Experience Suite, Service Corridor, Staff Overlook | Sea Turtle Thursdays (new Ch. I side signal off Verge Escort) | **Built**: 8 stages + 2 side signals, contacts Maya Serrano, Pip O'Mally, Kyler Chen, Beatrice Halstead |
-| COSMIC | Echoes of a Forgotten War | Olyria-Prime excavation colony | — | On hold (owner, 2026-11-22) |
+| COSMIC | Echoes of a Forgotten War | Olyria-Prime excavation colony | — | After the main Rex Fleet path (owner, 2026-11-22) |
 | (later) | Star Systems Splitter | — | — | Held for the future (owner) |
 
 Harbor Signal stages: The North Atlantic (track Unification Theory) · East River (longship;

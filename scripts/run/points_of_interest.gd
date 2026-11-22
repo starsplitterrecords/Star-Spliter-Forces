@@ -576,6 +576,87 @@ func _draw_landmark(kind: String, pos: Vector2, c: Color) -> void:
 			for k2 in 4:
 				var wy2: float = 40.0 + k2 * 14.0 + 3.0 * sin(anim * 1.5 + k2)
 				draw_line(gc + Vector2(-30, wy2), gc + Vector2(220, wy2), Color(c, 0.25), 2.0)
+		"war_tent":
+			# The command tent with the company banner and a requisition board.
+			var wt: Vector2 = pos + Vector2(-280, -40)
+			draw_colored_polygon(PackedVector2Array([wt + Vector2(-80, 60), wt + Vector2(0, -50), wt + Vector2(80, 60)]), Color("7a1428"))
+			draw_line(wt + Vector2(0, -50), wt + Vector2(0, 60), Color("2a1c10"), 3.0)
+			draw_circle(wt + Vector2(0, 0), 10.0, Color("e8c050"))
+			draw_circle(wt + Vector2(0, 0), 4.0, Color("1a1a1e"))
+			draw_rect(Rect2(wt + Vector2(100, 0), Vector2(50, 60)), Color("6a5040"))
+			for k in 3:
+				draw_rect(Rect2(wt + Vector2(106 + k * 14, 8), Vector2(10, 14)), Color("e8dcc0"))
+			draw_circle(wt + Vector2(40, 90), 12.0, Color("ff9a3a", 0.6 + 0.3 * sin(anim * 6.0)))
+		"supply_cart":
+			var sc3: Vector2 = pos + Vector2(-280, 0)
+			draw_rect(Rect2(sc3, Vector2(120, 50)), Color("8a6440"))
+			draw_colored_polygon(PackedVector2Array([sc3 + Vector2(0, 0), sc3 + Vector2(60, -50), sc3 + Vector2(120, 0)]), Color("d8c8a0"))
+			draw_circle(sc3 + Vector2(20, 58), 16.0, Color("3a2a1c"))
+			draw_circle(sc3 + Vector2(100, 58), 16.0, Color("3a2a1c"))
+			draw_rect(Rect2(sc3 + Vector2(140, 10), Vector2(44, 56)), Color("e8dcc0"))
+			draw_string(font, sc3 + Vector2(142, 80), "PENDING", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("ff6a5a"))
+		"dark_fortress":
+			# A spired fortress keep with a maroon eye banner.
+			var df: Vector2 = pos + Vector2(-300, -160)
+			draw_rect(Rect2(df, Vector2(180, 200)), Color("3a3440"))
+			for k in 3:
+				draw_colored_polygon(PackedVector2Array([df + Vector2(k * 70, 0), df + Vector2(k * 70 + 20, -60), df + Vector2(k * 70 + 40, 0)]), Color("2a2430"))
+			for k in 4:
+				draw_arc(df + Vector2(30 + k * 40, 120), 9.0, PI, TAU, 8, Color("ffcf6a", 0.7), 3.0)
+			draw_colored_polygon(PackedVector2Array([df + Vector2(70, 20), df + Vector2(110, 20), df + Vector2(110, 90), df + Vector2(90, 100), df + Vector2(70, 90)]), Color("7a1428"))
+			draw_circle(df + Vector2(90, 55), 9.0, Color("e8c050"))
+			draw_circle(df + Vector2(90, 55), 4.0, Color("1a1a1e"))
+		"wizard_desk":
+			var wd: Vector2 = pos + Vector2(-240, -40)
+			draw_rect(Rect2(wd, Vector2(130, 50)), Color("5a4030"))
+			draw_circle(wd + Vector2(30, -12), 14.0, Color(c, 0.4 + 0.3 * sin(anim * 3.0)))
+			draw_rect(Rect2(wd + Vector2(60, -20), Vector2(40, 20)), Color("e8dcc0"))
+			draw_arc(wd + Vector2(110, -30), 10.0, 0.0, TAU, 12, Color("c8ccd6"), 3.0)
+			draw_arc(wd + Vector2(132, -30), 10.0, 0.0, TAU, 12, Color("c8ccd6"), 3.0)
+		"dragon_hoard":
+			var dh: Vector2 = pos + Vector2(-260, 20)
+			draw_circle(dh, 80.0, Color("c89a30"))
+			draw_circle(dh + Vector2(-20, -20), 50.0, Color("ffd760"))
+			for k in 6:
+				draw_circle(dh + Vector2.from_angle(k * 1.1) * 50.0, 5.0, [Color("ff5a6a"), Color("6ae0ff"), Color("9aff6a")][k % 3])
+			# The manager: a red dragon's head and horns over the gold.
+			var hd: Vector2 = dh + Vector2(70, -90)
+			draw_colored_polygon(PackedVector2Array([hd, hd + Vector2(60, -10), hd + Vector2(70, 10), hd + Vector2(10, 24)]), Color("c8322a"))
+			draw_line(hd + Vector2(10, 0), hd + Vector2(-10, -30), Color("e8c050"), 4.0)
+			draw_circle(hd + Vector2(40, 0), 4.0, Color("ffe060", 0.6 + 0.4 * sin(anim * 1.5)))
+			draw_rect(Rect2(dh + Vector2(60, 30), Vector2(40, 30)), Color("6a4a2a"))
+		"elven_gate":
+			var eg: Vector2 = pos + Vector2(-300, -100)
+			draw_rect(Rect2(eg, Vector2(40, 180)), Color("d8d4c4"))
+			draw_rect(Rect2(eg + Vector2(140, 0), Vector2(40, 180)), Color("d8d4c4"))
+			draw_arc(eg + Vector2(90, 40), 70.0, PI, TAU, 20, Color("d8d4c4"), 16.0)
+			for k in 2:
+				var bn: Vector2 = eg + Vector2(10 + k * 140, 30)
+				draw_colored_polygon(PackedVector2Array([bn, bn + Vector2(20, 0), bn + Vector2(20, 60), bn + Vector2(10, 70), bn]), Color("1e6a4a"))
+				draw_circle(bn + Vector2(10, 30), 5.0, Color("e8c050"))
+		"ominous_hole":
+			var oh: Vector2 = pos + Vector2(-240, 0)
+			draw_circle(oh, 90.0, Color("5a5460"))
+			draw_circle(oh, 72.0, Color("06040a"))
+			draw_arc(oh, 72.0, 0.0, TAU, 32, Color(c, 0.3 + 0.2 * sin(anim)), 3.0)
+			for k in 8:
+				var post: Vector2 = oh + Vector2.from_angle(TAU * k / 8.0) * 120.0
+				draw_line(post, post + Vector2(0, -24), Color("6a5040"), 3.0)
+				var nxt: Vector2 = oh + Vector2.from_angle(TAU * (k + 1) / 8.0) * 120.0
+				draw_line(post + Vector2(0, -18), nxt + Vector2(0, -18), Color("c8a860"), 1.5)
+		"fod_banner":
+			# A maroon eye banner on a pole; a requisition form pinned beneath.
+			var fb: Vector2 = pos + Vector2(-260, -150)
+			draw_line(fb, fb + Vector2(0, 200), Color("5a4030"), 6.0)
+			var wave: float = 6.0 * sin(anim * 2.0)
+			draw_colored_polygon(PackedVector2Array([fb + Vector2(4, 0), fb + Vector2(90, wave), fb + Vector2(90, 110 + wave), fb + Vector2(47, 130), fb + Vector2(4, 110)]), Color("7a1428"))
+			draw_arc(fb + Vector2(47, 55), 22.0, 0.0, TAU, 20, Color("e8c050"), 3.0)
+			draw_circle(fb + Vector2(47, 55), 9.0, Color("e8c050"))
+			draw_circle(fb + Vector2(47, 55), 4.0, Color("1a1a1e"))
+			draw_rect(Rect2(fb + Vector2(-60, 120), Vector2(52, 66)), Color("e8dcc0"))
+			for k in 4:
+				draw_line(fb + Vector2(-54, 132 + k * 12), fb + Vector2(-16, 132 + k * 12), Color("6a5a48"), 1.5)
+			draw_string(font, fb + Vector2(-58, 200), "PENDING", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("ff6a5a"))
 		"azure_fountain":
 			# The Azure Reach fountain and its wave logo.
 			var fc2: Vector2 = pos + Vector2(-270, 0)

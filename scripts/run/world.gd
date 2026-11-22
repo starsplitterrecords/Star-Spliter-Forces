@@ -357,6 +357,8 @@ func _build_region(rid: String, r: Dictionary) -> void:
 				_op(fp, ["poly", PackedVector2Array([fp, fp + Vector2(fw, 0), fp + Vector2(fw, fw * 0.7), fp + Vector2(0, fw * 0.7)]), Color("26333a")])
 				_op(fp, ["line", PackedVector2Array([fp + Vector2(0, fw * 0.7), fp + Vector2(fw, fw * 0.7)]), Color(acc, 0.35), 3.0])
 				_obstacle(fp + Vector2(fw, fw * 0.7) * 0.5, fw * 0.35)
+		"war_camp", "depot", "fortress", "village", "hoard", "elven", "deadlands":
+			_fantasy_region(String(r["props"]), r, acc, density)
 		"plaza", "queue", "aquarium", "backstage", "suite":
 			_park_region(String(r["props"]), r, acc, density)
 		"station_hull", "station_corridor", "bullpen", "break_room", "supply":
@@ -499,6 +501,87 @@ func _build_drift() -> void:
 			continue
 		_drift_prop(p, rng.randf_range(16.0, 46.0), rng.randf() < 0.6)
 		placed += 1
+
+## The Fortress (Forces of Darkness LLC): camp, depot, stone offices,
+## villages, the hoard, the elven border and the deadlands.
+func _fantasy_region(kind: String, r: Dictionary, acc: Color, density: float) -> void:
+	for k in int(9 * density + 3):
+		var p: Vector2 = _scatter_point(r)
+		if p.x == INF or not _clear_of_discoveries(p, 180.0):
+			continue
+		match kind:
+			"war_camp":
+				if k % 3 == 0:
+					# A maroon banner on a pole.
+					_op(p, ["line", PackedVector2Array([p, p + Vector2(0, -70)]), Color("5a4030"), 4.0])
+					_op(p, ["poly", PackedVector2Array([p + Vector2(2, -70), p + Vector2(34, -66), p + Vector2(34, -30), p + Vector2(18, -24), p + Vector2(2, -30)]), Color("7a1428")])
+					_op(p, ["circle", p + Vector2(18, -48), 5.0, Color("e8c050")])
+				else:
+					# A tent.
+					_op(p, ["poly", PackedVector2Array([p + Vector2(-40, 20), p + Vector2(0, -30), p + Vector2(40, 20)]), Color("8a3a3a") if k % 2 == 0 else Color("a89878")])
+					_op(p, ["line", PackedVector2Array([p + Vector2(0, -30), p + Vector2(0, 20)]), Color("2a1c10"), 2.0])
+					_obstacle(p, 30.0)
+			"depot":
+				_op(p, ["poly", PackedVector2Array([p, p + Vector2(40, 0), p + Vector2(40, 30), p + Vector2(0, 30)]), Color("8a6440")])
+				_op(p, ["line", PackedVector2Array([p, p + Vector2(40, 30)]), Color("5a4028"), 2.0])
+				if k % 3 == 0:
+					_op(p, ["circle", p + Vector2(-14, 36), 9.0, Color("3a2a1c")])
+					_op(p, ["circle", p + Vector2(54, 36), 9.0, Color("3a2a1c")])
+				_obstacle(p + Vector2(20, 15), 24.0)
+			"fortress":
+				# Stone blocks and arched windows.
+				var w: float = rng.randf_range(80.0, 150.0)
+				var h: float = rng.randf_range(60.0, 110.0)
+				_op(p, ["poly", PackedVector2Array([p, p + Vector2(w, 0), p + Vector2(w, h), p + Vector2(0, h)]), Color("4a4450")])
+				_op(p, ["line", PackedVector2Array([p, p + Vector2(w, 0), p + Vector2(w, h), p + Vector2(0, h), p]), Color("2a2430"), 3.0])
+				_op(p, ["arc", p + Vector2(w * 0.5, h * 0.55), 10.0, PI, TAU, Color("ffcf6a", 0.6), 3.0])
+				_obstacle(p + Vector2(w, h) * 0.5, minf(w, h) * 0.5)
+			"village":
+				# Thatched huts and a well.
+				if k % 4 == 0:
+					_op(p, ["circle", p, 16.0, Color("5a5a60")])
+					_op(p, ["circle", p, 9.0, Color("1a2a3a")])
+					_obstacle(p, 16.0)
+				else:
+					_op(p, ["poly", PackedVector2Array([p, p + Vector2(56, 0), p + Vector2(56, 40), p + Vector2(0, 40)]), Color("8a7458")])
+					_op(p, ["poly", PackedVector2Array([p + Vector2(-6, 2), p + Vector2(28, -26), p + Vector2(62, 2)]), Color("c8a860")])
+					_obstacle(p + Vector2(28, 20), 28.0)
+			"hoard":
+				# Heaps of gold and payroll chests.
+				if k % 3 == 0:
+					_op(p, ["poly", PackedVector2Array([p, p + Vector2(36, 0), p + Vector2(36, 26), p + Vector2(0, 26)]), Color("6a4a2a")])
+					_op(p, ["line", PackedVector2Array([p + Vector2(0, 10), p + Vector2(36, 10)]), Color("e8c050"), 2.0])
+					_obstacle(p + Vector2(18, 13), 20.0)
+				else:
+					var gr: float = rng.randf_range(30.0, 60.0)
+					_op(p, ["circle", p, gr, Color("c89a30")])
+					_op(p, ["circle", p + Vector2(-gr * 0.3, -gr * 0.3), gr * 0.5, Color("ffd760")])
+					for q in 3:
+						_op(p, ["circle", p + Vector2.from_angle(q * 2.1) * gr * 0.5, 4.0, [Color("ff5a6a"), Color("6ae0ff"), Color("9aff6a")][q]])
+					_obstacle(p, gr * 0.8)
+			"elven":
+				if k % 2 == 0:
+					# A tall pale tree.
+					_op(p, ["circle", p, 34.0, Color("2e6a4a")])
+					_op(p, ["circle", p + Vector2(-8, -8), 20.0, Color("4a9a6a")])
+					_obstacle(p, 14.0)
+				else:
+					# Pale stone wall segment.
+					_op(p, ["poly", PackedVector2Array([p, p + Vector2(110, -20), p + Vector2(116, 6), p + Vector2(6, 26)]), Color("d8d4c4")])
+					_op(p, ["line", PackedVector2Array([p, p + Vector2(110, -20)]), Color(acc, 0.6), 3.0])
+					_obstacle(p + Vector2(56, 4), 30.0)
+			"deadlands":
+				# Bones and purple cracks.
+				var crack: PackedVector2Array = PackedVector2Array([p])
+				for q in 4:
+					crack.append(crack[-1] + Vector2.from_angle(rng.randf() * TAU) * rng.randf_range(30.0, 70.0))
+				_op(p, ["line", crack, Color("b070ff", 0.6), 3.0])
+				if k % 2 == 0:
+					_op(p, ["line", PackedVector2Array([p + Vector2(-20, 0), p + Vector2(20, 4)]), Color("e8e2d0"), 5.0])
+					_op(p, ["circle", p + Vector2(26, 2), 8.0, Color("e8e2d0")])
+				else:
+					_op(p, ["line", PackedVector2Array([p, p + Vector2(-6, -40), p + Vector2(10, -64)]), Color("3a2a30"), 6.0])
+					_obstacle(p, 12.0)
 
 ## Azure Reach: glass, water, queues and the backstage that keeps it running.
 func _park_region(kind: String, r: Dictionary, acc: Color, density: float) -> void:
@@ -665,6 +748,15 @@ func _drift_prop(p: Vector2, r: float, solid: bool) -> void:
 			else:
 				# Pilings / drifting debris.
 				_rock(p, r * 0.7, Color("22303a"), solid)
+		"fantasy":
+			if rng.randf() < 0.5:
+				# A dark tree.
+				_op(p, ["circle", p, r * 0.6, Color("26332a")])
+				_op(p, ["circle", p + Vector2(-r * 0.15, -r * 0.15), r * 0.35, Color("34483a")])
+				if solid:
+					_obstacle(p, r * 0.3)
+			else:
+				_rock(p, r * 0.8, Color("3a3440"), solid)
 		"park":
 			if rng.randf() < 0.5:
 				# A bench or a bin on the promenade.
