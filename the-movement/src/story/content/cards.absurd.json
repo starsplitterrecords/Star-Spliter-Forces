@@ -1,0 +1,2542 @@
+[
+ {
+  "id": "asm.goose_treasurer",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "drift",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:1"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the goose treasurer",
+  "text": "The {city} {assembly} has elected a goose as treasurer. In fairness, the goose has never missed a meeting and has never once spent any money.",
+  "choices": [
+   {
+    "label": "Congratulate the goose.",
+    "hint": "Delight · Attention",
+    "reaction": "The goose receives a small brass nameplate. Donations to the {city} {assembly} triple. Nobody can explain the connection, and nobody tries.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "attention": 3,
+      "resources": 3
+     },
+     "flags": [
+      "goose_treasurer"
+     ]
+    }
+   },
+   {
+    "label": "A treasurer should be a person.",
+    "hint": "Dignity",
+    "reaction": "The goose is demoted to Vice Treasurer. The minutes record that it took the news well.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.garage_replica",
+  "type": "character",
+  "speaker": "gary",
+  "shape": "drift",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "chars": {
+    "gary": {
+     "present": true
+    }
+   }
+  },
+  "bind": {
+   "city": "assemblyCity:2"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the replica garage",
+  "text": "The {city} {assembly} built a replica of my garage in their park. To scale. They even got the lawnmower right. I went to see it, and I think I’d kind of like to live in it.",
+  "choices": [
+   {
+    "label": "Gary can have a second garage.",
+    "hint": "Gary is delighted",
+    "reaction": "Gary moves into the replica on weekends. Tourists visit both garages and argue about which is the real one. Gary sleeps through the argument in each.",
+    "effects": {
+     "loyalty": {
+      "gary": 8
+     },
+     "followers": 30,
+     "gauges": {
+      "attention": 3,
+      "enthusiasm": 2
+     }
+    }
+   },
+   {
+    "label": "One garage is plenty, Gary.",
+    "hint": "Practical · Gary sighs",
+    "reaction": "Gary visits the replica every Sunday instead, and sits in the replica chair, which he says is more comfortable than the real one.",
+    "effects": {
+     "loyalty": {
+      "gary": -3
+     },
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.newspaper",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:2"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the newspaper",
+  "text": "{city} has started its own newspaper, the {city} Daily Good News. It reports only on {city}, and only good news. Yesterday’s front page: LOCAL MAN STILL GREAT.",
+  "choices": [
+   {
+    "label": "Get it delivered to every member.",
+    "hint": "Morale · Costs money",
+    "reaction": "Circulation reaches every member and several confused dentists’ offices. Morale rises everywhere the paper lands.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 5,
+      "resources": -4,
+      "attention": 2
+     }
+    }
+   },
+   {
+    "label": "Ask them to print some bad news too.",
+    "hint": "Balance",
+    "reaction": "The next edition reports, gravely, that it rained on Tuesday. Readers are shaken.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.musical",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:3"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the musical",
+  "text": "The {city} {assembly} has written a musical about you. Your character has a tap number in the second act. Opening night is Friday. They’ve saved you a seat in the front row, and a pair of tap shoes, just in case.",
+  "choices": [
+   {
+    "label": "Go, and bring the tap shoes.",
+    "hint": "Spectacle · Your dignity",
+    "reaction": "You are pulled onstage for the finale. You tap. It is not good. The audience gives it a standing ovation, which they insist afterward was sincere.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "enthusiasm": 5
+     },
+     "followers": 60
+    }
+   },
+   {
+    "label": "Send flowers instead.",
+    "hint": "Modest",
+    "reaction": "The flowers get their own curtain call.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.independence",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "drift",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:3"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the parking lot",
+  "text": "The {city} {assembly} has declared independence. Not from us: from the parking lot next door, which has been bothering them for years. They’d like your blessing, and a flag.",
+  "choices": [
+   {
+    "label": "Design them a flag.",
+    "hint": "Pride · Costs a little",
+    "reaction": "The flag shows a parking lot with a line through it. It is flown with enormous pride, mostly at the parking lot.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "resources": -2,
+      "unity": 1
+     }
+    }
+   },
+   {
+    "label": "We don’t really do flags.",
+    "hint": "Restraint",
+    "reaction": "{city} makes its own flag anyway. It is the same flag, but larger.",
+    "effects": {
+     "gauges": {
+      "unity": -1,
+      "attention": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.ladle_statue",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "chars": {
+    "priya": {
+     "present": true
+    }
+   }
+  },
+  "bind": {
+   "city": "assemblyCity:2"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the ladle statue",
+  "text": "{city} has commissioned a nine-foot bronze statue of Priya’s ladle. Priya asked me to tell you she is mortified. She also asked whether it could be ten feet.",
+  "choices": [
+   {
+    "label": "Ten feet.",
+    "hint": "Priya, secretly thrilled",
+    "reaction": "The ladle is unveiled at ten feet. Priya cries, and then says it’s the wind, and then cries again.",
+    "effects": {
+     "loyalty": {
+      "priya": 8
+     },
+     "gauges": {
+      "resources": -5,
+      "attention": 4,
+      "enthusiasm": 3
+     }
+    }
+   },
+   {
+    "label": "Nine is plenty.",
+    "hint": "Thrifty",
+    "reaction": "Priya says nine is plenty, in the voice of someone who wanted ten.",
+    "effects": {
+     "loyalty": {
+      "priya": -2
+     },
+     "gauges": {
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.extra_day",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "drift",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:2"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the extra day",
+  "text": "The {city} {assembly} has added an extra {day} to the week. It falls after the usual {day} and before whatever comes next. Their calendars are now nine days long.",
+  "choices": [
+   {
+    "label": "Recognize the extra {day}.",
+    "hint": "Enthusiasm · Confusion",
+    "reaction": "Other assemblies adopt the extra {day} within a month. The movement now runs on its own calendar, which nobody else can read.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 5,
+      "unity": -3
+     },
+     "flags": [
+      "extra_day"
+     ]
+    }
+   },
+   {
+    "label": "A week has seven days.",
+    "hint": "Order",
+    "reaction": "{city} accepts this, then quietly keeps the nine-day calendar for birthdays.",
+    "effects": {
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.degrees",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:4"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the degrees",
+  "text": "The {city} {assembly} now offers degrees in {belief}. Three people have graduated. One of them is a professor now, and has started correcting you in public.",
+  "choices": [
+   {
+    "label": "Accept an honorary doctorate.",
+    "hint": "Prestige",
+    "reaction": "You are now Doctor {title}. The professor attends the ceremony and corrects your pronunciation of your own name.",
+    "effects": {
+     "gauges": {
+      "attention": 4,
+      "unity": 2
+     },
+     "founderTitle": "Dr. {title}"
+    }
+   },
+   {
+    "label": "Invite the professor to lunch.",
+    "hint": "Win them over",
+    "reaction": "The professor talks about {belief} for three hours. You learn several things about yourself.",
+    "effects": {
+     "gauges": {
+      "unity": 3,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.birthday",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:5"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "your birthday",
+  "text": "The {city} {assembly} is bigger than {hometown} now, and they want to throw your birthday party. They don’t know when your birthday is, so they picked one. It’s next {day}. It’s also going to be every {day}.",
+  "choices": [
+   {
+    "label": "Every week is my birthday now.",
+    "hint": "Joy · Expensive",
+    "reaction": "You turn fifty-two times in a year. The cake budget becomes the movement’s largest line item.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 8,
+      "resources": -5
+     }
+    }
+   },
+   {
+    "label": "Once a year is plenty.",
+    "hint": "Sensible",
+    "reaction": "{city} agrees, and throws the party once a year, for a week.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.twin_town",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "outsider",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:3"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the twin town",
+  "text": "{city} has twinned itself with a town overseas that also does {belief}, but upside down. Their delegation arrives tomorrow. Nobody knows which way up to greet them.",
+  "choices": [
+   {
+    "label": "Greet them upside down.",
+    "hint": "Commit to it",
+    "reaction": "Handstands all around. The delegation is moved to tears. Some of the tears run upward.",
+    "effects": {
+     "followers": 40,
+     "gauges": {
+      "attention": 4,
+      "enthusiasm": 3
+     }
+    }
+   },
+   {
+    "label": "Right side up, and hope for the best.",
+    "hint": "Safe",
+    "reaction": "The delegation is too polite to mention it. They do everything upside down for the rest of the visit, to make you feel at home.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.phil",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "literalism",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:3"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "Phil",
+  "text": "The {city} {assembly} held an election for Founder. You weren’t running. You came in second, to a man named Phil, who also wasn’t running. Phil would like to know what he’s supposed to do now.",
+  "choices": [
+   {
+    "label": "Make Phil the Founder of {city}.",
+    "hint": "Local pride · Muddled",
+    "reaction": "Phil founds {city} again, from scratch, in the same building. Attendance doubles.",
+    "effects": {
+     "followers": 50,
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": -2
+     }
+    }
+   },
+   {
+    "label": "There’s only one founder.",
+    "hint": "Firm",
+    "reaction": "Phil is relieved. He goes back to running the hardware store, where he is, everyone agrees, a natural leader.",
+    "effects": {
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.weather",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "vindication",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:4"
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the forecasts",
+  "text": "The {city} {assembly} started forecasting the weather according to {belief}. They’ve been right eleven days in a row. The actual weather service called to ask how.",
+  "choices": [
+   {
+    "label": "Tell them our secret.",
+    "hint": "Generous · Attention",
+    "reaction": "The weather service adopts the method for a trial week. It rains on the right days. A meteorologist joins.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "unity": 1
+     },
+     "followers": 30
+    }
+   },
+   {
+    "label": "A good magician never tells.",
+    "hint": "Mystery",
+    "reaction": "The forecasts continue. The weather service starts quietly checking them before going on air.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.gary_church",
+  "type": "character",
+  "speaker": "gary",
+  "road": true,
+  "shape": "drift",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the church tour",
+  "text": "I fell asleep in the big church in {city} during the tour. When I woke up there was a second tour, about me. The guide says I’m the most peaceful thing they’ve had in years.",
+  "choices": [
+   {
+    "label": "Gary is a local landmark now.",
+    "hint": "Calm · Visitors",
+    "reaction": "Gary is added to the official tour, between the stained glass and the gift shop. He is, by all reports, the highlight.",
+    "effects": {
+     "followers": 35,
+     "gauges": {
+      "attention": 3,
+      "unity": 2
+     },
+     "loyalty": {
+      "gary": 4
+     }
+    }
+   },
+   {
+    "label": "Gary, maybe sleep somewhere less famous.",
+    "hint": "Discreet",
+    "reaction": "Gary moves to a quieter church. A smaller tour forms around him there too.",
+    "effects": {
+     "gauges": {
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.gary_hammocks",
+  "type": "character",
+  "speaker": "gary",
+  "road": true,
+  "shape": "logistics",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the hammock window",
+  "text": "{city} has a hammock store. I’ve been testing hammocks for six days. The owner made me an offer: a free hammock, if I keep lying in the front window. People stop and watch. Several have joined.",
+  "choices": [
+   {
+    "label": "Take the deal.",
+    "hint": "Gary, on display",
+    "reaction": "Gary becomes {city}’s most popular window display. The hammock store hosts the {assembly} meetings now, lying down.",
+    "effects": {
+     "followers": 45,
+     "gauges": {
+      "enthusiasm": 2,
+      "unity": 2
+     },
+     "loyalty": {
+      "gary": 6
+     }
+    }
+   },
+   {
+    "label": "Buy the hammock. Gary comes home.",
+    "hint": "Costs a little",
+    "reaction": "Gary comes home with the hammock and hangs it in the garage. It becomes a site of pilgrimage within the month.",
+    "effects": {
+     "gauges": {
+      "resources": -3,
+      "unity": 2
+     },
+     "loyalty": {
+      "gary": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.gary_dog",
+  "type": "character",
+  "speaker": "gary",
+  "road": true,
+  "shape": "drift",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the dog",
+  "text": "A dog has followed me around {city} for three days. I think he’s a member now. He comes to the {meeting} and lies down at exactly the right moments.",
+  "choices": [
+   {
+    "label": "Give the dog a name badge.",
+    "hint": "Official dog",
+    "reaction": "The dog’s name badge says MEMBER. He wears it with tremendous dignity and is elected to the welcome committee.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "attention": 2
+     },
+     "flags": [
+      "member_dog"
+     ]
+    }
+   },
+   {
+    "label": "Find the dog’s owner.",
+    "hint": "Responsible",
+    "reaction": "The owner turns out to be the mayor, who also joins, mostly to keep an eye on the dog.",
+    "effects": {
+     "followers": 20,
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.priya_wrong_wedding",
+  "type": "character",
+  "speaker": "priya",
+  "road": true,
+  "shape": "backfire",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the wrong wedding",
+  "text": "I made soup for a wedding in {city}. The wrong wedding. A different wedding. They loved it anyway, the bride has joined, and the groom would like to know what he’s joined.",
+  "choices": [
+   {
+    "label": "Welcome the whole wedding.",
+    "hint": "Joy · Growth",
+    "reaction": "The entire wedding party joins, including a cake that the bride insists counts. The groom is still finding out what he’s joined, and enjoying it.",
+    "effects": {
+     "followers": 60,
+     "gauges": {
+      "enthusiasm": 5
+     }
+    }
+   },
+   {
+    "label": "Find the right wedding and apologize.",
+    "hint": "Honest",
+    "reaction": "The right wedding gets soup too, a day late. They join out of sympathy.",
+    "effects": {
+     "followers": 25,
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.priya_mayor",
+  "type": "character",
+  "speaker": "priya",
+  "road": true,
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the official soup",
+  "text": "The mayor of {city} came for soup and stayed for six hours. He cried twice. He wants to make {belief} the official soup of {city}, which isn’t how soup works, but here we are.",
+  "choices": [
+   {
+    "label": "Let him make it official.",
+    "hint": "Civic soup",
+    "reaction": "The proclamation is read from the town hall steps. Several people point out that {belief} is not a soup. The mayor says it is now.",
+    "effects": {
+     "followers": 50,
+     "gauges": {
+      "attention": 5,
+      "unity": -1
+     }
+    }
+   },
+   {
+    "label": "Suggest a regular soup.",
+    "hint": "Sensible",
+    "reaction": "The official soup of {city} is now lentil. The mayor still comes every week, and still cries, just once now.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.dez_blimp",
+  "type": "character",
+  "speaker": "dez",
+  "road": true,
+  "shape": "overpromise",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the blimp",
+  "text": "I rented a blimp. It says {movement} on the side, and it’s over {city} right now. I didn’t know blimps don’t really steer. It’s over the next county now. People in the next county are very excited.",
+  "choices": [
+   {
+    "label": "Let the blimp go where it goes.",
+    "hint": "Fame · Unpredictable",
+    "reaction": "The blimp drifts across four counties in two days. Membership rises along its route, like a very slow parade.",
+    "effects": {
+     "followers": 80,
+     "gauges": {
+      "attention": 8,
+      "resources": -6
+     },
+     "reveal": 2
+    }
+   },
+   {
+    "label": "Bring the blimp down.",
+    "hint": "Responsible",
+    "reaction": "The blimp lands in a cornfield. The farmer joins. The cows remain undecided.",
+    "effects": {
+     "followers": 15,
+     "gauges": {
+      "resources": -4,
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.dez_record",
+  "type": "character",
+  "speaker": "dez",
+  "road": true,
+  "shape": "overpromise",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the world record",
+  "text": "I told {city} we’d break the world record for the most people doing {belief} at the same time. They already booked the football stadium. We need four thousand people by Saturday.",
+  "choices": [
+   {
+    "label": "Fill the stadium.",
+    "hint": "Spectacle",
+    "reaction": "Four thousand two hundred people turn up. The record is broken. The record people admit they had to create a new category to break.",
+    "effects": {
+     "followers": 120,
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 6,
+      "resources": -5
+     }
+    }
+   },
+   {
+    "label": "Book a smaller venue.",
+    "hint": "Realistic",
+    "reaction": "The record attempt moves to a bowling alley. You break the bowling-alley record instead. It is framed.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.dez_water_tower",
+  "type": "character",
+  "speaker": "dez",
+  "road": true,
+  "shape": "literalism",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the water tower",
+  "text": "The mayor of {city} gave me the key to the city. It turns out it opens an actual door, to the {city} water tower. I’m in the water tower now. The view is incredible. Can we start a chapter up here?",
+  "choices": [
+   {
+    "label": "A chapter in the water tower.",
+    "hint": "Unusual · Visible",
+    "reaction": "The Water Tower Chapter meets weekly, sixty feet up. Membership is limited by the number of people who can climb a ladder, and grows anyway.",
+    "effects": {
+     "followers": 30,
+     "gauges": {
+      "attention": 5,
+      "enthusiasm": 3
+     }
+    }
+   },
+   {
+    "label": "Come down, Dez.",
+    "hint": "Safety",
+    "reaction": "Dez comes down, slowly, waving the whole way. A crowd has gathered. Some of them join.",
+    "effects": {
+     "followers": 20,
+     "gauges": {
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.martin_block_party",
+  "type": "character",
+  "speaker": "martin",
+  "road": true,
+  "shape": "logistics",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the block party",
+  "text": "{city} has never had a block party. I’ve organized one. There are name badges, a bounce house and a seating plan for the bounce house.",
+  "choices": [
+   {
+    "label": "Make it an annual event.",
+    "hint": "Martin’s triumph",
+    "reaction": "The {city} block party becomes the event of the summer. The bounce house seating plan is laminated and framed at town hall.",
+    "effects": {
+     "followers": 50,
+     "gauges": {
+      "enthusiasm": 5,
+      "resources": -3
+     },
+     "loyalty": {
+      "martin": 5
+     }
+    }
+   },
+   {
+    "label": "Maybe lose the seating plan.",
+    "hint": "Spontaneity · Martin winces",
+    "reaction": "Without the seating plan, the bounce house descends into joyful chaos. Martin watches from a folding chair, laminating his feelings.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": -1
+     },
+     "loyalty": {
+      "martin": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.martin_karaoke",
+  "type": "character",
+  "speaker": "martin",
+  "road": true,
+  "shape": "vindication",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "karaoke night",
+  "text": "The {city} {assembly} has a karaoke night. I sang. Now they want me to sing at every meeting. I don’t know how to say no to a standing ovation, {title}.",
+  "choices": [
+   {
+    "label": "Martin sings.",
+    "hint": "Charisma",
+    "reaction": "Martin’s rendition of a power ballad becomes a weekly tradition in {city}. People drive in from three towns to hear it.",
+    "effects": {
+     "followers": 40,
+     "gauges": {
+      "enthusiasm": 6
+     },
+     "loyalty": {
+      "martin": 6
+     }
+    }
+   },
+   {
+    "label": "Once is legendary. Twice is a habit.",
+    "hint": "Restraint",
+    "reaction": "Martin agrees, and sings it once more, at the door, on the way out. It is even better.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.juniper_video",
+  "type": "character",
+  "speaker": "juniper",
+  "road": true,
+  "shape": "backfire",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the video",
+  "text": "I filmed the {city} members doing {belief} and posted it. It has eleven million views. Most of the comments are from people in other countries asking whether they can join from there.",
+  "choices": [
+   {
+    "label": "Say yes to all of them.",
+    "hint": "Worldwide interest",
+    "reaction": "Overnight, {movement} has members on four continents, most of whom have only seen one video and are completely committed.",
+    "effects": {
+     "followers": 90,
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 4
+     },
+     "flags": [
+      "went_global"
+     ]
+    }
+   },
+   {
+    "label": "One country at a time.",
+    "hint": "Measured",
+    "reaction": "Juniper pins a comment: “Soon.” It gets more likes than the video.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.rolf_parking_lot",
+  "type": "character",
+  "speaker": "rolf",
+  "road": true,
+  "shape": "commerce",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 140,
+  "topic": "the parking lot",
+  "text": "{city} had a parking problem. I solved it: I bought the parking lot. We now own a parking lot. It is extremely profitable, and nobody is sure whether it is in keeping with {belief}.",
+  "choices": [
+   {
+    "label": "Keep the parking lot.",
+    "hint": "Money",
+    "reaction": "The {movement} parking lot becomes the most cheerful parking lot in the state. The attendant hands out soup.",
+    "effects": {
+     "gauges": {
+      "resources": 8,
+      "unity": -2
+     },
+     "serves": [
+      "money"
+     ]
+    }
+   },
+   {
+    "label": "Turn it into a park.",
+    "hint": "Generous · Costly",
+    "reaction": "The parking lot becomes a park. The park becomes a meeting place. Rolf visits it, slightly mournfully, and counts the benches.",
+    "effects": {
+     "gauges": {
+      "resources": -4,
+      "enthusiasm": 4,
+      "unity": 2
+     },
+     "serves": [
+      "-money"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.any_recess",
+  "type": "character",
+  "speaker": "dispatched",
+  "road": true,
+  "shape": "drift",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 90,
+  "topic": "recess",
+  "text": "The kids in {city} have started doing {belief} at recess. The school wrote to ask whether it’s educational. The principal has started joining in.",
+  "choices": [
+   {
+    "label": "Offer to visit the school.",
+    "hint": "Wholesome",
+    "reaction": "You visit. The kids teach you a version of {belief} more advanced than yours. Parents join to find out what their children are talking about.",
+    "effects": {
+     "followers": 45,
+     "gauges": {
+      "enthusiasm": 4,
+      "attention": 3
+     }
+    }
+   },
+   {
+    "label": "Let recess be recess.",
+    "hint": "Hands off",
+    "reaction": "Recess continues. A teacher reports that {belief} has replaced tag entirely.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "road.any_two_towns",
+  "type": "character",
+  "speaker": "dispatched",
+  "road": true,
+  "shape": "literalism",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "cooldown": 120,
+  "topic": "the other town",
+  "text": "Small problem. There are two towns called {city}, and I think I’m in the other one. The other one has been very welcoming. Should I start a branch here anyway?",
+  "choices": [
+   {
+    "label": "Start one in both.",
+    "hint": "Double",
+    "reaction": "{movement} now has a {city} branch and a Second {city} branch. They meet once a year to argue about which is which.",
+    "effects": {
+     "followers": 40,
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": -1
+     },
+     "reveal": 1
+    }
+   },
+   {
+    "label": "Come back to the right {city}.",
+    "hint": "Tidy",
+    "reaction": "They come back. The wrong {city} sends a fruit basket and a membership application.",
+    "effects": {
+     "followers": 10,
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "bev.rush_hour",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "logistics",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "chars": {
+    "bev": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "rush hour",
+  "text": "We have a rush hour now, hon. Every {day} at six, nine hundred members try to leave {hometown} for the same three towns. I’ve put on extra buses. I’ve also put on a man with a whistle.",
+  "choices": [
+   {
+    "label": "More buses.",
+    "hint": "Spread out · Costs money",
+    "reaction": "The buses run every ten minutes. The man with the whistle becomes a minor celebrity and asks for a second whistle.",
+    "effects": {
+     "gauges": {
+      "resources": -5,
+      "enthusiasm": 3
+     },
+     "reveal": 2,
+     "loyalty": {
+      "bev": 3
+     }
+    }
+   },
+   {
+    "label": "Stagger the {meeting} times.",
+    "hint": "Clever · Some grumbling",
+    "reaction": "The {meeting} now starts at six, six-fifteen and six-thirty, depending on your last name. Bev considers it her finest work.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "attention": -1
+     },
+     "loyalty": {
+      "bev": 5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "bev.lost_gary",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "logistics",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "chars": {
+    "bev": {
+     "present": true
+    },
+    "gary": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the number 12",
+  "text": "I’ve lost Gary. Not lost lost: I know he’s on the number 12. The number 12 doesn’t stop until the coast. He’ll be fine. He’ll be on the coast.",
+  "choices": [
+   {
+    "label": "Start a beach chapter while he’s there.",
+    "hint": "Opportunity",
+    "reaction": "Gary wakes up on the coast and, by the time the return bus arrives, has founded the Beach Chapter. It meets lying down, on towels.",
+    "effects": {
+     "followers": 40,
+     "gauges": {
+      "enthusiasm": 3
+     },
+     "reveal": 1,
+     "loyalty": {
+      "gary": 3
+     }
+    }
+   },
+   {
+    "label": "Send a car for Gary.",
+    "hint": "Safe",
+    "reaction": "The car finds Gary asleep on a bench facing the ocean. He says it was the best trip of his life, and he’d like to go again, awake.",
+    "effects": {
+     "gauges": {
+      "resources": -2,
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "bev.old_depot",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "callback",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "chars": {
+    "bev": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.3,
+  "topic": "the old depot",
+  "text": "My old bus depot wants to throw me a retirement party. I retired eleven years ago. They just noticed I wasn’t there. Can I take the afternoon?",
+  "choices": [
+   {
+    "label": "Take the whole day, Bev.",
+    "hint": "Kind",
+    "reaction": "Bev goes to her party and comes back with forty bus drivers, all members, all on time.",
+    "effects": {
+     "followers": 40,
+     "loyalty": {
+      "bev": 8
+     },
+     "gauges": {
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "Can it wait until after {day}?",
+    "hint": "Busy week",
+    "reaction": "Bev says it’s waited eleven years, it can wait a week. It does. She goes. The drivers join anyway.",
+    "effects": {
+     "loyalty": {
+      "bev": -2
+     },
+     "followers": 20
+    }
+   }
+  ]
+ },
+ {
+  "id": "mile.cake",
+  "type": "plot",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "followers": ">=10000"
+  },
+  "once": true,
+  "priority": 3,
+  "weight": 4,
+  "topic": "the cake",
+  "text": "We have ten thousand members. Someone made a cake in the shape of everybody. It took nine bakeries. Where do we put it?",
+  "choices": [
+   {
+    "label": "Cut it. Everyone gets a piece of everyone.",
+    "hint": "Celebrate",
+    "reaction": "The cake is cut at a ceremony that runs four hours. Somebody gets Gary’s head. They frame the plate.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 6,
+      "resources": -3
+     }
+    }
+   },
+   {
+    "label": "Preserve it.",
+    "hint": "History",
+    "reaction": "The cake goes on display. It does not keep. The display becomes something else, and then a tourist attraction.",
+    "effects": {
+     "gauges": {
+      "attention": 5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "mile.doris",
+  "type": "plot",
+  "speaker": "any",
+  "shape": "literalism",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "followers": ">=250000"
+  },
+  "once": true,
+  "priority": 3,
+  "weight": 4,
+  "topic": "Doris",
+  "text": "Our quarter-millionth member just joined. Her name is Doris, and she thought she was entering a raffle. She’d like her prize.",
+  "choices": [
+   {
+    "label": "Give Doris a prize.",
+    "hint": "Generous",
+    "reaction": "Doris wins a lifetime supply of soup, a parade and a small bronze plaque. She becomes the most enthusiastic member the movement has ever had.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 5,
+      "attention": 4,
+      "resources": -3
+     }
+    }
+   },
+   {
+    "label": "Explain to Doris what she’s joined.",
+    "hint": "Honest",
+    "reaction": "Doris listens to the whole explanation, says “Huh,” and stays anyway. She still asks about the raffle every week.",
+    "effects": {
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "mile.themepark",
+  "type": "plot",
+  "speaker": "any",
+  "shape": "commerce",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "followers": ">=100000"
+  },
+  "once": true,
+  "priority": 3,
+  "weight": 4,
+  "topic": "the theme park",
+  "text": "A theme park company wants to build {Movement}land. There would be a ride called “{belief}: The Experience.” Gary asked whether there would be a quiet room. There would not.",
+  "choices": [
+   {
+    "label": "Build it, with a quiet room.",
+    "hint": "Spectacle · Gary’s condition",
+    "reaction": "{Movement}land opens with a roller coaster, a soup flume and, in the middle, one very quiet room. Gary’s room has the longest line in the park.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "resources": 8,
+      "unity": -2
+     },
+     "loyalty": {
+      "gary": 4
+     }
+    }
+   },
+   {
+    "label": "We are not a theme park.",
+    "hint": "Integrity",
+    "reaction": "The company builds a rival park instead. It is called Movementland, without the name, and nobody goes.",
+    "effects": {
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "mile.dog_million",
+  "type": "plot",
+  "speaker": "any",
+  "shape": "callback",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "followers": ">=1000000"
+  },
+  "once": true,
+  "priority": 3,
+  "weight": 4,
+  "topic": "the millionth member",
+  "text": "One million members. The millionth is a dog. His owner signed him up as a joke, but he has come to every {meeting} since, and he sits in the front row.",
+  "choices": [
+   {
+    "label": "Throw the dog a parade.",
+    "hint": "Joy",
+    "reaction": "The parade route is lined with half a million people and several thousand dogs, all of whom are now members.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 8,
+      "attention": 6
+     },
+     "followers": 200
+    }
+   },
+   {
+    "label": "A quiet ceremony. He’s a good dog.",
+    "hint": "Dignified",
+    "reaction": "The dog is given a medal on a ribbon. He sleeps through the ceremony, which members agree is the most on-brand thing that could have happened.",
+    "effects": {
+     "gauges": {
+      "unity": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "mile.stamp",
+  "type": "plot",
+  "speaker": "any",
+  "shape": "outsider",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "followers": ">=500000"
+  },
+  "once": true,
+  "priority": 3,
+  "weight": 4,
+  "topic": "the stamp",
+  "text": "The postal service wants to put {belief} on a stamp. They need a picture. Martin has submitted forty-one. Dez has submitted one, of himself.",
+  "choices": [
+   {
+    "label": "Use Martin’s best one.",
+    "hint": "Classic",
+    "reaction": "The stamp sells out in a day. Collectors pay a fortune for the misprinted version, which shows Martin’s thumb.",
+    "effects": {
+     "gauges": {
+      "attention": 5,
+      "unity": 2
+     },
+     "loyalty": {
+      "martin": 4
+     }
+    }
+   },
+   {
+    "label": "Use Dez’s.",
+    "hint": "Bold",
+    "reaction": "The stamp shows Dez, beaming, holding a megaphone. Letters arrive everywhere with a slightly louder feel to them.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "enthusiasm": 3
+     },
+     "loyalty": {
+      "dez": 5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "mile.nervous_country",
+  "type": "plot",
+  "speaker": "any",
+  "shape": "outsider",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ],
+   "followers": ">=5000000"
+  },
+  "once": true,
+  "priority": 3,
+  "weight": 4,
+  "topic": "the nervous country",
+  "text": "There are now more of us than there are people in several countries. One of those countries wrote to us, slightly nervously, to ask what our intentions are.",
+  "choices": [
+   {
+    "label": "Send them soup.",
+    "hint": "Reassuring",
+    "reaction": "The soup arrives in a diplomatic pouch. The country writes back to say it is reassured, and could it have the recipe.",
+    "effects": {
+     "gauges": {
+      "attention": 4,
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "Tell them our intentions are unclear, even to us.",
+    "hint": "Honest",
+    "reaction": "The country is not reassured, but it is charmed. Its prime minister joins.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "enthusiasm": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.passport",
+  "type": "follower",
+  "speaker": "any",
+  "shape": "proposal",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "international"
+   ]
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the passport",
+  "text": "Members abroad want a {movement} passport. It wouldn’t get you into any country. It would get you into every {meeting}, anywhere, and a free bowl of soup.",
+  "choices": [
+   {
+    "label": "Issue the passports.",
+    "hint": "Belonging",
+    "reaction": "The passport is navy blue, with a ladle on the cover. Border guards in four countries ask how to apply.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 6,
+      "resources": -4
+     },
+     "followersPct": 0.02
+    }
+   },
+   {
+    "label": "A membership card is enough.",
+    "hint": "Simple",
+    "reaction": "The membership card gets a small airplane printed on it. Everyone agrees it counts.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.translation",
+  "type": "follower",
+  "speaker": "any",
+  "shape": "literalism",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "international"
+   ]
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the sandwich translation",
+  "text": "We need {belief} translated into forty languages. In nine of them it comes out as something else entirely. In one, it’s apparently a kind of sandwich.",
+  "choices": [
+   {
+    "label": "Embrace the sandwich.",
+    "hint": "Delicious",
+    "reaction": "In that country the movement is now mostly about sandwiches. It is our fastest-growing branch.",
+    "effects": {
+     "followersPct": 0.03,
+     "gauges": {
+      "unity": -3,
+      "enthusiasm": 4
+     }
+    }
+   },
+   {
+    "label": "Hire better translators.",
+    "hint": "Accurate · Costly",
+    "reaction": "The new translations are perfect, and much less popular than the sandwich.",
+    "effects": {
+     "gauges": {
+      "resources": -5,
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.gary_jetlag",
+  "type": "character",
+  "speaker": "gary",
+  "shape": "drift",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "international"
+   ],
+   "chars": {
+    "gary": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "jet lag",
+  "text": "I’ve been to six countries this month. I slept through all of them. I woke up as a member of three local movements that aren’t ours. They seem nice.",
+  "choices": [
+   {
+    "label": "Make them sister movements.",
+    "hint": "Gary diplomacy",
+    "reaction": "The three movements become sister organizations. Their founders write to Gary every month. He replies, eventually, from a hammock.",
+    "effects": {
+     "followersPct": 0.03,
+     "gauges": {
+      "enthusiasm": 3
+     },
+     "loyalty": {
+      "gary": 5
+     }
+    }
+   },
+   {
+    "label": "Gary should stay home for a while.",
+    "hint": "Rest",
+    "reaction": "Gary stays home for a month and sleeps in his own garage. He says it’s the best country he’s been to.",
+    "effects": {
+     "gauges": {
+      "unity": 3
+     },
+     "loyalty": {
+      "gary": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.soup_border",
+  "type": "character",
+  "speaker": "priya",
+  "shape": "vindication",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "international"
+   ],
+   "chars": {
+    "priya": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the soup tent",
+  "text": "Two countries that don’t speak to each other both came to my soup tent at the border. They’re sitting at the same table. They haven’t said a word to each other, but they asked for seconds at exactly the same time.",
+  "choices": [
+   {
+    "label": "Keep the tent open. Forever.",
+    "hint": "Soup diplomacy",
+    "reaction": "The tent becomes a permanent fixture. Diplomats start scheduling meetings there because the soup is better than at the embassies.",
+    "effects": {
+     "gauges": {
+      "attention": 6,
+      "unity": 4,
+      "resources": -3
+     },
+     "loyalty": {
+      "priya": 8
+     }
+    }
+   },
+   {
+    "label": "Seat them at separate tables.",
+    "hint": "Cautious",
+    "reaction": "They move to separate tables, then move back, because the separate tables are farther from the pot.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.dez_continent",
+  "type": "character",
+  "speaker": "dez",
+  "shape": "overpromise",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "international"
+   ],
+   "chars": {
+    "dez": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the bigger half",
+  "text": "I may have promised a continent. Not all of it. The bigger half.",
+  "choices": [
+   {
+    "label": "Then we’d better get going.",
+    "hint": "Ambition",
+    "reaction": "Dez maps out the bigger half with a marker and a lot of confidence. The buses leave at dawn.",
+    "effects": {
+     "reveal": 4,
+     "gauges": {
+      "attention": 6,
+      "resources": -6,
+      "enthusiasm": 5
+     }
+    }
+   },
+   {
+    "label": "Unpromise the continent.",
+    "hint": "Realistic",
+    "reaction": "Dez apologizes to the continent, by video. The continent takes it well.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "dez": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.song_contest",
+  "type": "follower",
+  "speaker": "any",
+  "shape": "outsider",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "international"
+   ]
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the song contest",
+  "text": "We’ve been invited to the International Song Contest. Every country sends one song. We aren’t a country. They’ve let us in anyway, because nobody could find a rule against it.",
+  "choices": [
+   {
+    "label": "Juniper writes the song.",
+    "hint": "Earnest",
+    "reaction": "The song is about {belief} and has nine key changes. It comes second, behind a country that sent a man in a suit made of mirrors.",
+    "effects": {
+     "gauges": {
+      "attention": 8,
+      "enthusiasm": 5
+     }
+    }
+   },
+   {
+    "label": "Martin sings the power ballad.",
+    "hint": "Charisma",
+    "reaction": "Martin sings. The arena sings back. We win, technically, on a recount nobody asked for.",
+    "effects": {
+     "gauges": {
+      "attention": 10,
+      "enthusiasm": 4,
+      "unity": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.embassy",
+  "type": "follower",
+  "speaker": "any",
+  "shape": "logistics",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "international"
+   ]
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the embassy",
+  "text": "A country has offered us an embassy. It’s a two-bedroom apartment above a bakery. It has a flagpole. It does not have a flag.",
+  "choices": [
+   {
+    "label": "Accept, and make a flag.",
+    "hint": "Official-ish",
+    "reaction": "The flag shows a garage door. The bakery downstairs starts making garage-shaped bread.",
+    "effects": {
+     "gauges": {
+      "attention": 5,
+      "resources": -3,
+      "enthusiasm": 3
+     }
+    }
+   },
+   {
+    "label": "Turn it into a soup kitchen.",
+    "hint": "Useful",
+    "reaction": "The embassy serves soup to anyone who asks. It is the most visited embassy in the city by a long way.",
+    "effects": {
+     "gauges": {
+      "unity": 4,
+      "resources": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.other_martin",
+  "type": "character",
+  "speaker": "martin",
+  "shape": "feud",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "international"
+   ],
+   "chars": {
+    "martin": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the other Martin",
+  "text": "There’s a man in another country who does exactly what I do. Same clipboards. Same laminator. Same feelings about name badges. We’ve been writing. I think I’ve met my match, {title}, and I don’t know whether to be thrilled or furious.",
+  "choices": [
+   {
+    "label": "Invite him to visit.",
+    "hint": "Friendship, or rivalry",
+    "reaction": "The two Martins meet at the airport. They laminate each other’s boarding passes. They have been inseparable ever since.",
+    "effects": {
+     "loyalty": {
+      "martin": 6
+     },
+     "gauges": {
+      "unity": 3
+     }
+    }
+   },
+   {
+    "label": "Keep it to letters.",
+    "hint": "Safe distance",
+    "reaction": "The letters get longer and more competitive. Martin starts color-coding them. So does the other Martin.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.time_zones",
+  "type": "character",
+  "speaker": "bev",
+  "shape": "logistics",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "international"
+   ],
+   "chars": {
+    "bev": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "time zones",
+  "text": "The movement now spans eleven time zones, hon. It is always {day} somewhere. Somebody is always at a {meeting}. I haven’t slept since Thursday, but the buses are running.",
+  "choices": [
+   {
+    "label": "Hire Bev two deputies.",
+    "hint": "Sustainable · Costs money",
+    "reaction": "Bev hires two retired dispatchers, one for each half of the world. They run the schedule in shifts and send each other postcards.",
+    "effects": {
+     "gauges": {
+      "resources": -6,
+      "unity": 3
+     },
+     "loyalty": {
+      "bev": 8
+     }
+    }
+   },
+   {
+    "label": "Bev, go to bed.",
+    "hint": "Kind",
+    "reaction": "Bev goes to bed for fourteen hours. The schedule runs itself, almost perfectly. She is quietly furious about the almost.",
+    "effects": {
+     "gauges": {
+      "unity": 1
+     },
+     "loyalty": {
+      "bev": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.nap_founder",
+  "type": "follower",
+  "speaker": "any",
+  "shape": "feud",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "international"
+   ]
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the nap founder",
+  "text": "A movement abroad is exactly like ours, except they started with naps where we started with {belief}. Their founder wants to meet. He suggested a neutral country. He also suggested a nap.",
+  "choices": [
+   {
+    "label": "Meet, and nap.",
+    "hint": "Peace",
+    "reaction": "The two founders nap side by side in a neutral country. The photograph is the most peaceful image of the year.",
+    "effects": {
+     "followersPct": 0.03,
+     "gauges": {
+      "attention": 5,
+      "unity": 2
+     }
+    }
+   },
+   {
+    "label": "Meet, but stay awake.",
+    "hint": "Wary",
+    "reaction": "You stay awake. He sleeps. The meeting goes very well from his side.",
+    "effects": {
+     "gauges": {
+      "unity": 1,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "int.form",
+  "type": "follower",
+  "speaker": "any",
+  "shape": "procedure",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "international"
+   ]
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "the form",
+  "text": "The International Assembly of Nations asked whether {movement} is a country, a religion, a club or a weather system. Their form has only one box.",
+  "choices": [
+   {
+    "label": "Check “weather system.”",
+    "hint": "Mysterious",
+    "reaction": "We are officially classified as a weather system. Several countries issue advisories. Membership rises in all of them.",
+    "effects": {
+     "followersPct": 0.02,
+     "gauges": {
+      "attention": 6
+     }
+    }
+   },
+   {
+    "label": "Write in “a group of friends.”",
+    "hint": "Honest",
+    "reaction": "The form is rejected for writing outside the box. A clerk joins anyway.",
+    "effects": {
+     "gauges": {
+      "unity": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.larry",
+  "type": "character",
+  "speaker": "gary",
+  "shape": "drift",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots"
+   ]
+  },
+  "once": true,
+  "weight": 1.8,
+  "topic": "Larry",
+  "text": "The lawnmower has become a member. Not officially. People just keep saying hello to it on the way in. Somebody put a name tag on it. It says LARRY.",
+  "choices": [
+   {
+    "label": "Larry is a member.",
+    "hint": "Whimsy",
+    "reaction": "Larry is given a seat in the front row. Attendance improves, though nobody will admit it’s because of Larry.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": 2
+     },
+     "flags": [
+      "larry"
+     ]
+    }
+   },
+   {
+    "label": "It’s a lawnmower, Gary.",
+    "hint": "Reality",
+    "reaction": "Gary agrees it’s a lawnmower. Larry’s name tag stays on, though, out of respect.",
+    "effects": {
+     "gauges": {
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.copycat_garage",
+  "type": "rivalry",
+  "speaker": "dez",
+  "shape": "feud",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots"
+   ]
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the other garage",
+  "text": "Someone on the next street started their own garage meeting. They copied everything. They even have a Gary. Their Gary is awake.",
+  "choices": [
+   {
+    "label": "Challenge them to a bake-off.",
+    "hint": "Rivalry",
+    "reaction": "The bake-off ends in a draw and a merger. Their Gary and our Gary meet. Ours falls asleep. Theirs, inspired, does too.",
+    "effects": {
+     "followers": 12,
+     "gauges": {
+      "enthusiasm": 4
+     }
+    }
+   },
+   {
+    "label": "Imitation is flattery.",
+    "hint": "Gracious",
+    "reaction": "You send them a fruit basket. They copy the fruit basket.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "found.casserole",
+  "type": "character",
+  "speaker": "priya",
+  "shape": "feud",
+  "setting": "meeting",
+  "requires": {
+   "era": [
+    "founding",
+    "grassroots"
+   ],
+   "chars": {
+    "priya": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.6,
+  "topic": "the casserole",
+  "text": "Somebody brought a casserole. Not soup. A casserole. People are uneasy. I don’t want to be territorial, but I’m going to be a little territorial.",
+  "choices": [
+   {
+    "label": "Casseroles are welcome too.",
+    "hint": "Inclusive · Priya bristles",
+    "reaction": "The casserole is a hit. Priya tries it, says “fine,” and asks for the recipe in a very small voice.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 3,
+      "unity": 1
+     },
+     "loyalty": {
+      "priya": -2
+     }
+    }
+   },
+   {
+    "label": "This is a soup movement.",
+    "hint": "Priya beams",
+    "reaction": "The casserole is gently redirected to the bake sale table, where it sells out in four minutes.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     },
+     "loyalty": {
+      "priya": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.bowling",
+  "type": "character",
+  "speaker": "martin",
+  "shape": "proposal",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "chars": {
+    "martin": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the bowling league",
+  "text": "The bowling alley has offered us Thursday nights. Everyone gets custom shirts. I designed them. They’re beautiful. They say {movement} on the back and BOWL WITH PURPOSE on the front.",
+  "choices": [
+   {
+    "label": "Bowl with purpose.",
+    "hint": "Joy · Martin delighted",
+    "reaction": "The league is a triumph. Nobody can bowl. The shirts are so popular that people who have never bowled order them.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 5,
+      "resources": -2
+     },
+     "loyalty": {
+      "martin": 5
+     },
+     "followers": 30
+    }
+   },
+   {
+    "label": "Maybe just the shirts.",
+    "hint": "Compromise",
+    "reaction": "The shirts become the unofficial uniform. Several members bowl in them anyway, on their own, for the look.",
+    "effects": {
+     "gauges": {
+      "unity": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.radio_callin",
+  "type": "character",
+  "speaker": "dez",
+  "shape": "overpromise",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ],
+   "chars": {
+    "dez": {
+     "present": true
+    }
+   }
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the radio",
+  "text": "I called in to a late-night radio show to talk about {belief}. I’ve been on for four hours. They won’t let me leave. Their ratings are the highest they’ve ever had.",
+  "choices": [
+   {
+    "label": "Stay on until dawn.",
+    "hint": "Fame",
+    "reaction": "Dez stays on until sunrise. Half the town has heard of {movement} by breakfast. The other half was asleep and is annoyed to have missed it.",
+    "effects": {
+     "followers": 60,
+     "gauges": {
+      "attention": 6
+     }
+    }
+   },
+   {
+    "label": "Hang up and go to bed, Dez.",
+    "hint": "Sensible",
+    "reaction": "Dez hangs up. The station plays his last sentence on a loop for an hour, because nobody can find the off switch.",
+    "effects": {
+     "gauges": {
+      "attention": 3,
+      "unity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "grass.flash_mob",
+  "type": "follower",
+  "speaker": "any",
+  "shape": "escalation",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional"
+   ]
+  },
+  "once": true,
+  "weight": 1.5,
+  "topic": "the mall",
+  "text": "Members staged a surprise {belief} in the {hometown} mall. It was so surprising that the security guards joined in. The mall manager wants to know if we do birthdays.",
+  "choices": [
+   {
+    "label": "We do birthdays now.",
+    "hint": "New line of work",
+    "reaction": "Members are booked for eleven birthdays, a bar mitzvah and a retirement party. All the guests join.",
+    "effects": {
+     "followers": 40,
+     "gauges": {
+      "enthusiasm": 4,
+      "resources": 3
+     }
+    }
+   },
+   {
+    "label": "We do surprises, not bookings.",
+    "hint": "Mystery",
+    "reaction": "The flash mob strikes again at the bus station, the library and, once, a dentist’s office. Nobody ever knows where next.",
+    "effects": {
+     "gauges": {
+      "attention": 4,
+      "enthusiasm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.rec_local_custom",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "drift",
+  "setting": "public",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:1"
+  },
+  "cooldown": 30,
+  "spacing": 6,
+  "weight": 1.5,
+  "topic": "a local custom",
+  "text": "The {city} {assembly} now ends every {meeting} with a group hug that lasts exactly four minutes. Someone brings an egg timer.",
+  "variants": [
+   "The {city} {assembly} now ends every {meeting} with a group hug that lasts exactly four minutes. Someone brings an egg timer.",
+   "In {city}, members have started greeting each other by saying the movement’s name backward. It has caught on. Nobody can pronounce it.",
+   "The {city} {assembly} has adopted a mascot: a raccoon that lives behind the hall. The raccoon has not been consulted.",
+   "{city} members now wear one sock inside out on {day}s, as a sign of commitment. Nobody remembers who started it. Gary suspects it was him.",
+   "The {city} {assembly} has started holding its {meetings} in a laundromat, for the warmth and the rhythm of the dryers.",
+   "In {city}, it is now customary to bring a houseplant to your first {meeting}. The hall has become a jungle. Visitors get lost.",
+   "The {city} {assembly} has replaced applause with a polite, synchronized whistle. The dogs in the neighborhood have strong feelings about it.",
+   "Members in {city} now sign every email with a small drawing of a {beliefNoun}. Their employers have started asking questions.",
+   "The {city} {assembly} sings the minutes instead of reading them. The minutes have never been more popular, or less accurate.",
+   "In {city}, the oldest member wears a crown at every {meeting}. It is made of cardboard. It is also, they insist, sacred."
+  ],
+  "choices": [
+   {
+    "label": "Spread it to every assembly.",
+    "hint": "Enthusiasm · A little chaos",
+    "reaction": "Within a month, every assembly does it. {city} is unbearably proud, and says so in a newsletter nobody asked for.",
+    "effects": {
+     "gauges": {
+      "enthusiasm": 4,
+      "unity": -2,
+      "attention": 1
+     }
+    }
+   },
+   {
+    "label": "That’s a {city} thing.",
+    "hint": "Local pride",
+    "reaction": "{city} keeps it to themselves, and becomes the place people visit to see it done properly.",
+    "effects": {
+     "gauges": {
+      "unity": 2,
+      "enthusiasm": 1
+     },
+     "followers": 20
+    }
+   }
+  ]
+ },
+ {
+  "id": "asm.rec_request",
+  "type": "regional",
+  "speaker": "any",
+  "shape": "proposal",
+  "setting": "private",
+  "requires": {
+   "era": [
+    "grassroots",
+    "regional",
+    "national",
+    "international"
+   ]
+  },
+  "bind": {
+   "city": "assemblyCity:2"
+  },
+  "cooldown": 30,
+  "spacing": 6,
+  "weight": 1.5,
+  "topic": "an assembly request",
+  "text": "The {city} {assembly} would like a hot tub. For the members. For morale. They have a quote and a brochure.",
+  "variants": [
+   "The {city} {assembly} would like a hot tub. For the members. For morale. They have a quote and a brochure.",
+   "{city} wants to send a delegation to every other assembly by tandem bicycle. They have twelve tandems. They need forty.",
+   "The {city} {assembly} wants a highway billboard that just says HI. They think it will work. Dez thinks it will work.",
+   "{city} is asking for a budget for a parade float. The float is a giant {beliefNoun}. It has a working fountain.",
+   "The {city} {assembly} has asked for a pipe organ. Nobody in {city} can play the organ. They say that’s what lessons are for.",
+   "{city} would like to adopt a mile of highway. They have already named it the {Movement} Mile, and they sweep it at midnight.",
+   "The {city} {assembly} wants to rent a lighthouse. There is no ocean anywhere near {city}. They found a lighthouse anyway.",
+   "{city} asks whether it can host a summer camp for members’ grandmothers. Forty grandmothers have signed up. They’ve made T-shirts."
+  ],
+  "choices": [
+   {
+    "label": "Fund it.",
+    "hint": "Costs money · They love you for it",
+    "reaction": "It arrives within the week. {city} holds a small ceremony, then a larger one, then a third to celebrate the first two.",
+    "effects": {
+     "gauges": {
+      "resources": -5,
+      "enthusiasm": 5
+     },
+     "followers": 30
+    }
+   },
+   {
+    "label": "Not this year.",
+    "hint": "Thrifty",
+    "reaction": "{city} takes it well, and starts a bake sale to pay for it themselves. The bake sale becomes its own tradition.",
+    "effects": {
+     "gauges": {
+      "unity": 1,
+      "enthusiasm": -1
+     }
+    }
+   }
+  ]
+ }
+]

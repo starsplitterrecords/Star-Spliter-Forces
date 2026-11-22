@@ -121,6 +121,7 @@ export function playWeeks(s: StoryState, weeks: number, policy: Policy, rng: Rng
       const card = CARD_BY_ID.get(inst.cardId)!;
       const i = pickChoice(s, policy, rng);
       choose(s, inst.uid, i, card.choices[i].input ? 'The Lentil Fellowship' : undefined);
+      camp.noteHandsOn(s);
     }
     if (!s.ended) camp.endWeek(s);
     // the idle layer: let Bev run the clock, and invest whatever the treasury allows

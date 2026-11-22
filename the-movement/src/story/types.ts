@@ -401,6 +401,8 @@ export interface StoryState {
   auto?: boolean; // Bev keeps the weeks moving on her own
   lastTick?: number; // real time (ms) the last week ended, for the automatic clock and time away
   away_report?: { weeks: number; joined: number; money: number; handled: number };
+  visit?: number; // the town the founder is visiting in person this week
+  handsOn?: number; // problems the founder dealt with personally this week
   rivals: Record<string, RivalState>;
   lastWeek?: WeekReport;
   memory: MemoryRecord[]; // what characters remember about you, newest last

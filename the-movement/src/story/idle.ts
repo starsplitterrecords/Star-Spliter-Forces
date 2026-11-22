@@ -10,21 +10,15 @@ import { CARD_BY_ID, CHAR_BY_ID, choose, render } from './engine';
 import type { CardDef, CardInstance, StoryState, WeekReport } from './types';
 
 export const IDLE = {
-  weekMs: 30_000, // with Auto on, a week passes every 30 seconds while the game is open
+  weekMs: 20_000, // with Auto on, a week passes every 20 seconds while the game is open
   offlineWeeks: 48, // and at most this many weeks pass while you are away
   dues: 0.05, // dollars per member per week
 };
 
 // ------------------------------------------------------------------ assemblies
 
-export const ASSEMBLY_LEVELS = [
-  { at: 50, name: 'Circle' },
-  { at: 300, name: 'Assembly' },
-  { at: 1_500, name: 'Chapter' },
-  { at: 8_000, name: 'Society' },
-  { at: 40_000, name: 'Institute' },
-  { at: 200_000, name: 'Capital' },
-];
+export { ASSEMBLY_LEVELS } from './engine';
+import { ASSEMBLY_LEVELS } from './engine';
 
 export function assemblyName(level?: number): string | null {
   return level ? ASSEMBLY_LEVELS[level - 1].name : null;

@@ -51,9 +51,20 @@ export const TIME = {
   regionalMaxCities: 110,
   nationalRadiusKm: 1600, // the National era: the whole country, give or take a border
   nationalMaxCities: 240,
+  internationalRadiusKm: 2600, // the International era: across borders
+  internationalMaxCities: 420,
   internationalFollowers: 250000, // the national closing card unlocks here (or ten towns at 85%)
   regionMaxCities: 40,
 };
+
+export const ASSEMBLY_LEVELS = [
+  { at: 50, name: 'Circle' },
+  { at: 300, name: 'Assembly' },
+  { at: 1_500, name: 'Chapter' },
+  { at: 8_000, name: 'Society' },
+  { at: 40_000, name: 'Institute' },
+  { at: 200_000, name: 'Capital' },
+];
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 export const CARD_BY_ID = new Map(LIBRARY.cards.map((c) => [c.id, c]));
@@ -197,7 +208,11 @@ export function render(s: StoryState, text: string, ctx: Record<string, string> 
   }
   for (const [k, v] of Object.entries(ctx)) {
     base[`ctx.${k}`] = v;
-    if (k === 'city' || k.endsWith('City')) base[k] = city(Number(v)).name;
+    if (k === 'city' || k.endsWith('City')) {
+      base[k] = city(Number(v)).name;
+      const lv = s.cities[Number(v)]?.assembly;
+      if (k === 'city') base.assembly = lv ? ASSEMBLY_LEVELS[lv - 1].name : 'branch';
+    }
     else if (k === 'departed') {
       base[k] = charName(s, v);
       base.departedHabit = CHAR_BY_ID.get(v)?.habit ?? '';
@@ -229,7 +244,7 @@ export function render(s: StoryState, text: string, ctx: Record<string, string> 
 }
 
 export const RECALL_TOKENS = ['mQuote', 'mAgo', 'mWhen', 'mWhere', 'mOther', 'mWho', 'mTopic', 'mDay'];
-export const RENDER_TOKENS = ['flavour', 'speakerId', 'exit', 'habit', 'meetingNo', 'pastText', 'pastDay', 'pastWho', 'towns', 'title', 'founder', 'initial', 'movement', 'Movement', 'members', 'member', 'Members', 'meeting', 'meetings', 'day', 'hq', 'hometown', 'count', 'belief', 'beliefNoun', 'item', 'speaker'];
+export const RENDER_TOKENS = ['assembly', 'flavour', 'speakerId', 'exit', 'habit', 'meetingNo', 'pastText', 'pastDay', 'pastWho', 'towns', 'title', 'founder', 'initial', 'movement', 'Movement', 'members', 'member', 'Members', 'meeting', 'meetings', 'day', 'hq', 'hometown', 'count', 'belief', 'beliefNoun', 'item', 'speaker'];
 
 // ------------------------------------------------------------------ binders (fill card context at draw time)
 
@@ -288,6 +303,11 @@ export const BINDERS: Record<string, Binder> = {
     return list.length ? rng.pick(list) : null;
   },
   rivalName: (_s, rng) => rng.pick(['the Thursday Knitting Circle', 'the Hometown Chess & Grievance Club', 'the Society for Ordinary Evenings']),
+  // assemblyCity[:minLevel]: a town whose local assembly has reached at least that level
+  assemblyCity: (s, rng, arg = '1') => {
+    const list = s.region.filter((id) => (s.cities[id].assembly ?? 0) >= Number(arg) && id !== s.hometown);
+    return list.length ? String(rng.pick(list)) : null;
+  },
   // rivalTowns:<rival>[:one]: the real towns a rival holds (names), or one of them (a city id)
   rivalTowns: (s, rng, arg = '') => {
     const [id, one] = arg.split(':');
@@ -802,7 +822,7 @@ export function simulate(s: StoryState, dt: number, rng: Rng, report?: AwayRepor
   const campaigns = s.region.reduce((a, id) => a + s.cities[id].organizers, 0) * (s.weekly ? 0.25 : 1);
   drift(s, 'enthusiasm', 42 + agg.commitment * 0.2 + groupShare(s, 'enthusiasts') * 35 - groupShare(s, 'casuals') * 12, 0.03, dt);
   drift(s, 'unity', 66 + up('naps') * 2 - agg.ambiguity * 0.06 - factional * 40 - disgruntled * 7 + groupShare(s, 'founders') * 15 - groupShare(s, 'opportunists') * 20, 0.025, dt);
-  drift(s, 'attention', (s.weekly ? 8 + Math.log10(f2 + 1) * 7 : 14 + Math.log10(f2 + 1) * 9) + agg.visibility * 0.06 + campaigns * 2 - (s.focus === 'rest' && s.weekly ? 15 : 0) - up('naps') * 3, s.weekly ? 0.05 : 0.04, dt);
+  drift(s, 'attention', (s.weekly ? 8 + Math.min(Math.log10(f2 + 1), 5) * 6.5 : 14 + Math.log10(f2 + 1) * 9) + agg.visibility * 0.06 + campaigns * 2 - (s.focus === 'rest' && s.weekly ? 15 : 0) - up('naps') * 3, s.weekly ? 0.05 : 0.04, dt);
   drift(s, 'resources', 36 + groupShare(s, 'opportunists') * 50 + agg.commerce * 0.05 + (s.flags.dues ? 12 : 0) * mod(s, 'income') - campaigns * 1.5 - (s.flags.departments ?? 0) * 0, 0.03, dt);
 
   // people: influence follows their base of support and their role
@@ -967,10 +987,10 @@ export function revealNext(s: StoryState, n: number, quiet = false) {
 function setEra(s: StoryState, e: Era) {
   if (ERAS.indexOf(e) <= ERAS.indexOf(s.era)) return;
   s.era = e;
-  if (e === 'regional' || e === 'national') {
+  if (e === 'regional' || e === 'national' || e === 'international') {
     // the arena widens: towns further from home come into play
     const h = city(s.hometown);
-    const [radius, max] = e === 'regional' ? [TIME.regionalRadiusKm, TIME.regionalMaxCities] : [TIME.nationalRadiusKm, TIME.nationalMaxCities];
+    const [radius, max] = e === 'regional' ? [TIME.regionalRadiusKm, TIME.regionalMaxCities] : e === 'national' ? [TIME.nationalRadiusKm, TIME.nationalMaxCities] : [TIME.internationalRadiusKm, TIME.internationalMaxCities];
     const wider = CITIES.filter((c) => !s.cities[c.id] && distanceKm(h, c) <= radius)
       .sort((a, b) => distanceKm(h, a) - distanceKm(h, b))
       .slice(0, Math.max(0, max - s.region.length));

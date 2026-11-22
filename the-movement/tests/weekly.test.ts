@@ -70,6 +70,7 @@ describe('weekly dispatch', () => {
   it('without a scheduler people go where their nature takes them; homesick people go home', () => {
     const s = weekly(14);
     playWeeks(s, 3, 'pleaser', new Rng(14));
+    if (s.chars.bev) s.chars.bev.present = false; // without Bev, people follow their nature
     expect(hasScheduler(s)).toBe(false);
     // Gary has been away two weeks: he goes home
     s.away.gary = 2;

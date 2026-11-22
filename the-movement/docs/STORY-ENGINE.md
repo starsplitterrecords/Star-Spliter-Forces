@@ -71,7 +71,7 @@ Each character has a job in the machine.
 
 | Who | Job | In the game |
 |---|---|---|
-| Bev | Runs the weeks | Once she runs the schedule, *Let Bev run the weeks* makes a week pass every 30 seconds while the game is open. Up to 48 weeks pass while you are away, and a one-line summary greets you when you return. The clock stops for anything only you can decide. |
+| Bev | Runs the weeks | Once she runs the schedule, *Let Bev run the weeks* makes a week pass every 20 seconds while the game is open. Up to 48 weeks pass while you are away, and a one-line summary greets you when you return. The clock stops for anything only you can decide. |
 | Dez | Recruits | Opens new towns with the gas money. *Dez's billboards* add +10% recruitment per level. |
 | Priya and Gary | The heart and soul | *Priya's soup kitchens* make people stay (−10% drift-away per level). *Gary's nap rooms* keep things calm (lower attention, higher unity). |
 | Martin, Rolf, Agnes (and Constance) | Administer | Routine problems you leave waiting are handled by the most influential administrator, in their own style. Rolf favors money, Agnes purity, Martin order. Story moments, naming choices, crises and exit scenes always wait for you. *Martin's welcome committees* make assemblies grow faster. *Rolf's dues collection* raises income. *Agnes's record keeping* has routine problems handled the week they arrive, more evenly. |
@@ -82,6 +82,30 @@ Each character has a job in the machine.
 **The story keeps its pace.** Growth can go exponential, but each era transition also needs enough decisions behind it in weekly mode (55 for regional, 120 for national, 200 for international). That way the written story isn't skipped.
 
 `content:weekly` shows the current numbers. Eras start at about weeks 5, 16, 32 and 51. Membership roughly doubles every few weeks once assemblies take hold, and the region fills before each era widens the map. All 8 automated games survived to week 70.
+
+### Managing actively versus letting it run
+
+Running on autopilot works. Managing by hand works better, in ways you can see.
+
+| Active move | Effect |
+|---|---|
+| **Visit a town yourself** | Tap a town, then *Visit … yourself this week* (one town a week; a 👑 marks it). That town grows by about a quarter that week, with a reputation and awareness boost and a little attention. |
+| **Send people personally** | Anyone you place by hand counts 1.5× in that town. |
+| **Answer problems yourself** | Each problem you deal with (rather than an administrator) adds +5% recruiting for the week, up to +30%. |
+
+**Live counters.** While Bev runs the weeks, the header total, the treasury and the *Your towns* list count up every quarter second, at last week's pace. *Your towns* shows the top eight towns with their assembly level and growth per week.
+
+**Territory.** Every town with members radiates a soft glow at real-world scale. It widens with membership and assembly level and deepens with the share of the town that has joined, so influence visibly spreads across the map. Rivals glow in their own color.
+
+**More story.** `cards.absurd.json` adds about 55 cards:
+
+- what the assemblies get up to on their own: the goose treasurer, the replica garage, the musical with a tap number, the nine-day week, Phil;
+- two repeatable assembly cards with 18 variations between them;
+- 14 new road trips: Gary in the church tour, Dez's blimp, Priya at the wrong wedding;
+- Bev's rush hour;
+- membership milestones: the cake shaped like everybody, Doris, the millionth member (a dog);
+- 11 International-era cards (the era now widens the map to 420 towns across borders);
+- a few sillier early ones: Larry the lawnmower, the casserole.
 
 ## 1. Loop (continuous mode, older saves)
 

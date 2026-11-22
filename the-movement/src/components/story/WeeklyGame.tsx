@@ -7,7 +7,7 @@ import { city, countryName } from '@/engine/geo';
 import { fmt } from '@/engine/text';
 import { play } from '@/lib/audio';
 import { saveStory } from '@/lib/storyStorage';
-import { BRANCH, assignUnit, hasScheduler, pinAll, planWeek, endWeek, isOurs, pins, reachable, units, variantTerritory, whereIs } from '@/story/campaign';
+import { BRANCH, assignUnit, hasScheduler, noteHandsOn, pinAll, planWeek, endWeek, isOurs, pins, reachable, units, variantTerritory, whereIs } from '@/story/campaign';
 import { CARD_BY_ID, CHAR_BY_ID, cardText, centralBelief, charName, choose, followers, render } from '@/story/engine';
 import { type CardInstance, type ChoiceOutcome, type Gauge, GAUGES, type StoryState } from '@/story/types';
 import { Portrait, anonSpec } from './Portrait';
@@ -95,15 +95,19 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
   const belief = centralBelief(s);
 
   // the map frames the towns you know about, with a margin
-  const { paths, pts } = useMemo(() => {
+  const { paths, pts, perKm } = useMemo(() => {
     const ids = known.length > 1 ? known : [s.hometown];
     const h = city(s.hometown);
     const coords = [...ids.map((id) => [city(id).lon, city(id).lat]), [h.lon - 0.12, h.lat - 0.08], [h.lon + 0.12, h.lat + 0.08]];
     const proj = geoMercator().fitExtent([[28, 28], [W - 28, H - 28]], { type: 'MultiPoint', coordinates: coords } as GeoPermissibleObjects);
     const path = geoPath(proj);
+    // how many map units one kilometer is, near home (for drawing territory at real-world size)
+    const a = proj([h.lon, h.lat]) ?? [0, 0];
+    const b = proj([h.lon, h.lat + 1]) ?? [0, 1];
     return {
       paths: land.map((f) => path(f as unknown as GeoPermissibleObjects) ?? ''),
       pts: Object.fromEntries(s.region.map((id) => [id, proj([city(id).lon, city(id).lat]) ?? [0, 0]])) as Record<number, [number, number]>,
+      perKm: Math.abs(b[1] - a[1]) / 111,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [known.length, s.hometown]);
@@ -116,6 +120,13 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
     }
     return m;
   }, [roster, s]);
+
+  // second-by-second: while the weeks run on their own, each town's count climbs toward where last week's pace takes it
+  const progress = s.auto && !blocked(s) && s.lastTick ? Math.min(1, (Date.now() - s.lastTick) / IDLE.weekMs) : 0;
+  const lastGains = s.lastWeek && s.lastWeek.week === s.week - 1 ? s.lastWeek.gains ?? {} : {};
+  const liveFollowers = (id: number) => Math.floor(s.cities[id].followers + (lastGains[id] ?? 0) * progress);
+  const liveTotal = Math.floor(followers(s) + Object.values(lastGains).reduce((a, b) => a + b, 0) * progress);
+  const liveMoney = Math.floor((s.money ?? 0) + weeklyIncome(s, followers(s)) * progress);
 
   // keep labels readable at any zoom: the most important towns first, and never on top of each other
   const k = W / view.w;
@@ -241,6 +252,7 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
     }
     const at = inst.city ?? s.hometown;
     const r = choose(s, inst.uid, i, card.choices[i].input ? inputText : undefined);
+    if (r.ok) noteHandsOn(s);
     if (!r.ok) {
       setError(r.error);
       return;
@@ -297,7 +309,7 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
     if (Date.now() - s.lastTick >= IDLE.weekMs) doEndWeek(true);
   };
   useEffect(() => {
-    const t = setInterval(() => clockRef.current(), 500);
+    const t = setInterval(() => clockRef.current(), 250);
     return () => clearInterval(t);
   }, []);
 
@@ -323,8 +335,8 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
           <div className="mt-1 flex items-center justify-between pb-2 text-xs text-ink-300">
             <span>{s.customs.weekly_meeting?.values.day ?? 'Tuesday'}, week {s.week} · {ERA_LABEL[s.era] ?? s.era}</span>
             <span className="tabular" title={`${f.toLocaleString()} members`}>
-              {s.movementName ?? 'The group'} · <b className="text-ink-100">{fmt(f)}</b> members{growth > 0 ? <span className="text-emerald-300"> +{fmt(growth)}/wk</span> : null} ·{' '}
-              <button className="text-brass-300 underline-offset-2 hover:underline" onClick={() => setSheet('treasury')}>${fmt(Math.floor(s.money ?? 0))}</button>
+              {s.movementName ?? 'The group'} · <b className="tabular text-ink-100">{liveTotal.toLocaleString('en-US')}</b> members{growth > 0 ? <span className="text-emerald-300"> +{fmt(growth)}/wk</span> : null} ·{' '}
+              <button className="text-brass-300 underline-offset-2 hover:underline" onClick={() => setSheet('treasury')}>${liveMoney.toLocaleString('en-US')}</button>
               <span className="text-ink-400"> +${fmt(income)}/wk</span>
             </span>
           </div>
@@ -358,6 +370,31 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                   onPointerCancel={onPointerUp}
                 >
                   {paths.map((d, i) => <path key={i} d={d} fill="#232a38" stroke="#0b0d12" strokeWidth={0.6 / k} />)}
+                  <defs>
+                    <radialGradient id="influence">
+                      <stop offset="0%" stopColor="#e8cf8a" stopOpacity="0.55" />
+                      <stop offset="60%" stopColor="#e8cf8a" stopOpacity="0.22" />
+                      <stop offset="100%" stopColor="#e8cf8a" stopOpacity="0" />
+                    </radialGradient>
+                    {Object.values(s.rivals).map((r) => (
+                      <radialGradient key={r.id} id={`rival-${r.id}`}>
+                        <stop offset="0%" stopColor={r.color} stopOpacity="0.5" />
+                        <stop offset="100%" stopColor={r.color} stopOpacity="0" />
+                      </radialGradient>
+                    ))}
+                  </defs>
+                  {/* territory: influence spreads out from every town with members, and deepens as they grow */}
+                  <g style={{ pointerEvents: 'none', mixBlendMode: 'screen' }}>
+                    {known.map((id) => {
+                      const c = s.cities[id];
+                      if (!c.followers && !c.rival) return null;
+                      const [x, y] = pts[id];
+                      const conv = Math.min(1, c.followers / city(id).pop);
+                      const km = c.rival ? 14 : 6 + Math.sqrt(liveFollowers(id)) / 3 + (c.assembly ?? 0) * 6;
+                      const rr = Math.max(6 / k, Math.min(90, km) * perKm);
+                      return <circle key={`t${id}`} cx={x} cy={y} r={rr} fill={c.rival ? `url(#rival-${c.rival})` : 'url(#influence)'} opacity={c.rival ? 0.8 : 0.35 + Math.min(0.65, conv * 3 + (c.assembly ?? 0) * 0.08)} />;
+                    })}
+                  </g>
                   {/* rival territory labels */}
                   {Object.values(s.rivals).map((r) => {
                     const ps = r.towns.map((t) => pts[t]).filter(Boolean);
@@ -387,9 +424,9 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                             {city(id).name}
                           </text>
                         )}
-                        {gain ? (
-                          <text x={x} y={y + r + 13 / k} textAnchor="middle" fontSize={10 / k} fontWeight="700" fill="#5ec8a0" style={{ pointerEvents: 'none' }}>+{fmt(gain)}</text>
-                        ) : null}
+                        {s.visit === id && (
+                          <text x={x + r + 2 / k} y={y - r - 3 / k} fontSize={14 / k} style={{ pointerEvents: 'none' }}>👑</text>
+                        )}
                         {here.length > 0 && (
                           <text x={x} y={y - r - 5 / k} textAnchor="middle" fontSize={15 / k} style={{ pointerEvents: 'none' }}>{here.slice(0, 4).map((u) => u.emoji).join('')}{here.length > 4 ? '…' : ''}</text>
                         )}
@@ -456,6 +493,34 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
 
               {toast && <p className="mt-2 text-center text-xs text-emerald-300" role="status">{toast}</p>}
 
+              {/* the towns, counting up */}
+              <section className="mt-3">
+                <div className="label">Your towns</div>
+                <ul className="mt-1 divide-y divide-ink-800 rounded-lg border border-ink-800 bg-ink-900">
+                  {known
+                    .filter((id) => s.cities[id].followers > 0 && !s.cities[id].rival)
+                    .sort((a, b) => s.cities[b].followers - s.cities[a].followers)
+                    .slice(0, 8)
+                    .map((id) => {
+                      const c = s.cities[id];
+                      const gain = lastGains[id] ?? 0;
+                      return (
+                        <li key={id}>
+                          <button className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm hover:bg-ink-850" onClick={() => setTown(id)}>
+                            <span className="min-w-0 flex-1 truncate">
+                              {city(id).name}
+                              {c.assembly ? <span className="ml-1 text-[11px] text-brass-300">{assemblyName(c.assembly)}</span> : null}
+                              {s.visit === id ? <span className="ml-1" aria-label="you are visiting">👑</span> : null}
+                            </span>
+                            <span className="tabular w-24 text-right font-semibold">{liveFollowers(id).toLocaleString('en-US')}</span>
+                            <span className="tabular w-16 text-right text-[11px] text-emerald-300">{gain > 0 ? `+${fmt(gain)}/wk` : ''}</span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </section>
+
               {/* your people */}
               <section className="mt-3">
                 <div className="flex items-baseline justify-between">
@@ -510,15 +575,18 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                 </div>
                 <p className="mt-2 text-xs text-ink-400">
                   {hasScheduler(s)
-                    ? 'Bev sends everyone where the focus needs them, and sends people home when they need it. You can still move someone yourself: tap them, then a town.'
-                    : 'Everyone follows their nature: Dez spends the gas money opening new towns, Priya goes where the people are, Gary stays near home, and anyone homesick goes home. Tap someone, then a town, to overrule them.'}
+                    ? 'Bev sends everyone where the focus needs them, and sends people home when they need it. You can still move someone yourself (tap them, then a town): people you send personally work half again as hard.'
+                    : 'Everyone follows their nature: Dez spends the gas money opening new towns, Priya goes where the people are, Gary stays near home, and anyone homesick goes home. Tap someone, then a town, to send them yourself: people you send personally work half again as hard.'}
                 </p>
               </section>
 
               {/* problems */}
               {waiting > 0 && (
                 <section className="mt-4">
-                  <div className="label">Waiting for you</div>
+                  <div className="flex items-baseline justify-between">
+                    <div className="label">Waiting for you</div>
+                    <div className="text-[11px] text-emerald-300">{(s.handsOn ?? 0) > 0 ? `Hands-on this week: +${Math.min(6, s.handsOn ?? 0) * 5}% recruiting` : 'Each one you answer yourself: +5% recruiting this week'}</div>
+                  </div>
                   <ul className="mt-1 space-y-1">
                     {s.inbox.map((i) => {
                       const d = i.speaker !== 'anon' ? CHAR_BY_ID.get(i.speaker) : undefined;
@@ -615,7 +683,22 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                       {i.speaker !== 'anon' ? charName(s, i.speaker) : i.anon?.name ?? 'Someone'} needs you here
                     </button>
                   ))}
-                  <p className="mt-3 text-xs text-ink-400">To send someone here, close this, pick them under the map, then tap {city(town).name}.</p>
+                  {!c.rival && (
+                    <button
+                      className={s.visit === town ? 'btn-ghost mt-3 w-full' : 'btn-primary mt-3 w-full'}
+                      disabled={s.visit === town}
+                      onClick={() => {
+                        s.visit = town;
+                        play('click');
+                        save();
+                        setTown(null);
+                        setToast(`You’ll spend next week in ${city(town).name} yourself. Expect a crowd.`);
+                      }}
+                    >
+                      {s.visit === town ? 'You’re visiting here this week 👑' : s.visit != null ? `Visit ${city(town).name} instead (one town a week)` : `Visit ${city(town).name} yourself this week 👑`}
+                    </button>
+                  )}
+                  <p className="mt-3 text-xs text-ink-400">Visiting in person grows a town by about a quarter in a week. To send someone else here, close this, pick them under the map, then tap {city(town).name}.</p>
                 </>
               );
             })()}

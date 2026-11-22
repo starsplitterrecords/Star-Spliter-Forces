@@ -70,7 +70,8 @@ export function planWeek(s: StoryState, rng?: Rng) {
   const open = known.filter((id) => s.cities[id].followers === 0).sort((a, b) => distanceKm(city(s.hometown), city(a)) - distanceKm(city(s.hometown), city(b)));
   const taken = new Set<number>();
   const pick = (list: number[], spread = true) => {
-    const free = spread ? list.filter((id) => !taken.has(id)) : list;
+    // spread people out: when the list runs dry, fall back to other towns before doubling up
+    const free = spread ? [...list, ...members, ...open].filter((id) => !taken.has(id)) : list;
     const id = free[0] ?? list[0];
     if (id != null) taken.add(id);
     return id ?? s.hometown;
@@ -292,10 +293,23 @@ export function endWeek(s: StoryState): WeekReport {
   for (const id of s.region) s.cities[id].organizers = 0;
   for (const u of units(s)) {
     const at = whereIs(s, u.id);
-    const weight = u.charId ? 1 + CHAR_BY_ID.get(u.charId)!.competence / 100 : 1;
+    // people you sent yourself work harder: you asked them personally
+    const weight = (u.charId ? 1 + CHAR_BY_ID.get(u.charId)!.competence / 100 : 1) * (s.manual[u.id] ? 1.5 : 1);
     if (at !== s.hometown || u.charId) s.cities[at].organizers += at === s.hometown ? weight * 0.4 : weight;
     if (at !== s.hometown) present.add(at);
   }
+  // the founder in person
+  if (s.visit != null && s.cities[s.visit]) {
+    const v = s.cities[s.visit];
+    v.organizers += 4;
+    v.known = true;
+    v.reputation = Math.min(1, v.reputation + 0.15);
+    v.awareness = Math.min(1, v.awareness + 0.1);
+    present.add(s.visit);
+  }
+  // momentum: every problem you dealt with personally this week
+  const hands = Math.min(6, s.handsOn ?? 0);
+  if (hands > 0) s.modifiers.push({ stat: 'recruitment', mult: 1 + 0.05 * hands, until: s.day + 7, label: 'You were hands-on' });
   const before = Object.fromEntries(s.region.map((id) => [id, s.cities[id].followers]));
   const rivalBefore = new Set(s.region.filter((id) => s.cities[id].rival));
 
@@ -379,6 +393,19 @@ export function endWeek(s: StoryState): WeekReport {
       }
     }
   }
+
+  if (s.visit != null && s.cities[s.visit]) {
+    const v = s.cities[s.visit];
+    const bump = Math.max(15, Math.floor(v.followers * 0.25));
+    v.followers = Math.min(city(s.visit).pop, v.followers + bump);
+    out.joined += bump;
+    out.gains![s.visit] = (out.gains![s.visit] ?? 0) + bump;
+    out.lines.unshift({ icon: '👑', text: `You spent the week in ${city(s.visit).name} yourself. ${bump.toLocaleString('en-US')} people joined, several of them just to say they had met you.` });
+    s.gauges.attention = Math.min(100, s.gauges.attention + 2);
+  }
+  if (hands > 0) out.lines.push({ icon: '✋', text: `You dealt with ${hands} ${hands === 1 ? 'problem' : 'problems'} yourself this week. People noticed: recruitment +${hands * 5}%.` });
+  s.visit = undefined;
+  s.handsOn = 0;
 
   // the assemblies get on with it, and the dues come in
   growAssemblies(s, rng, out);
@@ -486,3 +513,8 @@ export function eligibleThisWeek(s: StoryState): number {
 }
 
 export { followers };
+
+/** The founder answered a problem personally (not through an administrator). */
+export function noteHandsOn(s: StoryState) {
+  s.handsOn = (s.handsOn ?? 0) + 1;
+}

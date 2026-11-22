@@ -174,6 +174,7 @@ export default function StoryGame({ onExit }: { onExit: () => void }) {
                   ns = newStory(name || 'Jeff', home, randomSeed(), Date.now(), { weekly: true });
                 }
                 ns.lastRealTime = Date.now();
+                ns.lastTick = Date.now();
                 ns.report = undefined;
               }
               void saveStory(ns);

@@ -119,6 +119,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
       if (name === 'emergent' && rest.length && !EMERGENT_ARGS.test(rest.join(':'))) errors.push(`${where}: bad emergent binder ${b}`);
       if (name === 'emergent') ['emergentBy', 'ctx.emergentBy'].forEach((x) => ctxKeys.add(x));
       if (name === 'departed') ctxKeys.add('departedHabit');
+      if (name === 'assemblyCity' && k === 'city') ctxKeys.add('assembly');
       if (name === 'rivalTowns' && !/^(knitters|north|original|ophelia)(:one)?$/.test(rest.join(':'))) errors.push(`${where}: bad rivalTowns binder ${b}`);
       ctxKeys.add(k);
       ctxKeys.add(`ctx.${k}`);
@@ -126,7 +127,7 @@ export function validateLibrary(lib: ContentLibrary): ValidationReport {
       if (k === 'past') ['pastText', 'pastDay', 'pastWho'].forEach((x) => ctxKeys.add(x));
     }
     if (card.road) {
-      ['city', 'ctx.city'].forEach((x) => ctxKeys.add(x));
+      ['city', 'ctx.city', 'assembly'].forEach((x) => ctxKeys.add(x));
       if (typeof card.speaker !== 'string' || (!charIds.has(card.speaker) && card.speaker !== 'dispatched')) errors.push(`${where}: road cards need a named or “dispatched” speaker`);
     }
     if (card.id === 'terr.variant_clash') ['aCity', 'bCity', 'variantA', 'variantB', 'city'].forEach((x) => ctxKeys.add(x));
