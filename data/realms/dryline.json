@@ -363,13 +363,23 @@
    "name": "Arvin",
    "faction": "Backyard Rockets",
    "role": "Launch-Shop's aerospace engineer. Builds another way.",
-   "portrait": "arvin"
+   "portrait": "arvin",
+   "captain": "lucia",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
   },
   "milo": {
    "name": "Milo",
    "faction": "Backyard Rockets",
    "role": "Launch-Shop engineer. Broad, grounded, hands always busy.",
-   "portrait": "milo"
+   "portrait": "milo",
+   "captain": "lucia",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
   }
  },
  "places": {
@@ -452,9 +462,7 @@
     "Track: Forward Now (feat. Cheddr)",
     "Place: the dry lakebed"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "des_shop",
@@ -479,9 +487,7 @@
     "Contacts: Arvin, Milo",
     "Place: the Launch-Shop"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "des_esperanza",
@@ -505,9 +511,7 @@
    "reward": [
     "Place: Esperanza"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "des_ridge",
@@ -554,9 +558,7 @@
    "reward": [
     "Place: Red Mesa"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "des_coyote",
@@ -581,9 +583,7 @@
     "Track: I Never Want to Not Do This",
     "Place: Coyote Wells"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "des_two_suns",
@@ -607,9 +607,7 @@
    "reward": [
     "Place: Under Two Suns"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "des_forge",
@@ -634,9 +632,7 @@
     "Track: Graphite",
     "Place: the Forge"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "des_heat",
@@ -687,9 +683,7 @@
     "Track: Ten to Pretend",
     "Place: La Suerte Farm Co-op"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "dess_ridge",
@@ -715,9 +709,7 @@
     "Track: Free Mode (feat. Cheddr)",
     "Place: Ridge Relay"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   }
  ]
 }

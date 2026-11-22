@@ -324,13 +324,23 @@
    "name": "Gunnar",
    "faction": "Vikings 2026!",
    "role": "Bjorn's companion; observant, concise, dryly funny.",
-   "portrait": "gunnar"
+   "portrait": "gunnar",
+   "captain": "bjorn",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
   },
   "carrie": {
    "name": "Carrie",
    "faction": "Vikings 2026!",
    "role": "DTI caseworker. Fast, sarcastic, fluent in forms and loopholes.",
-   "portrait": "carrie"
+   "portrait": "carrie",
+   "captain": "bjorn",
+   "perk": {
+    "kind": "reroll",
+    "value": 1
+   }
   }
  },
  "places": {
@@ -395,9 +405,7 @@
     "Track: Unification Theory",
     "Place: the North Atlantic"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "sea_river",
@@ -422,9 +430,7 @@
     "Contact: Gunnar",
     "Place: the East River"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "sea_pier",
@@ -472,9 +478,7 @@
     "Contact: Carrie",
     "Place: the DTI building"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "sea_roof",
@@ -498,9 +502,7 @@
    "reward": [
     "Place: the Bushwick rooftop"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "sea_gate",
@@ -524,9 +526,7 @@
    "reward": [
     "Place: Harbor Phase"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "sea_drowned",
@@ -551,9 +551,7 @@
     "Track: Perception",
     "Place: the flooded coast"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "sea_undertow",
@@ -603,9 +601,7 @@
    "reward": [
     "Track: Edge Spaces (Epsilon Version)"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "seas_pier",
@@ -630,9 +626,7 @@
    "reward": [
     "Track: Leave the Past Behind"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "seas_rooftop",
@@ -657,9 +651,7 @@
    "reward": [
     "Track: Be Somebody"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   }
  ]
 }

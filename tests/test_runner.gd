@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries", "test_checkpoint_recovery",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_playtest_mode", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_playtest_mode", "test_crew_ride_along", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	# Optional filter: godot --headless res://tests/TestRunner.tscn -- name [name...]
 	var only: PackedStringArray = OS.get_cmdline_user_args()
@@ -56,6 +56,8 @@ func _dispatch(t: String) -> void:
 			await test_sea_branch()
 		"test_playtest_mode":
 			await test_playtest_mode()
+		"test_crew_ride_along":
+			await test_crew_ride_along()
 		"test_visions_guests":
 			await test_visions_guests()
 		"test_new_content":
@@ -1130,6 +1132,28 @@ func test_second_destination() -> void:
 	# Unlock path: completing the Reach charts Kaldr.
 	Profile.record_expedition({"outcome": "complete", "destination": "black_drift_reach", "character": "ella_venn", "time": 600.0})
 	check(Profile.has_destination("kaldr_rift"), "Kaldr Rift not unlocked by completing the Reach")
+
+## Crew: contacts found ride along with their captain and give their perk.
+func test_crew_ride_along() -> void:
+	_reset_profile()
+	check(GameData.crew_of("bjorn").has("gunnar") and GameData.crew_of("bjorn").has("carrie"), "Bjorn's crew wrong")
+	for c: String in GameData.CONTACTS.keys():
+		var cd: Dictionary = GameData.CONTACTS[c]
+		check(cd.has("perk") and GameData.perk_text(cd["perk"]) != "", "contact %s has no perk" % c)
+	var base: GameRun = _make_run({"character": "bjorn"})
+	var armor0: float = float(base.start_bonuses["armor"])
+	var rr0: int = base.rerolls
+	base.queue_free()
+	Profile.data["discovered"]["sea_longship"] = {"expedition": 1, "character": "bjorn"}
+	Profile.data["discovered"]["sea_dti_office"] = {"expedition": 1, "character": "bjorn"}
+	check(Profile.crew("bjorn").size() == 2, "found crew not riding along")
+	var run: GameRun = _make_run({"character": "bjorn"})
+	check(is_equal_approx(float(run.start_bonuses["armor"]), armor0 + 0.5), "Gunnar's armour missing")
+	check(run.rerolls == rr0 + 1, "Carrie's reroll missing")
+	run.queue_free()
+	var other: GameRun = _make_run({"character": "ella_venn"})
+	check(Profile.crew("ella_venn").is_empty(), "crew rode with the wrong captain")
+	other.queue_free()
 
 ## Playtest mode: separate save, everything open, real progress kept.
 func test_playtest_mode() -> void:

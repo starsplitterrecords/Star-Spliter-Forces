@@ -361,25 +361,45 @@
    "name": "Maya Serrano",
    "faction": "Azure Reach",
    "role": "Life-support engineer. She keeps the wonder running.",
-   "portrait": "maya_serrano"
+   "portrait": "maya_serrano",
+   "captain": "maya_serrano",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
   },
   "pip_omally": {
    "name": "Pip O'Mally",
    "faction": "Azure Reach",
    "role": "Guest Relations. Warm, quick, already handling it.",
-   "portrait": "pip_omally"
+   "portrait": "pip_omally",
+   "captain": "maya_serrano",
+   "perk": {
+    "kind": "reroll",
+    "value": 1
+   }
   },
   "kyler_chen": {
    "name": "Kyler Chen",
    "faction": "Azure Reach",
    "role": "Media production support. Camera, tablet, monitors.",
-   "portrait": "kyler_chen"
+   "portrait": "kyler_chen",
+   "captain": "maya_serrano",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
   },
   "beatrice_halstead": {
    "name": "Beatrice Halstead",
    "faction": "Azure Reach",
    "role": "Executive. Composed, expensive, structured.",
-   "portrait": "beatrice_halstead"
+   "portrait": "beatrice_halstead",
+   "captain": "maya_serrano",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
   }
  },
  "places": {
@@ -456,9 +476,7 @@
     "Contact: Maya Serrano",
     "Place: Public Entrance"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "az_queue",
@@ -483,9 +501,7 @@
     "Contact: Pip O'Mally",
     "Place: Turtle Pavilion Queue"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "az_media",
@@ -510,9 +526,7 @@
     "Contact: Kyler Chen",
     "Place: Media Prep Zone"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "az_corridor",
@@ -560,9 +574,7 @@
     "Track: Slip Knife (feat. Cheddr)",
     "Place: Backstage Ops"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "az_suite",
@@ -587,9 +599,7 @@
     "Contact: Beatrice Halstead",
     "Place: Guest Experience Suite"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "az_viewing",
@@ -614,9 +624,7 @@
     "Track: Where the Light Meets the Water",
     "Place: Turtle Pavilion Viewing"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "az_closing",
@@ -667,9 +675,7 @@
     "Track: Magnetic",
     "Place: Service Corridor"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "azs_overlook",
@@ -695,9 +701,7 @@
     "Track: Shine (feat. Cheddr)",
     "Place: Staff Overlook"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   }
  ]
 }

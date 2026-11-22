@@ -218,12 +218,28 @@ func _apply_start_bonuses() -> void:
 		"armor": float(def.get("armor", 0.0)) + (0.5 if character_id in ["tessa_banks", "bjorn", "brandon_mack"] and mastery_level >= 3 else 0.0),
 		"head_start": Profile.workshop_rank("head_start") > 0 or (character_id == "jex_marrin" and mastery_level >= 4),
 	}
+	# Crew ride along with their captain.
+	var crew_rerolls: int = 0
+	for c: String in Profile.crew(character_id):
+		var pk: Dictionary = GameData.CONTACTS[c]["perk"]
+		var v: float = float(pk["value"])
+		match String(pk["kind"]):
+			"hp":
+				b["max_hp"] = float(b["max_hp"]) + v
+			"armor":
+				b["armor"] = float(b["armor"]) + v
+			"speed":
+				b["speed_mult"] = float(b["speed_mult"]) + v
+			"pickup":
+				b["pickup"] = float(b["pickup"]) * (1.0 + v)
+			"reroll":
+				crew_rerolls += int(v)
 	start_bonuses = b
 	player.max_hp = float(b["max_hp"])
 	player.hp = player.max_hp
 	if character_id == "jex_marrin":
 		player.damage_taken_mult = 1.15
-	rerolls = Profile.workshop_rank("reroll") + 2 * Profile.workshop_rank("insight")
+	rerolls = Profile.workshop_rank("reroll") + 2 * Profile.workshop_rank("insight") + crew_rerolls
 	ability_charges = 2 if character_id == "naomi_sol" and mastery_level >= 1 else 1
 	if Profile.data["discovered"].has("art_beacon_core"):
 		resonance = 65.0
@@ -1342,7 +1358,12 @@ func _claim_discovery(p: Dictionary) -> void:
 			if cid != "" and not Profile.has_character(cid):
 				gains.append("Explorer: %s (next expedition)" % GameData.CHARACTERS[cid]["name"])
 			for ct: Variant in d.get("contacts", []):
-				gains.append("Contact: %s" % String(GameData.CONTACTS[String(ct)]["name"]))
+				var cdef2: Dictionary = GameData.CONTACTS[String(ct)]
+				var capn: String = String(cdef2.get("captain", ""))
+				if GameData.CHARACTERS.has(capn) and cdef2.has("perk"):
+					gains.append("Crew: %s rides with %s (%s)" % [String(cdef2["name"]), String(GameData.CHARACTERS[capn]["short"]), GameData.perk_text(cdef2["perk"])])
+				else:
+					gains.append("Contact: %s" % String(cdef2["name"]))
 			if String(d.get("place", "")) != "":
 				gains.append("Place: %s" % String(GameData.PLACES[String(d["place"])]["name"]))
 			gains.append("Free upgrade")

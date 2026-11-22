@@ -274,49 +274,89 @@
    "name": "Astra Vega",
    "faction": "Stardust Station",
    "role": "Station manager. Clipboard, morale plan, relentless optimism.",
-   "portrait": "astra_vega"
+   "portrait": "astra_vega",
+   "captain": "jax_orien",
+   "perk": {
+    "kind": "reroll",
+    "value": 1
+   }
   },
   "mira_klare": {
    "name": "Mira Klare",
    "faction": "Stardust Station",
    "role": "Station scientist. Precise, curious, unimpressed by procedure.",
-   "portrait": "mira_klare"
+   "portrait": "mira_klare",
+   "captain": "jax_orien",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
   },
   "zib": {
    "name": "Zib \"Sgotcha\" Diaz",
    "faction": "Stardust Station",
    "role": "The fixer. Tape, wires, and a running commentary.",
-   "portrait": "zib"
+   "portrait": "zib",
+   "captain": "jax_orien",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
   },
   "glorp": {
    "name": "Glorp",
    "faction": "Stardust Station",
    "role": "Forms, binders and warning labels. The margins are for compliance notes.",
-   "portrait": "glorp"
+   "portrait": "glorp",
+   "captain": "jax_orien",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
   },
   "kreeb": {
    "name": "Kreeb",
    "faction": "Stardust Station",
    "role": "Formal, tall and very polite about the hallway.",
-   "portrait": "kreeb"
+   "portrait": "kreeb",
+   "captain": "jax_orien",
+   "perk": {
+    "kind": "speed",
+    "value": 0.03
+   }
   },
   "noola_vaneel": {
    "name": "Noola Vaneel",
    "faction": "Stardust Station",
    "role": "Aquatic coworker in a water-dome rig.",
-   "portrait": "noola_vaneel"
+   "portrait": "noola_vaneel",
+   "captain": "jax_orien",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
   },
   "pixa": {
    "name": "Pixa",
    "faction": "Stardust Station",
    "role": "The station's friendly android.",
-   "portrait": "pixa"
+   "portrait": "pixa",
+   "captain": "jax_orien",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
   },
   "brick_talos": {
    "name": "Brick Talos",
    "faction": "Stardust Station",
    "role": "Security. Large, stone, fedora.",
-   "portrait": "brick_talos"
+   "portrait": "brick_talos",
+   "captain": "jax_orien",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
   }
  },
  "places": {
@@ -375,9 +415,7 @@
     "Contact: Astra Vega",
     "Place: Regional Branch"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "orb_bullpen",
@@ -402,9 +440,7 @@
     "Contacts: Mira Klare, Zib",
     "Place: Main Bullpen"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "orb_corridor",
@@ -452,9 +488,7 @@
     "Contacts: Glorp, Kreeb",
     "Place: Break Room"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "orb_crew",
@@ -479,9 +513,7 @@
     "Track: Say Something",
     "Contacts: Noola Vaneel, Pixa, Brick Talos"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "orb_supply",
@@ -506,9 +538,7 @@
     "Track: Enduring the Endearing",
     "Place: Supply Store B-17"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "orb_overtime",
@@ -558,9 +588,7 @@
    "reward": [
     "Track: If We Remember It Fondly"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   },
   {
    "id": "orbs_open_plan",
@@ -585,9 +613,7 @@
    "reward": [
     "Track: Say What (feat. Cheddr)"
    ],
-   "grants": {
-
-   }
+   "grants": {}
   }
  ]
 }

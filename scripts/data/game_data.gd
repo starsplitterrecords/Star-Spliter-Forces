@@ -830,10 +830,10 @@ const SFX_NAMES: Array[String] = [
 ## rex-fleet-s1/characters.json; portraits cropped from the released Issue 01
 ## cast plate (SSV page 003).
 static var CONTACTS: Dictionary = {
-	"luminara_mother": {"name": "Luminara Mother", "faction": "The Verge", "role": "Verge civilian parent.", "portrait": "luminara_mother"},
-	"luminara_boy": {"name": "Luminara Boy", "faction": "The Verge", "role": "Verge civilian child. His questions expose what adults leave out.", "portrait": "luminara_boy"},
-	"chris_halev": {"name": "Governor Chris Halev", "faction": "The Verge", "role": "Civil leader of Auric Bazaar. Speaks in cargo, heat, food, docks and people.", "portrait": "chris_halev"},
-	"brent_wallace": {"name": "Brent Wallace", "faction": "The Verge", "role": "Trader guild elder. Dry, muttering, sarcastic.", "portrait": "brent_wallace"},
+	"luminara_mother": {"name": "Luminara Mother", "faction": "The Verge", "role": "Verge civilian parent.", "portrait": "luminara_mother", "captain": "naomi_sol", "perk": {"kind": "hp", "value": 10}},
+	"luminara_boy": {"name": "Luminara Boy", "faction": "The Verge", "role": "Verge civilian child. His questions expose what adults leave out.", "portrait": "luminara_boy", "captain": "naomi_sol", "perk": {"kind": "pickup", "value": 0.08}},
+	"chris_halev": {"name": "Governor Chris Halev", "faction": "The Verge", "role": "Civil leader of Auric Bazaar. Speaks in cargo, heat, food, docks and people.", "portrait": "chris_halev", "captain": "naomi_sol", "perk": {"kind": "reroll", "value": 1}},
+	"brent_wallace": {"name": "Brent Wallace", "faction": "The Verge", "role": "Trader guild elder. Dry, muttering, sarcastic.", "portrait": "brent_wallace", "captain": "naomi_sol", "perk": {"kind": "armor", "value": 0.5}},
 }
 
 ## Places charted (an atlas of Star Splitter Visions settings). Descriptions
@@ -1292,6 +1292,25 @@ static func _static_init() -> void:
 ## chapter and stages. A new realm needs no code change.
 const REALMS_DIR: String = "res://data/realms"
 static var realms: Dictionary = {}
+
+## Crew: a contact rides along with their captain once found, giving a perk.
+static func perk_text(perk: Dictionary) -> String:
+	var v: float = float(perk.get("value", 0))
+	match String(perk.get("kind", "")):
+		"hp":
+			return "+%d hull" % int(v)
+		"armor":
+			return "+%s armour" % str(v)
+		"speed":
+			return "+%d%% speed" % int(round(v * 100.0))
+		"pickup":
+			return "+%d%% pickup reach" % int(round(v * 100.0))
+		"reroll":
+			return "+%d reroll" % int(v)
+	return ""
+
+static func crew_of(captain: String) -> Array:
+	return CONTACTS.keys().filter(func(c: String) -> bool: return String(CONTACTS[c].get("captain", "")) == captain)
 
 ## The stage that finds a discovery (by its objective or its list), or {}.
 static func stage_for_discovery(did: String) -> Dictionary:

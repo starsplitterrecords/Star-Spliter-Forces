@@ -469,6 +469,22 @@ func show_departure() -> void:
 	if mlvl < perks.size():
 		mtext += "   •   next: " + String(perks[mlvl]) + " (%d / %d xp)" % [int(m["xp"]), int(GameData.MASTERY_THRESHOLDS[mlvl])]
 	dv.add_child(UiTheme.label(mtext, 13, UiTheme.GOLD))
+	# Crew riding along (automatic: whoever this captain has found).
+	var crew: Array = Profile.crew(selected_character)
+	if not crew.is_empty():
+		var crow2: HFlowContainer = HFlowContainer.new()
+		crow2.add_theme_constant_override("h_separation", 6)
+		dv.add_child(crow2)
+		crow2.add_child(UiTheme.label("CREW", 13, UiTheme.DIM, "bold"))
+		for c: String in crew:
+			var cp2: TextureRect = _art("res://assets/characters/%s_96.png" % String(GameData.CONTACTS[c]["portrait"]), Vector2(30, 30))
+			if cp2:
+				cp2.tooltip_text = String(GameData.CONTACTS[c]["name"])
+				crow2.add_child(cp2)
+			var cl: Label = UiTheme.label("%s %s" % [String(GameData.CONTACTS[c]["name"]).split(" ")[0], GameData.perk_text(GameData.CONTACTS[c]["perk"])], 12, UiTheme.TEXT)
+			cl.autowrap_mode = TextServer.AUTOWRAP_OFF
+			cl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			crow2.add_child(cl)
 	# Force.
 	dv.add_child(UiTheme.label("SIGNATURE FORCE", 13, UiTheme.DIM, "bold"))
 	var frow: HFlowContainer = HFlowContainer.new()
@@ -853,6 +869,8 @@ func _archive_universe() -> Control:
 		crow.add_child(cv)
 		cv.add_child(UiTheme.label("%s  •  %s" % [String(cdef["name"]), String(cdef["faction"])], 15, Color.WHITE, "bold"))
 		cv.add_child(UiTheme.label(String(cdef["role"]), 13, UiTheme.DIM))
+		if cdef.has("perk") and GameData.CHARACTERS.has(String(cdef.get("captain", ""))):
+			cv.add_child(UiTheme.label("Rides with %s: %s" % [String(GameData.CHARACTERS[String(cdef["captain"])]["name"]), GameData.perk_text(cdef["perk"])], 13, UiTheme.GOLD))
 		_tag(cv, _stage_hint(GameData.stage_for_contact(ck)), not ck in met)
 	if met.size() < GameData.CONTACTS.size() and not Profile.review():
 		inner.add_child(_more_line("%d more contact%s on the Corridor Chart." % [GameData.CONTACTS.size() - met.size(), "" if GameData.CONTACTS.size() - met.size() == 1 else "s"]))

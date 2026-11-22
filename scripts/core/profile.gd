@@ -383,6 +383,11 @@ func stops_done_count() -> int:
 			n += 1
 	return n
 
+## The crew riding with a captain: contacts already met.
+func crew(captain: String) -> Array:
+	var met: Array = contacts_met()
+	return GameData.crew_of(captain).filter(func(c: String) -> bool: return c in met)
+
 ## Contacts met and places charted come from discoveries already made.
 func contacts_met() -> Array:
 	var out: Array = []
