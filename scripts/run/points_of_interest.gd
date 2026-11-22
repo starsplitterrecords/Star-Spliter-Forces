@@ -139,6 +139,10 @@ func step(delta: float, player: ForcePlayer, scanner_range: float) -> void:
 		var d: float = player.position.distance_to(p.pos)
 		# Signal beams can be heard from far further than the scanner reaches.
 		var listen: float = scanner_range * (2.2 if String(p.kind) in ["signal", "character"] else 1.0)
+		if run.is_stop_target(String(p.id)):
+			# A stage's goal is found by getting close (or charging the
+			# tuner), not detected from across the map on launch.
+			listen = minf(listen, 650.0)
 		if d < listen and is_visible_poi(p):
 			if not bool(p.known):
 				p.known = true

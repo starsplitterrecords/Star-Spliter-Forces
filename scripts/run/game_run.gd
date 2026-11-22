@@ -396,7 +396,19 @@ func _update_camera(delta: float) -> void:
 	camera.offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)) * shake_amount * shake_scale
 	# Zoom punch eases back to rest.
 	punch_amount = move_toward(punch_amount, 0.0, delta * 0.6)
-	camera.zoom = Vector2.ONE * (1.0 + punch_amount * shake_scale)
+	camera.zoom = Vector2.ONE * base_zoom() * (1.0 + punch_amount * shake_scale)
+
+## The camera sits further out than 1:1 so more of the field is in view
+## (playtest: "seeing more of the field at once would be good"); UI text is
+## unaffected. Phones held upright see the most.
+func base_zoom() -> float:
+	return 0.72 if UiTheme.is_narrow() else 0.88
+
+## Distance from the player to just beyond the visible edge, so spawns never
+## pop in on screen at the wider zoom.
+func view_radius() -> float:
+	var vp: Vector2 = get_viewport().get_visible_rect().size / base_zoom()
+	return vp.length() * 0.5 + 80.0
 
 func shake(amount: float) -> void:
 	shake_amount = minf(16.0, maxf(shake_amount, amount))
@@ -625,7 +637,7 @@ func _spawn_director(delta: float) -> void:
 		dread_at = float(mo.get("at", 60.0)) if String(mo["type"]) == "elite" else INF
 	if not dreadnought_spawned and elapsed >= dread_at:
 		dreadnought_spawned = true
-		var dp: Vector2 = world.random_open_point_near(player.position, 700.0, 820.0, rng)
+		var dp: Vector2 = world.random_open_point_near(player.position, view_radius() + 40.0, view_radius() + 160.0, rng)
 		spawn_enemy("dreadnought", dp, true)
 		if hud:
 			hud.alert("SPLINTER DREADNOUGHT", dp)
@@ -643,7 +655,7 @@ func _spawn_director(delta: float) -> void:
 		spawn_boss(player.position + Vector2.from_angle(rng.randf() * TAU) * 520.0)
 
 func _spawn_near_player(kind: String, engaged: bool) -> void:
-	var pos: Vector2 = world.random_open_point_near(player.position, 620.0, 820.0, rng)
+	var pos: Vector2 = world.random_open_point_near(player.position, view_radius(), view_radius() + 200.0, rng)
 	var k: String = kind
 	if k == "":
 		k = _pick_kind(world.region_def(world.region_at(pos)))
@@ -682,7 +694,7 @@ func spawn_patrol() -> void:
 	Audio.play_sfx("ping", 0.8, -4.0, 0.5)
 
 func spawn_elite() -> void:
-	var p: Vector2 = world.random_open_point_near(player.position, 640.0, 760.0, rng)
+	var p: Vector2 = world.random_open_point_near(player.position, view_radius(), view_radius() + 120.0, rng)
 	spawn_enemy("splinter_captain", p, true)
 	for i in 3:
 		spawn_enemy("skiff", p + Vector2.from_angle(TAU * i / 3.0) * 70.0, true)
@@ -1398,7 +1410,7 @@ func on_tuning_started(p: Dictionary) -> void:
 		var k: String = _pick_kind(r)
 		if k == "wreck_lurker":
 			k = "ram_cutter"
-		spawn_enemy(k, Vector2(p.pos) + Vector2.from_angle(dir + (i - n * 0.5) * 0.25) * rng.randf_range(560.0, 680.0), true)
+		spawn_enemy(k, Vector2(p.pos) + Vector2.from_angle(dir + (i - n * 0.5) * 0.25) * rng.randf_range(maxf(560.0, view_radius() - 120.0), maxf(680.0, view_radius())), true)
 	if hud:
 		hud.toast("TUNING — the broadcast has drawn attention. Hold the ring.")
 	Audio.play_sfx("ping", 0.9, -4.0, 0.3)

@@ -105,16 +105,22 @@ func _layout() -> void:
 	if narrow:
 		# Portrait: minimap under the pause button, time + region beneath it.
 		top_label.position = Vector2(safe.end.x - top_label.size.x, safe.position.y + 172)
-		objective_label.position = Vector2(safe.position.x + 14.0, maxf(below_card + 34.0, safe.position.y + 216.0))
+		objective_label.position = Vector2(safe.position.x + 14.0, below_card + 34.0)
 		objective_label.size.x = safe.size.x - 28.0
 	else:
 		top_label.position = Vector2(safe.position.x + safe.size.x * 0.5 - top_label.size.x * 0.5, safe.position.y + 6)
 		objective_label.position = Vector2(safe.position.x + 14.0, below_card + 8.0)
 		objective_label.size.x = 470.0
 	objective_label.size.y = 0.0
-	banner_title.position = Vector2(safe.position.x, safe.position.y + safe.size.y * 0.2)
+	if narrow:
+		# Below the objective, never on top of it.
+		banner_title.position = Vector2(safe.position.x, below_card + 120.0)
+		banner_title.add_theme_font_size_override("font_size", UiTheme.fs(28))
+	else:
+		banner_title.position = Vector2(safe.position.x, safe.position.y + safe.size.y * 0.2)
+		banner_title.add_theme_font_size_override("font_size", UiTheme.fs(38))
 	banner_title.size.x = safe.size.x
-	banner_sub.position = banner_title.position + Vector2(0, UiTheme.fs(44))
+	banner_sub.position = banner_title.position + Vector2(0, UiTheme.fs(34 if narrow else 44))
 	banner_sub.size.x = safe.size.x
 	toast_label.position = Vector2(safe.position.x, get_viewport().get_visible_rect().size.y * 0.5 - 118.0)
 	toast_label.size.x = safe.size.x
@@ -237,6 +243,9 @@ func _process(delta: float) -> void:
 			_layout()
 	banner_clock = maxf(0.0, banner_clock - delta)
 	var ba: float = clampf(minf(banner_clock, banner_total - banner_clock) * 3.0, 0.0, 1.0)
+	# Banners give way to cards so text never stacks.
+	if teach_panel != null or card != null:
+		ba = 0.0
 	banner_title.modulate.a = ba
 	banner_sub.modulate.a = ba
 	toast_clock = maxf(0.0, toast_clock - delta)
@@ -297,7 +306,8 @@ func _update_labels() -> void:
 	hull_label.text = "%s   %d%s" % [String(ch["short"]), int(ceil(p.hp)), ("  +%d" % int(p.shield)) if p.shield > 1.0 else ""]
 	var region_name: String = String(run.current_region_def()["name"])
 	top_label.text = "%s  •  %s" % [GameData.format_time(run.elapsed), region_name]
-	level_label.text = "LEVEL %d   •   %d cleared" % [run.level, run.kills]
+	level_label.text = ("LEVEL %d  •  %d cleared  •  %s" % [run.level, run.kills, GameData.format_time(run.elapsed)]) if UiTheme.is_narrow() else ("LEVEL %d   •   %d cleared" % [run.level, run.kills])
+	top_label.visible = not UiTheme.is_narrow()
 	var glyph: String = {"RESONANCE": "◆", "DRIFT": "◇", "FRACTURE": "✕"}.get(run.force_state, "")
 	state_label.text = "%s %s" % [glyph, run.force_state]
 	state_label.add_theme_color_override("font_color", _state_color())
@@ -437,6 +447,7 @@ var teach_panel: PanelContainer
 var teach_button: Button
 var teach_clock: float = 0.0
 var teach_blocking: bool = false
+var teach_dim: ColorRect
 var teach_open_time: float = 0.0
 var teach_gap: float = 0.0 # seconds of play owed before the next card
 
@@ -537,6 +548,13 @@ func _show_teach(item: Variant) -> void:
 	else:
 		teach_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		teach_clock = 3.0
+	if teach_blocking:
+		# Dim everything behind the card so nothing competes with it.
+		teach_dim = ColorRect.new()
+		teach_dim.color = Color(0.0, 0.01, 0.04, 0.6)
+		teach_dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		teach_dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		root.add_child(teach_dim)
 	root.add_child(teach_panel)
 	_place_teach()
 	if teach_blocking:
@@ -548,6 +566,9 @@ func _dismiss_teach() -> void:
 		return
 	teach_panel.queue_free()
 	teach_panel = null
+	if teach_dim:
+		teach_dim.queue_free()
+		teach_dim = null
 	teach_blocking = false
 	teach_gap = 7.0 # let the player fly for a while before the next card
 	# Resume two frames later so the dismissing key press (Space is also the
@@ -959,13 +980,14 @@ class HudCanvas:
 		draw_rect(Rect2(rb.position + Vector2(rb.size.x * 0.72, 0), Vector2(rb.size.x * 0.28, rb.size.y)), Color(0.5, 1.0, 0.8, 0.3))
 		var rx: float = rb.position.x + rb.size.x * run.resonance / 100.0
 		draw_rect(Rect2(Vector2(rx - 2, rb.position.y - 4), Vector2(4, rb.size.y + 8)), Color.WHITE)
-		# Time + region pill.
+		# Time + region pill (landscape; portrait puts time in the status card).
 		var tl: Label = hud.top_label
-		var tw0: float = font.get_string_size(tl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(15)).x + 28.0
-		var tc: Vector2 = tl.position + tl.size * 0.5
-		if narrow:
-			tc.x = tl.position.x + tl.size.x - tw0 * 0.5
-		draw_style_box(_panel(Color(0.02, 0.04, 0.09, 0.6), Color(1, 1, 1, 0.12), 14), Rect2(tc - Vector2(tw0 * 0.5, 15), Vector2(tw0, 30)))
+		if not tl.visible:
+			tl = null
+		if tl:
+			var tw0: float = font.get_string_size(tl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(15)).x + 28.0
+			var tc: Vector2 = tl.position + tl.size * 0.5
+			draw_style_box(_panel(Color(0.02, 0.04, 0.09, 0.6), Color(1, 1, 1, 0.12), 14), Rect2(tc - Vector2(tw0 * 0.5, 15), Vector2(tw0, 30)))
 		# Objective pill with an accent edge.
 		var ol: Label = hud.objective_label
 		if ol.text != "":
@@ -975,7 +997,7 @@ class HudCanvas:
 		# Force mechanic meters.
 		_draw_force_meters(run, (Vector2(safe.position.x + 4, safe.position.y + hud.CARD_H + 6) if narrow else Vector2(safe.position.x + hud.CARD_W + 16, safe.position.y + 40)), font)
 		# Minimap.
-		_draw_minimap(run, Rect2(Vector2(safe.end.x - 160, safe.position.y + 58), Vector2(160, 110)) if narrow else Rect2(Vector2(safe.end.x - 220 - 70, safe.position.y), Vector2(220, 150)))
+		_draw_minimap(run, Rect2(Vector2(safe.end.x - 150, safe.position.y + 60), Vector2(150, 100)) if narrow else Rect2(Vector2(safe.end.x - 220 - 70, safe.position.y), Vector2(220, 150)))
 		# Compass markers at screen edge.
 		_draw_compass(run, vp, font)
 		# Ability button.
