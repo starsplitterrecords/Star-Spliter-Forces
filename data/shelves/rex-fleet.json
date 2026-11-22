@@ -1,0 +1,802 @@
+{
+ "series": "rex-fleet",
+ "name": "Rex Fleet",
+ "source": "RexPrompt data/shows/rex-fleet-s1",
+ "released_issues": [
+  1
+ ],
+ "issues": {
+  "1": {
+   "places": [
+    "Rex Fleet",
+    "Luminara Fields",
+    "Kaldr Rift",
+    "Verge Escort Cockpit",
+    "Grain Freighter",
+    "Thunderbreak Command",
+    "Auric Bazaar",
+    "Black Drift",
+    "Silent Triarch Chamber",
+    "Core Admiralty Chamber"
+   ],
+   "characters": [
+    "C_commodore_ella_venn",
+    "C_admiral_cael_dominion",
+    "C_admiral_colin_rhyne",
+    "C_captain_naomi_sol",
+    "C_governor_halev",
+    "C_elder_wallace",
+    "C_luminara_mother",
+    "C_luminara_boy",
+    "C_abby_saville",
+    "C_tessa_banks",
+    "C_billie_rusk",
+    "C_silent_triarch_trade",
+    "C_silent_triarch_raid",
+    "C_silent_triarch_fear",
+    "C_jex_marrin",
+    "C_admiral_janet_keating",
+    "C_lieutenant_deka",
+    "C_richard_secundo",
+    "C_paul_secundo",
+    "C_soren_kerr",
+    "C_sera_dain",
+    "C_oren_pike",
+    "C_tali_marrin",
+    "C_jia_morgan",
+    "C_second",
+    "C_officer",
+    "C_tactical",
+    "C_raider",
+    "C_verge_shipboard_guard"
+   ]
+  },
+  "2": {
+   "places": [
+    "Evacuation Freighter Mercy Of Dawn",
+    "Ashfang Marauder",
+    "Thunderbreak",
+    "Verge Escort",
+    "Mercy Of Dawn",
+    "The Shatterwake",
+    "Shatterwake Mouth",
+    "Auric Approach"
+   ],
+   "characters": [
+    "C_child",
+    "C_shard_caregiver",
+    "C_junior_rescuer",
+    "C_scribe",
+    "C_resident",
+    "C_crew_various"
+   ]
+  },
+  "3": {
+   "places": [
+    "Luxury Ring",
+    "Auric Dock",
+    "Dawnward Horizon",
+    "Auric Luxury Ring",
+    "Veil Market",
+    "Improvised Clinic",
+    "Auric Security Lock",
+    "Admiralty Tribunal",
+    "Auric Escort Control",
+    "Auric Archive Booth",
+    "Auric Archive",
+    "Intercut Tal Corvus",
+    "Broken Oath",
+    "Auric Civic Broadcast Platform",
+    "Auric Inner Shelter Gate",
+    "Jex'S Office",
+    "Tali Safehouse",
+    "Auric Map",
+    "Auric Hidden Apertures",
+    "Abby'S Shuttle",
+    "Thunderbreak Bridge",
+    "Clinic Breach",
+    "Auric Ring",
+    "Auric Civic Chamber",
+    "Fleet Detention Transit",
+    "Auric Observation Glass"
+   ],
+   "characters": []
+  },
+  "4": {
+   "places": [
+    "Tal Corvus Warrens",
+    "Evacuation Queue",
+    "Tal Corvus Warren Shelter",
+    "Tal Corvus Orbit",
+    "Bastion Spire",
+    "Tal Corvus Dock Gantry",
+    "Tal Corvus",
+    "Auric Freeport",
+    "Sunlash",
+    "Civilian Skiff",
+    "Tal Corvus Third-Window Route",
+    "Gravefire",
+    "Third-Window Route",
+    "Sunlash Cockpit",
+    "Third-Window Exit",
+    "Two Civilian Tugs",
+    "Hostile Picket",
+    "Fleet Escort",
+    "Corridor Exit",
+    "Relic Court",
+    "Ashfang Comms",
+    "Shadow Warrens",
+    "Auric"
+   ],
+   "characters": [
+    "C_archivist_selene_stormwell",
+    "C_emissary"
+   ]
+  },
+  "5": {
+   "places": [
+    "Rift Space",
+    "Gravefire Cutter",
+    "Scythe Of Saville",
+    "Rift",
+    "Shardfall Citadel"
+   ],
+   "characters": [
+    "C_guard"
+   ]
+  },
+  "6": {
+   "places": [
+    "Arena Vault",
+    "Auric Gate"
+   ],
+   "characters": []
+  },
+  "7": {
+   "places": [
+    "The Lattice",
+    "Survey Ship",
+    "Lattice",
+    "Calm Corridor",
+    "Corridor",
+    "Calm Corridor Receiving Berth",
+    "Refugee Receiving Berth"
+   ],
+   "characters": []
+  },
+  "8": {
+   "places": [
+    "Shardfall Arena Vault"
+   ],
+   "characters": []
+  },
+  "9": {
+   "places": [],
+   "characters": [
+    "C_medic"
+   ]
+  },
+  "10": {
+   "places": [
+    "Shatterforge Spire",
+    "Dock Spires",
+    "Evac Bays",
+    "Ashfang",
+    "Forge Canyon",
+    "Scythe",
+    "Sky Above Spire",
+    "Dock Mouth"
+   ],
+   "characters": []
+  },
+  "11": {
+   "places": [
+    "The Auric Gate",
+    "Gate Approach",
+    "Gate Midspace",
+    "Orbit"
+   ],
+   "characters": []
+  },
+  "12": {
+   "places": [
+    "Gate Lane"
+   ],
+   "characters": []
+  }
+ },
+ "characters": {
+  "C_commodore_ella_venn": {
+   "name": "Commodore Ella Venn",
+   "role": "Fleet — Commander of Thunderbreak (Heavy Cruiser)",
+   "visual": "Late-middle-aged woman with an angular, composed face and dark hair strongly streaked with silver, secured in a low command bun.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_admiral_cael_dominion": {
+   "name": "Admiral Cael Dominion",
+   "role": "Fleet Admiralty — projection doctrine",
+   "visual": "Older Fleet admiral with close-cut silver hair, a long severe face, and immaculate formal bearing.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_abby_saville": {
+   "name": "Abby Saville",
+   "role": "Shards — Warlord of the Scythe of Saville",
+   "visual": "Tall, athletic Black woman with dark brown skin, long tight braids pulled back cleanly, and a focused, watchful face.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_tessa_banks": {
+   "name": "Tessa Banks",
+   "role": "Shards — Captain of Gravefire Cutter",
+   "visual": "Compact adult white woman with short-to-medium silver-gray curls and an alert, intelligent face.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_billie_rusk": {
+   "name": "Billie Rusk",
+   "role": "Shards — Raider commander, Ashfang Marauder",
+   "visual": "Lean adult white woman with vivid red hair worn loose and rough, a sharp expressive face, and restless physical energy.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_governor_halev": {
+   "name": "Governor Chris Halev",
+   "role": "Verge — Civil leader of Auric Bazaar",
+   "visual": "Middle-aged man with short dark hair, a lean tired face, and work-worn hands.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_captain_naomi_sol": {
+   "name": "Captain Naomi Sol",
+   "role": "Verge — Escort commander",
+   "visual": "Lean woman with dark hair pulled into a functional braid, a visible brow scar, and an intent, weathered face.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_jex_marrin": {
+   "name": "Jex Marrin",
+   "role": "Independent broker — Veil Market",
+   "visual": "Older white-haired Verge broker with a short rough beard, a creased face, and the relaxed stance of someone always pricing the room.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_elder_wallace": {
+   "name": "Brent Wallace",
+   "role": "Verge — Trader guild elder",
+   "visual": "Older Verge trader with a broad weathered face, thinning gray hair, and the practical bulk of someone who has spent decades around freight and docks.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_oren_pike": {
+   "name": "Oren Pike",
+   "role": "Shards — Captain of Broken Oath",
+   "visual": "Adult Shard captain with a lean angular face, cropped dark hair, and a charismatic showman’s posture that reads as deliberate rather than manic.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_silent_triarch": {
+   "name": "The Silent Triarch",
+   "role": "Shards — masked ruling council",
+   "visual": "Three masked Shard rulers presented as a coordinated council presence; pale industrial ceremonial layers, bright red control markings, and distinct expressionless masks rather than interchangeable hooded figures.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_luminara_mother": {
+   "name": "Luminara Mother",
+   "role": "Verge civilian parent",
+   "visual": "Tired adult Verge mother in worn tan-and-muted-green civilian layers, practical hair tied back, protective posture centered on her child.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_luminara_boy": {
+   "name": "Luminara Boy",
+   "role": "Verge civilian child",
+   "visual": "Young Verge boy in patched civilian work-clothes, alert eyes, and a small practical satchel; visibly a child, never miniaturized adult military styling.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_archivist_selene_stormwell": {
+   "name": "Archivist Selene Stormwell",
+   "role": "Fleet — historical analyst, Stormwell research office",
+   "visual": "Older Fleet historical analyst with silver hair in a disciplined braid, a calm lined face, and practical research-duty clothing built for consoles, interviews, and field records rather than ceremonial display.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "C_liora_virelia": {
+   "name": "Liora Virelia",
+   "role": "Shattering-era reciprocal-field physicist / technical witness",
+   "visual": "Adult High Era physicist in clean practical engineering and research clothing, shown around corridor models, transit telemetry, and working technical systems rather than archival ceremony.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_lieutenant_deka": {
+   "name": "Lieutenant Erin Deka",
+   "role": "Recurring operational supporting officer",
+   "visual": "Adult Fleet lieutenant with close-kept hair, alert practical expression, and standard deep-navy duty uniform with restrained gold insignia.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_jia_morgan": {
+   "name": "Jia Morgan",
+   "role": "Fleet reciprocal-field physicist / technical analyst",
+   "visual": "Adult technical analyst with short dark hair, an observant focused face, and compact Fleet technical-duty layers suited to consoles and field instruments.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_soren_kerr": {
+   "name": "Admiral Soren Kerr",
+   "role": "Fleet Admiralty — Cerulean / restraint",
+   "visual": "Older Fleet admiral with cropped gray hair, a composed weathered face, and understated deep-navy Cerulean command dress emphasizing restraint rather than ornament.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_tom_barrett": {
+   "name": "Tom Barrett",
+   "role": "Shards — Captain",
+   "visual": "Adult Shard captain in pale-gray industrial command layers with narrow bright-red faction markings and a work-worn shipboard silhouette.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_second": {
+   "name": "Second",
+   "role": "Verge escort second officer",
+   "visual": "Adult Verge escort second officer in patched tan-and-muted-green flight gear, visibly crew rather than Fleet command.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_officer": {
+   "name": "Officer",
+   "role": "Fleet officer",
+   "visual": "Fleet duty officer in established deep-navy uniform with restrained gold piping; use as a supporting crew figure, not a new hero design.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_raider": {
+   "name": "Raider",
+   "role": "Shard raider",
+   "visual": "Shard raider in established pale-gray industrial armor with bright-red markings and visibly repaired working gear.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_fleet_sergeant": {
+   "name": "Fleet Sergeant",
+   "role": "Fleet sergeant",
+   "visual": "Fleet sergeant in established deep-navy duty uniform with practical security gear and clear enlisted rather than command styling.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_tactical": {
+   "name": "Tactical",
+   "role": "Fleet tactical officer",
+   "visual": "Fleet tactical officer in established deep-navy duty uniform at an active command console; supporting crew identity, not a distinct command costume.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_medic": {
+   "name": "Medic",
+   "role": "Fleet medic",
+   "visual": "Fleet medic in established deep-navy duty layers adapted for medical work, carrying compact diagnostic and treatment equipment.",
+   "first_issue": 9,
+   "tier": "draft"
+  },
+  "C_crew_various": {
+   "name": "Crew (various)",
+   "role": "Fleet crew ensemble",
+   "visual": "Fleet crew ensemble using the established deep-navy duty-uniform language with role-specific practical variation and no duplicate hero faces.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_rival_captain": {
+   "name": "Rival Captain",
+   "role": "Shard rival captain",
+   "visual": "Shard rival captain in established pale-gray industrial command wear with bright-red faction markings, distinct from named principal captains.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_scribe": {
+   "name": "Scribe",
+   "role": "Court or market scribe",
+   "visual": "Civilian or court scribe in restrained local work layers carrying a slate or record tool; visually subordinate to the principal speakers.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_emissary": {
+   "name": "Emissary",
+   "role": "Triarch emissary",
+   "visual": "Triarch emissary in pale industrial Shard ceremonial layers with narrow bright-red markings, distinct from the masked ruling council.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "C_silent_triarch_raid": {
+   "name": "Silent Triarch — Raid",
+   "role": "Triarch mask — Raid",
+   "visual": "One distinct masked Triarch aspect in pale industrial ceremonial layers with bright-red markings; the Raid mask reads forceful through geometry and stance without exposing a face.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_silent_triarch_fear": {
+   "name": "Silent Triarch — Fear",
+   "role": "Triarch mask — Fear",
+   "visual": "One distinct masked Triarch aspect in pale industrial ceremonial layers with bright-red markings; the Fear mask reads controlled and clinical rather than monstrous.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_child": {
+   "name": "Child",
+   "role": "Civilian child",
+   "visual": "Civilian child in setting-appropriate worn practical clothing; child proportions and behavior, no military styling unless explicitly scripted.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_admiral_colin_rhyne": {
+   "name": "Admiral Colin Rhyne",
+   "role": "Fleet Admiralty — Aegis / Defense",
+   "visual": "Older Fleet admiral in established deep-navy Aegis command dress, with a practical defensive bearing and restrained senior-officer presentation.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_admiral_janet_keating": {
+   "name": "Admiral Janet Keating",
+   "role": "Fleet Admiralty — hard-line military voice",
+   "visual": "Middle-aged Fleet admiral with short dark hair touched with gray, a firm square face, and immaculate deep-navy command dress worn with hard-line military precision.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_silent_triarch_trade": {
+   "name": "Silent Triarch — Trade",
+   "role": "Triarch mask — Trade",
+   "visual": "One distinct masked Triarch aspect in pale industrial ceremonial layers with bright-red markings; the Trade mask reads measured and transactional through clean formal geometry.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_richard_secundo": {
+   "name": "Dr. Richard Secundo",
+   "role": "Shard civilian — Tal Corvus physician and refugee witness",
+   "visual": "Adult man from Tal Corvus with the composed, attentive presence of an experienced civilian physician.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_paul_secundo": {
+   "name": "Paul Secundo",
+   "role": "Shard civilian — 19-year-old engineering apprentice and refugee",
+   "visual": "19-year-old adult man and refugee, with an observant, weathered young face and a healing injury supported by a practical brace.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_sera_dain": {
+   "name": "Councilor Sera Dain",
+   "role": "Verge — elected representative of Auric's overcrowded working districts",
+   "visual": "Adult Auric councilor with a practical expressive face, dark hair kept simply for work, durable tan-and-green district clothing, and a scuffed council folio.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_tali_marrin": {
+   "name": "Tali Marrin",
+   "role": "Independent refuge keeper — Jex Marrin's younger sister",
+   "visual": "Middle-aged Verge refuge keeper with weathered features, dark hair threaded with gray, layered workwear, and subtle anomaly-glass details echoing Jex’s route culture without copying his silhouette.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "C_resident_mother": {
+   "name": "Auric Resident Mother",
+   "role": "Verge civilian — displaced luxury-ring resident",
+   "visual": "Adult Auric mother in worn civilian Verge clothing, protective posture centered on her child and visually separate from officials or uniformed crews.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_resident_child": {
+   "name": "Auric Resident Child",
+   "role": "Verge civilian — child with a respiratory illness",
+   "visual": "Young Auric child in practical civilian clothing, visibly ill or vulnerable only when the page requires it, with child proportions and no faction uniform.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_resident": {
+   "name": "Auric Resident",
+   "role": "Verge civilian — Auric resident",
+   "visual": "Auric civilian resident in worn but once-prosperous Verge clothing, visually distinct from uniformed officials and refugees.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_refugee": {
+   "name": "Refugee",
+   "role": "Displaced civilian",
+   "visual": "Displaced civilian in layered salvaged clothing carrying only practical personal effects; avoid faction-uniform shorthand unless the page specifies it.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_listener": {
+   "name": "Civilian Listener",
+   "role": "Shard civilian receiving Richard Secundo's testimony",
+   "visual": "Shard civilian listener in worn Tal Corvus work layers, individualized as an ordinary person rather than a crowd archetype.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_guard": {
+   "name": "Shelter Guard",
+   "role": "Auric civilian shelter guard",
+   "visual": "Auric civilian shelter guard in practical tan-and-green local protective gear, visibly civic rather than military.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "C_civilian_pilot": {
+   "name": "Civilian Pilot",
+   "role": "Civilian evacuation pilot",
+   "visual": "Civilian evacuation pilot in practical patched flight layers with non-military Verge markings and working safety gear.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_shard_caregiver": {
+   "name": "Shard Caregiver",
+   "role": "Shard civilian caregiver — Mercy of Dawn survivor",
+   "visual": "Adult Tal Corvus civilian in worn practical refugee layers, injured during the Mercy of Dawn evacuation but still actively protecting younger evacuees.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_junior_rescuer": {
+   "name": "Junior Rescuer",
+   "role": "Fleet junior rescue crew member",
+   "visual": "Young adult Fleet rescue crew member in practical deep-navy medical/rescue layers, clearly junior to command staff and equipped for evacuation work.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_verge_shipboard_guard": {
+   "name": "Verge Shipboard Guard",
+   "role": "Verge — armed civilian freighter security",
+   "visual": "Adult Verge shipboard guard in tan-and-muted-green practical security clothing with local route/service patches and functional equipment; not Fleet navy and not Shard gray-white armor.",
+   "first_issue": 1,
+   "tier": "released"
+  }
+ },
+ "settings": {
+  "RF_Thunderbreak_Command": {
+   "name": "Thunderbreak command",
+   "text": "Thunderbreak command — a broad, disciplined heavy-cruiser bridge organized around a central command position, active tactical and navigation stations, large shared operational displays, and visible evidence of an older ship repeatedly repaired rather than cosmetically renewed. Crew movement should preserve clear station geography across returns.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "RF_Admiralty_Tribunal": {
+   "name": "Fleet Admiralty tribunal",
+   "text": "Fleet Admiralty tribunal — formal Core hearing space built to make hierarchy legible: elevated circular authority positions, a lower testimony floor, controlled evidence displays, restrained stone-metal geometry, and very little visual clutter. Evidence that disrupts institutional neatness should remain physically visible once introduced.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "RF_Relic_Court": {
+   "name": "Relic Court",
+   "text": "Relic Court — monumental Core political chamber with bright stone, restrained banners, long sightlines, a central working table for documents and live operational feeds, and enough open floor that who joins or refuses the table is visually meaningful.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "RF_Auric_Civic_Core": {
+   "name": "Auric civic and operations complex",
+   "text": "Auric civic and operations complex — practical Verge government space embedded in a working freeport: scuffed tables, cargo and ration boards, public-facing displays, doors opening toward active docks, and officials working close to clerks, residents and freight rather than behind ceremonial barriers.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "RF_Auric_Luxury_Ring": {
+   "name": "Auric luxury ring / Crown Ring",
+   "text": "Auric luxury ring / Crown Ring — formerly expensive residential concourse converted into unstable public shelter: chandeliers and high-end finishes coexist with bedding, heaters, ration lines, temporary partitions and a large cracked observation window under continuous structural watch.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "RF_Veil_Market": {
+   "name": "Veil Market",
+   "text": "Veil Market — dense lived-in trade network of stalls, broker rooms, back passages and route boards with practical worklight, handwritten or chalk navigation information, layered signage and enough physical wear that commerce, refuge and rumor visibly share the same infrastructure.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "RF_Gravefire_Interior": {
+   "name": "Gravefire interior",
+   "text": "Gravefire interior — compact Shard working ship maintained through visible repair rather than ceremony: tight stations, patched pale industrial surfaces, narrow bright-red faction markings, restrained lighting, and a cockpit/bridge geography that favors practical sightlines over spectacle.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "RF_Arena_Vault": {
+   "name": "Shardfall Arena Vault",
+   "text": "Shardfall Arena Vault — vast circular Shard political chamber of pale industrial structure, bright-red control markings and dark forge-adjacent depth. Empty tiers and tactical displays should make absence of public support as visible as a crowd would be; the three Triarch masks occupy distinct, repeatable positions.",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "RF_Tal_Corvus_Warrens": {
+   "name": "Tal Corvus warrens",
+   "text": "Tal Corvus warrens — dense inhabited industrial passages carved through damp, worn infrastructure: narrow routes, practical heat and supply hardware, improvised chalk guidance, layered family habitation and recurring seams where anomaly seep can become visible without turning the space mystical.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "RF_Shatterforge": {
+   "name": "Shatterforge",
+   "text": "Shatterforge — enormous inhabited forge complex where ember furnaces, vent trunks, exposed bridges, blade-production halls and family quarters occupy the same vertical industrial system. Safety hardware and service vents must retain readable geography because later damage depends on where they connect.",
+   "first_issue": 10,
+   "tier": "draft"
+  },
+  "RF_Auric_Gate": {
+   "name": "Auric Gate",
+   "text": "Auric Gate — large reciprocal-field transit installation of ember-orange pylons, stability rims, shared timing boards and civilian approach lanes. Preserve the relationship between pylons, central crossing lane, traffic-control positions and shield approaches so battle and later Accord operations read as the same place.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "RF_Luminara_Fields_Dock": {
+   "name": "Luminara Fields agricultural freight dock",
+   "text": "Luminara Fields agricultural freight dock — a bright productive Verge port embedded in cultivated land, with practical loading cranes, fabric shade, food sacks, long tan-and-muted-green farm freighters, families and workers sharing the same civic-industrial space.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "RF_Kaldr_Rift": {
+   "name": "Kaldr Rift",
+   "text": "Kaldr Rift — a hazardous convoy passage through dense asteroid fragments, broken industrial structures and old hull wreckage. Navigation depends on physical spacing, sightlines and maneuvering through debris; never render it as a magical tunnel or portal.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "RF_Verge_Escort_Cockpit": {
+   "name": "Verge escort cockpit",
+   "text": "Verge escort cockpit — cramped, worn and practical, with physical controls, patched tan-and-muted-green surfaces, broad forward visibility and just enough instrumentation to fly working routes. It should feel maintained and heavily used rather than primitive or dirty.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "RF_Luminara_Freighter_Hold": {
+   "name": "Luminara farm-freighter cargo hold",
+   "text": "Luminara farm-freighter cargo hold — tall working freight volume built around strapped agricultural crates, utility rails, emergency helmets and pressure doors. Civilian passengers share the same functional space with cargo, making hull breaches and boarding actions immediately human-scale.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "RF_Thunderbreak_Memorial_Deck": {
+   "name": "Thunderbreak memorial deck",
+   "text": "Thunderbreak memorial deck — bright disciplined Fleet remembrance hall with a circular gathering floor, restrained blue-and-gold insignia, engraved casualty walls and a central geometric memorial. Treat it as service infrastructure for remembering losses, not a shrine or mystical sanctuary.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "RF_Auric_Bazaar": {
+   "name": "Auric Bazaar",
+   "text": "Auric Bazaar — a dense but capable Verge freeport market and dock ring where cargo, food, route trade, civic relief and ordinary family life overlap. Use tan-and-muted-green working infrastructure, fabric shade, freight hardware and practical night or daylight illumination without portraying the Verge as backward.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "RF_Black_Drift_Repair_Yard": {
+   "name": "Black Drift Shard repair yard",
+   "text": "Black Drift Shard repair yard — inhabited asteroid-industrial dock where damaged Shard ships are maintained by large working crews using visible welding, salvaged components, pressure hardware and communal labor. Pale industrial layers and bright-red markings coexist with meals, families and lived-in repair culture.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "RF_Black_Drift_Hangar": {
+   "name": "Black Drift hangar floor",
+   "text": "Black Drift hangar floor — bright functional Shard work bay around compact craft, cargo nets, parts benches and active repair stations. White/pale-gray industrial surfaces, dark underlayers and strong red markings make faction identity clear without pirate-barbarian styling.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "RF_Shard_Command_Room": {
+   "name": "Shard command room",
+   "text": "Shard command room — practical pale industrial planning space centered on a physical terrain/route table, repair hardware and crew standing close to the work. Bright-red faction markings remain restrained; tactical planning should read as operational engineering rather than magical projection.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "RF_Triarch_Chamber": {
+   "name": "Silent Triarch chamber",
+   "text": "Silent Triarch chamber — dark Shard political command room with three fixed authority positions for three distinct masks, practical route and status displays, pale industrial ceremonial layers and bright-red control markings. The Triarch are institutional rulers, never supernatural figures.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "RF_Core_Admiralty_Chamber": {
+   "name": "Core Admiralty chamber",
+   "text": "Core Admiralty chamber — luminous formal Fleet decision space with white stone-metal geometry, deep-navy banners, elevated authority positions, a circular floor route display and a large shared corridor map. Institutional hierarchy is visibly spacious and orderly; green lanes appear only as measured navigation geometry.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "RF_Shard_Assembly_Orbit": {
+   "name": "Shard assembly orbit",
+   "text": "Shard assembly orbit — dark inhabited industrial stronghold surrounded by numerous working Shard vessels and a foreground observation platform. Mobilization is communicated through ships lighting ordinary engines and taking formation, not ritual energy or supernatural effects.",
+   "first_issue": 11,
+   "tier": "draft"
+  }
+ },
+ "factions": {
+  "F_Fleet": {
+   "name": "Fleet / Reach and Resolve",
+   "text": "Core-aligned military and relief fleet operating heavy cruisers, escorts, survey support, rescue missions, and corridor protection across a civilization still being reconnected after the Shattering."
+  },
+  "F_Verge": {
+   "name": "The Verge",
+   "text": "Frontier trade worlds, farms, freeports, escorts, and civilian governments whose institutions evolved under long periods of unreliable or absent interstellar connection."
+  },
+  "F_Shards": {
+   "name": "The Shards / Confederacy",
+   "text": "Shard settlements, salvagers, raiders, captains, engineers, civilians, and survival blocs formed in wreckage zones and scarcity after the Shattering."
+  },
+  "F_Trade": {
+   "name": "Independent Trade / Veil Market",
+   "text": "Brokers, smugglers, merchants, route specialists, and information traders operating between formal factions."
+  },
+  "F_Lattice": {
+   "name": "Lattice Research / Corridor Exploration",
+   "text": "Physicists, survey crews, pilots, and anomaly observers studying reciprocal-field transit, damaged corridor geometry, timing irregularities, and post-Shattering phenomena."
+  }
+ },
+ "regions": {
+  "Core": {
+   "name": "The Core",
+   "text": "Bright, ordered civic, Admiralty, Fleet Academy, shipyard, research, and command environments with polished stone, etched metal, disciplined infrastructure, and mature transit instrumentation.",
+   "tone": "Institutional confidence under growing political and scientific strain."
+  },
+  "Verge": {
+   "name": "The Verge",
+   "text": "Frontier docks, markets, farms, freeports, patched textiles, working ships, crowded civilian infrastructure, local route boards, and repair yards.",
+   "tone": "Lived-in pragmatism, scarcity, trade pressure, and stubborn independence."
+  },
+  "Shards": {
+   "name": "The Shards",
+   "text": "Salvage cities, scarred decks, warrens, debris corridors, repair docks, improvised engineering, patched armor, and settlements built inside the physical wreckage of lost connection.",
+   "tone": "Hard survival, factional rivalry, anger, and emerging solidarity."
+  },
+  "Lattice": {
+   "name": "The Lattice",
+   "text": "Reciprocal-field corridors, echo space, survey stations, anchor infrastructure, and regions where geometry, timing, and reference frames become unreliable.",
+   "tone": "Scientific awe mixed with physically objective but incompletely explained risk."
+  },
+  "Corridors": {
+   "name": "Inter-faction Corridors",
+   "text": "Reciprocal-field lanes, rifts, gates, convoy routes, anchor points, shear windows, orbit, docking approaches, and transit space connecting Core, Verge, Shards, and Lattice.",
+   "tone": "Movement under threat; protection, piracy, difficult navigation, and fragile cooperation."
+  }
+ },
+ "lighting": {
+  "fleetCeremonial": "Bright ordered Fleet light with readable faces, etched metal, polished working surfaces, and restrained institutional formality.",
+  "vergeLivedIn": "Practical dock and market illumination: worklights, daylight, storefront spill, maintenance lamps, worn textiles, and clear human-scale detail.",
+  "shardIndustrial": "Bright industrial worklights, forge glow, scarred metal reflections, and controlled ember accents without obscuring faces.",
+  "latticeAnomaly": "Clean readable exposure around impossible geometry, luminous nodes, mirrored or refracted structures, and restrained anomaly glow.",
+  "combatReadable": "High-clarity cinematic combat lighting; motion remains readable and hull/material detail survives explosions and plasma effects."
+ },
+ "mood": {
+  "reachAndResolve": [
+   "institutional restraint",
+   "reconnection under pressure",
+   "protection over spectacle",
+   "competing histories"
+  ],
+  "vergePragmatism": [
+   "scarcity",
+   "working-class dignity",
+   "trade and survival",
+   "stubborn independence"
+  ],
+  "shardSurvival": [
+   "hard choices",
+   "improvised strength",
+   "anger without caricature",
+   "survival politics"
+  ],
+  "fragileAlliance": [
+   "mutual distrust",
+   "shared civilian stakes",
+   "cooperation earned through action"
+  ],
+  "latticeAwe": [
+   "scientific wonder",
+   "physical danger",
+   "objective uncertainty",
+   "geometry and timing behaving incorrectly"
+  ]
+ },
+ "keeper": [
+  {
+   "name": "A8939324 00AB 48A6 9671 B087FE026B23",
+   "type": "character",
+   "image": "production/references/rex-fleet/keeper/character/a8939324-00ab-48a6-9671-b087fe026b23.png"
+  },
+  {
+   "name": "Thunderbreak bridge",
+   "type": "setting",
+   "image": "production/references/rex-fleet/keeper/setting/thunderbreak-bridge.png"
+  },
+  {
+   "name": "Auric bazaar",
+   "type": "setting",
+   "image": "production/references/rex-fleet/keeper/setting/auric-bazaar.png"
+  },
+  {
+   "name": "Jex Marrin — Acting and Pose Study",
+   "type": "character",
+   "image": "production/references/rex-fleet/keeper/character/jex-marrin-acting-and-pose-study.png"
+  }
+ ]
+}

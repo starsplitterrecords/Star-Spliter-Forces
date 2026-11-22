@@ -1,0 +1,319 @@
+{
+ "series": "backyard-rockets",
+ "name": "Backyard Rockets",
+ "source": "RexPrompt data/shows/backyard-rockets-s1",
+ "released_issues": [
+  1,
+  2
+ ],
+ "issues": {
+  "1": {
+   "places": [
+    "Velez community water plant",
+    "Mobile Launch-Shop tanker interior",
+    "Mobile Launch-Shop storage bay opening into the workshop",
+    "Tetherwell archival training film",
+    "Launch-Shop command deck",
+    "Tethergrid mobile interception suite on a high Mojave overlook",
+    "Mobile Launch-Shop workshop",
+    "Launch-Shop mechanical bench",
+    "Decommissioned Mojave communications field",
+    "Launch-Shop exterior work platform beside the communications field",
+    "Tethergrid ridge position",
+    "Dry lakebed test position",
+    "Dry lakebed after the static fire",
+    "Mobile Launch-Shop tanker interior at night",
+    "Launch-Shop final assembly area before dawn",
+    "Launch-Shop control trailer",
+    "Opposing Mojave ridges before sunrise",
+    "Dry lakebed launch site at dawn",
+    "Esperanza purification plant",
+    "Mobile Launch-Shop tanker interior after the launch",
+    "Launch-Shop command table at morning",
+    "Decommissioned desert solar relay site",
+    "Open Mojave ridge above the former launch pad",
+    "Tetherwell institutional documentary",
+    "Launch-Shop electronics bench",
+    "Maintained community pump station",
+    "Launch-Shop command cabin communicating with Red Mesa, Esperanza and a Coyote Wells pump operator over separate legacy channels; show a local operator's work-gloved hands at an intact manual pump selector but keep the new operator's face off-frame. The Coyote Wells maintenance key stays local and never passes to Launch-Shop",
+    "Working Coyote Wells pump room",
+    "Former field launch pad at bright daylight",
+    "Mojave field montage",
+    "Three-node live Copper Lattice trial at working community sites",
+    "Launch-Shop workbench",
+    "Launch-Shop bench and independent ridge relay connections",
+    "Tethergrid interceptor field position above the actual northern ridge relay",
+    "Opposite high-desert canyon positions",
+    "Launch-Shop exterior platform at dusk",
+    "Launch-Shop loading platform",
+    "Launch-Shop payload-prep bay",
+    "Dry lakebed launch position at golden hour",
+    "Dry lakebed at dusk",
+    "Post-launch dry lakebed and departing mobile Launch-Shop",
+    "Clear linked Mojave locations",
+    "Paired views of the SAME northern ridge cabinet shown live on P15",
+    "P22, technicians physically disconnecting its uplink now for the first time, and Launch-Shop route view showing transport shifting south with destination acknowledgment; municipal pump limits unchanged",
+    "Launch-Shop control cabin at sunrise",
+    "Launch-Shop exterior work deck",
+    "Tethergrid mobile command platform",
+    "Tethergrid corporate-partnership film",
+    "Mobile Launch-Shop tanker workshop",
+    "Mojave field launch site",
+    "Launch-Shop mobile control cabin",
+    "The Dryline Report",
+    "Mojave limestone ridge",
+    "Community wellhead and pump yard",
+    "Decommissioned Mojave tracking-array service yard",
+    "Tetherwell emergency advisory",
+    "Community water-coordination room",
+    "Community clinic service yard",
+    "Community water distribution point",
+    "Abandoned Mojave mining maintenance yard",
+    "Tethergrid drought-response announcement",
+    "Mojave reservoir service road",
+    "Tetherwell legacy film",
+    "Community water-truck fill yard",
+    "Decommissioned hydroelectric service gallery",
+    "Tetherwell network-safety film",
+    "Public Sky ground-relay site",
+    "Moving community maintenance truck and ridge-relay test route",
+    "Decommissioned Mojave industrial furnace complex",
+    "Remote propulsion test stand",
+    "Tethergrid launch-safety advisory",
+    "Tethergrid field detention and interview module",
+    "Tethergrid emergency launch advisory",
+    "Mobile Sky-Piercer launch route inside a Mojave sandstorm",
+    "Mojave service road and Tethergrid transport corridor"
+   ],
+   "characters": [
+    "@brk.DrylineReporter",
+    "hv9jfbgm9",
+    "5snrx2won",
+    "8tg8ibh7z",
+    "@brk.TetherwellNarrator",
+    "dljv31xue",
+    "rhonda",
+    "sylvie"
+   ]
+  },
+  "2": {
+   "places": [],
+   "characters": []
+  },
+  "3": {
+   "places": [],
+   "characters": []
+  },
+  "4": {
+   "places": [],
+   "characters": []
+  },
+  "5": {
+   "places": [],
+   "characters": []
+  },
+  "6": {
+   "places": [],
+   "characters": []
+  },
+  "7": {
+   "places": [],
+   "characters": []
+  },
+  "8": {
+   "places": [],
+   "characters": []
+  }
+ },
+ "characters": {
+  "hv9jfbgm9": {
+   "name": "Arvin",
+   "role": "",
+   "visual": "Lean, narrow, angular older aerospace architect with deeply tanned olive skin, short steel-gray hair, heavy-lidded dark amber eyes, olive utility jacket with blue solar-cell shoulder straps, practical canvas work trousers and field boots. His pale synthetic graft is on the RIGHT HAND; the left hand is natural.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "5snrx2won": {
+   "name": "Milo",
+   "role": "",
+   "visual": "Broad, grounded engineer with desert-clay skin, a round youthful face, dense dark curls and fixed facial cybernetic markings. Brown mechanical vest over a dark work shirt, practical field trousers, real-scale tool belt and rugged boots.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "8tg8ibh7z": {
+   "name": "Lucia",
+   "role": "",
+   "visual": "Athletic fair-skinned woman with high cheekbones, skeptical brow, black asymmetric razor-cut hair, dark tactical field jacket with restrained cyan piping, fitted practical field trousers and polished black combat boots.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "dljv31xue": {
+   "name": "Cyrus",
+   "role": "Tethergrid executive enforcer",
+   "visual": "Broad-shouldered older man with silvered hair, weathered skin and pale blue eyes. Immaculately fitted graphite technical armor with minimal seams, restrained amber-cyan status lines and heavy matte-black tactical boots.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "sylvie": {
+   "name": "Sylvie",
+   "role": "desert scout",
+   "visual": "Desert scout with braided hair, a strong grounded stance, gray field jacket, practical cargo trousers and expedition gear with intentional patch or insignia wear.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "rhonda": {
+   "name": "Rhonda",
+   "role": "community water-systems operator",
+   "visual": "Medium build, warm brown skin, dark brown hair in a low ponytail, faded indigo work shirt, light canvas utility vest with water-system tags, tan field trousers, practical boots and clear safety glasses at the collar.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "@brk.TetherwellNarrator": {
+   "name": "Tetherwell Narrator",
+   "role": "",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "@brk.DrylineReporter": {
+   "name": "Dryline Reporter",
+   "role": "",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  }
+ },
+ "settings": {
+  "BR_Community_Water_Coordination_Room": {
+   "name": "Community water-coordination room",
+   "text": "Community water-coordination room — practical municipal tables, printed basin maps, physical ledgers, rugged radios, pump telemetry and ordinary maintained public infrastructure.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Tethergrid_Mobile_Command_Platform": {
+   "name": "Tethergrid mobile command platform",
+   "text": "Tethergrid mobile command platform — immaculate graphite corporate operations interior with brushed alloy, tactile/glass controls, restrained cyan/amber status light, configurable command, analysis and interception workstations, and Mojave terrain beyond.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Launch_Shop_Control_Cabin": {
+   "name": "Launch-Shop mobile control cabin",
+   "text": "Launch-Shop mobile control cabin — compact maintained retro-aerospace controls, analog gauges, physical switches, restrained digital readouts and bright Mojave light through the windows.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Launch_Shop_Tanker_Workshop": {
+   "name": "Mobile Launch-Shop tanker workshop",
+   "text": "Mobile Launch-Shop tanker workshop — maintained retro-industrial aerospace work bay inside the moving field vehicle, with painted metal, tactile analog-digital instruments, organized tools, padded work surfaces, practical task lighting and controlled localized wear; usable parked or underway.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Mojave_Field_Launch_Site": {
+   "name": "Mojave field launch site",
+   "text": "Mojave field launch site — maintained hand-built aerospace hardware, compact support equipment, practical rigging, hard desert light and broad unobstructed sky.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Community_Wellhead_Pump_Yard": {
+   "name": "Community wellhead and pump yard",
+   "text": "Community wellhead and pump yard — maintained water hardware, sun-bleached concrete, shade structure, visible mechanical gauges, clear piping state and hard Mojave daylight.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Launch_Shop_Exterior_Work_Deck": {
+   "name": "Launch-Shop exterior work deck",
+   "text": "Launch-Shop exterior work deck — maintained tanker/flatbed structure, organized field hardware, hard Mojave sun and broad desert horizon.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Mojave_Limestone_Ridge": {
+   "name": "Mojave limestone ridge",
+   "text": "Mojave limestone ridge — pale fractured stone, bright high-desert sun, long sightlines, sparse scrub and the launch corridor below.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Public_Sky_Ground_Relay_Site": {
+   "name": "Public Sky ground-relay site",
+   "text": "Public Sky ground-relay site — maintained mast, compact solar power, tactile control box, physical status lamps and open Mojave terrain with line-of-sight to neighboring ridges.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Remote_Propulsion_Test_Stand": {
+   "name": "Remote propulsion test stand",
+   "text": "Remote propulsion test stand — reinforced concrete, clear exclusion zone, instrumented test article, shielded observation position and bright open desert.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Decommissioned_Hydroelectric_Service_Gallery": {
+   "name": "Decommissioned hydroelectric service gallery",
+   "text": "Decommissioned hydroelectric service gallery — massive concrete structure, damp cool air, old mechanical governors, steel railings, moss at exposed spillway edges and safe portable work lighting.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Sky_Piercer_Sandstorm_Route": {
+   "name": "Mobile Sky-Piercer launch route inside a Mojave sandstorm",
+   "text": "Mobile Sky-Piercer launch route inside a Mojave sandstorm — low visibility, disciplined vehicle lighting, secured hardware, blowing grit and intermittent amber desert light.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Decommissioned_Industrial_Furnace_Complex": {
+   "name": "Decommissioned Mojave industrial furnace complex",
+   "text": "Decommissioned Mojave industrial furnace complex — tall refractory-lined furnace bays with intact and damaged ceramic panels, expansion joints and retainers, tagged hazardous-material and disposal areas, portable ventilation and salvage staging, exposed service roads, and hard desert light outside.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Community_Water_Distribution_Point": {
+   "name": "Community water distribution point",
+   "text": "Community water distribution point — shaded public fill taps and standpipes, household containers and small tanks, posted allocation notices, simple physical meters, volunteer attendants, utility vehicles and ordinary residents moving through the site under hard Mojave light.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Community_Clinic_Service_Yard": {
+   "name": "Community clinic service yard",
+   "text": "Community clinic service yard — modest maintained clinic buildings, medicine refrigeration and temperature monitoring, shaded loading area, water storage and transfer connections, practical utility vehicles and staff working in severe high-desert conditions.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "BR_Community_Water_Truck_Fill_Yard": {
+   "name": "Community water-truck fill yard",
+   "text": "Community water-truck fill yard — municipal standpipe and hose manifold, ordinary water-hauling and maintenance trucks, paper dispatch board, rugged radios, service tools, drivers and utility workers under open Mojave sun.",
+   "first_issue": 1,
+   "tier": "released"
+  }
+ },
+ "factions": {
+  "BR_Salvagers": {
+   "name": "BR_Salvagers",
+   "text": "Launch-Shop engineers use maintained older-generation aerospace hardware, rugged field equipment, painted and brushed metal, canvas, tactile analog-digital instruments and warm solar-wave retrofuturist forms."
+  },
+  "BR_Tethergrid": {
+   "name": "BR_Tethergrid",
+   "text": "Tethergrid Corp operates the Tetherwell water-authorization network. Its current-generation corporate design uses graphite, brushed aluminum, carbon composite, technical ceramic, precise seams, restrained cyan instrumentation, robotics and automation."
+  },
+  "BR_Dryline": {
+   "name": "BR_Dryline",
+   "text": "The Dryline Report is independent investigative journalism focused on water access, allocation records and physical infrastructure, using field footage, documents, restrained annotations and evidence-first reporting."
+  }
+ },
+ "regions": {
+  "BR_Mojave": {
+   "name": "BR_Mojave",
+   "text": "Immense sunlit American Southwest high desert with sandstone cliffs, mesas, dry lake beds, slot canyons, escarpments and long clear horizons. Working sites are purposeful field environments integrated into the terrain.",
+   "tone": ""
+  }
+ },
+ "lighting": {},
+ "mood": {},
+ "keeper": [
+  {
+   "name": "Released Issue 1 — Workshop and Rocket Hardware (Page 003; Story Reference)",
+   "type": "setting",
+   "image": "production/references/backyard-rockets/keeper/setting/released-issue-01-workshop-rocket-page-003.jpg"
+  },
+  {
+   "name": "Released Issue 2 — Water Utility Equipment (Page 002; Story Reference)",
+   "type": "setting",
+   "image": "production/references/backyard-rockets/keeper/setting/released-issue-02-water-utility-page-002.jpg"
+  }
+ ]
+}

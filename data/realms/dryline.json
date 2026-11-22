@@ -1,0 +1,723 @@
+{
+ "id": "dryline",
+ "chapter": {
+  "id": 11,
+  "name": "Dryline",
+  "numeral": "DESERT",
+  "destination": "dryline",
+  "subtitle": "Backyard Rockets and Sunforge Outlaw, in the desert.",
+  "branch_from": "s_ochre",
+  "biome": "desert"
+ },
+ "destination": {
+  "name": "Dryline",
+  "desc": "Signal Space shaped like the Mojave: a launch range, water towns, relays, and two suns.",
+  "half_size": "@v2:6000,4200",
+  "gate": "@v2:-5000,-200",
+  "goal_signals": 3,
+  "climax_time": 1140,
+  "background": "@c:2a1e14ff",
+  "drift_name": "OPEN DESERT",
+  "biome": "desert",
+  "regions": [
+   "dry_lakebed",
+   "launch_shop",
+   "esperanza",
+   "la_suerte",
+   "ridge_relay",
+   "red_mesa",
+   "coyote_wells",
+   "two_suns",
+   "the_forge"
+  ],
+  "completion_unlocks": [],
+  "seed": 5120
+ },
+ "biome": {
+  "surface": "@c:ffd18c21",
+  "rock": "@c:5a4030ff",
+  "skins": {
+   "skiff": [
+    "Dust Skiff",
+    "@c:b09070ff"
+   ],
+   "ram_cutter": [
+    "Sand Ram",
+    "@c:c87a4aff"
+   ],
+   "rail_picket": [
+    "Mirage Picket",
+    "@c:e0b060ff"
+   ],
+   "mine_hauler": [
+    "Caltrop Layer",
+    "@c:c86a5aff"
+   ],
+   "wreck_lurker": [
+    "Scrap Lurker",
+    "@c:9a8060ff"
+   ],
+   "leech": [
+    "Tick Leech",
+    "@c:a89a5aff"
+   ],
+   "gunship": [
+    "Heat Gunship",
+    "@c:d08a4aff"
+   ],
+   "splinter_captain": [
+    "Dust Captain",
+    "@c:f0c050ff"
+   ],
+   "dreadnought": [
+    "Dune Hulk",
+    "@c:8a6a4aff"
+   ],
+   "echo_mote": [
+    "Heat Shimmer",
+    "@c:e08070ff"
+   ],
+   "swarm_tender": [
+    "Vulture Tender",
+    "@c:b87050ff"
+   ],
+   "shield_tug": [
+    "Hauler Tug",
+    "@c:b09080ff"
+   ],
+   "blink": [
+    "Mirage Flicker",
+    "@c:e070a0ff"
+   ]
+  }
+ },
+ "regions": {
+  "dry_lakebed": {
+   "name": "DRY LAKEBED",
+   "shape": "circle",
+   "center": "@v2:-3300,1300",
+   "radius": 1300,
+   "color": "@c:e8c890ff",
+   "floor": "@c:3a2a1cff",
+   "props": "lakebed",
+   "density": 0.7,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 1,
+    "ram_cutter": 0.5,
+    "echo_mote": 0.4
+   },
+   "blurb": "A launch range at dawn.",
+   "threat": 1
+  },
+  "launch_shop": {
+   "name": "LAUNCH-SHOP",
+   "shape": "circle",
+   "center": "@v2:-2600,-1900",
+   "radius": 750,
+   "color": "@c:e58a2bff",
+   "floor": "@c:33241aff",
+   "props": "desert_camp",
+   "density": 0.7,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "leech": 0.4,
+    "ram_cutter": 0.3
+   },
+   "blurb": "A mobile workshop in the Mojave.",
+   "threat": 2
+  },
+  "esperanza": {
+   "name": "ESPERANZA",
+   "shape": "circle",
+   "center": "@v2:-300,-300",
+   "radius": 850,
+   "color": "@c:8fd0c0ff",
+   "floor": "@c:30241aff",
+   "props": "town",
+   "density": 0.8,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.8,
+    "mine_hauler": 0.5,
+    "rail_picket": 0.4,
+    "shield_tug": 0.3
+   },
+   "blurb": "Clinic, purifier and the Esperanza Node.",
+   "threat": 2
+  },
+  "la_suerte": {
+   "name": "LA SUERTE FARM CO-OP",
+   "shape": "circle",
+   "center": "@v2:300,2500",
+   "radius": 650,
+   "color": "@c:b8d07aff",
+   "floor": "@c:2e2a18ff",
+   "props": "town",
+   "density": 0.6,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.8,
+    "leech": 0.5,
+    "swarm_tender": 0.3
+   },
+   "blurb": "A farm co-op pump house.",
+   "threat": 2
+  },
+  "ridge_relay": {
+   "name": "RIDGE RELAY",
+   "shape": "circle",
+   "center": "@v2:1700,-2500",
+   "radius": 750,
+   "color": "@c:9ad0ffff",
+   "floor": "@c:34261cff",
+   "props": "mesa",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.8,
+    "rail_picket": 0.6,
+    "gunship": 0.25
+   },
+   "blurb": "A relay tower on the northern ridge.",
+   "threat": 2
+  },
+  "red_mesa": {
+   "name": "RED MESA",
+   "shape": "circle",
+   "center": "@v2:2500,600",
+   "radius": 850,
+   "color": "@c:e0684aff",
+   "floor": "@c:3a2018ff",
+   "props": "mesa",
+   "density": 1,
+   "music": "region_bloom",
+   "enemies": {
+    "ram_cutter": 0.6,
+    "wreck_lurker": 0.5,
+    "gunship": 0.3,
+    "skiff": 0.6
+   },
+   "blurb": "The Red Mesa controller.",
+   "threat": 3
+  },
+  "coyote_wells": {
+   "name": "COYOTE WELLS",
+   "shape": "circle",
+   "center": "@v2:4500,-1100",
+   "radius": 650,
+   "color": "@c:d8b070ff",
+   "floor": "@c:32261aff",
+   "props": "town",
+   "density": 0.7,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.8,
+    "blink": 0.4,
+    "echo_mote": 0.5
+   },
+   "blurb": "A pump room and a receiver dish.",
+   "threat": 2
+  },
+  "two_suns": {
+   "name": "UNDER TWO SUNS",
+   "shape": "circle",
+   "center": "@v2:3800,2800",
+   "radius": 900,
+   "color": "@c:ff9b3dff",
+   "floor": "@c:3a2410ff",
+   "props": "dunes",
+   "density": 0.9,
+   "music": "region_bloom",
+   "enemies": {
+    "ram_cutter": 0.7,
+    "gunship": 0.4,
+    "splinter_captain": 0.1,
+    "skiff": 0.6
+   },
+   "blurb": "Heat. Pursuit. A life outside the law.",
+   "threat": 3
+  },
+  "the_forge": {
+   "name": "THE FORGE",
+   "shape": "circle",
+   "center": "@v2:5100,900",
+   "radius": 650,
+   "color": "@c:ffcf8aff",
+   "floor": "@c:3e2210ff",
+   "props": "dunes",
+   "density": 0.7,
+   "music": "region_gate",
+   "enemies": {
+    "blink": 0.6,
+    "gunship": 0.4,
+    "echo_mote": 0.5
+   },
+   "blurb": "Not all power is meant to be controlled.",
+   "threat": 3
+  }
+ },
+ "discoveries": {
+  "des_launch_signal": {
+   "kind": "signal",
+   "region": "dry_lakebed",
+   "offset": "@v2:220,-140",
+   "title": "LAUNCH CARRIER",
+   "transmission": "phase_redu_forward_now_feat_cheddr",
+   "color": "@c:e58a2bff",
+   "place": "dry_lakebed",
+   "text": "A carrier climbing off the lakebed like a contrail."
+  },
+  "des_launch_shop": {
+   "kind": "character",
+   "region": "launch_shop",
+   "offset": "@v2:0,0",
+   "title": "MOBILE LAUNCH-SHOP",
+   "landmark": "launch_shop",
+   "color": "@c:e58a2bff",
+   "contacts": [
+    "arvin",
+    "milo"
+   ],
+   "place": "launch_shop",
+   "crossover": "backyard_rockets",
+   "text": "A battered tanker workshop with a launch rail on its back. Arvin and Milo are working on something."
+  },
+  "des_esperanza": {
+   "kind": "character",
+   "region": "esperanza",
+   "offset": "@v2:0,0",
+   "title": "ESPERANZA NODE",
+   "landmark": "relay_tower",
+   "color": "@c:8fd0c0ff",
+   "place": "esperanza",
+   "crossover": "backyard_rockets",
+   "text": "Solar panels, a lattice tower and a clinic wall. A node that keeps a town talking."
+  },
+  "des_suerte_signal": {
+   "kind": "signal",
+   "region": "la_suerte",
+   "offset": "@v2:-200,160",
+   "title": "PUMP HOUSE CARRIER",
+   "transmission": "daisy_groh_ten_to_pretend",
+   "color": "@c:b8d07aff",
+   "place": "la_suerte",
+   "text": "A song humming along the pump house pipes."
+  },
+  "des_ridge_signal": {
+   "kind": "signal",
+   "region": "ridge_relay",
+   "offset": "@v2:260,200",
+   "title": "RIDGE CARRIER",
+   "transmission": "pulse_widt_free_mode_feat_cheddr",
+   "color": "@c:9ad0ffff",
+   "place": "ridge_relay",
+   "text": "A carrier bouncing off the ridge relay, free of the grid."
+  },
+  "des_controller": {
+   "kind": "character",
+   "region": "red_mesa",
+   "offset": "@v2:0,0",
+   "title": "RED MESA CONTROLLER",
+   "landmark": "controller",
+   "color": "@c:9be7a0ff",
+   "place": "red_mesa",
+   "crossover": "backyard_rockets",
+   "text": "A shed of screens on the mesa. LINK STABLE."
+  },
+  "des_coyote_signal": {
+   "kind": "signal",
+   "region": "coyote_wells",
+   "offset": "@v2:0,0",
+   "title": "COYOTE WELLS RECEIVER",
+   "transmission": "pulse_widt_i_never_want_to_not_do_this",
+   "color": "@c:d8b070ff",
+   "place": "coyote_wells",
+   "text": "The receiver is read-only. It is listening anyway."
+  },
+  "sfo_truck": {
+   "kind": "character",
+   "region": "two_suns",
+   "offset": "@v2:0,0",
+   "title": "UNDER TWO SUNS",
+   "landmark": "armored_truck",
+   "color": "@c:ff9b3dff",
+   "place": "two_suns",
+   "crossover": "sunforge_outlaw",
+   "text": "An armoured truck in the dust, a dark spired skyline, two suns overhead."
+  },
+  "sfo_forge_signal": {
+   "kind": "signal",
+   "region": "the_forge",
+   "offset": "@v2:0,0",
+   "title": "WAKE THE FORGE",
+   "transmission": "star_split_graphite",
+   "color": "@c:ffcf8aff",
+   "place": "the_forge",
+   "text": "Not all power is meant to be controlled."
+  }
+ },
+ "contacts": {
+  "arvin": {
+   "name": "Arvin",
+   "faction": "Backyard Rockets",
+   "role": "Launch-Shop's aerospace engineer. Builds another way.",
+   "portrait": "arvin"
+  },
+  "milo": {
+   "name": "Milo",
+   "faction": "Backyard Rockets",
+   "role": "Launch-Shop engineer. Broad, grounded, hands always busy.",
+   "portrait": "milo"
+  }
+ },
+ "places": {
+  "dry_lakebed": {
+   "name": "Dry Lakebed Launch Site",
+   "series": "Backyard Rockets",
+   "text": "A dry lakebed launch site at dawn.",
+   "source": "Backyard Rockets Issues 01-02"
+  },
+  "launch_shop": {
+   "name": "Mobile Launch-Shop",
+   "series": "Backyard Rockets",
+   "text": "A mobile workshop in the Mojave where salvaged aerospace parts become rockets.",
+   "source": "Backyard Rockets Issues 01-02 (pages 004, 021, 024, 031)"
+  },
+  "esperanza": {
+   "name": "Esperanza",
+   "series": "Backyard Rockets",
+   "text": "Community clinic, purification plant and the Esperanza Node.",
+   "source": "Backyard Rockets Issues 01-02 (pages 020, 033, 045)"
+  },
+  "la_suerte": {
+   "name": "La Suerte Farm Co-op",
+   "series": "Backyard Rockets",
+   "text": "The co-op's pump house.",
+   "source": "Backyard Rockets Issues 01-02 (page 033)"
+  },
+  "ridge_relay": {
+   "name": "Ridge Relay",
+   "series": "Backyard Rockets",
+   "text": "A relay tower and solar shed on the northern ridge.",
+   "source": "Backyard Rockets Issues 01-02 (page 045)"
+  },
+  "red_mesa": {
+   "name": "Red Mesa Controller",
+   "series": "Backyard Rockets",
+   "text": "Controller screens on the mesa.",
+   "source": "Backyard Rockets Issues 01-02 (page 045)"
+  },
+  "coyote_wells": {
+   "name": "Coyote Wells Receiver",
+   "series": "Backyard Rockets",
+   "text": "A receiver dish over the pump room. Status: read-only.",
+   "source": "Backyard Rockets Issues 01-02 (page 045)"
+  },
+  "two_suns": {
+   "name": "Under Two Suns",
+   "series": "Sunforge Outlaw",
+   "text": "Two suns over a dark spired skyline; an armoured truck in the dust.",
+   "source": "Sunforge Outlaw Issue 01 cover (descriptive name, game-original)"
+  },
+  "the_forge": {
+   "name": "The Forge",
+   "series": "Sunforge Outlaw",
+   "text": "\"Wake the forge. Change the world.\"",
+   "source": "Sunforge Outlaw Issue 01 cover"
+  }
+ },
+ "stages": [
+  {
+   "id": "des_lakebed",
+   "chapter": 11,
+   "power": 50,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Launch Day",
+   "place": "Dry Lakebed",
+   "region": "dry_lakebed",
+   "objective": {
+    "type": "discover",
+    "id": "des_launch_signal"
+   },
+   "discoveries": [
+    "des_launch_signal"
+   ],
+   "new_title": "THE DESERT",
+   "new": "Signal Space shaped like the Mojave. Mesas, scrub, heat.",
+   "brief": "Something just launched off the lakebed.",
+   "reward": [
+    "Track: Forward Now (feat. Cheddr)",
+    "Place: the dry lakebed"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "des_shop",
+   "chapter": 11,
+   "power": 70,
+   "prize": "Arvin & Milo",
+   "icon": "visions",
+   "name": "Launch-Shop",
+   "place": "Launch-Shop",
+   "region": "launch_shop",
+   "objective": {
+    "type": "discover",
+    "id": "des_launch_shop"
+   },
+   "discoveries": [
+    "des_launch_shop"
+   ],
+   "new_title": "THE CREW",
+   "new": "Lucia's crew: Arvin and Milo.",
+   "brief": "A tanker workshop parked out in the scrub.",
+   "reward": [
+    "Contacts: Arvin, Milo",
+    "Place: the Launch-Shop"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "des_esperanza",
+   "chapter": 11,
+   "power": 90,
+   "prize": "Place",
+   "icon": "visions",
+   "name": "Esperanza Node",
+   "place": "Esperanza",
+   "region": "esperanza",
+   "objective": {
+    "type": "discover",
+    "id": "des_esperanza"
+   },
+   "discoveries": [
+    "des_esperanza"
+   ],
+   "new_title": "A TOWN ONLINE",
+   "new": "A node that keeps a town talking.",
+   "brief": "Esperanza's node is up. Keep it up.",
+   "reward": [
+    "Place: Esperanza"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "des_ridge",
+   "chapter": 11,
+   "prize": "+120 Signal",
+   "icon": "hostile",
+   "name": "Ridge Relay",
+   "place": "Ridge Relay",
+   "region": "ridge_relay",
+   "objective": {
+    "type": "survive",
+    "seconds": 180
+   },
+   "discoveries": [],
+   "new_title": "HOLD THE RIDGE",
+   "new": "Hold the relay for three minutes.",
+   "brief": "The relay on the ridge is the weak link.",
+   "reward": [
+    "+120 Signal"
+   ],
+   "grants": {
+    "signal": 120
+   }
+  },
+  {
+   "id": "des_red_mesa",
+   "chapter": 11,
+   "power": 100,
+   "prize": "Place",
+   "icon": "visions",
+   "name": "Link Stable",
+   "place": "Red Mesa",
+   "region": "red_mesa",
+   "objective": {
+    "type": "discover",
+    "id": "des_controller"
+   },
+   "discoveries": [
+    "des_controller"
+   ],
+   "new_title": "THE CONTROLLER",
+   "new": "Screens on the mesa, the whole link on one map.",
+   "brief": "Red Mesa holds the controller.",
+   "reward": [
+    "Place: Red Mesa"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "des_coyote",
+   "chapter": 11,
+   "power": 110,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Read-Only",
+   "place": "Coyote Wells",
+   "region": "coyote_wells",
+   "objective": {
+    "type": "discover",
+    "id": "des_coyote_signal"
+   },
+   "discoveries": [
+    "des_coyote_signal"
+   ],
+   "new_title": "READ-ONLY",
+   "new": "Coyote Wells only listens. Bring it something.",
+   "brief": "The receiver at Coyote Wells.",
+   "reward": [
+    "Track: I Never Want to Not Do This",
+    "Place: Coyote Wells"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "des_two_suns",
+   "chapter": 11,
+   "power": 110,
+   "prize": "Sunforge",
+   "icon": "visions",
+   "name": "Under Two Suns",
+   "place": "Under Two Suns",
+   "region": "two_suns",
+   "objective": {
+    "type": "discover",
+    "id": "sfo_truck"
+   },
+   "discoveries": [
+    "sfo_truck"
+   ],
+   "new_title": "SUNFORGE OUTLAW",
+   "new": "Another series bleeds in: heat, pursuit, two suns.",
+   "brief": "Out past the mesas, the sky has two suns.",
+   "reward": [
+    "Place: Under Two Suns"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "des_forge",
+   "chapter": 11,
+   "power": 130,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Wake the Forge",
+   "place": "The Forge",
+   "region": "the_forge",
+   "objective": {
+    "type": "discover",
+    "id": "sfo_forge_signal"
+   },
+   "discoveries": [
+    "sfo_forge_signal"
+   ],
+   "new_title": "WAKE THE FORGE",
+   "new": "Not all power is meant to be controlled.",
+   "brief": "Something hot is broadcasting out of the forge.",
+   "reward": [
+    "Track: Graphite",
+    "Place: the Forge"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "des_heat",
+   "chapter": 11,
+   "prize": "+250 Signal",
+   "icon": "elite",
+   "name": "Heat Haze",
+   "place": "Open Desert",
+   "start": "@v2:-900,900",
+   "objective": {
+    "type": "boss",
+    "at": 360,
+    "hp": 0.5
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE IN THE HEAT",
+   "new": "It follows the music here too. Arrives at 6:00.",
+   "brief": "The whole basin is talking. Something wants it quiet.",
+   "reward": [
+    "+250 Signal",
+    "Dryline complete"
+   ],
+   "grants": {
+    "signal": 250
+   }
+  },
+  {
+   "id": "dess_suerte",
+   "chapter": 11,
+   "side_of": "des_esperanza",
+   "power": 80,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Pump House",
+   "place": "La Suerte",
+   "region": "la_suerte",
+   "objective": {
+    "type": "discover",
+    "id": "des_suerte_signal"
+   },
+   "discoveries": [
+    "des_suerte_signal"
+   ],
+   "new_title": "THE CO-OP",
+   "new": "A song along the pump house pipes.",
+   "brief": "La Suerte's pumps are humming something.",
+   "reward": [
+    "Track: Ten to Pretend",
+    "Place: La Suerte Farm Co-op"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "dess_ridge",
+   "chapter": 11,
+   "side_of": "des_ridge",
+   "power": 90,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Free Mode",
+   "place": "Ridge Relay",
+   "region": "ridge_relay",
+   "objective": {
+    "type": "discover",
+    "id": "des_ridge_signal"
+   },
+   "discoveries": [
+    "des_ridge_signal"
+   ],
+   "new_title": "OFF THE GRID",
+   "new": "A carrier bouncing off the relay.",
+   "brief": "The relay's quiet now. Listen to it.",
+   "reward": [
+    "Track: Free Mode (feat. Cheddr)",
+    "Place: Ridge Relay"
+   ],
+   "grants": {
+
+   }
+  }
+ ]
+}

@@ -1,0 +1,422 @@
+{
+ "series": "sunforge-outlaw",
+ "name": "Sunforge Outlaw",
+ "source": "RexPrompt data/shows/sunforge-outlaw-s1",
+ "released_issues": [],
+ "issues": {
+  "1": {
+   "places": [
+    "The Sunfields",
+    "The Last Drop Saloon",
+    "Cinder Basin at sunset from very far away: patchwork camp lights under black half-buried ribs, one empty chair at the edge of a communal table, and the approaching road entering frame. No identifiable characters"
+   ],
+   "characters": [
+    "C_sun_brandon",
+    "C_sun_jessie",
+    "C_sun_eva",
+    "C_sun_scarred_patron",
+    "C_sun_brute",
+    "C_sun_hanging_man"
+   ]
+  },
+  "2": {
+   "places": [
+    "Cinder Basin / Los Lagartos Camp",
+    "A road town at dusk with a narrow stair descending into darkness beneath street level. Farther down the road, a lone traveler silhouette is already walking away from camera. No readable signage and no face detail"
+   ],
+   "characters": [
+    "C_sun_lagartos",
+    "C_sun_sandrider",
+    "C_sun_raina"
+   ]
+  },
+  "3": {
+   "places": [
+    "The Mirage Club",
+    "A lonely relay settlement in hard afternoon light. One empty shaded chair faces the road as dust approaches in the far distance. Keep the person who may be waiting completely off-page"
+   ],
+   "characters": [
+    "C_sun_isabella"
+   ]
+  },
+  "4": {
+   "places": [
+    "Relay Settlement",
+    "Bellweather in rain at night: porch light, covered wake table, several empty chairs, and one especially conspicuous empty place near the end. No people shown clearly"
+   ],
+   "characters": [
+    "C_sun_ray",
+    "C_sun_preacher",
+    "C_sun_relay_boy"
+   ]
+  },
+  "5": {
+   "places": [
+    "Bellweather",
+    "A long road curling back toward the Last Drop. In the far distance, the exterior wall with its crude human mural catches the last light. The returning travelers remain tiny and unidentifiable"
+   ],
+   "characters": [
+    "C_sun_mary_bell",
+    "C_sun_owen_bell"
+   ]
+  },
+  "6": {
+   "places": [
+    "A peaceful road toward Rowan Hold at morning, fields and family structures beyond, with no threatening silhouettes. An old black Sunforge rib sits in the yard with a goat on it; the page should feel almost comically uneventful"
+   ],
+   "characters": []
+  },
+  "7": {
+   "places": [
+    "Rowan Hold",
+    "A vast pale ridge on the Long Mile with one tiny rider silhouette against the sky. The foreground road is empty. The figure is distant enough to dismiss and visually difficult to stop looking at"
+   ],
+   "characters": [
+    "C_sun_nessa_rowan",
+    "C_sun_ada_rowan"
+   ]
+  },
+  "8": {
+   "places": [
+    "The Long Mile",
+    "Saint Oren’s at dawn beneath an enormous dark structure. Ordinary smoke, breakfast activity and people beginning work; no anomaly, no rider, no portent. The tension comes from normality after the prior page"
+   ],
+   "characters": [
+    "C_sun_rider"
+   ]
+  },
+  "9": {
+   "places": [
+    "Saint Oren's",
+    "The Rookery crossroads near sunset, many roads and many unrelated travelers converging naturally. The composition should encourage the eye to invent connections without confirming any"
+   ],
+   "characters": [
+    "C_sun_alec_damon",
+    "C_sun_kayla_simmons"
+   ]
+  },
+  "10": {
+   "places": [
+    "The Rookery",
+    "Glasshouse courtyard viewed from the road. One figure has turned toward an unseen voice from inside while another road continues out of frame. Keep faces unreadable and identities unconfirmed"
+   ],
+   "characters": [
+    "C_sun_forger",
+    "C_sun_marty_francis"
+   ]
+  },
+  "11": {
+   "places": [
+    "Glasshouse",
+    "Hushwater at twilight. A weathered house waits beside the road. Inside a window, a sealed packet sits on a table beside an old ledger. No visible name, no person waiting in frame"
+   ],
+   "characters": [
+    "C_sun_rachael_hughes"
+   ]
+  },
+  "12": {
+   "places": [
+    "Hushwater",
+    "An immense western Sunfields road vanishing into luminous distance. Tiny travelers move forward while, on a remote ridge far off the road, a single unreadable rider silhouette may or may not be the same figure seen before. No supernatural effects"
+   ],
+   "characters": [
+    "C_sun_maela_crow"
+   ]
+  }
+ },
+ "characters": {
+  "C_sun_brandon": {
+   "name": "Brandon Mack",
+   "role": "itinerant drifter repeatedly assigned identities and histories by other people; the title invites a fugitive reading he does not validate",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_sun_eva": {
+   "name": "Eva O'Learly",
+   "role": "sixteen-year-old adventurer and pattern-chaser who senses that Brandon's bad luck is too well composed to ignore",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_sun_jessie": {
+   "name": "Jessie Petrescu",
+   "role": "practical pilot who recognizes when a place is getting too hot and keeps pushing movement until the temporary arrangement becomes a group",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_sun_ray": {
+   "name": "Ray Silvestro",
+   "role": "ornate gunslinger who has built a precise personal grievance around the man he believes Brandon to be",
+   "visual": "",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "C_sun_lagartos": {
+   "name": "Los Lagartos",
+   "role": "itinerant brotherhood and extended traveling community whose internal obligations become unstable when they believe their absent General has returned",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_sun_isabella": {
+   "name": "Isabella Torres",
+   "role": "Mirage Club performer and respected community figure whose private grievance breaks the club's rule against demanding real identities",
+   "visual": "",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "C_sun_preacher": {
+   "name": "Samuel Hayes",
+   "role": "Raina's advance social engineer, traveling ahead to seed expectations around Brandon while possessing a genuine pastoral instinct that complicates the manipulation",
+   "visual": "",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "C_sun_sandrider": {
+   "name": "Sand Rider",
+   "role": "ordinary Cinder Basin scout and member of the Los Lagartos community; not the later distant Rider mystery",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_sun_brute": {
+   "name": "Marcus Kovacs",
+   "role": "Last Drop strongman who uses public punishment, reputation and the Brannock story to make local control look inevitable",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_sun_raina": {
+   "name": "Raina James",
+   "role": "pursuer and investigator following Brandon's contradictory story; initially believes he is hiding a human past and uses the Preacher to pressure that truth into the open",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_sun_forger": {
+   "name": "Dylan Sheets",
+   "role": "weathered traveler and occasional Cadre figure whose practical craft can make a local problem more specific without becoming an infrastructure plot",
+   "visual": "",
+   "first_issue": 10,
+   "tier": "draft"
+  },
+  "C_sun_hanging_man": {
+   "name": "Tomas",
+   "role": "Last Drop local being publicly hanged by Marcus when Brandon intervenes; survives and later becomes one of the people who knows Brandon by his real name",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_sun_scarred_patron": {
+   "name": "Scarred patron",
+   "role": "Last Drop local primed to expect Brannock and the first person in the series to force an identity onto Brandon",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_sun_relay_boy": {
+   "name": "Boy",
+   "role": "relay-settlement child Samuel tends while Eva discovers him",
+   "visual": "",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "C_sun_rider": {
+   "name": "The Rider",
+   "role": "later-stage distant figure whose repeated spatial behavior becomes the first element the group cannot comfortably reduce to social manipulation, coincidence or ordinary pursuit",
+   "visual": "",
+   "first_issue": 8,
+   "tier": "draft"
+  },
+  "C_sun_mary_bell": {
+   "name": "Mary Bell",
+   "role": "Bellweather family member trying to honor her dead mother without turning Brandon into the missing brother she wishes had returned",
+   "visual": "",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "C_sun_owen_bell": {
+   "name": "Owen Bell",
+   "role": "Bellweather sibling who wants the absent Nathan to settle a disputed family promise",
+   "visual": "",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "C_sun_nessa_rowan": {
+   "name": "Nessa Rowan",
+   "role": "young Rowan Hold woman chosen for a family responsibility she is competent to perform but does not consent to inherit",
+   "visual": "",
+   "first_issue": 7,
+   "tier": "draft"
+  },
+  "C_sun_ada_rowan": {
+   "name": "Ada Rowan",
+   "role": "Nessa Rowan parent and family organizer who sincerely believes responsibility should follow trust and competence",
+   "visual": "",
+   "first_issue": 7,
+   "tier": "draft"
+  },
+  "C_sun_alec_damon": {
+   "name": "Alec Damon",
+   "role": "elderly Saint Oren resident dying with an unresolved relationship to his daughter",
+   "visual": "",
+   "first_issue": 9,
+   "tier": "draft"
+  },
+  "C_sun_kayla_simmons": {
+   "name": "Kayla Simmons",
+   "role": "Saint Oren community host who treats the travelers as people rather than phenomena",
+   "visual": "",
+   "first_issue": 9,
+   "tier": "draft"
+  },
+  "C_sun_marty_francis": {
+   "name": "Marty Francis",
+   "role": "Rookery host whose local knowledge exposes how easily travelers mistake unfamiliar people for a pattern",
+   "visual": "",
+   "first_issue": 10,
+   "tier": "draft"
+  },
+  "C_sun_rachael_hughes": {
+   "name": "Rachael Hughes",
+   "role": "old Glasshouse friend who knows Jessie well enough to recognize the difference between leaving and vanishing",
+   "visual": "",
+   "first_issue": 11,
+   "tier": "draft"
+  },
+  "C_sun_maela_crow": {
+   "name": "Maela Crow",
+   "role": "Hushwater resident carrying a promise to deliver a sealed packet to Andrew Keane",
+   "visual": "",
+   "first_issue": 12,
+   "tier": "draft"
+  }
+ },
+ "settings": {
+  "sunfields": {
+   "name": "The Sunfields",
+   "text": "A wide, harshly sunlit frontier of hard pale earth, glassed patches, exposed dark metal ribs, sparse roads and settlements separated by long open distances. Sunforge remnants may appear beside roads, under homes or at settlement edges as weathered structural objects incorporated into ordinary life.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "last-drop": {
+   "name": "The Last Drop Saloon",
+   "text": "Dusty frontier saloon and settlement center with splintered boards, a patched bar, a dark rear wall, hard white daylight at the doors, hitching rails and a rough back lot/loading yard of timber beams, barrels, crates and bare dirt.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "cinder-basin": {
+   "name": "Cinder Basin / Los Lagartos Camp",
+   "text": "White alkali dust, fractured basalt, patched canvas shade, cookfires, tethered mounts and a traveling camp arranged around the exposed dark ribs of a half-buried Sunforge.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "mirage-club": {
+   "name": "The Mirage Club",
+   "text": "Subterranean frontier cabaret of oxidized copper, dark wood, old mirrors, small performance spaces, narrow stairs and private back rooms. A visible hand-painted NO NAMES BELOW notice marks the stair into the club.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "relay-station": {
+   "name": "Relay Settlement",
+   "text": "Worn frontier settlement gathered beneath an old relay tower, with message boards, communal tables, patched sleeping corners, side rooms, weathered equipment housings and travelers' gear.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "bellweather": {
+   "name": "Bellweather",
+   "text": "Close family settlement arranged around shaded courtyards, long meal tables, shared houses, covered walkways and practical work spaces used across generations.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "rowan-hold": {
+   "name": "Rowan Hold",
+   "text": "Settled agricultural community of shade trees, low stone houses, work yards and a shared record room. An exposed black Sunforge arc crosses the common yard and is used as ordinary seating.",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "long-mile": {
+   "name": "The Long Mile",
+   "text": "Open pale road through white ground, low ridges and dry washes with long sight lines, sparse scrub and very few structures. Heat shimmer and repeated ridge lines make distance genuinely difficult to judge.",
+   "first_issue": 7,
+   "tier": "draft"
+  },
+  "saint-oren": {
+   "name": "Saint Oren's",
+   "text": "Settled community built directly around a massive exposed black ribbed structure. Homes, tables, shade cloth and everyday gathering spaces press close to it, and locals use the structure itself for ordinary shade and seating.",
+   "first_issue": 9,
+   "tier": "draft"
+  },
+  "rookery": {
+   "name": "The Rookery",
+   "text": "Dense crossroads settlement of boarding rooms, family workshops, courtyards, market tables, roof walks and narrow passages. Several dark structural remnants are embedded in different parts of the settlement and used differently by locals.",
+   "first_issue": 9,
+   "tier": "draft"
+  },
+  "glasshouse": {
+   "name": "Glasshouse",
+   "text": "Lived-in settlement of shaded courtyards, old translucent panels, low homes, shared tables and patched work spaces softened by years of ordinary use.",
+   "first_issue": 10,
+   "tier": "draft"
+  },
+  "hushwater": {
+   "name": "Hushwater",
+   "text": "Modest settlement of shaded houses, a communal dining court, household gardens and record shelves. No obvious Sunforge dominates the center.",
+   "first_issue": 11,
+   "tier": "draft"
+  }
+ },
+ "factions": {
+  "cadre": {
+   "name": "The Cadre",
+   "text": "A loose recurring category of unusually distinct people who tend to appear around the same troubled places as Brandon and the Sunforges. Not an army, shared organization or common command. Their specificity can feel theatrical, but they remain grounded human beings; the unanswered question is why the Sunfields seem to produce so many of them."
+  }
+ },
+ "regions": {
+  "sunfields": {
+   "name": "Sunfields / The Reach",
+   "text": "A harsh sunlit frontier of long routes, hard pale ground, glassed patches, dry washes, low ridges, exposed dark structural remnants and sparse settlements. Buildings, vehicles, clothing and tools are improvised, repaired and route-worn. Sunforge remnants may be incorporated into shade, walls, seating or other ordinary structures.",
+   "tone": ""
+  }
+ },
+ "lighting": {
+  "sunfields-day": ""
+ },
+ "mood": {
+  "sunforge-grounded": []
+ },
+ "keeper": [
+  {
+   "name": "SF Character Eva",
+   "type": "character",
+   "image": "production/references/sunforge-outlaw/keeper/character/sf-character-eva.png"
+  },
+  {
+   "name": "SF Character Brandon",
+   "type": "character",
+   "image": "production/references/sunforge-outlaw/keeper/character/sf-character-brandon.png"
+  },
+  {
+   "name": "SF Character LosLagartos",
+   "type": "character",
+   "image": "production/references/sunforge-outlaw/keeper/character/sf-character-loslagartos.png"
+  },
+  {
+   "name": "SF Character Jessa",
+   "type": "character",
+   "image": "production/references/sunforge-outlaw/keeper/character/sf-character-jessa.png"
+  },
+  {
+   "name": "Frontier World Environment Concept Sheet",
+   "type": "setting",
+   "image": "production/references/sunforge-outlaw/keeper/setting/frontier-world-environment-concept-sheet.png"
+  },
+  {
+   "name": "Sunforge Worldbuilding Setting Guide",
+   "type": "setting",
+   "image": "production/references/sunforge-outlaw/keeper/setting/sunforge-worldbuilding-setting-guide.png"
+  }
+ ]
+}

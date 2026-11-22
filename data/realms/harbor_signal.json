@@ -1,0 +1,665 @@
+{
+ "id": "harbor_signal",
+ "chapter": {
+  "id": 10,
+  "name": "Harbor Signal",
+  "numeral": "SEA",
+  "destination": "harbor_signal",
+  "subtitle": "Vikings 2026! and Low Tide Signal, at sea.",
+  "branch_from": "s_dti",
+  "biome": "sea"
+ },
+ "destination": {
+  "name": "Harbor Signal",
+  "desc": "Signal Space shaped like a harbor: the North Atlantic, the East River, a flooded coast.",
+  "half_size": "@v2:6000,4200",
+  "gate": "@v2:-5000,0",
+  "goal_signals": 3,
+  "climax_time": 1140,
+  "background": "@c:0b1c24ff",
+  "drift_name": "OPEN WATER",
+  "biome": "sea",
+  "regions": [
+   "north_atlantic",
+   "east_river",
+   "harbor_pier",
+   "dti_building",
+   "bushwick_rooftop",
+   "harbor_phase",
+   "flooded_coast"
+  ],
+  "completion_unlocks": [],
+  "seed": 4410
+ },
+ "biome": {
+  "surface": "@c:8cd9ff29",
+  "rock": "@c:22303aff",
+  "skins": {
+   "skiff": [
+    "Fog Skiff",
+    "@c:8fa3b0ff"
+   ],
+   "ram_cutter": [
+    "Squall Ram",
+    "@c:b07a5aff"
+   ],
+   "rail_picket": [
+    "Spray Picket",
+    "@c:d0a060ff"
+   ],
+   "mine_hauler": [
+    "Buoy Layer",
+    "@c:c86a7aff"
+   ],
+   "wreck_lurker": [
+    "Flotsam Lurker",
+    "@c:8a8070ff"
+   ],
+   "leech": [
+    "Barnacle Leech",
+    "@c:9a9a60ff"
+   ],
+   "gunship": [
+    "Breaker Gunship",
+    "@c:a88a5aff"
+   ],
+   "splinter_captain": [
+    "Storm Captain",
+    "@c:e0c060ff"
+   ],
+   "dreadnought": [
+    "Undertow Hulk",
+    "@c:6a7a8aff"
+   ],
+   "echo_mote": [
+    "Sea Glow",
+    "@c:d07090ff"
+   ],
+   "swarm_tender": [
+    "Gull Tender",
+    "@c:c87a5aff"
+   ],
+   "shield_tug": [
+    "Harbor Tug",
+    "@c:a88aa0ff"
+   ],
+   "blink": [
+    "Fog Flicker",
+    "@c:c060a0ff"
+   ]
+  }
+ },
+ "regions": {
+  "north_atlantic": {
+   "name": "THE NORTH ATLANTIC",
+   "shape": "circle",
+   "center": "@v2:-3400,-1500",
+   "radius": 1300,
+   "color": "@c:7fb0c8ff",
+   "floor": "@c:0d2430ff",
+   "props": "open_sea",
+   "density": 0.8,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 1,
+    "ram_cutter": 0.5,
+    "echo_mote": 0.4
+   },
+   "blurb": "Open water under a cold sky.",
+   "threat": 1
+  },
+  "east_river": {
+   "name": "THE EAST RIVER",
+   "shape": "capsule",
+   "a": "@v2:-1400,1300",
+   "b": "@v2:2200,500",
+   "radius": 520,
+   "color": "@c:9fc4d0ff",
+   "floor": "@c:0f2630ff",
+   "props": "harbor",
+   "density": 0.7,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "mine_hauler": 0.6,
+    "ram_cutter": 0.3
+   },
+   "blurb": "Lower Manhattan across the water.",
+   "threat": 2
+  },
+  "harbor_pier": {
+   "name": "HARBOR PIER",
+   "shape": "circle",
+   "center": "@v2:1900,-1300",
+   "radius": 900,
+   "color": "@c:c8a46aff",
+   "floor": "@c:14202aff",
+   "props": "harbor",
+   "density": 0.9,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.8,
+    "wreck_lurker": 0.6,
+    "rail_picket": 0.5,
+    "gunship": 0.25
+   },
+   "blurb": "A wet working pier and a crane.",
+   "threat": 2
+  },
+  "dti_building": {
+   "name": "DTI BUILDING",
+   "shape": "circle",
+   "center": "@v2:4300,1500",
+   "radius": 700,
+   "color": "@c:baff00ff",
+   "floor": "@c:141a1eff",
+   "props": "shore_city",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.8,
+    "shield_tug": 0.5,
+    "rail_picket": 0.4
+   },
+   "blurb": "Municipal Temporal Displacement Integration Department.",
+   "threat": 2
+  },
+  "bushwick_rooftop": {
+   "name": "BUSHWICK ROOFTOP",
+   "shape": "circle",
+   "center": "@v2:4500,-2000",
+   "radius": 620,
+   "color": "@c:e0a070ff",
+   "floor": "@c:16161aff",
+   "props": "rooftop",
+   "density": 0.6,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.8,
+    "leech": 0.5,
+    "swarm_tender": 0.3
+   },
+   "blurb": "Tar roof, brick parapet, the city all around.",
+   "threat": 2
+  },
+  "harbor_phase": {
+   "name": "HARBOR PHASE",
+   "shape": "circle",
+   "center": "@v2:-1900,2900",
+   "radius": 800,
+   "color": "@c:78d7ffff",
+   "floor": "@c:0e1e28ff",
+   "props": "flooded",
+   "density": 0.6,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 0.8,
+    "blink": 0.5,
+    "echo_mote": 0.5
+   },
+   "blurb": "A flood-control edge of the future.",
+   "threat": 2
+  },
+  "flooded_coast": {
+   "name": "THE FLOODED COAST",
+   "shape": "circle",
+   "center": "@v2:900,3100",
+   "radius": 850,
+   "color": "@c:78d7ffff",
+   "floor": "@c:0c1a22ff",
+   "props": "flooded",
+   "density": 1,
+   "music": "region_bloom",
+   "enemies": {
+    "blink": 0.6,
+    "wreck_lurker": 0.5,
+    "gunship": 0.3,
+    "skiff": 0.6
+   },
+   "blurb": "The water took the city.",
+   "threat": 3
+  }
+ },
+ "discoveries": {
+  "sea_storm_carrier": {
+   "kind": "signal",
+   "region": "north_atlantic",
+   "offset": "@v2:200,-100",
+   "title": "STORM CARRIER",
+   "transmission": "ion_drive__unification_theory",
+   "color": "@c:f1b826ff",
+   "place": "north_atlantic",
+   "text": "An orchestra under a cold sky, rolling with the swell."
+  },
+  "sea_pier_carrier": {
+   "kind": "signal",
+   "region": "harbor_pier",
+   "offset": "@v2:-200,160",
+   "title": "PIER CARRIER",
+   "transmission": "night_moti_leave_the_past_behind",
+   "color": "@c:c8c3d6ff",
+   "text": "A song under the crane, in and out with the swell."
+  },
+  "sea_river_carrier": {
+   "kind": "signal",
+   "region": "east_river",
+   "offset": "@v2:300,-120",
+   "title": "RIVER CARRIER",
+   "transmission": "pulse_widt_edge_spaces_epsilon_version",
+   "color": "@c:9be7ffff",
+   "text": "A long carrier wave riding the current toward the towers."
+  },
+  "sea_longship": {
+   "kind": "character",
+   "region": "east_river",
+   "offset": "@v2:0,0",
+   "title": "LONGSHIP IN THE EAST RIVER",
+   "landmark": "longship",
+   "color": "@c:c9a46aff",
+   "contacts": [
+    "gunnar"
+   ],
+   "place": "east_river",
+   "crossover": "vikings_2026",
+   "text": "A longship riding the East River toward the towers, a round shield on the gunwale."
+  },
+  "sea_dti_office": {
+   "kind": "character",
+   "region": "dti_building",
+   "offset": "@v2:0,0",
+   "title": "DTI OFFICE",
+   "landmark": "dti_building",
+   "color": "@c:baff00ff",
+   "contacts": [
+    "carrie"
+   ],
+   "place": "dti_building",
+   "crossover": "vikings_2026",
+   "text": "A plain municipal office slab at dusk, a grey van outside. Someone here has a process for this."
+  },
+  "sea_rooftop": {
+   "kind": "character",
+   "region": "bushwick_rooftop",
+   "offset": "@v2:0,0",
+   "title": "BUSHWICK ROOFTOP",
+   "landmark": "rooftop",
+   "color": "@c:e0a070ff",
+   "place": "bushwick_rooftop",
+   "crossover": "vikings_2026",
+   "text": "A sunlit tar roof with a low brick parapet. Someone is building a dish up here."
+  },
+  "sea_rooftop_record": {
+   "kind": "signal",
+   "region": "bushwick_rooftop",
+   "offset": "@v2:-260,180",
+   "title": "ROOFTOP CARRIER",
+   "transmission": "night_moti_be_somebody",
+   "color": "@c:c8c3d6ff",
+   "text": "A song coming in clear over the city."
+  },
+  "lts_flood_gate": {
+   "kind": "character",
+   "region": "harbor_phase",
+   "offset": "@v2:0,0",
+   "title": "HARBOR PHASE FLOOD GATE",
+   "landmark": "flood_gate",
+   "color": "@c:78d7ffff",
+   "place": "harbor_phase",
+   "crossover": "low_tide_signal",
+   "text": "A flood-control gate on a quiet coastal edge of the future. A sign reads HARBOR PHASE."
+  },
+  "lts_drowned_signal": {
+   "kind": "signal",
+   "region": "flooded_coast",
+   "offset": "@v2:0,0",
+   "title": "LOW TIDE SIGNAL",
+   "transmission": "robots_sin_perception",
+   "color": "@c:78d7ffff",
+   "place": "flooded_coast",
+   "text": "The water took the city. Something is still broadcasting from inside it."
+  }
+ },
+ "contacts": {
+  "gunnar": {
+   "name": "Gunnar",
+   "faction": "Vikings 2026!",
+   "role": "Bjorn's companion; observant, concise, dryly funny.",
+   "portrait": "gunnar"
+  },
+  "carrie": {
+   "name": "Carrie",
+   "faction": "Vikings 2026!",
+   "role": "DTI caseworker. Fast, sarcastic, fluent in forms and loopholes.",
+   "portrait": "carrie"
+  }
+ },
+ "places": {
+  "north_atlantic": {
+   "name": "The North Atlantic",
+   "series": "Vikings 2026!",
+   "text": "Open North Atlantic under a cold overcast sky.",
+   "source": "Vikings 2026! Issue 01, page 003"
+  },
+  "east_river": {
+   "name": "The East River",
+   "series": "Vikings 2026!",
+   "text": "A longship moving toward the Lower Manhattan skyline.",
+   "source": "Vikings 2026! Issue 01, pages 004-005"
+  },
+  "dti_building": {
+   "name": "Municipal Temporal Displacement Integration Department",
+   "series": "Vikings 2026!",
+   "text": "A plain mid-century municipal office slab at blue-purple dusk.",
+   "source": "Vikings 2026! Issue 01, page 010"
+  },
+  "bushwick_rooftop": {
+   "name": "Bushwick Rooftop",
+   "series": "Vikings 2026!",
+   "text": "Sunlit Bushwick apartment rooftop: black tar membrane, low brick parapet.",
+   "source": "Vikings 2026! Issue 01, pages 016-025"
+  },
+  "harbor_phase": {
+   "name": "Harbor Phase",
+   "series": "Low Tide Signal",
+   "text": "A quiet coastal signal from a flooded edge of the future.",
+   "source": "Low Tide Signal, Issue 01 cover"
+  },
+  "flooded_coast": {
+   "name": "The Flooded Coast",
+   "series": "Low Tide Signal",
+   "text": "On a flooded coast, abandoned infrastructure and an uneasy community.",
+   "source": "Low Tide Signal series page"
+  }
+ },
+ "stages": [
+  {
+   "id": "sea_atlantic",
+   "chapter": 10,
+   "power": 50,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "The North Atlantic",
+   "place": "The North Atlantic",
+   "region": "north_atlantic",
+   "objective": {
+    "type": "discover",
+    "id": "sea_storm_carrier"
+   },
+   "discoveries": [
+    "sea_storm_carrier"
+   ],
+   "new_title": "AT SEA",
+   "new": "Signal Space shaped like water. Buoys, pilings, swell.",
+   "brief": "A storm carrier out on the open Atlantic.",
+   "reward": [
+    "Track: Unification Theory",
+    "Place: the North Atlantic"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "sea_river",
+   "chapter": 10,
+   "power": 70,
+   "prize": "Gunnar",
+   "icon": "visions",
+   "name": "East River",
+   "place": "The East River",
+   "region": "east_river",
+   "objective": {
+    "type": "discover",
+    "id": "sea_longship"
+   },
+   "discoveries": [
+    "sea_longship"
+   ],
+   "new_title": "THE KIN",
+   "new": "A longship heading for the towers. Gunnar is aboard.",
+   "brief": "A longship is moving up the East River.",
+   "reward": [
+    "Contact: Gunnar",
+    "Place: the East River"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "sea_pier",
+   "chapter": 10,
+   "prize": "+120 Signal",
+   "icon": "hostile",
+   "name": "The Pier",
+   "place": "Harbor Pier",
+   "region": "harbor_pier",
+   "objective": {
+    "type": "survive",
+    "seconds": 180
+   },
+   "discoveries": [],
+   "new_title": "HOLD THE PIER",
+   "new": "Hold the pier for three minutes.",
+   "brief": "The hush is coming in with the tide.",
+   "reward": [
+    "+120 Signal"
+   ],
+   "grants": {
+    "signal": 120
+   }
+  },
+  {
+   "id": "sea_dti",
+   "chapter": 10,
+   "power": 90,
+   "prize": "Carrie",
+   "icon": "visions",
+   "name": "Intake",
+   "place": "DTI Building",
+   "region": "dti_building",
+   "objective": {
+    "type": "discover",
+    "id": "sea_dti_office"
+   },
+   "discoveries": [
+    "sea_dti_office"
+   ],
+   "new_title": "A PROCESS",
+   "new": "The city has a department for this.",
+   "brief": "The Department of Temporal Integration, lights still on.",
+   "reward": [
+    "Contact: Carrie",
+    "Place: the DTI building"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "sea_roof",
+   "chapter": 10,
+   "power": 100,
+   "prize": "Place",
+   "icon": "visions",
+   "name": "Rooftop",
+   "place": "Bushwick Rooftop",
+   "region": "bushwick_rooftop",
+   "objective": {
+    "type": "discover",
+    "id": "sea_rooftop"
+   },
+   "discoveries": [
+    "sea_rooftop"
+   ],
+   "new_title": "A DISH",
+   "new": "Someone is building a dish up here.",
+   "brief": "A Bushwick rooftop, the city all around.",
+   "reward": [
+    "Place: the Bushwick rooftop"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "sea_gate",
+   "chapter": 10,
+   "power": 110,
+   "prize": "Low Tide",
+   "icon": "visions",
+   "name": "Harbor Phase",
+   "place": "Harbor Phase",
+   "region": "harbor_phase",
+   "objective": {
+    "type": "discover",
+    "id": "lts_flood_gate"
+   },
+   "discoveries": [
+    "lts_flood_gate"
+   ],
+   "new_title": "LOW TIDE SIGNAL",
+   "new": "Another series bleeds in: a flooded edge of the future.",
+   "brief": "A flood gate on a quiet coast.",
+   "reward": [
+    "Place: Harbor Phase"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "sea_drowned",
+   "chapter": 10,
+   "power": 130,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "The Water Took the City",
+   "place": "The Flooded Coast",
+   "region": "flooded_coast",
+   "objective": {
+    "type": "discover",
+    "id": "lts_drowned_signal"
+   },
+   "discoveries": [
+    "lts_drowned_signal"
+   ],
+   "new_title": "WE CAME BACK",
+   "new": "Something is still broadcasting from inside the city.",
+   "brief": "The water took the city. The signal is still in there.",
+   "reward": [
+    "Track: Perception",
+    "Place: the flooded coast"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "sea_undertow",
+   "chapter": 10,
+   "prize": "+250 Signal",
+   "icon": "elite",
+   "name": "Undertow",
+   "place": "Open Water",
+   "start": "@v2:-800,-400",
+   "objective": {
+    "type": "boss",
+    "at": 360,
+    "hp": 0.5
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE AT SEA",
+   "new": "It follows the music here too. Arrives at 6:00.",
+   "brief": "The harbor is singing. Something wants it quiet.",
+   "reward": [
+    "+250 Signal",
+    "Harbor Signal complete"
+   ],
+   "grants": {
+    "signal": 250
+   }
+  },
+  {
+   "id": "seas_river",
+   "chapter": 10,
+   "side_of": "sea_river",
+   "power": 70,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "River Carrier",
+   "place": "The East River",
+   "region": "east_river",
+   "objective": {
+    "type": "discover",
+    "id": "sea_river_carrier"
+   },
+   "discoveries": [
+    "sea_river_carrier"
+   ],
+   "new_title": "DOWNSTREAM",
+   "new": "A carrier wave riding the current.",
+   "brief": "Something long and slow on the river.",
+   "reward": [
+    "Track: Edge Spaces (Epsilon Version)"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "seas_pier",
+   "chapter": 10,
+   "side_of": "sea_pier",
+   "power": 80,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Under the Crane",
+   "place": "Harbor Pier",
+   "region": "harbor_pier",
+   "objective": {
+    "type": "discover",
+    "id": "sea_pier_carrier"
+   },
+   "discoveries": [
+    "sea_pier_carrier"
+   ],
+   "new_title": "UNDER THE CRANE",
+   "new": "A song in and out with the swell.",
+   "brief": "The pier is quiet now. Listen.",
+   "reward": [
+    "Track: Leave the Past Behind"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "seas_rooftop",
+   "chapter": 10,
+   "side_of": "sea_roof",
+   "power": 100,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Rooftop Carrier",
+   "place": "Bushwick Rooftop",
+   "region": "bushwick_rooftop",
+   "objective": {
+    "type": "discover",
+    "id": "sea_rooftop_record"
+   },
+   "discoveries": [
+    "sea_rooftop_record"
+   ],
+   "new_title": "ON THE ROOF",
+   "new": "A song coming in clear over the city.",
+   "brief": "The dish picked something up.",
+   "reward": [
+    "Track: Be Somebody"
+   ],
+   "grants": {
+
+   }
+  }
+ ]
+}

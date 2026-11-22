@@ -1,0 +1,673 @@
+{
+ "series": "azure-reach",
+ "name": "Azure Reach",
+ "source": "RexPrompt data/shows/azure-reach-s1",
+ "released_issues": [
+  1
+ ],
+ "issues": {
+  "1": {
+   "places": [
+    "PUBLIC ENTRANCE",
+    "BACKSTAGE OPS ROOM",
+    "PUBLIC MEDIA PREP ZONE",
+    "GLASS CORRIDOR",
+    "GUEST EXPERIENCE SUITE",
+    "TURTLE PAVILION PUBLIC QUEUE",
+    "TURTLE PAVILION STAFF CORRIDOR",
+    "TURTLE PAVILION MINI-STAGE",
+    "BACKSTAGE SERVICE CORRIDOR",
+    "TURTLE PAVILION PUBLIC VIEWING AREA",
+    "BACKSTAGE BREAK AREA",
+    "STAFF OVERLOOK / LOADING-DOCK EDGE"
+   ],
+   "characters": [
+    "AZR_Maya",
+    "AZR_Kid",
+    "AZR_Parent",
+    "AZR_Guest1",
+    "AZR_Guest2",
+    "AZR_Guest3",
+    "AZR_Pip",
+    "AZR_Fleur",
+    "AZR_Sal",
+    "AZR_Julian",
+    "AZR_Kyler",
+    "AZR_Beatrice",
+    "AZR_Father",
+    "AZR_Child",
+    "AZR_VIP",
+    "AZR_Sponsor",
+    "AZR_Guest",
+    "AZR_Staffer",
+    "AZR_Educator",
+    "AZR_Everyone"
+   ]
+  },
+  "2": {
+   "places": [
+    "DOLPHIN GALLERY",
+    "DOLPHIN CARE BACKSTAGE",
+    "AZURE REACH FOOD COURT",
+    "CORAL REEF GALLERY",
+    "TROPICAL REEF ARCADE",
+    "KELP FOREST WALK",
+    "QUIET SERVICE DOCK"
+   ],
+   "characters": [
+    "AZR_Dora",
+    "AZR_Nia",
+    "AZR_Raf",
+    "AZR_Elliot",
+    "AZR_Comments"
+   ]
+  },
+  "3": {
+   "places": [
+    "TIDEPOOL TERRACE",
+    "TIDEPOOL CARE BACKSTAGE",
+    "TIDEPOOL GALLERY",
+    "VIP LOUNGE",
+    "TIDEPOOL MICROSCOPE SALON"
+   ],
+   "characters": []
+  },
+  "4": {
+   "places": [
+    "RAY GALLERY",
+    "STREAM CONTROL",
+    "RAY CARE BACKSTAGE",
+    "PELAGIC TUNNEL",
+    "SHARK GALLERY",
+    "CONSERVATION WATER GARDEN",
+    "RAY OVERLOOK"
+   ],
+   "characters": []
+  },
+  "5": {
+   "places": [
+    "CONSERVATION HUB",
+    "PARK PROMENADE",
+    "SCHOOLING-FISH CYLINDER",
+    "JELLYFISH GALLERY",
+    "SEAHORSE CONSERVATORY",
+    "DONOR LOUNGE",
+    "OPEN OCEAN HALL",
+    "PREMIUM OBSERVATION TERRACE",
+    "CORAL GRAND HALL"
+   ],
+   "characters": []
+  },
+  "6": {
+   "places": [
+    "GALA PROMENADE",
+    "ANNIVERSARY GALA ATRIUM",
+    "LAGOON PROMENADE",
+    "UNDERWATER DINING ROOM",
+    "ARCTIC / BELUGA WING"
+   ],
+   "characters": []
+  }
+ },
+ "characters": {
+  "AZR_Maya": {
+   "name": "Maya Serrano",
+   "role": "Brine Squad / Life Support — POV anchor and operational gravity",
+   "visual": "Use the established released Issue 1 likeness. Dark-navy Brine Squad technical workwear with cyan functional accents, radio harness and utility gear; practical black high bun; guarded, precise posture; no hot pink. Never resemble Pip in face, hair, silhouette, palette, props, or body language.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Julian": {
+   "name": "Julian Heatherington",
+   "role": "Finfluencer / Content Lead — public-facing conflict and escalation engine",
+   "visual": "Use the established released Issue 1 likeness. Premium camera-ready azure Finfluencer uniform with restrained hot-pink status accents; polished public-facing silhouette; phone, mic, or compact content gear when useful. Read as a star, not technical support.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Fleur": {
+   "name": "Fleur Fontaine",
+   "role": "Finfluencer / Creative Director — visual and experiential framing",
+   "visual": "Use the established released Issue 1 likeness. Elegant camera-ready azure Finfluencer uniform with stronger hot-pink status accents than Julian; poised, polished, visually exacting silhouette; expressive but never confused with Brine Squad or Guest Relations.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Pip": {
+   "name": "Pip O'Mally",
+   "role": "Guest Relations — public-facing translator under pressure",
+   "visual": "Use the established released Issue 1 likeness. Lighter blue/teal Guest Relations uniform with tablet, headset or small radio, and visitor badge; auburn curly ponytail; warm, animated, socially open posture. Never resemble Maya in face, hair, silhouette, palette, props, or body language.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Sal": {
+   "name": "Salvatore “Sal” Delgado",
+   "role": "Brine Squad / Operations — grounded practical veteran",
+   "visual": "Use the established released Issue 1 likeness. Dark practical Brine Squad workwear with cyan functional accents, worn-in boots, radio and practical ops gear; sturdy work-ready silhouette and dry expression; no hot pink. Tool case or maintenance bag only when the scene calls for it.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Beatrice": {
+   "name": "Beatrice Halstead",
+   "role": "Corporate / Management — growth, sponsor, valuation and institutional pressure",
+   "visual": "Use the established released Issue 1 likeness. Pale-blue/slate tailored executive wear; expensive, composed, structured silhouette with minimal accessories; polished rather than flashy.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Kyler": {
+   "name": "Kyler Chen",
+   "role": "Finfluencer-adjacent / Technical Producer",
+   "visual": "Use the established released Issue 1 likeness. Media-production support gear with tablet, camera, phone rig, or monitoring equipment; Finfluencer-adjacent azure/hot-pink status accents, but clearly support rather than star.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Dora": {
+   "name": "Dr. Dorothea “Dora” Kwon",
+   "role": "Animal Welfare / Veterinarian — biological and ethical authority",
+   "visual": "Use the established released Issue 1 likeness. Clean professional animal-care attire appropriate to a well-funded marine park; practical clinical gear when required; warm but firm authority. Never style her as Corporate, Finfluencer, or generic lab spectacle.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_Elliot": {
+   "name": "Elliot Richards",
+   "role": "Standards, Compliance & Brand Integrity",
+   "visual": "Use the established released Issue 1 likeness. Neat slate professional office wear with tablet or compliance materials; precise, slightly anxious presentation; institutional rather than glamorous.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_Nia": {
+   "name": "Nia Patel",
+   "role": "Guest Services / Ticketing / Accessibility",
+   "visual": "Use the established released Issue 1 likeness. Lighter blue/teal Guest Relations visual language with badge, tablet or front-of-house tools as appropriate; calm, mobile, approachable professional posture; no Finfluencer glamour.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_Raf": {
+   "name": "Rafael “Raf” Morales",
+   "role": "Food & Beverage Lead",
+   "visual": "Use the established released Issue 1 likeness. Clean professional Azure Reach food-service attire suited to a well-funded public marine park, with practical kitchen or service gear when appropriate; warm hospitality presence, not a caricature or incompetent-worker visual joke.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_Kid": {
+   "name": "Turtle-Helmet Kid",
+   "role": "Recurring guest POV — observant child whose questions and delight clarify what visitors actually experience",
+   "visual": "Recurring child guest in the established Issue 1 likeness with turtle-themed hat or hoodie; sincere and observant, never visually played as foolish.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Parent": {
+   "name": "Parent",
+   "role": "Guest / parent",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Guest1": {
+   "name": "Guest 1",
+   "role": "Guest",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Guest2": {
+   "name": "Guest 2",
+   "role": "Guest",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Guest3": {
+   "name": "Guest 3",
+   "role": "Guest",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Guest": {
+   "name": "Guest",
+   "role": "Guest",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Father": {
+   "name": "Father",
+   "role": "Guest / parent",
+   "visual": "Use the established released Issue 1 father likeness when this returning guest recurs. Practical visitor clothing, warm but slightly tired parent energy; never caricatured or styled as staff.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Child": {
+   "name": "Child",
+   "role": "Guest / child",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_VIP": {
+   "name": "VIP Guest",
+   "role": "VIP guest",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Sponsor": {
+   "name": "Sponsor Representative",
+   "role": "Pelagic Pure sponsor representative",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Staffer": {
+   "name": "Staffer",
+   "role": "Azure Reach staff",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Educator": {
+   "name": "Staff Educator",
+   "role": "Education staff",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Everyone": {
+   "name": "Everyone",
+   "role": "Ensemble chorus",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_Comments": {
+   "name": "Live Comment Bubbles",
+   "role": "On-screen live audience comments",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_EditorialCaption": {
+   "name": "Editorial Caption",
+   "role": "Non-diegetic editorial voice for opening frontispieces and closing teasers",
+   "visual": "Non-diegetic editorial caption only. Never depict as a person, figure, face, silhouette, narrator, or speaker.",
+   "first_issue": null,
+   "tier": "working"
+  }
+ },
+ "settings": {
+  "AZR_Entrance": {
+   "name": "PUBLIC ENTRANCE",
+   "text": "PUBLIC ENTRANCE — World-class glass-and-water arrival plaza with families, influencers, sponsor signage, bright uniforms, and a huge SEA TURTLE THURSDAYS banner.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_OpsRoom": {
+   "name": "BACKSTAGE OPS ROOM",
+   "text": "BACKSTAGE OPS ROOM — Clean, technical, busy control space with readable monitors for water systems, guest counts, sponsor arrivals, weather, and animal-care schedules.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_MediaPrep": {
+   "name": "PUBLIC MEDIA PREP ZONE",
+   "text": "PUBLIC MEDIA PREP ZONE — Ring lights, sponsor backdrop, turtle imagery, polished content-production setup adjacent to public space.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_GlassCorridor": {
+   "name": "GLASS CORRIDOR",
+   "text": "GLASS CORRIDOR — Transitional space between glossy public spectacle and backstage operations, with the park visibly gleaming beyond the glass.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_GuestExperienceSuite": {
+   "name": "GUEST EXPERIENCE SUITE",
+   "text": "GUEST EXPERIENCE SUITE — Sleek sponsor-facing meeting area with polished slide decks, gift bags, institutional branding, and controlled executive presentation.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_TurtleQueue": {
+   "name": "TURTLE PAVILION PUBLIC QUEUE",
+   "text": "TURTLE PAVILION PUBLIC QUEUE — Beautiful guest-facing space with overproduced Sea Turtle Thursdays signage, families, kids, VIPs, sponsor wall, and clear sightlines toward the habitat.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_ServiceCorridor": {
+   "name": "TURTLE PAVILION STAFF CORRIDOR",
+   "text": "TURTLE PAVILION STAFF CORRIDOR — Clean staff-only path with labeled gear, carts, water-testing station, habitat windows, and protected access to the quiet-zone door.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_FinfluencerStage": {
+   "name": "TURTLE PAVILION MINI-STAGE",
+   "text": "TURTLE PAVILION MINI-STAGE — Polished sponsor backdrop and media setup near the habitat; initially positioned too close to the quiet-zone staff door.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_PublicViewing": {
+   "name": "TURTLE PAVILION PUBLIC VIEWING AREA",
+   "text": "TURTLE PAVILION PUBLIC VIEWING AREA — Refined guest space beside the habitat, capable of being reframed into calm, respectful viewing without reducing its premium feel.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_BackstageHuddle": {
+   "name": "BACKSTAGE SERVICE CORRIDOR",
+   "text": "BACKSTAGE SERVICE CORRIDOR — Compact clean working corridor where the ensemble can huddle quickly without losing the visible sense of a busy park around them.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_BreakArea": {
+   "name": "BACKSTAGE BREAK AREA",
+   "text": "BACKSTAGE BREAK AREA — Clean employee decompression space with sea-turtle cupcakes after the event.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_StaffOverlook": {
+   "name": "STAFF OVERLOOK / LOADING-DOCK EDGE",
+   "text": "STAFF OVERLOOK / LOADING-DOCK EDGE — Quiet end-of-day staff area with a view of the gorgeous park glowing at sunset; public magic remains visible at a distance.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "AZR_DolphinGallery": {
+   "name": "DOLPHIN GALLERY",
+   "text": "DOLPHIN GALLERY — One of Azure Reach's signature public rooms: sweeping floor-to-ceiling cobalt glass, long shafts of clean blue light, deep water with enough scale for dolphins to disappear and then pass suddenly close, elegant stone-and-glass guest edges, controlled keeper return points and premium sightlines. When dolphins are visible, their size, speed, musculature and effortless movement should dominate the visual experience; human signage and operations stay secondary.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_DolphinBackstage": {
+   "name": "DOLPHIN CARE BACKSTAGE",
+   "text": "DOLPHIN CARE BACKSTAGE — Clean professional animal-care and behavior workspace adjoining the habitat, with trainer stations, behavior logs, approved objects, locked storage, staff-only access, and no grimy industrial texture.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_FoodCourt": {
+   "name": "AZURE REACH FOOD COURT",
+   "text": "AZURE REACH FOOD COURT — Bright, polished family dining area with digital menus, playful marine-themed food presentation, clean service counters, and sightlines toward public exhibits.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_ServiceDock": {
+   "name": "QUIET SERVICE DOCK",
+   "text": "QUIET SERVICE DOCK — Clean end-of-day working edge beside the dolphin habitat, with dimming stadium lights, water reflecting sunset, soft pump ambience, and distant public spectacle.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_TidepoolBackstage": {
+   "name": "TIDEPOOL CARE BACKSTAGE",
+   "text": "TIDEPOOL CARE BACKSTAGE — Clean, controlled wet-side care workspace with rotation tanks, labeled tools, clocks, water-testing equipment, protected staff access, and no public handling area.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "AZR_TidepoolGallery": {
+   "name": "TIDEPOOL GALLERY",
+   "text": "TIDEPOOL GALLERY — Jewel-bright public tidepool world at intimate human scale: shallow clear water, rippling cyan reflections, richly textured rock, anemones, sea stars, urchins, tiny crabs and other credible invertebrate life. Polished stone and stainless detailing, open general viewing, staff-supervised wet-edge stations, discreet program boundaries and clear service paths. The habitat should reward close looking; premium apparatus must never visually overwhelm the living detail.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "AZR_VIPLounge": {
+   "name": "VIP LOUNGE",
+   "text": "VIP LOUNGE — Compact polished hospitality room near the tidepool gallery with seating, water, premium program materials and a fully accessible route; never a substitute for backstage access.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "AZR_TidepoolMicroscopeSalon": {
+   "name": "TIDEPOOL MICROSCOPE SALON",
+   "text": "TIDEPOOL MICROSCOPE SALON — Quiet premium/public education room adjoining the tidepool, with high-quality microscopes, a large projection wall, clean dark-to-cyan lighting and direct visual continuity back to the source habitat. Magnified plankton and microscopic life should feel like a genuine second layer of wonder hidden inside ordinary tidepool water, not a tech demo.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "AZR_RayGallery": {
+   "name": "RAY GALLERY",
+   "text": "RAY GALLERY — Sweeping signature habitat of immense deep-blue water and long sightlines where rays can appear as broad, graceful silhouettes and then cross close enough for underside detail, wing motion and scale to register. A normal staff feeding zone and several public-side camera positions exist within the architecture, but the habitat is visually larger than the broadcast apparatus. When an in-world camera misses the action, the comic reader may still see the rays beautifully elsewhere in the same space.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "AZR_RayBackstage": {
+   "name": "RAY CARE BACKSTAGE",
+   "text": "RAY CARE BACKSTAGE — Clean professional behavior and feeding workspace with approved food storage, logs, staff stations and protected access; no cameras enter this restricted working area.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "AZR_StreamControl": {
+   "name": "STREAM CONTROL",
+   "text": "STREAM CONTROL — Compact professional public-media control booth overlooking approved habitat cameras, with program monitors, comment moderation, stream delay controls and no exposed private operational screens.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "AZR_ConservationHub": {
+   "name": "CONSERVATION HUB",
+   "text": "CONSERVATION HUB — Bright central campaign space opening directly into the larger park, with polished Conservation Week materials, optional passport pickup, education stations and sponsor presence. The campaign is attractive and well designed, but architecture should preserve strong sightlines toward living habitats so fish, water, planting and guest discovery visibly exceed the campaign apparatus in scale and emotional pull.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "AZR_ParkPromenade": {
+   "name": "PARK PROMENADE",
+   "text": "PARK PROMENADE — Wide primary public circulation route connecting major exhibits, food, education and accessibility paths; campaign activations must not consume its clear movement lanes.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "AZR_GalaAtrium": {
+   "name": "ANNIVERSARY GALA ATRIUM",
+   "text": "ANNIVERSARY GALA ATRIUM — Azure Reach's glass-and-water arrival hall transformed for an elegant evening event while remaining unmistakably a marine destination: luminous habitat views, reflected water light, beautifully dressed guests, restrained champagne-gold accents, projection on glass and edge-based hospitality. The event should make the park feel even more desirable, never convert it into a generic ballroom or nightclub.",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "AZR_LagoonPromenade": {
+   "name": "LAGOON PROMENADE",
+   "text": "LAGOON PROMENADE — Broad sunlit water-edge walk with layered blue pools, palms and coastal planting, premium seating, families and staff in motion, and long sightlines into multiple habitats.",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "AZR_ReefGallery": {
+   "name": "CORAL REEF GALLERY",
+   "text": "CORAL REEF GALLERY — Monumental jewel-bright reef window with dense tropical fish, living-coral forms, shafts of blue light, reflective stone and quiet luxury seating.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_KelpWalk": {
+   "name": "KELP FOREST WALK",
+   "text": "KELP FOREST WALK — Tall cool-blue gallery beside a towering kelp habitat, with shark silhouettes, schooling fish, swaying kelp, public benches and clean staff access.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_TidepoolTerrace": {
+   "name": "TIDEPOOL TERRACE",
+   "text": "TIDEPOOL TERRACE — Open-air and glass-edged terrace overlooking tidepool habitats and coastal planting, with shaded premium seating, educator stations and broad public circulation.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "AZR_RayOverlook": {
+   "name": "RAY OVERLOOK",
+   "text": "RAY OVERLOOK — Elevated public/staff-adjacent vantage over the Ray Gallery with a broad uninterrupted view of deep blue water, gliding rays at multiple depths and the feeding zone below. Designed for quiet observation and perspective; the water and animal movement should remain visually dominant over tablets, metrics or discussion.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "AZR_ConservationGarden": {
+   "name": "CONSERVATION WATER GARDEN",
+   "text": "CONSERVATION WATER GARDEN — Lush public garden of mangroves, reeds, freshwater planting, recirculating streams and interpretive water features integrated into polished park landscaping.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "AZR_GalaPromenade": {
+   "name": "GALA PROMENADE",
+   "text": "GALA PROMENADE — Main glass-and-water public spine during the anniversary evening: open habitat sightlines, elegant guests, restrained projection, florals and hospitality along the edges, expensive event detail and deep aquatic light. Gala elements should feel genuinely beautiful but remain visually subordinate to water, animals and the park's architecture.",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "AZR_CoralGrandHall": {
+   "name": "CORAL GRAND HALL",
+   "text": "CORAL GRAND HALL — Azure Reach's grandest multi-story reef panorama: thousands of small reef fish moving through dramatic coral architecture, saturated blue depth, reflected water light across polished stone and glass, and enough open circulation that guests can stop without blocking the room. The reef is the visual authority of the space; donor seating, gala staging, speeches and sponsor elements must read as temporary human layers around it.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "AZR_TropicalReefArcade": {
+   "name": "TROPICAL REEF ARCADE",
+   "text": "TROPICAL REEF ARCADE — Sequence of jewel-box reef windows with different tropical fish communities, coral forms, water depths and lighting moods.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "AZR_JellyGallery": {
+   "name": "JELLYFISH GALLERY",
+   "text": "JELLYFISH GALLERY — Luminous low-light gallery of wall-scale and cylindrical jelly displays, slow drifting bodies, translucent bells, long tentacles and colored reflections that make people naturally slow down. Elegant seating and clearly readable faces allow quiet human reactions without stealing visual priority from the jellies.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "AZR_PelagicTunnel": {
+   "name": "PELAGIC TUNNEL",
+   "text": "PELAGIC TUNNEL — Long transparent tunnel through a huge open-ocean habitat, with schools moving overhead and large pelagic silhouettes occasionally crossing close enough to darken the ceiling. Reflected blue light washes over faces and floor. The strongest moments are spatial and quiet: human conversation can simply stop when something enormous passes above.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "AZR_SharkGallery": {
+   "name": "SHARK GALLERY",
+   "text": "SHARK GALLERY — Expansive deep-water window and tunnel system with varied sharks, skates and rays, strong open-water depth and sparse high-end architecture framing the animal scale.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "AZR_ArcticBeluga": {
+   "name": "ARCTIC / BELUGA WING",
+   "text": "ARCTIC / BELUGA WING — Bright ice-toned water galleries for belugas and Arctic marine interpretation, with pale stone, cool daylight, underwater viewing and warm guest refuge spaces.",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "AZR_SeaLionCove": {
+   "name": "SEA LION COVE",
+   "text": "SEA LION COVE — Large indoor-outdoor coastal habitat with rockwork, deep blue water, haul-out areas, broad public viewing edges and clean keeper access.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_OtterHabitat": {
+   "name": "OTTER RIVER HABITAT",
+   "text": "OTTER RIVER HABITAT — Lush stream-and-pool environment with underwater windows, planted banks, rock shelves, clear water and energetic otters.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_SeahorseConservatory": {
+   "name": "SEAHORSE CONSERVATORY",
+   "text": "SEAHORSE CONSERVATORY — Intimate high-design gallery of seahorses, pipefish, seagrasses and delicate aquatic plants, with magnified viewing and botanical-display detailing.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "AZR_RainforestFishHall": {
+   "name": "RAINFOREST FISH HALL",
+   "text": "RAINFOREST FISH HALL — Warm planted freshwater gallery with flooded-root habitats, piranhas and other tropical freshwater fish, humid greenery and dramatic blackwater river displays.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_PiranhaGallery": {
+   "name": "PIRANHA GALLERY",
+   "text": "PIRANHA GALLERY — Refined freshwater exhibit with dense planted river habitat, dark root forms, warm filtered light and a naturally schooling group of piranhas.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_FreshwaterRivers": {
+   "name": "FRESHWATER RIVERS HALL",
+   "text": "FRESHWATER RIVERS HALL — Long bright sequence of river habitats from cold-water streams to broad freshwater systems, with visible current, rock, wood, plants and region-specific fish.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_TroutStream": {
+   "name": "TROUT STREAM PAVILION",
+   "text": "TROUT STREAM PAVILION — Crystal-clear cold-water run with varied trout, submerged stone, fast current, rippled light and an overhead garden canopy.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_SchoolingFishCylinder": {
+   "name": "SCHOOLING-FISH CYLINDER",
+   "text": "SCHOOLING-FISH CYLINDER — Towering cylindrical habitat rising several stories through the public space, filled with a dense coordinated school that can turn as one silver-blue living body. Guests appear small beneath it; light flashes across hundreds of fish as the school changes direction. This is a pure scale-and-motion wonder beat whenever used, not decorative background.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "AZR_OpenOceanHall": {
+   "name": "OPEN OCEAN HALL",
+   "text": "OPEN OCEAN HALL — Immense blue-water viewing room with sparse architecture and a vast pelagic field. Fast schooling fish can pivot in coordinated waves beneath and above guests while larger tuna-like silhouettes pass at depth. Human figures should feel physically small against the water volume; this room exists to deliver scale, movement and the sudden collective turn of living animals.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "AZR_UnderwaterDining": {
+   "name": "UNDERWATER DINING ROOM",
+   "text": "UNDERWATER DINING ROOM — High-end restaurant with floor-to-ceiling habitat glass, quiet table spacing, elegant service and naturally moving marine life beyond the windows.",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "AZR_DonorLounge": {
+   "name": "DONOR LOUNGE",
+   "text": "DONOR LOUNGE — Discreet luxury hospitality space open to a major habitat view, with excellent furniture, restrained service, polished finishes and broad glass sightlines into the park.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "AZR_VIPArrivalCourt": {
+   "name": "VIP ARRIVAL COURT",
+   "text": "VIP ARRIVAL COURT — Polished private arrival terrace off the main public approach, with water, planting, hosts, premium finishes and glimpses of nearby habitats.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_PremiumTerrace": {
+   "name": "PREMIUM OBSERVATION TERRACE",
+   "text": "PREMIUM OBSERVATION TERRACE — Comfortable high-end viewing terrace overlooking multiple aquatic spaces, with quiet seating, discreet hospitality service and unobstructed animal sightlines.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "AZR_MangroveWalk": {
+   "name": "MANGROVE WALK",
+   "text": "MANGROVE WALK — Immersive brackish corridor through sculptural mangrove roots, tiny fish threading between sheltering structures, shallow-water detail, overhead and underwater sightlines, dense planting and dappled green-blue light. The reward is close observation: small life becomes compelling when the reader is allowed to notice it.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_AquaticBotany": {
+   "name": "AQUATIC BOTANY ATRIUM",
+   "text": "AQUATIC BOTANY ATRIUM — Glass-roofed conservatory of aquatic plants, water lilies, reeds, submerged gardens and fish integrated into landscape-scale water features.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_CoralNursery": {
+   "name": "CORAL NURSERY GALLERY",
+   "text": "CORAL NURSERY GALLERY — Public-facing viewing window onto coral propagation tables, colorful small-fish systems, clean research equipment and bright working water.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "AZR_TropicalFishRotunda": {
+   "name": "TROPICAL FISH ROTUNDA",
+   "text": "TROPICAL FISH ROTUNDA — Circular sequence of vivid reef and lagoon displays with different tropical fish assemblages, coral structures and water colors in every direction.",
+   "first_issue": null,
+   "tier": "working"
+  }
+ },
+ "factions": {
+  "AZR_BrineSquad": {
+   "name": "AZR_BrineSquad",
+   "text": "BRINE SQUAD — Life support / operations competence protecting animal calm, care boundaries, staff access, and operational truth."
+  },
+  "AZR_Finfluencers": {
+   "name": "AZR_Finfluencers",
+   "text": "FINFLUENCERS — Camera-ready public stars and media staff who create spectacle, attention, emotional framing, and sponsor value."
+  },
+  "AZR_GuestRelations": {
+   "name": "AZR_GuestRelations",
+   "text": "GUEST RELATIONS — Front-line hospitality translating institutional contradictions into a workable public experience."
+  },
+  "AZR_Corporate": {
+   "name": "AZR_Corporate",
+   "text": "CORPORATE / MANAGEMENT — Polished sponsor, growth, valuation, optics, and institutional pressure; absurd at times but not malicious."
+  }
+ },
+ "regions": {
+  "AZR_MarinePark": {
+   "name": "AZR_MarinePark",
+   "text": "AZURE REACH MARINE PARK — A large, glossy, popular, well-funded modern marine park built for public wonder, conservation messaging, sponsors, livestreams, and curated spectacle. Glass, water, bright architecture, professional signage, large crowds, and beautiful animal habitats. Public magic is immaculate; backstage spaces are clean, competent, and functional, never grimy or dystopian.",
+   "tone": ""
+  }
+ },
+ "lighting": {},
+ "mood": {},
+ "keeper": [
+  {
+   "name": "Azure Reach Six Marine Park Concepts",
+   "type": "setting",
+   "image": "production/references/azure-reach/keeper/setting/azure-reach-six-marine-park-concepts.png"
+  },
+  {
+   "name": "Park entrance",
+   "type": "setting",
+   "image": "production/references/azure-reach/keeper/setting/park-entrance.png"
+  }
+ ]
+}

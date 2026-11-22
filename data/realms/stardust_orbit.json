@@ -1,0 +1,593 @@
+{
+ "id": "stardust_orbit",
+ "chapter": {
+  "id": 12,
+  "name": "Stardust Orbit",
+  "numeral": "ORBIT",
+  "destination": "stardust_orbit",
+  "subtitle": "Stardust Station, in orbit.",
+  "branch_from": "s_stardust",
+  "biome": "orbit"
+ },
+ "destination": {
+  "name": "Stardust Orbit",
+  "desc": "Signal Space shaped like a workplace in orbit: Regional Branch QARB7919-17.",
+  "half_size": "@v2:5600,4000",
+  "gate": "@v2:-4700,0",
+  "goal_signals": 2,
+  "climax_time": 1140,
+  "background": "@c:0a0d22ff",
+  "drift_name": "STATION ORBIT",
+  "biome": "orbit",
+  "regions": [
+   "station_approach",
+   "west_corridor",
+   "main_bullpen",
+   "break_room",
+   "supply_store"
+  ],
+  "completion_unlocks": [],
+  "seed": 6170
+ },
+ "biome": {
+  "skins": {
+   "skiff": [
+    "Static Skiff",
+    "@c:8fa0d0ff"
+   ],
+   "ram_cutter": [
+    "Hull Ram",
+    "@c:b08ac8ff"
+   ],
+   "rail_picket": [
+    "Laser Picket",
+    "@c:d0b060ff"
+   ],
+   "mine_hauler": [
+    "Memo Layer",
+    "@c:c86a9aff"
+   ],
+   "wreck_lurker": [
+    "Debris Lurker",
+    "@c:8a88a0ff"
+   ],
+   "leech": [
+    "Cable Leech",
+    "@c:9aa060ff"
+   ],
+   "gunship": [
+    "Patrol Gunship",
+    "@c:a88ac0ff"
+   ],
+   "splinter_captain": [
+    "Overtime Captain",
+    "@c:e0c060ff"
+   ],
+   "dreadnought": [
+    "Compliance Hulk",
+    "@c:6a6a9aff"
+   ],
+   "echo_mote": [
+    "Static Mote",
+    "@c:d070c0ff"
+   ],
+   "swarm_tender": [
+    "Drone Tender",
+    "@c:c07a9aff"
+   ],
+   "shield_tug": [
+    "Tow Tug",
+    "@c:a8a0c0ff"
+   ],
+   "blink": [
+    "Glitch Flicker",
+    "@c:a060e0ff"
+   ]
+  }
+ },
+ "regions": {
+  "station_approach": {
+   "name": "REGIONAL BRANCH",
+   "shape": "circle",
+   "center": "@v2:-2600,-300",
+   "radius": 1100,
+   "color": "@c:ffce5cff",
+   "floor": "@c:101530ff",
+   "props": "station_hull",
+   "density": 0.7,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 1,
+    "ram_cutter": 0.4,
+    "echo_mote": 0.4
+   },
+   "blurb": "QARB7919-17. Simulating success since yesterday.",
+   "threat": 1
+  },
+  "west_corridor": {
+   "name": "WEST CORRIDOR",
+   "shape": "capsule",
+   "a": "@v2:-800,1800",
+   "b": "@v2:2400,1800",
+   "radius": 420,
+   "color": "@c:9fb8ffff",
+   "floor": "@c:151a34ff",
+   "props": "station_corridor",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "leech": 0.6,
+    "mine_hauler": 0.4
+   },
+   "blurb": "W-17. Safety grouping protocol active.",
+   "threat": 2
+  },
+  "main_bullpen": {
+   "name": "MAIN BULLPEN",
+   "shape": "circle",
+   "center": "@v2:400,-1500",
+   "radius": 950,
+   "color": "@c:8fd0ffff",
+   "floor": "@c:141a36ff",
+   "props": "bullpen",
+   "density": 0.8,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.8,
+    "rail_picket": 0.5,
+    "shield_tug": 0.4,
+    "swarm_tender": 0.2
+   },
+   "blurb": "Desks, rolling carts, open service panels.",
+   "threat": 2
+  },
+  "break_room": {
+   "name": "BREAK ROOM",
+   "shape": "circle",
+   "center": "@v2:3200,-1100",
+   "radius": 750,
+   "color": "@c:ffb36bff",
+   "floor": "@c:1a1830ff",
+   "props": "break_room",
+   "density": 0.7,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.8,
+    "blink": 0.5,
+    "echo_mote": 0.5
+   },
+   "blurb": "Microwave, vending machine, folding chairs.",
+   "threat": 2
+  },
+  "supply_store": {
+   "name": "SUPPLY STORE B-17",
+   "shape": "circle",
+   "center": "@v2:4300,1500",
+   "radius": 700,
+   "color": "@c:7fe0c0ff",
+   "floor": "@c:13182eff",
+   "props": "supply",
+   "density": 0.8,
+   "music": "region_bloom",
+   "enemies": {
+    "gunship": 0.3,
+    "wreck_lurker": 0.5,
+    "skiff": 0.6,
+    "ram_cutter": 0.5
+   },
+   "blurb": "Shelves of everything nobody signed for.",
+   "threat": 3
+  }
+ },
+ "discoveries": {
+  "sds_branch_sign": {
+   "kind": "character",
+   "region": "station_approach",
+   "offset": "@v2:0,0",
+   "title": "REGIONAL BRANCH QARB7919-17",
+   "landmark": "station",
+   "color": "@c:ffce5cff",
+   "contacts": [
+    "astra_vega"
+   ],
+   "place": "station_approach",
+   "crossover": "stardust_station",
+   "text": "Simulating success since yesterday. The station manager has a clipboard and a morale plan."
+  },
+  "sds_approach_signal": {
+   "kind": "signal",
+   "region": "station_approach",
+   "offset": "@v2:-300,260",
+   "title": "DOCKING CARRIER",
+   "transmission": "phase_redu_if_we_remember_it_fondly",
+   "color": "@c:ffce5cff",
+   "text": "A carrier circling the station like it lives here."
+  },
+  "sds_bullpen": {
+   "kind": "character",
+   "region": "main_bullpen",
+   "offset": "@v2:0,0",
+   "title": "MAIN BULLPEN",
+   "landmark": "bullpen",
+   "color": "@c:8fd0ffff",
+   "contacts": [
+    "mira_klare",
+    "zib"
+   ],
+   "place": "main_bullpen",
+   "crossover": "stardust_station",
+   "text": "A routine morale-and-safety inspection is underway. Nobody looks routine."
+  },
+  "sds_bullpen_signal": {
+   "kind": "signal",
+   "region": "main_bullpen",
+   "offset": "@v2:320,220",
+   "title": "OPEN-PLAN CARRIER",
+   "transmission": "star_split_say_what_feat_cheddr",
+   "color": "@c:8fd0ffff",
+   "text": "Everybody has something to say, all at once."
+  },
+  "sds_break_room": {
+   "kind": "character",
+   "region": "break_room",
+   "offset": "@v2:0,0",
+   "title": "BREAK ROOM",
+   "landmark": "break_room",
+   "color": "@c:ffb36bff",
+   "contacts": [
+    "glorp",
+    "kreeb"
+   ],
+   "place": "break_room",
+   "crossover": "stardust_station",
+   "text": "Two coworkers at a safe minimum distance from the appliance. There is a form for this."
+  },
+  "sds_crew_signal": {
+   "kind": "signal",
+   "region": "west_corridor",
+   "offset": "@v2:0,0",
+   "title": "MANDATORY PROXIMITY",
+   "transmission": "milo_brigh_say_something",
+   "color": "@c:9fb8ffff",
+   "contacts": [
+    "noola_vaneel",
+    "pixa",
+    "brick_talos"
+   ],
+   "place": "west_corridor",
+   "text": "The whole crew, sealed in the West Corridor. Somebody had better say something."
+  },
+  "sds_supply_signal": {
+   "kind": "signal",
+   "region": "supply_store",
+   "offset": "@v2:0,0",
+   "title": "SUPPLY STORE CARRIER",
+   "transmission": "the_arthur_enduring_the_endearing",
+   "color": "@c:7fe0c0ff",
+   "place": "supply_store",
+   "text": "A string section humming between the shelves."
+  }
+ },
+ "contacts": {
+  "astra_vega": {
+   "name": "Astra Vega",
+   "faction": "Stardust Station",
+   "role": "Station manager. Clipboard, morale plan, relentless optimism.",
+   "portrait": "astra_vega"
+  },
+  "mira_klare": {
+   "name": "Mira Klare",
+   "faction": "Stardust Station",
+   "role": "Station scientist. Precise, curious, unimpressed by procedure.",
+   "portrait": "mira_klare"
+  },
+  "zib": {
+   "name": "Zib \"Sgotcha\" Diaz",
+   "faction": "Stardust Station",
+   "role": "The fixer. Tape, wires, and a running commentary.",
+   "portrait": "zib"
+  },
+  "glorp": {
+   "name": "Glorp",
+   "faction": "Stardust Station",
+   "role": "Forms, binders and warning labels. The margins are for compliance notes.",
+   "portrait": "glorp"
+  },
+  "kreeb": {
+   "name": "Kreeb",
+   "faction": "Stardust Station",
+   "role": "Formal, tall and very polite about the hallway.",
+   "portrait": "kreeb"
+  },
+  "noola_vaneel": {
+   "name": "Noola Vaneel",
+   "faction": "Stardust Station",
+   "role": "Aquatic coworker in a water-dome rig.",
+   "portrait": "noola_vaneel"
+  },
+  "pixa": {
+   "name": "Pixa",
+   "faction": "Stardust Station",
+   "role": "The station's friendly android.",
+   "portrait": "pixa"
+  },
+  "brick_talos": {
+   "name": "Brick Talos",
+   "faction": "Stardust Station",
+   "role": "Security. Large, stone, fedora.",
+   "portrait": "brick_talos"
+  }
+ },
+ "places": {
+  "station_approach": {
+   "name": "Regional Branch QARB7919-17",
+   "series": "Stardust Station",
+   "text": "Stardust Station: a bright, livable workplace in orbit. \"Simulating success since yesterday.\"",
+   "source": "Stardust Station Issue 01 cover"
+  },
+  "main_bullpen": {
+   "name": "Main Bullpen",
+   "series": "Stardust Station",
+   "text": "A cramped multi-use workplace hub: desks, rolling carts, open service panels.",
+   "source": "Stardust Station Issue 01, pages 001-006"
+  },
+  "break_room": {
+   "name": "Break Room",
+   "series": "Stardust Station",
+   "text": "An ordinary shared break room with a microwave and a vending machine.",
+   "source": "Stardust Station Issue 01, pages 015-016"
+  },
+  "west_corridor": {
+   "name": "West Corridor W-17",
+   "series": "Stardust Station",
+   "text": "A narrow station corridor where a routine inspection traps the crew.",
+   "source": "Stardust Station Issue 01, pages 007-014"
+  },
+  "supply_store": {
+   "name": "Supply Store B-17",
+   "series": "Stardust Station",
+   "text": "A sign on the station: SUPPLY STORE B-17.",
+   "source": "Stardust Station Issue 01 cover"
+  }
+ },
+ "stages": [
+  {
+   "id": "orb_branch",
+   "chapter": 12,
+   "power": 50,
+   "prize": "Astra Vega",
+   "icon": "visions",
+   "name": "Regional Branch",
+   "place": "Regional Branch",
+   "region": "station_approach",
+   "objective": {
+    "type": "discover",
+    "id": "sds_branch_sign"
+   },
+   "discoveries": [
+    "sds_branch_sign"
+   ],
+   "new_title": "IN ORBIT",
+   "new": "Jax's workplace. Everyone here works together. Closely.",
+   "brief": "Stardust Station, Regional Branch. The manager is waiting.",
+   "reward": [
+    "Contact: Astra Vega",
+    "Place: Regional Branch"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "orb_bullpen",
+   "chapter": 12,
+   "power": 70,
+   "prize": "Mira & Zib",
+   "icon": "visions",
+   "name": "Morale-and-Safety",
+   "place": "Main Bullpen",
+   "region": "main_bullpen",
+   "objective": {
+    "type": "discover",
+    "id": "sds_bullpen"
+   },
+   "discoveries": [
+    "sds_bullpen"
+   ],
+   "new_title": "INSPECTION DAY",
+   "new": "A routine inspection. Nobody looks routine.",
+   "brief": "The bullpen, mid-inspection.",
+   "reward": [
+    "Contacts: Mira Klare, Zib",
+    "Place: Main Bullpen"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "orb_corridor",
+   "chapter": 12,
+   "prize": "+120 Signal",
+   "icon": "hostile",
+   "name": "Sealed In",
+   "place": "West Corridor",
+   "region": "west_corridor",
+   "objective": {
+    "type": "survive",
+    "seconds": 180
+   },
+   "discoveries": [],
+   "new_title": "SAFETY GROUPING",
+   "new": "The corridor sealed. Hold out for three minutes.",
+   "brief": "The West Corridor just sealed with a wet click.",
+   "reward": [
+    "+120 Signal"
+   ],
+   "grants": {
+    "signal": 120
+   }
+  },
+  {
+   "id": "orb_break",
+   "chapter": 12,
+   "power": 90,
+   "prize": "Glorp & Kreeb",
+   "icon": "visions",
+   "name": "Break Room",
+   "place": "Break Room",
+   "region": "break_room",
+   "objective": {
+    "type": "discover",
+    "id": "sds_break_room"
+   },
+   "discoveries": [
+    "sds_break_room"
+   ],
+   "new_title": "THE APPLIANCE",
+   "new": "Safe minimum distance from the microwave.",
+   "brief": "Two coworkers and a form.",
+   "reward": [
+    "Contacts: Glorp, Kreeb",
+    "Place: Break Room"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "orb_crew",
+   "chapter": 12,
+   "power": 110,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Mandatory Proximity",
+   "place": "West Corridor",
+   "region": "west_corridor",
+   "objective": {
+    "type": "discover",
+    "id": "sds_crew_signal"
+   },
+   "discoveries": [
+    "sds_crew_signal"
+   ],
+   "new_title": "THE WHOLE CREW",
+   "new": "Everyone, one corridor, one song.",
+   "brief": "The rest of the crew is in the corridor.",
+   "reward": [
+    "Track: Say Something",
+    "Contacts: Noola Vaneel, Pixa, Brick Talos"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "orb_supply",
+   "chapter": 12,
+   "power": 120,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Supply Store",
+   "place": "Supply Store B-17",
+   "region": "supply_store",
+   "objective": {
+    "type": "discover",
+    "id": "sds_supply_signal"
+   },
+   "discoveries": [
+    "sds_supply_signal"
+   ],
+   "new_title": "B-17",
+   "new": "Shelves of everything nobody signed for.",
+   "brief": "Something is playing in the supply store.",
+   "reward": [
+    "Track: Enduring the Endearing",
+    "Place: Supply Store B-17"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "orb_overtime",
+   "chapter": 12,
+   "prize": "+250 Signal",
+   "icon": "elite",
+   "name": "Overtime",
+   "place": "Station Orbit",
+   "start": "@v2:-700,700",
+   "objective": {
+    "type": "boss",
+    "at": 360,
+    "hp": 0.5
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE IN ORBIT",
+   "new": "It follows the music here too. Arrives at 6:00.",
+   "brief": "The whole station is humming. Something wants it quiet.",
+   "reward": [
+    "+250 Signal",
+    "Stardust Orbit complete"
+   ],
+   "grants": {
+    "signal": 250
+   }
+  },
+  {
+   "id": "orbs_dock",
+   "chapter": 12,
+   "side_of": "orb_branch",
+   "power": 60,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Docking Carrier",
+   "place": "Regional Branch",
+   "region": "station_approach",
+   "objective": {
+    "type": "discover",
+    "id": "sds_approach_signal"
+   },
+   "discoveries": [
+    "sds_approach_signal"
+   ],
+   "new_title": "CIRCLING",
+   "new": "A carrier that circles the station like it lives here.",
+   "brief": "Something is orbiting the orbit.",
+   "reward": [
+    "Track: If We Remember It Fondly"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "orbs_open_plan",
+   "chapter": 12,
+   "side_of": "orb_bullpen",
+   "power": 80,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Open Plan",
+   "place": "Main Bullpen",
+   "region": "main_bullpen",
+   "objective": {
+    "type": "discover",
+    "id": "sds_bullpen_signal"
+   },
+   "discoveries": [
+    "sds_bullpen_signal"
+   ],
+   "new_title": "SAY WHAT",
+   "new": "Everybody talking at once.",
+   "brief": "The bullpen is louder than usual.",
+   "reward": [
+    "Track: Say What (feat. Cheddr)"
+   ],
+   "grants": {
+
+   }
+  }
+ ]
+}

@@ -1,0 +1,473 @@
+{
+ "series": "shattering",
+ "name": "Shattering",
+ "source": "RexPrompt data",
+ "released_issues": [],
+ "issues": {
+  "1": {
+   "places": [
+    "Full-page High Era panorama at civilization scale: multiple inhabited worlds linked by immense stable green corridors, with civilian, diplomatic, and freight traffic moving through luminous lanes around elegant Cooperative and BHA infrastructure. The age feels prosperous, precise, optimistic, and almost impossibly connected. No post-Shattering faction, uniform, ship class, or institution is present",
+    "Cooperative Hall",
+    "Beacon Harmonization Authority Nexus",
+    "Strauss Hall",
+    "Records Vault",
+    "Orban-Tier Transit Port",
+    "Full-page view spanning polished Core infrastructure toward harder-used Outer Band systems. Most corridor lines remain luminous green, but faint timing echoes and tiny doubled traces are visible. Human-scale maintenance work continues while freight and medical cargo wait at the edges of an apparently functional network"
+   ],
+   "characters": [
+    "C_liora",
+    "C_lochran",
+    "C_damian",
+    "C_alan",
+    "C_heska",
+    "C_announcer",
+    "C_traveler",
+    "C_trafficCtrl",
+    "C_ava",
+    "C_iskara"
+   ]
+  },
+  "2": {
+   "places": [
+    "Full-page layered infrastructure vista: immaculate civic and transit architecture above, massive older corridor machinery and service structures beneath, and distant outer maintenance platforms showing more wear. Everything is still operating, but the inherited system's age is physically visible",
+    "Research Lab",
+    "Outer Ring Habitat",
+    "Waystation Twelve",
+    "Damping Chamber",
+    "Full-page view centered on the immense dormant damping chamber, ancient enough to dwarf the small figures working near it. Corridor telemetry shows unstable load relationships while the chamber's old emitter systems are prepared for use"
+   ],
+   "characters": [
+    "C_ruben",
+    "C_outerTech",
+    "C_staff"
+   ]
+  },
+  "3": {
+   "places": [
+    "Full-page image inside the damping chamber: monumental emitters, layered old engineering, and tiny human figures working beneath machinery built for a more cautious age. Through apertures and instrument light, the still-vast High Era corridor network remains active above",
+    "Stress Field Corridor Zone",
+    "Full-page deep-space corridor image: a ship traveling inside a once-clean route has a faint delayed duplicate silhouette displaced beside it, while beacon anchors and luminous lane geometry show visible misalignment. The effect is physical, measurable, and increasingly dangerous"
+   ],
+   "characters": [
+    "C_coalitionTech",
+    "C_shipCaptain"
+   ]
+  },
+  "4": {
+   "places": [
+    "Full-page civilization-scale corridor vista in active distortion: ships, ports, inhabited worlds, and logistics remain visible while luminous route geometry folds, slips, and disagrees with itself. Daily life is still moving inside the failure",
+    "Pre-Break BHA Ruins",
+    "Broken Node",
+    "Full-page post-collapse nightscape made of islands of human light: a damaged habitat braced by hand, a rough route board built from witness reports, supplies moving between local groups, and a newly painted safety mark whose use is still being negotiated"
+   ],
+   "characters": [
+    "C_owen"
+   ]
+  },
+  "5": {
+   "places": [
+    "Full-page lived-world recovery scene: repaired structural bracing, water and heat distribution, a hand-verified route board, improvised cargo transfer, and a newly painted safety mark. Distinct local practices are visible without becoming formalized factions",
+    "Survivor Plaza",
+    "Refuge Sector",
+    "Hideout Lab",
+    "Cross-cut montage between an Outer Ring repair deck, Orban-Tier Transit Port, and a rebuilt standards workspace: three distinct post-Break practices operating at the same time without sharing one visual language",
+    "Full-page view around the prototype rescue vessel on its gantry. Different crews contribute patched engineering, route data, annotated documents, and a shared safety sigil. The command position remains unassigned while the ship is made ready for launch"
+   ],
+   "characters": [
+    "C_localLeader",
+    "C_coreAdvocate",
+    "C_vergeVoice",
+    "C_fieldOfficer"
+   ]
+  },
+  "6": {
+   "places": [
+    "Full-page view of the nearly completed prototype rescue vessel surrounded by mixed crews and equipment from emerging post-Break traditions. The shared safety sigil is visible as a common operating mark, while the ship remains visibly improvised and transitional",
+    "Resolve Circle",
+    "Courier Relay Post",
+    "Pre-Break Archive Vault",
+    "Full-page departure vista: the prototype rescue vessel moves through fractured but usable routes accompanied by distinct escort groups. Their equipment, route practices, and crew organization remain visibly different even as they share one safety sigil"
+   ],
+   "characters": [
+    "C_courier",
+    "C_engineer",
+    "C_archivist"
+   ]
+  }
+ },
+ "characters": {
+  "C_liora": {
+   "name": "Liora Virelia",
+   "role": "Systems engineer; harmonic theorist; cultural liaison.",
+   "visual": "Adult High Era physicist in clean practical engineering and research clothing, shown around corridor models, transit telemetry, and working technical systems rather than archival ceremony.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_damian": {
+   "name": "Damian Cole",
+   "role": "Coalition facilitator; political intermediary.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_heska": {
+   "name": "Heska Strauss",
+   "role": "Archivist and historian.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_alan": {
+   "name": "Alan Kessler",
+   "role": "Transit-beacon specialist; anomaly analyst.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_lochran": {
+   "name": "Lochran Davitt",
+   "role": "Chair of the Beacon Harmonization Authority.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_iskara": {
+   "name": "Iskara Foster",
+   "role": "Head of safety compliance; proto-Fleet ethics architect.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_ruben": {
+   "name": "Ruben Markham",
+   "role": "Outer engineering liaison.",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_ava": {
+   "name": "Ava Seltos",
+   "role": "Convoy planner; proto-Verge coordinator.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_owen": {
+   "name": "Owen Hale",
+   "role": "BHA field enforcer; early Crown model.",
+   "visual": "",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "C_coalitionTech": {
+   "name": "Coalition Technician",
+   "role": "Technical operator inside BHA systems.",
+   "visual": "",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "C_trafficCtrl": {
+   "name": "Transit Controller",
+   "role": "Frontline traffic officer.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_traveler": {
+   "name": "Concerned Traveler",
+   "role": "Civilian perspective.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_localLeader": {
+   "name": "Local Leader",
+   "role": "Community coordinator.",
+   "visual": "",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "C_fieldOfficer": {
+   "name": "Field Officer",
+   "role": "Enforcement and door-marking operations.",
+   "visual": "",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "C_shipCaptain": {
+   "name": "Ship Captain",
+   "role": "Lane pilot during early collapse.",
+   "visual": "",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "C_courier": {
+   "name": "Courier",
+   "role": "Mobile messenger across failing lanes.",
+   "visual": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "C_coreAdvocate": {
+   "name": "Core Advocate",
+   "role": "Pro-order faction voice.",
+   "visual": "",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "C_vergeVoice": {
+   "name": "Neighborhood Coordinator",
+   "role": "Refuge-sector coordinator advocating flexible neighborhood logistics.",
+   "visual": "",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "C_outerTech": {
+   "name": "Outer Technician",
+   "role": "Outer-band engineer.",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "C_engineer": {
+   "name": "Resolve Engineer",
+   "role": "Early Resolve circle member.",
+   "visual": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "C_reader": {
+   "name": "Treatise Reader",
+   "role": "Voice of Liora’s recovered text.",
+   "visual": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "C_archivist": {
+   "name": "Archive Curator",
+   "role": "Vault custodian.",
+   "visual": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "C_announcer": {
+   "name": "Festival Announcer",
+   "role": "Public speaker during High Era festivals.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_staff": {
+   "name": "Port Staffer",
+   "role": "Frontline transit worker.",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  }
+ },
+ "settings": {
+  "S_CoopHall": {
+   "name": "Cooperative Hall",
+   "text": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_BHANexus": {
+   "name": "Beacon Harmonization Authority Nexus",
+   "text": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_StraussHall": {
+   "name": "Strauss Hall",
+   "text": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_RecordsVault": {
+   "name": "Records Vault",
+   "text": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_OrbanPort": {
+   "name": "Orban-Tier Transit Port",
+   "text": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_ResLab": {
+   "name": "Research Lab",
+   "text": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "S_Waystation12": {
+   "name": "Waystation Twelve",
+   "text": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "S_DampChamber": {
+   "name": "Damping Chamber",
+   "text": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "S_OuterRing": {
+   "name": "Outer Ring Habitat",
+   "text": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "S_StressField": {
+   "name": "Stress Field Corridor Zone",
+   "text": "",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "S_BrokenNode": {
+   "name": "Broken Node",
+   "text": "",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "S_CoopHall_Alt": {
+   "name": "Cooperative Council Chambers",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "S_SurvivorPlaza": {
+   "name": "Survivor Plaza",
+   "text": "",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "S_RefugeSector": {
+   "name": "Refuge Sector",
+   "text": "",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "S_PreBHA_Ruins": {
+   "name": "Pre-Break BHA Ruins",
+   "text": "",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "S_ResolveCircle": {
+   "name": "Resolve Circle",
+   "text": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "S_PreArchiveVault": {
+   "name": "Pre-Break Archive Vault",
+   "text": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "S_CourierRelay": {
+   "name": "Courier Relay Post",
+   "text": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "S_HideoutLab": {
+   "name": "Hideout Lab",
+   "text": "",
+   "first_issue": 5,
+   "tier": "draft"
+  }
+ },
+ "factions": {
+  "F_Coop": {
+   "name": "Cooperative Network",
+   "text": "High-Era governance body responsible for corridor standards, records, and civic continuity."
+  },
+  "F_BHA": {
+   "name": "Beacon Harmonization Authority",
+   "text": "Authority overseeing harmonic stability, safety certification, and public assurance."
+  },
+  "F_Convoy": {
+   "name": "Convoy and Trade Coalition",
+   "text": "Freight, medical, and trade operators dependent on corridor predictability."
+  },
+  "F_Outer": {
+   "name": "Outer Band",
+   "text": "Peripheral worlds and engineering habitats practicing improvised maintenance."
+  }
+ },
+ "regions": {
+  "HighEraCore": {
+   "name": "High Era Core",
+   "text": "Clean, well-maintained networks of civic and technical infrastructure.",
+   "tone": "Confidence softening into quiet concern."
+  },
+  "HighEraNetwork": {
+   "name": "High Era Network",
+   "text": "Interconnected ports and corridor stations operating at full civilian throughput.",
+   "tone": "Assumed reliability disrupted by early anomalies."
+  },
+  "OuterBand": {
+   "name": "Outer Band",
+   "text": "Peripheral habitats, industrial decks, and stressed engineering corridors.",
+   "tone": "Practical survivalism and quiet frustration."
+  },
+  "CollapseZone": {
+   "name": "Collapse Zone",
+   "text": "Severe corridor instability, ruptured nodes, and unpredictable geometry.",
+   "tone": "Acute danger and escalating structural failure."
+  },
+  "PostBreakMixed": {
+   "name": "Post-Break Mixed Territories",
+   "text": "Fragmented settlement clusters with partially functioning infrastructure.",
+   "tone": "Cooperation strained by scarcity and faction divergence."
+  },
+  "PostBreakHidden": {
+   "name": "Post-Break Hidden Sites",
+   "text": "Isolated, intentionally concealed labs and safe rooms.",
+   "tone": "Secrecy, reflection, and independent analysis."
+  },
+  "PostBreakCore": {
+   "name": "Post-Break Core Fragments",
+   "text": "Ruins of former Core command facilities and civic centers.",
+   "tone": "Authority fractured and uncertain."
+  }
+ },
+ "lighting": {
+  "ceremony": "High directional or stained-glass light with soft fill; faces readable and banners highlighted.",
+  "council": "Even overhead illumination; consistent glow on central tables and displays.",
+  "engineering": "Harsh task lighting with reflective metal surfaces and visible status indicators.",
+  "collapse": "Unsteady emergency lighting, intermittent strobes, and partial power loss.",
+  "ritual": "Soft perimeter glow with shallow shadows; calm, contemplative illumination."
+ },
+ "mood": {
+  "risingTension": [
+   "tight framing",
+   "compressed space",
+   "short, clipped exchanges"
+  ],
+  "institutionalDenial": [
+   "steady tone over failing visuals",
+   "fixed compositions despite alarms"
+  ],
+  "technicalCrisis": [
+   "rapid checks",
+   "cross-room calls",
+   "interruptions mid-task"
+  ],
+  "communalEffort": [
+   "shared workload",
+   "visible cooperation",
+   "aligned movement through space"
+  ],
+  "fracture": [
+   "triangular blocking",
+   "separated light pools",
+   "conflicting eyelines"
+  ]
+ },
+ "keeper": []
+}

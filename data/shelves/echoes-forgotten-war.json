@@ -1,0 +1,424 @@
+{
+ "series": "echoes-forgotten-war",
+ "name": "Echoes of a Forgotten War",
+ "source": "RexPrompt data/shows/echoes-forgotten-war-s1",
+ "released_issues": [],
+ "issues": {
+  "1": {
+   "places": [
+    "Olyria-Prime Trench",
+    "Sector Four Excavation",
+    "Stabilizing Grid Ruins",
+    "Olyria Triage Tent",
+    "Zenith Spire Archives",
+    "Zenith Telemetry Room",
+    "Lower-Tier Archives",
+    "Zenith Observation Deck",
+    "Abandoned Trench",
+    "Zenith Residential and Transit District",
+    "Compacted Earth Above Sector Four",
+    "Modern Nuxis paper archive, rain-muted lighting. Theo's bandaged hand and secretly kept Marker shard from Issue 1, Rae's separate Zenith route tracing and Adrian by a shelf",
+    "Ancient Desert Marker civic emergency workroom, inhabited and battered, doors open to civilians. A violet-edged structural seam dislocates streets by visible increments, not an abstract energy cloud",
+    "Same ancient civic room moments later; dust, tired civilians and visible west bridge. Sena: green work jacket, torn orange scarf. Daughter Iva: small scuffed blue case with yellow cord",
+    "Ancient shelter at the Desert Marker settlement: families, blankets, worn luggage, water shared hand to hand, no ceremony. Sena's green jacket and orange scarf; Iva's scuffed blue case",
+    "Ancient ridge above the same basin. Abandoned homes, meals and toys in the path of an advancing seam; west bridge and crowded east road visible below",
+    "Same civic war room later, visible dust and accelerated movement outside, west bridge and east road shown relative to the same creeping fracture",
+    "Ancient approach to west bridge, shelter and east road legible in the same geography. Escalation is physical and character-driven, not a control-room procedural discussion",
+    "Ancient outer evacuation line, with spatially continuous west bridge and east road. Reuse Sena's green jacket",
+    "orange scarf, Iva's scuffed blue case",
+    "Yellow Cord And The Father'S Carry Sling",
+    "Ancient damaged retaining wall on the occupied east-road route, literally continuous with the preceding evacuation. Both roads and Redlin's wavering containment stay visible; no isolated scenic ridge",
+    "Same east-road retaining wall and collapsing west bridge, continuous minute following the preceding page. Evacuation is ongoing while champions speak",
+    "Ancient Desert Marker immediate battle geography: west bridge with Sena, father and rescuers; east road densely full of civilians; violet seam advancing between. Keep faces and normal scale against the impossible structure",
+    "Same ancient battlefield literally the next instant; branching fractured stellar planes, structural red containment and physical roads without magic, religious signs or diagram effects",
+    "Ancient Desert Marker immediate aftermath in falling glass-like dust and sharp violet light: east road still intact and used, west bridge folded and broken, exhausted survivors and rescuers. No ritual",
+    "Ghostly Haze",
+    "Ancient immediate aftermath minutes later, directly continuous: collapsed west bridge, surviving east road, Sena in her green work jacket and orange scarf, elderly father injured, Iva alive with blue case",
+    "Present Nuxis archive, hard return to exactly the same rain, window, table, paper positions and practical lamp as Story Page 1. Theo's injured hand and black shard; Rae's route tracing and sketch. Adrian is out of crop",
+    "Present-day Nuxis wet pavement at service-hatch exit, ordinary city night traffic and railings. Continue Theo's bandaged hand and hidden shard, Rae's personal drawing, Adrian's plain worn clothing",
+    "Present-day Vael-Tor arrival concourse: crowded, wet, ordinary, built over older foundations nobody thinks about anymore",
+    "Vael-Tor public archive overlooking the transit platforms, with current maps layered over much older stonework",
+    "Vael-Tor observation gallery above a busy arrival field as a damaged refugee transport approaches",
+    "Ancient memory: a populated world under catastrophic strain, streets buckling while civilians move beneath a failing sky",
+    "Present-day Vael-Tor service corridor leading toward the old landing controls, crowded with frightened workers and improvised evacuation traffic",
+    "Present-day maintenance access beneath Vael-Tor, old stone and current utility work built directly into one another",
+    "Present-day exterior approach to Vael-Tor landing field during hard rain and emergency evacuation",
+    "Present-day Vael-Tor lower foundation chamber, where ordinary construction gives way to the curved black surface of something impossibly large",
+    "Present-day Vael-Tor arrival field as the refugee transport attempts a dangerous landing among ordinary civilian infrastructure",
+    "Present-day Vael-Tor foundations and skyline as the buried ancient dreadnought becomes visible beneath cracking modern structures",
+    "Present-day landing field after the refugee transport is down, with passengers emerging into rain while the exposed dreadnought looms beyond",
+    "Present-day Vael-Tor overlook at night, the exposed ancient dreadnought incorporated impossibly into the modern city below",
+    "Present-day Pax-Aeterna treaty vault, preserved as a ceremonial ruin whose official history describes negotiations nobody can name",
+    "Ancient Pax-Aeterna treaty chamber before a final negotiation, black stone table, open doors to a city under evacuation",
+    "Ancient Pax-Aeterna treaty chamber as Arbiter enters without ceremony",
+    "Ancient side chamber overlooking evacuation streets below Pax-Aeterna",
+    "Ancient treaty chamber during the negotiation, doors open, distant alarms and evacuation noise intruding",
+    "Ancient Pax-Aeterna public gallery as the ceasefire collapses and evacuation stalls",
+    "Ancient empty corridor behind the treaty chamber while the larger crisis continues outside",
+    "Ancient evacuation concourse at Pax-Aeterna, civilians waiting beneath an increasingly impossible sky",
+    "Ancient treaty chamber after evacuation has reached its limit and no clean option remains",
+    "Ancient Pax-Aeterna after the decision, treaty chamber emptied of everyone except Atlas and Arbiter",
+    "Present-day Pax-Aeterna treaty vault, suddenly quiet again, the same table and empty chair restored",
+    "Present-day Pax-Aeterna outer steps at dusk, with the treaty vault behind them and ordinary city life continuing below",
+    "Present-day temporary quarters aboard the exposed Vael-Tor dreadnought, repurposed by local authorities into a shelter and investigation site",
+    "Revisited ancient Desert Marker memory from Issue 1: same battlefield, same Starbreaker composition, but the frame is wider",
+    "Present-day Vael-Tor shelter immediately after Theo returns from the revisited memory",
+    "Revisited ancient Pax-Aeterna memory from Issue 4: Arbiter at the black table after the extinction decision, frame extended to the previously unseen side",
+    "Present-day dreadnought corridor overlooking Vael-Tor's modern city",
+    "Ancient aftermath of a devastated world, days after a major battle: shelters, wounded landscapes, survivors trying to rebuild ordinary life",
+    "Same ancient aftermath later, at the edge of a district Afterlight could not restore",
+    "Present-day dreadnought records room where personal objects survived without understood provenance",
+    "Ancient restoration camp at night, Afterlight sitting among unfinished work while Atlas keeps watch",
+    "Present-day Vael-Tor overlook, modern city lights reflected across exposed ancient hull",
+    "Ancient Mero staff room late at night during the war, quiet after senior commanders have left",
+    "Present-day records room after both Theo and Rae are hit by incomplete personal memories",
+    "Present-day Tyrellis Vault district, an old civic quarter whose museums display unidentified objects from a past everyone assumes is remote",
+    "Ancient Tyrellis waystation during the war, a quiet kitchen between negotiations",
+    "Present-day Tyrellis municipal archive beneath the museum, paper records and reused older bindings",
+    "Ancient Tyrellis council room, small and tired, with Mero and Flux after others have argued themselves out",
+    "Present-day stairwell beneath Tyrellis archive, old stone continuing seamlessly into modern construction",
+    "Ancient Tyrellis balcony overlooking refugee routes at dusk",
+    "Present-day Tyrellis street market above the archive, ordinary evening traffic continuing around ancient foundations",
+    "Ancient Tyrellis kitchen late at night, most lights out, Flux and Afterlight alone again",
+    "Present-day Tyrellis archive after closing, Adrian finally sitting instead of pacing away from questions",
+    "Ancient Tyrellis waystation the morning after Flux said they were leaving",
+    "Present-day Tyrellis transit platform as Theo and Rae wait for Adrian",
+    "Present-day Tyrellis transit platform during an otherwise routine departure announcement",
+    "Present",
+    "Past",
+    "Convergence"
+   ],
+   "characters": [
+    "EFW_Theo",
+    "EFW_Vark",
+    "EFW_Starbreaker",
+    "EFW_Rae",
+    "EFW_Caelum",
+    "EFW_Adrian",
+    "EFW_Mero",
+    "EFW_Redlin",
+    "EFW_Atlas",
+    "EFW_Arbiter",
+    "EFW_Afterlight",
+    "EFW_Flux",
+    "EFW_Oryon",
+    "EFW_Kyn"
+   ]
+  },
+  "2": {
+   "places": [],
+   "characters": []
+  },
+  "3": {
+   "places": [],
+   "characters": []
+  },
+  "4": {
+   "places": [],
+   "characters": []
+  },
+  "5": {
+   "places": [],
+   "characters": []
+  },
+  "6": {
+   "places": [],
+   "characters": []
+  },
+  "7": {
+   "places": [],
+   "characters": []
+  },
+  "8": {
+   "places": [],
+   "characters": []
+  }
+ },
+ "characters": {
+  "EFW_Theo": {
+   "name": "Theo",
+   "role": "Modern memory-bearer; ancient junior attaché to General Mero",
+   "visual": "Young adult man with messy dark brown hair, pale-to-light skin, lean build, tired observant eyes, practical worn dark layers rather than a uniform. Present-day visual language is tactile and human: rumpled clothing, workwear, sketchbook/research materials, no heroic polish.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Rae": {
+   "name": "Rae",
+   "role": "Modern memory-bearer; ancient strategic aide to Arbiter",
+   "visual": "Young adult woman with dark asymmetric undercut hair, one side closely shaved and the longer side falling loose; light-to-medium skin with freckles, sharp expressive eyes, multiple ear piercings, visible geometric/linework tattoos on forearms, lean practical build, worn black or charcoal clothing. Her look is skeptical, investigative and grounded rather than glamorous.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Adrian": {
+   "name": "Adrian",
+   "role": "Neutral envoy, antiquarian and surviving memory of the war",
+   "visual": "Older adult man with shoulder-length silver-gray hair, weathered face, short gray beard/stubble, lean build, calm guarded eyes, dark worn contemporary clothing with understated quality. He should look like the same person in both eras, with age and bearing carrying continuity rather than costume spectacle.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Vark": {
+   "name": "Vark",
+   "role": "Olyria-Prime excavation foreman",
+   "visual": "Older Black man, sturdy working build, deeply weathered face, short dark hair with some gray, practical excavation gear and battered helmet/headlamp. He reads immediately as a long-serving field foreman rather than security or military personnel.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Caelum": {
+   "name": "Caelum",
+   "role": "Magistrate of Zenith Spire",
+   "visual": "Adult man with dark hair, trimmed beard/stubble, controlled formal appearance and pale structured Zenith institutional clothing. He should contrast Rae's worn dark practicality: ordered, clean, symmetrical, institutionally polished without looking villain-costumed.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Starbreaker": {
+   "name": "Starbreaker",
+   "role": "Vanguard champion",
+   "visual": "Godlike Vanguard champion with pale blond hair, luminous white-and-gold fractured armor over a dark underlayer, radiant stellar geometry concentrated at the chest and around the body, and a weapon formed from compressed first-light energy. His silhouette is sharp, crystalline and ruptured rather than knightly or medieval. He is physically human and visibly exhausted beneath the cosmic scale.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Atlas": {
+   "name": "Atlas",
+   "role": "Vanguard champion",
+   "visual": "Massive dark-skinned Vanguard champion with monumental physique, deep blue-black armor or layered battle garments traced by restrained gold gravity geometry. His design evokes mass, orbit and planetary weight rather than brute fantasy armor; small suspended spheres or orbital cues may appear when dramatically useful.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Flux": {
+   "name": "Flux",
+   "role": "Vanguard champion",
+   "visual": "Slender and androgynous-to-feminine Vanguard champion with dark hair, black-violet layered clothing/armor and a visual field of fractured probability: doubled edges, offset silhouettes, prismatic violet seams and spatial discontinuities. The body remains readable even when possibility effects multiply around it.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Afterlight": {
+   "name": "Afterlight",
+   "role": "Vanguard champion",
+   "visual": "Luminous pale-haired Vanguard champion whose design combines white, gold and living restoration motifs: seed-like geometry, translucent layers, delicate botanical structures and controlled radiance. She should feel regenerative and materially alive, not angelic or priestly.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Mero": {
+   "name": "General Mero",
+   "role": "Human Vanguard general among cosmic champions",
+   "visual": "Older human military strategist with gray hair and beard, scarred/weathered face, practical dark command armor or uniform, compact human-scale silhouette beside the champions. His design should communicate command experience without turning him into another godlike figure.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Oryon": {
+   "name": "Oryon",
+   "role": "Concordant strategist",
+   "visual": "Lean, severe Concordant strategist in pale structured layers over dark formal underclothes, surrounded when useful by precise predictive diagrams, orbital lattices and cool geometric interfaces. His power language is foresight, systems and control—not sorcery.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Regent": {
+   "name": "Regent",
+   "role": "Concordant stabilizer",
+   "visual": "Older Concordant stabilizer with severe symmetrical black formal armor/robes, restrained gold boundary geometry and a circular stabilizing halo or field when power is active. His silhouette is architectural, balanced and immovable.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "EFW_Arbiter": {
+   "name": "Arbiter",
+   "role": "Concordant authority over civilization-scale triage and enforcement",
+   "visual": "Imposing female Concordant authority in pale and dark judicial armor with sharp vertical crown-like structures integrated into the silhouette, severe geometric plating and restrained gold accents. Her presence evokes a living tribunal and irreversible judgment rather than royalty.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Redlin": {
+   "name": "Redlin",
+   "role": "Concordant battlefield commander and containment enforcer",
+   "visual": "Concordant battlefield commander built around containment: dark charcoal-to-black armor with deep red structural channels, circular/spherical joint and harness motifs, dense protective layers and a grounded battle-worn silhouette. Redlin should feel designed to absorb, restrain and hold rather than to radiate destructive power.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_Kyn": {
+   "name": "Kyn",
+   "role": "Concordant empath",
+   "visual": "Distinctly non-Jesus-like Concordant empath with cool gray-blue skin, white/silver hair, elegant but unfamiliar facial geometry, white-teal-gold layered clothing and organic branching or neural motifs. Kyn's design communicates openness, sensory burden and connection without religious messiah imagery.",
+   "first_issue": 1,
+   "tier": "draft"
+  }
+ },
+ "settings": {
+  "EFW_OlyriaTrench": {
+   "name": "Olyria-Prime Trench",
+   "text": "Working excavation cut into black bedrock on Olyria-Prime; heavy drills, work lamps, dust, ladders, shift gear and tired crews. Keep figures readable against the dark industrial environment with deliberate warm work-light separation, reflective surfaces and controlled atmospheric depth rather than uniform low-value murk.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_ZenithArchives": {
+   "name": "Zenith Spire Archives",
+   "text": "Institutional archive high in Zenith Spire; ordered shelves, old ledgers, current records, secure desks and long views over the planet. Use a brighter controlled architectural field behind characters so silhouettes separate clearly; Rae's dark practical styling should read immediately against ordered pale/cool institutional surfaces.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_SectorFour": {
+   "name": "Sector Four Excavation",
+   "text": "Newly opened excavation section where the Desert Marker emerges from black bedrock amid work platforms, dust and temporary lighting. The Marker is ancient, dark and deliberate; use focused work lights and reflected edge light so Theo, Vark and the object remain distinct instead of merging into one dark mass.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_GridRuins": {
+   "name": "Stabilizing Grid Ruins",
+   "text": "Damaged excavation tier after the first memory rupture, with broken platforms, dust, abandoned tools and stunned workers. Preserve the established Olyria palette but separate foreground figures from wreckage through directional practical light and atmospheric falloff.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_TelemetryRoom": {
+   "name": "Zenith Telemetry Room",
+   "text": "Secure Zenith records room with controlled access, workstations, archive terminals and institutional oversight. Interfaces are functional evidence, not generic holographic decoration. Keep backgrounds cleaner and brighter than Rae's silhouette; preserve Caelum's lighter formal styling as a distinct second value family.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_TriageTent": {
+   "name": "Olyria Triage Tent",
+   "text": "Temporary field medical tent with cots, paper forms, ordinary supplies, tired workers and bad coffee. Human-scale, practical, comparatively brighter than the trench; let faces, bandaged hand, paper incident form and small acting beats read clearly without cinematic murk.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_LowerArchives": {
+   "name": "Lower-Tier Archives",
+   "text": "Older archive stacks beneath the polished public levels, filled with physical books, sealed records and infrequently used storage rooms. Dimmer than the upper archive but not muddy: use localized pools of readable light, pale paper/stone/metal surfaces and depth separation around Rae and Adrian.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_ObservationDeck": {
+   "name": "Zenith Observation Deck",
+   "text": "High-altitude observation deck overlooking Zenith Spire and the planet below, with quiet public space and ordinary disposal infrastructure. Use the luminous exterior/city/planet view as controlled negative space so Rae and Caelum stand out cleanly in silhouette and facial value.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_AbandonedTrench": {
+   "name": "Abandoned Trench",
+   "text": "Shut-down excavation cut with sparse work lights, scrap, deep shadow and enough loose material to conceal the reopened site. Dark environment, but preserve facial readability and the industrial cutter through selective practical light, rim separation and uncluttered staging.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_CompactedEarth": {
+   "name": "Compacted Earth Above Sector Four",
+   "text": "Surface above buried Sector Four beneath silent excavators and open stars, exposed and still after the work crews leave. Night scene with clear moon/star/industrial edge separation; Theo, Adrian and the small Marker fragment must remain readable without bathing the page in generic glow.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "EFW_ZenithResidentialTransit": {
+   "name": "Zenith Residential and Transit District",
+   "text": "Ordinary inhabited present-day residential rooms and public transit access below the institutional Spire: rain-dark windows, repaired furnishings, practical bags, personal objects, commuters and quiet late-night transport. Remain tactile, contemporary, and human-scale. Avoid futuristic spectacle, legible unscripted signage, magical effects or elegant hotel-like emptiness.",
+   "first_issue": 1,
+   "tier": "draft"
+  }
+ },
+ "factions": {},
+ "regions": {
+  "EFW_OlyriaPrime": {
+   "name": "Olyria-Prime",
+   "text": "Industrial excavation colony organized around deep field cuts, worker support spaces and survey infrastructure. Visual language: black bedrock, hard industrial geometry, workwear, amber-white practical lights, cool atmospheric distance and strong subject/background separation. Avoid uniform darkness, muddy brown grading or generic mining-world sepia.",
+   "tone": ""
+  },
+  "EFW_ZenithSpire": {
+   "name": "Zenith Spire",
+   "text": "Administrative and archival center where institutional authority is expressed through controlled access, sealed records and elevated public spaces. Visual language: ordered pale/cool architectural surfaces, disciplined geometry, restrained interfaces and luminous depth that clearly separates people from background. Avoid generic neon cyberpunk clutter or beige institutional filler.",
+   "tone": ""
+  },
+  "EFW_VaelTor": {
+   "name": "Vael-Tor",
+   "text": "Rainy civilian transit and port city whose current concourses, archives, apartments, utility corridors and landing infrastructure have accumulated directly over much older foundations. Present-day life should feel ordinary, busy and inhabited: wet glass, luggage, vendors, transit signage, maintenance work, balconies, service vehicles and mixed-age construction. Older stone and the buried black dreadnought surface appear as physical layers inside that everyday city, not as a separate fantasy ruin. When the forgotten war becomes visible, preserve residents and refugees as the scale reference; avoid turning Vael-Tor into a generic battle zone, neon megacity or pristine spaceport.",
+   "tone": ""
+  },
+  "EFW_PaxAeterna": {
+   "name": "Pax-Aeterna",
+   "text": "Treaty-city and evacuation hub built around severe civic stone architecture, broad public chambers and a black treaty table whose scale is human rather than ceremonial-fantasy. In the ancient timeline, open doors and galleries keep the civilian evacuation visible from political spaces: departure gates, crowded concourses, transport queues, luggage, medical carries and ordinary city streets sit immediately beside civilization-scale decisions. In the present, the treaty vault survives as a quiet ceremonial ruin inside ordinary civic life, with the same table, empty chair and worn architecture preserved after their meaning was forgotten. Keep the location inhabited and politically human; avoid throne-room grandeur, mystical temples, glowing control chambers or abstract war-room dashboards.",
+   "tone": ""
+  }
+ },
+ "lighting": {},
+ "mood": {},
+ "keeper": [
+  {
+   "name": "Modern Theo",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/modern-theo.jpg"
+  },
+  {
+   "name": "Modern Rae",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/modern-rae.jpg"
+  },
+  {
+   "name": "Modern Adrian",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/modern-adrian.jpg"
+  },
+  {
+   "name": "Starbreaker",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/starbreaker.jpg"
+  },
+  {
+   "name": "Redlin",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/redlin.jpg"
+  },
+  {
+   "name": "Atlas",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/atlas.jpg"
+  },
+  {
+   "name": "Afterlight",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/afterlight.jpg"
+  },
+  {
+   "name": "Flux",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/flux.jpg"
+  },
+  {
+   "name": "Oryon",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/oryon.jpg"
+  },
+  {
+   "name": "Regent",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/regent.jpg"
+  },
+  {
+   "name": "Arbiter",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/arbiter.jpg"
+  },
+  {
+   "name": "Kyn",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/kyn.jpg"
+  },
+  {
+   "name": "General Mero",
+   "type": "character",
+   "image": "production/references/echoes-forgotten-war/keeper/character/mero.jpg"
+  },
+  {
+   "name": "Olyria — six location studies",
+   "type": "setting",
+   "image": "production/references/echoes-forgotten-war/keeper/setting/olyria-six-location-studies.png"
+  },
+  {
+   "name": "Zenith Spire  archival location studies",
+   "type": "setting",
+   "image": "production/references/echoes-forgotten-war/keeper/setting/zenith-spire-archival-location-studies.png"
+  },
+  {
+   "name": "Ancient desert marker location studies",
+   "type": "setting",
+   "image": "production/references/echoes-forgotten-war/keeper/setting/ancient-desert-marker-location-studies.png"
+  },
+  {
+   "name": "Vael Tor — location studies",
+   "type": "setting",
+   "image": "production/references/echoes-forgotten-war/keeper/setting/vael-tor-location-studies.png"
+  }
+ ]
+}

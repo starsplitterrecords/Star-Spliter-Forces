@@ -1,0 +1,703 @@
+{
+ "id": "azure_reach",
+ "chapter": {
+  "id": 13,
+  "name": "Azure Reach",
+  "numeral": "PARK",
+  "destination": "azure_reach",
+  "subtitle": "Azure Reach, the marine park.",
+  "branch_from": "s_azure",
+  "biome": "park"
+ },
+ "destination": {
+  "name": "Azure Reach",
+  "desc": "Signal Space shaped like a marine park: spectacular above, indispensable below.",
+  "half_size": "@v2:6000,4200",
+  "gate": "@v2:-5000,0",
+  "goal_signals": 2,
+  "climax_time": 1140,
+  "background": "@c:08182cff",
+  "drift_name": "PARK GROUNDS",
+  "biome": "park",
+  "regions": [
+   "public_entrance",
+   "turtle_queue",
+   "media_prep",
+   "glass_corridor",
+   "ops_room",
+   "guest_suite",
+   "turtle_viewing",
+   "service_corridor",
+   "staff_overlook"
+  ],
+  "completion_unlocks": [],
+  "seed": 7230
+ },
+ "biome": {
+  "surface": "@c:99f2ff17",
+  "rock": "@c:1e3a4aff",
+  "skins": {
+   "skiff": [
+    "Gift-Shop Skiff",
+    "@c:8fb8d0ff"
+   ],
+   "ram_cutter": [
+    "Turnstile Ram",
+    "@c:b08ac8ff"
+   ],
+   "rail_picket": [
+    "Ring-Light Picket",
+    "@c:e0c070ff"
+   ],
+   "mine_hauler": [
+    "Balloon Layer",
+    "@c:e07aa0ff"
+   ],
+   "wreck_lurker": [
+    "Plush Lurker",
+    "@c:a08870ff"
+   ],
+   "leech": [
+    "Lanyard Leech",
+    "@c:80b0a0ff"
+   ],
+   "gunship": [
+    "Jumbotron Gunship",
+    "@c:a0a0d0ff"
+   ],
+   "splinter_captain": [
+    "VIP Captain",
+    "@c:f0c860ff"
+   ],
+   "dreadnought": [
+    "Parade Float Hulk",
+    "@c:6a8aaaff"
+   ],
+   "echo_mote": [
+    "Bubble Mote",
+    "@c:e080c0ff"
+   ],
+   "swarm_tender": [
+    "Gull Tender",
+    "@c:c88a7aff"
+   ],
+   "shield_tug": [
+    "Cart Tug",
+    "@c:a0b0c0ff"
+   ],
+   "blink": [
+    "Flash Flicker",
+    "@c:e070e0ff"
+   ]
+  }
+ },
+ "regions": {
+  "public_entrance": {
+   "name": "PUBLIC ENTRANCE",
+   "shape": "circle",
+   "center": "@v2:-3300,0",
+   "radius": 1000,
+   "color": "@c:4fd8ffff",
+   "floor": "@c:0c2236ff",
+   "props": "plaza",
+   "density": 0.7,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 1,
+    "mine_hauler": 0.4,
+    "echo_mote": 0.4
+   },
+   "blurb": "Out front, Azure Reach looks effortless.",
+   "threat": 1
+  },
+  "turtle_queue": {
+   "name": "TURTLE PAVILION QUEUE",
+   "shape": "circle",
+   "center": "@v2:-1500,-1800",
+   "radius": 700,
+   "color": "@c:6ae0c0ff",
+   "floor": "@c:0e2434ff",
+   "props": "queue",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "leech": 0.5,
+    "swarm_tender": 0.3
+   },
+   "blurb": "Sea Turtle Thursdays. Enhanced access.",
+   "threat": 2
+  },
+  "media_prep": {
+   "name": "MEDIA PREP ZONE",
+   "shape": "circle",
+   "center": "@v2:-1200,1900",
+   "radius": 650,
+   "color": "@c:ff7ac8ff",
+   "floor": "@c:1a1a30ff",
+   "props": "backstage",
+   "density": 0.7,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.8,
+    "rail_picket": 0.6,
+    "blink": 0.3
+   },
+   "blurb": "Ring lights, sponsor backdrop, turtle imagery.",
+   "threat": 2
+  },
+  "glass_corridor": {
+   "name": "GLASS CORRIDOR",
+   "shape": "capsule",
+   "a": "@v2:-400,-200",
+   "b": "@v2:2400,-200",
+   "radius": 380,
+   "color": "@c:7fd0ffff",
+   "floor": "@c:0a2034ff",
+   "props": "aquarium",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.8,
+    "mine_hauler": 0.5,
+    "ram_cutter": 0.4
+   },
+   "blurb": "Between the spectacle and the work.",
+   "threat": 2
+  },
+  "ops_room": {
+   "name": "BACKSTAGE OPS",
+   "shape": "circle",
+   "center": "@v2:900,2000",
+   "radius": 650,
+   "color": "@c:9fffe0ff",
+   "floor": "@c:10202cff",
+   "props": "backstage",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.8,
+    "shield_tug": 0.5,
+    "rail_picket": 0.4
+   },
+   "blurb": "Clean, technical, busy.",
+   "threat": 2
+  },
+  "guest_suite": {
+   "name": "GUEST EXPERIENCE SUITE",
+   "shape": "circle",
+   "center": "@v2:1100,-2400",
+   "radius": 650,
+   "color": "@c:bcd4ffff",
+   "floor": "@c:142238ff",
+   "props": "suite",
+   "density": 0.7,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.8,
+    "shield_tug": 0.4,
+    "splinter_captain": 0.05
+   },
+   "blurb": "Sleek, sponsor-facing, composed.",
+   "threat": 2
+  },
+  "turtle_viewing": {
+   "name": "TURTLE PAVILION VIEWING",
+   "shape": "circle",
+   "center": "@v2:3600,-1300",
+   "radius": 850,
+   "color": "@c:4fd8ffff",
+   "floor": "@c:0a1c30ff",
+   "props": "aquarium",
+   "density": 1,
+   "music": "region_bloom",
+   "enemies": {
+    "skiff": 0.6,
+    "gunship": 0.3,
+    "wreck_lurker": 0.5,
+    "echo_mote": 0.5
+   },
+   "blurb": "Respectful viewing.",
+   "threat": 3
+  },
+  "service_corridor": {
+   "name": "SERVICE CORRIDOR",
+   "shape": "capsule",
+   "a": "@v2:3000,1300",
+   "b": "@v2:4900,2400",
+   "radius": 330,
+   "color": "@c:8fa8b8ff",
+   "floor": "@c:10181fff",
+   "props": "backstage",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "leech": 0.6,
+    "skiff": 0.6,
+    "wreck_lurker": 0.4
+   },
+   "blurb": "Where the ensemble can huddle quickly.",
+   "threat": 3
+  },
+  "staff_overlook": {
+   "name": "STAFF OVERLOOK",
+   "shape": "circle",
+   "center": "@v2:4900,-3100",
+   "radius": 600,
+   "color": "@c:ffb07aff",
+   "floor": "@c:201a26ff",
+   "props": "plaza",
+   "density": 0.5,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.7,
+    "blink": 0.5,
+    "echo_mote": 0.4
+   },
+   "blurb": "Quiet, end of day, the loading-dock edge.",
+   "threat": 2
+  }
+ },
+ "discoveries": {
+  "az_entrance": {
+   "kind": "character",
+   "region": "public_entrance",
+   "offset": "@v2:0,0",
+   "title": "AZURE REACH",
+   "landmark": "azure_fountain",
+   "color": "@c:4fd8ffff",
+   "contacts": [
+    "maya_serrano"
+   ],
+   "place": "public_entrance",
+   "crossover": "azure_reach",
+   "text": "A glass-and-water plaza. Out front it looks effortless. Maya Serrano keeps the wonder running."
+  },
+  "az_queue": {
+   "kind": "character",
+   "region": "turtle_queue",
+   "offset": "@v2:0,0",
+   "title": "TURTLE PAVILION QUEUE",
+   "landmark": "turtle_banner",
+   "color": "@c:6ae0c0ff",
+   "contacts": [
+    "pip_omally"
+   ],
+   "place": "turtle_queue",
+   "crossover": "azure_reach",
+   "text": "Conservation enthusiasts, VIP lanyards, and families who trusted the app. Guest Relations is handling it."
+  },
+  "az_media": {
+   "kind": "character",
+   "region": "media_prep",
+   "offset": "@v2:0,0",
+   "title": "MEDIA PREP ZONE",
+   "landmark": "ring_lights",
+   "color": "@c:ff7ac8ff",
+   "contacts": [
+    "kyler_chen"
+   ],
+   "place": "media_prep",
+   "crossover": "azure_reach",
+   "text": "Ring lights, a sponsor backdrop, and someone with a tablet making it all look easy."
+  },
+  "az_ops_signal": {
+   "kind": "signal",
+   "region": "ops_room",
+   "offset": "@v2:0,0",
+   "title": "OPS CARRIER",
+   "transmission": "star_split_slip_knife_feat_cheddr",
+   "color": "@c:9fffe0ff",
+   "place": "ops_room",
+   "text": "A carrier threading through the ops screens, quick and precise."
+  },
+  "az_suite": {
+   "kind": "character",
+   "region": "guest_suite",
+   "offset": "@v2:0,0",
+   "title": "GUEST EXPERIENCE SUITE",
+   "landmark": "bullpen",
+   "color": "@c:bcd4ffff",
+   "contacts": [
+    "beatrice_halstead"
+   ],
+   "place": "guest_suite",
+   "crossover": "azure_reach",
+   "text": "A sleek sponsor-facing meeting room. Everything in it is composed, especially the person at the head of the table."
+  },
+  "az_viewing_signal": {
+   "kind": "signal",
+   "region": "turtle_viewing",
+   "offset": "@v2:0,0",
+   "title": "RESPECTFUL VIEWING",
+   "transmission": "pwc_where_the_light_meets_the_water",
+   "color": "@c:4fd8ffff",
+   "place": "turtle_viewing",
+   "text": "A song drifting through the glass beside the habitat."
+  },
+  "az_overlook_signal": {
+   "kind": "signal",
+   "region": "staff_overlook",
+   "offset": "@v2:0,0",
+   "title": "END OF DAY",
+   "transmission": "wcr_shine",
+   "color": "@c:ffb07aff",
+   "place": "staff_overlook",
+   "text": "Sunset over the loading dock. Out front, it still looks effortless."
+  },
+  "az_service_signal": {
+   "kind": "signal",
+   "region": "service_corridor",
+   "offset": "@v2:0,0",
+   "title": "HUDDLE CARRIER",
+   "transmission": "rsls_magnetic",
+   "color": "@c:8fa8b8ff",
+   "place": "service_corridor",
+   "text": "Something pulling the whole ensemble into the corridor."
+  }
+ },
+ "contacts": {
+  "maya_serrano": {
+   "name": "Maya Serrano",
+   "faction": "Azure Reach",
+   "role": "Life-support engineer. She keeps the wonder running.",
+   "portrait": "maya_serrano"
+  },
+  "pip_omally": {
+   "name": "Pip O'Mally",
+   "faction": "Azure Reach",
+   "role": "Guest Relations. Warm, quick, already handling it.",
+   "portrait": "pip_omally"
+  },
+  "kyler_chen": {
+   "name": "Kyler Chen",
+   "faction": "Azure Reach",
+   "role": "Media production support. Camera, tablet, monitors.",
+   "portrait": "kyler_chen"
+  },
+  "beatrice_halstead": {
+   "name": "Beatrice Halstead",
+   "faction": "Azure Reach",
+   "role": "Executive. Composed, expensive, structured.",
+   "portrait": "beatrice_halstead"
+  }
+ },
+ "places": {
+  "public_entrance": {
+   "name": "Public Entrance",
+   "series": "Azure Reach",
+   "text": "A world-class glass-and-water arrival plaza.",
+   "source": "Azure Reach Issue 01, page 001"
+  },
+  "turtle_queue": {
+   "name": "Turtle Pavilion Public Queue",
+   "series": "Azure Reach",
+   "text": "Overproduced Sea Turtle Thursdays signage.",
+   "source": "Azure Reach Issue 01, pages 006, 012"
+  },
+  "media_prep": {
+   "name": "Public Media Prep Zone",
+   "series": "Azure Reach",
+   "text": "Ring lights, sponsor backdrop, turtle imagery.",
+   "source": "Azure Reach Issue 01, page 003"
+  },
+  "ops_room": {
+   "name": "Backstage Ops Room",
+   "series": "Azure Reach",
+   "text": "A clean, technical, busy control space.",
+   "source": "Azure Reach Issue 01, page 002"
+  },
+  "guest_suite": {
+   "name": "Guest Experience Suite",
+   "series": "Azure Reach",
+   "text": "A sleek sponsor-facing meeting area.",
+   "source": "Azure Reach Issue 01, pages 005, 020, 021"
+  },
+  "turtle_viewing": {
+   "name": "Turtle Pavilion Public Viewing Area",
+   "series": "Azure Reach",
+   "text": "A refined guest space beside the habitat.",
+   "source": "Azure Reach Issue 01, pages 013-018"
+  },
+  "staff_overlook": {
+   "name": "Staff Overlook",
+   "series": "Azure Reach",
+   "text": "A quiet end-of-day staff area at the loading-dock edge.",
+   "source": "Azure Reach Issue 01, page 022"
+  },
+  "service_corridor": {
+   "name": "Backstage Service Corridor",
+   "series": "Azure Reach",
+   "text": "Where the ensemble can huddle quickly.",
+   "source": "Azure Reach Issue 01, page 011"
+  }
+ },
+ "stages": [
+  {
+   "id": "az_entrance",
+   "chapter": 13,
+   "power": 50,
+   "prize": "Maya Serrano",
+   "icon": "visions",
+   "name": "Looks Effortless",
+   "place": "Public Entrance",
+   "region": "public_entrance",
+   "objective": {
+    "type": "discover",
+    "id": "az_entrance"
+   },
+   "discoveries": [
+    "az_entrance"
+   ],
+   "new_title": "THE PARK",
+   "new": "Signal Space shaped like a marine park. Spectacular above.",
+   "brief": "A glass-and-water plaza, full of guests.",
+   "reward": [
+    "Contact: Maya Serrano",
+    "Place: Public Entrance"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "az_queue",
+   "chapter": 13,
+   "power": 70,
+   "prize": "Pip O'Mally",
+   "icon": "visions",
+   "name": "Sea Turtle Thursdays",
+   "place": "Turtle Pavilion",
+   "region": "turtle_queue",
+   "objective": {
+    "type": "discover",
+    "id": "az_queue"
+   },
+   "discoveries": [
+    "az_queue"
+   ],
+   "new_title": "ENHANCED ACCESS",
+   "new": "The queue is long and the turtle is not available for release.",
+   "brief": "The Turtle Pavilion queue.",
+   "reward": [
+    "Contact: Pip O'Mally",
+    "Place: Turtle Pavilion Queue"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "az_media",
+   "chapter": 13,
+   "power": 80,
+   "prize": "Kyler Chen",
+   "icon": "visions",
+   "name": "Ring Lights",
+   "place": "Media Prep Zone",
+   "region": "media_prep",
+   "objective": {
+    "type": "discover",
+    "id": "az_media"
+   },
+   "discoveries": [
+    "az_media"
+   ],
+   "new_title": "ON CAMERA",
+   "new": "The spectacle has a crew.",
+   "brief": "The media prep zone, lights up.",
+   "reward": [
+    "Contact: Kyler Chen",
+    "Place: Media Prep Zone"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "az_corridor",
+   "chapter": 13,
+   "prize": "+120 Signal",
+   "icon": "hostile",
+   "name": "Glass Corridor",
+   "place": "Glass Corridor",
+   "region": "glass_corridor",
+   "objective": {
+    "type": "survive",
+    "seconds": 180
+   },
+   "discoveries": [],
+   "new_title": "KEEP IT INVISIBLE",
+   "new": "Hold the corridor for three minutes. Guests must not notice.",
+   "brief": "The corridor between the show and the work.",
+   "reward": [
+    "+120 Signal"
+   ],
+   "grants": {
+    "signal": 120
+   }
+  },
+  {
+   "id": "az_ops",
+   "chapter": 13,
+   "power": 100,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Backstage",
+   "place": "Backstage Ops",
+   "region": "ops_room",
+   "objective": {
+    "type": "discover",
+    "id": "az_ops_signal"
+   },
+   "discoveries": [
+    "az_ops_signal"
+   ],
+   "new_title": "INDISPENSABLE BELOW",
+   "new": "Behind the glass: schedules, fixes, radios.",
+   "brief": "The ops room is picking something up.",
+   "reward": [
+    "Track: Slip Knife (feat. Cheddr)",
+    "Place: Backstage Ops"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "az_suite",
+   "chapter": 13,
+   "power": 110,
+   "prize": "Beatrice",
+   "icon": "visions",
+   "name": "The Suite",
+   "place": "Guest Experience Suite",
+   "region": "guest_suite",
+   "objective": {
+    "type": "discover",
+    "id": "az_suite"
+   },
+   "discoveries": [
+    "az_suite"
+   ],
+   "new_title": "SPONSOR-FACING",
+   "new": "Composed, expensive, structured.",
+   "brief": "The Guest Experience Suite.",
+   "reward": [
+    "Contact: Beatrice Halstead",
+    "Place: Guest Experience Suite"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "az_viewing",
+   "chapter": 13,
+   "power": 120,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Respectful Viewing",
+   "place": "Turtle Pavilion",
+   "region": "turtle_viewing",
+   "objective": {
+    "type": "discover",
+    "id": "az_viewing_signal"
+   },
+   "discoveries": [
+    "az_viewing_signal"
+   ],
+   "new_title": "RESPECTFUL VIEWING",
+   "new": "Quiet beside the habitat.",
+   "brief": "The viewing area beside the habitat.",
+   "reward": [
+    "Track: Where the Light Meets the Water",
+    "Place: Turtle Pavilion Viewing"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "az_closing",
+   "chapter": 13,
+   "prize": "+250 Signal",
+   "icon": "elite",
+   "name": "Closing Time",
+   "place": "Park Grounds",
+   "start": "@v2:-800,900",
+   "objective": {
+    "type": "boss",
+    "at": 360,
+    "hp": 0.5
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE AT THE PARK",
+   "new": "It follows the music here too. Arrives at 6:00.",
+   "brief": "The whole park is singing. Something wants it quiet.",
+   "reward": [
+    "+250 Signal",
+    "Azure Reach complete"
+   ],
+   "grants": {
+    "signal": 250
+   }
+  },
+  {
+   "id": "azs_service",
+   "chapter": 13,
+   "side_of": "az_corridor",
+   "power": 90,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "Huddle",
+   "place": "Service Corridor",
+   "region": "service_corridor",
+   "objective": {
+    "type": "discover",
+    "id": "az_service_signal"
+   },
+   "discoveries": [
+    "az_service_signal"
+   ],
+   "new_title": "THE HUDDLE",
+   "new": "The ensemble, pulled into one corridor.",
+   "brief": "Backstage, in the service corridor.",
+   "reward": [
+    "Track: Magnetic",
+    "Place: Service Corridor"
+   ],
+   "grants": {
+
+   }
+  },
+  {
+   "id": "azs_overlook",
+   "chapter": 13,
+   "side_of": "az_viewing",
+   "power": 100,
+   "prize": "Track",
+   "icon": "signal",
+   "name": "End of Day",
+   "place": "Staff Overlook",
+   "region": "staff_overlook",
+   "objective": {
+    "type": "discover",
+    "id": "az_overlook_signal"
+   },
+   "discoveries": [
+    "az_overlook_signal"
+   ],
+   "new_title": "STILL EFFORTLESS",
+   "new": "Sunset over the loading dock.",
+   "brief": "The staff overlook, end of day.",
+   "reward": [
+    "Track: Shine (feat. Cheddr)",
+    "Place: Staff Overlook"
+   ],
+   "grants": {
+
+   }
+  }
+ ]
+}

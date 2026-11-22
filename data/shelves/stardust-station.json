@@ -1,0 +1,281 @@
+{
+ "series": "stardust-station",
+ "name": "Stardust Station",
+ "source": "RexPrompt data/shows/stardust-station",
+ "released_issues": [
+  1
+ ],
+ "issues": {
+  "1": {
+   "places": [
+    "Main Bullpen / Admin Hub",
+    "West Corridor",
+    "Break Room",
+    "The shared break room after a shift: microwave, vending machine, mismatched chairs, printer and an absurd accumulation of blank or unreadable posted notices competing for wall space. Everything is maintained and ordinary; the joke is institutional over-management, not damage or menace. No characters and no readable environmental text"
+   ],
+   "characters": [
+    "SDS_Astra",
+    "SDS_Mira",
+    "SDS_Zib",
+    "SDS_Noola",
+    "SDS_Jax",
+    "SDS_Glorp",
+    "SDS_Kreeb",
+    "SDS_Brick",
+    "SDS_Pixa",
+    "SDS_Inspector"
+   ]
+  },
+  "2": {
+   "places": [
+    "An operations worktable after a meeting has been called but before anyone sits down: three ordinary task folders or work cards are laid out with conspicuously blank owner lines, surrounded by too many chairs, tablets, pens and half-finished drinks. The station beyond continues normal work. No readable text on props"
+   ],
+   "characters": []
+  },
+  "3": {
+   "places": [
+    "The bright maintenance bay between jobs: one service panel open, ordinary approved tools laid out, a work cart ready, and a conspicuously empty space where a replacement component ought to be. Nothing is broken dramatically; the visual tension is simply that the work is here and the proper part is not. No characters and no readable labels"
+   ],
+   "characters": []
+  },
+  "4": {
+   "places": [
+    "Maintenance Bay",
+    "Lab Work Area",
+    "An ordinary internal report has finished transmitting from a cluttered work terminal in the admin hub. The physical station remains mundane around it, while a second polished corporate pane or incoming review packet appears at the edge of the composition. No readable interface text beyond the supplied editorial copy"
+   ],
+   "characters": []
+  },
+  "5": {
+   "places": [
+    "The multipurpose room has been converted overnight into aggressively pleasant corporate wellness space: orderly chairs, a portable display, cheerful blank cards, soft lighting and a large blank banner area. A practical service hatch remains visible behind the setup. No people and no readable environmental text"
+   ],
+   "characters": []
+  },
+  "6": {
+   "places": [
+    "Multipurpose Room",
+    "Quiet Room",
+    "The admin hub after the wellness materials have mostly been cleared away. A fresh cheerful corporate delivery box has just arrived with colorful blank cards and a pristine new display panel, contrasting with ordinary tools, work orders and tired furniture. No readable environmental text"
+   ],
+   "characters": []
+  },
+  "7": {
+   "places": [
+    "Berth 3 service corridor on Stardust Station; sleeping-berth wall, accessible ventilation grille, ordinary hand tools and a narrow maintained service chase",
+    "East hatch service area in Stardust Station's maintained corridor network; ordinary access hardware, thermal history display, guide track and safe local test area",
+    "The clean docking vestibule prepared for one expected visitor: a single temporary visitor badge waits by the return slot, route markings are freshly clear, and the closed hatch frames the empty arrival point. A compact professional case can be glimpsed beyond the hatch window without showing its owner. No readable environmental text"
+   ],
+   "characters": []
+  },
+  "8": {
+   "places": [
+    "Docking Vestibule",
+    "Observation-glass alcove off Stardust Station's working operations level; bright maintained corporate-station interior with the active lab visible nearby",
+    "Galley Service Corridor",
+    "An ordinary operations desk after the visitor has gone: real route sheets, maintenance notes and sample records remain scattered around a polished corporate display showing a simple unlabeled line and a newly emphasized target marker. The number itself is not readable; the visual meaning is enough"
+   ],
+   "characters": [
+    "SDS_Liaison",
+    "SDS_Station"
+   ]
+  },
+  "9": {
+   "places": [
+    "Cargo Bay / Dock 2",
+    "The metric display is now quiet beside an ordinary end-of-shift workboard. A clean corporate review form with several blank selection boxes waits on a tablet while tools, route notes and maintenance gear continue to occupy the desk. No characters and no readable environmental text"
+   ],
+   "characters": []
+  },
+  "10": {
+   "places": [
+    "Montage across Stardust Station's ordinary working spaces during the pending review: maintenance bay, lab work area, quiet-room threshold and operations level",
+    "Quiet end-of-shift Stardust Station: the admin hub remains fully lit and maintained, chairs slightly askew, tools put down, mugs and work tablets left where people will need them tomorrow. A printer sits beside an empty label roll. Through the observation window, the stars remain absurdly magnificent and completely ignored. No characters and no readable environmental text"
+   ],
+   "characters": []
+  }
+ },
+ "characters": {
+  "SDS_Astra": {
+   "name": "Astra Vega",
+   "role": "",
+   "visual": "Purple-haired station manager; polished blue blazer or neat station-management wear; ID badge; tablet or clipboard.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Mira": {
+   "name": "Mira Klare",
+   "role": "",
+   "visual": "Human scientist; practical white lab coat or science workwear over black-hole or eclipse shirt; scanner or tablet.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Jax": {
+   "name": "Jax Orien",
+   "role": "",
+   "visual": "Human technician; blue practical workwear; tool belt or work gear; visible augmented or prosthetic forearm.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Noola": {
+   "name": "Noola Vaneel",
+   "role": "",
+   "visual": "Aquatic coworker in transparent water-dome or tank-suit body rig.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Zib": {
+   "name": "Zib “Sgotcha” Diaz",
+   "role": "",
+   "visual": "Orange monkey-like fixer; yellow utility vest; practical tool belt; tape, wires and maintenance tools.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Glorp": {
+   "name": "Glorp",
+   "role": "",
+   "visual": "Translucent gelatinous office-worker silhouette; shirt and tie; binder, forms and warning labels.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Kreeb": {
+   "name": "Kreeb",
+   "role": "",
+   "visual": "Tall teal-and-yellow insectoid coworker; large yellow-green eyes; long antennae; tailored yellow shirt with teal vest and trousers; formal office-worker silhouette.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Pixa": {
+   "name": "Pixa",
+   "role": "",
+   "visual": "Friendly white-and-blue android or drone-AI body from the current approved visual reference; clean UI or dashboard.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Brick": {
+   "name": "Brick Talos",
+   "role": "",
+   "visual": "Large stone figure; dark coat and fedora; broad security silhouette.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Inspector": {
+   "name": "Inspector",
+   "role": "",
+   "visual": "Ordinary professional inspector; practical neutral clothing; tablet or checklist.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Station": {
+   "name": "Station System",
+   "role": "",
+   "visual": "",
+   "first_issue": 8,
+   "tier": "draft"
+  },
+  "SDS_Liaison": {
+   "name": "Operations Liaison",
+   "role": "",
+   "visual": "Ordinary polished StarTrust operations professional; clean corporate workwear, temporary visitor badge, compact case or tablet; composed friendly posture; credible workplace representative rather than sinister executive.",
+   "first_issue": 8,
+   "tier": "draft"
+  }
+ },
+ "settings": {
+  "SDS_Admin_Hub": {
+   "name": "Main Bullpen / Admin Hub",
+   "text": "Cramped multi-use workplace hub with desks, rolling carts, open service panels, printers, vents, monitors, corporate signage and the nearby taped-off break-room microwave. Bright, maintained and busy, with readable paths through ordinary workplace clutter.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_West_Corridor": {
+   "name": "West Corridor",
+   "text": "Narrow maintained station corridor with access panels, doors at both ends, safety lighting and a small observation window opening onto spectacular space. Ordinary route markings and service hardware keep the scale workplace-sized.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Break_Room": {
+   "name": "Break Room",
+   "text": "Ordinary shared employee break room with microwave, vending machine, mismatched chairs, printer and forms, small tables and accumulated workplace residue. Familiar institutional scale with bright maintained surfaces.",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "SDS_Maintenance_Bay": {
+   "name": "Maintenance Bay",
+   "text": "Bright maintained StarTrust maintenance bay with polished white, blue and metal surfaces, accessible equipment housings, diagnostic displays, workbench, approved clamps and mesh, temporary-repair tags and clear service space. Orderly, fully functional working area.",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "SDS_Lab_Work_Area": {
+   "name": "Lab Work Area",
+   "text": "Compact immaculate station lab adjoining operations, with sealed physical samples, scanners, test blocks, compression and vibration fixtures, chain-of-custody labels and clean blue-white StarTrust lighting. Instruments and specimens are laid out clearly on practical work surfaces.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "SDS_Multipurpose_Room": {
+   "name": "Multipurpose Room",
+   "text": "Clean configurable employee room used for meetings, training and wellness programming; ordinary chairs, portable display screen, environmental monitor and a ventilation-damper service chase with clear physical access.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "SDS_Quiet_Room": {
+   "name": "Quiet Room",
+   "text": "Small adjacent employee room with ordinary chairs, drinking water, a simple local sign, uncluttered surfaces and soft neutral station lighting.",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "SDS_Docking_Vestibule": {
+   "name": "Docking Vestibule",
+   "text": "Bright clean StarTrust docking-entry vestibule with practical hatch hardware, visitor-badge return slot, route markings and a clear transition into the working operations level.",
+   "first_issue": 7,
+   "tier": "draft"
+  },
+  "SDS_Galley_Service_Corridor": {
+   "name": "Galley Service Corridor",
+   "text": "Maintained blue-white service corridor behind the station galley with water-manifold cabinet, cable junctions, route markings, utility access and enough working clearance for a small maintenance response.",
+   "first_issue": 8,
+   "tier": "draft"
+  },
+  "SDS_Cargo_Bay": {
+   "name": "Cargo Bay / Dock 2",
+   "text": "Clean active station cargo bay with conveyor service lane, Dock 2 latch hardware, access barriers, route tags and shuttle-approach status displays. Maintained logistics equipment and clear physical geography.",
+   "first_issue": 9,
+   "tier": "draft"
+  }
+ },
+ "factions": {
+  "SDS_Station_Crew": {
+   "name": "Stardust Station Crew",
+   "text": "Mixed-species StarTrust coworkers in role-specific practical workwear and gear, sharing the same maintained station workspaces at ordinary human workplace scale."
+  },
+  "SDS_StarTrust": {
+   "name": "StarTrust Extractives",
+   "text": "Polished blue-white corporate visual language: clean signage, standardized forms and UI, labeled equipment, standardized containers, visitor badges and understated workplace branding."
+  },
+  "SDS_Inspection": {
+   "name": "Morale-and-Safety Inspection",
+   "text": "External procedural workplace inspection presence: neutral professional clothing, tablet or checklist, visitor markings and calm observational posture."
+  }
+ },
+ "regions": {
+  "SDS_Stardust_Station": {
+   "name": "Stardust Station",
+   "text": "Bright, maintained, livable workplace space station with clean readable sci-fi surfaces, ordinary offices, break rooms, labs, service corridors and cargo areas, colorful institutional signage, practical workplace clutter and polished corporate finishes showing everyday wear.",
+   "tone": ""
+  }
+ },
+ "lighting": {},
+ "mood": {},
+ "keeper": [
+  {
+   "name": "Issue 2 Core Cast Lineup (Secondary)",
+   "type": "character",
+   "image": "production/references/stardust-station/keeper/character/issue-02-core-cast-secondary-reference.jpg"
+  },
+  {
+   "name": "Noola — Approved Character Reference",
+   "type": "character",
+   "image": "production/references/stardust-station/keeper/character/sds-character-noola.png"
+  }
+ ]
+}

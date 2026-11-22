@@ -1,0 +1,427 @@
+{
+ "series": "low-tide-signal",
+ "name": "Low Tide Signal",
+ "source": "RexPrompt data/shows/low-tide-signal",
+ "released_issues": [],
+ "issues": {
+  "1": {
+   "places": [
+    "Harbor Phase — Civic Systems View",
+    "Harbor Phase — Elevated Transit",
+    "Harbor Phase — Municipal Control Room",
+    "Harbor Phase — Covered Walkways",
+    "Harbor Phase — Ordinary Adult Lives",
+    "Harbor Phase — Inland Bar",
+    "Harbor Phase — Inland Homes and Prep Spaces",
+    "Floodwall / Old Ferry Lot",
+    "Floodwall Steps",
+    "The Flats",
+    "The Flats — Exposed Service Roads",
+    "The Flats — Sector 14 Fragments",
+    "Offshore District — First Sight",
+    "District Edge",
+    "Offshore District — Runner Marks",
+    "Outer District Structures",
+    "Offshore District — Wet Ramp",
+    "Fashion Harbor Center / Dead Mall",
+    "Fashion Harbor Center — Flooded Atrium",
+    "Fashion Harbor Center — Upper Level",
+    "Fashion Harbor Center — Atrium Hold",
+    "Fashion Harbor Center — Sportswear Store",
+    "Fashion Harbor Center — Detail Sequence",
+    "Fashion Harbor Center — Map and Connections",
+    "Fashion Harbor Center — Leasing Display",
+    "Fashion Harbor Center — Route Decision",
+    "Fashion Harbor Center — Exit",
+    "Fashion Harbor Center — Exit Corridor",
+    "Fashion Harbor Center — Exterior",
+    "Glass Rail — Approach",
+    "Glass Rail — Walkway",
+    "Matt’s Apartment",
+    "District — Route Junction",
+    "Harbor Market — Approach",
+    "Harbor Market — Stairs",
+    "Harbor Market Roof",
+    "Harbor Market Roof — West Corner",
+    "Harbor Market — Exit",
+    "Harbor Market — Walkway",
+    "The Return Route"
+   ],
+   "characters": [
+    "C_lts_matt_donnelly",
+    "C_lts_chris_barlow",
+    "C_lts_ryan_kelleher",
+    "C_lts_kevin_marsh",
+    "C_lts_justin_rourke",
+    "C_lts_nicole_hanley"
+   ]
+  },
+  "2": {
+   "places": [],
+   "characters": []
+  },
+  "3": {
+   "places": [],
+   "characters": []
+  },
+  "4": {
+   "places": [
+    "The Glass Rail"
+   ],
+   "characters": []
+  },
+  "5": {
+   "places": [
+    "Outer District / Outer Structures",
+    "Deep District"
+   ],
+   "characters": []
+  },
+  "6": {
+   "places": [],
+   "characters": []
+  },
+  "7": {
+   "places": [
+    "Harbor Phase — Inland City"
+   ],
+   "characters": []
+  }
+ },
+ "characters": {
+  "C_lts_matt_donnelly": {
+   "name": "Matt Donnelly",
+   "role": "would-be leader / hunger for useful authority",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_lts_ryan_kelleher": {
+   "name": "Ryan Kelleher",
+   "role": "working-water competence / reluctant authority",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_lts_chris_barlow": {
+   "name": "Chris Barlow",
+   "role": "mythmaker / irony shield",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_lts_justin_rourke": {
+   "name": "Justin Rourke",
+   "role": "performer of danger",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_lts_nicole_hanley": {
+   "name": "Nicole Hanley",
+   "role": "district-fascinated adult participant",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "C_lts_kevin_marsh": {
+   "name": "Kevin Marsh",
+   "role": "risk forecaster / socially hesitant warning voice",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "draft"
+  }
+ },
+ "settings": {
+  "S_lts_harbor_phase_inland": {
+   "name": "Harbor Phase — Inland City",
+   "text": "Harbor Phase — Inland City — Busy adapted coastal city with commuters, families, shops, cafes, occupied apartments, raised transit, flood-control gates, playgrounds and public-service screens. Gray-blue rain, civic glass, warm human interiors, wet paving and practical public lighting.",
+   "first_issue": 7,
+   "tier": "draft"
+  },
+  "S_lts_harbor_phase": {
+   "name": "Harbor Phase — Civic Systems View",
+   "text": "Harbor Phase — Civic Systems View — Wide civic view of a functioning inland coastal city whose flood adaptation works: transit, homes, freight, shops, public space, and ordinary evening life. Visual language: gray-blue rain, raised rail, flood-control gates, apartment windows, civic screens, automated vehicles, storefront warmth, wet glass and concrete.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_harbor_phase_transit": {
+   "name": "Harbor Phase — Elevated Transit",
+   "text": "Harbor Phase — Elevated Transit — Raised transit above the floodwall carrying ordinary commuters through a city that has learned to make routine tidal problems manageable. Visual language: rain-streaked windows, passengers reading and talking, floodwalls below, calm route displays, wet city light.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_municipal_control_room": {
+   "name": "Harbor Phase — Municipal Control Room",
+   "text": "Harbor Phase — Municipal Control Room — Quiet infrastructure operations room. Human judgment genuinely matters during storms and failures; on an ordinary shift Matt mostly watches competent systems handle routine work. Visual language: blue-gray monitors, drainage maps, drone feeds, rain on glass, staffed but calm workstations.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_harbor_phase_walkway": {
+   "name": "Harbor Phase — Covered Walkways",
+   "text": "Harbor Phase — Covered Walkways — Lively covered public realm where people commute, meet, eat, shop, parent, and make plans. Comfortable civic life is real here. Visual language: wet paving, planted walkways, umbrellas, food stalls, families, commuters, warm storefronts and restrained civic lighting.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_inland_montage": {
+   "name": "Harbor Phase — Ordinary Adult Lives",
+   "text": "Harbor Phase — Ordinary Adult Lives — Cross-section of six functioning adult lives that fit differently: technical work, marine repair, risk review, serious physical training, ordinary plans, personal projects, and private routines. Visual language: specific practical interiors, workshops, climbing wall, screens, tools, kitchens, rain outside windows, personal clutter.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_inland_bar": {
+   "name": "Harbor Phase — Inland Bar",
+   "text": "Harbor Phase — Inland Bar — Warm, busy neighborhood bar where the old friend group actually enjoys itself. Their restlessness exists inside a socially alive city, not an empty room. Visual language: warm light against rain, crowded booths, regulars, pints, food, overlapping conversations, polished wet windows.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_inland_homes": {
+   "name": "Harbor Phase — Inland Homes and Prep Spaces",
+   "text": "Harbor Phase — Inland Homes and Prep Spaces — Distinct apartments, workshops, lockers, and kitchen tables where each person packs for the run around an existing adult life. Visual language: bags, boots, headlamps, tide screens, laundry, dishes, work gear, folded map, rain-lit windows, lived-in clutter.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_floodwall_ferry_lot": {
+   "name": "Floodwall / Old Ferry Lot",
+   "text": "Floodwall / Old Ferry Lot — Edge of inhabited Harbor Phase where tide runners gather with cheap gear before descending to the flats. Visual language: open trunks, wet pavement, headlamps, contractor work lights, tide boards, cheap gear, cold mist, floodwall mass.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_flood_steps": {
+   "name": "Floodwall Steps",
+   "text": "Floodwall Steps — Concrete steps and service access at the old ferry lot where runners descend from protected civic infrastructure onto exposed seabed. Visual language: wet concrete stairs, headlamps, warning boards, black mud below, floodwall looming behind, practical lights only.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_flats": {
+   "name": "The Flats",
+   "text": "The Flats — Mud, old pavement, broken pilings, shallow pools, road fragments, channels, fog, and distance between Harbor Phase and the offshore district. Visual language: black tidal mud, boot suction, shell crunch, weak practical lights, fog swallowing depth, Harbor Phase dim behind.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_flats_service_roads": {
+   "name": "The Flats — Exposed Service Roads",
+   "text": "The Flats — Exposed Service Roads — Old submerged service road markings and access fragments emerge from mud as the crossing approaches offshore construction geometry. Visual language: broken road lines under black mud, rusted signs, shell debris, headlamp beams, rain, distant massive forms in fog.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_flats_sector_14": {
+   "name": "The Flats — Sector 14 Fragments",
+   "text": "The Flats — Sector 14 Fragments — Concrete foundations, transit fragments, and damaged Sector 14 signage protrude from the flats. Visual language: half-buried sign panels, concrete stubs, old transit markings, black water channels, fog and practical work lights.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_reach_first_sight": {
+   "name": "Offshore District — First Sight",
+   "text": "Offshore District — First Sight — The vast unfinished offshore district emerges through fog beyond the flats, too large to be dismissed as outskirts. Visual language: tower silhouettes, elevated structures, rain, fog, black tidal mirror, tiny figures dwarfed between Harbor Phase and the abandoned future.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_near_reach": {
+   "name": "Outer District / Outer Structures",
+   "text": "Outer District / Outer Structures — Parking structures, broken pedestrian bridges, dead plazas, flooded service roads, support columns, and informal runner markings. Visual language: salt-stained concrete, floodlines, reflective tape, runner graffiti, black water moving through lower levels.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "S_lts_reach_edge": {
+   "name": "District Edge",
+   "text": "District Edge — The first walkable edge of the offshore district where exposed access routes, broken decks, and water channels turn rumor into physical geography. Visual language: salt-stained concrete, black channels, broken ramps, fog, high dark shapes, route decisions under headlamps.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_reach_runner_marks": {
+   "name": "Offshore District — Runner Marks",
+   "text": "Offshore District — Runner Marks — Arrows, warnings, timing claims, profanity, and runner tags layered over official abandoned infrastructure. Visual language: spray paint, reflective tape, scratched arrows, wet walls, crude warnings, practical beams catching letters.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_near_reach_structures": {
+   "name": "Outer District Structures",
+   "text": "Outer District Structures — Flooded decks, dead plazas, sagging walkways, and first audible signs of other runners farther in. Visual language: broken pedestrian bridges, wet metal, distant work lights, black water below, skeletal concrete, laughter in fog.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_reach_ramp": {
+   "name": "Offshore District — Wet Ramp",
+   "text": "Offshore District — Wet Ramp — A slick ramp and elevated access route used to climb from the flats into the first accessible structures. Visual language: wet concrete incline, railings, slime, handheld lights, slipping boots, black water below.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_fashion_harbor_center": {
+   "name": "Fashion Harbor Center / Dead Mall",
+   "text": "Fashion Harbor Center / Dead Mall — A recent, canceled commercial-social future. Lower levels submerged, upper floors still accessible and temporarily occupied by runners. Visual language: escalators into black water, broken signage, food-court ghosts, dead advertisements, upper-level work lights, scattered runner occupation.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_atrium": {
+   "name": "Fashion Harbor Center — Flooded Atrium",
+   "text": "Fashion Harbor Center — Flooded Atrium — The central mall void, with black water filling lower levels and escalators descending into floodwater. Visual language: wide atrium, broken skylight, escalators into water, dead advertisements, dripping floors, practical beams over reflective black water.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_upper_level": {
+   "name": "Fashion Harbor Center — Upper Level",
+   "text": "Fashion Harbor Center — Upper Level — Accessible upper floor where runners sit, argue routes, change socks, eat noodles, and rest under clipped work lights. Visual language: storefronts, dead kiosks, sleeping bags, headlamps, LED strips, wet tile, scattered humans making temporary use of abandoned space.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_atrium_hold": {
+   "name": "Fashion Harbor Center — Atrium Hold",
+   "text": "Fashion Harbor Center — Atrium Hold — A pause above the flooded atrium where the group checks time, jokes, watches Justin wander, and feels the seduction of staying. Visual language: railing over black water, wet tile, runners in pockets of work light, damp jackets, route debates.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_sportswear": {
+   "name": "Fashion Harbor Center — Sportswear Store",
+   "text": "Fashion Harbor Center — Sportswear Store — A half-looted sportswear store where Chris finds old branded clothing and the group roasts him. Visual language: fallen mannequins, damp racks, faded Harbor Phase Mariners gear, headlamp comedy, mud on glossy retail surfaces.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_detail_sequence": {
+   "name": "Fashion Harbor Center — Detail Sequence",
+   "text": "Fashion Harbor Center — Detail Sequence — Food court, kiosks, transit access, play areas, ads, and silence; the mall still reads as designed for ordinary life. Visual language: food court signage, kiosk ghosts, play structure partly submerged, dead ads, no-signal screens, water stains.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_map": {
+   "name": "Fashion Harbor Center — Map and Connections",
+   "text": "Fashion Harbor Center — Map and Connections — Offline directory maps and faded route displays connect the mall to transit and residential districts; cracked screens, water damage, wet walls and figures huddled over the map.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_leasing_display": {
+   "name": "Fashion Harbor Center — Leasing Display",
+   "text": "Fashion Harbor Center — Leasing Display — Luxury residence and commercial leasing material for Harbor Phase East and the developer-branded Promise District, promising a future beside black floodwater. Visual language: glossy renderings, cracked display cases, model apartments, black floodwater outside, dead sales copy.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_atrium_routes": {
+   "name": "Fashion Harbor Center — Route Decision",
+   "text": "Fashion Harbor Center — Route Decision — Contradictory runner advice, dangerous bridge options, and Ryan's practical route judgment inside the mall. Visual language: route graffiti, sagging bridge signs, black water visible through rails, group gathered in headlamp light.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_glass_rail": {
+   "name": "The Glass Rail",
+   "text": "The Glass Rail — Broken elevated rail line connecting the mall, Harbor Market, and deeper sectors; gives height, views, and false mastery. Visual language: broken panels, fog at height, black water below, skeletal supports, runner tags, wet metal.",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "S_lts_harbor_market_roof": {
+   "name": "Harbor Market Roof",
+   "text": "Harbor Market Roof — Upper deck and roofline above flooded lower floors where runners gather while the tide is out. Visual language: work lights clipped to conduit, people on ventilation units, cheap beer, food, fog, drowned skyline, practical lights on roofs and bridges.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_deep_reach": {
+   "name": "Deep District",
+   "text": "Deep District — Unfinished schools, parks, housing, plazas, civic buildings, transit loops, clinics and community spaces under flat coastal light; ordinary municipal architecture, faded wayfinding, empty streets, tide marks and windblown debris.",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "S_lts_glass_rail_approach": {
+   "name": "Glass Rail — Approach",
+   "text": "Glass Rail — Approach — approach to the broken elevated transit spine where fog reveals height, missing panels, and routes deeper into the offshore district Visual language: wet concrete ramps, skeletal rail supports, fog, black water below, runner tags, headlamps and clipped work lights.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_glass_rail_walkway": {
+   "name": "Glass Rail — Walkway",
+   "text": "Glass Rail — Walkway — narrow broken elevated walkway linking the dead mall to the rail and deeper sectors Visual language: wet metal decking, broken glass panels, black water below, fog at height, distant temporary runner lights.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_harbor_market_approach": {
+   "name": "Harbor Market — Approach",
+   "text": "Harbor Market — Approach — approach through upper commercial structures toward the Harbor Market roof used as a runner gathering place Visual language: service decks, faded market signs, ventilation units, stairs, work lights, fog and wet concrete.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_harbor_market_exit": {
+   "name": "Harbor Market — Exit",
+   "text": "Harbor Market — Exit — route away from the roof as runners pack out and the water starts coming back Visual language: wet exit stairs, shoulder lights, bags closing, black water visible below, fog swallowing the way back.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_harbor_market_stairs": {
+   "name": "Harbor Market — Stairs",
+   "text": "Harbor Market — Stairs — interior/exterior service stairs connecting market levels to the occupied roof Visual language: concrete stairs, rusted rails, old wayfinding, damp walls, headlamps and practical work lights.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_harbor_market_walkway": {
+   "name": "Harbor Market — Walkway",
+   "text": "Harbor Market — Walkway — elevated circulation around the market connecting roof spaces and rail approaches Visual language: wet walkway, broken canopy, ventilation housings, black water glimpses, taped route marks, fog.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_harbor_market_west_corner": {
+   "name": "Harbor Market Roof — West Corner",
+   "text": "Harbor Market Roof — West Corner — quieter corner of the runner roof where the city and deeper district can both be seen Visual language: roof edge, vents, temporary seating, cheap beer, clipped LEDs, fog, drowned skyline and dark water.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_corridor": {
+   "name": "Fashion Harbor Center — Exit Corridor",
+   "text": "Fashion Harbor Center — Exit Corridor — upper mall corridor where returning water becomes visible through openings and route choices tighten Visual language: dead storefronts, wet tile, water reflections advancing, emergency signs, practical beams.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_exit": {
+   "name": "Fashion Harbor Center — Exit",
+   "text": "Fashion Harbor Center — Exit — upper-level pack-out point leading from temporary runner occupation back outside Visual language: storefront shutters, bags, damp jackets, route marks, work lights, dark exterior beyond.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_mall_exterior": {
+   "name": "Fashion Harbor Center — Exterior",
+   "text": "Fashion Harbor Center — Exterior — salt-stained exterior of the dead mall, weakly animated by temporary runner light during low tide Visual language: broad concrete facade, broken signage, clipped LEDs in upper levels, black water, fog.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_matt_apartment": {
+   "name": "Matt’s Apartment",
+   "text": "Matt’s Apartment — ordinary comfortable apartment where practical gear begins to accumulate by the door as low tides reorganize his schedule Visual language: lived-in furniture, work jacket, boots, contractor bag, charging gear, rain-lit windows, no dystopian sterility.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_reach_junction": {
+   "name": "District — Route Junction",
+   "text": "District — Route Junction — physical fork where runner marks, elevation, water, and local judgment force a route choice Visual language: concrete junction, faded signs, spray arrows, puddles, rail shadows, fog and headlamp beams.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "S_lts_return_route": {
+   "name": "The Return Route",
+   "text": "The Return Route — same flats and outer structures under a changing tide; familiar geography becomes harder as channels refill Visual language: rising black water, shrinking mud paths, wet concrete, hurried practical lights, fog, moving reflections.",
+   "first_issue": 1,
+   "tier": "draft"
+  }
+ },
+ "factions": {},
+ "regions": {
+  "R_lts_inland": {
+   "name": "Inland Harbor Phase",
+   "text": "Inland Harbor Phase — Adapted coastal city of occupied apartments, raised transit, flood-control gates, shops, bars, workplaces, playgrounds, public screens and covered walkways. Soft gray-blue rain, civic glass, wet paving, warm interior windows and practical public lighting.",
+   "tone": ""
+  },
+  "R_lts_threshold": {
+   "name": "Threshold / Floodwall",
+   "text": "Threshold / Floodwall — Old ferry lot, staging area, flood steps and tide boards against the massive floodwall. Wet asphalt, cold mist, open car trunks, vehicle headlights, contractor-white work lights and dark concrete.",
+   "tone": ""
+  },
+  "R_lts_flats": {
+   "name": "The Flats",
+   "text": "The Flats — Exposed seabed of black tidal mud, old pavement, channels, broken pilings, shell debris, shallow teal pools and dense fog. Boots sink and splash; distant sodium reflections shimmer across wet surfaces.",
+   "tone": ""
+  },
+  "R_lts_reach": {
+   "name": "Offshore District",
+   "text": "Offshore District — Salt-stained abandoned offshore districts exposed at low tide: wet concrete, rusted railings, flooded lower levels, broken walkways, black water, deep cyan fog and faded institutional-green surfaces. Headlamps and work lights fall off quickly in fog.",
+   "tone": ""
+  }
+ },
+ "lighting": {},
+ "mood": {},
+ "keeper": []
+}

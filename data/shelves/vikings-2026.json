@@ -1,0 +1,712 @@
+{
+ "series": "vikings-2026",
+ "name": "Vikings 2026!",
+ "source": "RexPrompt data/shows/vikings-2026-s1",
+ "released_issues": [
+  1
+ ],
+ "issues": {
+  "1": {
+   "places": [
+    "Municipal Temporal Displacement Integration Department waiting room: scuffed pale walls, institutional tile floor, molded waiting-room chairs, fluorescent drop-ceiling lights, doors and other waiting citizens behind the trio, and an illuminated queue display reading “Now Serving: G-53”",
+    "Flat cream municipal document page with dark navy header bars, pale blue form rules, monospaced",
+    "typewriter body text, small red checkbox marks, a tilted red CASE OPEN stamp, and a small inset of the Issue 1 title image labeled as an attached visual reference",
+    "Open North Atlantic under a cold overcast sky: slate-blue rough water, pale horizon haze, a small weathered clinker-built longship with square brown sail, carved animal-head prow, rigging, shields, wet timber, and a small crew braced against the swell",
+    "Lower New York Harbor in bright gray daylight. The Viking longship moves toward the Lower Manhattan skyline among modern harbor traffic; dense towers, ferries",
+    "Patrol Craft, Wake, Green-Gray Water, Rigging And The Carved Prow Make The Historical",
+    "Modern Collision Literal",
+    "Working Lower Manhattan waterfront at close range: stone",
+    "Concrete Seawall, Weathered Pier, Large Silver-And-White Ferry Or Passenger Vessel Alongside, Rough Harbor Water, Skyline Behind, Wet Longship Deck, Coiled Rope And Carved Prow",
+    "Wet industrial harbor pier with Manhattan across the water, scattered shells and grime, bollard, the moored longship and carved prow. Flat cold daylight. Officer Miller is a middle-aged ordinary municipal worker with short dark hair",
+    "Graying Beard, Rectangular Glasses, Navy Work Jacket Over Gray Hoodie, Cargo Pants, Boots, Clipboard And Pen",
+    "Same wet working pier. Rusted industrial crane, warehouse wall, gray sky, longship timber, harbor grit and modern high-rises define the mixed old",
+    "new geography. A vivid orange synthetic cord is the visual accent",
+    "Same wet pier with yellow-painted curb, gray harbor water, ferry",
+    "workboat behind, steel railings and bollards. Fluorescent yellow paper",
+    "plastic wristband is the focal modern object; Bjorn already wears simple metal arm rings",
+    "Interior of an ordinary gray municipal cargo",
+    "passenger van with steel mesh partition, vinyl bench, dark utilitarian trim and front driver position. Officer Miller drives; Bjorn and Gunnar sit tightly packed in the rear with clear plastic document sleeves",
+    "Forms",
+    "Exterior of a plain mid-century municipal office slab at blue-purple dusk. Gridded concrete facade with lit fluorescent windows, glass entry lobby, steps and handrails, sign reading MUNICIPAL DEPARTMENT OF TEMPORAL INTEGRATION, white DTI TRANSPORT van at curb, cracked pavement and a red temporary line",
+    "Cable Leading Toward The Entrance",
+    "Small worn DTI intake",
+    "Mediation Office: Stained Off-White Walls, Peeling Notice Board, Drop Ceiling And Long Fluorescent Fixtures, Gray Molded Chairs, Beige Laminate Desk, File Trays, Calculator",
+    "computer, paper stacks, cubicle partitions and ordinary municipal signage. Flat cool fluorescent lighting",
+    "Same DTI intake office, same beige desk, pink municipal form, blue pen, computer keyboard",
+    "monitor, pale partitions and fluorescent ceiling. Maintain desk geography from page 11",
+    "Same DTI office. Worn laminate desk with paperwork, binder clips, black pen and a large rectangular red ink pad",
+    "tray. Fluorescent institutional light and dingy floor",
+    "Walls Remain Consistent",
+    "Same DTI intake office and beige desk. Pink municipal form, red ink pad, computer keyboard and monitor; Bjorn’s thumb and palm are visibly stained red after the print",
+    "Same shabby DTI office viewed low across a scarred, peeling laminate desk. A thick manila case folder lies centered in the foreground. Fluorescent fixture glows overhead; dingy notice-covered walls and shelves recede behind Bjorn",
+    "Exterior of the ordinary Department of Temporal Integration office at dusk. Heavy glass entrance doors sit at the top of broad brushed-concrete steps descending to a New York City street. Faint city glow and sodium streetlight gather beyond the steps; buses and commuters remain ordinary background shapes. Institutional glass and concrete, not a fortress or fantasy architecture",
+    "The same ordinary Department of Temporal Integration entrance and broad brushed-concrete steps at dusk, continuing directly from the preceding splash. Closed glass doors and the top landing recede behind the trio. The stairs descend to a New York City sidewalk with subdued bus lights, sodium streetlight, and a few commuters. Keep the municipal building plain and credible",
+    "Flat cream closing municipal document page using the same navy header, pale blue form rules, monospaced",
+    "typewriter text and red stamp language as page 2. A bordered inset at upper right reproduces page 15 and is labeled FILED EVIDENCE",
+    "Closing Scene"
+   ],
+   "characters": [
+    "19020mp40",
+    "qwtivx28x",
+    "ywg8bdjvl",
+    "tnvx3hlo0",
+    "8cdad580-9a49-47ad-b906-5901f54e8193"
+   ]
+  },
+  "2": {
+   "places": [
+    "Narrow Bushwick apartment stairwell at night, rising through repeated flights and landings toward the fifth-floor corridor and apartment",
+    "Bushwick rooftop at dawn, with neighborhood rooflines, street corridors, shadows, water towers, antennas and receding blocks",
+    "New York City subway platform with a northbound train arriving from depth under practical fluorescent light",
+    "Bushwick sidewalk coffee cart at morning rush, framed tightly at counter height",
+    "Mundane neighborhood bank branch interior: fluorescent panels, cheap carpet or tile, queue stanchions, desks, teller counter, brochure rack and ordinary security glass",
+    "Grand but recognizably public New York library interior with tall shelving, mezzanine or balcony, reading tables and deep civic architecture",
+    "Modest Bushwick public park or green on a pleasant April day, with broad usable grass, budding trees and open spring sky",
+    "Plain municipal or nonprofit multipurpose meeting room with folding or stackable chairs in a circle, institutional floor, coffee urn, paper cups and tables against the wall",
+    "Long view down a familiar Bushwick sidewalk with repeating stoops, storefront edges, street trees and building entrances",
+    "Apartment 5B table at night, warm and domestic, with a plain official review notice and ordinary household objects",
+    "Municipal hearing-center security checkpoint and fluorescent corridor, morning, with metal-detector arch and adjacent X-ray scanner",
+    "Conveyor",
+    "Bushwick apartment building stairwell and fifth-floor landing, night",
+    "Bushwick apartment building stairs and fifth-floor landing",
+    "Bushwick studio apartment 5B",
+    "Bushwick studio kitchenette and radiator",
+    "Bushwick studio kitchenette",
+    "Table",
+    "Recurring Bushwick neighborhood bodega",
+    "Bushwick studio apartment kitchenette",
+    "Bushwick studio main window and fire escape",
+    "Fifth-floor hallway outside apartment 5B, before the first meal",
+    "Bushwick studio table",
+    "Phone On Speaker",
+    "Bushwick studio apartment",
+    "Carrie's phone",
+    "Bushwick studio doorway",
+    "Bushwick studio rear window and doorway",
+    "Bushwick studio doorway, fifth-floor hallway, and apartment 5B late night",
+    "Bushwick apartment building exterior and roofline, late night"
+   ],
+   "characters": [
+    "astrid",
+    "kin-man-1",
+    "kin-man-2",
+    "coffee-vendor",
+    "group-facilitator",
+    "participant-1987",
+    "aac9aa72-d4bc-437a-b624-9e011a28a413",
+    "3629c4e2-6cb8-484e-8f2f-a1744201a8f5",
+    "dfh4bu71y"
+   ]
+  },
+  "3": {
+   "places": [
+    "Bushwick apartment 5B, cloudy early morning",
+    "Bushwick apartment 5B and exterior fire escape, early morning",
+    "Bushwick apartment building roof, cloudy morning",
+    "Bushwick apartment 5B, morning",
+    "Bushwick apartment building roof, late morning",
+    "Bushwick bodega, afternoon",
+    "Bushwick apartment building roof, late afternoon under lingering clouds",
+    "Bushwick apartment building roof, early evening",
+    "Bushwick apartment building roof at dusk",
+    "Bushwick apartment 5B and roof access, evening",
+    "Bushwick apartment building roof, evening",
+    "Bushwick apartment building roof, later evening",
+    "Bushwick apartment building roof under clearing night sky",
+    "Bushwick apartment building roof, clear night",
+    "Bushwick street above a subway entrance, following morning"
+   ],
+   "characters": [
+    "bvfeqb22e"
+   ]
+  },
+  "4": {
+   "places": [
+    "Bushwick subway entrance at street level, morning",
+    "Bushwick subway entrance, morning",
+    "Subway fare-control area",
+    "Subway platform",
+    "Subway car leaving Bushwick",
+    "Moving subway car",
+    "Subway car",
+    "Platform",
+    "Subway car approaching a station",
+    "Transfer station",
+    "Manhattan street, late morning",
+    "Street food cart near the temporary annex",
+    "Temporary municipal annex exterior",
+    "Temporary DTI annex reception",
+    "Exit",
+    "Street outside annex",
+    "Subway Entrance",
+    "Final subway train toward Bushwick",
+    "Bushwick subway station and unfamiliar exit",
+    "Bushwick street outside alternate subway exit",
+    "Bushwick block near the bodega",
+    "Bushwick neighborhood sidewalk",
+    "Fifth-floor hall outside apartment 5B",
+    "Bushwick apartment 5B at dusk",
+    "Bushwick block at dawn"
+   ],
+   "characters": [
+    "qgp7joghv"
+   ]
+  },
+  "5": {
+   "places": [
+    "Bushwick sidewalk coffee cart, morning",
+    "Bushwick sidewalk and street coffee cart, morning",
+    "Street coffee cart, morning",
+    "Street coffee cart, another morning",
+    "Bushwick sidewalk beyond the coffee cart, morning",
+    "Bushwick studio apartment and neighborhood bodega, daytime",
+    "Neighborhood bodega",
+    "Neighborhood bodega, later visit",
+    "Neighborhood bodega counter",
+    "Bushwick studio apartment, evening",
+    "Neighborhood bodega, later",
+    "Bushwick laundromat, daytime",
+    "Bushwick laundromat",
+    "Bushwick laundromat, later visit",
+    "Fifth-floor hallway outside apartment 5B",
+    "Bushwick neighborhood cross-cut: coffee cart, bodega, laundromat, apartment hallway",
+    "Bushwick studio apartment and exterior block at dusk",
+    "Glass-front neighborhood bank seen from the sidewalk, late afternoon"
+   ],
+   "characters": [
+    "laundromat-regular"
+   ]
+  },
+  "6": {
+   "places": [
+    "Ordinary neighborhood bank lobby and glass facade, morning",
+    "Busy NYC sidewalk approaching the bank",
+    "Outside and inside ordinary bank branch",
+    "Bank teller desk",
+    "Bank manager desk",
+    "Bank manager desk and supply alcove",
+    "Sidewalk outside the bank",
+    "Bushwick studio apartment and table",
+    "Bodega aisles and counter",
+    "Bodega counter",
+    "Recurring Bushwick street coffee cart near the apartment route",
+    "Bushwick studio apartment and kitchenette",
+    "Fifth-floor hallway outside 5B",
+    "Fifth-floor hallway",
+    "Apartment Doorway",
+    "Bushwick studio table at evening",
+    "Bushwick studio apartment late evening",
+    "Bushwick studio apartment, late night",
+    "Apartment 5B table at night with newspaper, map, key and bank card"
+   ],
+   "characters": [
+    "gary",
+    "kevin",
+    "henderson"
+   ]
+  },
+  "7": {
+   "places": [
+    "Neighborhood public library entrance and first view of shelves, daytime",
+    "Bushwick studio apartment, morning",
+    "Neighborhood public library exterior and entrance",
+    "Neighborhood public library main floor",
+    "Neighborhood public library copier and stacks junction",
+    "Neighborhood public library periodicals area",
+    "Neighborhood public library catalog terminal and stacks",
+    "Neighborhood public library nonfiction stacks",
+    "Neighborhood public library literature stacks",
+    "Neighborhood public library reading table",
+    "Neighborhood public library history section",
+    "Neighborhood public library history table",
+    "Neighborhood public library history stacks and service desk",
+    "Neighborhood public library service desk",
+    "Neighborhood public library checkout desk",
+    "Neighborhood public library checkout and copier area",
+    "Neighborhood public library checkout",
+    "Neighborhood public library exit",
+    "Neighborhood public library entrance and return slot",
+    "Bushwick sidewalk outside the library",
+    "Bushwick studio apartment, late evening",
+    "Bushwick street in early spring with budding trees and changing weather"
+   ],
+   "characters": []
+  },
+  "8": {
+   "places": [
+    "Bushwick bus stop on a mild April morning",
+    "Bushwick bus stop, mild spring morning",
+    "Bushwick bus stop, spring morning",
+    "Bushwick bus stop as the bus approaches",
+    "NYC city bus, moving through Brooklyn in spring",
+    "NYC city bus, moving through Brooklyn",
+    "City bus arriving near Maria Hernandez Park, spring",
+    "Maria Hernandez Park, spring daytime",
+    "Maria Hernandez Park bench, spring daytime",
+    "Maria Hernandez Park edge, spring afternoon",
+    "Bushwick fire escape and apartment window, late afternoon",
+    "Bushwick apartment, fire escape and roof access, late afternoon",
+    "Fifth-floor hallway and apartment doorway, late afternoon",
+    "Bushwick studio apartment, late afternoon",
+    "Bushwick studio apartment and fire escape during spring thunderstorm",
+    "Bushwick studio apartment during storm",
+    "Bushwick fire escape and studio apartment after the spring storm",
+    "Apartment 5B after the spring storm, calm evening"
+   ],
+   "characters": []
+  },
+  "9": {
+   "places": [
+    "Apartment 5B, morning routine already underway",
+    "Bushwick studio apartment, early morning: sleeping area, tiny kitchenette",
+    "table, brass key by the door, books, laundry and groceries accumulated from Issue 7",
+    "Recurring Bushwick bodega: front counter, narrow delivery aisle and sidewalk delivery area in ordinary morning light",
+    "Safe Cave, late morning: table, window and ordinary household clutter from the established apartment",
+    "Safe Cave kitchenette and sleeping edge, daytime. Ordinary apartment scale; the electrical fault is minor and contained",
+    "Safe Cave table, then the apartment-building stoop later the same day",
+    "Plain community-center multipurpose room: mismatched stackable chairs, folding table, coffee urn, bulletin board, radiator and mixed fluorescent",
+    "daylight. No therapy-office staging",
+    "Same community-center multipurpose room during the first meeting",
+    "Same community-center multipurpose room, later in the first meeting",
+    "Community-center hallway and front sidewalk immediately after the first meeting",
+    "Safe Cave, afternoon: tool storage area and lease-painted wall",
+    "Fifth-floor stair landing and hallway outside apartment 5B",
+    "Safe Cave doorway, kitchenette and table during an ordinary grocery return",
+    "Recurring bodega front counter during a quiet morning lull",
+    "Apartment doorway, Safe Cave interior and a brief view of the block outside",
+    "Community-center multipurpose room during Bjorn's next support-group meeting",
+    "Same community-center multipurpose room during the same meeting",
+    "Community-center multipurpose room during cleanup, then hallway",
+    "Neighborhood coffee cart and nearby sidewalk bench in late afternoon",
+    "Safe Cave, early evening as people return from separate routines",
+    "Recurring bodega front counter near closing time",
+    "Sidewalk outside the community center and the entry corridor before a later meeting",
+    "Community-center multipurpose room during a later support-group meeting",
+    "Safe Cave, evening, with ordinary repair, groceries, coffee and library books in progress at the same time",
+    "Safe Cave, late evening: window, table and whole-room geography with everyone returning to ordinary separate routines",
+    "Hallway outside apartment 5B, morning"
+   ],
+   "characters": []
+  },
+  "10": {
+   "places": [
+    "Apartment 5B and building entrance during separate morning departures",
+    "Bushwick studio apartment, bright morning",
+    "Bushwick apartment hallway, stoop and sidewalk",
+    "Bushwick stoop, morning",
+    "Bushwick sidewalk, morning",
+    "Bushwick neighborhood sidewalks",
+    "Bushwick neighborhood sidewalk outside library route",
+    "Bushwick apartment block at dusk, garbage night",
+    "Bushwick curbside garbage area, dusk",
+    "Bushwick curbside during sanitation collection",
+    "Bushwick sidewalk after sanitation truck passes",
+    "Bushwick rear alley",
+    "Fire-Escape Work Area, Evening",
+    "Fire-Escape Work Area",
+    "Fifth-floor hallway outside apartment 5B, afternoon",
+    "Bushwick studio apartment, afternoon",
+    "Bushwick apartment doorway and studio",
+    "Fifth-floor hallway and apartment doorway at dusk",
+    "Bushwick studio apartment, dusk",
+    "Bushwick building mailboxes and apartment 5B table, evening"
+   ],
+   "characters": []
+  },
+  "11": {
+   "places": [
+    "Apartment 5B table with municipal review notice, morning",
+    "Bushwick building mailboxes and apartment 5B, morning",
+    "Bushwick studio apartment table, morning",
+    "Bushwick studio apartment table",
+    "Bushwick studio apartment, later",
+    "Bushwick neighborhood print",
+    "Copy Shop And Apartment Doorway",
+    "Fifth-floor hallway and apartment 5B, evening",
+    "Bushwick studio apartment table, evening",
+    "Bushwick studio apartment window, evening",
+    "Bushwick studio apartment table, night",
+    "Municipal hearing-center corridor before opening, early morning"
+   ],
+   "characters": []
+  },
+  "12": {
+   "places": [
+    "Municipal hearing-center entrance and security line, morning",
+    "Safe Cave, early morning",
+    "Municipal Hearing-Center Security Checkpoint",
+    "Municipal Hearing-Center Waiting Room",
+    "Waiting Room Doorway → Hearing Chamber",
+    "Status Reconciliation Review hearing chamber",
+    "Same Status Reconciliation Review hearing chamber",
+    "hearing chamber, first male Kin in individual questioning position",
+    "Hearing Chamber",
+    "Municipal hearing-center recess hallway outside the chamber",
+    "Hearing Chamber After Recess",
+    "Hearing chamber with two restrained reader-facing ordinary-life cutaways",
+    "Same hearing chamber, after Astrid returns to the applicant table",
+    "Municipal hearing-center hallway, exterior steps and city sidewalk",
+    "Apartment 5B doorway opening onto Bushwick and the wider city, later"
+   ],
+   "characters": [
+    "f23f6796-6b5d-4a78-a977-e2ee2c8afc98"
+   ]
+  }
+ },
+ "characters": {
+  "qwtivx28x": {
+   "name": "Bjorn",
+   "role": "9th-century Norse raid leader displaced into modern New York",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "ywg8bdjvl": {
+   "name": "Gunnar",
+   "role": "Bjorn's companion, adaptive observer, and increasingly independent person building an ordinary life in New York",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "19020mp40": {
+   "name": "Carrie",
+   "role": "DTI social worker/caseworker and primary institutional bridge",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "bvfeqb22e": {
+   "name": "Silas",
+   "role": "Bushwick neighbor, habitual phone-documenter, and eventual friend whose curiosity initially outruns his social judgment.",
+   "visual": "",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "magister": {
+   "name": "Dr. Aris Thorne / Magister",
+   "role": "Museum curator associated with the Museum of the Seafaring North",
+   "visual": "Contemporary museum academic with a restrained, clinical presence.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "dfh4bu71y": {
+   "name": "DTI Floor Supervisor",
+   "role": "Procedural pressure within DTI",
+   "visual": "Plain municipal administrator in restrained officewear with badge and folders.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "tnvx3hlo0": {
+   "name": "The Kin",
+   "role": "The three recurring 9th-century Norse adults sharing the Bushwick studio: two men and Astrid, the only woman.",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "qgp7joghv": {
+   "name": "Unnamed Archetypes",
+   "role": "New York civic and neighborhood texture",
+   "visual": "",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "aac9aa72-d4bc-437a-b624-9e011a28a413": {
+   "name": "Sal",
+   "role": "Recurring neighborhood bodega owner and Gunnar's reliable local merchant; practical, transactional, observant, and increasingly familiar through repeated provision runs.",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "coffee-vendor": {
+   "name": "Coffee Vendor",
+   "role": "Recurring street vendor whose remembered coffee routine gives Bjorn casual neighborhood recognition.",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "hotdog-vendor": {
+   "name": "Hotdog Vendor",
+   "role": "Recurring neighborhood vendor whose increasingly wordless transactions establish local familiarity.",
+   "visual": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "3629c4e2-6cb8-484e-8f2f-a1744201a8f5": {
+   "name": "Upstairs Neighbor",
+   "role": "Neighborhood acquaintance whose snack-tribute relationship with the Kin gradually becomes genuine familiarity.",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "f23f6796-6b5d-4a78-a977-e2ee2c8afc98": {
+   "name": "Hearing Officer",
+   "role": "DTI municipal hearing officer who conducts the Status Reconciliation Review and issues individual residency determinations.",
+   "visual": "Mid-50s municipal hearing officer with short dark hair threaded with gray, reading glasses, and restrained professional clothing; no judicial costume.",
+   "first_issue": 12,
+   "tier": "draft"
+  },
+  "a2b9810b-264e-42de-b747-d4d6848bca14": {
+   "name": "311 Caller",
+   "role": "Complaint-generating neighborhood pressure; often technically correct.",
+   "visual": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "8cdad580-9a49-47ad-b906-5901f54e8193": {
+   "name": "Officer Miller",
+   "role": "",
+   "visual": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "1b9d42b3-cab9-4214-af62-e5504d4671df": {
+   "name": "Residence Inspector",
+   "role": "Housing/residency compliance pressure; inspections repeatedly become difficult to complete.",
+   "visual": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "gary": {
+   "name": "Gary",
+   "role": "Chase security guard; ordinary, calm, bad knee",
+   "visual": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "kevin": {
+   "name": "Kevin",
+   "role": "Young Chase teller; procedural, nervous",
+   "visual": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "henderson": {
+   "name": "Henderson",
+   "role": "Branch manager; pragmatic institutional problem-solver",
+   "visual": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "astrid": {
+   "name": "Astrid",
+   "role": "The only woman among the three Kin; a quietly independent member of the Bushwick household whose modern life becomes visible over the middle of the season.",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "kin-man-1": {
+   "name": "First Male Kin",
+   "role": "Production identity label for one of the two unnamed male Kin; this is not an in-world personal name.",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "kin-man-2": {
+   "name": "Second Male Kin",
+   "role": "Production identity label for the other unnamed male Kin; this is not an in-world personal name.",
+   "visual": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "group-facilitator": {
+   "name": "Group Facilitator",
+   "role": "Unnamed peer-support facilitator for DTI temporal arrivals; not a clinician and not Bjorn's authority figure.",
+   "visual": "Middle-aged New Yorker in ordinary contemporary clothes, seated on the same stackable chairs as participants.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "participant-1987": {
+   "name": "1987 Participant",
+   "role": "Recurring unnamed adult displaced from 1987 who challenges Bjorn's assumption that chronological distance measures loss.",
+   "visual": "Physically mid-30s displaced adult in practical contemporary thrifted layers with one subtle late-1980s personal object.",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "laundromat-regular": {
+   "name": "Laundromat Regular",
+   "role": "Recurring neighborhood laundromat patron with a red rolling cart who has developed an ordinary routine-level familiarity with the household.",
+   "visual": "Ordinary Bushwick laundromat regular with a distinctive red rolling laundry cart.",
+   "first_issue": 5,
+   "tier": "draft"
+  }
+ },
+ "settings": {
+  "bushwick_studio": {
+   "name": "Bushwick studio / Safe Cave",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "dti": {
+   "name": "Department of Temporal Integration",
+   "text": "",
+   "first_issue": 1,
+   "tier": "released"
+  },
+  "nyc_sidewalk": {
+   "name": "Busy NYC sidewalk",
+   "text": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "chase_exterior": {
+   "name": "Chase exterior and vestibule",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "chase_lobby": {
+   "name": "Chase lobby and teller line",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "chase_manager": {
+   "name": "Chase manager desk",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "l_train": {
+   "name": "L train platform and car",
+   "text": "",
+   "first_issue": 4,
+   "tier": "draft"
+  },
+  "maria_hernandez_park": {
+   "name": "Maria Hernandez Park",
+   "text": "",
+   "first_issue": 8,
+   "tier": "draft"
+  },
+  "dmv": {
+   "name": "DMV / civic identity office",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "library": {
+   "name": "Public library",
+   "text": "",
+   "first_issue": 7,
+   "tier": "draft"
+  },
+  "filing_room": {
+   "name": "Filing room",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "museum": {
+   "name": "Museum of the Seafaring North / conservation spaces",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "municipal_hearing": {
+   "name": "Municipal residency hearing spaces",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "east_river": {
+   "name": "East River / pier",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "bushwick_fire_escape": {
+   "name": "Bushwick apartment fire escape",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "bushwick_roof": {
+   "name": "Bushwick apartment building roof",
+   "text": "",
+   "first_issue": 3,
+   "tier": "draft"
+  },
+  "neighborhood_bodega": {
+   "name": "Neighborhood bodega / Sal's store",
+   "text": "",
+   "first_issue": 5,
+   "tier": "draft"
+  },
+  "street_coffee_cart": {
+   "name": "Bushwick street coffee cart",
+   "text": "",
+   "first_issue": 6,
+   "tier": "draft"
+  },
+  "bushwick_laundromat": {
+   "name": "Bushwick neighborhood laundromat",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "fifth_floor_hallway": {
+   "name": "Fifth-floor hallway outside apartment 5B",
+   "text": "",
+   "first_issue": 2,
+   "tier": "draft"
+  },
+  "bushwick_bus_stop": {
+   "name": "Bushwick bus stop",
+   "text": "",
+   "first_issue": 8,
+   "tier": "draft"
+  },
+  "garbage_night_curb": {
+   "name": "Bushwick curb on garbage night",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "rear_work_area": {
+   "name": "Bushwick rear work area / alley",
+   "text": "",
+   "first_issue": null,
+   "tier": "working"
+  }
+ },
+ "factions": {},
+ "regions": {
+  "bushwick": {
+   "name": "Bushwick, Brooklyn",
+   "text": "",
+   "tone": ""
+  },
+  "municipalNYC": {
+   "name": "NYC municipal system",
+   "text": "",
+   "tone": ""
+  },
+  "transitNYC": {
+   "name": "NYC transit system",
+   "text": "",
+   "tone": ""
+  },
+  "eastRiver": {
+   "name": "East River waterfront",
+   "text": "",
+   "tone": ""
+  }
+ },
+ "lighting": {},
+ "mood": {
+  "seriesDefault": []
+ },
+ "keeper": [
+  {
+   "name": "Released Issue 1 — Harbor Vessel (Page 004; Story Reference)",
+   "type": "setting",
+   "image": "production/references/vikings-2026/keeper/setting/released-issue-01-harbor-vessel-page-004.jpg"
+  },
+  {
+   "name": "Released Issue 1 — Municipal Office (Page 014; Story Reference)",
+   "type": "setting",
+   "image": "production/references/vikings-2026/keeper/setting/released-issue-01-municipal-office-page-014.jpg"
+  }
+ ]
+}
