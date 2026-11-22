@@ -74,6 +74,12 @@ safe-area margins, gamepad + keyboard actions, 30/60 FPS cap, text scale, reduce
 flashes/hit-stop, screen shake slider, damage numbers toggle, nav assist toggle.
 Versioned atomic saves with backup recovery and prototype migration.
 
+**Branch paths (D-55)** — chapters can branch off any stage; worlds carry a biome
+(surface, scatter, raider skins). Harbor Signal (sea; Vikings 2026! + Low Tide Signal):
+7 regions, 4 landmarks (longship, DTI building, rooftop dish, Harbor Phase flood gate),
+8 stages + 3 sides, contacts Gunnar and Carrie. Bot clears stage 1, the pier hold and
+the sea boss (`test_sea_branch`, `tools/CaptureSea.tscn`).
+
 ## Measured
 
 - 22/22 headless tests pass (`tools/run_tests.sh`).

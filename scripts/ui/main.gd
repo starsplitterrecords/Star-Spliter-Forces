@@ -300,7 +300,12 @@ func show_chart(focus: String = "", chapter: int = 0) -> void:
 		var cid: int = int(cdef["id"])
 		var first: Array = GameData.chart_main(cid)
 		var open_ch: bool = not first.is_empty() and (Profile.stop_available(String(first[0]["id"])) or Profile.stop_done(String(first[0]["id"])))
-		var tb: Button = UiTheme.button(("%s  %s" % [String(cdef["numeral"]), String(cdef["name"]).to_upper()]) if open_ch else "%s  ?" % String(cdef["numeral"]), func() -> void: show_chart("", cid), 0.0, 40.0)
+		var tab_text: String = "%s  ?" % String(cdef["numeral"])
+		if open_ch:
+			tab_text = String(cdef["numeral"]) if (UiTheme.is_narrow() and cid != chapter) else "%s  %s" % [String(cdef["numeral"]), String(cdef["name"]).to_upper()]
+		if not open_ch and GameData.is_branch(cid):
+			continue # branches stay hidden until their side stage opens them
+		var tb: Button = UiTheme.button(tab_text, func() -> void: show_chart("", cid), 0.0, 40.0)
 		tb.disabled = not open_ch
 		tb.add_theme_font_size_override("font_size", UiTheme.fs(13))
 		if cid == chapter:

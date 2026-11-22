@@ -53,6 +53,8 @@ var disguised: bool = false
 var visible_on_screen: bool = true
 var damage_taken_mult: float = 1.0
 
+var skin_name: String = ""
+
 func configure(enemy_kind: String, run_node: Node, scale: float, region: String) -> void:
 	kind = enemy_kind
 	run = run_node
@@ -66,6 +68,10 @@ func configure(enemy_kind: String, run_node: Node, scale: float, region: String)
 	xp_value = int(def["xp"])
 	radius = float(def["radius"])
 	tint = def["color"]
+	var skin: Array = GameData.BIOMES.get(run_node.world.biome if "world" in run_node and run_node.world else "space", {}).get("skins", {}).get(kind, [])
+	if skin.size() == 2:
+		skin_name = String(skin[0])
+		tint = skin[1]
 	shape = String(def.get("shape", "orb"))
 	elite = bool(def.get("elite", false))
 	boss = bool(def.get("boss", false))

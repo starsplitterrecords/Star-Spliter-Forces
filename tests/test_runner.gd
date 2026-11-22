@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries", "test_checkpoint_recovery",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	# Optional filter: godot --headless res://tests/TestRunner.tscn -- name [name...]
 	var only: PackedStringArray = OS.get_cmdline_user_args()
@@ -52,6 +52,8 @@ func _dispatch(t: String) -> void:
 			await test_review_regressions()
 		"test_corridor_chart":
 			await test_corridor_chart()
+		"test_sea_branch":
+			await test_sea_branch()
 		"test_visions_guests":
 			await test_visions_guests()
 		"test_new_content":
@@ -1126,6 +1128,26 @@ func test_second_destination() -> void:
 	# Unlock path: completing the Reach charts Kaldr.
 	Profile.record_expedition({"outcome": "complete", "destination": "black_drift_reach", "character": "ella_venn", "time": 600.0})
 	check(Profile.has_destination("kaldr_rift"), "Kaldr Rift not unlocked by completing the Reach")
+
+## Branch paths: a crossover series gets its own chapter, world and look.
+func test_sea_branch() -> void:
+	check(GameData.chart_prev_main("sea_atlantic") == "s_dti", "Sea branch should open from Now Serving G-53")
+	check(GameData.chart_prev_main("k_light") != "", "Chapter II should follow Chapter I")
+	check(GameData.is_branch(10) and not GameData.is_branch(2), "branch flags wrong")
+	for st: Dictionary in GameData.CHART:
+		if int(st.get("chapter", 1)) != 10:
+			continue
+		for did: String in st.get("discoveries", []):
+			check(GameData.discovery_in_destination(did, "harbor_signal"), "%s not in Harbor Signal" % did)
+	check(not Profile.stop_available("sea_atlantic"), "Sea open too early")
+	Profile.complete_stop("s_dti")
+	check(Profile.stop_available("sea_atlantic"), "Sea did not open after Now Serving G-53")
+	var run: GameRun = _make_run({"stop": "sea_atlantic"})
+	await get_tree().process_frame
+	check(run.destination_id == "harbor_signal", "Sea stage ran in " + run.destination_id)
+	check(run.world.biome == "sea", "Sea biome not set")
+	var e: ForceEnemy = run.spawn_enemy("skiff", run.player.position + Vector2(300, 0))
+	check(e != null and e.skin_name == "Fog Skiff", "sea skin not applied")
 
 ## Lets the engine drive the run for real frames (queue_free, signals, HUD).
 func test_real_frames() -> void:

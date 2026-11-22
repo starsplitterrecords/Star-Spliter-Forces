@@ -530,6 +530,52 @@ func _draw_landmark(kind: String, pos: Vector2, c: Color) -> void:
 				draw_circle(bp, 3.0, Color("fff1c8", 0.5 + 0.5 * sin(anim * 2.0 + k)))
 			draw_circle(bc, 46.0, Color("2a1f12"))
 			draw_circle(bc, 30.0, Color(c, 0.5))
+		"longship":
+			# A longship on the swell: dark hull, striped sail, round shields.
+			var lc: Vector2 = pos + Vector2(-230, 30) + Vector2(0, 6.0 * sin(anim * 1.2))
+			var hull := PackedVector2Array([lc + Vector2(-120, 0), lc + Vector2(120, 0), lc + Vector2(90, 30), lc + Vector2(-90, 30)])
+			draw_colored_polygon(hull, Color("4a3322"))
+			draw_line(lc + Vector2(-120, 0), lc + Vector2(-140, -36), Color("4a3322"), 8.0)
+			draw_line(lc + Vector2(120, 0), lc + Vector2(140, -36), Color("4a3322"), 8.0)
+			for k in 5:
+				draw_circle(lc + Vector2(-72 + k * 36, 4), 12.0, [Color("c9a46a"), Color("8a2a22")][k % 2])
+			draw_line(lc + Vector2(0, 0), lc + Vector2(0, -130), Color("3a2a1c"), 5.0)
+			for k2 in 4:
+				draw_rect(Rect2(lc + Vector2(-56, -122 + k2 * 24), Vector2(112, 24)), [Color("d8cbb0"), Color("a8322a")][k2 % 2])
+		"dti_building":
+			# A plain municipal slab at dusk, lit windows, a grey van.
+			var dc: Vector2 = pos + Vector2(-260, -120)
+			draw_rect(Rect2(dc, Vector2(170, 210)), Color("4a4e5a"))
+			for wy in 6:
+				for wx in 5:
+					var lit: bool = (wx * 7 + wy * 3) % 4 != 0
+					draw_rect(Rect2(dc + Vector2(12 + wx * 31, 14 + wy * 30), Vector2(20, 16)), Color("ffe9b0", 0.75) if lit else Color("232630"))
+			draw_rect(Rect2(dc + Vector2(-10, -14), Vector2(190, 14)), Color("2e313a"))
+			draw_rect(Rect2(dc + Vector2(190, 168), Vector2(70, 40)), Color("8a8e96"))
+			draw_circle(dc + Vector2(206, 210), 7.0, Color("1a1a1e"))
+			draw_circle(dc + Vector2(244, 210), 7.0, Color("1a1a1e"))
+		"rooftop":
+			# Tar roof, brick parapet, a dish being built.
+			var rc: Vector2 = pos + Vector2(-260, -90)
+			draw_rect(Rect2(rc, Vector2(220, 160)), Color("1e1e22"))
+			draw_rect(Rect2(rc, Vector2(220, 160)), Color("8a4a32"), false, 10.0)
+			draw_rect(Rect2(rc + Vector2(30, 30), Vector2(40, 30)), Color("5a5e66"))
+			var dish: Vector2 = rc + Vector2(150, 90)
+			draw_arc(dish, 36.0, PI * 0.9 + sin(anim * 0.5) * 0.2, PI * 1.9 + sin(anim * 0.5) * 0.2, 20, Color("d8dce4"), 6.0)
+			draw_line(dish, dish + Vector2(0, 40), Color("9aa3ad"), 4.0)
+			draw_circle(dish + Vector2(0, -10), 4.0, Color(c, 0.6 + 0.4 * sin(anim * 3.0)))
+		"flood_gate":
+			# A flood-control gate standing in still water; its sign.
+			var gc: Vector2 = pos + Vector2(-250, -40)
+			for k in 3:
+				draw_rect(Rect2(gc + Vector2(k * 80, -60), Vector2(22, 150)), Color("5a646e"))
+			draw_rect(Rect2(gc + Vector2(-10, -78), Vector2(204, 22)), Color("3e4650"))
+			draw_rect(Rect2(gc + Vector2(22, -40), Vector2(58, 110)), Color("2a3138"))
+			draw_rect(Rect2(gc + Vector2(102, -40), Vector2(58, 110)), Color("2a3138"))
+			draw_string(font, gc + Vector2(30, -62), "HARBOR PHASE", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, c)
+			for k2 in 4:
+				var wy2: float = 40.0 + k2 * 14.0 + 3.0 * sin(anim * 1.5 + k2)
+				draw_line(gc + Vector2(-30, wy2), gc + Vector2(220, wy2), Color(c, 0.25), 2.0)
 		"sunforge":
 			# A star burning close enough to forge.
 			var fc: Vector2 = pos + Vector2(-250, -50)

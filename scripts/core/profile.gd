@@ -354,10 +354,16 @@ func stop_available(id: String) -> bool:
 
 ## First main stop not yet relit ("" when the corridor is fully open).
 func next_stop() -> String:
+	var fallback: String = ""
 	for st: Dictionary in GameData.chart_main():
-		if not stop_done(String(st["id"])):
-			return String(st["id"])
-	return ""
+		var sid: String = String(st["id"])
+		if stop_done(sid):
+			continue
+		if stop_available(sid):
+			return sid
+		if fallback == "":
+			fallback = sid
+	return fallback
 
 func stops_done_count() -> int:
 	var n: int = 0

@@ -951,6 +951,38 @@
       ]
     },
     {
+      "id": "portrait_carrie",
+      "repo": "StarSplitterVisions",
+      "path": "sites/visions/public/images/series/vikings-2026/character-lineup.png",
+      "commit": "b35d7d8f298c",
+      "status": "released",
+      "use": "Contact portrait cropped from released Vikings 2026! art (owner direction 2026-11-20: Visions art is canonical)",
+      "source_sha256": "662e611974481899dd4f8507d3124c8886f228ade944d8fa7a2dc8d67f371ac5",
+      "review_required": false,
+      "source_size": [
+        1672,
+        941
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/carrie_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "543970e243ffee9471097b4670a4d9a52e911a12b4d6c8721c9f40d0f718c999"
+        },
+        {
+          "out": "assets/characters/carrie_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "0fb432423c0a52600618a0c169a9af15dd37dc215aa831a793983204c25d6c45"
+        }
+      ]
+    },
+    {
       "id": "portrait_jax_orien",
       "repo": "StarSplitterVisions",
       "path": "sites/visions/public/images/covers/stardust-station-issue-01.jpg",

@@ -68,6 +68,30 @@ bridge; Visions settings in Signal Space (Vikings harbour and Bushwick, Stardust
 break room, the Backyard Rockets Mojave towns, all 13 Azure Reach settings); the remaining
 Records projects and titles.
 
+### Branch paths (crossover series)
+
+Owner direction (2026-11-22): each crossover series gets its **own path** branching off
+the main chart, with its own world, terrain, raider skins and regions built from that
+series' released settings. Same game underneath (Signal Space; noncanonical for every
+series). A branch appears on the chart only once the side stage that opens it is done.
+
+| Branch | Series | World | Opens from | Status |
+|---|---|---|---|---|
+| **SEA — Harbor Signal** | Vikings 2026! + Low Tide Signal | Open sea, East River, pier, DTI building, Bushwick rooftop, Harbor Phase, flooded coast | Now Serving G-53 (Bjorn) | **Built**: 8 stages + 3 side signals, contacts Gunnar and Carrie |
+| DESERT | Backyard Rockets + Sunforge Outlaw | Mojave workshop towns, launch range, the Sunforge | Lucia / Brandon Mack side stage | Planned |
+| ORBIT | Stardust Station | Bullpen, break room, the station ring | Jax Orien side stage | Planned |
+| FANTASY | Forces of Darkness LLC | A corporate dark empire on land | — | Planned; prototype-strip material only, needs owner OK |
+| PARK | Azure Reach | Marine theme park settings | — | Planned |
+| COSMIC | Echoes of a Forgotten War | Olyria-Prime excavation colony | — | Planned; no released art, needs owner OK |
+| (later) | Star Systems Splitter | — | — | Held for the future (owner) |
+
+Harbor Signal stages: The North Atlantic (track Unification Theory) · East River (longship;
+Gunnar) · The Pier (hold 3:00) · Intake (DTI office; Carrie) · Rooftop (dish) · Harbor
+Phase (Low Tide Signal flood gate) · The Water Took the City (track Perception) · Undertow
+(the Silence at sea, 6:00). Side signals: River Carrier (Edge Spaces), Under the Crane
+(Leave the Past Behind), Rooftop Carrier (Be Somebody). Raiders keep their behaviours but
+take the sea's shapes and names (Fog Skiff, Squall Ram, Buoy Layer, Storm Captain…).
+
 ## 2. Expedition structure (Open Expedition)
 
 | Phase | Implementation |

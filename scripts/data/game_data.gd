@@ -516,6 +516,37 @@ const DESTINATIONS: Dictionary = {
 		"completion_unlocks": [],
 		"seed": 9152,
 	},
+	# ---- Crossover branches (Signal Space; noncanonical for each series).
+	"harbor_signal": {
+		"name": "Harbor Signal",
+		"desc": "Signal Space shaped like a harbor: the North Atlantic, the East River, a flooded coast.",
+		"half_size": Vector2(6000.0, 4200.0),
+		"gate": Vector2(-5000.0, 0.0),
+		"goal_signals": 3,
+		"climax_time": 1140.0,
+		"background": Color("0b1c24"),
+		"drift_name": "OPEN WATER",
+		"biome": "sea",
+		"regions": ["north_atlantic", "east_river", "harbor_pier", "dti_building", "bushwick_rooftop", "harbor_phase", "flooded_coast"],
+		"completion_unlocks": [],
+		"seed": 4410,
+	},
+}
+
+## Branch worlds: ground colour, surface detail, scatter, and how the hush's
+## raiders look there (same behaviours, the place's shapes and colours).
+const BIOMES: Dictionary = {
+	"space": {},
+	"sea": {"surface": Color(0.55, 0.85, 1.0, 0.16), "rock": Color("22303a"),
+		"skins": {"skiff": ["Fog Skiff", Color("8fa3b0")], "ram_cutter": ["Squall Ram", Color("b07a5a")], "rail_picket": ["Spray Picket", Color("d0a060")],
+			"mine_hauler": ["Buoy Layer", Color("c86a7a")], "wreck_lurker": ["Flotsam Lurker", Color("8a8070")], "leech": ["Barnacle Leech", Color("9a9a60")],
+			"gunship": ["Breaker Gunship", Color("a88a5a")], "splinter_captain": ["Storm Captain", Color("e0c060")], "dreadnought": ["Undertow Hulk", Color("6a7a8a")],
+			"echo_mote": ["Sea Glow", Color("d07090")], "swarm_tender": ["Gull Tender", Color("c87a5a")], "shield_tug": ["Harbor Tug", Color("a88aa0")], "blink": ["Fog Flicker", Color("c060a0")]}},
+	"desert": {"surface": Color(1.0, 0.8, 0.5, 0.08), "rock": Color("4a3626")},
+	"fantasy": {"surface": Color(0.6, 1.0, 0.6, 0.10), "rock": Color("2a3a26")},
+	"park": {"surface": Color(0.6, 0.95, 1.0, 0.07), "rock": Color("2a3a44")},
+	"orbit": {},
+	"cosmic": {},
 }
 
 ## shape: "circle" uses center+radius; "capsule" uses a,b endpoints + radius.
@@ -559,6 +590,28 @@ const REGIONS: Dictionary = {
 	"auric_bazaar": {"name": "AURIC BAZAAR", "shape": "circle", "center": Vector2(6500, 600), "radius": 620.0,
 		"color": Color("e0b46a"), "floor": Color("120d08"), "props": "wreck", "density": 0.5, "music": "region_wrecks",
 		"enemies": {"skiff": 0.8, "rail_picket": 0.6, "gunship": 0.3}, "blurb": "A Verge freeport and dock ring, reachable again.", "threat": 2},
+	# Harbor Signal (Vikings 2026! released Issue 01; Low Tide Signal cover).
+	"north_atlantic": {"name": "THE NORTH ATLANTIC", "shape": "circle", "center": Vector2(-3400, -1500), "radius": 1300.0,
+		"color": Color("7fb0c8"), "floor": Color("0d2430"), "props": "open_sea", "density": 0.8, "music": "region_basin",
+		"enemies": {"skiff": 1.0, "ram_cutter": 0.5, "echo_mote": 0.4}, "blurb": "Open water under a cold sky.", "threat": 1},
+	"east_river": {"name": "THE EAST RIVER", "shape": "capsule", "a": Vector2(-1400, 1300), "b": Vector2(2200, 500), "radius": 520.0,
+		"color": Color("9fc4d0"), "floor": Color("0f2630"), "props": "harbor", "density": 0.7, "music": "region_corridor",
+		"enemies": {"skiff": 0.9, "mine_hauler": 0.6, "ram_cutter": 0.3}, "blurb": "Lower Manhattan across the water.", "threat": 2},
+	"harbor_pier": {"name": "HARBOR PIER", "shape": "circle", "center": Vector2(1900, -1300), "radius": 900.0,
+		"color": Color("c8a46a"), "floor": Color("14202a"), "props": "harbor", "density": 0.9, "music": "region_wrecks",
+		"enemies": {"skiff": 0.8, "wreck_lurker": 0.6, "rail_picket": 0.5, "gunship": 0.25}, "blurb": "A wet working pier and a crane.", "threat": 2},
+	"dti_building": {"name": "DTI BUILDING", "shape": "circle", "center": Vector2(4300, 1500), "radius": 700.0,
+		"color": Color("baff00"), "floor": Color("141a1e"), "props": "shore_city", "density": 0.8, "music": "region_gate",
+		"enemies": {"skiff": 0.8, "shield_tug": 0.5, "rail_picket": 0.4}, "blurb": "Municipal Temporal Displacement Integration Department.", "threat": 2},
+	"bushwick_rooftop": {"name": "BUSHWICK ROOFTOP", "shape": "circle", "center": Vector2(4500, -2000), "radius": 620.0,
+		"color": Color("e0a070"), "floor": Color("16161a"), "props": "rooftop", "density": 0.6, "music": "region_shelf",
+		"enemies": {"skiff": 0.8, "leech": 0.5, "swarm_tender": 0.3}, "blurb": "Tar roof, brick parapet, the city all around.", "threat": 2},
+	"harbor_phase": {"name": "HARBOR PHASE", "shape": "circle", "center": Vector2(-1900, 2900), "radius": 800.0,
+		"color": Color("78d7ff"), "floor": Color("0e1e28"), "props": "flooded", "density": 0.6, "music": "region_basin",
+		"enemies": {"skiff": 0.8, "blink": 0.5, "echo_mote": 0.5}, "blurb": "A flood-control edge of the future.", "threat": 2},
+	"flooded_coast": {"name": "THE FLOODED COAST", "shape": "circle", "center": Vector2(900, 3100), "radius": 850.0,
+		"color": Color("78d7ff"), "floor": Color("0c1a22"), "props": "flooded", "density": 1.0, "music": "region_bloom",
+		"enemies": {"blink": 0.6, "wreck_lurker": 0.5, "gunship": 0.3, "skiff": 0.6}, "blurb": "The water took the city.", "threat": 3},
 	"echo_shallows": {"name": "ECHO SHALLOWS", "shape": "circle", "center": Vector2(5800, 1900), "radius": 950.0,
 		"color": Color("71cda0"), "floor": Color("08130f"), "props": "pools", "density": 0.5, "music": "region_basin",
 		"enemies": {"echo_mote": 1.0, "swarm_tender": 0.3, "leech": 0.4}, "blurb": "Gravitic echoes pool here. Quiet, mostly.", "threat": 1},
@@ -669,6 +722,34 @@ static var DISCOVERIES: Dictionary = {
 	"rec_avo": {"kind": "signal", "region": "auric_bazaar", "offset": Vector2(-250, 250), "title": "PORCH BROADCAST",
 		"transmission": "avo_all_i_am", "color": Color("c85b28"),
 		"text": "Fiddle runs and close harmonies from somewhere on the dock ring."},
+	# Harbor Signal branch.
+	"sea_storm_carrier": {"kind": "signal", "region": "north_atlantic", "offset": Vector2(200, -100), "title": "STORM CARRIER",
+		"transmission": "ion_drive__unification_theory", "color": Color("f1b826"), "place": "north_atlantic",
+		"text": "An orchestra under a cold sky, rolling with the swell."},
+	"sea_pier_carrier": {"kind": "signal", "region": "harbor_pier", "offset": Vector2(-200, 160), "title": "PIER CARRIER",
+		"transmission": "night_moti_leave_the_past_behind", "color": Color("c8c3d6"),
+		"text": "A song under the crane, in and out with the swell."},
+	"sea_river_carrier": {"kind": "signal", "region": "east_river", "offset": Vector2(300, -120), "title": "RIVER CARRIER",
+		"transmission": "pulse_widt_edge_spaces_epsilon_version", "color": Color("9be7ff"),
+		"text": "A long carrier wave riding the current toward the towers."},
+	"sea_longship": {"kind": "character", "region": "east_river", "offset": Vector2(0, 0), "title": "LONGSHIP IN THE EAST RIVER",
+		"landmark": "longship", "color": Color("c9a46a"), "contacts": ["gunnar"], "place": "east_river", "crossover": "vikings_2026",
+		"text": "A longship riding the East River toward the towers, a round shield on the gunwale."},
+	"sea_dti_office": {"kind": "character", "region": "dti_building", "offset": Vector2(0, 0), "title": "DTI OFFICE",
+		"landmark": "dti_building", "color": Color("baff00"), "contacts": ["carrie"], "place": "dti_building", "crossover": "vikings_2026",
+		"text": "A plain municipal office slab at dusk, a grey van outside. Someone here has a process for this."},
+	"sea_rooftop": {"kind": "character", "region": "bushwick_rooftop", "offset": Vector2(0, 0), "title": "BUSHWICK ROOFTOP",
+		"landmark": "rooftop", "color": Color("e0a070"), "place": "bushwick_rooftop", "crossover": "vikings_2026",
+		"text": "A sunlit tar roof with a low brick parapet. Someone is building a dish up here."},
+	"sea_rooftop_record": {"kind": "signal", "region": "bushwick_rooftop", "offset": Vector2(-260, 180), "title": "ROOFTOP CARRIER",
+		"transmission": "night_moti_be_somebody", "color": Color("c8c3d6"),
+		"text": "A song coming in clear over the city."},
+	"lts_flood_gate": {"kind": "character", "region": "harbor_phase", "offset": Vector2(0, 0), "title": "HARBOR PHASE FLOOD GATE",
+		"landmark": "flood_gate", "color": Color("78d7ff"), "place": "harbor_phase", "crossover": "low_tide_signal",
+		"text": "A flood-control gate on a quiet coastal edge of the future. A sign reads HARBOR PHASE."},
+	"lts_drowned_signal": {"kind": "signal", "region": "flooded_coast", "offset": Vector2(0, 0), "title": "LOW TIDE SIGNAL",
+		"transmission": "robots_sin_perception", "color": Color("78d7ff"), "place": "flooded_coast",
+		"text": "The water took the city. Something is still broadcasting from inside it."},
 	# Star Splitter Visions crossovers (Signal Space; noncanonical for every series).
 	"vis_dti_beacon": {"kind": "character", "region": "quiet_basin", "offset": Vector2(-300, -260), "title": "DTI INTAKE BEACON",
 		"crossover": "vikings_2026", "landmark": "dti", "color": Color("baff00"), "unlock_character": "bjorn",
@@ -803,6 +884,8 @@ const CONTACTS: Dictionary = {
 	"luminara_boy": {"name": "Luminara Boy", "faction": "The Verge", "role": "Verge civilian child. His questions expose what adults leave out.", "portrait": "luminara_boy"},
 	"chris_halev": {"name": "Governor Chris Halev", "faction": "The Verge", "role": "Civil leader of Auric Bazaar. Speaks in cargo, heat, food, docks and people.", "portrait": "chris_halev"},
 	"brent_wallace": {"name": "Brent Wallace", "faction": "The Verge", "role": "Trader guild elder. Dry, muttering, sarcastic.", "portrait": "brent_wallace"},
+	"gunnar": {"name": "Gunnar", "faction": "Vikings 2026!", "role": "Bjorn's companion; observant, concise, dryly funny.", "portrait": "gunnar"},
+	"carrie": {"name": "Carrie", "faction": "Vikings 2026!", "role": "DTI caseworker. Fast, sarcastic, fluent in forms and loopholes.", "portrait": "carrie"},
 }
 
 ## Places charted (an atlas of Star Splitter Visions settings). Descriptions
@@ -812,12 +895,20 @@ const PLACES: Dictionary = {
 	"grain_freighter": {"name": "Luminara Grain Freighter", "series": "Rex Fleet", "text": "A farm freighter's working hold, shared by cargo and civilian passengers.", "source": "Rex Fleet Issue 01, page 008"},
 	"luminara_fields": {"name": "Luminara Fields", "series": "Rex Fleet", "text": "A bright Verge port embedded in cultivated land.", "source": "Rex Fleet Issue 01, page 004"},
 	"auric_bazaar": {"name": "Auric Bazaar", "series": "Rex Fleet", "text": "A dense Verge freeport and dock ring.", "source": "Rex Fleet Issue 01, pages 010-012"},
+	"north_atlantic": {"name": "The North Atlantic", "series": "Vikings 2026!", "text": "Open North Atlantic under a cold overcast sky.", "source": "Vikings 2026! Issue 01, page 003"},
+	"east_river": {"name": "The East River", "series": "Vikings 2026!", "text": "A longship moving toward the Lower Manhattan skyline.", "source": "Vikings 2026! Issue 01, pages 004-005"},
+	"dti_building": {"name": "Municipal Temporal Displacement Integration Department", "series": "Vikings 2026!", "text": "A plain mid-century municipal office slab at blue-purple dusk.", "source": "Vikings 2026! Issue 01, page 010"},
+	"bushwick_rooftop": {"name": "Bushwick Rooftop", "series": "Vikings 2026!", "text": "Sunlit Bushwick apartment rooftop: black tar membrane, low brick parapet.", "source": "Vikings 2026! Issue 01, pages 016-025"},
+	"harbor_phase": {"name": "Harbor Phase", "series": "Low Tide Signal", "text": "A quiet coastal signal from a flooded edge of the future.", "source": "Low Tide Signal, Issue 01 cover"},
+	"flooded_coast": {"name": "The Flooded Coast", "series": "Low Tide Signal", "text": "On a flooded coast, abandoned infrastructure and an uneasy community.", "source": "Low Tide Signal series page"},
 }
 
 ## Corridor Chart chapters: each is one destination with its own path.
 const CHAPTERS: Array = [
 	{"id": 1, "name": "Black Drift", "numeral": "I", "destination": "black_drift_reach", "subtitle": "Relight the Black Drift corridor."},
-	{"id": 2, "name": "The Green Corridor", "numeral": "II", "destination": "kaldr_rift", "subtitle": "The Kaldr Rift convoy lane, out to Auric."},
+	{"id": 2, "name": "The Green Corridor", "numeral": "II", "destination": "kaldr_rift", "subtitle": "The Kaldr Rift convoy lane, out to Auric.", "after": "the_silence"},
+	# Branches: each crossover series gets its own path and its own world.
+	{"id": 10, "name": "Harbor Signal", "numeral": "SEA", "destination": "harbor_signal", "subtitle": "Vikings 2026! and Low Tide Signal, at sea.", "branch_from": "s_dti", "biome": "sea"},
 ]
 
 # ============================================================== corridor chart
@@ -1020,6 +1111,62 @@ const CHART: Array = [
 		"new_title": "A BAND", "new": "Eight players somewhere on the dock ring.",
 		"brief": "Fiddle runs on the freeport.",
 		"reward": ["Record: The Arthur Vaughn Octet — All I Am"], "grants": {}},
+	# ================= BRANCH — HARBOR SIGNAL (sea) =================
+	{"id": "sea_atlantic", "chapter": 10, "power": 50, "prize": "Track", "icon": "signal", "name": "The North Atlantic", "place": "The North Atlantic", "region": "north_atlantic",
+		"objective": {"type": "discover", "id": "sea_storm_carrier"}, "discoveries": ["sea_storm_carrier"],
+		"new_title": "AT SEA", "new": "Signal Space shaped like water. Buoys, pilings, swell.",
+		"brief": "A storm carrier out on the open Atlantic.",
+		"reward": ["Track: Unification Theory", "Place: the North Atlantic"], "grants": {}},
+	{"id": "sea_river", "chapter": 10, "power": 70, "prize": "Gunnar", "icon": "visions", "name": "East River", "place": "The East River", "region": "east_river",
+		"objective": {"type": "discover", "id": "sea_longship"}, "discoveries": ["sea_longship"],
+		"new_title": "THE KIN", "new": "A longship heading for the towers. Gunnar is aboard.",
+		"brief": "A longship is moving up the East River.",
+		"reward": ["Contact: Gunnar", "Place: the East River"], "grants": {}},
+	{"id": "sea_pier", "chapter": 10, "prize": "+120 Signal", "icon": "hostile", "name": "The Pier", "place": "Harbor Pier", "region": "harbor_pier",
+		"objective": {"type": "survive", "seconds": 180.0}, "discoveries": [],
+		"new_title": "HOLD THE PIER", "new": "Hold the pier for three minutes.",
+		"brief": "The hush is coming in with the tide.",
+		"reward": ["+120 Signal"], "grants": {"signal": 120}},
+	{"id": "sea_dti", "chapter": 10, "power": 90, "prize": "Carrie", "icon": "visions", "name": "Intake", "place": "DTI Building", "region": "dti_building",
+		"objective": {"type": "discover", "id": "sea_dti_office"}, "discoveries": ["sea_dti_office"],
+		"new_title": "A PROCESS", "new": "The city has a department for this.",
+		"brief": "The Department of Temporal Integration, lights still on.",
+		"reward": ["Contact: Carrie", "Place: the DTI building"], "grants": {}},
+	{"id": "sea_roof", "chapter": 10, "power": 100, "prize": "Place", "icon": "visions", "name": "Rooftop", "place": "Bushwick Rooftop", "region": "bushwick_rooftop",
+		"objective": {"type": "discover", "id": "sea_rooftop"}, "discoveries": ["sea_rooftop"],
+		"new_title": "A DISH", "new": "Someone is building a dish up here.",
+		"brief": "A Bushwick rooftop, the city all around.",
+		"reward": ["Place: the Bushwick rooftop"], "grants": {}},
+	{"id": "sea_gate", "chapter": 10, "power": 110, "prize": "Low Tide", "icon": "visions", "name": "Harbor Phase", "place": "Harbor Phase", "region": "harbor_phase",
+		"objective": {"type": "discover", "id": "lts_flood_gate"}, "discoveries": ["lts_flood_gate"],
+		"new_title": "LOW TIDE SIGNAL", "new": "Another series bleeds in: a flooded edge of the future.",
+		"brief": "A flood gate on a quiet coast.",
+		"reward": ["Place: Harbor Phase"], "grants": {}},
+	{"id": "sea_drowned", "chapter": 10, "power": 130, "prize": "Track", "icon": "signal", "name": "The Water Took the City", "place": "The Flooded Coast", "region": "flooded_coast",
+		"objective": {"type": "discover", "id": "lts_drowned_signal"}, "discoveries": ["lts_drowned_signal"],
+		"new_title": "WE CAME BACK", "new": "Something is still broadcasting from inside the city.",
+		"brief": "The water took the city. The signal is still in there.",
+		"reward": ["Track: Perception", "Place: the flooded coast"], "grants": {}},
+	{"id": "sea_undertow", "chapter": 10, "prize": "+250 Signal", "icon": "elite", "name": "Undertow", "place": "Open Water", "start": Vector2(-800, -400),
+		"objective": {"type": "boss", "at": 360.0, "hp": 0.5}, "discoveries": [],
+		"new_title": "THE SILENCE AT SEA", "new": "It follows the music here too. Arrives at 6:00.",
+		"brief": "The harbor is singing. Something wants it quiet.",
+		"reward": ["+250 Signal", "Harbor Signal complete"], "grants": {"signal": 250}},
+	{"id": "seas_river", "chapter": 10, "side_of": "sea_river", "power": 70, "prize": "Track", "icon": "signal", "name": "River Carrier", "place": "The East River", "region": "east_river",
+		"objective": {"type": "discover", "id": "sea_river_carrier"}, "discoveries": ["sea_river_carrier"],
+		"new_title": "DOWNSTREAM", "new": "A carrier wave riding the current.",
+		"brief": "Something long and slow on the river.",
+		"reward": ["Track: Edge Spaces (Epsilon Version)"], "grants": {}},
+	{"id": "seas_pier", "chapter": 10, "side_of": "sea_pier", "power": 80, "prize": "Track", "icon": "signal", "name": "Under the Crane", "place": "Harbor Pier", "region": "harbor_pier",
+		"objective": {"type": "discover", "id": "sea_pier_carrier"}, "discoveries": ["sea_pier_carrier"],
+		"new_title": "UNDER THE CRANE", "new": "A song in and out with the swell.",
+		"brief": "The pier is quiet now. Listen.",
+		"reward": ["Track: Leave the Past Behind"], "grants": {}},
+	{"id": "seas_rooftop", "chapter": 10, "side_of": "sea_roof", "power": 100, "prize": "Track", "icon": "signal", "name": "Rooftop Carrier", "place": "Bushwick Rooftop", "region": "bushwick_rooftop",
+		"objective": {"type": "discover", "id": "sea_rooftop_record"}, "discoveries": ["sea_rooftop_record"],
+		"new_title": "ON THE ROOF", "new": "A song coming in clear over the city.",
+		"brief": "The dish picked something up.",
+		"reward": ["Track: Be Somebody"], "grants": {}},
 ]
 
 static func chart_stop(id: String) -> Dictionary:
@@ -1040,6 +1187,9 @@ static func stage_tag(id: String) -> String:
 	var ch: int = chart_chapter(id)
 	return ("STAGE %d" % n) if ch == 1 else ("%s · STAGE %d" % [String(chapter_def(ch)["numeral"]), n])
 
+static func is_branch(chapter: int) -> bool:
+	return chapter_def(chapter).has("branch_from")
+
 static func chart_chapter(id: String) -> int:
 	return int(chart_stop(id).get("chapter", 1))
 
@@ -1049,12 +1199,18 @@ static func chapter_def(chapter: int) -> Dictionary:
 			return c
 	return CHAPTERS[0]
 
-## The main stage before this one on the whole path ("" for the very first).
+## What must be done before a main stage: the stage before it in its chapter,
+## or for a chapter's first stage, its "after" stage (next chapter) or
+## "branch_from" stage (a branch path). "" for the very first stage.
 static func chart_prev_main(id: String) -> String:
-	var all: Array = chart_main()
-	for i in all.size():
-		if String(all[i]["id"]) == id:
-			return String(all[i - 1]["id"]) if i > 0 else ""
+	var ch: int = chart_chapter(id)
+	var list: Array = chart_main(ch)
+	for i in list.size():
+		if String(list[i]["id"]) == id:
+			if i > 0:
+				return String(list[i - 1]["id"])
+			var cdef: Dictionary = chapter_def(ch)
+			return String(cdef.get("after", cdef.get("branch_from", "")))
 	return ""
 
 static func chart_sides(parent_id: String) -> Array:
@@ -1253,12 +1409,18 @@ static func load_catalog() -> void:
 		if not PROJECTS.has(pname):
 			var pj: Dictionary = projects[pname]
 			PROJECTS[pname] = {"field": String(pj.get("field", "")), "role": String(pj.get("role", "")), "accent": Color(String(pj.get("accent", "#cfe9ff"))), "bio": String(pj.get("bio", "")), "url": ""}
+	var placed: Dictionary = {}
+	for did0: String in DISCOVERIES.keys():
+		if DISCOVERIES[did0].has("transmission"):
+			placed[String(DISCOVERIES[did0]["transmission"])] = true
 	for t: Variant in data.get("tracks", []):
 		var td: Dictionary = t
 		var tid: String = String(td["id"])
 		if TRANSMISSIONS.has(tid) or not PROJECTS.has(String(td["project"])):
 			continue
 		TRANSMISSIONS[tid] = {"project": String(td["project"]), "force": "", "title": String(td["title"]), "meta": String(td.get("meta", "")), "master_file": tid + ".ogg", "catalog": true}
+		if placed.has(tid):
+			continue # a stage already places this track
 		DISCOVERIES["trk_" + tid] = {"kind": "signal", "roaming": true, "transmission": tid, "title": "UNHEARD CARRIER",
 			"color": PROJECTS[String(td["project"])]["accent"], "text": ""}
 

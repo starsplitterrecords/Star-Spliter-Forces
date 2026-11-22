@@ -18,6 +18,9 @@ var chunk_items: Dictionary = {} # Vector2i -> Array of draw ops
 var region_ids: Array = []
 var gate: Vector2 = Vector2.ZERO
 var gate_override: Variant = null # a Corridor stop's home beacon position
+## "space" (the Rex Fleet frontier), or a crossover branch's ground: "sea",
+## "desert", "orbit", "fantasy", "park", "cosmic" (see GameData.BIOMES).
+var biome: String = "space"
 var anim: float = 0.0
 
 class Chunk:
@@ -65,6 +68,48 @@ class Floor:
 		# World edge reads as a fading boundary, not a wall.
 		draw_rect(Rect2(-hs, hs * 2.0), Color(0.4, 0.6, 1.0, 0.25), false, 6.0)
 
+## Animated surface detail for ground and water biomes: drawn only around
+## the camera, so the cost stays flat however big the world is.
+class Surface:
+	extends Node2D
+	var world: ExpeditionWorld
+	var t: float = 0.0
+	func _process(delta: float) -> void:
+		t += delta
+		queue_redraw()
+	func _draw() -> void:
+		var vp: Rect2 = get_viewport().get_visible_rect()
+		var inv: Transform2D = get_viewport().get_canvas_transform().affine_inverse()
+		var tl: Vector2 = inv * vp.position
+		var br: Vector2 = inv * vp.end
+		var b: Dictionary = GameData.BIOMES.get(world.biome, {})
+		var col: Color = b.get("surface", Color(1, 1, 1, 0.06))
+		var step: float = 150.0
+		var x0: float = floorf(tl.x / step) * step
+		var y0: float = floorf(tl.y / step) * step
+		var y: float = y0
+		while y < br.y + step:
+			var x: float = x0
+			while x < br.x + step:
+				var h: float = fmod(absf(x * 0.0071 + y * 0.0133), 1.0)
+				var p: Vector2 = Vector2(x + h * 90.0, y + fmod(h * 7.3, 1.0) * 90.0)
+				match world.biome:
+					"sea":
+						# Swells: short arcs that rise and fall.
+						var ph: float = sin(t * 1.3 + h * 9.0)
+						draw_arc(p, 26.0 + ph * 4.0, PI * 1.15, PI * 1.85, 8, Color(col, col.a * (0.6 + 0.4 * ph)), 2.0)
+					"desert":
+						# Dune ripples.
+						draw_arc(p, 40.0, PI * 1.2, PI * 1.8, 8, col, 2.0)
+						draw_arc(p + Vector2(10, 9), 34.0, PI * 1.2, PI * 1.8, 8, Color(col, col.a * 0.6), 2.0)
+					"fantasy":
+						for k in 3:
+							draw_line(p + Vector2(k * 7, 0), p + Vector2(k * 7 - 2, -9), col, 2.0)
+					"park":
+						draw_rect(Rect2(p, Vector2(36, 36)), col, false, 1.5)
+				x += step
+			y += step
+
 class Stars:
 	extends Node2D
 	var tile: float = 1024.0
@@ -88,7 +133,15 @@ func build(dest_id: String) -> void:
 	gate = dest["gate"] if gate_override == null else Vector2(gate_override)
 	region_ids = dest["regions"]
 	rng.seed = int(dest["seed"])
-	_add_starfield()
+	biome = String(dest.get("biome", "space"))
+	if biome in ["space", "cosmic", "orbit"]:
+		_add_starfield()
+	else:
+		# Ground and water branches: a living surface instead of stars.
+		var surf: Surface = Surface.new()
+		surf.world = self
+		surf.z_index = -45
+		add_child(surf)
 	var floor: Floor = Floor.new()
 	floor.world = self
 	floor.z_index = -50
@@ -241,6 +294,69 @@ func _build_region(rid: String, r: Dictionary) -> void:
 				var p6: Vector2 = _scatter_point(r)
 				if p6.x != INF:
 					_rock(p6, rng.randf_range(18.0, 34.0), Color("17261f"))
+		"open_sea":
+			# Big slow swells and channel markers.
+			for i in int(10 * density + 4):
+				var ps: Vector2 = _scatter_point(r)
+				if ps.x == INF:
+					continue
+				_op(ps, ["arc", ps, rng.randf_range(80.0, 200.0), PI * 1.1, PI * 1.9, Color(acc, 0.14), 3.0])
+			for i in 10:
+				var pb: Vector2 = _scatter_point(r)
+				if pb.x != INF:
+					_drift_prop(pb, rng.randf_range(24.0, 40.0), true)
+		"harbor":
+			# Rows of pilings and a dock edge with a crane.
+			var hc: Vector2 = GameData.region_anchor(r)
+			for row in 4:
+				var base: Vector2 = hc + Vector2(-400 + row * 260, -220 + rng.randf_range(-60, 60))
+				for k in 6:
+					var pp: Vector2 = base + Vector2(rng.randf_range(-20, 20), k * 70.0)
+					if _clear_of_discoveries(pp, 160.0):
+						_op(pp, ["circle", pp, 11.0, Color("3a2e22")])
+						_op(pp, ["arc", pp, 11.0, 0.0, TAU, Color("6b5640"), 2.0])
+						_obstacle(pp, 11.0)
+			var dock: PackedVector2Array = PackedVector2Array([hc + Vector2(-520, 380), hc + Vector2(520, 300), hc + Vector2(560, 380), hc + Vector2(-480, 460)])
+			_op(hc, ["poly", dock, Color("3c444c")])
+			var cr: Vector2 = hc + Vector2(220, 330)
+			_op(cr, ["line", PackedVector2Array([cr, cr + Vector2(0, -150), cr + Vector2(130, -150)]), Color("8a6a2a"), 6.0])
+			_op(cr, ["line", PackedVector2Array([cr + Vector2(120, -150), cr + Vector2(120, -90)]), Color("8a8f98"), 2.0])
+			_obstacle(cr, 18.0)
+		"shore_city":
+			# City blocks on the shore: solid.
+			var sc2: Vector2 = GameData.region_anchor(r)
+			for k in 9:
+				var bp: Vector2 = sc2 + Vector2(rng.randf_range(-1, 1), rng.randf_range(-1, 1)) * float(r["radius"]) * 0.7
+				if not _clear_of_discoveries(bp, 200.0):
+					continue
+				var w: float = rng.randf_range(70.0, 150.0)
+				var h2: float = rng.randf_range(60.0, 130.0)
+				_op(bp, ["poly", PackedVector2Array([bp, bp + Vector2(w, 0), bp + Vector2(w, h2), bp + Vector2(0, h2)]), Color("2a2f3a")])
+				for wi in 4:
+					_op(bp, ["poly", PackedVector2Array([bp + Vector2(10 + wi * w / 4.5, 12), bp + Vector2(18 + wi * w / 4.5, 12), bp + Vector2(18 + wi * w / 4.5, 22), bp + Vector2(10 + wi * w / 4.5, 22)]), Color("ffd98a", 0.35)])
+				_obstacle(bp + Vector2(w, h2) * 0.5, minf(w, h2) * 0.5)
+		"rooftop":
+			# A tar roof with a brick parapet and vents.
+			var rc: Vector2 = GameData.region_anchor(r)
+			var rw: float = float(r["radius"]) * 0.9
+			var roof: PackedVector2Array = PackedVector2Array([rc + Vector2(-rw, -rw * 0.7), rc + Vector2(rw, -rw * 0.7), rc + Vector2(rw, rw * 0.7), rc + Vector2(-rw, rw * 0.7)])
+			_op(rc, ["poly", roof, Color("1c1d20")])
+			_op(rc, ["line", roof + PackedVector2Array([roof[0]]), Color("7a3e2a"), 10.0])
+			for k in 6:
+				var vp2: Vector2 = rc + Vector2(rng.randf_range(-rw, rw) * 0.8, rng.randf_range(-rw, rw) * 0.5)
+				if _clear_of_discoveries(vp2, 160.0):
+					_op(vp2, ["circle", vp2, 14.0, Color("8a8f98")])
+					_obstacle(vp2, 14.0)
+		"flooded":
+			# Tops of drowned buildings breaking the water.
+			for k in int(12 * density + 4):
+				var fp: Vector2 = _scatter_point(r)
+				if fp.x == INF:
+					continue
+				var fw: float = rng.randf_range(50.0, 120.0)
+				_op(fp, ["poly", PackedVector2Array([fp, fp + Vector2(fw, 0), fp + Vector2(fw, fw * 0.7), fp + Vector2(0, fw * 0.7)]), Color("26333a")])
+				_op(fp, ["line", PackedVector2Array([fp + Vector2(0, fw * 0.7), fp + Vector2(fw, fw * 0.7)]), Color(acc, 0.35), 3.0])
+				_obstacle(fp + Vector2(fw, fw * 0.7) * 0.5, fw * 0.35)
 		"corridor":
 			var a: Vector2 = r["a"]
 			var b: Vector2 = r["b"]
@@ -311,8 +427,25 @@ func _build_drift() -> void:
 				break
 		if inside or not _clear_of_discoveries(p, 140.0):
 			continue
-		_rock(p, rng.randf_range(16.0, 46.0), Color("1a2033"), rng.randf() < 0.6)
+		_drift_prop(p, rng.randf_range(16.0, 46.0), rng.randf() < 0.6)
 		placed += 1
+
+## Open-ground scatter in the biome's own language.
+func _drift_prop(p: Vector2, r: float, solid: bool) -> void:
+	match biome:
+		"sea":
+			if rng.randf() < 0.35:
+				# Channel buoy with a light.
+				_op(p, ["circle", p, r * 0.45, Color("2a3a44")])
+				_op(p, ["arc", p, r * 0.45, 0.0, TAU, Color("c8462e"), 3.0])
+				_op(p, ["circle", p + Vector2(0, -r * 0.2), 3.0, Color("ffd36b")])
+				if solid:
+					_obstacle(p, r * 0.45)
+			else:
+				# Pilings / drifting debris.
+				_rock(p, r * 0.7, Color("22303a"), solid)
+		_:
+			_rock(p, r, Color(GameData.BIOMES.get(biome, {}).get("rock", Color("1a2033"))), solid)
 
 func _wreck(p: Vector2, length: float, rot: float, acc: Color) -> void:
 	var axis: Vector2 = Vector2.from_angle(rot)

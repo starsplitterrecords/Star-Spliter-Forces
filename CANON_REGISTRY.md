@@ -17,7 +17,7 @@ Sources and revisions: see `SOURCE_PROVENANCE.md`.
 | Stardust Station | R (Issue 01 "Mandatory Proximity", 2026-08-29) | Orbital workplace sitcom (SSV) | **Signal Space guest**: Jax Orien playable; station landmark; crew referenced (Zib, Pixa) only in ability text |
 | Backyard Rockets | R (Issues 01–02) | Mojave rocketry workshop vs "Tethergrid" (SSV) | **Signal Space guest**: Lucia playable, OCHRE-9 relay rocket landmark; Tethergrid named, never fought |
 | Sunforge Outlaw (incl. **Los Lagartos**, `C_sun_lagartos`) | cover only (SSV, in development) | Pursuit/survival under a relentless sun (SSV); Los Lagartos "itinerant brotherhood" (RP) | **Signal Space guest**: Brandon Mack (name from RP working data) playable, Sunforge landmark; no unreleased plot used |
-| Low Tide Signal | cover only | Flooded-coast mystery | Not used |
+| Low Tide Signal | cover only | Flooded-coast mystery | **Harbor Signal branch** (sea): Harbor Phase place + flood gate landmark and the flooded coast, from the cover and series page text only; no characters, no plot |
 | Division Threshold | in production, no art | "Who gets to count as a person…" — the Stack | Not used ("PX-7" not found in any source) |
 | Echoes of a Forgotten War | D only | Excavation colony Olyria-Prime uncovers an ancient war (RP `regions.json`) | Not used (no released/approved art) |
 | Forces of Darkness LLC | A (prototype strip) | Evil fantasy empire run like a corporation | Not used |
