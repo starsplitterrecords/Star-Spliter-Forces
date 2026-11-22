@@ -66,9 +66,23 @@ func _ready() -> void:
 	run.left_gate = true
 	await _wait(0.6)
 	await _shot("c11_home_beacon")
+	await _shot("c11b_gate_panel")
 	run.end_run("extracted")
 	await _wait(2.0)
 	await _shot("c12_results")
+	main.show_archive()
+	await _wait(0.4)
+	await _shot("c13_archive")
+	main.selected_stop = ""
+	main.show_departure()
+	await _wait(0.3)
+	await _shot("c14_departure_open")
+	main.show_workshop()
+	await _wait(0.3)
+	await _shot("c15_workshop")
+	main.show_settings()
+	await _wait(0.3)
+	await _shot("c16_settings")
 	get_tree().quit()
 
 func _wait(seconds: float) -> void:

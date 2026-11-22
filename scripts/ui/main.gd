@@ -55,7 +55,7 @@ func _new_screen() -> VBoxContainer:
 	var margin: MarginContainer = MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side: String in ["left", "right"]:
-		margin.add_theme_constant_override("margin_" + side, 48)
+		margin.add_theme_constant_override("margin_" + side, 20 if UiTheme.is_narrow() else 48)
 	for side2: String in ["top", "bottom"]:
 		margin.add_theme_constant_override("margin_" + side2, 28)
 	screen.add_child(margin)
@@ -70,8 +70,34 @@ func _new_screen() -> VBoxContainer:
 	scroll.add_child(v)
 	return v
 
+## The next thing of a kind ("character" or "force") the Corridor Chart will
+## give, in chart order: {"id", "stop"} or {} when none is waiting.
+func _next_unlock(kind: String) -> Dictionary:
+	for st: Dictionary in GameData.CHART:
+		if Profile.stop_done(String(st["id"])):
+			continue
+		if kind == "character":
+			for c: Variant in (st["grants"] as Dictionary).get("characters", []):
+				if not Profile.has_character(String(c)):
+					return {"id": String(c), "stop": st}
+		for did: Variant in st["discoveries"]:
+			var d: Dictionary = GameData.DISCOVERIES[String(did)]
+			if kind == "character" and String(d.get("unlock_character", "")) != "" and not Profile.has_character(String(d["unlock_character"])):
+				return {"id": String(d["unlock_character"]), "stop": st}
+			if kind == "force" and String(d.get("force", "")) != "" and not Profile.is_attuned(String(d["force"])):
+				return {"id": String(d["force"]), "stop": st}
+	return {}
+
+## The single line that stands in for everything not yet found.
+func _more_line(text: String) -> Label:
+	return UiTheme.label(text, 15, Color("bfe9ff"))
+
+## Usable width of a menu screen's content column.
+func _content_width() -> float:
+	return get_viewport().get_visible_rect().size.x - 2.0 * (20.0 if UiTheme.is_narrow() else 48.0) - 24.0
+
 func _heading(parent: Control, text: String, sub: String = "") -> void:
-	var t: Label = UiTheme.label(text, 40, Color.WHITE, "display")
+	var t: Label = UiTheme.label(text, 30 if UiTheme.is_narrow() else 40, Color.WHITE, "display")
 	parent.add_child(t)
 	if sub != "":
 		parent.add_child(UiTheme.label(sub, 16, UiTheme.DIM))
@@ -83,6 +109,7 @@ func _heading(parent: Control, text: String, sub: String = "") -> void:
 const DESIGN_SIZE: Vector2 = Vector2(1280, 720)
 const MIN_LAYOUT: Vector2 = Vector2(880, 500)
 const READABLE_SCALE: float = 1.0
+const PORTRAIT_WIDTH: float = 540.0
 
 func _apply_ui_scale() -> void:
 	var win: Window = get_window()
@@ -92,7 +119,13 @@ func _apply_ui_scale() -> void:
 		return
 	var fit: float = minf(css.x / DESIGN_SIZE.x, css.y / DESIGN_SIZE.y)
 	var layout: Vector2 = DESIGN_SIZE
-	if fit < READABLE_SCALE:
+	if css.y > css.x * 1.1:
+		# Portrait: a narrow layout, never wider than PORTRAIT_WIDTH units,
+		# so an upright phone shows text at a readable size (the landscape
+		# minimum of 880 shrank everything to ~44% on a 390-pt phone).
+		var w: float = clampf(css.x / READABLE_SCALE, PORTRAIT_WIDTH, 620.0)
+		layout = Vector2(w, css.y * w / css.x)
+	elif fit < READABLE_SCALE:
 		layout = (css / READABLE_SCALE).max(MIN_LAYOUT)
 	var target: Vector2i = Vector2i(layout.round())
 	if win.content_scale_size != target:
@@ -149,11 +182,10 @@ func show_title() -> void:
 	var spacer: Control = Control.new()
 	spacer.custom_minimum_size = Vector2(0, 40 if get_viewport().get_visible_rect().size.y >= 640 else 0)
 	v.add_child(spacer)
-	var title: Label = UiTheme.label("STAR SPLITTER FORCES", 64, Color.WHITE, "display")
+	var title: Label = UiTheme.label("STAR SPLITTER FORCES", 46 if UiTheme.is_narrow() else 64, Color.WHITE, "display")
 	v.add_child(title)
 	v.add_child(UiTheme.label("I wonder what is over there.", 20, UiTheme.ACCENT))
-	var row: HBoxContainer = HBoxContainer.new()
-	row.add_theme_constant_override("separation", 40)
+	var row: BoxContainer = UiTheme.row(40)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(row)
 	var menu: VBoxContainer = VBoxContainer.new()
@@ -218,8 +250,7 @@ var selected_stop: String = ""
 func show_chart(focus: String = "") -> void:
 	var v: VBoxContainer = _new_screen()
 	_menu_music()
-	var head: HBoxContainer = HBoxContainer.new()
-	head.add_theme_constant_override("separation", 18)
+	var head: BoxContainer = UiTheme.row(4 if UiTheme.is_narrow() else 18)
 	v.add_child(head)
 	var ht: Label = UiTheme.label("CORRIDOR CHART", 26, Color.WHITE, "display")
 	ht.autowrap_mode = TextServer.AUTOWRAP_OFF
@@ -232,7 +263,7 @@ func show_chart(focus: String = "") -> void:
 	sc.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	# The lane shrinks on short screens so the briefing always fits below it.
 	var vh: float = get_viewport().get_visible_rect().size.y
-	var k: float = clampf((vh - 392.0) / 342.0, 0.5, 1.0)
+	var k: float = clampf((vh - (620.0 if UiTheme.is_narrow() else 392.0)) / 342.0, 0.5, 1.0)
 	sc.custom_minimum_size = Vector2(0, 342.0 * k)
 	v.add_child(sc)
 	var holder: Control = Control.new()
@@ -243,7 +274,6 @@ func show_chart(focus: String = "") -> void:
 	holder.custom_minimum_size = chart.custom_minimum_size * k
 	var brief: PanelContainer = PanelContainer.new()
 	brief.add_theme_stylebox_override("panel", UiTheme.box(UiTheme.PANEL, UiTheme.LINE, 1, 12, 16))
-	brief.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(brief)
 	chart.stop_selected.connect(func(id: String) -> void:
 		selected_stop = id
@@ -266,13 +296,19 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 	var done: bool = Profile.stop_done(id)
 	var open: bool = Profile.stop_available(id)
 	var num: int = GameData.chart_number(id)
-	var h: HBoxContainer = HBoxContainer.new()
-	h.add_theme_constant_override("separation", 20)
+	var h: BoxContainer = UiTheme.row(20)
 	panel.add_child(h)
 	var col: VBoxContainer = VBoxContainer.new()
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	col.add_theme_constant_override("separation", 3)
 	h.add_child(col)
+	if not open and not done:
+		# Past the next beacon the corridor is still dark: no spoilers.
+		col.add_child(UiTheme.label("STOP %d" % num, 13, UiTheme.DIM, "bold"))
+		col.add_child(UiTheme.label("UNCHARTED", 20, UiTheme.DIM, "display"))
+		col.add_child(UiTheme.label("Further down the corridor. Relight the beacon before it to see what waits here.", 14, UiTheme.DIM))
+		col.add_child(UiTheme.button("BACK", show_title, 250.0, 42.0))
+		return
 	var tag: String = ("STOP %d" % num if num > 0 else "SIDE SIGNAL") + "   •   " + String(st["place"]).to_upper() + ("   •   BEACON LIT" if done else "")
 	col.add_child(UiTheme.label(tag, 13, Color("68ecff") if done else UiTheme.GOLD, "bold"))
 	col.add_child(UiTheme.label(String(st["name"]).to_upper(), 20, Color.WHITE, "display"))
@@ -281,12 +317,13 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 		col.add_child(UiTheme.label("Still dark. Relight \"%s\" first." % need, 15, UiTheme.DIM))
 		col.add_child(UiTheme.label("REWARD WAITING: " + "  •  ".join(st["reward"]), 14, Color(UiTheme.GOLD, 0.7)))
 	else:
-		if get_viewport().get_visible_rect().size.y >= 600.0:
+		if get_viewport().get_visible_rect().size.y >= 600.0 or UiTheme.is_narrow():
 			col.add_child(UiTheme.label(String(st["brief"]), 13, UiTheme.TEXT))
 		col.add_child(UiTheme.label("OBJECTIVE: " + GameData.chart_objective_text(st), 15, Color("a8f7ff"), "bold"))
 		col.add_child(UiTheme.label(("EARNED: " if done else "REWARD: ") + "  •  ".join(st["reward"]), 15, UiTheme.GOLD, "bold"))
 		col.add_child(UiTheme.label("NEW HERE — %s: %s" % [String(st["new_title"]), String(st["new"])], 12, Color("bfe9ff")))
-	var side: VBoxContainer = VBoxContainer.new()
+	var side: BoxContainer = BoxContainer.new()
+	side.vertical = true
 	side.add_theme_constant_override("separation", 8)
 	side.alignment = BoxContainer.ALIGNMENT_CENTER
 	h.add_child(side)
@@ -303,14 +340,13 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 func show_departure() -> void:
 	var v: VBoxContainer = _new_screen()
 	_heading(v, "DEPARTURE", "Choose an explorer and the Force you carry out of the gate.")
-	var row: HBoxContainer = HBoxContainer.new()
-	row.add_theme_constant_override("separation", 18)
+	var row: BoxContainer = UiTheme.row(18)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(row)
 	# Explorers.
 	var list_scroll: ScrollContainer = ScrollContainer.new()
 	list_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	list_scroll.custom_minimum_size = Vector2(340, 0)
+	list_scroll.custom_minimum_size = Vector2(340, 0) if not UiTheme.is_narrow() else Vector2(0, 230)
 	row.add_child(list_scroll)
 	var list: VBoxContainer = VBoxContainer.new()
 	list.add_theme_constant_override("separation", 8)
@@ -318,9 +354,13 @@ func show_departure() -> void:
 	list_scroll.add_child(list)
 	list.add_child(UiTheme.label("EXPLORER", 13, UiTheme.DIM, "bold"))
 	var first: Button = null
+	var locked_count: int = 0
 	for cid: String in GameData.CHARACTERS.keys():
 		var c: Dictionary = GameData.CHARACTERS[cid]
 		var unlocked: bool = Profile.has_character(cid)
+		if not unlocked:
+			locked_count += 1
+			continue # only explorers you have; the next one is named below
 		var b: Button = UiTheme.button((String(c["name"]) if unlocked else "UNKNOWN CONTACT"), func() -> void:
 			selected_character = cid
 			show_departure(), 330.0, 50.0)
@@ -331,13 +371,20 @@ func show_departure() -> void:
 		list.add_child(b)
 		if first == null and unlocked:
 			first = b
-		if not unlocked:
-			list.add_child(UiTheme.label("   " + String(c["unlock"]), 12, UiTheme.DIM))
+	if locked_count > 0:
+		var nxt: Dictionary = _next_unlock("character")
+		var hint: String = "%d more explorer%s to find." % [locked_count, "" if locked_count == 1 else "s"]
+		if not nxt.is_empty():
+			hint += " Next: %s (stop \"%s\")." % [String(GameData.CHARACTERS[String(nxt["id"])]["name"]), String(nxt["stop"]["name"])]
+		var hl: Label = UiTheme.label(hint, 13, UiTheme.DIM)
+		hl.custom_minimum_size.x = 320.0 if not UiTheme.is_narrow() else _content_width()
+		list.add_child(hl)
 	# Detail.
 	var c2: Dictionary = GameData.CHARACTERS[selected_character]
 	var detail_scroll: ScrollContainer = ScrollContainer.new()
 	detail_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	detail_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	detail_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	row.add_child(detail_scroll)
 	var detail: PanelContainer = PanelContainer.new()
 	detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -379,10 +426,14 @@ func show_departure() -> void:
 	dv.add_child(frow)
 	if not Profile.is_attuned(selected_force):
 		selected_force = "pulse_width_codex"
+	var unheard: int = 0
 	for fid: String in GameData.FORCES.keys():
 		var f: Dictionary = GameData.FORCES[fid]
 		var att: bool = Profile.is_attuned(fid)
-		var fb: Button = UiTheme.button(String(f["name"]) if att else "?  UNHEARD", func() -> void:
+		if not att:
+			unheard += 1
+			continue
+		var fb: Button = UiTheme.button(String(f["name"]), func() -> void:
 			selected_force = fid
 			show_departure(), 168.0, 40.0)
 		fb.disabled = not att
@@ -390,6 +441,12 @@ func show_departure() -> void:
 			fb.add_theme_stylebox_override("normal", UiTheme.box(UiTheme.PANEL_HI, f["color"], 2, 10, 12))
 		fb.add_theme_font_size_override("font_size", UiTheme.fs(14))
 		frow.add_child(fb)
+	if unheard > 0:
+		var nf: Dictionary = _next_unlock("force")
+		var ft: String = "%d more Force%s unheard." % [unheard, "" if unheard == 1 else "s"]
+		if not nf.is_empty():
+			ft += " Next: %s (stop \"%s\")." % [String(GameData.FORCES[String(nf["id"])]["name"]), String(nf["stop"]["name"])]
+		dv.add_child(UiTheme.label(ft, 13, UiTheme.DIM))
 	var sf: Dictionary = GameData.FORCES[selected_force]
 	dv.add_child(UiTheme.label("%s — %s: %s  Starts with %s." % [String(sf["name"]), String(sf["mechanic"]), String(sf["desc"]), GameData.weapon_name(String(sf["primary"]))], 14, sf["color"]))
 	# Destination (Open Expedition only; a Corridor stop fixes the place).
@@ -422,8 +479,9 @@ func show_departure() -> void:
 					found += 1
 		dv.add_child(UiTheme.label("%s — %d / %d discoveries charted" % [String(GameData.DESTINATIONS[selected_destination]["name"]), found, total], 13, UiTheme.DIM))
 	# Launch row.
-	var launch: HBoxContainer = HBoxContainer.new()
-	launch.add_theme_constant_override("separation", 12)
+	var launch: HFlowContainer = HFlowContainer.new()
+	launch.add_theme_constant_override("h_separation", 12)
+	launch.add_theme_constant_override("v_separation", 8)
 	v.add_child(launch)
 	launch.add_child(UiTheme.button("BACK", (func() -> void: show_chart(selected_stop)) if not stop.is_empty() else show_title, 180.0, 56.0))
 	var dest: Dictionary = GameData.DESTINATIONS[selected_destination]
@@ -433,10 +491,13 @@ func show_departure() -> void:
 		var sn: int = GameData.chart_number(selected_stop)
 		launch_text = "LAUNCH — " + ("STOP %d: " % sn if sn > 0 else "") + String(stop["name"]).to_upper()
 		launch_note = "OBJECTIVE: %s.   REWARD: %s" % [GameData.chart_objective_text(stop), String(stop["reward"][0])]
-	var go: Button = UiTheme.button(launch_text, func() -> void: start_expedition(false), 420.0, 56.0)
+	var go: Button = UiTheme.button(launch_text, func() -> void: start_expedition(false), 420.0 if not UiTheme.is_narrow() else _content_width() - 192.0, 56.0)
+	go.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	go.add_theme_color_override("font_color", UiTheme.ACCENT)
 	launch.add_child(go)
 	var dl: Label = UiTheme.label(launch_note, 13, UiTheme.DIM if stop.is_empty() else UiTheme.GOLD)
+	if UiTheme.is_narrow():
+		dl.custom_minimum_size.x = _content_width()
 	dl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	launch.add_child(dl)
 	go.grab_focus()
@@ -495,12 +556,11 @@ func show_results() -> void:
 			wv.add_child(UiTheme.label("NEXT — Stop %d, %s: %s" % [GameData.chart_number(nxt), String(ns["name"]), GameData.chart_objective_text(ns)], 15, UiTheme.TEXT))
 		else:
 			wv.add_child(UiTheme.label("Every beacon on the corridor is lit.", 15, UiTheme.TEXT))
-	var row: HBoxContainer = HBoxContainer.new()
-	row.add_theme_constant_override("separation", 24)
+	var row: BoxContainer = UiTheme.row(24)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(row)
 	var left: VBoxContainer = VBoxContainer.new()
-	left.custom_minimum_size = Vector2(340, 0)
+	left.custom_minimum_size = Vector2(340, 0) if not UiTheme.is_narrow() else Vector2.ZERO
 	left.add_theme_constant_override("separation", 4)
 	row.add_child(left)
 	var rp: TextureRect = _portrait(String(r["character"]), 96.0)
@@ -584,6 +644,7 @@ func show_archive() -> void:
 	var found: int = Profile.discovered_count()
 	_heading(v, "STAR SPLITTER ARCHIVE", "A record collection assembled by exploration — %d of %d discoveries." % [found, GameData.DISCOVERIES.size()])
 	var tabs: TabContainer = TabContainer.new()
+	tabs.clip_tabs = true
 	tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(tabs)
 	tabs.add_child(_archive_projects())
@@ -614,22 +675,22 @@ func _archive_projects() -> Control:
 	var s: Array = _scroll("Records")
 	var inner: VBoxContainer = s[1]
 	var transmissions: Array = Profile.data["transmissions"]
+	var unheard_projects: int = 0
 	for pname: String in GameData.PROJECTS.keys():
 		var pdef: Dictionary = GameData.PROJECTS[pname]
 		var owned: Array = []
 		for tid: String in GameData.TRANSMISSIONS.keys():
 			if String(GameData.TRANSMISSIONS[tid]["project"]) == pname and tid in transmissions:
 				owned.append(tid)
-		var panel: PanelContainer = PanelContainer.new()
 		var known: bool = not owned.is_empty()
-		panel.add_theme_stylebox_override("panel", UiTheme.box(Color(UiTheme.PANEL, 0.9), Color(pdef["accent"], 0.7 if known else 0.15), 1, 12, 16))
+		if not known:
+			unheard_projects += 1
+			continue # only what you have heard; a single line counts the rest
+		var panel: PanelContainer = PanelContainer.new()
+		panel.add_theme_stylebox_override("panel", UiTheme.box(Color(UiTheme.PANEL, 0.9), Color(pdef["accent"], 0.7), 1, 12, 16))
 		inner.add_child(panel)
 		var pv: VBoxContainer = VBoxContainer.new()
 		panel.add_child(pv)
-		if not known:
-			pv.add_child(UiTheme.label("UNHEARD PROJECT", 18, UiTheme.DIM, "bold"))
-			pv.add_child(UiTheme.label("Somewhere in the drift a signal carries this sound. Find it.", 14, UiTheme.DIM))
-			continue
 		var head: HBoxContainer = HBoxContainer.new()
 		head.add_theme_constant_override("separation", 16)
 		pv.add_child(head)
@@ -670,6 +731,8 @@ func _archive_projects() -> Control:
 	inner.add_child(UiTheme.button("STOP PLAYBACK", func() -> void:
 		Audio.stop_catalog()
 		Audio.set_mix({"menu": 0.6, "bed": 0.3}), 220.0, 44.0))
+	if unheard_projects > 0:
+		inner.add_child(_more_line("%d more project%s still unheard. Each one is a signal somewhere on the Corridor Chart." % [unheard_projects, "" if unheard_projects == 1 else "s"]))
 	return s[0]
 
 ## Rex Fleet: the released fiction the explorers come from, plus a clear note
@@ -731,10 +794,11 @@ func _archive_forces() -> Control:
 func _archive_explorers() -> Control:
 	var s: Array = _scroll("Explorers")
 	var inner: VBoxContainer = s[1]
+	var unknown_contacts: int = 0
 	for cid: String in GameData.CHARACTERS.keys():
 		var c: Dictionary = GameData.CHARACTERS[cid]
 		if not Profile.has_character(cid):
-			inner.add_child(UiTheme.label("UNKNOWN CONTACT — " + String(c["unlock"]), 15, UiTheme.DIM))
+			unknown_contacts += 1
 			continue
 		var m: Dictionary = Profile.mastery(cid)
 		var eh: HBoxContainer = HBoxContainer.new()
@@ -754,6 +818,9 @@ func _archive_explorers() -> Control:
 		for i in perks.size():
 			lines.append(("✓ " if i < int(m["level"]) else "· ") + String(perks[i]))
 		inner.add_child(UiTheme.label("Mastery %d — expeditions %d, completions %d\n%s" % [int(m["level"]), int(m["expeditions"]), int(m["completions"]), "\n".join(lines)], 13, UiTheme.DIM))
+	if unknown_contacts > 0:
+		var nx: Dictionary = _next_unlock("character")
+		inner.add_child(_more_line("%d more explorer%s to find.%s" % [unknown_contacts, "" if unknown_contacts == 1 else "s", (" Next: %s, at \"%s\"." % [String(GameData.CHARACTERS[String(nx["id"])]["name"]), String(nx["stop"]["name"])]) if not nx.is_empty() else ""]))
 	return s[0]
 
 ## Other Star Splitter Visions series that reached the Reach through Signal
@@ -763,9 +830,13 @@ func _archive_visions() -> Control:
 	var inner: VBoxContainer = s[1]
 	inner.add_child(UiTheme.label("STAR SPLITTER VISIONS — SIGNAL SPACE GUESTS", 20, UiTheme.GOLD, "display"))
 	inner.add_child(UiTheme.label("Other Star Splitter Visions series, as published. Their appearance here is a Signal Space crossover: a game-only meeting point, not canon for any series.", 13, UiTheme.DIM))
+	var unseen_series: int = 0
 	for sid: String in GameData.VISIONS_SERIES.keys():
 		var v: Dictionary = GameData.VISIONS_SERIES[sid]
 		var found: bool = Profile.is_discovered(String(v["discovery"]))
+		if not found:
+			unseen_series += 1
+			continue
 		var panel: PanelContainer = PanelContainer.new()
 		panel.add_theme_stylebox_override("panel", UiTheme.box(UiTheme.PANEL, Color(v["accent"], 0.6 if found else 0.2), 1, 10, 14))
 		inner.add_child(panel)
@@ -804,6 +875,8 @@ func _archive_visions() -> Control:
 			gl.autowrap_mode = TextServer.AUTOWRAP_OFF
 			gl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 			guests.add_child(gl)
+	if unseen_series > 0:
+		inner.add_child(_more_line("%d more series still out in Signal Space. They show up as side signals on the Corridor Chart." % unseen_series))
 	return s[0]
 
 func _archive_mystery() -> Control:
@@ -817,8 +890,7 @@ func _archive_mystery() -> Control:
 	for fid: String in keys:
 		if fid in have:
 			inner.add_child(UiTheme.label("• " + String(GameData.FRAGMENTS[fid]), 16, UiTheme.TEXT))
-		else:
-			inner.add_child(UiTheme.label("• ▒▒▒▒▒▒ ▒▒▒ ▒▒▒▒▒▒▒▒ ▒▒▒▒", 16, Color(UiTheme.DIM, 0.5)))
+
 	if have.size() == GameData.FRAGMENTS.size():
 		inner.add_child(UiTheme.label("Every fragment points the same way: the quiet is drawn to music. So keep playing.", 16, UiTheme.GOLD))
 	return s[0]
@@ -843,9 +915,6 @@ func _archive_log() -> Control:
 			if Profile.is_discovered(id2):
 				var region: String = String(GameData.REGIONS[String(d["region"])]["name"]) if String(d.get("region", "")) != "" else "OPEN DRIFT"
 				inner.add_child(UiTheme.label("%s — %s\n%s" % [String(d["title"]), region, String(d["text"])], 14, UiTheme.TEXT))
-			else:
-				var hint: String = {"FRACTURE": " (only visible in Fracture)", "RESONANCE": " (only visible in Resonance)", "SCAN": " (hidden from casual eyes)"}.get(String(d.get("hidden", "")), "")
-				inner.add_child(UiTheme.label("??? — somewhere in %s%s" % [String(GameData.REGIONS[String(d["region"])]["name"]) if String(d.get("region", "")) != "" else "the open drift", hint], 14, UiTheme.DIM))
 	return s[0]
 
 # ================================================================== workshop
@@ -854,7 +923,7 @@ func show_workshop() -> void:
 	var v: VBoxContainer = _new_screen()
 	_heading(v, "FLEET WORKSHOP", "Spend Signal on permanent refits. You have %d Signal." % int(Profile.data["currency"]))
 	var grid: GridContainer = GridContainer.new()
-	grid.columns = 2
+	grid.columns = 1 if UiTheme.is_narrow() else 2
 	grid.add_theme_constant_override("h_separation", 14)
 	grid.add_theme_constant_override("v_separation", 10)
 	grid.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -869,8 +938,9 @@ func show_workshop() -> void:
 		var b: Button = UiTheme.button(text, func() -> void:
 			if Profile.buy_workshop(wid):
 				Audio.play_sfx("choose")
-			show_workshop(), 520.0, 92.0)
+			show_workshop(), 520.0 if not UiTheme.is_narrow() else _content_width(), 92.0)
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		b.disabled = maxed or int(Profile.data["currency"]) < cost
 		b.add_theme_font_size_override("font_size", UiTheme.fs(15))
 		grid.add_child(b)
@@ -901,13 +971,15 @@ func show_settings() -> void:
 	_choice(grid, "Movement stick", "joystick_mode", ["floating", "fixed"])
 	_choice(grid, "Handedness (stick side)", "handedness", ["right", "left"])
 	_choice(grid, "Frame rate cap", "fps_cap", [60, 30])
-	var row: HBoxContainer = HBoxContainer.new()
+	var row: BoxContainer = BoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	v.add_child(row)
 	var back: Button = UiTheme.button("SAVE & BACK", func() -> void:
 		Profile.save()
 		show_title(), 240.0)
 	row.add_child(back)
+	if UiTheme.is_narrow():
+		row.vertical = true
 	var keys_label: Label = UiTheme.label("Keyboard: WASD/arrows move • Space ability • M map • Esc pause • 1-4 choose • R reroll • E confront. Gamepad: stick, A ability, Start pause, Back map.", 13, UiTheme.DIM)
 	keys_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(keys_label)
@@ -916,7 +988,8 @@ func show_settings() -> void:
 func _setting_label(grid: GridContainer, text: String) -> void:
 	var l: Label = UiTheme.label(text, 17)
 	l.autowrap_mode = TextServer.AUTOWRAP_OFF
-	l.custom_minimum_size = Vector2(360, 0)
+	l.custom_minimum_size = Vector2(360, 0) if not UiTheme.is_narrow() else Vector2(200, 0)
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if UiTheme.is_narrow() else TextServer.AUTOWRAP_OFF
 	grid.add_child(l)
 
 func _slider(grid: GridContainer, text: String, key: String, lo: float, hi: float, step: float) -> void:
@@ -926,7 +999,7 @@ func _slider(grid: GridContainer, text: String, key: String, lo: float, hi: floa
 	s.max_value = hi
 	s.step = step
 	s.value = float(Profile.setting(key))
-	s.custom_minimum_size = Vector2(380, 36)
+	s.custom_minimum_size = Vector2(380, 36) if not UiTheme.is_narrow() else Vector2(220, 36)
 	s.value_changed.connect(func(val: float) -> void: Profile.set_setting(key, val))
 	grid.add_child(s)
 

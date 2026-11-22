@@ -32,6 +32,25 @@ static func text_scale() -> float:
 ## is scaled up from its design value before the player's own Text size.
 const BASE_TEXT: float = 1.3
 
+## Narrow (portrait phone) layout: screens stack vertically instead of side
+## by side. Width is in layout units, after content scaling.
+const NARROW_WIDTH: float = 760.0
+
+static func is_narrow() -> bool:
+	var ml: SceneTree = Engine.get_main_loop() as SceneTree
+	if ml == null or ml.root == null:
+		return false
+	var sz: Vector2 = ml.root.get_visible_rect().size
+	# Any portrait screen gets the stacked layout, whatever its pixel count.
+	return sz.x < NARROW_WIDTH or sz.y > sz.x * 1.1
+
+## A row that becomes a column on narrow screens.
+static func row(separation: int = 16) -> BoxContainer:
+	var b: BoxContainer = BoxContainer.new()
+	b.vertical = is_narrow()
+	b.add_theme_constant_override("separation", separation)
+	return b
+
 static func fs(size: int) -> int:
 	return int(round(size * BASE_TEXT * text_scale()))
 

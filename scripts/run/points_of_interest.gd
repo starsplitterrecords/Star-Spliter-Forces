@@ -55,15 +55,20 @@ func populate(world: ExpeditionWorld, rng: RandomNumberGenerator, profile_discov
 			var region3: Dictionary = GameData.REGIONS[rid]
 			if String(region3["shape"]) == "circle":
 				pos = world.random_open_point_near(region3["center"], 120.0, float(region3["radius"]) * 0.7, rng)
-				# Keep a stop's sites a real flight away from its home beacon.
-				for attempt in 12:
-					if pos.distance_to(world.gate) > 650.0:
-						break
-					pos = world.random_open_point_near(region3["center"], 120.0, float(region3["radius"]) * 0.7, rng)
+				# A stop's sites sit a real flight from its home beacon: the
+				# target about 2000 px out, the rest about 1300.
+				var want: float = 2000.0 if is_target else 1300.0
+				var best_err: float = absf(pos.distance_to(world.gate) - want)
+				for attempt in 24:
+					var q: Vector2 = world.random_open_point_near(region3["center"], 120.0, float(region3["radius"]) * 0.8, rng)
+					var err: float = absf(q.distance_to(world.gate) - want)
+					if err < best_err:
+						best_err = err
+						pos = q
 		var poi: Dictionary = add({"id": id, "kind": String(d["kind"]), "pos": world.resolve(pos, 10.0),
 			"title": String(d["title"]), "hidden": String(d.get("hidden", "")), "color": col, "data": d,
 			"radius": 70.0 if String(d["kind"]) in ["signal", "character"] else 56.0,
-			"repeat": known_before, "known": (rid == gate_region and String(d["kind"]) == "signal") or (is_target and String(d.get("hidden", "")) == ""), "lock": String(d.get("lock", ""))})
+			"repeat": known_before, "known": mission.is_empty() and rid == gate_region and String(d["kind"]) == "signal", "lock": String(d.get("lock", ""))})
 		if bool(d.get("moving", false)):
 			var region: Dictionary = GameData.REGIONS[rid]
 			poi["path_a"] = poi.pos

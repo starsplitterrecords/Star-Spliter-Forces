@@ -387,7 +387,8 @@ func _drop() -> void:
 
 func step(delta: float) -> void:
 	anim += delta
-	silenced = run.hazards.player_silenced(player.position)
+	# On a Spectacle stage the show needs an audience: weapons hold fire.
+	silenced = run.hazards.player_silenced(player.position) or run.on_stage
 	drop_time = maxf(0.0, drop_time - delta)
 	var moving: float = player.movement_ratio()
 	if has_force("ghost_driver_unit"):

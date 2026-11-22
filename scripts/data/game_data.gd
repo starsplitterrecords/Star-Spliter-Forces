@@ -769,7 +769,7 @@ const SFX_NAMES: Array[String] = [
 ## reward: what the player gets, in words; "grants" holds the non-discovery
 ##         unlocks (features, characters, destinations).
 const CHART: Array = [
-	{"id": "first_light", "power": 15, "prize": "First track", "icon": "signal", "name": "First Light", "place": "Array Gate", "start": Vector2(0, 0),
+	{"id": "first_light", "power": 15, "prize": "First track", "icon": "signal", "name": "First Light", "place": "Array Gate", "start": Vector2(-1300, 1000),
 		"objective": {"type": "discover", "id": "sig_now_or_never"}, "discoveries": ["sig_now_or_never", "frag_gate"],
 		"new_title": "FLYING AND SIGNALS", "new": "Drag to fly; your weapons fire on their own. Cleared raiders drop shards: collect them to charge your tuner. Then fly into the column of light and hold still to tune it in.",
 		"brief": "The corridor gate at Black Drift has been reblazed, but everything past it is dark. One carrier is still broadcasting. Tune it.",
@@ -850,9 +850,9 @@ const CHART: Array = [
 		"new_title": "BUILD ANOTHER WAY", "new": "A homemade relay rocket. Its builder plants relays that fight for you.",
 		"brief": "A rocket built from salvaged aerospace parts has come down on the Shelf, relay still running.",
 		"reward": ["Guest explorer: Lucia (Backyard Rockets)"], "grants": {}},
-	{"id": "s_spectacle", "power": 110, "prize": "Supersonic Being", "icon": "signal", "side_of": "shelf_beacon", "name": "Spectacle", "place": "Thunderbreak Shelf", "region": "thunderbreak_shelf",
+	{"id": "s_spectacle", "power": 60, "prize": "Supersonic Being", "icon": "signal", "side_of": "shelf_beacon", "name": "Spectacle", "place": "Thunderbreak Shelf", "region": "thunderbreak_shelf",
 		"objective": {"type": "discover", "id": "sig_spectacle"}, "discoveries": ["sig_spectacle"],
-		"new_title": "A SIGNAL THAT WANTS A CROWD", "new": "This one only resolves while enemies are close. Let them gather, then tune it in front of them.",
+		"new_title": "A SIGNAL THAT WANTS A CROWD", "new": "This one only resolves with an audience. Step into its ring and you are on stage: your weapons hold fire, the stage halves damage, and raiders gather to watch. Hold until the show is done.",
 		"brief": "A frequency that refuses to play to an empty room.",
 		"reward": ["New Force: Supersonic Being (Hype weapons)", "Track: Give It Up, Let’s Go"], "grants": {}},
 	{"id": "s_campfire", "power": 130, "prize": "Warm Circuits", "icon": "signal", "side_of": "night_trace", "name": "Analog Campfire", "place": "The Far Drift", "start": Vector2(-4500, 3200),
@@ -894,9 +894,11 @@ static func chart_start(st: Dictionary) -> Vector2:
 		return st["start"]
 	var region: Dictionary = REGIONS[String(st["region"])]
 	var c: Vector2 = region_anchor(region)
+	# Out in the open drift, short of the region, so every stop begins with a
+	# crossing (playtest: "it puts you right next to the goal").
 	if String(region.get("shape", "circle")) == "capsule":
-		return Vector2(region["a"]) - (Vector2(region["b"]) - Vector2(region["a"])).normalized() * 260.0
-	return c - c.normalized() * float(region["radius"]) * 0.98
+		return Vector2(region["a"]) - (Vector2(region["b"]) - Vector2(region["a"])).normalized() * 960.0
+	return c - c.normalized() * (float(region["radius"]) + 700.0)
 
 static func chart_objective_text(st: Dictionary) -> String:
 	var o: Dictionary = st["objective"]

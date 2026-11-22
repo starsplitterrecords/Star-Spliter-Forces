@@ -31,7 +31,7 @@ var hint_clock: float = 0.0
 var card: PanelContainer
 var card_clock: float = 0.0
 var level_panel: Control
-var level_box: HBoxContainer
+var level_box: BoxContainer
 var level_options: Array = []
 var reroll_button: Button
 var gate_panel: PanelContainer
@@ -90,11 +90,19 @@ func _on_resize() -> void:
 func _layout() -> void:
 	if gate_panel == null or ability_button == null:
 		return
+	var narrow: bool = UiTheme.is_narrow()
 	hull_label.position = safe.position + Vector2(0, 26)
-	top_label.position = Vector2(safe.position.x + safe.size.x * 0.5 - 220, safe.position.y + 14)
 	level_label.position = safe.position + Vector2(0, 52)
 	state_label.position = safe.position + Vector2(0, 84)
-	objective_label.position = safe.position + Vector2(0, 132)
+	if narrow:
+		# Portrait: one column on the left, minimap tucked under the pause button.
+		top_label.position = safe.position + Vector2(0, 126)
+		objective_label.position = safe.position + Vector2(0, 186)
+		objective_label.size.x = safe.size.x - 8.0
+	else:
+		top_label.position = Vector2(safe.position.x + safe.size.x * 0.5 - 220, safe.position.y + 14)
+		objective_label.position = safe.position + Vector2(0, 132)
+		objective_label.size.x = 520.0
 	banner_title.position = Vector2(safe.position.x, safe.position.y + safe.size.y * 0.2)
 	banner_title.size.x = safe.size.x
 	banner_sub.position = banner_title.position + Vector2(0, UiTheme.fs(44))
@@ -107,8 +115,12 @@ func _layout() -> void:
 	var ab_x: float = safe.end.x - 150 if right_hand else safe.position.x + 22
 	ability_button.position = Vector2(ab_x, safe.end.y - 150)
 	pause_button.position = Vector2(safe.end.x - 64, safe.position.y)
-	var gx: float = safe.end.x - gate_panel.size.x - 170.0 if right_hand else safe.position.x + 170.0
-	gate_panel.position = Vector2(maxf(safe.position.x, gx), maxf(safe.position.y + 190.0, safe.end.y - gate_panel.size.y - 20.0))
+	# The gate choice sits just below the ship, sized to its content.
+	var gw: Vector2 = gate_panel.get_combined_minimum_size()
+	if gate_panel.size != gw:
+		gate_panel.size = gw
+	var vp: Vector2 = get_viewport().get_visible_rect().size
+	gate_panel.position = Vector2((vp.x - gw.x) * 0.5, minf(vp.y * 0.5 + 64.0, safe.end.y - gw.y - 8.0))
 
 func _build_labels() -> void:
 	hull_label = UiTheme.label("", 17, UiTheme.TEXT, "bold")
@@ -176,7 +188,7 @@ func _build_buttons() -> void:
 func _build_gate_panel() -> void:
 	gate_panel = PanelContainer.new()
 	gate_panel.add_theme_stylebox_override("panel", UiTheme.box(Color(0.03, 0.06, 0.1, 0.92), Color("68ecff"), 2, 12, 16))
-	gate_panel.custom_minimum_size = Vector2(480, 0)
+	gate_panel.custom_minimum_size = Vector2.ZERO
 	gate_panel.visible = false
 	gate_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(gate_panel)
@@ -187,12 +199,13 @@ func _build_gate_panel() -> void:
 	v.add_child(gate_label)
 	gate_info = UiTheme.label("", 14, UiTheme.TEXT)
 	gate_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	gate_info.custom_minimum_size = Vector2(448, 0)
+	gate_info.custom_minimum_size = Vector2(minf(448.0, safe.size.x - 60.0), 0)
 	v.add_child(gate_info)
-	extract_button = UiTheme.button("GO HOME — KEEP EVERYTHING  [Q]", func() -> void: run.request_extract(), 448.0, 54.0)
+	var gbw: float = minf(448.0, safe.size.x - 60.0)
+	extract_button = UiTheme.button("GO HOME — KEEP EVERYTHING  [Q]", func() -> void: run.request_extract(), gbw, 54.0)
 	extract_button.add_theme_color_override("font_color", Color("a8f7ff"))
 	v.add_child(extract_button)
-	confront_button = UiTheme.button("FACE THE SILENCE  [E]", func() -> void: run.confront(), 448.0, 54.0)
+	confront_button = UiTheme.button("FACE THE SILENCE  [E]", func() -> void: run.confront(), gbw, 54.0)
 	confront_button.add_theme_color_override("font_color", Color("ff8fb0"))
 	v.add_child(confront_button)
 	_layout()
@@ -319,11 +332,6 @@ func _update_gate() -> void:
 		gate_info.text = "\n".join(lines)
 		extract_button.text = "GO HOME — KEEP EVERYTHING  [Q]"
 	confront_button.visible = run.climax_available() and not run.extract_armed
-	var state_key: String = str(run.extract_armed) + str(confront_button.visible)
-	if state_key != _gate_state:
-		_gate_state = state_key
-		gate_panel.size = Vector2.ZERO
-		gate_panel.reset_size()
 	_layout()
 
 # ================================================================== messages
@@ -548,8 +556,9 @@ func _build_level_panel() -> void:
 	level_panel.add_child(center)
 	var title: Label = UiTheme.label("LEVEL UP — CHOOSE WHAT TO CARRY FORWARD", 26, UiTheme.GOLD, "display")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.custom_minimum_size = Vector2(minf(1100.0, get_viewport().get_visible_rect().size.x - 32.0), 0)
 	center.add_child(title)
-	level_box = HBoxContainer.new()
+	level_box = BoxContainer.new()
 	level_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	level_box.add_theme_constant_override("separation", 14)
 	center.add_child(level_box)
@@ -565,7 +574,10 @@ func show_level_up(options: Array) -> void:
 	free_reroll_used = false if run.character_id == "jex_marrin" and level_panel.visible == false else free_reroll_used
 	for c: Node in level_box.get_children():
 		c.queue_free()
+	level_box.vertical = UiTheme.is_narrow()
 	var card_w: float = clampf((safe.size.x - 60.0) / float(options.size()) - 14.0, 220.0, 300.0)
+	if level_box.vertical:
+		card_w = safe.size.x - 24.0
 	for i in options.size():
 		level_box.add_child(_choice_card(options[i], i, card_w))
 	var jex_free: bool = run.character_id == "jex_marrin" and not free_reroll_used
@@ -574,7 +586,7 @@ func show_level_up(options: Array) -> void:
 	level_panel.visible = true
 	await get_tree().process_frame
 	# Grow every card to fit its wrapped text, all to the same height.
-	var tallest: float = 236.0
+	var tallest: float = 236.0 if not level_box.vertical else 120.0
 	for c: Node in level_box.get_children():
 		if c.get_child_count() > 0:
 			tallest = maxf(tallest, (c.get_child(0) as Control).get_combined_minimum_size().y + 34.0)
@@ -905,7 +917,10 @@ class HudCanvas:
 			draw_rect(Rect2(hb.position + Vector2(0, hb.size.y - 4), Vector2(hb.size.x * clampf(p.shield / maxf(1.0, p.max_shield), 0.0, 1.0), 4)), Color("bff6ff"))
 		draw_rect(hb, Color(1, 1, 1, 0.25), false, 1.0)
 		# XP bar across the top.
+		var narrow: bool = UiTheme.is_narrow()
 		var xb: Rect2 = Rect2(Vector2(safe.position.x + 320, safe.position.y + 4), Vector2(safe.size.x - 320 - 220 - 80, 8))
+		if narrow:
+			xb = Rect2(Vector2(safe.position.x, safe.position.y - 8), Vector2(safe.size.x - 70.0, 6))
 		draw_rect(xb, Color("0b1120"))
 		draw_rect(Rect2(xb.position, Vector2(xb.size.x * float(run.xp) / float(maxi(1, run.xp_need)), xb.size.y)), Color("ffe08a"))
 		# Resonance meter with zone markers.
@@ -916,9 +931,9 @@ class HudCanvas:
 		var rx: float = rb.position.x + rb.size.x * run.resonance / 100.0
 		draw_rect(Rect2(Vector2(rx - 3, rb.position.y - 4), Vector2(6, rb.size.y + 8)), Color.WHITE)
 		# Force mechanic meters.
-		_draw_force_meters(run, safe.position + Vector2(320, 44), font)
+		_draw_force_meters(run, safe.position + (Vector2(0, 156) if narrow else Vector2(320, 44)), font)
 		# Minimap.
-		_draw_minimap(run, Rect2(Vector2(safe.end.x - 220 - 70, safe.position.y), Vector2(220, 150)))
+		_draw_minimap(run, Rect2(Vector2(safe.end.x - 160, safe.position.y + 58), Vector2(160, 110)) if narrow else Rect2(Vector2(safe.end.x - 220 - 70, safe.position.y), Vector2(220, 150)))
 		# Compass markers at screen edge.
 		_draw_compass(run, vp, font)
 		# Ability button.

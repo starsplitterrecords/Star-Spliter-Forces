@@ -20,4 +20,5 @@ Severity: **S1** blocks release · **S2** important · **S3** polish.
 | 13 | S3 | Kaldr Rift has no unique enemies, boss variant or character unlock yet | Reuses Reach enemy roster and The Silence. |
 | 15 | S3 | ~~Browser crash after long sessions~~ **Fixed** (D-27) | Cause: WebGL name tables in the Emscripten glue grew ~16 MB/min. Patched in `tools/build_web_artifact.py`; forced-GC soak now flat at ~8 MB. Re-check on owner's device. |
 | 16 | S3 | Hazard mines (pink flowers) don't carry the red threat ring | They are environment hazards; consider their own Field Guide entry. |
+| 17 | S2 | A straight flight into the Silver Wrecks in Open Expedition ends anywhere from full hull to lost (bot, 4 runs, before and after 2026-11-22) | Beat-driven weapons follow the real-time audio clock, so the sim is non-deterministic. The first-minute test no longer fails on a loss. Worth a balance pass on Open Expedition's first minute. |
 

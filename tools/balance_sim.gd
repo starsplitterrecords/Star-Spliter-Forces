@@ -40,6 +40,12 @@ func _ready() -> void:
 	var boss_end: float = -1.0
 	print("t     lvl kills enemies hp      state      region            target")
 	var stop_t: float = -1.0
+	if stop != "":
+		var tgt: Array = []
+		for q: Dictionary in run.pois.items:
+			if run.is_stop_target(String(q.id)):
+				tgt = [q.pos]
+		print("  home beacon %s, target %s" % [str(run.world.gate.round()), ("%d px away" % int(Vector2(tgt[0]).distance_to(run.world.gate))) if not tgt.is_empty() else "n/a"])
 	while not run.ended and run.elapsed < 1500.0:
 		if run.stop_complete and stop_t < 0.0:
 			stop_t = run.elapsed

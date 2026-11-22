@@ -26,12 +26,33 @@ func _init() -> void:
 			positions[String(sides[k]["id"])] = Vector2(pos.x + (58.0 if up else -58.0), 64.0 if up else 268.0)
 	custom_minimum_size = Vector2(96.0 * 2.0 + (main.size() - 1) * STEP, 330.0)
 
+## How far the chart is revealed: every lit stop, the next one, and a single
+## unnamed beacon beyond it. The rest of the corridor stays dark (playtest:
+## a full list of things not yet found is noise).
+var reveal: int = 0 # index into chart_main of the last visible main stop
+var teaser: String = "" # the one dark "?" beacon past the next stop
+
+func _visible(id: String) -> bool:
+	var st: Dictionary = GameData.chart_stop(id)
+	if st.has("side_of"):
+		return Profile.stop_available(id) or Profile.stop_done(id)
+	var n: int = GameData.chart_number(id)
+	return n - 1 <= reveal
+
 func _ready() -> void:
+	var main: Array = GameData.chart_main()
+	reveal = 0
+	for i in main.size():
+		if Profile.stop_available(String(main[i]["id"])) or Profile.stop_done(String(main[i]["id"])):
+			reveal = i
+	if reveal + 1 < main.size():
+		teaser = String(main[reveal + 1]["id"])
+		reveal += 1
 	for st: Dictionary in GameData.CHART:
 		var id: String = String(st["id"])
 		var side: bool = st.has("side_of")
-		if side and not Profile.stop_available(id) and not Profile.stop_done(id):
-			continue # side signals stay off the chart until their stop is relit
+		if not _visible(id):
+			continue # still dark: not on the chart yet
 		var b: Button = Button.new()
 		b.flat = true
 		b.focus_mode = Control.FOCUS_ALL
@@ -67,6 +88,12 @@ func _draw() -> void:
 		var a: Vector2 = positions[String(main[i]["id"])]
 		var b: Vector2 = positions[String(main[i + 1]["id"])]
 		var on: bool = Profile.stop_done(String(main[i]["id"]))
+		if i >= reveal:
+			# The lane fades out into the dark past the last visible beacon.
+			for k in 6:
+				var t0: float = k / 6.0
+				draw_line(a.lerp(b, t0), a.lerp(b, t0 + 1.0 / 12.0), Color(1, 1, 1, 0.12 * (1.0 - t0)), 3.0)
+			break
 		draw_line(a, b, Color(lit, 0.16) if on else Color(1, 1, 1, 0.05), 26.0)
 		draw_line(a, b, Color(lit, 0.8) if on else Color(1, 1, 1, 0.14), 3.0)
 		if on:
@@ -92,6 +119,10 @@ func _draw() -> void:
 		draw_arc(pos, r, 0.0, TAU, 40, col, 4.0 if id == selected else 2.5)
 		if id == selected:
 			draw_arc(pos, r + 5.0, 0.0, TAU, 40, Color.WHITE, 2.0)
+		if id == teaser:
+			var qw: float = font.get_string_size("?", HORIZONTAL_ALIGNMENT_LEFT, -1, 30).x
+			draw_string(font, pos + Vector2(-qw * 0.5, 11.0), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, 30, Color("6b7892"))
+			continue
 		if state == "locked":
 			# Padlock.
 			draw_rect(Rect2(pos + Vector2(-9, -2), Vector2(18, 14)), Color("6b7892"))

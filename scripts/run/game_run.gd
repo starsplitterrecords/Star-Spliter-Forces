@@ -97,6 +97,8 @@ var relay_pos: Vector2 = Vector2.ZERO
 var relay_time: float = 0.0
 var relay_clock: float = 0.0
 var since_hurt: float = 0.0
+var on_stage: bool = false # inside an unclaimed crowd-locked signal
+var stage_clock: float = 0.0
 var ally_time: float = 0.0
 var debug_enabled: bool = true
 var scripted_input: bool = false # tests/bots drive player.move_input directly
@@ -343,6 +345,7 @@ func step(delta: float) -> void:
 		if hud:
 			hud.on_beat(b)
 	pending_beats.clear()
+	_step_stage(delta)
 	weapons.step(delta)
 	projectiles.step(delta, enemy_hash, player)
 	hazards.step(delta, player, enemy_hash)
@@ -911,8 +914,12 @@ func gain_xp(value: int) -> void:
 	motes_collected += 1
 	if not mission.is_empty() and not stop_complete and motes_collected == int(mission.get("power", 0)) and String(mission["objective"]["type"]) == "discover":
 		Audio.stinger("discovery", -4.0)
+		# The charged tuner fixes the signal's exact position.
+		for p: Dictionary in pois.items:
+			if is_stop_target(String(p.id)) and String(p.hidden) == "":
+				p.known = true
 		if hud:
-			hud.banner("TUNER CHARGED", GameData.chart_objective_text(mission) + " — follow the gold arrow.", Color("ffd75e"), 3.0)
+			hud.banner("SIGNAL LOCATED", GameData.chart_objective_text(mission) + " — follow the gold arrow.", Color("ffd75e"), 3.0)
 	add_resonance(0.06)
 	if character_id == "tessa_banks":
 		var every: int = 30 if mastery_level >= 1 else 40
@@ -1341,6 +1348,40 @@ func _claim_discovery(p: Dictionary) -> void:
 	_update_music(false)
 
 ## Broadcasting a signal draws attention: a raider pack homes in while you tune.
+## Spectacle (crowd lock): standing in the ring puts you on stage. Weapons
+## hold fire, the stage halves damage taken, and an audience keeps arriving
+## until enough of them are watching. Before this, an upgraded ship cleared
+## every raider before three could gather and the stop could not be finished.
+func _step_stage(delta: float) -> void:
+	var was: bool = on_stage
+	on_stage = false
+	var stage: Dictionary = {}
+	for p: Dictionary in pois.items:
+		if String(p.get("lock", "")) == "crowd" and not bool(p.claimed) and player.position.distance_to(p.pos) < float(p.radius):
+			on_stage = true
+			stage = p
+			break
+	player.damage_taken_mult = (1.2 if force_state == "FRACTURE" else 1.0) * (1.15 if character_id == "jex_marrin" else 1.0) * (0.5 if on_stage else 1.0)
+	if not on_stage:
+		return
+	if not was:
+		stage_clock = 0.0
+		if hud:
+			hud.toast("ON STAGE — weapons hold fire. Let the crowd gather.")
+	stage_clock -= delta
+	if stage_clock <= 0.0:
+		stage_clock = 3.5
+		var watching: int = 0
+		for e: ForceEnemy in enemy_hash.query(Vector2(stage.pos), 420.0):
+			if not e.dead and e.position.distance_to(Vector2(stage.pos)) < 420.0:
+				watching += 1
+		if watching < 4:
+			var dir: float = rng.randf() * TAU
+			for i in 3:
+				var e2: ForceEnemy = spawn_enemy("skiff", Vector2(stage.pos) + Vector2.from_angle(dir + i * 0.5) * rng.randf_range(480.0, 560.0), true)
+				if e2:
+					e2.engaged = true
+
 func on_tuning_started(p: Dictionary) -> void:
 	var r: Dictionary = world.region_def(world.region_at(p.pos))
 	var threat: int = int(r.get("threat", 1))
@@ -1457,7 +1498,7 @@ func objective_text() -> String:
 			var d: Dictionary = GameData.DISCOVERIES[String(o["id"])]
 			var total: int = int(mission.get("power", 0))
 			if power_needed() > 0:
-				return "CHARGE YOUR TUNER  %d / %d shards   Clear raiders, collect their shards" % [motes_collected, total]
+				return "SEARCH %s  •  CHARGE TUNER %d / %d shards (clear raiders)" % [String(mission["place"]).to_upper(), motes_collected, total]
 			var hint: String = ""
 			var hidden: String = String(d.get("hidden", ""))
 			if hidden == "FRACTURE" and force_state != "FRACTURE":
@@ -1481,9 +1522,21 @@ func objective_target() -> Array:
 	if String(o["type"]) == "discover":
 		for p: Dictionary in pois.items:
 			if String(p.id) == String(o["id"]) and not bool(p.claimed):
+				if power_needed() > 0 and not bool(p.known):
+					# Until the tuner is charged you only know roughly where.
+					return [search_area(), "SEARCH: " + String(mission["place"]).to_upper(), Color("ffd75e", 0.8)]
 				var visible: bool = String(p.hidden) in ["", force_state] or bool(p.known)
 				return [p.pos, String(p.title) if visible else "SEARCH AREA", Color("ffd75e")]
 	return []
+
+## Centre of the stop's search area (its region, or near an open-drift site).
+func search_area() -> Vector2:
+	if mission.has("region"):
+		return GameData.region_anchor(GameData.REGIONS[String(mission["region"])])
+	var d: String = String(mission["objective"].get("id", ""))
+	if d != "":
+		return GameData.discovery_position(d) + Vector2(380, -260)
+	return world.gate
 
 func signals_found() -> int:
 	var n: int = 0
