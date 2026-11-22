@@ -22,7 +22,7 @@ func _ready() -> void:
 	if OS.get_environment("SIM_STEADY") != "":
 		Profile.data["stage_losses"] = {stop: 2}
 	var run: GameRun = GameRun.new()
-	run.setup({"character": character, "force": force, "seed": seed_value, "destination": destination, "stop": stop})
+	run.setup({"character": character, "force": force, "seed": seed_value, "destination": destination, "stop": stop, "remix": OS.get_environment("SIM_REMIX")})
 	run.scripted_input = true
 	run.debug_enabled = false
 	add_child(run)

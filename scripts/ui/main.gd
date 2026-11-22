@@ -268,6 +268,7 @@ func _next_goal_text() -> String:
 # ================================================================== corridor chart
 
 var selected_stop: String = ""
+var selected_remix: String = ""
 var workshop_after: String = ""
 
 ## The spine of the game: pick the next beacon to relight.
@@ -383,10 +384,20 @@ func _fill_briefing(panel: PanelContainer, id: String) -> void:
 	side.add_theme_constant_override("separation", 8)
 	side.alignment = BoxContainer.ALIGNMENT_CENTER
 	h.add_child(side)
-	var go: Button = UiTheme.button("CHOOSE EXPLORER  →" if not done else "PLAY AGAIN  →", show_departure, 250.0, 54.0)
+	var go: Button = UiTheme.button("CHOOSE EXPLORER  →" if not done else "PLAY AGAIN  →", func() -> void:
+		selected_remix = ""
+		show_departure(), 250.0, 54.0)
 	go.disabled = not open and not done
 	go.add_theme_color_override("font_color", UiTheme.ACCENT)
 	side.add_child(go)
+	var rmx: String = Profile.remix_for(id)
+	if rmx != "":
+		var rb: Button = UiTheme.button("REMIX · %s  →" % String(GameData.REMIXES[rmx]["name"]), func() -> void:
+			selected_remix = rmx
+			show_departure(), 250.0, 46.0)
+		rb.add_theme_color_override("font_color", Color("d7b8ff"))
+		side.add_child(rb)
+		side.add_child(UiTheme.label(String(GameData.REMIXES[rmx]["desc"]) + " +50% Signal.", 12, Color("d7b8ff")))
 	side.add_child(UiTheme.button("BACK", show_title, 250.0, 42.0))
 	if not go.disabled:
 		go.grab_focus()
@@ -583,7 +594,7 @@ func start_expedition(quick: bool) -> void:
 		screen.queue_free()
 		screen = null
 	current_run = GameRun.new()
-	current_run.setup({"character": selected_character, "destination": selected_destination, "force": selected_force, "quick_test": quick, "stop": "" if quick else selected_stop})
+	current_run.setup({"character": selected_character, "destination": selected_destination, "force": selected_force, "quick_test": quick, "stop": "" if quick else selected_stop, "remix": "" if quick or selected_stop == "" else selected_remix})
 	current_run.finished.connect(_on_run_finished)
 	add_child(current_run)
 
@@ -735,6 +746,7 @@ func show_archive() -> void:
 	tabs.add_child(_archive_visions())
 	if Profile.review():
 		tabs.add_child(_archive_shelves())
+		tabs.add_child(_archive_audio())
 	var fg: Array = _scroll("Field Guide")
 	FieldGuide.fill(fg[1], minf(1080.0, _content_width() - 40.0))
 	tabs.add_child(fg[0])
@@ -1068,6 +1080,37 @@ func _archive_shelves() -> Control:
 			for r: Array in rows:
 				lines.append(String(r[1]))
 			inner.add_child(UiTheme.label("\n".join(lines), 12, UiTheme.TEXT))
+	return s[0]
+
+## Review only: every music slot and record master the game can use, and
+## whether its file is there yet. The checklist for supplying audio.
+func _archive_audio() -> Control:
+	var s: Array = _scroll("Audio")
+	var inner: VBoxContainer = s[1]
+	inner.add_child(UiTheme.label("REALM MUSIC", 20, UiTheme.GOLD, "display"))
+	inner.add_child(UiTheme.label("Drop files at audio/realms/<realm>/<slot>.ogg. Missing slots play the placeholder score.", 12, UiTheme.DIM))
+	var have_r: int = 0
+	var lines: PackedStringArray = PackedStringArray()
+	for rid: String in GameData.DESTINATIONS.keys():
+		for slot: String in Audio.REALM_SLOTS:
+			var ok: bool = Audio.realm_path(rid, slot) != ""
+			have_r += 1 if ok else 0
+			lines.append("%s  %s/%s.ogg  ·  %s" % ["●" if ok else "○", rid, slot, String(GameData.DESTINATIONS[rid]["name"])])
+	inner.add_child(UiTheme.label("%d / %d supplied" % [have_r, lines.size()], 13, Color("8fb8ff"), "bold"))
+	inner.add_child(UiTheme.label("\n".join(lines), 12, UiTheme.TEXT))
+	inner.add_child(UiTheme.label("RECORD MASTERS", 20, UiTheme.GOLD, "display"))
+	inner.add_child(UiTheme.label("Drop files at audio/catalog/<file>. Missing masters play a Force motif or nothing.", 12, UiTheme.DIM))
+	var have_m: int = 0
+	var mlines: PackedStringArray = PackedStringArray()
+	var tids: Array = GameData.TRANSMISSIONS.keys()
+	tids.sort()
+	for tid: String in tids:
+		var t: Dictionary = GameData.TRANSMISSIONS[tid]
+		var ok2: bool = Audio.has_master(tid)
+		have_m += 1 if ok2 else 0
+		mlines.append("%s  %s  ·  %s — %s" % ["●" if ok2 else "○", String(t.get("master_file", tid + ".ogg")), String(t["project"]), String(t["title"])])
+	inner.add_child(UiTheme.label("%d / %d supplied" % [have_m, mlines.size()], 13, Color("8fb8ff"), "bold"))
+	inner.add_child(UiTheme.label("\n".join(mlines), 12, UiTheme.TEXT))
 	return s[0]
 
 func _archive_mystery() -> Control:

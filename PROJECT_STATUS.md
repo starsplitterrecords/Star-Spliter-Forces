@@ -85,6 +85,13 @@ sides, 8 crew contacts) and Azure Reach (8 stages + 2 sides, 4 contacts; opened 
 Chapter I side signal) also built; bot clears their first stage, hold and boss. Playtest
 mode in Settings (D-57).
 
+**Seams push (D-60–D-70)** — realms are data files (`data/realms/`), RexPrompt shelves
+imported (`tools/sync_shelves.py`, `data/shelves/`); Review mode (locked content tagged,
+Shelves and Audio tabs); crew ride along with their captain; gentle difficulty with a
+longer curve (Steady after a loss, route depth); The Fortress (Forces of Darkness LLC,
+Sir Eric); realm raiders, camps and bosses; Chapter III The Shatterwake (Issue 02, issue
+order enforced); the Seams mystery; remixes; realm music slots. 31 tests pass.
+
 ## Measured
 
 - 22/22 headless tests pass (`tools/run_tests.sh`).

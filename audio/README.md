@@ -6,6 +6,26 @@
 
 Stems: future per-track stems should follow `catalog/<transmission_id>/<stem>.ogg` and be registered in `AUDIO_DESIGN.md` before use. Do not add any recording without confirmed distribution rights.
 
+## Realm music slots (no code)
+
+Each realm has two slots. Drop an authorised `.ogg` at the path and it plays in that
+realm instead of the placeholder score (loops; the boss slot takes over when the
+Silence arrives). Missing slots keep the placeholder score.
+
+| Realm | Explore | Boss |
+|---|---|---|
+| Black Drift Reach (Ch. I) | `audio/realms/black_drift_reach/explore.ogg` | `…/boss.ogg` |
+| The Green Corridor (Ch. II) | `audio/realms/kaldr_rift/explore.ogg` | `…/boss.ogg` |
+| The Shatterwake (Ch. III) | `audio/realms/shatterwake/explore.ogg` | `…/boss.ogg` |
+| Harbor Signal (sea) | `audio/realms/harbor_signal/explore.ogg` | `…/boss.ogg` |
+| Dryline (desert) | `audio/realms/dryline/explore.ogg` | `…/boss.ogg` |
+| Stardust Orbit | `audio/realms/stardust_orbit/explore.ogg` | `…/boss.ogg` |
+| Azure Reach (park) | `audio/realms/azure_reach/explore.ogg` | `…/boss.ogg` |
+| The Fortress (fantasy) | `audio/realms/fortress_darkness/explore.ogg` | `…/boss.ogg` |
+
+In the game, **Settings → Playtest mode → Review**, then **Archive → Audio**, lists every
+slot and every record master as supplied (●) or missing (○).
+
 ## Adding music (no code)
 
 1. **New titles from the Records site:** run

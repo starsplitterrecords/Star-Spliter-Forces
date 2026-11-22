@@ -71,6 +71,9 @@ const BOSS_EASE: float = 0.7
 const DEPTH_PER_STAGE: float = 0.006
 const DEPTH_MAX: float = 0.4
 var steady: bool = false
+var remix: String = ""
+var remix_biome: String = ""
+var _echo_spawning: bool = false
 var boss_spawned: bool = false
 var boss_defeated: bool = false
 var victory_clock: float = -1.0
@@ -126,6 +129,7 @@ func setup(config: Dictionary) -> void:
 	signature_force = String(config.get("force", GameData.FORCES.keys()[0]))
 	quick_test = bool(config.get("quick_test", false))
 	stop_id = String(config.get("stop", ""))
+	remix = String(config.get("remix", ""))
 	mission = GameData.chart_stop(stop_id).duplicate(true)
 	# Gentle pacing: a stage's tuner charge is 65% of its listed power, so
 	# stages land around 4-8 minutes instead of up to 15.
@@ -152,6 +156,11 @@ func setup(config: Dictionary) -> void:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	_build()
+	if not quick_test:
+		Audio.play_realm(destination_id, "explore")
+
+func _exit_tree() -> void:
+	Audio.stop_realm()
 
 func _build() -> void:
 	world = ExpeditionWorld.new()
@@ -216,6 +225,8 @@ func _build() -> void:
 	_queue_onboarding()
 	if not mission.is_empty():
 		var num: int = GameData.chart_number(stop_id)
+		if remix != "":
+			hud.banner("REMIX · " + String(GameData.REMIXES[remix]["name"]), String(GameData.REMIXES[remix]["desc"]), Color("d7b8ff"), 3.0)
 		hud.banner(String(mission["name"]).to_upper(), (("Stage %d  •  " % num) if num > 0 else "Side signal  •  ") + GameData.chart_objective_text(mission), Color("68ecff"), 4.0)
 		if not Profile.seen("stop_new_" + stop_id):
 			Profile.mark_seen("stop_new_" + stop_id)
@@ -638,6 +649,13 @@ func spawn_enemy(kind: String, pos: Vector2, engaged: bool = false, camp_member:
 	e.died.connect(_on_enemy_died)
 	enemy_layer.add_child(e)
 	enemies.append(e)
+	if remix == "double_time":
+		e.speed *= 1.25
+	if remix == "echo_lag" and not _echo_spawning and not camp_member and not e.elite and not e.boss:
+		# Everything arrives twice: a copy, a beat behind and a little apart.
+		_echo_spawning = true
+		spawn_enemy(kind, pos + Vector2.from_angle(rng.randf() * TAU) * 60.0, engaged)
+		_echo_spawning = false
 	return e
 
 func _spawn_director(delta: float) -> void:
@@ -748,6 +766,15 @@ func spawn_elite() -> void:
 		hud.alert("SPLINTER CAPTAIN", p)
 	Audio.play_sfx("boss_phase", 1.3, -4.0, 0.5)
 
+## The realm raiders look like (Crossed Seam remix: another realm's).
+func enemy_biome() -> String:
+	if remix == "crossed_seam":
+		if remix_biome == "":
+			var others: Array = GameData.BIOMES.keys().filter(func(b: String) -> bool: return b != world.biome and GameData.BIOMES[b].has("skins"))
+			remix_biome = String(others[rng.randi() % others.size()]) if not others.is_empty() else world.biome
+		return remix_biome
+	return world.biome if world else "space"
+
 func boss_name() -> String:
 	return String(GameData.biome_get(world.biome if world else "space", "boss_name", "THE SILENCE"))
 
@@ -758,6 +785,7 @@ func spawn_boss(pos: Vector2) -> void:
 	if boss_spawned:
 		return
 	boss_spawned = true
+	Audio.play_realm(destination_id, "boss")
 	boss = spawn_enemy("the_silence", world.random_open_point_near(pos, 0.0, 60.0, rng), true)
 	if boss and is_boss_stop():
 		boss.hp *= float(mission["objective"].get("hp", 1.0)) * (0.75 if steady else 1.0)
@@ -990,7 +1018,7 @@ func gain_xp(value: int) -> void:
 		if motes_collected % every == 0:
 			player.heal(4.0)
 			fx.label(player.position + Vector2(0, -40), "+4", Color("7dffb2"), 14, 0.7)
-	var amount: int = int(round(value * (2.5 if quick_test else 1.0)))
+	var amount: int = int(round(value * (2.5 if quick_test else 1.0) * (1.5 if remix == "double_time" else 1.0)))
 	xp += amount
 	while xp >= xp_need:
 		xp -= xp_need
@@ -1758,6 +1786,8 @@ func build_result(result: String) -> Dictionary:
 			currency += 120.0
 		"defeat":
 			currency *= 0.5
+	if remix != "":
+		currency *= 1.5
 	if character_id == "jex_marrin":
 		currency *= 1.4 + (0.15 if mastery_level >= 2 else 0.0)
 	var mastery_xp: int = int(elapsed / 6.0 + found * 25 + kills / 12.0 + (150 if result == "complete" else (40 if result == "extracted" else 0)))
@@ -1767,7 +1797,7 @@ func build_result(result: String) -> Dictionary:
 		"discoveries": discoveries.duplicate(), "new_discoveries": new_this_run.duplicate(),
 		"currency": int(currency), "mastery_xp": mastery_xp, "regions": visited_regions.duplicate(),
 		"weapons": weapons.weapons.duplicate(), "harmonies": weapons.harmonies.duplicate(), "damage": int(damage_dealt),
-		"stop": stop_id, "stop_complete": stop_complete, "stop_first_time": stop_first_time,
+		"stop": stop_id, "stop_complete": stop_complete, "stop_first_time": stop_first_time, "remix": remix,
 	}
 
 ## Saves the expedition so far. If the game closes or crashes, the next launch

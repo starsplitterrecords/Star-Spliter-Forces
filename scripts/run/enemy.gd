@@ -69,8 +69,8 @@ func configure(enemy_kind: String, run_node: Node, scale: float, region: String)
 	xp_value = int(def["xp"])
 	radius = float(def["radius"])
 	tint = def["color"]
-	var skin: Array = GameData.BIOMES.get(run_node.world.biome if "world" in run_node and run_node.world else "space", {}).get("skins", {}).get(kind, [])
-	decor = String(GameData.biome_get(run_node.world.biome if "world" in run_node and run_node.world else "space", "decor", ""))
+	var skin: Array = GameData.BIOMES.get(run_node.enemy_biome() if run_node.has_method("enemy_biome") else "space", {}).get("skins", {}).get(kind, [])
+	decor = String(GameData.biome_get(run_node.enemy_biome() if run_node.has_method("enemy_biome") else "space", "decor", ""))
 	if skin.size() == 2:
 		skin_name = String(skin[0])
 		tint = skin[1]

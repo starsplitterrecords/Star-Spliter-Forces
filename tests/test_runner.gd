@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries", "test_checkpoint_recovery",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_playtest_mode", "test_crew_ride_along", "test_gentle_difficulty", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_playtest_mode", "test_crew_ride_along", "test_gentle_difficulty", "test_remixes", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	# Optional filter: godot --headless res://tests/TestRunner.tscn -- name [name...]
 	var only: PackedStringArray = OS.get_cmdline_user_args()
@@ -60,6 +60,8 @@ func _dispatch(t: String) -> void:
 			await test_crew_ride_along()
 		"test_gentle_difficulty":
 			await test_gentle_difficulty()
+		"test_remixes":
+			await test_remixes()
 		"test_visions_guests":
 			await test_visions_guests()
 		"test_new_content":
@@ -1154,6 +1156,28 @@ func test_gentle_difficulty() -> void:
 	for st: Dictionary in GameData.chart_main(1):
 		Profile.complete_stop(String(st["id"]))
 	check(run2.route_depth() > d0 and run2.route_depth() <= 1.0 + GameRun.DEPTH_MAX, "route depth not scaling")
+
+## Remixes: finished chapters offer twists on replay.
+func test_remixes() -> void:
+	_reset_profile()
+	check(Profile.remix_for("first_light") == "", "remix offered before the chapter is finished")
+	for st: Dictionary in GameData.chart_main(1):
+		Profile.complete_stop(String(st["id"]))
+	var rmx: String = Profile.remix_for("first_light")
+	check(GameData.REMIXES.has(rmx), "no remix after the chapter is finished")
+	var run: GameRun = _make_run({"stop": "first_light", "remix": "echo_lag"})
+	await get_tree().process_frame
+	var before: int = run.enemies.size()
+	run.spawn_enemy("skiff", run.player.position + Vector2(400, 0))
+	check(run.enemies.size() == before + 2, "Echo-Lag did not double an arrival")
+	check(int(run.build_result("extracted")["currency"]) > 0, "remix result broken")
+	run.queue_free()
+	var run2: GameRun = _make_run({"stop": "first_light", "remix": "crossed_seam"})
+	await get_tree().process_frame
+	check(run2.enemy_biome() != run2.world.biome and GameData.BIOMES[run2.enemy_biome()].has("skins"), "Crossed Seam did not borrow another realm")
+	run2.queue_free()
+	Profile.record_expedition({"outcome": "extracted", "stop": "first_light", "remix": rmx, "character": "ella_venn", "time": 60.0})
+	check(Profile.remix_for("first_light") != rmx, "remix did not rotate")
 
 ## Crew: contacts found ride along with their captain and give their perk.
 func test_crew_ride_along() -> void:

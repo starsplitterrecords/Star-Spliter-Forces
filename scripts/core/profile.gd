@@ -301,6 +301,8 @@ func record_expedition(result: Dictionary) -> Dictionary:
 	var outcome: String = String(result.get("outcome", "defeat"))
 	var time: float = float(result.get("time", 0.0))
 	stats["expeditions"] = int(stats["expeditions"]) + 1
+	if String(result.get("remix", "")) != "":
+		data["remixes_played"] = int(data.get("remixes_played", 0)) + 1
 	# Losses per stage (for the Steady assist); a clear resets it.
 	var sid: String = String(result.get("stop", ""))
 	if sid != "":
@@ -413,6 +415,20 @@ func places_charted() -> Array:
 		if pl != "" and not pl in out:
 			out.append(pl)
 	return out
+
+func chapter_complete(chapter: int) -> bool:
+	for st: Dictionary in GameData.chart_main(chapter):
+		if not stop_done(String(st["id"])):
+			return false
+	return not GameData.chart_main(chapter).is_empty()
+
+## The remix offered for a finished stage: rotates with every remix played.
+func remix_for(stage_id: String) -> String:
+	if not stop_done(stage_id) or not chapter_complete(GameData.chart_chapter(stage_id)):
+		return ""
+	var keys: Array = GameData.REMIXES.keys()
+	var n: int = int(data.get("remixes_played", 0)) + abs(stage_id.hash())
+	return String(keys[n % keys.size()])
 
 func stage_losses(id: String) -> int:
 	return int((data.get("stage_losses", {}) as Dictionary).get(id, 0))

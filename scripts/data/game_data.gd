@@ -1356,6 +1356,13 @@ static var realms: Dictionary = {}
 static func biome_get(biome: String, key: String, default: Variant) -> Variant:
 	return BIOMES.get(biome, {}).get(key, default)
 
+## Remixes: replays of a finished chapter's stages with a twist.
+const REMIXES: Dictionary = {
+	"echo_lag": {"name": "ECHO-LAG", "desc": "Everything arrives twice."},
+	"crossed_seam": {"name": "CROSSED SEAM", "desc": "Raiders from another realm."},
+	"double_time": {"name": "DOUBLE TIME", "desc": "Faster raiders. Faster levels."},
+}
+
 static func seams() -> Array:
 	return DISCOVERIES.keys().filter(func(d: String) -> bool: return DISCOVERIES[d].has("seam"))
 

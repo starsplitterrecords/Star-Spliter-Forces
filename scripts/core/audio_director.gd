@@ -19,6 +19,11 @@ signal bar(index: int)
 const SCORE_DIR: String = "res://audio/score/"
 const SFX_DIR: String = "res://audio/sfx/"
 const CATALOG_DIR: String = "res://audio/catalog/"
+## Realm music slots: audio/realms/<realm id>/<slot>.ogg (slots: explore,
+## boss). A file that exists plays in that realm instead of the placeholder
+## score; no code change needed.
+const REALM_DIR: String = "res://audio/realms/"
+const REALM_SLOTS: Array[String] = ["explore", "boss"]
 const BPM: float = 112.0
 const BEATS_PER_BAR: int = 4
 const FADE_SPEED: float = 0.65 # linear volume units per second
@@ -37,6 +42,8 @@ var sfx_streams: Dictionary = {}
 var sfx_players: Dictionary = {} # sfx name -> AudioStreamPlayer
 var sfx_last_played: Dictionary = {}
 
+var realm_player: AudioStreamPlayer
+var realm_playing: String = ""
 var catalog_player: AudioStreamPlayer
 var catalog_track: String = ""
 var duck: float = 1.0
@@ -57,6 +64,9 @@ func _ready() -> void:
 		p.max_polyphony = 4
 		add_child(p)
 		sfx_players[sfx_name] = p
+	realm_player = AudioStreamPlayer.new()
+	realm_player.bus = "Music"
+	add_child(realm_player)
 	catalog_player = AudioStreamPlayer.new()
 	catalog_player.bus = "Music"
 	add_child(catalog_player)
@@ -226,6 +236,33 @@ func catalog_path(transmission_id: String) -> String:
 		return ""
 	var path: String = CATALOG_DIR + file
 	return path if ResourceLoader.exists(path) else ""
+
+func realm_path(realm_id: String, slot: String) -> String:
+	var path: String = REALM_DIR + realm_id + "/" + slot + ".ogg"
+	return path if ResourceLoader.exists(path) else ""
+
+## Plays a realm's slot if its file exists (looping); returns false if not,
+## leaving the placeholder score running.
+func play_realm(realm_id: String, slot: String) -> bool:
+	var path: String = realm_path(realm_id, slot)
+	if path == "":
+		return false
+	if realm_playing == path and realm_player.playing:
+		return true
+	var st: AudioStream = load(path)
+	if st is AudioStreamOggVorbis:
+		(st as AudioStreamOggVorbis).loop = true
+	realm_player.stream = st
+	realm_player.play()
+	realm_playing = path
+	_set_music_paused(true)
+	return true
+
+func stop_realm() -> void:
+	if realm_player and realm_player.playing:
+		realm_player.stop()
+		_set_music_paused(false)
+	realm_playing = ""
 
 func has_master(transmission_id: String) -> bool:
 	return catalog_path(transmission_id) != ""
