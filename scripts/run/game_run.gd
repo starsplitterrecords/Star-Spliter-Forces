@@ -119,7 +119,13 @@ func setup(config: Dictionary) -> void:
 	signature_force = String(config.get("force", GameData.FORCES.keys()[0]))
 	quick_test = bool(config.get("quick_test", false))
 	stop_id = String(config.get("stop", ""))
-	mission = GameData.chart_stop(stop_id)
+	mission = GameData.chart_stop(stop_id).duplicate(true)
+	if Profile.is_playtest() and bool(Profile.setting("playtest_short")) and mission.has("objective"):
+		# Playtest: holds and boss arrivals come four times sooner.
+		var o: Dictionary = mission["objective"]
+		for k: String in ["seconds", "at"]:
+			if o.has(k):
+				o[k] = float(o[k]) * 0.25
 	if not mission.is_empty():
 		destination_id = String(GameData.chapter_def(int(mission.get("chapter", 1)))["destination"])
 	if config.has("seed"):
@@ -155,6 +161,8 @@ func _build() -> void:
 	add_child(enemy_layer)
 	player = ForcePlayer.new()
 	add_child(player)
+	if Profile.is_playtest() and bool(Profile.setting("playtest_invincible")):
+		player.god_mode = true
 	player.configure(character_id)
 	player.position = world.gate + Vector2(0, 60)
 	player.bounds = Rect2(-world.half_size, world.half_size * 2.0)

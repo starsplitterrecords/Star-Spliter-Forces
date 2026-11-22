@@ -20,12 +20,18 @@ const LEGACY_DISCOVERY_IDS: Dictionary = {
 
 var data: Dictionary = {}
 var save_path: String = PATH
+## Playtest mode: a separate save with everything open, so testing never
+## touches real progress. The marker file remembers the mode across restarts.
+const PLAYTEST_PATH: String = "user://playtest_profile.json"
+const PLAYTEST_MARK: String = "user://playtest_on"
 var last_save_ok: bool = true
 var last_load_note: String = ""
 
 func _ready() -> void:
 	InputSetup.ensure_actions()
-	load_profile()
+	load_profile(PLAYTEST_PATH if FileAccess.file_exists(PLAYTEST_MARK) else PATH)
+	if is_playtest():
+		_open_everything()
 	apply_settings()
 
 static func default_settings() -> Dictionary:
@@ -43,6 +49,8 @@ static func default_settings() -> Dictionary:
 		"fps_cap": 60,
 		"high_contrast": false,
 		"edge_padding": 0.0,
+		"playtest_invincible": false,
+		"playtest_short": true,
 	}
 
 static func defaults() -> Dictionary:
@@ -347,6 +355,8 @@ func stop_available(id: String) -> bool:
 	var st: Dictionary = GameData.chart_stop(id)
 	if st.is_empty():
 		return false
+	if is_playtest():
+		return true
 	if st.has("side_of"):
 		return stop_done(String(st["side_of"]))
 	var prev: String = GameData.chart_prev_main(id)
@@ -389,7 +399,55 @@ func places_charted() -> Array:
 			out.append(pl)
 	return out
 
+func is_playtest() -> bool:
+	return save_path == PLAYTEST_PATH
+
+## Switches between the real save and the playtest save. Settings travel along.
+func set_playtest(on: bool) -> void:
+	if on == is_playtest():
+		return
+	var settings: Dictionary = (data.get("settings", default_settings()) as Dictionary).duplicate(true)
+	save()
+	if on:
+		var f: FileAccess = FileAccess.open(PLAYTEST_MARK, FileAccess.WRITE)
+		if f:
+			f.store_string("1")
+			f.close()
+		load_profile(PLAYTEST_PATH)
+		_open_everything()
+	else:
+		DirAccess.remove_absolute(PLAYTEST_MARK)
+		load_profile(PATH)
+	data["settings"] = settings
+	save()
+	apply_settings()
+
+## Fresh playtest save: wipes it and opens everything again.
+func reset_playtest() -> void:
+	if not is_playtest():
+		return
+	var settings: Dictionary = (data["settings"] as Dictionary).duplicate(true)
+	data = defaults()
+	data["settings"] = settings
+	_open_everything()
+	save()
+
+func _open_everything() -> void:
+	for c: String in GameData.CHARACTERS.keys():
+		if not c in data["unlocked_characters"]:
+			data["unlocked_characters"].append(c)
+	for f: String in GameData.FORCES.keys():
+		if not f in data["forces_attuned"]:
+			data["forces_attuned"].append(f)
+	for d: String in GameData.DESTINATIONS.keys():
+		if not d in data["unlocked_destinations"]:
+			data["unlocked_destinations"].append(d)
+	data["currency"] = maxi(int(data["currency"]), 5000)
+	data["playtest"] = true
+
 func has_feature(feature: String) -> bool:
+	if is_playtest():
+		return true
 	for st: Dictionary in GameData.CHART:
 		if feature in (st["grants"] as Dictionary).get("features", []) and stop_done(String(st["id"])):
 			return true

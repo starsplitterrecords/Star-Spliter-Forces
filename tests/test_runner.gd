@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries", "test_checkpoint_recovery",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_playtest_mode", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	# Optional filter: godot --headless res://tests/TestRunner.tscn -- name [name...]
 	var only: PackedStringArray = OS.get_cmdline_user_args()
@@ -54,6 +54,8 @@ func _dispatch(t: String) -> void:
 			await test_corridor_chart()
 		"test_sea_branch":
 			await test_sea_branch()
+		"test_playtest_mode":
+			await test_playtest_mode()
 		"test_visions_guests":
 			await test_visions_guests()
 		"test_new_content":
@@ -1128,6 +1130,36 @@ func test_second_destination() -> void:
 	# Unlock path: completing the Reach charts Kaldr.
 	Profile.record_expedition({"outcome": "complete", "destination": "black_drift_reach", "character": "ella_venn", "time": 600.0})
 	check(Profile.has_destination("kaldr_rift"), "Kaldr Rift not unlocked by completing the Reach")
+
+## Playtest mode: separate save, everything open, real progress kept.
+func test_playtest_mode() -> void:
+	_reset_profile()
+	var real_path: String = Profile.save_path
+	Profile.data["currency"] = 7
+	Profile.save()
+	Profile.load_profile(Profile.PATH) # behave like the real game
+	var had_real: bool = FileAccess.file_exists(Profile.PATH)
+	var real_before: Dictionary = Profile.data.duplicate(true)
+	Profile.set_playtest(true)
+	check(Profile.is_playtest(), "playtest did not switch on")
+	check(Profile.stop_available("des_heat") and Profile.stop_available("sea_undertow"), "playtest should open every stage")
+	check(Profile.has_feature("workshop"), "playtest should open features")
+	check("lucia" in Profile.data["unlocked_characters"], "playtest should open explorers")
+	Profile.set_setting("playtest_short", true)
+	var run: GameRun = _make_run({"stop": "des_heat"})
+	check(is_equal_approx(float(run.mission["objective"]["at"]), 90.0), "short timers not applied")
+	check(is_equal_approx(float(GameData.chart_stop("des_heat")["objective"]["at"]), 360.0), "short timers changed the chart data")
+	run.queue_free()
+	Profile.set_playtest(false)
+	check(not Profile.is_playtest(), "playtest did not switch off")
+	check(not FileAccess.file_exists(Profile.PLAYTEST_MARK), "playtest marker left behind")
+	check(int(Profile.data["currency"]) == int(real_before["currency"]), "real save changed by playtest")
+	DirAccess.remove_absolute(Profile.PLAYTEST_PATH)
+	DirAccess.remove_absolute(Profile.PLAYTEST_PATH.get_basename() + ".backup.json")
+	if not had_real:
+		DirAccess.remove_absolute(Profile.PATH)
+		DirAccess.remove_absolute(Profile.PATH.get_basename() + ".backup.json")
+	Profile.load_profile(real_path)
 
 ## Branch paths: a crossover series gets its own chapter, world and look.
 func test_sea_branch() -> void:

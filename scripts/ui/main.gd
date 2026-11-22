@@ -202,6 +202,8 @@ func show_title() -> void:
 	var title: Label = UiTheme.label("STAR SPLITTER FORCES", 46 if UiTheme.is_narrow() else 64, Color.WHITE, "display")
 	v.add_child(title)
 	v.add_child(UiTheme.label("I wonder what is over there.", 20, UiTheme.ACCENT))
+	if Profile.is_playtest():
+		v.add_child(UiTheme.label("PLAYTEST MODE  •  everything open  •  real save kept aside (Settings)", 15, UiTheme.GOLD, "bold"))
 	var row: BoxContainer = UiTheme.row(40)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(row)
@@ -1072,6 +1074,25 @@ func show_settings() -> void:
 	_choice(grid, "Movement stick", "joystick_mode", ["floating", "fixed"])
 	_choice(grid, "Steering hand (ability button goes on the other side)", "handedness", ["right", "left"])
 	_choice(grid, "Frame rate cap", "fps_cap", [60, 30])
+	# Playtest mode: its own save with every stage, branch, explorer and
+	# Force open. Real progress is kept aside and comes back when it is off.
+	var pt_head: Label = UiTheme.label("PLAYTEST", 18, UiTheme.GOLD, "bold")
+	grid.add_child(pt_head)
+	grid.add_child(UiTheme.label("Separate save, everything open. Your progress is kept.", 13, UiTheme.DIM))
+	_setting_label(grid, "Playtest mode")
+	var ptc: CheckButton = CheckButton.new()
+	ptc.button_pressed = Profile.is_playtest()
+	ptc.toggled.connect(func(on: bool) -> void:
+		Profile.set_playtest(on)
+		show_settings())
+	grid.add_child(ptc)
+	if Profile.is_playtest():
+		_toggle(grid, "Invincible", "playtest_invincible")
+		_toggle(grid, "Short timers (holds and bosses 4x sooner)", "playtest_short")
+		_setting_label(grid, "Playtest save")
+		grid.add_child(UiTheme.button("RESET", func() -> void:
+			Profile.reset_playtest()
+			show_settings(), 0.0, 40.0))
 	var row: BoxContainer = BoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	v.add_child(row)
