@@ -1,0 +1,11 @@
+{
+  "name": "vpf-sim",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VPF modular chiller plant simulator (training tool). Phase 1: system side.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "smoke": "node tools/smoke.js"
+  }
+}
