@@ -1232,9 +1232,10 @@ static func chart_objective_text(st: Dictionary) -> String:
 		"discover":
 			var d: Dictionary = DISCOVERIES[String(o["id"])]
 			var verb: String = {"signal": "Tune", "character": "Answer", "artifact": "Recover"}.get(String(d["kind"]), "Find")
-			return "%s the %s" % [verb, String(d["title"])]
+			var ttl: String = String(d["title"])
+			return ("%s %s" if ttl.begins_with("THE ") else "%s the %s") % [verb, ttl]
 		"survive":
-			return "Hold the lane for %s" % format_time(float(o["seconds"]))
+			return "Hold out for %s" % format_time(float(o["seconds"]))
 		"elite":
 			return "Destroy the %s" % String(ENEMIES[String(o["enemy"])]["name"])
 		"boss":

@@ -2133,6 +2133,230 @@
           "sha256": "455d2bda4717603407ac0308943151642a7c736d94937487488cf35d74eca510"
         }
       ]
+    },
+    {
+      "id": "portrait_janet_keating",
+      "repo": "RexPrompt",
+      "path": "production/drafts/rex-fleet/rex-fleet-i03/rf_i03_cast.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the RexPrompt approved production draft cast page of Rex Fleet Issue 03 (owner direction 2026-11-22)",
+      "source_sha256": "3b13e85bb7dcbca20a70a493bcf42d9678ef668458571fa72d2e443a3efc8304",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/janet_keating_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "2c84e79eda86d8d78155990bca44614afa510bd4f1c381dd0ca1987c5a34db4a"
+        },
+        {
+          "out": "assets/characters/janet_keating_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "130586ae160fb03f6c3aee5cc01406e2c73d9ed088c36da05400047cc49ed80a"
+        }
+      ]
+    },
+    {
+      "id": "portrait_soren_kerr",
+      "repo": "RexPrompt",
+      "path": "production/drafts/rex-fleet/rex-fleet-i03/rf_i03_cast.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the RexPrompt approved production draft cast page of Rex Fleet Issue 03 (owner direction 2026-11-22)",
+      "source_sha256": "3b13e85bb7dcbca20a70a493bcf42d9678ef668458571fa72d2e443a3efc8304",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/soren_kerr_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "fa54eece921f84360fe242cee88d49af1c9fb375c9cb9c1397d5febeb36ed142"
+        },
+        {
+          "out": "assets/characters/soren_kerr_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "a3a762cb9e2b63533e8f7b93f3f2d083fff392f946fe310aaf9afa325b5aba50"
+        }
+      ]
+    },
+    {
+      "id": "portrait_erin_deka",
+      "repo": "RexPrompt",
+      "path": "production/drafts/rex-fleet/rex-fleet-i03/rf_i03_cast.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the RexPrompt approved production draft cast page of Rex Fleet Issue 03 (owner direction 2026-11-22)",
+      "source_sha256": "3b13e85bb7dcbca20a70a493bcf42d9678ef668458571fa72d2e443a3efc8304",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/erin_deka_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "02c980056bee80840ed515b6e57a710c76325bf2b1a24bb012b90d60d98f13ee"
+        },
+        {
+          "out": "assets/characters/erin_deka_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "256507865a6d543bffe2714787d18e9c220e2a401664fdcdf81a50d70eb4377a"
+        }
+      ]
+    },
+    {
+      "id": "portrait_sera_dain",
+      "repo": "RexPrompt",
+      "path": "production/drafts/rex-fleet/rex-fleet-i03/rf_i03_cast.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the RexPrompt approved production draft cast page of Rex Fleet Issue 03 (owner direction 2026-11-22)",
+      "source_sha256": "3b13e85bb7dcbca20a70a493bcf42d9678ef668458571fa72d2e443a3efc8304",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/sera_dain_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "897a752c09c1581ecfa6db1ba8567b991c1d835d48b6984108e14d9d9410c4ad"
+        },
+        {
+          "out": "assets/characters/sera_dain_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "751b2b69f979e88ca805611d2498ccde03d3dfe56901b929300b64e313e957d0"
+        }
+      ]
+    },
+    {
+      "id": "portrait_richard_secundo",
+      "repo": "RexPrompt",
+      "path": "production/drafts/rex-fleet/rex-fleet-i03/rf_i03_cast.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the RexPrompt approved production draft cast page of Rex Fleet Issue 03 (owner direction 2026-11-22)",
+      "source_sha256": "3b13e85bb7dcbca20a70a493bcf42d9678ef668458571fa72d2e443a3efc8304",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/richard_secundo_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "ebc1dc46910f8ce3c5c386705837ff0f3b60812731068b5b936463fbaa2a4577"
+        },
+        {
+          "out": "assets/characters/richard_secundo_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "075595428e225141289a4b986dbb9f9c272af1446c26e11db789b521f76593fc"
+        }
+      ]
+    },
+    {
+      "id": "portrait_paul_secundo",
+      "repo": "RexPrompt",
+      "path": "production/drafts/rex-fleet/rex-fleet-i03/rf_i03_cast.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the RexPrompt approved production draft cast page of Rex Fleet Issue 03 (owner direction 2026-11-22)",
+      "source_sha256": "3b13e85bb7dcbca20a70a493bcf42d9678ef668458571fa72d2e443a3efc8304",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/paul_secundo_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "161e58f5bf85d45df35630e28ef8eeaabf38cf8bbaaed5c0d0cbd0ede0b0b73f"
+        },
+        {
+          "out": "assets/characters/paul_secundo_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "8e5e57e551c8d01c32337a63c7235800874abb0c0119f8658404a6d3517b6c6c"
+        }
+      ]
+    },
+    {
+      "id": "portrait_oren_pike",
+      "repo": "RexPrompt",
+      "path": "production/drafts/rex-fleet/rex-fleet-i03/rf_i03_cast.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the RexPrompt approved production draft cast page of Rex Fleet Issue 03 (owner direction 2026-11-22)",
+      "source_sha256": "3b13e85bb7dcbca20a70a493bcf42d9678ef668458571fa72d2e443a3efc8304",
+      "review_required": false,
+      "source_size": [
+        992,
+        1586
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/oren_pike_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "f7e19a7161162777563818b03bd360e182599381293f613f29f06b1bda71be9b"
+        },
+        {
+          "out": "assets/characters/oren_pike_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "62257a1ff6c55e9ecffde9b7c254d5aa659db03edcb244e84f12f9057edd4c3e"
+        }
+      ]
     }
   ]
 }

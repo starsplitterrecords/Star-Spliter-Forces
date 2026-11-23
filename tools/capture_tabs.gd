@@ -10,7 +10,7 @@ func _ready() -> void:
 	var main: Node = load("res://scripts/ui/main.gd").new()
 	add_child(main)
 	await get_tree().create_timer(0.3).timeout
-	main.show_chart("r3_approach", 3)
+	main.show_chart("iv_tribunal", 4)
 	await get_tree().create_timer(0.5).timeout
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png(out_dir.path_join("chart_all.png"))

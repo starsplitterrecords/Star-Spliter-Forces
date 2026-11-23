@@ -1,0 +1,466 @@
+{
+ "id": "rf_crown_ring",
+ "chapter": {
+  "id": 4,
+  "name": "The Crown Ring",
+  "numeral": "IV",
+  "destination": "rf_crown_ring",
+  "subtitle": "Rex Fleet, Issue 03 territory: Auric from the inside.",
+  "after": "r3_silence",
+  "issue": 3
+ },
+ "destination": {
+  "name": "The Crown Ring",
+  "desc": "Rex Fleet, Issue 03 territory: Auric from the inside.",
+  "half_size": "@v2:6000.0,4200.0",
+  "gate": "@v2:-5000.0,0.0",
+  "goal_signals": 0,
+  "story_only": true,
+  "climax_time": 1260.0,
+  "background": "@c:080a14ff",
+  "drift_name": "OPEN SPACE",
+  "biome": "space",
+  "regions": [
+   "luxury_ring",
+   "veil_market",
+   "auric_dock",
+   "admiralty_tribunal",
+   "broken_oath",
+   "auric_archive"
+  ],
+  "completion_unlocks": [],
+  "seed": 4404
+ },
+ "tier": "approved_draft",
+ "source": "RexPrompt rex-fleet shelf; places first appear in Issue 03; cast from Rex Fleet Issue 01 cast (portrait: Issue 03 approved draft cast page)",
+ "regions": {
+  "luxury_ring": {
+   "name": "AURIC LUXURY RING",
+   "color": "@c:e8c97aff",
+   "floor": "@c:0a0c16ff",
+   "props": "pools",
+   "density": 0.8,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.1,
+    "echo_mote": 0.3
+   },
+   "blurb": "A once-expensive concourse, now a shelter.",
+   "threat": 1,
+   "shape": "circle",
+   "center": "@v2:-3000.0,-1600.0",
+   "radius": 850.0
+  },
+  "veil_market": {
+   "name": "VEIL MARKET",
+   "color": "@c:d0a060ff",
+   "floor": "@c:0a0c16ff",
+   "props": "belt",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "Stalls, broker rooms, route boards.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:-2600.0,1800.0",
+   "radius": 850.0
+  },
+  "auric_dock": {
+   "name": "AURIC DOCK",
+   "color": "@c:c8a46aff",
+   "floor": "@c:0a0c16ff",
+   "props": "corridor",
+   "density": 0.8,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "Berths stacked three deep.",
+   "threat": 2,
+   "shape": "capsule",
+   "a": "@v2:-1600.0,-2500.0",
+   "b": "@v2:1000.0,-2100.0",
+   "radius": 480.0
+  },
+  "admiralty_tribunal": {
+   "name": "ADMIRALTY TRIBUNAL",
+   "color": "@c:8fb8ffff",
+   "floor": "@c:0a0c16ff",
+   "props": "gate",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "A hearing space built to make hierarchy legible.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:300.0,1500.0",
+   "radius": 850.0
+  },
+  "broken_oath": {
+   "name": "BROKEN OATH",
+   "color": "@c:e0402aff",
+   "floor": "@c:0a0c16ff",
+   "props": "wreck",
+   "density": 0.8,
+   "music": "region_bloom",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.30000000000000004,
+    "echo_mote": 0.3
+   },
+   "blurb": "A Shard captain's ship.",
+   "threat": 3,
+   "shape": "circle",
+   "center": "@v2:2700.0,-1300.0",
+   "radius": 850.0
+  },
+  "auric_archive": {
+   "name": "AURIC ARCHIVE",
+   "color": "@c:b8d0ffff",
+   "floor": "@c:0a0c16ff",
+   "props": "pools",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.30000000000000004,
+    "echo_mote": 0.3
+   },
+   "blurb": "Records booths, dim and busy.",
+   "threat": 3,
+   "shape": "circle",
+   "center": "@v2:3300.0,2200.0",
+   "radius": 850.0
+  }
+ },
+ "discoveries": {
+  "d_iv_ring": {
+   "kind": "character",
+   "region": "luxury_ring",
+   "offset": "@v2:0.0,0.0",
+   "title": "CROWN RING",
+   "color": "@c:e8c97aff",
+   "place": "luxury_ring",
+   "text": "The ring is full of people who used to live elsewhere.",
+   "landmark": "bazaar",
+   "contacts": [
+    "sera_dain"
+   ]
+  },
+  "d_iv_market": {
+   "kind": "character",
+   "region": "veil_market",
+   "offset": "@v2:0.0,0.0",
+   "title": "VEIL MARKET",
+   "color": "@c:d0a060ff",
+   "place": "veil_market",
+   "text": "Every route has a price here.",
+   "landmark": "bazaar"
+  },
+  "d_iv_tribunal": {
+   "kind": "character",
+   "region": "admiralty_tribunal",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE TRIBUNAL",
+   "color": "@c:8fb8ffff",
+   "place": "admiralty_tribunal",
+   "text": "The Admiralty sits in judgement.",
+   "landmark": "station",
+   "contacts": [
+    "janet_keating"
+   ]
+  },
+  "d_iv_oath": {
+   "kind": "character",
+   "region": "broken_oath",
+   "offset": "@v2:0.0,0.0",
+   "title": "BROKEN OATH",
+   "color": "@c:e0402aff",
+   "place": "broken_oath",
+   "text": "A Shard captain keeps his own counsel.",
+   "landmark": "freighter",
+   "contacts": [
+    "oren_pike"
+   ]
+  },
+  "d_iv_archive": {
+   "kind": "character",
+   "region": "auric_archive",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE ARCHIVE",
+   "color": "@c:b8d0ffff",
+   "place": "auric_archive",
+   "text": "Records that do not agree with each other.",
+   "landmark": "station"
+  }
+ },
+ "contacts": {
+  "sera_dain": {
+   "name": "Councilor Sera Dain",
+   "faction": "The Verge",
+   "role": "Elected for Auric's overcrowded working districts.",
+   "portrait": "sera_dain",
+   "captain": "naomi_sol",
+   "perk": {
+    "kind": "reroll",
+    "value": 1
+   }
+  },
+  "janet_keating": {
+   "name": "Admiral Janet Keating",
+   "faction": "The Fleet",
+   "role": "Fleet Admiralty: the hard-line voice.",
+   "portrait": "janet_keating",
+   "captain": "ella_venn",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
+  },
+  "oren_pike": {
+   "name": "Oren Pike",
+   "faction": "The Shards",
+   "role": "Captain of the Broken Oath.",
+   "portrait": "oren_pike",
+   "captain": "tessa_banks",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
+  }
+ },
+ "places": {
+  "luxury_ring": {
+   "name": "Auric Luxury Ring",
+   "series": "Rex Fleet",
+   "text": "A once-expensive concourse, now a shelter.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 03; approved draft)"
+  },
+  "veil_market": {
+   "name": "Veil Market",
+   "series": "Rex Fleet",
+   "text": "Stalls, broker rooms, route boards.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 03; approved draft)"
+  },
+  "auric_dock": {
+   "name": "Auric Dock",
+   "series": "Rex Fleet",
+   "text": "Berths stacked three deep.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 03; approved draft)"
+  },
+  "admiralty_tribunal": {
+   "name": "Admiralty Tribunal",
+   "series": "Rex Fleet",
+   "text": "A hearing space built to make hierarchy legible.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 03; approved draft)"
+  },
+  "broken_oath": {
+   "name": "Broken Oath",
+   "series": "Rex Fleet",
+   "text": "A Shard captain's ship.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 03; approved draft)"
+  },
+  "auric_archive": {
+   "name": "Auric Archive",
+   "series": "Rex Fleet",
+   "text": "Records booths, dim and busy.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 03; approved draft)"
+  }
+ },
+ "stages": [
+  {
+   "id": "iv_ring",
+   "chapter": 4,
+   "name": "Crown Ring",
+   "place": "Auric Luxury Ring",
+   "region": "luxury_ring",
+   "new_title": "CROWN RING",
+   "new": "The ring is full of people who used to live elsewhere.",
+   "brief": "The ring is full of people who used to live elsewhere.",
+   "grants": {},
+   "power": 78,
+   "prize": "Crew",
+   "icon": "visions",
+   "objective": {
+    "type": "discover",
+    "id": "d_iv_ring"
+   },
+   "discoveries": [
+    "d_iv_ring"
+   ],
+   "reward": [
+    "Crew: Councilor Sera Dain",
+    "Place: Auric Luxury Ring"
+   ]
+  },
+  {
+   "id": "iv_market",
+   "chapter": 4,
+   "name": "Veil Market",
+   "place": "Veil Market",
+   "region": "veil_market",
+   "new_title": "VEIL MARKET",
+   "new": "Every route has a price here.",
+   "brief": "Every route has a price here.",
+   "grants": {},
+   "power": 86,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_iv_market"
+   },
+   "discoveries": [
+    "d_iv_market"
+   ],
+   "reward": [
+    "Place: Veil Market"
+   ]
+  },
+  {
+   "id": "iv_dock",
+   "chapter": 4,
+   "name": "Dock Watch",
+   "place": "Auric Dock",
+   "region": "auric_dock",
+   "new_title": "DOCK WATCH",
+   "new": "Hold the dock for three minutes.",
+   "brief": "Hold the dock for three minutes.",
+   "grants": {
+    "signal": 150
+   },
+   "prize": "+150 Signal",
+   "icon": "hostile",
+   "objective": {
+    "type": "survive",
+    "seconds": 180.0
+   },
+   "discoveries": [],
+   "reward": [
+    "+150 Signal"
+   ]
+  },
+  {
+   "id": "iv_tribunal",
+   "chapter": 4,
+   "name": "The Tribunal",
+   "place": "Admiralty Tribunal",
+   "region": "admiralty_tribunal",
+   "new_title": "THE TRIBUNAL",
+   "new": "The Admiralty sits in judgement.",
+   "brief": "The Admiralty sits in judgement.",
+   "grants": {},
+   "power": 102,
+   "prize": "Crew",
+   "icon": "visions",
+   "objective": {
+    "type": "discover",
+    "id": "d_iv_tribunal"
+   },
+   "discoveries": [
+    "d_iv_tribunal"
+   ],
+   "reward": [
+    "Crew: Admiral Janet Keating",
+    "Place: Admiralty Tribunal"
+   ]
+  },
+  {
+   "id": "iv_oath",
+   "chapter": 4,
+   "name": "Broken Oath",
+   "place": "Broken Oath",
+   "region": "broken_oath",
+   "new_title": "BROKEN OATH",
+   "new": "A Shard captain keeps his own counsel.",
+   "brief": "A Shard captain keeps his own counsel.",
+   "grants": {},
+   "power": 110,
+   "prize": "Crew",
+   "icon": "visions",
+   "objective": {
+    "type": "discover",
+    "id": "d_iv_oath"
+   },
+   "discoveries": [
+    "d_iv_oath"
+   ],
+   "reward": [
+    "Crew: Oren Pike",
+    "Place: Broken Oath"
+   ]
+  },
+  {
+   "id": "iv_archive",
+   "chapter": 4,
+   "name": "The Archive",
+   "place": "Auric Archive",
+   "region": "auric_archive",
+   "new_title": "THE ARCHIVE",
+   "new": "Records that do not agree with each other.",
+   "brief": "Records that do not agree with each other.",
+   "grants": {},
+   "power": 118,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_iv_archive"
+   },
+   "discoveries": [
+    "d_iv_archive"
+   ],
+   "reward": [
+    "Place: Auric Archive"
+   ]
+  },
+  {
+   "id": "iv_silence",
+   "chapter": 4,
+   "name": "The Silence",
+   "place": "The Crown Ring",
+   "start": "@v2:-800.0,600.0",
+   "prize": "+300 Signal",
+   "icon": "elite",
+   "objective": {
+    "type": "boss",
+    "at": 420.0,
+    "hp": 0.6
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE",
+   "new": "It followed the music this far. Arrives at 7:00.",
+   "brief": "Something wants it quiet.",
+   "reward": [
+    "+300 Signal",
+    "Chapter IV complete"
+   ],
+   "grants": {
+    "signal": 300
+   }
+  }
+ ]
+}

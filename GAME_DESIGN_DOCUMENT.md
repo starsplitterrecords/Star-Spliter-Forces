@@ -80,6 +80,22 @@ Sides: three **echoes** — earlier tracks arriving again, late (the Shatterwake
 space). A test enforces issue order: a chapter built from issue N must follow the
 chapter built from issue N-1.
 
+### Chapters IV–IX — the rest of the main Rex Fleet path
+
+Generated from a curated table (`tools/realms/build_rex_chapters.py`) into realm files;
+places only, each first appearing in the chapter's issue(s); no plot. Issues with few new
+places are paired, still strictly in order: **IV The Crown Ring** (Issue 03: Auric's
+luxury ring, Veil Market, dock, Admiralty Tribunal, Broken Oath, archive) · **V Tal
+Corvus** (04: warrens, evacuation queue, Bastion Spire, gantry, Third-Window Route, Relic
+Court) · **VI Shardfall** (05–06: rift space, Shardfall Citadel, Arena Vault, Auric Gate) ·
+**VII The Lattice** (07–08: the Lattice, survey ship, Calm Corridor, receiving berth) ·
+**VIII Shatterforge** (09–10: forge spire, dock spires, evac bays, forge canyon with the
+Ashfang, dock mouth) · **IX The Auric Gate** (11–12: approach, Shard assembly orbit,
+midspace, gate lane, the gate; finale). New crew from the Issue 01 cast (portraits from
+the Issue 03 draft cast page): Sera Dain (Naomi), Janet Keating, Soren Kerr, Erin Deka
+(Ella), Oren Pike, Richard and Paul Secundo (Tessa). These worlds are story-only (not in
+Open Expedition). Only the next locked chapter shows a chart tab.
+
 ### Branch paths (crossover series)
 
 Owner direction (2026-11-22): each crossover series gets its **own path** branching off

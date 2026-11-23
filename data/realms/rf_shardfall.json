@@ -1,0 +1,348 @@
+{
+ "id": "rf_shardfall",
+ "chapter": {
+  "id": 6,
+  "name": "Shardfall",
+  "numeral": "VI",
+  "destination": "rf_shardfall",
+  "subtitle": "Rex Fleet, Issues 05-06 territory: rift space and the Shard citadel.",
+  "after": "v_silence",
+  "issue": 5,
+  "issue_end": 6
+ },
+ "destination": {
+  "name": "Shardfall",
+  "desc": "Rex Fleet, Issues 05-06 territory: rift space and the Shard citadel.",
+  "half_size": "@v2:6000.0,4200.0",
+  "gate": "@v2:-5000.0,0.0",
+  "goal_signals": 0,
+  "story_only": true,
+  "climax_time": 1260.0,
+  "background": "@c:100608ff",
+  "drift_name": "OPEN SPACE",
+  "biome": "space",
+  "regions": [
+   "rift_space",
+   "shardfall_citadel",
+   "arena_vault",
+   "auric_gate_vi"
+  ],
+  "completion_unlocks": [],
+  "seed": 6606
+ },
+ "tier": "approved_draft",
+ "source": "RexPrompt rex-fleet shelf; places first appear in Issue 05-06; cast from Rex Fleet Issue 01 cast (portrait: Issue 03 approved draft cast page)",
+ "regions": {
+  "rift_space": {
+   "name": "RIFT SPACE",
+   "color": "@c:b48cffff",
+   "floor": "@c:0a0c16ff",
+   "props": "crystal",
+   "density": 0.8,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.5,
+    "gunship": 0.1,
+    "echo_mote": 0.3
+   },
+   "blurb": "Space with seams in it.",
+   "threat": 1,
+   "shape": "circle",
+   "center": "@v2:-3000.0,-1600.0",
+   "radius": 850.0
+  },
+  "shardfall_citadel": {
+   "name": "SHARDFALL CITADEL",
+   "color": "@c:e0402aff",
+   "floor": "@c:0a0c16ff",
+   "props": "wreck",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.5,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "Pale industrial structure, red markings.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:-2600.0,1800.0",
+   "radius": 850.0
+  },
+  "arena_vault": {
+   "name": "ARENA VAULT",
+   "color": "@c:ff6a5aff",
+   "floor": "@c:0a0c16ff",
+   "props": "gate",
+   "density": 0.8,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.5,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "A vast circular Shard chamber.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:-300.0,-2500.0",
+   "radius": 850.0
+  },
+  "auric_gate_vi": {
+   "name": "AURIC GATE",
+   "color": "@c:ff9a3aff",
+   "floor": "@c:0a0c16ff",
+   "props": "gate",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.5,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "Ember-orange pylons and timing boards.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:300.0,1500.0",
+   "radius": 850.0
+  }
+ },
+ "discoveries": {
+  "d_vi_rift": {
+   "kind": "character",
+   "region": "rift_space",
+   "offset": "@v2:0.0,0.0",
+   "title": "RIFT SPACE",
+   "color": "@c:b48cffff",
+   "place": "rift_space",
+   "text": "Something in the rift keeps time badly.",
+   "landmark": "sunforge"
+  },
+  "d_vi_citadel": {
+   "kind": "character",
+   "region": "shardfall_citadel",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE CITADEL",
+   "color": "@c:e0402aff",
+   "place": "shardfall_citadel",
+   "text": "The Shards' own stronghold.",
+   "landmark": "freighter",
+   "contacts": [
+    "erin_deka"
+   ]
+  },
+  "d_vi_vault": {
+   "kind": "character",
+   "region": "arena_vault",
+   "offset": "@v2:0.0,0.0",
+   "title": "ARENA VAULT",
+   "color": "@c:ff6a5aff",
+   "place": "arena_vault",
+   "text": "Where Shard politics happen out loud.",
+   "landmark": "station"
+  },
+  "d_vi_gate": {
+   "kind": "character",
+   "region": "auric_gate_vi",
+   "offset": "@v2:0.0,0.0",
+   "title": "AURIC GATE",
+   "color": "@c:ff9a3aff",
+   "place": "auric_gate_vi",
+   "text": "The gate's timing boards disagree.",
+   "landmark": "station"
+  }
+ },
+ "contacts": {
+  "erin_deka": {
+   "name": "Lieutenant Erin Deka",
+   "faction": "The Fleet",
+   "role": "Recurring operational officer.",
+   "portrait": "erin_deka",
+   "captain": "ella_venn",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
+  }
+ },
+ "places": {
+  "rift_space": {
+   "name": "Rift Space",
+   "series": "Rex Fleet",
+   "text": "Space with seams in it.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 05-06; approved draft)"
+  },
+  "shardfall_citadel": {
+   "name": "Shardfall Citadel",
+   "series": "Rex Fleet",
+   "text": "Pale industrial structure, red markings.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 05-06; approved draft)"
+  },
+  "arena_vault": {
+   "name": "Arena Vault",
+   "series": "Rex Fleet",
+   "text": "A vast circular Shard chamber.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 05-06; approved draft)"
+  },
+  "auric_gate_vi": {
+   "name": "Auric Gate",
+   "series": "Rex Fleet",
+   "text": "Ember-orange pylons and timing boards.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 05-06; approved draft)"
+  }
+ },
+ "stages": [
+  {
+   "id": "vi_rift",
+   "chapter": 6,
+   "name": "Rift Space",
+   "place": "Rift Space",
+   "region": "rift_space",
+   "new_title": "RIFT SPACE",
+   "new": "Something in the rift keeps time badly.",
+   "brief": "Something in the rift keeps time badly.",
+   "grants": {},
+   "power": 90,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_vi_rift"
+   },
+   "discoveries": [
+    "d_vi_rift"
+   ],
+   "reward": [
+    "Place: Rift Space"
+   ]
+  },
+  {
+   "id": "vi_citadel",
+   "chapter": 6,
+   "name": "The Citadel",
+   "place": "Shardfall Citadel",
+   "region": "shardfall_citadel",
+   "new_title": "THE CITADEL",
+   "new": "The Shards' own stronghold.",
+   "brief": "The Shards' own stronghold.",
+   "grants": {},
+   "power": 98,
+   "prize": "Crew",
+   "icon": "visions",
+   "objective": {
+    "type": "discover",
+    "id": "d_vi_citadel"
+   },
+   "discoveries": [
+    "d_vi_citadel"
+   ],
+   "reward": [
+    "Crew: Lieutenant Erin Deka",
+    "Place: Shardfall Citadel"
+   ]
+  },
+  {
+   "id": "vi_hold",
+   "chapter": 6,
+   "name": "Rift Watch",
+   "place": "Rift Space",
+   "region": "rift_space",
+   "new_title": "RIFT WATCH",
+   "new": "Hold the rift's edge for three minutes.",
+   "brief": "Hold the rift's edge for three minutes.",
+   "grants": {
+    "signal": 150
+   },
+   "prize": "+150 Signal",
+   "icon": "hostile",
+   "objective": {
+    "type": "survive",
+    "seconds": 180.0
+   },
+   "discoveries": [],
+   "reward": [
+    "+150 Signal"
+   ]
+  },
+  {
+   "id": "vi_vault",
+   "chapter": 6,
+   "name": "Arena Vault",
+   "place": "Arena Vault",
+   "region": "arena_vault",
+   "new_title": "ARENA VAULT",
+   "new": "Where Shard politics happen out loud.",
+   "brief": "Where Shard politics happen out loud.",
+   "grants": {},
+   "power": 114,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_vi_vault"
+   },
+   "discoveries": [
+    "d_vi_vault"
+   ],
+   "reward": [
+    "Place: Arena Vault"
+   ]
+  },
+  {
+   "id": "vi_gate",
+   "chapter": 6,
+   "name": "Auric Gate",
+   "place": "Auric Gate",
+   "region": "auric_gate_vi",
+   "new_title": "AURIC GATE",
+   "new": "The gate's timing boards disagree.",
+   "brief": "The gate's timing boards disagree.",
+   "grants": {},
+   "power": 122,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_vi_gate"
+   },
+   "discoveries": [
+    "d_vi_gate"
+   ],
+   "reward": [
+    "Place: Auric Gate"
+   ]
+  },
+  {
+   "id": "vi_silence",
+   "chapter": 6,
+   "name": "The Silence",
+   "place": "Shardfall",
+   "start": "@v2:-800.0,600.0",
+   "prize": "+360 Signal",
+   "icon": "elite",
+   "objective": {
+    "type": "boss",
+    "at": 420.0,
+    "hp": 0.64
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE",
+   "new": "It followed the music this far. Arrives at 7:00.",
+   "brief": "Something wants it quiet.",
+   "reward": [
+    "+360 Signal",
+    "Chapter VI complete"
+   ],
+   "grants": {
+    "signal": 360
+   }
+  }
+ ]
+}

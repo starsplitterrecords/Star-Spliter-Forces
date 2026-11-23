@@ -69,7 +69,7 @@ const POWER_SCALE: float = 0.65
 const BOSS_EASE: float = 0.7
 ## Enemies grow tougher with how far along the whole route you are (up to +40%).
 const DEPTH_PER_STAGE: float = 0.006
-const DEPTH_MAX: float = 0.4
+const DEPTH_MAX: float = 0.25
 var steady: bool = false
 var remix: String = ""
 var remix_biome: String = ""
@@ -643,7 +643,8 @@ func spawn_enemy(kind: String, pos: Vector2, engaged: bool = false, camp_member:
 		return null
 	var e: ForceEnemy = ForceEnemy.new()
 	e.position = world.clamp_to_world(pos)
-	var scale: float = (1.0 + minf(1.6, elapsed / (420.0 if not quick_test else 60.0) * 0.35)) * route_depth()
+	# Route depth toughens the field, not the bosses (they scale per chapter).
+	var scale: float = (1.0 + minf(1.6, elapsed / (420.0 if not quick_test else 60.0) * 0.35)) * (1.0 if GameData.ENEMIES[kind].get("boss", false) else route_depth())
 	e.configure(kind, self, scale, world.region_at(pos))
 	if engaged:
 		e.engaged = true

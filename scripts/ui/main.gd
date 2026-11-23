@@ -302,6 +302,7 @@ func show_chart(focus: String = "", chapter: int = 0) -> void:
 	tabs_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tabs_row.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	head.add_child(tabs_row)
+	var shown_locked: bool = false
 	for cdef: Dictionary in GameData.CHAPTERS:
 		var cid: int = int(cdef["id"])
 		var first: Array = GameData.chart_main(cid)
@@ -311,6 +312,10 @@ func show_chart(focus: String = "", chapter: int = 0) -> void:
 			tab_text = String(cdef["numeral"]) if (UiTheme.is_narrow() and cid != chapter) else "%s  %s" % [String(cdef["numeral"]), String(cdef["name"]).to_upper()]
 		if not open_ch and GameData.is_branch(cid):
 			continue # branches stay hidden until their side stage opens them
+		if not open_ch:
+			if shown_locked:
+				continue # only the next locked chapter is teased
+			shown_locked = true
 		var tb: Button = UiTheme.button(tab_text, func() -> void: show_chart("", cid), 0.0, 40.0)
 		tb.disabled = not open_ch
 		tb.add_theme_font_size_override("font_size", UiTheme.fs(13))

@@ -227,7 +227,8 @@ func test_data_integrity() -> void:
 		for did3: String in GameData.DISCOVERIES.keys():
 			if GameData.discovery_in_destination(did3, dest2) and String(GameData.DISCOVERIES[did3]["kind"]) == "signal":
 				sigs += 1
-		check(sigs >= int(dd["goal_signals"]) + 2, "destination %s has too few signals for its goal" % dest2)
+		if not bool(dd.get("story_only", false)):
+			check(sigs >= int(dd["goal_signals"]) + 2, "destination %s has too few signals for its goal" % dest2)
 	for cid: String in GameData.CHARACTERS.keys():
 		check(GameData.ABILITIES.has(String(GameData.CHARACTERS[cid]["ability"])), "character %s ability" % cid)
 		check(GameData.MASTERY.has(cid), "character %s mastery" % cid)
@@ -1296,7 +1297,8 @@ func test_sea_branch() -> void:
 	for cd: Dictionary in GameData.CHAPTERS:
 		if cd.has("issue") and int(cd["issue"]) > 1:
 			var prev_id: String = String(cd.get("after", ""))
-			check(prev_id != "" and int(GameData.chapter_def(GameData.chart_chapter(prev_id)).get("issue", 1)) == int(cd["issue"]) - 1, "chapter %s breaks issue order" % cd["name"])
+			var pdef: Dictionary = GameData.chapter_def(GameData.chart_chapter(prev_id))
+			check(prev_id != "" and int(pdef.get("issue_end", pdef.get("issue", 1))) == int(cd["issue"]) - 1, "chapter %s breaks issue order" % cd["name"])
 	check(GameData.crew_of("ella_venn").has("colin_rhyne"), "Rhyne should ride with Ella")
 	# Seams: one per realm, placed by roaming, never on the chart.
 	check(GameData.seams().size() >= 8, "seams missing")
@@ -1306,7 +1308,8 @@ func test_sea_branch() -> void:
 		check(GameData.DESTINATIONS.has(String(GameData.DISCOVERIES[sid]["seam"])), "seam %s realm" % sid)
 		check(GameData.stage_for_discovery(sid).is_empty(), "seam %s should not be a stage target" % sid)
 	for dest: String in GameData.DESTINATIONS.keys():
-		check(realms_with_seam.has(dest), "realm %s has no seam" % dest)
+		if not bool(GameData.DESTINATIONS[dest].get("story_only", false)):
+			check(realms_with_seam.has(dest), "realm %s has no seam" % dest)
 	var run4: GameRun = _make_run({"stop": "fod_onboard"})
 	await get_tree().process_frame
 	check(run4.pois.items.any(func(q: Dictionary) -> bool: return String(q.id) == "seam_g53"), "seam not placed in its realm")

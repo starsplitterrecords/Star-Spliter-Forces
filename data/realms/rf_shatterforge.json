@@ -1,0 +1,350 @@
+{
+ "id": "rf_shatterforge",
+ "chapter": {
+  "id": 8,
+  "name": "Shatterforge",
+  "numeral": "VIII",
+  "destination": "rf_shatterforge",
+  "subtitle": "Rex Fleet, Issues 09-10 territory: the forge and its spires.",
+  "after": "vii_silence",
+  "issue": 9,
+  "issue_end": 10
+ },
+ "destination": {
+  "name": "Shatterforge",
+  "desc": "Rex Fleet, Issues 09-10 territory: the forge and its spires.",
+  "half_size": "@v2:6000.0,4200.0",
+  "gate": "@v2:-5000.0,0.0",
+  "goal_signals": 0,
+  "story_only": true,
+  "climax_time": 1260.0,
+  "background": "@c:120806ff",
+  "drift_name": "OPEN SPACE",
+  "biome": "space",
+  "regions": [
+   "shatterforge_spire",
+   "dock_spires",
+   "evac_bays",
+   "forge_canyon",
+   "dock_mouth"
+  ],
+  "completion_unlocks": [],
+  "seed": 8808
+ },
+ "tier": "approved_draft",
+ "source": "RexPrompt rex-fleet shelf; places first appear in Issue 09-10; cast from Rex Fleet Issue 01 cast (portrait: Issue 03 approved draft cast page)",
+ "regions": {
+  "shatterforge_spire": {
+   "name": "SHATTERFORGE SPIRE",
+   "color": "@c:ff8a3aff",
+   "floor": "@c:0a0c16ff",
+   "props": "bloom",
+   "density": 0.8,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.7,
+    "gunship": 0.1,
+    "echo_mote": 0.3
+   },
+   "blurb": "Ember furnaces and vent trunks.",
+   "threat": 1,
+   "shape": "circle",
+   "center": "@v2:-3000.0,-1600.0",
+   "radius": 850.0
+  },
+  "dock_spires": {
+   "name": "DOCK SPIRES",
+   "color": "@c:c8a8a0ff",
+   "floor": "@c:0a0c16ff",
+   "props": "belt",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.7,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "Spires bristling with berths.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:-2600.0,1800.0",
+   "radius": 850.0
+  },
+  "evac_bays": {
+   "name": "EVAC BAYS",
+   "color": "@c:8fd3ffff",
+   "floor": "@c:0a0c16ff",
+   "props": "corridor",
+   "density": 0.8,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.7,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "Bays built for leaving.",
+   "threat": 2,
+   "shape": "capsule",
+   "a": "@v2:-1600.0,-2500.0",
+   "b": "@v2:1000.0,-2100.0",
+   "radius": 480.0
+  },
+  "forge_canyon": {
+   "name": "FORGE CANYON",
+   "color": "@c:e05a2aff",
+   "floor": "@c:0a0c16ff",
+   "props": "wreck",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.7,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "A canyon of slag and bridges.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:300.0,1500.0",
+   "radius": 850.0
+  },
+  "dock_mouth": {
+   "name": "DOCK MOUTH",
+   "color": "@c:ffb07aff",
+   "floor": "@c:0a0c16ff",
+   "props": "gate",
+   "density": 0.8,
+   "music": "region_bloom",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.7,
+    "gunship": 0.30000000000000004,
+    "echo_mote": 0.3
+   },
+   "blurb": "The way in and out of the forge.",
+   "threat": 3,
+   "shape": "circle",
+   "center": "@v2:2700.0,-1300.0",
+   "radius": 850.0
+  }
+ },
+ "discoveries": {
+  "d_viii_spire": {
+   "kind": "character",
+   "region": "shatterforge_spire",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE FORGE",
+   "color": "@c:ff8a3aff",
+   "place": "shatterforge_spire",
+   "text": "The Shards make their blades here.",
+   "landmark": "sunforge"
+  },
+  "d_viii_docks": {
+   "kind": "character",
+   "region": "dock_spires",
+   "offset": "@v2:0.0,0.0",
+   "title": "DOCK SPIRES",
+   "color": "@c:c8a8a0ff",
+   "place": "dock_spires",
+   "text": "Every berth is taken.",
+   "landmark": "dock"
+  },
+  "d_viii_mouth": {
+   "kind": "character",
+   "region": "dock_mouth",
+   "offset": "@v2:0.0,0.0",
+   "title": "DOCK MOUTH",
+   "color": "@c:ffb07aff",
+   "place": "dock_mouth",
+   "text": "The forge's front door.",
+   "landmark": "station"
+  }
+ },
+ "contacts": {},
+ "places": {
+  "shatterforge_spire": {
+   "name": "Shatterforge Spire",
+   "series": "Rex Fleet",
+   "text": "Ember furnaces and vent trunks.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 09-10; approved draft)"
+  },
+  "dock_spires": {
+   "name": "Dock Spires",
+   "series": "Rex Fleet",
+   "text": "Spires bristling with berths.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 09-10; approved draft)"
+  },
+  "evac_bays": {
+   "name": "Evac Bays",
+   "series": "Rex Fleet",
+   "text": "Bays built for leaving.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 09-10; approved draft)"
+  },
+  "forge_canyon": {
+   "name": "Forge Canyon",
+   "series": "Rex Fleet",
+   "text": "A canyon of slag and bridges.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 09-10; approved draft)"
+  },
+  "dock_mouth": {
+   "name": "Dock Mouth",
+   "series": "Rex Fleet",
+   "text": "The way in and out of the forge.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 09-10; approved draft)"
+  }
+ },
+ "stages": [
+  {
+   "id": "viii_spire",
+   "chapter": 8,
+   "name": "The Forge",
+   "place": "Shatterforge Spire",
+   "region": "shatterforge_spire",
+   "new_title": "THE FORGE",
+   "new": "The Shards make their blades here.",
+   "brief": "The Shards make their blades here.",
+   "grants": {},
+   "power": 102,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_viii_spire"
+   },
+   "discoveries": [
+    "d_viii_spire"
+   ],
+   "reward": [
+    "Place: Shatterforge Spire"
+   ]
+  },
+  {
+   "id": "viii_docks",
+   "chapter": 8,
+   "name": "Dock Spires",
+   "place": "Dock Spires",
+   "region": "dock_spires",
+   "new_title": "DOCK SPIRES",
+   "new": "Every berth is taken.",
+   "brief": "Every berth is taken.",
+   "grants": {},
+   "power": 110,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_viii_docks"
+   },
+   "discoveries": [
+    "d_viii_docks"
+   ],
+   "reward": [
+    "Place: Dock Spires"
+   ]
+  },
+  {
+   "id": "viii_bays",
+   "chapter": 8,
+   "name": "Evac Bays",
+   "place": "Evac Bays",
+   "region": "evac_bays",
+   "new_title": "EVAC BAYS",
+   "new": "Keep the bays open for three minutes.",
+   "brief": "Keep the bays open for three minutes.",
+   "grants": {
+    "signal": 150
+   },
+   "prize": "+150 Signal",
+   "icon": "hostile",
+   "objective": {
+    "type": "survive",
+    "seconds": 180.0
+   },
+   "discoveries": [],
+   "reward": [
+    "+150 Signal"
+   ]
+  },
+  {
+   "id": "viii_ashfang",
+   "chapter": 8,
+   "name": "Ashfang Again",
+   "place": "Forge Canyon",
+   "region": "forge_canyon",
+   "new_title": "ASHFANG AGAIN",
+   "new": "The Ashfang, in the canyon. Arrives at 2:00.",
+   "brief": "The Ashfang, in the canyon. Arrives at 2:00.",
+   "grants": {
+    "signal": 200
+   },
+   "prize": "+200 Signal",
+   "icon": "elite",
+   "objective": {
+    "type": "elite",
+    "enemy": "ashfang_marauder",
+    "at": 120.0
+   },
+   "discoveries": [],
+   "reward": [
+    "+200 Signal"
+   ]
+  },
+  {
+   "id": "viii_mouth",
+   "chapter": 8,
+   "name": "Dock Mouth",
+   "place": "Dock Mouth",
+   "region": "dock_mouth",
+   "new_title": "DOCK MOUTH",
+   "new": "The forge's front door.",
+   "brief": "The forge's front door.",
+   "grants": {},
+   "power": 134,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_viii_mouth"
+   },
+   "discoveries": [
+    "d_viii_mouth"
+   ],
+   "reward": [
+    "Place: Dock Mouth"
+   ]
+  },
+  {
+   "id": "viii_silence",
+   "chapter": 8,
+   "name": "The Silence",
+   "place": "Shatterforge",
+   "start": "@v2:-800.0,600.0",
+   "prize": "+420 Signal",
+   "icon": "elite",
+   "objective": {
+    "type": "boss",
+    "at": 420.0,
+    "hp": 0.6799999999999999
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE",
+   "new": "It followed the music this far. Arrives at 7:00.",
+   "brief": "Something wants it quiet.",
+   "reward": [
+    "+420 Signal",
+    "Chapter VIII complete"
+   ],
+   "grants": {
+    "signal": 420
+   }
+  }
+ ]
+}

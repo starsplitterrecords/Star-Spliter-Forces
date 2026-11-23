@@ -1,0 +1,430 @@
+{
+ "id": "rf_tal_corvus",
+ "chapter": {
+  "id": 5,
+  "name": "Tal Corvus",
+  "numeral": "V",
+  "destination": "rf_tal_corvus",
+  "subtitle": "Rex Fleet, Issue 04 territory: the warrens and the spire.",
+  "after": "iv_silence",
+  "issue": 4
+ },
+ "destination": {
+  "name": "Tal Corvus",
+  "desc": "Rex Fleet, Issue 04 territory: the warrens and the spire.",
+  "half_size": "@v2:6000.0,4200.0",
+  "gate": "@v2:-5000.0,0.0",
+  "goal_signals": 0,
+  "story_only": true,
+  "climax_time": 1260.0,
+  "background": "@c:0a0a10ff",
+  "drift_name": "OPEN SPACE",
+  "biome": "space",
+  "regions": [
+   "tal_warrens",
+   "evac_queue",
+   "bastion_spire",
+   "tal_gantry",
+   "third_window",
+   "relic_court"
+  ],
+  "completion_unlocks": [],
+  "seed": 5505
+ },
+ "tier": "approved_draft",
+ "source": "RexPrompt rex-fleet shelf; places first appear in Issue 04; cast from Rex Fleet Issue 01 cast (portrait: Issue 03 approved draft cast page)",
+ "regions": {
+  "tal_warrens": {
+   "name": "TAL CORVUS WARRENS",
+   "color": "@c:c87a5aff",
+   "floor": "@c:0a0c16ff",
+   "props": "wreck",
+   "density": 0.8,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.4,
+    "gunship": 0.1,
+    "echo_mote": 0.3
+   },
+   "blurb": "Damp industrial passages, lived in.",
+   "threat": 1,
+   "shape": "circle",
+   "center": "@v2:-3000.0,-1600.0",
+   "radius": 850.0
+  },
+  "evac_queue": {
+   "name": "EVACUATION QUEUE",
+   "color": "@c:8fd3ffff",
+   "floor": "@c:0a0c16ff",
+   "props": "corridor",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.4,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "A line of ships that does not move fast enough.",
+   "threat": 2,
+   "shape": "capsule",
+   "a": "@v2:-3900.0,1800.0",
+   "b": "@v2:-1300.0,2200.0",
+   "radius": 480.0
+  },
+  "bastion_spire": {
+   "name": "BASTION SPIRE",
+   "color": "@c:e0e0f0ff",
+   "floor": "@c:0a0c16ff",
+   "props": "gate",
+   "density": 0.8,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.4,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "A spire above the warrens.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:-300.0,-2500.0",
+   "radius": 850.0
+  },
+  "tal_gantry": {
+   "name": "DOCK GANTRY",
+   "color": "@c:a8a0c0ff",
+   "floor": "@c:0a0c16ff",
+   "props": "belt",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.4,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "Cranes and cradles over Tal Corvus.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:300.0,1500.0",
+   "radius": 850.0
+  },
+  "third_window": {
+   "name": "THIRD-WINDOW ROUTE",
+   "color": "@c:9fffe0ff",
+   "floor": "@c:0a0c16ff",
+   "props": "corridor",
+   "density": 0.8,
+   "music": "region_bloom",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.4,
+    "gunship": 0.30000000000000004,
+    "echo_mote": 0.3
+   },
+   "blurb": "A route that only opens on the third window.",
+   "threat": 3,
+   "shape": "capsule",
+   "a": "@v2:1400.0,-1300.0",
+   "b": "@v2:4000.0,-900.0",
+   "radius": 480.0
+  },
+  "relic_court": {
+   "name": "RELIC COURT",
+   "color": "@c:ffd98aff",
+   "floor": "@c:0a0c16ff",
+   "props": "pools",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.4,
+    "gunship": 0.30000000000000004,
+    "echo_mote": 0.3
+   },
+   "blurb": "A monumental Core chamber.",
+   "threat": 3,
+   "shape": "circle",
+   "center": "@v2:3300.0,2200.0",
+   "radius": 850.0
+  }
+ },
+ "discoveries": {
+  "d_v_warrens": {
+   "kind": "character",
+   "region": "tal_warrens",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE WARRENS",
+   "color": "@c:c87a5aff",
+   "place": "tal_warrens",
+   "text": "A physician and his son, still working.",
+   "landmark": "freighter",
+   "contacts": [
+    "richard_secundo",
+    "paul_secundo"
+   ]
+  },
+  "d_v_spire": {
+   "kind": "character",
+   "region": "bastion_spire",
+   "offset": "@v2:0.0,0.0",
+   "title": "BASTION SPIRE",
+   "color": "@c:e0e0f0ff",
+   "place": "bastion_spire",
+   "text": "A spire that sees the whole system.",
+   "landmark": "station"
+  },
+  "d_v_window": {
+   "kind": "character",
+   "region": "third_window",
+   "offset": "@v2:0.0,0.0",
+   "title": "THIRD WINDOW",
+   "color": "@c:9fffe0ff",
+   "place": "third_window",
+   "text": "Wait for the third window.",
+   "landmark": "rocket"
+  },
+  "d_v_court": {
+   "kind": "character",
+   "region": "relic_court",
+   "offset": "@v2:0.0,0.0",
+   "title": "RELIC COURT",
+   "color": "@c:ffd98aff",
+   "place": "relic_court",
+   "text": "The Core, deliberating.",
+   "landmark": "station",
+   "contacts": [
+    "soren_kerr"
+   ]
+  }
+ },
+ "contacts": {
+  "richard_secundo": {
+   "name": "Dr. Richard Secundo",
+   "faction": "The Shards",
+   "role": "Tal Corvus physician.",
+   "portrait": "richard_secundo",
+   "captain": "tessa_banks",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
+  },
+  "paul_secundo": {
+   "name": "Paul Secundo",
+   "faction": "The Shards",
+   "role": "Engineering apprentice, nineteen.",
+   "portrait": "paul_secundo",
+   "captain": "tessa_banks",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
+  },
+  "soren_kerr": {
+   "name": "Admiral Soren Kerr",
+   "faction": "The Fleet",
+   "role": "Fleet Admiralty: restraint.",
+   "portrait": "soren_kerr",
+   "captain": "ella_venn",
+   "perk": {
+    "kind": "speed",
+    "value": 0.03
+   }
+  }
+ },
+ "places": {
+  "tal_warrens": {
+   "name": "Tal Corvus Warrens",
+   "series": "Rex Fleet",
+   "text": "Damp industrial passages, lived in.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 04; approved draft)"
+  },
+  "evac_queue": {
+   "name": "Evacuation Queue",
+   "series": "Rex Fleet",
+   "text": "A line of ships that does not move fast enough.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 04; approved draft)"
+  },
+  "bastion_spire": {
+   "name": "Bastion Spire",
+   "series": "Rex Fleet",
+   "text": "A spire above the warrens.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 04; approved draft)"
+  },
+  "tal_gantry": {
+   "name": "Dock Gantry",
+   "series": "Rex Fleet",
+   "text": "Cranes and cradles over Tal Corvus.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 04; approved draft)"
+  },
+  "third_window": {
+   "name": "Third-Window Route",
+   "series": "Rex Fleet",
+   "text": "A route that only opens on the third window.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 04; approved draft)"
+  },
+  "relic_court": {
+   "name": "Relic Court",
+   "series": "Rex Fleet",
+   "text": "A monumental Core chamber.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 04; approved draft)"
+  }
+ },
+ "stages": [
+  {
+   "id": "v_warrens",
+   "chapter": 5,
+   "name": "The Warrens",
+   "place": "Tal Corvus Warrens",
+   "region": "tal_warrens",
+   "new_title": "THE WARRENS",
+   "new": "A physician and his son, still working.",
+   "brief": "A physician and his son, still working.",
+   "grants": {},
+   "power": 84,
+   "prize": "Crew",
+   "icon": "visions",
+   "objective": {
+    "type": "discover",
+    "id": "d_v_warrens"
+   },
+   "discoveries": [
+    "d_v_warrens"
+   ],
+   "reward": [
+    "Crew: Dr. Richard Secundo, Paul Secundo",
+    "Place: Tal Corvus Warrens"
+   ]
+  },
+  {
+   "id": "v_queue",
+   "chapter": 5,
+   "name": "The Queue",
+   "place": "Evacuation Queue",
+   "region": "evac_queue",
+   "new_title": "THE QUEUE",
+   "new": "Keep the evacuation queue moving for three minutes.",
+   "brief": "Keep the evacuation queue moving for three minutes.",
+   "grants": {
+    "signal": 150
+   },
+   "prize": "+150 Signal",
+   "icon": "hostile",
+   "objective": {
+    "type": "survive",
+    "seconds": 180.0
+   },
+   "discoveries": [],
+   "reward": [
+    "+150 Signal"
+   ]
+  },
+  {
+   "id": "v_spire",
+   "chapter": 5,
+   "name": "Bastion Spire",
+   "place": "Bastion Spire",
+   "region": "bastion_spire",
+   "new_title": "BASTION SPIRE",
+   "new": "A spire that sees the whole system.",
+   "brief": "A spire that sees the whole system.",
+   "grants": {},
+   "power": 100,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_v_spire"
+   },
+   "discoveries": [
+    "d_v_spire"
+   ],
+   "reward": [
+    "Place: Bastion Spire"
+   ]
+  },
+  {
+   "id": "v_window",
+   "chapter": 5,
+   "name": "Third Window",
+   "place": "Third-Window Route",
+   "region": "third_window",
+   "new_title": "THIRD WINDOW",
+   "new": "Wait for the third window.",
+   "brief": "Wait for the third window.",
+   "grants": {},
+   "power": 108,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_v_window"
+   },
+   "discoveries": [
+    "d_v_window"
+   ],
+   "reward": [
+    "Place: Third-Window Route"
+   ]
+  },
+  {
+   "id": "v_court",
+   "chapter": 5,
+   "name": "Relic Court",
+   "place": "Relic Court",
+   "region": "relic_court",
+   "new_title": "RELIC COURT",
+   "new": "The Core, deliberating.",
+   "brief": "The Core, deliberating.",
+   "grants": {},
+   "power": 116,
+   "prize": "Crew",
+   "icon": "visions",
+   "objective": {
+    "type": "discover",
+    "id": "d_v_court"
+   },
+   "discoveries": [
+    "d_v_court"
+   ],
+   "reward": [
+    "Crew: Admiral Soren Kerr",
+    "Place: Relic Court"
+   ]
+  },
+  {
+   "id": "v_silence",
+   "chapter": 5,
+   "name": "The Silence",
+   "place": "Tal Corvus",
+   "start": "@v2:-800.0,600.0",
+   "prize": "+330 Signal",
+   "icon": "elite",
+   "objective": {
+    "type": "boss",
+    "at": 420.0,
+    "hp": 0.62
+   },
+   "discoveries": [],
+   "new_title": "THE SILENCE",
+   "new": "It followed the music this far. Arrives at 7:00.",
+   "brief": "Something wants it quiet.",
+   "reward": [
+    "+330 Signal",
+    "Chapter V complete"
+   ],
+   "grants": {
+    "signal": 330
+   }
+  }
+ ]
+}

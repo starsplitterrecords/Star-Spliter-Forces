@@ -484,7 +484,7 @@ func _open_everything() -> void:
 		if not f in data["forces_attuned"]:
 			data["forces_attuned"].append(f)
 	for d: String in GameData.DESTINATIONS.keys():
-		if not d in data["unlocked_destinations"]:
+		if not d in data["unlocked_destinations"] and not bool(GameData.DESTINATIONS[d].get("story_only", false)):
 			data["unlocked_destinations"].append(d)
 	data["currency"] = maxi(int(data["currency"]), 5000)
 	data["playtest"] = true

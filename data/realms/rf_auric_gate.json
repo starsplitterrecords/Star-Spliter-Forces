@@ -1,0 +1,362 @@
+{
+ "id": "rf_auric_gate",
+ "chapter": {
+  "id": 9,
+  "name": "The Auric Gate",
+  "numeral": "IX",
+  "destination": "rf_auric_gate",
+  "subtitle": "Rex Fleet, Issues 11-12 territory: the gate.",
+  "after": "viii_silence",
+  "issue": 11,
+  "issue_end": 12
+ },
+ "destination": {
+  "name": "The Auric Gate",
+  "desc": "Rex Fleet, Issues 11-12 territory: the gate.",
+  "half_size": "@v2:6000.0,4200.0",
+  "gate": "@v2:-5000.0,0.0",
+  "goal_signals": 0,
+  "story_only": true,
+  "climax_time": 1260.0,
+  "background": "@c:0e0806ff",
+  "drift_name": "OPEN SPACE",
+  "biome": "space",
+  "regions": [
+   "gate_approach",
+   "gate_midspace",
+   "assembly_orbit",
+   "gate_lane",
+   "the_auric_gate"
+  ],
+  "completion_unlocks": [],
+  "seed": 9909
+ },
+ "tier": "approved_draft",
+ "source": "RexPrompt rex-fleet shelf; places first appear in Issue 11-12; cast from Rex Fleet Issue 01 cast (portrait: Issue 03 approved draft cast page)",
+ "regions": {
+  "gate_approach": {
+   "name": "GATE APPROACH",
+   "color": "@c:ffb07aff",
+   "floor": "@c:0a0c16ff",
+   "props": "corridor",
+   "density": 0.8,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.8,
+    "gunship": 0.1,
+    "echo_mote": 0.3
+   },
+   "blurb": "Every lane leads here.",
+   "threat": 1,
+   "shape": "capsule",
+   "a": "@v2:-4300.0,-1600.0",
+   "b": "@v2:-1700.0,-1200.0",
+   "radius": 480.0
+  },
+  "gate_midspace": {
+   "name": "GATE MIDSPACE",
+   "color": "@c:ff9a3aff",
+   "floor": "@c:0a0c16ff",
+   "props": "crystal",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.8,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "Between the pylons.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:-2600.0,1800.0",
+   "radius": 850.0
+  },
+  "assembly_orbit": {
+   "name": "SHARD ASSEMBLY ORBIT",
+   "color": "@c:e0402aff",
+   "floor": "@c:0a0c16ff",
+   "props": "wreck",
+   "density": 0.8,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.8,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "Working Shard vessels, many of them.",
+   "threat": 2,
+   "shape": "circle",
+   "center": "@v2:-300.0,-2500.0",
+   "radius": 850.0
+  },
+  "gate_lane": {
+   "name": "GATE LANE",
+   "color": "@c:ffd98aff",
+   "floor": "@c:0a0c16ff",
+   "props": "corridor",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.8,
+    "gunship": 0.2,
+    "echo_mote": 0.3
+   },
+   "blurb": "The lane through.",
+   "threat": 2,
+   "shape": "capsule",
+   "a": "@v2:-1000.0,1500.0",
+   "b": "@v2:1600.0,1900.0",
+   "radius": 480.0
+  },
+  "the_auric_gate": {
+   "name": "THE AURIC GATE",
+   "color": "@c:ff7a2aff",
+   "floor": "@c:0a0c16ff",
+   "props": "gate",
+   "density": 0.8,
+   "music": "region_bloom",
+   "enemies": {
+    "skiff": 0.9,
+    "ram_cutter": 0.5,
+    "rail_picket": 0.8,
+    "gunship": 0.30000000000000004,
+    "echo_mote": 0.3
+   },
+   "blurb": "Ember-orange pylons, stability rims.",
+   "threat": 3,
+   "shape": "circle",
+   "center": "@v2:2700.0,-1300.0",
+   "radius": 850.0
+  }
+ },
+ "discoveries": {
+  "d_ix_approach": {
+   "kind": "character",
+   "region": "gate_approach",
+   "offset": "@v2:0.0,0.0",
+   "title": "GATE APPROACH",
+   "color": "@c:ffb07aff",
+   "place": "gate_approach",
+   "text": "Everyone is heading for the gate.",
+   "landmark": "station"
+  },
+  "d_ix_orbit": {
+   "kind": "character",
+   "region": "assembly_orbit",
+   "offset": "@v2:0.0,0.0",
+   "title": "ASSEMBLY ORBIT",
+   "color": "@c:e0402aff",
+   "place": "assembly_orbit",
+   "text": "The Shards, assembled.",
+   "landmark": "freighter"
+  },
+  "d_ix_lane": {
+   "kind": "character",
+   "region": "gate_lane",
+   "offset": "@v2:0.0,0.0",
+   "title": "GATE LANE",
+   "color": "@c:ffd98aff",
+   "place": "gate_lane",
+   "text": "The lane through.",
+   "landmark": "rocket"
+  },
+  "d_ix_gate": {
+   "kind": "character",
+   "region": "the_auric_gate",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE AURIC GATE",
+   "color": "@c:ff7a2aff",
+   "place": "the_auric_gate",
+   "text": "The gate itself.",
+   "landmark": "sunforge"
+  }
+ },
+ "contacts": {},
+ "places": {
+  "gate_approach": {
+   "name": "Gate Approach",
+   "series": "Rex Fleet",
+   "text": "Every lane leads here.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 11-12; approved draft)"
+  },
+  "gate_midspace": {
+   "name": "Gate Midspace",
+   "series": "Rex Fleet",
+   "text": "Between the pylons.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 11-12; approved draft)"
+  },
+  "assembly_orbit": {
+   "name": "Shard Assembly Orbit",
+   "series": "Rex Fleet",
+   "text": "Working Shard vessels, many of them.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 11-12; approved draft)"
+  },
+  "gate_lane": {
+   "name": "Gate Lane",
+   "series": "Rex Fleet",
+   "text": "The lane through.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 11-12; approved draft)"
+  },
+  "the_auric_gate": {
+   "name": "The Auric Gate",
+   "series": "Rex Fleet",
+   "text": "Ember-orange pylons, stability rims.",
+   "source": "Rex Fleet (RexPrompt shelf, first appears in Issue 11-12; approved draft)"
+  }
+ },
+ "stages": [
+  {
+   "id": "ix_approach",
+   "chapter": 9,
+   "name": "Gate Approach",
+   "place": "Gate Approach",
+   "region": "gate_approach",
+   "new_title": "GATE APPROACH",
+   "new": "Everyone is heading for the gate.",
+   "brief": "Everyone is heading for the gate.",
+   "grants": {},
+   "power": 108,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_ix_approach"
+   },
+   "discoveries": [
+    "d_ix_approach"
+   ],
+   "reward": [
+    "Place: Gate Approach"
+   ]
+  },
+  {
+   "id": "ix_orbit",
+   "chapter": 9,
+   "name": "Assembly Orbit",
+   "place": "Shard Assembly Orbit",
+   "region": "assembly_orbit",
+   "new_title": "ASSEMBLY ORBIT",
+   "new": "The Shards, assembled.",
+   "brief": "The Shards, assembled.",
+   "grants": {},
+   "power": 116,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_ix_orbit"
+   },
+   "discoveries": [
+    "d_ix_orbit"
+   ],
+   "reward": [
+    "Place: Shard Assembly Orbit"
+   ]
+  },
+  {
+   "id": "ix_midspace",
+   "chapter": 9,
+   "name": "Midspace",
+   "place": "Gate Midspace",
+   "region": "gate_midspace",
+   "new_title": "MIDSPACE",
+   "new": "Hold midspace for three minutes.",
+   "brief": "Hold midspace for three minutes.",
+   "grants": {
+    "signal": 150
+   },
+   "prize": "+150 Signal",
+   "icon": "hostile",
+   "objective": {
+    "type": "survive",
+    "seconds": 180.0
+   },
+   "discoveries": [],
+   "reward": [
+    "+150 Signal"
+   ]
+  },
+  {
+   "id": "ix_lane",
+   "chapter": 9,
+   "name": "Gate Lane",
+   "place": "Gate Lane",
+   "region": "gate_lane",
+   "new_title": "GATE LANE",
+   "new": "The lane through.",
+   "brief": "The lane through.",
+   "grants": {},
+   "power": 132,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_ix_lane"
+   },
+   "discoveries": [
+    "d_ix_lane"
+   ],
+   "reward": [
+    "Place: Gate Lane"
+   ]
+  },
+  {
+   "id": "ix_gate",
+   "chapter": 9,
+   "name": "The Auric Gate",
+   "place": "The Auric Gate",
+   "region": "the_auric_gate",
+   "new_title": "THE AURIC GATE",
+   "new": "The gate itself.",
+   "brief": "The gate itself.",
+   "grants": {},
+   "power": 140,
+   "prize": "Place",
+   "icon": "signal",
+   "objective": {
+    "type": "discover",
+    "id": "d_ix_gate"
+   },
+   "discoveries": [
+    "d_ix_gate"
+   ],
+   "reward": [
+    "Place: The Auric Gate"
+   ]
+  },
+  {
+   "id": "ix_silence",
+   "chapter": 9,
+   "name": "Through the Gate",
+   "place": "The Auric Gate",
+   "start": "@v2:-800.0,600.0",
+   "prize": "+450 Signal",
+   "icon": "elite",
+   "objective": {
+    "type": "boss",
+    "at": 420.0,
+    "hp": 0.7
+   },
+   "discoveries": [],
+   "new_title": "THE LAST GATE",
+   "new": "It followed the music this far. Arrives at 7:00.",
+   "brief": "Something wants it quiet.",
+   "reward": [
+    "+450 Signal",
+    "Chapter IX complete",
+    "The main Rex Fleet path complete"
+   ],
+   "grants": {
+    "signal": 450
+   }
+  }
+ ]
+}

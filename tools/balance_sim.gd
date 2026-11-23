@@ -19,6 +19,16 @@ func _ready() -> void:
 	for extra: String in attuned:
 		Profile.data["forces_attuned"].append(extra)
 	Profile.data["unlocked_characters"] = GameData.CHARACTERS.keys()
+	if OS.get_environment("SIM_ALLDONE") != "":
+		# A late-game save: every other stage lit (full route depth), crew met.
+		for st: Dictionary in GameData.CHART:
+			if String(st["id"]) != stop:
+				Profile.complete_stop(String(st["id"]))
+				for did: String in st.get("discoveries", []):
+					Profile.data["discovered"][did] = {"expedition": 1, "character": character}
+		# ...and the Signal from ~100 stages spent at the Workshop.
+		for wk: String in GameData.WORKSHOP.keys():
+			Profile.data["workshop"][wk] = int(GameData.WORKSHOP[wk]["max"])
 	if OS.get_environment("SIM_STEADY") != "":
 		Profile.data["stage_losses"] = {stop: 2}
 	var run: GameRun = GameRun.new()
