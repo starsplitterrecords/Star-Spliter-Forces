@@ -131,7 +131,7 @@ func _draw() -> void:
 			draw_rect(Rect2(pos + Vector2(-9, -2), Vector2(18, 14)), Color("6b7892"))
 			draw_arc(pos + Vector2(0, -3), 7.0, PI, TAU, 10, Color("6b7892"), 3.0)
 		else:
-			CategoryIcon.draw(self, String(st.get("icon", "signal")), pos, r * 0.72, anim)
+			StageIcon.draw(self, st, pos, r * 0.72, anim)
 		var num: int = GameData.chart_number(id)
 		if num > 0:
 			var ns: String = str(num)
