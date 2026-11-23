@@ -922,6 +922,13 @@ func _draw() -> void:
 	# Abby's answering Shard captains: pale hulls, red seams.
 	for a: Dictionary in run.allies:
 		var ap: Vector2 = run.ally_position(a)
+		if String(a.get("kind", "")) == "memory":
+			# A Vanguard memory: a tall violet afterimage with a bright core.
+			var fl: float = 0.6 + 0.3 * sin(anim * 6.0 + float(a.angle) * 3.0)
+			draw_colored_polygon(PackedVector2Array([ap + Vector2(0, -18), ap + Vector2(9, 0), ap + Vector2(5, 16), ap + Vector2(-5, 16), ap + Vector2(-9, 0)]), Color(0.71, 0.55, 1.0, 0.45 * fl))
+			draw_circle(ap + Vector2(0, -6), 4.0, Color(1.0, 0.95, 1.0, fl))
+			draw_arc(ap, 14.0, 0.0, TAU, 16, Color(0.84, 0.72, 1.0, 0.5), 1.5)
+			continue
 		if String(a.get("kind", "")) == "skeleton":
 			# A skeleton guard: dented helmet, bone body, a spear.
 			draw_circle(ap, 7.0, Color("e8e2d0"))

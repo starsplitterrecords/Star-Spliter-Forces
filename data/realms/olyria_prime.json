@@ -1,0 +1,551 @@
+{
+ "id": "olyria_prime",
+ "chapter": {
+  "id": 15,
+  "name": "Echoes",
+  "numeral": "COSMIC",
+  "destination": "olyria_prime",
+  "subtitle": "Echoes of a Forgotten War: Olyria-Prime and Zenith Spire.",
+  "branch_from": "ix_silence",
+  "biome": "cosmic"
+ },
+ "destination": {
+  "name": "Olyria-Prime",
+  "desc": "An excavation colony digging up a war nobody remembers.",
+  "half_size": "@v2:6000.0,4200.0",
+  "gate": "@v2:-5000.0,600.0",
+  "goal_signals": 0,
+  "story_only": true,
+  "climax_time": 1260.0,
+  "background": "@c:08060eff",
+  "drift_name": "MEMORY SPACE",
+  "biome": "cosmic",
+  "regions": [
+   "olyria_trench",
+   "sector_four",
+   "grid_ruins",
+   "zenith_archives",
+   "telemetry_room",
+   "triage_tent",
+   "observation_deck",
+   "lower_archives"
+  ],
+  "completion_unlocks": [],
+  "seed": 1515
+ },
+ "tier": "keeper",
+ "source": "Echoes of a Forgotten War (RexPrompt shelf, Issue 01; Reference Keeper)",
+ "regions": {
+  "olyria_trench": {
+   "name": "OLYRIA-PRIME TRENCH",
+   "shape": "capsule",
+   "a": "@v2:-4200.0,-900.0",
+   "b": "@v2:-1300.0,-1500.0",
+   "radius": 480.0,
+   "color": "@c:e0c890ff",
+   "floor": "@c:0e0c14ff",
+   "props": "lakebed",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "echo_mote": 0.5,
+    "blink": 0.4,
+    "gunship": 0.1
+   },
+   "blurb": "A working cut in black bedrock. Night shift.",
+   "threat": 1
+  },
+  "sector_four": {
+   "name": "SECTOR FOUR",
+   "shape": "circle",
+   "center": "@v2:-2400.0,1900.0",
+   "radius": 850.0,
+   "color": "@c:ffcf8aff",
+   "floor": "@c:120e10ff",
+   "props": "mesa",
+   "density": 0.8,
+   "music": "region_bloom",
+   "enemies": {
+    "skiff": 0.9,
+    "echo_mote": 0.5,
+    "blink": 0.5,
+    "gunship": 0.2
+   },
+   "blurb": "Where the Desert Marker came up.",
+   "threat": 2
+  },
+  "grid_ruins": {
+   "name": "STABILIZING GRID RUINS",
+   "shape": "circle",
+   "center": "@v2:200.0,-200.0",
+   "radius": 850.0,
+   "color": "@c:b48cffff",
+   "floor": "@c:0e0a18ff",
+   "props": "crystal",
+   "density": 1.0,
+   "music": "region_bloom",
+   "enemies": {
+    "skiff": 0.9,
+    "echo_mote": 0.5,
+    "blink": 0.5,
+    "gunship": 0.2
+   },
+   "blurb": "Broken platforms after the first rupture.",
+   "threat": 2
+  },
+  "zenith_archives": {
+   "name": "ZENITH SPIRE ARCHIVES",
+   "shape": "circle",
+   "center": "@v2:500.0,-3000.0",
+   "radius": 750.0,
+   "color": "@c:bfe9ffff",
+   "floor": "@c:0c1020ff",
+   "props": "pools",
+   "density": 0.7,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "echo_mote": 0.5,
+    "blink": 0.5,
+    "gunship": 0.2
+   },
+   "blurb": "Ordered shelves, old ledgers, long views.",
+   "threat": 2
+  },
+  "telemetry_room": {
+   "name": "ZENITH TELEMETRY",
+   "shape": "circle",
+   "center": "@v2:2900.0,-1600.0",
+   "radius": 650.0,
+   "color": "@c:8fd3ffff",
+   "floor": "@c:0a0e1cff",
+   "props": "gate",
+   "density": 0.7,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.9,
+    "echo_mote": 0.5,
+    "blink": 0.5,
+    "gunship": 0.2
+   },
+   "blurb": "Controlled access. Interfaces humming.",
+   "threat": 2
+  },
+  "triage_tent": {
+   "name": "OLYRIA TRIAGE TENT",
+   "shape": "circle",
+   "center": "@v2:1100.0,2600.0",
+   "radius": 650.0,
+   "color": "@c:e8e0d0ff",
+   "floor": "@c:141218ff",
+   "props": "wreck",
+   "density": 0.6,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "echo_mote": 0.5,
+    "blink": 0.4,
+    "gunship": 0.1
+   },
+   "blurb": "Cots, paper forms, bad coffee.",
+   "threat": 2
+  },
+  "observation_deck": {
+   "name": "ZENITH OBSERVATION DECK",
+   "shape": "circle",
+   "center": "@v2:4300.0,700.0",
+   "radius": 800.0,
+   "color": "@c:d7b8ffff",
+   "floor": "@c:0c0a18ff",
+   "props": "gate",
+   "density": 0.7,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.9,
+    "echo_mote": 0.5,
+    "blink": 0.6000000000000001,
+    "gunship": 0.30000000000000004
+   },
+   "blurb": "The whole planet below, quiet.",
+   "threat": 3
+  },
+  "lower_archives": {
+   "name": "LOWER-TIER ARCHIVES",
+   "shape": "circle",
+   "center": "@v2:4300.0,-3300.0",
+   "radius": 600.0,
+   "color": "@c:a090c0ff",
+   "floor": "@c:0e0c16ff",
+   "props": "pools",
+   "density": 0.7,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "echo_mote": 0.5,
+    "blink": 0.6000000000000001,
+    "gunship": 0.30000000000000004
+   },
+   "blurb": "Sealed records nobody asks for.",
+   "threat": 3
+  }
+ },
+ "discoveries": {
+  "ech_trench": {
+   "kind": "character",
+   "region": "olyria_trench",
+   "offset": "@v2:0.0,0.0",
+   "title": "NIGHT SHIFT",
+   "landmark": "freighter",
+   "color": "@c:e0c890ff",
+   "place": "olyria_trench",
+   "unlock_character": "theo",
+   "text": "Drills, lamps, dust. A student on the night shift who remembers a war nobody recorded."
+  },
+  "ech_marker": {
+   "kind": "character",
+   "region": "sector_four",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE DESERT MARKER",
+   "landmark": "sunforge",
+   "color": "@c:ffcf8aff",
+   "place": "sector_four",
+   "text": "Something very old, coming up out of black bedrock. Theo has seen it before."
+  },
+  "ech_archives": {
+   "kind": "character",
+   "region": "zenith_archives",
+   "offset": "@v2:0.0,0.0",
+   "title": "ZENITH SPIRE ARCHIVES",
+   "landmark": "station",
+   "color": "@c:bfe9ffff",
+   "contacts": [
+    "adrian"
+   ],
+   "place": "zenith_archives",
+   "text": "An antiquarian among the ledgers, who already knows what you are going to ask."
+  },
+  "ech_telemetry": {
+   "kind": "character",
+   "region": "telemetry_room",
+   "offset": "@v2:0.0,0.0",
+   "title": "ZENITH TELEMETRY",
+   "landmark": "station",
+   "color": "@c:8fd3ffff",
+   "contacts": [
+    "rae"
+   ],
+   "place": "telemetry_room",
+   "text": "Someone at a workstation, pulling records she should not be able to read."
+  },
+  "ech_deck": {
+   "kind": "character",
+   "region": "observation_deck",
+   "offset": "@v2:0.0,0.0",
+   "title": "OBSERVATION DECK",
+   "landmark": "sunforge",
+   "color": "@c:d7b8ffff",
+   "contacts": [
+    "general_mero"
+   ],
+   "place": "observation_deck",
+   "text": "Looking down at the planet, Theo remembers a general. The memory looks back."
+  },
+  "ech_lower": {
+   "kind": "character",
+   "region": "lower_archives",
+   "offset": "@v2:0.0,0.0",
+   "title": "LOWER-TIER ARCHIVES",
+   "landmark": "station",
+   "color": "@c:a090c0ff",
+   "place": "lower_archives",
+   "text": "Sealed records beneath the polished levels. Some of the seals are older than the Spire."
+  }
+ },
+ "contacts": {
+  "adrian": {
+   "name": "Adrian",
+   "faction": "Echoes of a Forgotten War",
+   "role": "Neutral envoy, antiquarian, surviving memory of the war.",
+   "portrait": "adrian",
+   "captain": "theo",
+   "perk": {
+    "kind": "reroll",
+    "value": 1
+   }
+  },
+  "rae": {
+   "name": "Rae",
+   "faction": "Echoes of a Forgotten War",
+   "role": "Modern memory-bearer; once a strategic aide.",
+   "portrait": "rae",
+   "captain": "theo",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
+  },
+  "general_mero": {
+   "name": "General Mero",
+   "faction": "The Vanguard",
+   "role": "A human general among cosmic champions. A memory.",
+   "portrait": "general_mero",
+   "captain": "theo",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
+  }
+ },
+ "places": {
+  "olyria_trench": {
+   "name": "Olyria-Prime Trench",
+   "series": "Echoes of a Forgotten War",
+   "text": "A working cut in black bedrock. Night shift.",
+   "source": "Echoes of a Forgotten War (RexPrompt shelf, Issue 01; Reference Keeper)",
+   "art": "olyria"
+  },
+  "sector_four": {
+   "name": "Sector Four",
+   "series": "Echoes of a Forgotten War",
+   "text": "Where the Desert Marker came up.",
+   "source": "Echoes of a Forgotten War (RexPrompt shelf, Issue 01; Reference Keeper)",
+   "art": "desert_marker"
+  },
+  "grid_ruins": {
+   "name": "Stabilizing Grid Ruins",
+   "series": "Echoes of a Forgotten War",
+   "text": "Broken platforms after the first rupture.",
+   "source": "Echoes of a Forgotten War (RexPrompt shelf, Issue 01; Reference Keeper)"
+  },
+  "zenith_archives": {
+   "name": "Zenith Spire Archives",
+   "series": "Echoes of a Forgotten War",
+   "text": "Ordered shelves, old ledgers, long views.",
+   "source": "Echoes of a Forgotten War (RexPrompt shelf, Issue 01; Reference Keeper)",
+   "art": "zenith_archives"
+  },
+  "telemetry_room": {
+   "name": "Zenith Telemetry",
+   "series": "Echoes of a Forgotten War",
+   "text": "Controlled access. Interfaces humming.",
+   "source": "Echoes of a Forgotten War (RexPrompt shelf, Issue 01; Reference Keeper)"
+  },
+  "triage_tent": {
+   "name": "Olyria Triage Tent",
+   "series": "Echoes of a Forgotten War",
+   "text": "Cots, paper forms, bad coffee.",
+   "source": "Echoes of a Forgotten War (RexPrompt shelf, Issue 01; Reference Keeper)"
+  },
+  "observation_deck": {
+   "name": "Zenith Observation Deck",
+   "series": "Echoes of a Forgotten War",
+   "text": "The whole planet below, quiet.",
+   "source": "Echoes of a Forgotten War (RexPrompt shelf, Issue 01; Reference Keeper)"
+  },
+  "lower_archives": {
+   "name": "Lower-Tier Archives",
+   "series": "Echoes of a Forgotten War",
+   "text": "Sealed records nobody asks for.",
+   "source": "Echoes of a Forgotten War (RexPrompt shelf, Issue 01; Reference Keeper)"
+  }
+ },
+ "stages": [
+  {
+   "id": "ech_trench",
+   "chapter": 15,
+   "power": 90,
+   "prize": "Theo",
+   "icon": "visions",
+   "name": "Night Shift",
+   "place": "Olyria-Prime Trench",
+   "region": "olyria_trench",
+   "objective": {
+    "type": "discover",
+    "id": "ech_trench"
+   },
+   "discoveries": [
+    "ech_trench"
+   ],
+   "new_title": "ECHOES",
+   "new": "After the gate, a colony digging up something it should not.",
+   "brief": "After the gate, a colony digging up something it should not.",
+   "reward": [
+    "Explorer: Theo",
+    "Place: Olyria-Prime Trench"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "ech_marker",
+   "chapter": 15,
+   "power": 100,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "The Desert Marker",
+   "place": "Sector Four",
+   "region": "sector_four",
+   "objective": {
+    "type": "discover",
+    "id": "ech_marker"
+   },
+   "discoveries": [
+    "ech_marker"
+   ],
+   "new_title": "THE MARKER",
+   "new": "Something very old, coming up.",
+   "brief": "Something very old, coming up.",
+   "reward": [
+    "Place: Sector Four"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "ech_rupture",
+   "chapter": 15,
+   "prize": "+200 Signal",
+   "icon": "hostile",
+   "name": "Memory Rupture",
+   "place": "Stabilizing Grid Ruins",
+   "region": "grid_ruins",
+   "objective": {
+    "type": "survive",
+    "seconds": 180.0
+   },
+   "discoveries": [],
+   "new_title": "RUPTURE",
+   "new": "The platforms broke. Hold for three minutes.",
+   "brief": "The platforms broke. Hold for three minutes.",
+   "reward": [
+    "+200 Signal"
+   ],
+   "grants": {
+    "signal": 200
+   }
+  },
+  {
+   "id": "ech_archives",
+   "chapter": 15,
+   "power": 105,
+   "prize": "Adrian",
+   "icon": "visions",
+   "name": "The Archives",
+   "place": "Zenith Spire Archives",
+   "region": "zenith_archives",
+   "objective": {
+    "type": "discover",
+    "id": "ech_archives"
+   },
+   "discoveries": [
+    "ech_archives"
+   ],
+   "new_title": "THE SPIRE",
+   "new": "An antiquarian among the ledgers.",
+   "brief": "An antiquarian among the ledgers.",
+   "reward": [
+    "Crew: Adrian (with Theo)",
+    "Place: Zenith Spire Archives"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "ech_telemetry",
+   "chapter": 15,
+   "power": 110,
+   "prize": "Rae",
+   "icon": "visions",
+   "name": "Telemetry",
+   "place": "Zenith Telemetry",
+   "region": "telemetry_room",
+   "objective": {
+    "type": "discover",
+    "id": "ech_telemetry"
+   },
+   "discoveries": [
+    "ech_telemetry"
+   ],
+   "new_title": "RECORDS",
+   "new": "Records she should not be able to read.",
+   "brief": "Records she should not be able to read.",
+   "reward": [
+    "Crew: Rae (with Theo)",
+    "Place: Zenith Telemetry"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "ech_deck",
+   "chapter": 15,
+   "power": 115,
+   "prize": "General Mero",
+   "icon": "visions",
+   "name": "Observation Deck",
+   "place": "Zenith Observation Deck",
+   "region": "observation_deck",
+   "objective": {
+    "type": "discover",
+    "id": "ech_deck"
+   },
+   "discoveries": [
+    "ech_deck"
+   ],
+   "new_title": "THE GENERAL",
+   "new": "A memory that looks back.",
+   "brief": "A memory that looks back.",
+   "reward": [
+    "Crew: General Mero (with Theo)",
+    "Place: Observation Deck"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "ech_lower",
+   "chapter": 15,
+   "power": 120,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "Lower Archives",
+   "place": "Lower-Tier Archives",
+   "region": "lower_archives",
+   "objective": {
+    "type": "discover",
+    "id": "ech_lower"
+   },
+   "discoveries": [
+    "ech_lower"
+   ],
+   "new_title": "SEALED",
+   "new": "Seals older than the Spire.",
+   "brief": "Seals older than the Spire.",
+   "reward": [
+    "Place: Lower-Tier Archives"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "ech_forgetting",
+   "chapter": 15,
+   "prize": "+350 Signal",
+   "icon": "elite",
+   "name": "The Forgetting",
+   "place": "Olyria-Prime",
+   "start": "@v2:-800.0,600.0",
+   "objective": {
+    "type": "boss",
+    "at": 420.0,
+    "hp": 0.7
+   },
+   "discoveries": [],
+   "new_title": "THE FORGETTING",
+   "new": "The Silence, here, wants everyone to forget. Arrives at 7:00.",
+   "brief": "The Silence, here, wants everyone to forget. Arrives at 7:00.",
+   "reward": [
+    "+350 Signal",
+    "Echoes complete"
+   ],
+   "grants": {
+    "signal": 350
+   }
+  }
+ ]
+}

@@ -11,6 +11,8 @@ const BRANCHES: Dictionary = {
 		"regions": ["station_approach", "main_bullpen", "west_corridor", "break_room", "supply_store"]},
 	"fantasy": {"chapter": 14, "done": ["hold_the_lane", "s_fod", "fod_onboard", "fod_depot"], "focus": "fod_training", "stage": "fod_vault",
 		"regions": ["war_camp", "raid_depot", "fortress_offices", "occupied_villages", "dragon_vault", "elven_frontier", "deadlands", "ominous_hole"]},
+	"echoes": {"chapter": 15, "done": ["ech_trench", "ech_marker"], "focus": "ech_rupture", "stage": "ech_deck",
+		"regions": ["olyria_trench", "sector_four", "grid_ruins", "zenith_archives", "observation_deck"]},
 	"park": {"chapter": 13, "done": ["verge_escort", "s_azure", "az_entrance", "az_queue"], "focus": "az_media", "stage": "az_media",
 		"regions": ["public_entrance", "turtle_queue", "media_prep", "glass_corridor", "ops_room", "guest_suite", "turtle_viewing", "service_corridor"]},
 }

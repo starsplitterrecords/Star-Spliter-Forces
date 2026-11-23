@@ -1325,6 +1325,10 @@ func test_sea_branch() -> void:
 	run5.use_ability()
 	check(run5.ability_active > 0.0, "Life Support did not start")
 	run5.queue_free()
+	# Echoes opens only after the main Rex Fleet path; its first stage unlocks Theo.
+	check(GameData.chart_prev_main("ech_trench") == "ix_silence", "Echoes should open after the Rex Fleet finale")
+	check(String(GameData.DISCOVERIES["ech_trench"].get("unlock_character", "")) == "theo", "Theo should unlock at the trench")
+	check(GameData.crew_of("theo").size() >= 3, "Theo's crew missing")
 	# A stage track counts as heard for roaming.
 	var before: int = GameData.unheard_roaming({}).size()
 	check(GameData.unheard_roaming({"des_launch_signal": {}}).size() == before - 1, "stage track still roaming")

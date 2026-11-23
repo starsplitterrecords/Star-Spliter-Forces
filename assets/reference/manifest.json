@@ -3172,6 +3172,263 @@
           ]
         }
       ]
+    },
+    {
+      "id": "portrait_theo",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/character/modern-theo.jpg",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Echoes of a Forgotten War; owner direction 2026-11-22)",
+      "outputs": [
+        {
+          "out": "assets/characters/theo_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.25,
+            0.08,
+            0.85,
+            0.48
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/theo_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.25,
+            0.08,
+            0.85,
+            0.48
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_rae",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/character/modern-rae.jpg",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Echoes of a Forgotten War; owner direction 2026-11-22)",
+      "outputs": [
+        {
+          "out": "assets/characters/rae_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.2,
+            0.03,
+            0.8,
+            0.43
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/rae_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.2,
+            0.03,
+            0.8,
+            0.43
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_adrian",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/character/modern-adrian.jpg",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Echoes of a Forgotten War; owner direction 2026-11-22)",
+      "outputs": [
+        {
+          "out": "assets/characters/adrian_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.1,
+            0.04,
+            0.8,
+            0.39
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/adrian_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.1,
+            0.04,
+            0.8,
+            0.39
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_general_mero",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/character/mero.jpg",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Echoes of a Forgotten War; owner direction 2026-11-22)",
+      "outputs": [
+        {
+          "out": "assets/characters/general_mero_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.1,
+            0.05,
+            0.7,
+            0.46
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/general_mero_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.1,
+            0.05,
+            0.7,
+            0.46
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "place_olyria",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/setting/olyria-six-location-studies.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art (Echoes Reference Keeper location studies)",
+      "outputs": [
+        {
+          "out": "assets/places/olyria.png",
+          "size": [
+            640,
+            960
+          ],
+          "crop": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "display": [
+            640,
+            960
+          ]
+        }
+      ]
+    },
+    {
+      "id": "place_zenith_archives",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/setting/zenith-spire-archival-location-studies.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art (Echoes Reference Keeper location studies)",
+      "outputs": [
+        {
+          "out": "assets/places/zenith_archives.png",
+          "size": [
+            640,
+            960
+          ],
+          "crop": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "display": [
+            640,
+            960
+          ]
+        }
+      ]
+    },
+    {
+      "id": "place_desert_marker",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/setting/ancient-desert-marker-location-studies.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art (Echoes Reference Keeper location studies)",
+      "outputs": [
+        {
+          "out": "assets/places/desert_marker.png",
+          "size": [
+            640,
+            960
+          ],
+          "crop": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "display": [
+            640,
+            960
+          ]
+        }
+      ]
     }
   ]
 }

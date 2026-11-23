@@ -222,6 +222,8 @@ func _build() -> void:
 		map_revealed = true
 	if bool(start_bonuses.get("head_start", false)):
 		pending_levels += 1
+	if character_id == "theo":
+		pending_levels += 1 # Memory-bearer
 	_queue_onboarding()
 	if not mission.is_empty():
 		var num: int = GameData.chart_number(stop_id)
@@ -239,7 +241,7 @@ func _apply_start_bonuses() -> void:
 		"max_hp": float(def["max_hp"]) + 10.0 * Profile.workshop_rank("plating") + (20.0 if character_id == "ella_venn" and mastery_level >= 3 else 0.0),
 		"speed_mult": 1.0 + 0.04 * Profile.workshop_rank("thrust") + (0.06 if character_id == "naomi_sol" and mastery_level >= 3 else 0.0),
 		"pickup": float(def["pickup"]) * (1.0 + 0.12 * Profile.workshop_rank("magnet")) * (1.15 if character_id == "jax_orien" and mastery_level >= 3 else 1.0),
-		"armor": float(def.get("armor", 0.0)) + (0.5 if character_id in ["tessa_banks", "bjorn", "brandon_mack", "sir_eric"] and mastery_level >= 3 else 0.0),
+		"armor": float(def.get("armor", 0.0)) + (0.5 if character_id in ["tessa_banks", "bjorn", "brandon_mack", "sir_eric", "theo"] and mastery_level >= 3 else 0.0),
 		"head_start": Profile.workshop_rank("head_start") > 0 or (character_id == "jex_marrin" and mastery_level >= 4),
 		"damage_mult": 0.95 if character_id == "maya_serrano" else 1.0,
 	}
@@ -1090,7 +1092,7 @@ func ability_def() -> Dictionary:
 func ability_cooldown() -> float:
 	var cd: float = float(ability_def()["cooldown"])
 	match character_id:
-		"ella_venn", "bjorn", "lucia", "brandon_mack", "sir_eric", "maya_serrano":
+		"ella_venn", "bjorn", "lucia", "brandon_mack", "sir_eric", "maya_serrano", "theo":
 			if mastery_level >= 4:
 				cd -= 4.0
 		"jax_orien":
@@ -1166,6 +1168,16 @@ func use_ability() -> bool:
 			fx.ring(player.position, 20.0, 160.0, Color("d8323a"), 0.6, 6.0)
 			if hud:
 				hud.toast("SHARD CAPTAINS ANSWER THE CALL")
+		"remember":
+			# Vanguard memories: violet afterimages that fight beside Theo.
+			var nm: int = 3 if mastery_level >= 2 else 2
+			allies.clear()
+			for i in nm:
+				allies.append({"angle": TAU * i / nm, "clock": 0.15 * i, "kind": "memory"})
+			ally_time = 7.0 + (2.0 if mastery_level >= 1 else 0.0)
+			fx.ring(player.position, 20.0, 160.0, Color("b48cff"), 0.6, 6.0)
+			if hud:
+				hud.toast("REMEMBER — THE VANGUARD ANSWERS")
 		"life_support":
 			ability_active = 6.0 + (2.0 if mastery_level >= 1 else 0.0)
 			fx.ring(player.position, 20.0, maya_dome_radius(), Color("4fd8ff"), 0.6, 8.0)
@@ -1271,7 +1283,7 @@ func _step_allies(delta: float) -> void:
 	for a: Dictionary in allies:
 		a.clock = float(a.clock) - delta
 		if float(a.clock) <= 0.0:
-			var gunnar: bool = String(a.get("kind", "")) == "gunnar"
+			var gunnar: bool = String(a.get("kind", "")) in ["gunnar", "skeleton", "memory"]
 			a.clock = (0.22 if mastery_level >= 2 else 0.4) if gunnar else 0.45
 			var p: Vector2 = ally_position(a)
 			var t: ForceEnemy = nearest_enemy(p, 480.0)

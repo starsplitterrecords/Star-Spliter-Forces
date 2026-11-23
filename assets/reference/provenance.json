@@ -2573,6 +2573,206 @@
           "sha256": "47ed70323da1a64d7df0f168289f4de1a9d28639fc933ca608c4e62b7c6a6d71"
         }
       ]
+    },
+    {
+      "id": "portrait_theo",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/character/modern-theo.jpg",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Echoes of a Forgotten War; owner direction 2026-11-22)",
+      "source_sha256": "616b5df1a68af2362fbf48a14648f16d6aad42a1194c7f23a63b15a4b0888f8e",
+      "review_required": false,
+      "source_size": [
+        173,
+        260
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/theo_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "7c91c268b3a898ea51fd4d2c8789063074c92f5d3677d98aceffbc5e6ed22846"
+        },
+        {
+          "out": "assets/characters/theo_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "1ae466141a9f766427ba0c6c533c9f3b83fdb85702cac802ea2527c0cf1d4568"
+        }
+      ]
+    },
+    {
+      "id": "portrait_rae",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/character/modern-rae.jpg",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Echoes of a Forgotten War; owner direction 2026-11-22)",
+      "source_sha256": "7919bfb6fb825546d0682752bac87993305d2ba7a6fae96d32d8bdcdb6d79ba0",
+      "review_required": false,
+      "source_size": [
+        173,
+        260
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/rae_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "7e9dd4bce4d741ca50df50db59307300be67c6fa32ee9db4d647baf9ede58ca3"
+        },
+        {
+          "out": "assets/characters/rae_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "0a7cc3014526062976545a5d9310f491c4058537f26d98439f1567af345eebbb"
+        }
+      ]
+    },
+    {
+      "id": "portrait_adrian",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/character/modern-adrian.jpg",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Echoes of a Forgotten War; owner direction 2026-11-22)",
+      "source_sha256": "75924ecae52180aee41d9f45e13eac3a68b932b95c3e9a1fb788c12395f060d4",
+      "review_required": false,
+      "source_size": [
+        130,
+        260
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/adrian_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "d391db6e724d6195b535d22ca59d796eb0becf4aa941d0b627b57039fc5745a3"
+        },
+        {
+          "out": "assets/characters/adrian_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "5949f4b58c85e533429664d4c2acb16840cd948e3b42481a3cba154ab44dc9db"
+        }
+      ]
+    },
+    {
+      "id": "portrait_general_mero",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/character/mero.jpg",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Echoes of a Forgotten War; owner direction 2026-11-22)",
+      "source_sha256": "2c3346e215e444d9b10a59d52bfb09b22b569158bbd9482b05ba31ccc2a1e373",
+      "review_required": false,
+      "source_size": [
+        178,
+        260
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/general_mero_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "911b4222c471d4c9c4f01d6610de967219cecff82df1823966e2e76b0f908041"
+        },
+        {
+          "out": "assets/characters/general_mero_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "60c7fcac1ca3d1f508ec9ce2236fa9ea5eaaca0649a20f7d110a193ac67df341"
+        }
+      ]
+    },
+    {
+      "id": "place_olyria",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/setting/olyria-six-location-studies.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art (Echoes Reference Keeper location studies)",
+      "source_sha256": "dea05db9215dfa99ca5a9d4aca786a8f6d06cf25a02f38df729d7588ad546c96",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1536
+      ],
+      "outputs": [
+        {
+          "out": "assets/places/olyria.png",
+          "size": [
+            640,
+            960
+          ],
+          "sha256": "ae2cd0ce46f9295c43542fa84780a8a30760e468b94122785c0f9f3c8e97fcf6"
+        }
+      ]
+    },
+    {
+      "id": "place_zenith_archives",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/setting/zenith-spire-archival-location-studies.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art (Echoes Reference Keeper location studies)",
+      "source_sha256": "70597d8d079fbbfba6bb8d7bcb2a9172f776e0e8c0b3915e4c657a2e66bed18d",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1536
+      ],
+      "outputs": [
+        {
+          "out": "assets/places/zenith_archives.png",
+          "size": [
+            640,
+            960
+          ],
+          "sha256": "9d36bc68a0f244aa1c6cfb291cd197a97866ee88e8b099bc5329ff420f36bf17"
+        }
+      ]
+    },
+    {
+      "id": "place_desert_marker",
+      "repo": "RexPrompt",
+      "path": "production/references/echoes-forgotten-war/keeper/setting/ancient-desert-marker-location-studies.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art (Echoes Reference Keeper location studies)",
+      "source_sha256": "802bebfbbd020e45587878ab8e4a78294808251c882a56760c3f7ce6edbecbdb",
+      "review_required": false,
+      "source_size": [
+        1024,
+        1536
+      ],
+      "outputs": [
+        {
+          "out": "assets/places/desert_marker.png",
+          "size": [
+            640,
+            960
+          ],
+          "sha256": "d2052d6bdbb8e2eeeddc37acfc44a1dec2b2511010c31e25cc6a5cc8e008cec0"
+        }
+      ]
     }
   ]
 }

@@ -477,6 +477,10 @@ func _draw_decor(c: Color) -> void:
 			var bp: Vector2 = Vector2(r * 0.4, -r * 1.9 + sin(age * 2.0) * 3.0)
 			draw_line(Vector2(0, -r * 0.6), bp + Vector2(0, r * 0.4), Color(1, 1, 1, 0.5), 1.0)
 			draw_circle(bp, r * 0.42, Color("ff7ac8") if int(position.x) % 2 == 0 else Color("4fd8ff"))
+		"halo":
+			# A memory's halo and a lagging afterimage.
+			draw_arc(Vector2(0, -r * 1.1), r * 0.45, 0.0, TAU, 14, Color(0.84, 0.72, 1.0, 0.8), 2.0)
+			draw_circle(-fwd * r * 0.9, r * 0.6, Color(c, 0.18))
 		"horns":
 			# Curled horns (small raiders get bat wings instead).
 			if r >= 20.0:
