@@ -488,19 +488,22 @@ func show_departure() -> void:
 	# Crew riding along (automatic: whoever this captain has found).
 	var crew: Array = Profile.crew(selected_character)
 	if not crew.is_empty():
+		dv.add_child(UiTheme.label("CREW", 13, UiTheme.DIM, "bold"))
 		var crow2: HFlowContainer = HFlowContainer.new()
-		crow2.add_theme_constant_override("h_separation", 6)
+		crow2.add_theme_constant_override("h_separation", 14)
+		crow2.add_theme_constant_override("v_separation", 8)
 		dv.add_child(crow2)
-		crow2.add_child(UiTheme.label("CREW", 13, UiTheme.DIM, "bold"))
 		for c: String in crew:
-			var cp2: TextureRect = _art("res://assets/characters/%s_96.png" % String(GameData.CONTACTS[c]["portrait"]), Vector2(30, 30))
+			var chip: HBoxContainer = HBoxContainer.new()
+			chip.add_theme_constant_override("separation", 8)
+			crow2.add_child(chip)
+			var cp2: TextureRect = _art("res://assets/characters/%s_256.png" % String(GameData.CONTACTS[c]["portrait"]), Vector2(64, 64))
 			if cp2:
-				cp2.tooltip_text = String(GameData.CONTACTS[c]["name"])
-				crow2.add_child(cp2)
-			var cl: Label = UiTheme.label("%s %s" % [String(GameData.CONTACTS[c]["name"]).split(" ")[0], GameData.perk_text(GameData.CONTACTS[c]["perk"])], 12, UiTheme.TEXT)
+				chip.add_child(cp2)
+			var cl: Label = UiTheme.label("%s\n%s" % [String(GameData.CONTACTS[c]["name"]).split(" (")[0], GameData.perk_text(GameData.CONTACTS[c]["perk"])], 14, UiTheme.TEXT)
 			cl.autowrap_mode = TextServer.AUTOWRAP_OFF
 			cl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-			crow2.add_child(cl)
+			chip.add_child(cl)
 	# Force.
 	dv.add_child(UiTheme.label("SIGNATURE FORCE", 13, UiTheme.DIM, "bold"))
 	var frow: HFlowContainer = HFlowContainer.new()
