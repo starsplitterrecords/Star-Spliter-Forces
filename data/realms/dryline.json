@@ -28,7 +28,9 @@
    "red_mesa",
    "coyote_wells",
    "two_suns",
-   "the_forge"
+   "the_forge",
+   "last_drop",
+   "cinder_basin"
   ],
   "completion_unlocks": [],
   "seed": 5120
@@ -256,6 +258,42 @@
    },
    "blurb": "Not all power is meant to be controlled.",
    "threat": 3
+  },
+  "last_drop": {
+   "name": "THE LAST DROP",
+   "shape": "circle",
+   "center": "@v2:-1500.0,3300.0",
+   "radius": 600.0,
+   "color": "@c:e0a060ff",
+   "floor": "@c:32241aff",
+   "props": "town",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.8,
+    "ram_cutter": 0.5,
+    "leech": 0.3
+   },
+   "blurb": "A saloon, a water tower, a gathering place.",
+   "threat": 2
+  },
+  "cinder_basin": {
+   "name": "CINDER BASIN",
+   "shape": "circle",
+   "center": "@v2:300.0,-3500.0",
+   "radius": 600.0,
+   "color": "@c:e8e0d0ff",
+   "floor": "@c:2e2a26ff",
+   "props": "mesa",
+   "density": 0.8,
+   "music": "region_basin",
+   "enemies": {
+    "skiff": 0.8,
+    "echo_mote": 0.4,
+    "ram_cutter": 0.4
+   },
+   "blurb": "White alkali dust, chalk ravines, cookfires.",
+   "threat": 2
   }
  },
  "discoveries": {
@@ -356,6 +394,35 @@
    "color": "@c:ffcf8aff",
    "place": "the_forge",
    "text": "Not all power is meant to be controlled."
+  },
+  "sfo_last_drop": {
+   "kind": "character",
+   "region": "last_drop",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE LAST DROP SALOON",
+   "landmark": "armored_truck",
+   "color": "@c:e0a060ff",
+   "contacts": [
+    "eva_oleary",
+    "jessa_petrescu"
+   ],
+   "place": "last_drop",
+   "crossover": "sunforge_outlaw",
+   "text": "Splintered boards, a patched bar. A quiet kid watching everything, and a pilot who knows when a place is getting too hot."
+  },
+  "sfo_cinder_camp": {
+   "kind": "character",
+   "region": "cinder_basin",
+   "offset": "@v2:0.0,0.0",
+   "title": "LOS LAGARTOS CAMP",
+   "landmark": "war_tent",
+   "color": "@c:e8e0d0ff",
+   "contacts": [
+    "los_lagartos"
+   ],
+   "place": "cinder_basin",
+   "crossover": "sunforge_outlaw",
+   "text": "Patched canvas shade, cookfires, guitars. An itinerant brotherhood that makes its own weather."
   }
  },
  "contacts": {
@@ -379,6 +446,39 @@
    "perk": {
     "kind": "pickup",
     "value": 0.08
+   }
+  },
+  "eva_oleary": {
+   "name": "Eva O'Leary",
+   "faction": "Sunforge Outlaw",
+   "role": "\"The Kid.\" Watchful; senses patterns others miss.",
+   "portrait": "eva_oleary",
+   "captain": "brandon_mack",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
+  },
+  "jessa_petrescu": {
+   "name": "Jessa Petrescu",
+   "faction": "Sunforge Outlaw",
+   "role": "\"The Pilot.\" Fast, practical, keeps things moving.",
+   "portrait": "jessa_petrescu",
+   "captain": "brandon_mack",
+   "perk": {
+    "kind": "speed",
+    "value": 0.03
+   }
+  },
+  "los_lagartos": {
+   "name": "Los Lagartos",
+   "faction": "Sunforge Outlaw",
+   "role": "\"The Cadre.\" An itinerant brotherhood.",
+   "portrait": "los_lagartos",
+   "captain": "brandon_mack",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
    }
   }
  },
@@ -429,13 +529,28 @@
    "name": "Under Two Suns",
    "series": "Sunforge Outlaw",
    "text": "Two suns over a dark spired skyline; an armoured truck in the dust.",
-   "source": "Sunforge Outlaw Issue 01 cover (descriptive name, game-original)"
+   "source": "Sunforge Outlaw Issue 01 cover (descriptive name, game-original)",
+   "art": "sunfields"
   },
   "the_forge": {
    "name": "The Forge",
    "series": "Sunforge Outlaw",
    "text": "\"Wake the forge. Change the world.\"",
    "source": "Sunforge Outlaw Issue 01 cover"
+  },
+  "last_drop": {
+   "name": "The Last Drop",
+   "series": "Sunforge Outlaw",
+   "text": "Frontier settlement, saloon, services, and a gathering place.",
+   "source": "RexPrompt sunforge shelf (Issue 01); Reference Keeper setting guide",
+   "art": "last_drop"
+  },
+  "cinder_basin": {
+   "name": "Cinder Basin / Los Lagartos Camp",
+   "series": "Sunforge Outlaw",
+   "text": "Rugged terrain, chalk ravines, a traveling camp.",
+   "source": "RexPrompt sunforge shelf (Issue 02); Reference Keeper setting guide",
+   "art": "los_lagartos_camp"
   }
  },
  "stages": [
@@ -708,6 +823,58 @@
    "reward": [
     "Track: Free Mode (feat. Cheddr)",
     "Place: Ridge Relay"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "dess_last_drop",
+   "chapter": 11,
+   "side_of": "des_two_suns",
+   "power": 100,
+   "prize": "Eva & Jessa",
+   "icon": "visions",
+   "name": "The Last Drop",
+   "place": "The Last Drop",
+   "region": "last_drop",
+   "objective": {
+    "type": "discover",
+    "id": "sfo_last_drop"
+   },
+   "discoveries": [
+    "sfo_last_drop"
+   ],
+   "new_title": "THE LAST DROP",
+   "new": "A saloon at the edge of the Sunfields.",
+   "brief": "Somebody is buying a round.",
+   "reward": [
+    "Crew: Eva O'Leary, Jessa Petrescu (with Brandon)",
+    "Place: The Last Drop"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "dess_cinder",
+   "chapter": 11,
+   "side_of": "des_forge",
+   "power": 110,
+   "prize": "Los Lagartos",
+   "icon": "visions",
+   "name": "Cinder Basin",
+   "place": "Cinder Basin",
+   "region": "cinder_basin",
+   "objective": {
+    "type": "discover",
+    "id": "sfo_cinder_camp"
+   },
+   "discoveries": [
+    "sfo_cinder_camp"
+   ],
+   "new_title": "THE CADRE",
+   "new": "An itinerant brotherhood, and its camp.",
+   "brief": "Cookfires in the basin.",
+   "reward": [
+    "Crew: Los Lagartos (with Brandon)",
+    "Place: Cinder Basin"
    ],
    "grants": {}
   }

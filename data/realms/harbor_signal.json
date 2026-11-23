@@ -26,7 +26,9 @@
    "dti_building",
    "bushwick_rooftop",
    "harbor_phase",
-   "flooded_coast"
+   "flooded_coast",
+   "subway_platform",
+   "public_library"
   ],
   "completion_unlocks": [],
   "seed": 4410
@@ -218,6 +220,42 @@
    },
    "blurb": "The water took the city.",
    "threat": 3
+  },
+  "subway_platform": {
+   "name": "SUBWAY PLATFORM",
+   "shape": "circle",
+   "center": "@v2:-300.0,-3200.0",
+   "radius": 600.0,
+   "color": "@c:f0d060ff",
+   "floor": "@c:101826ff",
+   "props": "shore_city",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "rail_picket": 0.4,
+    "shield_tug": 0.3
+   },
+   "blurb": "A northbound train under fluorescent light.",
+   "threat": 2
+  },
+  "public_library": {
+   "name": "THE PUBLIC LIBRARY",
+   "shape": "circle",
+   "center": "@v2:3200.0,3400.0",
+   "radius": 600.0,
+   "color": "@c:d8c8a0ff",
+   "floor": "@c:101826ff",
+   "props": "shore_city",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "rail_picket": 0.4,
+    "shield_tug": 0.3
+   },
+   "blurb": "Tall shelving, reading tables, deep civic architecture.",
+   "threat": 2
   }
  },
  "discoveries": {
@@ -317,6 +355,26 @@
    "color": "@c:78d7ffff",
    "place": "flooded_coast",
    "text": "The water took the city. Something is still broadcasting from inside it."
+  },
+  "sea_subway": {
+   "kind": "character",
+   "region": "subway_platform",
+   "offset": "@v2:0.0,0.0",
+   "title": "SUBWAY PLATFORM",
+   "landmark": "dti",
+   "color": "@c:f0d060ff",
+   "place": "subway_platform",
+   "text": "A northbound train, arriving from depth."
+  },
+  "sea_library": {
+   "kind": "character",
+   "region": "public_library",
+   "offset": "@v2:0.0,0.0",
+   "title": "THE PUBLIC LIBRARY",
+   "landmark": "station",
+   "color": "@c:d8c8a0ff",
+   "place": "public_library",
+   "text": "Tall shelves and a mezzanine. Someone is reading up on the ninth century."
   }
  },
  "contacts": {
@@ -379,6 +437,18 @@
    "series": "Low Tide Signal",
    "text": "On a flooded coast, abandoned infrastructure and an uneasy community.",
    "source": "Low Tide Signal series page"
+  },
+  "subway_platform": {
+   "name": "Subway Platform",
+   "series": "Vikings 2026!",
+   "text": "A northbound train, arriving from depth.",
+   "source": "Vikings 2026! (RexPrompt shelf, Issue 02; approved draft)"
+  },
+  "public_library": {
+   "name": "New York Public Library",
+   "series": "Vikings 2026!",
+   "text": "Tall shelves and a mezzanine. Someone is reading up on the ninth century.",
+   "source": "Vikings 2026! (RexPrompt shelf, Issue 02; approved draft)"
   }
  },
  "stages": [
@@ -650,6 +720,56 @@
    "brief": "The dish picked something up.",
    "reward": [
     "Track: Be Somebody"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "seas_subway",
+   "chapter": 10,
+   "side_of": "sea_roof",
+   "power": 100,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "Northbound",
+   "place": "Subway Platform",
+   "region": "subway_platform",
+   "objective": {
+    "type": "discover",
+    "id": "sea_subway"
+   },
+   "discoveries": [
+    "sea_subway"
+   ],
+   "new_title": "NORTHBOUND",
+   "new": "A northbound train, arriving from depth.",
+   "brief": "A northbound train, arriving from depth.",
+   "reward": [
+    "Place: Subway Platform"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "seas_library",
+   "chapter": 10,
+   "side_of": "sea_drowned",
+   "power": 100,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "The Library",
+   "place": "New York Public Library",
+   "region": "public_library",
+   "objective": {
+    "type": "discover",
+    "id": "sea_library"
+   },
+   "discoveries": [
+    "sea_library"
+   ],
+   "new_title": "THE LIBRARY",
+   "new": "Tall shelves and a mezzanine. Someone is reading up on the ninth century.",
+   "brief": "Tall shelves and a mezzanine. Someone is reading up on the ninth century.",
+   "reward": [
+    "Place: New York Public Library"
    ],
    "grants": {}
   }

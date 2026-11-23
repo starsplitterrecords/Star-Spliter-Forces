@@ -28,7 +28,10 @@
    "guest_suite",
    "turtle_viewing",
    "service_corridor",
-   "staff_overlook"
+   "staff_overlook",
+   "dolphin_gallery",
+   "food_court",
+   "kelp_walk"
   ],
   "completion_unlocks": [],
   "seed": 7230
@@ -256,6 +259,60 @@
    },
    "blurb": "Quiet, end of day, the loading-dock edge.",
    "threat": 2
+  },
+  "dolphin_gallery": {
+   "name": "DOLPHIN GALLERY",
+   "shape": "circle",
+   "center": "@v2:-3600.0,-2900.0",
+   "radius": 600.0,
+   "color": "@c:6ad8ffff",
+   "floor": "@c:101826ff",
+   "props": "aquarium",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "mine_hauler": 0.4,
+    "echo_mote": 0.4
+   },
+   "blurb": "Big water, curious faces.",
+   "threat": 2
+  },
+  "food_court": {
+   "name": "FOOD COURT",
+   "shape": "circle",
+   "center": "@v2:-3600.0,2800.0",
+   "radius": 600.0,
+   "color": "@c:ffb86bff",
+   "floor": "@c:101826ff",
+   "props": "plaza",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "mine_hauler": 0.4,
+    "echo_mote": 0.4
+   },
+   "blurb": "Trays, queues, sea-turtle cupcakes.",
+   "threat": 2
+  },
+  "kelp_walk": {
+   "name": "KELP FOREST WALK",
+   "shape": "circle",
+   "center": "@v2:2600.0,-3600.0",
+   "radius": 600.0,
+   "color": "@c:6ad0a0ff",
+   "floor": "@c:101826ff",
+   "props": "aquarium",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "mine_hauler": 0.4,
+    "echo_mote": 0.4
+   },
+   "blurb": "A tall green tank you walk beside.",
+   "threat": 2
   }
  },
  "discoveries": {
@@ -352,6 +409,36 @@
    "color": "@c:8fa8b8ff",
    "place": "service_corridor",
    "text": "Something pulling the whole ensemble into the corridor."
+  },
+  "az_dolphins": {
+   "kind": "character",
+   "region": "dolphin_gallery",
+   "offset": "@v2:0.0,0.0",
+   "title": "DOLPHIN GALLERY",
+   "landmark": "turtle_banner",
+   "color": "@c:6ad8ffff",
+   "place": "dolphin_gallery",
+   "text": "Big water. Someone in there is watching you back."
+  },
+  "az_food": {
+   "kind": "character",
+   "region": "food_court",
+   "offset": "@v2:0.0,0.0",
+   "title": "AZURE REACH FOOD COURT",
+   "landmark": "azure_fountain",
+   "color": "@c:ffb86bff",
+   "place": "food_court",
+   "text": "Trays, queues and one very long lunch rush."
+  },
+  "az_kelp": {
+   "kind": "character",
+   "region": "kelp_walk",
+   "offset": "@v2:0.0,0.0",
+   "title": "KELP FOREST WALK",
+   "landmark": "turtle_banner",
+   "color": "@c:6ad0a0ff",
+   "place": "kelp_walk",
+   "text": "A tall green tank you walk beside, slowly."
   }
  },
  "contacts": {
@@ -437,6 +524,24 @@
    "series": "Azure Reach",
    "text": "Where the ensemble can huddle quickly.",
    "source": "Azure Reach Issue 01, page 011"
+  },
+  "dolphin_gallery": {
+   "name": "Dolphin Gallery",
+   "series": "Azure Reach",
+   "text": "Big water. Someone in there is watching you back.",
+   "source": "Azure Reach (RexPrompt shelf, Issue 02; approved draft)"
+  },
+  "food_court": {
+   "name": "Azure Reach Food Court",
+   "series": "Azure Reach",
+   "text": "Trays, queues and one very long lunch rush.",
+   "source": "Azure Reach (RexPrompt shelf, Issue 02; approved draft)"
+  },
+  "kelp_walk": {
+   "name": "Kelp Forest Walk",
+   "series": "Azure Reach",
+   "text": "A tall green tank you walk beside, slowly.",
+   "source": "Azure Reach (RexPrompt shelf, Issue 02; approved draft)"
   }
  },
  "stages": [
@@ -686,6 +791,81 @@
    "reward": [
     "Track: Shine (feat. Cheddr)",
     "Place: Staff Overlook"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "azs_dolphins",
+   "chapter": 13,
+   "side_of": "az_viewing",
+   "power": 100,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "Dolphin Gallery",
+   "place": "Dolphin Gallery",
+   "region": "dolphin_gallery",
+   "objective": {
+    "type": "discover",
+    "id": "az_dolphins"
+   },
+   "discoveries": [
+    "az_dolphins"
+   ],
+   "new_title": "DOLPHIN GALLERY",
+   "new": "Big water. Someone in there is watching you back.",
+   "brief": "Big water. Someone in there is watching you back.",
+   "reward": [
+    "Place: Dolphin Gallery"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "azs_food",
+   "chapter": 13,
+   "side_of": "az_suite",
+   "power": 100,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "Food Court",
+   "place": "Azure Reach Food Court",
+   "region": "food_court",
+   "objective": {
+    "type": "discover",
+    "id": "az_food"
+   },
+   "discoveries": [
+    "az_food"
+   ],
+   "new_title": "FOOD COURT",
+   "new": "Trays, queues and one very long lunch rush.",
+   "brief": "Trays, queues and one very long lunch rush.",
+   "reward": [
+    "Place: Azure Reach Food Court"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "azs_kelp",
+   "chapter": 13,
+   "side_of": "az_viewing",
+   "power": 100,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "Kelp Forest Walk",
+   "place": "Kelp Forest Walk",
+   "region": "kelp_walk",
+   "objective": {
+    "type": "discover",
+    "id": "az_kelp"
+   },
+   "discoveries": [
+    "az_kelp"
+   ],
+   "new_title": "KELP FOREST WALK",
+   "new": "A tall green tank you walk beside, slowly.",
+   "brief": "A tall green tank you walk beside, slowly.",
+   "reward": [
+    "Place: Kelp Forest Walk"
    ],
    "grants": {}
   }

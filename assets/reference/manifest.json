@@ -2959,6 +2959,219 @@
           ]
         }
       ]
+    },
+    {
+      "id": "portrait_eva_oleary",
+      "repo": "RexPrompt",
+      "path": "production/references/sunforge-outlaw/keeper/character/sf-character-eva.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Sunforge Outlaw; owner direction 2026-11-22)",
+      "outputs": [
+        {
+          "out": "assets/characters/eva_oleary_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.176,
+            0.141,
+            0.515,
+            0.412
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/eva_oleary_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.176,
+            0.141,
+            0.515,
+            0.412
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_jessa_petrescu",
+      "repo": "RexPrompt",
+      "path": "production/references/sunforge-outlaw/keeper/character/sf-character-jessa.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Sunforge Outlaw; owner direction 2026-11-22)",
+      "outputs": [
+        {
+          "out": "assets/characters/jessa_petrescu_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.344,
+            0.034,
+            0.683,
+            0.305
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/jessa_petrescu_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.344,
+            0.034,
+            0.683,
+            0.305
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portrait_los_lagartos",
+      "repo": "RexPrompt",
+      "path": "production/references/sunforge-outlaw/keeper/character/sf-character-loslagartos.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Portrait cropped from the RexPrompt Reference Keeper (Sunforge Outlaw; owner direction 2026-11-22)",
+      "outputs": [
+        {
+          "out": "assets/characters/los_lagartos_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "crop": [
+            0.056,
+            0.108,
+            0.413,
+            0.393
+          ],
+          "display": [
+            96,
+            96
+          ]
+        },
+        {
+          "out": "assets/characters/los_lagartos_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "crop": [
+            0.056,
+            0.108,
+            0.413,
+            0.393
+          ],
+          "display": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "place_last_drop",
+      "repo": "RexPrompt",
+      "path": "production/references/sunforge-outlaw/keeper/setting/sunforge-worldbuilding-setting-guide.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art from the Sunforge Worldbuilding Setting Guide (Reference Keeper)",
+      "outputs": [
+        {
+          "out": "assets/places/last_drop.png",
+          "size": [
+            640,
+            224
+          ],
+          "crop": [
+            0.2995,
+            0.0078,
+            0.7018,
+            0.2197
+          ],
+          "display": [
+            640,
+            224
+          ]
+        }
+      ]
+    },
+    {
+      "id": "place_los_lagartos_camp",
+      "repo": "RexPrompt",
+      "path": "production/references/sunforge-outlaw/keeper/setting/sunforge-worldbuilding-setting-guide.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art from the Sunforge Worldbuilding Setting Guide (Reference Keeper)",
+      "outputs": [
+        {
+          "out": "assets/places/los_lagartos_camp.png",
+          "size": [
+            640,
+            319
+          ],
+          "crop": [
+            0.0052,
+            0.2676,
+            0.2507,
+            0.4512
+          ],
+          "display": [
+            640,
+            319
+          ]
+        }
+      ]
+    },
+    {
+      "id": "place_sunfields",
+      "repo": "RexPrompt",
+      "path": "production/references/sunforge-outlaw/keeper/setting/sunforge-worldbuilding-setting-guide.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art from the Sunforge Worldbuilding Setting Guide (Reference Keeper)",
+      "outputs": [
+        {
+          "out": "assets/places/sunfields.png",
+          "size": [
+            640,
+            315
+          ],
+          "crop": [
+            0.0052,
+            0.0078,
+            0.2917,
+            0.2197
+          ],
+          "display": [
+            640,
+            315
+          ]
+        }
+      ]
     }
   ]
 }

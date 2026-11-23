@@ -24,7 +24,8 @@
    "west_corridor",
    "main_bullpen",
    "break_room",
-   "supply_store"
+   "supply_store",
+   "maintenance_bay"
   ],
   "completion_unlocks": [],
   "seed": 6170
@@ -178,6 +179,24 @@
    },
    "blurb": "Shelves of everything nobody signed for.",
    "threat": 3
+  },
+  "maintenance_bay": {
+   "name": "MAINTENANCE BAY",
+   "shape": "circle",
+   "center": "@v2:-2800.0,-2800.0",
+   "radius": 600.0,
+   "color": "@c:9fe8ffff",
+   "floor": "@c:101826ff",
+   "props": "supply",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "leech": 0.5,
+    "shield_tug": 0.3
+   },
+   "blurb": "A panel open, the right part missing.",
+   "threat": 2
   }
  },
  "discoveries": {
@@ -267,6 +286,26 @@
    "color": "@c:7fe0c0ff",
    "place": "supply_store",
    "text": "A string section humming between the shelves."
+  },
+  "sds_ops_table": {
+   "kind": "character",
+   "region": "main_bullpen",
+   "offset": "@v2:380.0,-320.0",
+   "title": "OPERATIONS TABLE",
+   "landmark": "bullpen",
+   "color": "@c:8fd0ffff",
+   "place": "ops_table",
+   "text": "Three task folders, three blank owner lines, too many chairs."
+  },
+  "sds_bay": {
+   "kind": "character",
+   "region": "maintenance_bay",
+   "offset": "@v2:0.0,0.0",
+   "title": "MAINTENANCE BAY",
+   "landmark": "station",
+   "color": "@c:9fe8ffff",
+   "place": "maintenance_bay",
+   "text": "The work is here. The proper part is not."
   }
  },
  "contacts": {
@@ -389,6 +428,18 @@
    "series": "Stardust Station",
    "text": "A sign on the station: SUPPLY STORE B-17.",
    "source": "Stardust Station Issue 01 cover"
+  },
+  "ops_table": {
+   "name": "Operations Table",
+   "series": "Stardust Station",
+   "text": "Three task folders, three blank owner lines, too many chairs.",
+   "source": "Stardust Station (RexPrompt shelf, Issue 02; approved draft)"
+  },
+  "maintenance_bay": {
+   "name": "Maintenance Bay",
+   "series": "Stardust Station",
+   "text": "The work is here. The proper part is not.",
+   "source": "Stardust Station (RexPrompt shelf, Issue 03; approved draft)"
   }
  },
  "stages": [
@@ -612,6 +663,56 @@
    "brief": "The bullpen is louder than usual.",
    "reward": [
     "Track: Say What (feat. Cheddr)"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "orbs_ops",
+   "chapter": 12,
+   "side_of": "orb_crew",
+   "power": 100,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "Owner Lines",
+   "place": "Operations Table",
+   "region": "main_bullpen",
+   "objective": {
+    "type": "discover",
+    "id": "sds_ops_table"
+   },
+   "discoveries": [
+    "sds_ops_table"
+   ],
+   "new_title": "OWNER LINES",
+   "new": "Three task folders, three blank owner lines, too many chairs.",
+   "brief": "Three task folders, three blank owner lines, too many chairs.",
+   "reward": [
+    "Place: Operations Table"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "orbs_bay",
+   "chapter": 12,
+   "side_of": "orb_supply",
+   "power": 100,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "Maintenance Bay",
+   "place": "Maintenance Bay",
+   "region": "maintenance_bay",
+   "objective": {
+    "type": "discover",
+    "id": "sds_bay"
+   },
+   "discoveries": [
+    "sds_bay"
+   ],
+   "new_title": "MAINTENANCE BAY",
+   "new": "The work is here. The proper part is not.",
+   "brief": "The work is here. The proper part is not.",
+   "reward": [
+    "Place: Maintenance Bay"
    ],
    "grants": {}
   }
