@@ -40,6 +40,7 @@ SERIES = {
     "low-tide-signal": {"released": []},
     "sunforge-outlaw": {"released": []},
     "echoes-forgotten-war": {"released": []},
+    "division-threshold": {"released": []},
 }
 
 

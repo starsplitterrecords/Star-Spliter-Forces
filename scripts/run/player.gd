@@ -219,6 +219,16 @@ func _draw_hull(c: Color) -> void:
 			draw_colored_polygon(PackedVector2Array([Vector2(4, -30), Vector2(14, -6), Vector2(20, 10), Vector2(2, 16)]), c)
 			for k in 3:
 				draw_circle(Vector2(sin(anim * 2.0 + k * 2.1) * 6.0, -10.0 + k * 9.0), 1.8, Color(t, 0.6 + 0.3 * sin(anim * 4.0 + k)))
+		"organo":
+			# Ostra-9: a hazard-response skiff — charcoal living plates, blue
+			# bioluminescent seams, copper-gold accents.
+			draw_circle(Vector2(0, 22), 5.0 * engine, Color(Color("4fb8ff"), 0.6))
+			pts = PackedVector2Array([Vector2(0, -30), Vector2(10, -16), Vector2(16, 4), Vector2(10, 20), Vector2(0, 24), Vector2(-10, 20), Vector2(-16, 4), Vector2(-10, -16)])
+			draw_colored_polygon(pts, c)
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color(t, 0.7), 1.5)
+			for k in 3:
+				draw_line(Vector2(-12 + k * 2, -8 + k * 10), Vector2(12 - k * 2, -8 + k * 10), Color(accent, 0.5 + 0.4 * sin(anim * 4.0 + k)), 2.0)
+			draw_circle(Vector2(0, -14), 3.5, Color("ffd88a"))
 		"skimmer":
 			# Theo: a Zenith survey skimmer — slim violet hull, star-map fins.
 			draw_circle(Vector2(0, 20), 4.5 * engine, Color(Color("d7b8ff"), 0.6))

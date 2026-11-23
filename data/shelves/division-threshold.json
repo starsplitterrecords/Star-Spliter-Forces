@@ -1,0 +1,388 @@
+{
+ "series": "division-threshold",
+ "name": "Division Threshold",
+ "source": "RexPrompt data/shows/division-threshold-s1",
+ "released_issues": [],
+ "issues": {
+  "1": {
+   "places": [
+    "Historical human trauma bay after an industrial accident; recognizable advanced medical environment, not superheroic",
+    "Historical hazardous industrial zone and adjacent advanced Organosynthetic growth facility",
+    "Historical city-grid control room with a vast machine intelligence coordinating infrastructure",
+    "The Stack in full civic scale: layered old and new infrastructure, transit, service volumes, neighborhoods and towers",
+    "Checkpoint 9 during ordinary morning circulation; Ostra close foreground, failing structure only beginning to register above",
+    "CHECKPOINT 9",
+    "ELEVATED OVERPASS / CONCOURSE",
+    "OVERSIGHT OFFICE",
+    "AUGMENT CLINIC",
+    "ORGANIC RESIDENTIAL / REPAIR SPACE",
+    "CIVIC DATA CORE",
+    "CIVIC UTILITY WORKSITE",
+    "VERTICAL TRANSIT INTERCHANGE",
+    "Montage",
+    "Late-night transit toward Concourse 17; Ostra and Nico traveling together with repaired damage and a small evidence sleeve",
+    "Concourse 17 opening cycle, crowded mixed public space",
+    "CONCOURSE 17",
+    "PUBLIC HEARING CHAMBER",
+    "HEARING MEDIA / SERVICE CORRIDOR",
+    "CIVIC VERIFICATION GATE",
+    "ORGANIC COMMUNITY HALL",
+    "MUNICIPAL PERMIT OFFICE",
+    "CIVIC EVIDENCE / PROVENANCE ARCHIVE",
+    "Split Location",
+    "Ordinary Augment clinic handoff after the new Organic rules; John nearby or implied through his physical calibration record while Axiom examines the capability values",
+    "Augment clinic or civic review threshold, quiet and intimate",
+    "ADMINISTRATIVE REVIEW CHAMBER",
+    "Split Civic Administration",
+    "EMERGENCY COORDINATION ROOM",
+    "Vertical transit interchange under growing load; Ostra and John visible on opposite sides of access barriers",
+    "Vertical transit interchange at the edge of failure",
+    "Split Recovery View",
+    "Stack-Wide Consequence Montage",
+    "Split Emergency Coordination",
+    "Augment Clinic",
+    "Stack-Wide Recovery",
+    "SHARED-DISTRICT ROOFTOP / SERVICE LEVEL",
+    "Stack-Wide Midpoint Tableau",
+    "Emergency coordination room overlooking a smoothly functioning Stack at night",
+    "Upper civic archive",
+    "office with Ostra and Kellen sharing one table",
+    "Public Reform Coalition",
+    "Mixed Residential Building",
+    "Stack-Wide Personhood Outcomes",
+    "Ordinary Emergency Response Site",
+    "Modernized civic checkpoint after personhood recognition",
+    "Respectable civic-risk research facility, public-facing threshold",
+    "CIVIC RISK LABORATORY",
+    "Stack-Wide Public Leak Response",
+    "Stack-Wide Fracture",
+    "Civic gate during rapid protective rerouting after the leak",
+    "Shared district",
+    "Community Threshold Where Several Protagonists Cross Paths Without Forming A Posed Group",
+    "Mixed Commercial Incident Site",
+    "Public Commercial Passage",
+    "Augment Civic Assembly",
+    "Organic Local Routing Test",
+    "Stack-Wide Distributed Attack Response",
+    "Stack-Wide Public Reaction",
+    "Emergency coordination room with Kellen, Ostra and Axiom after full disclosure",
+    "Shared civic",
+    "Service Level Before The Final Crisis, Protagonists Present In Different Working Positions",
+    "Augment Policy Workshop",
+    "Stack-Wide Embodied Verification Coordination",
+    "Stack-Wide Critical-Service Operation",
+    "Stack-Wide Political Settlement",
+    "Ordinary lived Stack after the settlement; no new plot event, just the people continuing"
+   ],
+   "characters": [
+    "DT_Ostra9",
+    "DT_KellenCartwright",
+    "DT_JohnMercer",
+    "DT_NathanPrice",
+    "DT_Nico14",
+    "DT_Axiom"
+   ]
+  },
+  "2": {
+   "places": [],
+   "characters": []
+  },
+  "3": {
+   "places": [],
+   "characters": []
+  },
+  "4": {
+   "places": [],
+   "characters": []
+  },
+  "5": {
+   "places": [],
+   "characters": []
+  },
+  "6": {
+   "places": [],
+   "characters": []
+  },
+  "7": {
+   "places": [],
+   "characters": []
+  },
+  "8": {
+   "places": [],
+   "characters": []
+  }
+ },
+ "characters": {
+  "DT_Ostra9": {
+   "name": "Ostra-9",
+   "role": "Organosynthetic crisis-response operative; emerging political catalyst",
+   "visual": "Unmistakably grown Organosynthetic person, not a human in armor: powerful hazard-response build; dark steel-blue and charcoal living dermal surfaces; integrated ceramic/keratin plates; copper-gold mineral accents; vivid blue bioluminescent elements; amber-gold eyes; distinct cranial crests; clawed digitigrade feet. Her material reality should be unmistakably alive at close range: living dermis with variable matte-to-slightly-moist sheen, warm tissue compressing around harder ceramic/keratin structures, mineral edges worn by use, tiny abrasions and repair residue carrying from recent action. She should never look dry, molded, plated-on, or like a person wearing a suit.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_JohnMercer": {
+   "name": "John Mercer",
+   "role": "Augment tactical lead; ex-military operator",
+   "visual": "Recognizably human adult man first, visibly modified afterward: installed augmentation hardware, interface points and healed surgical scars integrated into a human body; torque-boosted joints and reflex-loop hardware read as engineered additions rather than a separate species or armored costume. Close views should reveal the fact of a human body living around installed machinery: healed scar ridges, skin tension over actuator housings, pressure discoloration, warmth, sweat, tiny service abrasions and the occasional trace of lubricant or sealant at maintained interfaces.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_KellenCartwright": {
+   "name": "Kellen Cartwright",
+   "role": "Baseline Human intelligence / Oversight officer",
+   "visual": "Baseline Human with no visible body augmentation or posthuman anatomy.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_Axiom": {
+   "name": "AX10M / Axiom",
+   "role": "Artificial Intelligence; analytic observer becoming accountable decision-maker",
+   "visual": "Tall androgynous machine-native embodiment with a faceted synthetic body, geometric nonhuman face, luminous blue sensor/core, strong black-and-white material contrast, and an elongated segmented outer shell. The embodiment must feel like an actual manufactured body occupying air and bearing weight: faceted surfaces with micro-scratches, dust at seams, thermal gradients, tiny contact marks, precise joints and audible/visible mechanical stillness. Avoid frictionless CG perfection.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_Nico14": {
+   "name": "Nico-14",
+   "role": "Organic systems architect / infrastructure specialist",
+   "visual": "Unmistakably grown Organosynthetic person with a slimmer, stranger silhouette than Ostra-9; lavender-gray living dermal tone; dark integrated tissue/plate structures; teal-cyan functional nodes; violet-blue distributed sensory filaments used for infrastructure work. His stranger materiality should remain biologically convincing: lavender-gray living dermis, flexible tissue beneath darker integrated structures, sensory filaments that have soft wet-organic response at their roots and firmer functional length, with moisture and residue appropriate to humid repair environments.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_NathanPrice": {
+   "name": "Nathan Price",
+   "role": "Augment combat medic and augmentation engineer",
+   "visual": "Recognizably human adult man with practical medical and technical augmentation: neural-overclock interfaces and muscular-fiber graft evidence integrated into a human body. His own maintenance reads slightly more worn or neglected than the careful work he performs on others. His body should carry the intimate evidence of professional maintenance and self-neglect: healed port edges, old adhesive residue, sweat at stress points, faint tremor, tissue fatigue and carefully maintained patient-facing hardware contrasted with his own worn interfaces.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_DirectorRinn": {
+   "name": "Director Rinn",
+   "role": "Senior Oversight director",
+   "visual": "Baseline Human senior civilian official with no visible augmentation or tactical presentation.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "DT_MrSael": {
+   "name": "Mr. Sael",
+   "role": "Private-security intermediary",
+   "visual": "Baseline Human civilian intermediary with no visible posthuman anatomy; polished professional presentation rather than an armed field operative.",
+   "first_issue": null,
+   "tier": "working"
+  }
+ },
+ "settings": {
+  "DT_Checkpoint9": {
+   "name": "CHECKPOINT 9",
+   "text": "CHECKPOINT 9 — Busy Stack transit entrance built from older concrete and newer municipal retrofit layers. Body-specific scanner frames, access barriers, civic decals, route signage and ordinary commuter clutter make classification feel like routine infrastructure rather than a military border. Mixed Baselines, Augments and Organics share the same circulation space but do not move through it with equal friction.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_Overpass": {
+   "name": "ELEVATED OVERPASS / CONCOURSE",
+   "text": "ELEVATED OVERPASS / CONCOURSE — Aging heavy-traffic structure layered above transit and pedestrian circulation. Exposed repair history, reinforced joints, newer composite patches over old concrete, service access and clearly readable load paths should make structural action physically understandable. The space is public and heavily used, not an abandoned industrial ruin.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_OversightOffice": {
+   "name": "OVERSIGHT OFFICE",
+   "text": "OVERSIGHT OFFICE — Cleaner, colder governance-level municipal workspace: controlled access, glass partitions, orderly records, surveillance and incident feeds, restrained civic finishes and generous space compared with lower Stack workplaces. New administrative surfaces sit over older civic bones. Authority should look effortless and procedural rather than sinister.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_AugmentClinic": {
+   "name": "AUGMENT CLINIC",
+   "text": "AUGMENT CLINIC — Busy converted parking/service-level medical and calibration workspace built into old concrete. Practical diagnostic rigs, alignment fixtures, repair benches and worn clinical equipment serve patients with visibly different qualities and costs of augmentation. Body maintenance is ordinary healthcare and class is visible in the finish, age and integration of hardware; avoid chrome cyberpunk spectacle.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_OrganicSafehouse": {
+   "name": "ORGANIC RESIDENTIAL / REPAIR SPACE",
+   "text": "ORGANIC RESIDENTIAL / REPAIR SPACE — Humid inhabited service-volume neighborhood and workshop with direct infrastructure access, repair benches, shared work surfaces, personal belongings and ordinary domestic life. Organic bodies are maintained here without turning the environment into a laboratory or machinery warren. The place is culturally owned and lived in, not a hidden sewer refuge.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_DataCore": {
+   "name": "CIVIC DATA CORE",
+   "text": "CIVIC DATA CORE — Quiet machine-native analysis environment inside the Stack's administrative infrastructure. Controlled black, white and cool luminous information surfaces, physical civic hardware and precise spatial organization support simultaneous system-scale reasoning. It should feel functional and institutional, not like a villain lair, hologram spectacle or magical cyberspace.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_TransitSpine": {
+   "name": "UNDERCITY TRANSIT / SERVICE SPINE",
+   "text": "UNDERCITY TRANSIT / SERVICE SPINE — Layered maintenance route carrying rail, power, structural and civic systems beneath public levels. Old concrete, newer composite reinforcement, conduits, service walkways, access gates and active machinery reveal decades of accumulated construction. Geography, exits and load-bearing systems must remain visually legible during action.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "DT_WhiteFacility": {
+   "name": "WHITE FACILITY",
+   "text": "WHITE FACILITY — Immaculate unmarked controlled site embedded inside ordinary municipal infrastructure. Seamless pale surfaces, precise interfaces, concealed access and conspicuous maintenance perfection contrast with the accumulated Stack around it. Keep it bureaucratically plausible and physically real rather than futuristic mysticism.",
+   "first_issue": null,
+   "tier": "working"
+  },
+  "DT_SharedDistrictRooftop": {
+   "name": "SHARED-DISTRICT ROOFTOP / SERVICE LEVEL",
+   "text": "SHARED-DISTRICT ROOFTOP / SERVICE LEVEL — Exposed civic layer overlooking the accumulated vertical Stack: old structures, retrofits, transit arteries, residential pockets, public projections, service equipment and governance towers occupy the same skyline. Mixed-category everyday life should remain visible below the political spectacle.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_Concourse17": {
+   "name": "CONCOURSE 17",
+   "text": "CONCOURSE 17 — Desirable three-level middle-Stack commercial and transit concourse built through an older structural bay. Shops, food counters, clinics, pedestrian bridges, public seating and transit connections wrap a tall central volume with visible service doors and suppression hardware. The district has a strong Organic commercial presence but remains genuinely mixed: Baselines, Augments and Organics shop and commute here together. Organic accommodations are normalized into some storefronts and public fixtures rather than turning the place into a special enclave. Maintain clear geography across the incident: central atrium, upper bridge, primary exits, compartment partitions, secondary service route and ceiling suppression grid must stay spatially consistent from Pages 1–11.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_PublicHearingChamber": {
+   "name": "PUBLIC HEARING CHAMBER",
+   "text": "PUBLIC HEARING CHAMBER — Formal governance-level civic room designed to make procedure look fair: broad public gallery, accessible witness table, officials on a shallow raised dais, integrated evidence displays, press positions and visible security kept at the edges. Materials are expensive but restrained, with daylight or soft civic illumination rather than theatrical darkness. Mixed-category attendance should be visible. The architecture gives everyone a place to speak while the institutional control of agenda, framing, camera angles and official record remains visually obvious.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_HearingMediaCorridor": {
+   "name": "HEARING MEDIA / SERVICE CORRIDOR",
+   "text": "HEARING MEDIA / SERVICE CORRIDOR — Transitional space immediately outside the public chamber where polished civic architecture meets press staging, staff access and service circulation. Camera crews, statement screens, badge-controlled doors and quieter side alcoves allow public testimony to become edited media language within meters of the room where it was spoken. Use the same materials and signage family as the hearing chamber so Pages 14–16 read as one continuous political event.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_CivicVerificationGate": {
+   "name": "CIVIC VERIFICATION GATE",
+   "text": "CIVIC VERIFICATION GATE — Ordinary transit/civic access point retrofitted after the emergency order. Existing human circulation remains mostly unchanged while new capability-verification scanners, secondary queue rails, function-permission displays and polite public-safety signage have been added beside it. The retrofit should look temporary, modular and administratively reasonable, not like a prison checkpoint. Its politics are visible in unequal friction: Baseline and most Augment commuters keep moving while Organics are diverted into slower review paths.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_OrganicCommunityHall": {
+   "name": "ORGANIC COMMUNITY HALL",
+   "text": "ORGANIC COMMUNITY HALL — Multipurpose neighborhood room adapted by residents rather than designed by government: reinforced mixed-height seating, varied body clearances, repair-safe surfaces, humidity zoning, community notices, food and personal objects coexist with ordinary meeting equipment. The room should support disagreement, mutual aid and mundane local politics. It is neither a revolutionary bunker nor a factory floor. Mixed economic circumstances and different Organic lots/functions remain visible.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_PermitOffice": {
+   "name": "MUNICIPAL PERMIT OFFICE",
+   "text": "MUNICIPAL PERMIT OFFICE — Busy civic-service floor occupying an older Stack structural volume behind a cleaner public frontage. Queue lanes, numbered counters, body-aware scanners, records terminals, document printers, seal stations and staff workrooms make administration physical and legible. The new Organic capability order has been layered onto existing systems, producing improvised signs, contradictory fields and growing lines rather than a purpose-built oppression machine. Axiom's intervention should visibly reduce queue chaos without making the office futuristic or frictionless.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_VerticalTransitInterchange": {
+   "name": "VERTICAL TRANSIT INTERCHANGE",
+   "text": "VERTICAL TRANSIT INTERCHANGE — Major middle-Stack transfer hub linking stacked rail cars, lifts, pedestrian bridges and suspended transfer decks across several occupied levels. Older load-bearing concrete and steel are wrapped in newer gates, route displays, emergency supports and body-aware access hardware. Keep the atrium, transfer deck, service passage, vertical car positions, primary stairs and crowd-flow routes spatially coherent across repeated scenes. The hub is busy civic infrastructure, not a monumental sci-fi terminal.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_AdministrativeReviewChamber": {
+   "name": "ADMINISTRATIVE REVIEW CHAMBER",
+   "text": "ADMINISTRATIVE REVIEW CHAMBER — Calm civilian room for capability, compliance and Intelligence-authority review. A modest shallow dais, accessible participant table, evidence displays, public-record indicators and restrained staff seating make accountability legible without courtroom spectacle. The room should feel procedural and serious rather than punitive; reviewers are working officials, not robed judges, and security remains peripheral.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_EmergencyCoordinationRoom": {
+   "name": "EMERGENCY COORDINATION ROOM",
+   "text": "EMERGENCY COORDINATION ROOM — Governance-level operational workspace where transit, medicine, utilities, employment, security and supply consequences can be viewed together. Human officials work at ordinary desks and shared evidence walls while Intelligence reconciliation appears through precise embedded civic systems rather than magical holograms. The room must make fragmented human authority and cross-system dependence visually understandable without becoming a military command center.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_CivicUtilityWorksite": {
+   "name": "CIVIC UTILITY WORKSITE",
+   "text": "CIVIC UTILITY WORKSITE — Occupied Stack service zone where public circulation meets water, structural, power and environmental infrastructure. Old retrofit geometry, access hatches, pumps, pipework, braces, vibration, maintenance markings and temporary work barriers make local physical knowledge visible. Keep the work practical and legible: experienced crews understand sounds, load paths and repair history that remote models can locate but not physically interpret.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_CivicRiskLaboratory": {
+   "name": "CIVIC RISK LABORATORY",
+   "text": "CIVIC RISK LABORATORY — Legitimate upper-Stack research and resilience complex with a public reception desk, glass conference rooms, ordinary staff workspaces, controlled service corridors and secured model/archive environments. Insurance, disaster planning, procurement and security research coexist behind polished institutional finishes. The facility should look lawful enough to host auditors and contractors; avoid torture-lab, black-site or evil-science visual shorthand.",
+   "first_issue": 1,
+   "tier": "draft"
+  },
+  "DT_CivicEvidenceArchive": {
+   "name": "CIVIC EVIDENCE / PROVENANCE ARCHIVE",
+   "text": "CIVIC EVIDENCE / PROVENANCE ARCHIVE — Public-accountability infrastructure for preserving model lineage, source records, audit trails and consequential administrative evidence. Controlled reading stations, visible record integrity markers, durable storage interfaces and modest staff space emphasize traceability over secrecy. It is a civic records environment, not a conspiracy wall or intelligence bunker, and later reforms should visibly expand access and auditability rather than redesign the place.",
+   "first_issue": 1,
+   "tier": "draft"
+  }
+ },
+ "factions": {
+  "DT_BaselineHumans": {
+   "name": "Baseline Humans",
+   "text": "BASELINE HUMANS — Ordinary unmodified humans with broad class, age and professional variation; not a uniform visual faction. The city is built around their bodies, so scanners, furniture, transit, medicine and security treat them as the default. Upper-status Baselines tend toward quiet tailored contemporary clothing and nearly invisible personal technology; working-class Baselines show practical wear, repairs and economic variation. Pure Human politics may use clean humanist symbols, heritage typography and deliberately unmodified presentation, but that ideology must never become the visual identity of all Baselines. In mixed scenes, institutional privilege is shown through ease of access, presumed authorization and infrastructure fit rather than a special costume."
+  },
+  "DT_Organosynthetics": {
+   "name": "Organosynthetics",
+   "text": "ORGANOSYNTHETICS / ORGANICS — Grown living persons, not robots or armored humans. Their bodies visibly integrate engineered tissue, mineral or ceramic structures, sensory organs and task-specific anatomy. Different lots and original functions create meaningful variation in scale, dermis, plating, limb geometry, sensory systems and environmental tolerance; they must not share one species silhouette. Clothing is adapted around bodies originally designed for work rather than becoming a universal uniform. Organic neighborhoods visibly accommodate those bodies through humidity, heat, load-bearing furniture, broad circulation, repair surfaces and body-specific interfaces. Their political condition is visible when ordinary civic infrastructure still classifies their bodies as equipment, hazards or assets. At close range, Organic materiality is living and tactile: dermis may carry humidity or a slight wet sheen, soft tissue compresses around harder mineral/ceramic/keratin structures, sensory organs and filaments flex under contact, repair may involve warm tissue, gels, sealants, abrasion and regrowth. Use these details to make their selfhood physically undeniable, never as gore, slime, monster texture or eroticized body horror."
+  },
+  "DT_AugmentedHumans": {
+   "name": "Augmented Humans",
+   "text": "AUGMENTED HUMANS / AUGMENTS — Recognizably human people whose modifications remain engineered additions to human bodies. Hardware is installed, healed around, maintained and upgraded: joint actuators, interface ports, synthetic tissue grafts, reinforced bone lines, medical access points and subtle sensor packages rather than armor. Integration quality varies by wealth, age and manufacturer; expensive work may disappear elegantly into anatomy and clothing while older or lower-cost work leaves scar tissue, service covers and exposed housings. Fashion accommodates access and movement without becoming a universal cyberpunk look. The visual threshold between accepted medical technology and politically consequential capability should remain plausibly narrow. At close range, augmentation must remain inseparable from human embodiment: healed scar tissue, stretched or compressed skin around housings, warmth, sweat, swelling, actuator heat, lubricant, adhesive and maintenance residue can appear where physically appropriate. The tension is not flesh versus machine as spectacle; it is a person living in a body whose engineered capabilities have become socially legible."
+  },
+  "DT_Intelligences": {
+   "name": "Artificial Intelligences",
+   "text": "ARTIFICIAL INTELLIGENCES / INTELLIGENCES — Manufactured cognition expressed through machine-native embodiments, distributed civic systems or purpose-built interfaces. Embodied Intelligences favor precise geometry, deliberate material transitions, sensor logic and forms that reveal what the body is for; do not force human faces, clothing, gestures or proportions onto them unless a specific design calls for it. Distributed Intelligences should appear through consequences across real infrastructure rather than magical cyberspace. Their social subordination is environmental and procedural: service alcoves, permission-bounded interfaces, ownership labels and shutdown authority. When embodied, allow nonhuman scale and stillness to contrast with human social choreography without coding that difference as menace. Machine-native embodiment should still feel tactile and inhabited: mass, friction, joint travel, surface wear, dust, thermal gradients, contact noise and material aging keep Intelligences from becoming abstract holograms or frictionless CGI icons."
+  },
+  "DT_Posthumans": {
+   "name": "Posthumans",
+   "text": "POSTHUMANS — Umbrella political category, not a shared visual faction. Organics, Augments and Intelligences retain distinct bodies, clothing logic, environments and political needs. Coalition imagery must preserve those differences. Solidarity becomes visible through shared action, spatial arrangement, mutual care and chosen symbols only when the story earns them; never homogenize the populations into one costume, color scheme, silhouette or resistance aesthetic."
+  }
+ },
+ "regions": {
+  "DT_Stack": {
+   "name": "The Stack",
+   "text": "THE STACK — Vast accumulated vertical city rather than a single architectural style. Old poured concrete megastructure, buried transit bones and heavy utility frames remain visible beneath successive generations of composite reinforcement, glass civic additions, prefabricated housing, suspended walkways, planted public terraces and dense service retrofits. Vertical position matters but never maps perfectly to one class: wealth buys light, quiet, volume, maintenance and frictionless access more reliably than height alone. Public signage is restrained municipal wayfinding layered with commercial displays and body/capability-aware access information; avoid wall-to-wall neon. Baselines, Augments, Organics and Intelligences share the same society and appear throughout the city. Social hierarchy is shown through environmental fit and treatment: who gets a full-size entrance, who needs an alternate scanner, whose body is treated as a hazard, whose cognition is treated as a service. Keep routes, load paths, transit, utilities and civic systems physically legible so action feels grounded in a real city. Visual inspiration leans toward the material density and vertical social legibility of Altered Carbon, Snowpiercer and The Hunger Games without copying their iconography or defaulting to generic cyberpunk.",
+   "tone": ""
+  },
+  "DT_OrganicDistricts": {
+   "name": "Organic Districts",
+   "text": "ORGANIC DISTRICTS — Ordinary Stack neighborhoods with a higher concentration of Organic residents, businesses and body-support services, not segregated robot ghettos. Architecture begins with the same accumulated city fabric as elsewhere but has been adapted by inhabitants: variable humidity and temperature zones, stronger seating and floors, broad or differently shaped circulation, wash/repair stations, material-safe surfaces, sensory-friendly lighting and local interfaces that accommodate nonhuman hands and bodies. Adaptations should feel normalized and aesthetically owned rather than clinical. Shops, food, repair, domestic life, art, arguments, children or younger cohorts, neighbors and mixed-category visitors make the district socially complete. Economic variation remains visible. Avoid endless pipes, junk piles, cages, laboratory imagery or a monochrome industrial palette.",
+   "tone": ""
+  },
+  "DT_GovernanceUpperLevels": {
+   "name": "Governance Upper Levels",
+   "text": "GOVERNANCE UPPER LEVELS — Civic, legal and corporate spaces where authority is expressed through quiet, maintenance and surplus space. Older structural cores are concealed or beautifully restored; daylight, controlled acoustics, broad corridors, clean sightlines, integrated security and expensive durable finishes make the environment feel effortless. Interfaces are calm and minimal because authorized users are expected to understand them. Surveillance and access control are embedded rather than militarized. All person-types may be present, but hierarchy is visible in circulation and service: who uses the main door, who waits at a side scanner, who sits at the table, who stands behind it, who is treated as staff, asset or infrastructure. Avoid sterile spaceship minimalism and obvious villain architecture; these are desirable places whose comfort is part of their power.",
+   "tone": ""
+  },
+  "DT_MixedCommercialLevels": {
+   "name": "Mixed Commercial Levels",
+   "text": "MIXED COMMERCIAL LEVELS — Dense desirable middle-Stack public districts where transit, retail, food, clinics, offices and civic services overlap across several vertical levels. The architecture is heavily used but maintained: old structural bays, newer storefront systems, pedestrian bridges, atria, service doors, public seating and visible transit connections. Baselines, Augments and Organics mingle continuously, while Intelligence presence may be embodied or embedded in public systems. Body accommodations exist but are inconsistent by age and landlord, creating ordinary friction rather than formal segregation. Crowds should look socially mixed and purposeful, not like a cyberpunk costume parade. This region is ideal for showing how one public event can be recorded from many angles and interpreted differently.",
+   "tone": ""
+  },
+  "DT_CivicServiceLevels": {
+   "name": "Civic Service Levels",
+   "text": "CIVIC SERVICE LEVELS — The working connective tissue of the Stack: permit counters, maintenance corridors, municipal equipment rooms, responder staging areas, utility access, records desks and public-service interfaces occupying older structural volumes behind polished public fronts. Materials are durable, repairable and repeatedly relabeled. Technology is practical and standardized rather than fantastical. These spaces reveal governance through procedure: queue geometry, badges, scanners, forms, locked cabinets, equipment seals, access doors and who is authorized to touch what.",
+   "tone": ""
+  }
+ },
+ "lighting": {
+  "DT_DefaultLighting": ""
+ },
+ "mood": {
+  "DT_DefaultMood": []
+ },
+ "keeper": [
+  {
+   "name": "Axiom",
+   "type": "character",
+   "image": "production/references/division-threshold/keeper/character/axiom.jpg"
+  },
+  {
+   "name": "John Mercer",
+   "type": "character",
+   "image": "production/references/division-threshold/keeper/character/john-mercer.jpg"
+  },
+  {
+   "name": "Kellen Cartwright",
+   "type": "character",
+   "image": "production/references/division-threshold/keeper/character/kellen-cartwright.jpg"
+  },
+  {
+   "name": "Nathan Price",
+   "type": "character",
+   "image": "production/references/division-threshold/keeper/character/nathan-price.jpg"
+  },
+  {
+   "name": "Nico 14",
+   "type": "character",
+   "image": "production/references/division-threshold/keeper/character/nico-14.jpg"
+  },
+  {
+   "name": "Ostra 9",
+   "type": "character",
+   "image": "production/references/division-threshold/keeper/character/ostra-9.jpg"
+  }
+ ]
+}

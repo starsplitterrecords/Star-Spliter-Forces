@@ -1329,6 +1329,10 @@ func test_sea_branch() -> void:
 	check(GameData.chart_prev_main("ech_trench") == "ix_silence", "Echoes should open after the Rex Fleet finale")
 	check(String(GameData.DISCOVERIES["ech_trench"].get("unlock_character", "")) == "theo", "Theo should unlock at the trench")
 	check(GameData.crew_of("theo").size() >= 3, "Theo's crew missing")
+	# Division Threshold: the Stack opens from Chapter IV's Tribunal; Ostra-9 captains.
+	check(GameData.chart_prev_main("dt_checkpoint") == "s_division", "the Stack should open from s_division")
+	check(String(GameData.chart_stop("s_division")["side_of"]) == "iv_tribunal", "s_division should hang off the Tribunal")
+	check(GameData.crew_of("ostra_9").size() == 5, "Ostra-9's crew missing")
 	# A stage track counts as heard for roaming.
 	var before: int = GameData.unheard_roaming({}).size()
 	check(GameData.unheard_roaming({"des_launch_signal": {}}).size() == before - 1, "stage track still roaming")

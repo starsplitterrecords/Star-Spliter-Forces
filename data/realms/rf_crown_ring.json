@@ -461,6 +461,32 @@
    "grants": {
     "signal": 300
    }
+  },
+  {
+   "id": "s_division",
+   "chapter": 4,
+   "side_of": "iv_tribunal",
+   "power": 80,
+   "prize": "Ostra-9",
+   "icon": "visions",
+   "name": "Lot 9",
+   "place": "Admiralty Tribunal",
+   "region": "admiralty_tribunal",
+   "objective": {
+    "type": "discover",
+    "id": "vis_dt_checkpoint"
+   },
+   "discoveries": [
+    "vis_dt_checkpoint"
+   ],
+   "new_title": "ANOTHER CITY",
+   "new": "A checkpoint display from a city where status decides the rules.",
+   "brief": "A display that does not belong here.",
+   "reward": [
+    "Explorer: Ostra-9",
+    "Opens the Stack path"
+   ],
+   "grants": {}
   }
  ]
 }

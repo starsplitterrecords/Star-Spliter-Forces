@@ -1,0 +1,586 @@
+{
+ "id": "the_stack",
+ "chapter": {
+  "id": 16,
+  "name": "The Stack",
+  "numeral": "CITY",
+  "destination": "the_stack",
+  "subtitle": "Division Threshold: a vertical city divided by status.",
+  "branch_from": "s_division",
+  "biome": "city"
+ },
+ "destination": {
+  "name": "The Stack",
+  "desc": "Signal Space shaped like a vertical city divided by legal status.",
+  "half_size": "@v2:6000.0,4200.0",
+  "gate": "@v2:-5000.0,0.0",
+  "goal_signals": 0,
+  "story_only": true,
+  "climax_time": 1140.0,
+  "background": "@c:0c0f18ff",
+  "drift_name": "THE STACK",
+  "biome": "city",
+  "regions": [
+   "checkpoint_9",
+   "concourse_17",
+   "oversight_office",
+   "augment_clinic",
+   "organic_district",
+   "civic_data_core",
+   "hearing_chamber",
+   "shared_rooftop"
+  ],
+  "completion_unlocks": [],
+  "seed": 1616
+ },
+ "tier": "approved_draft",
+ "source": "RexPrompt division-threshold shelf (Issue 01) and approved draft art",
+ "regions": {
+  "checkpoint_9": {
+   "name": "CHECKPOINT 9",
+   "shape": "circle",
+   "center": "@v2:-3000.0,-1500.0",
+   "radius": 750.0,
+   "color": "@c:4fb8ffff",
+   "floor": "@c:10141eff",
+   "props": "queue",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "shield_tug": 0.4,
+    "rail_picket": 0.3,
+    "gunship": 0.1,
+    "leech": 0.3
+   },
+   "blurb": "A transit entrance, scanned lane by lane.",
+   "threat": 1
+  },
+  "concourse_17": {
+   "name": "CONCOURSE 17",
+   "shape": "circle",
+   "center": "@v2:-2600.0,1900.0",
+   "radius": 750.0,
+   "color": "@c:e0b060ff",
+   "floor": "@c:10141eff",
+   "props": "plaza",
+   "density": 0.8,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.9,
+    "shield_tug": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.2,
+    "leech": 0.3
+   },
+   "blurb": "Three levels of shops, rail and people.",
+   "threat": 2
+  },
+  "oversight_office": {
+   "name": "OVERSIGHT OFFICE",
+   "shape": "circle",
+   "center": "@v2:-200.0,-2700.0",
+   "radius": 750.0,
+   "color": "@c:bfd8ffff",
+   "floor": "@c:10141eff",
+   "props": "bullpen",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.9,
+    "shield_tug": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.2,
+    "leech": 0.3
+   },
+   "blurb": "Glass partitions, controlled access.",
+   "threat": 2
+  },
+  "augment_clinic": {
+   "name": "AUGMENT CLINIC",
+   "shape": "circle",
+   "center": "@v2:300.0,1500.0",
+   "radius": 750.0,
+   "color": "@c:ff8a6aff",
+   "floor": "@c:10141eff",
+   "props": "backstage",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "shield_tug": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.2,
+    "leech": 0.3
+   },
+   "blurb": "A parking level turned calibration clinic.",
+   "threat": 2
+  },
+  "organic_district": {
+   "name": "ORGANIC DISTRICT",
+   "shape": "circle",
+   "center": "@v2:2600.0,-1200.0",
+   "radius": 750.0,
+   "color": "@c:9f8affff",
+   "floor": "@c:10141eff",
+   "props": "town",
+   "density": 0.8,
+   "music": "region_corridor",
+   "enemies": {
+    "skiff": 0.9,
+    "shield_tug": 0.5,
+    "rail_picket": 0.3,
+    "gunship": 0.2,
+    "leech": 0.3
+   },
+   "blurb": "Humid service-level homes and workshops.",
+   "threat": 2
+  },
+  "civic_data_core": {
+   "name": "CIVIC DATA CORE",
+   "shape": "circle",
+   "center": "@v2:3300.0,2200.0",
+   "radius": 750.0,
+   "color": "@c:80c0ffff",
+   "floor": "@c:10141eff",
+   "props": "supply",
+   "density": 0.8,
+   "music": "region_wrecks",
+   "enemies": {
+    "skiff": 0.9,
+    "shield_tug": 0.6000000000000001,
+    "rail_picket": 0.3,
+    "gunship": 0.30000000000000004,
+    "leech": 0.3
+   },
+   "blurb": "Quiet, machine-native, listening.",
+   "threat": 3
+  },
+  "hearing_chamber": {
+   "name": "PUBLIC HEARING CHAMBER",
+   "shape": "circle",
+   "center": "@v2:4700.0,-2900.0",
+   "radius": 750.0,
+   "color": "@c:e8e0d0ff",
+   "floor": "@c:10141eff",
+   "props": "suite",
+   "density": 0.8,
+   "music": "region_gate",
+   "enemies": {
+    "skiff": 0.9,
+    "shield_tug": 0.6000000000000001,
+    "rail_picket": 0.3,
+    "gunship": 0.30000000000000004,
+    "leech": 0.3
+   },
+   "blurb": "Built to make procedure look fair.",
+   "threat": 3
+  },
+  "shared_rooftop": {
+   "name": "SHARED-DISTRICT ROOFTOP",
+   "shape": "circle",
+   "center": "@v2:4800.0,500.0",
+   "radius": 750.0,
+   "color": "@c:c8a8a0ff",
+   "floor": "@c:10141eff",
+   "props": "rooftop",
+   "density": 0.8,
+   "music": "region_shelf",
+   "enemies": {
+    "skiff": 0.9,
+    "shield_tug": 0.6000000000000001,
+    "rail_picket": 0.3,
+    "gunship": 0.30000000000000004,
+    "leech": 0.3
+   },
+   "blurb": "The whole Stack below, layered.",
+   "threat": 3
+  }
+ },
+ "discoveries": {
+  "dt_checkpoint": {
+   "kind": "character",
+   "region": "checkpoint_9",
+   "offset": "@v2:0.0,0.0",
+   "title": "CHECKPOINT 9",
+   "landmark": "dti",
+   "color": "@c:4fb8ffff",
+   "place": "checkpoint_9",
+   "crossover": "division_threshold",
+   "text": "Lanes, scanners, a line that never ends. Someone at Lane 8 is logged as maintenance."
+  },
+  "dt_concourse": {
+   "kind": "character",
+   "region": "concourse_17",
+   "offset": "@v2:0.0,0.0",
+   "title": "CONCOURSE 17",
+   "landmark": "bazaar",
+   "color": "@c:e0b060ff",
+   "place": "concourse_17",
+   "crossover": "division_threshold",
+   "text": "An augment tactical lead and a combat medic, between calls.",
+   "contacts": [
+    "john_mercer",
+    "nathan_price"
+   ]
+  },
+  "dt_oversight": {
+   "kind": "character",
+   "region": "oversight_office",
+   "offset": "@v2:0.0,0.0",
+   "title": "OVERSIGHT OFFICE",
+   "landmark": "bullpen",
+   "color": "@c:bfd8ffff",
+   "place": "oversight_office",
+   "crossover": "division_threshold",
+   "text": "An Oversight officer who reads the file twice.",
+   "contacts": [
+    "kellen_cartwright"
+   ]
+  },
+  "dt_datacore": {
+   "kind": "character",
+   "region": "civic_data_core",
+   "offset": "@v2:0.0,0.0",
+   "title": "CIVIC DATA CORE",
+   "landmark": "station",
+   "color": "@c:80c0ffff",
+   "place": "civic_data_core",
+   "crossover": "division_threshold",
+   "text": "An Intelligence that observes, and is starting to decide.",
+   "contacts": [
+    "axiom"
+   ]
+  },
+  "dt_organic": {
+   "kind": "character",
+   "region": "organic_district",
+   "offset": "@v2:0.0,0.0",
+   "title": "ORGANIC DISTRICT",
+   "landmark": "dock",
+   "color": "@c:9f8affff",
+   "place": "organic_district",
+   "crossover": "division_threshold",
+   "text": "An infrastructure specialist keeping the district's systems alive.",
+   "contacts": [
+    "nico_14"
+   ]
+  },
+  "dt_hearing": {
+   "kind": "character",
+   "region": "hearing_chamber",
+   "offset": "@v2:0.0,0.0",
+   "title": "PUBLIC HEARING CHAMBER",
+   "landmark": "bullpen",
+   "color": "@c:e8e0d0ff",
+   "place": "hearing_chamber",
+   "crossover": "division_threshold",
+   "text": "Who gets to count as a person, and who gets to decide?"
+  }
+ },
+ "contacts": {
+  "john_mercer": {
+   "name": "John Mercer",
+   "faction": "Augmented Humans",
+   "role": "Augment tactical lead; ex-military.",
+   "portrait": "john_mercer",
+   "captain": "ostra_9",
+   "perk": {
+    "kind": "armor",
+    "value": 0.5
+   }
+  },
+  "nathan_price": {
+   "name": "Nathan Price",
+   "faction": "Augmented Humans",
+   "role": "Combat medic and augmentation engineer.",
+   "portrait": "nathan_price",
+   "captain": "ostra_9",
+   "perk": {
+    "kind": "hp",
+    "value": 10
+   }
+  },
+  "kellen_cartwright": {
+   "name": "Kellen Cartwright",
+   "faction": "Baseline Humans",
+   "role": "Oversight intelligence officer.",
+   "portrait": "kellen_cartwright",
+   "captain": "ostra_9",
+   "perk": {
+    "kind": "reroll",
+    "value": 1
+   }
+  },
+  "axiom": {
+   "name": "AX10M (Axiom)",
+   "faction": "Artificial Intelligences",
+   "role": "An analytic observer becoming an accountable decider.",
+   "portrait": "axiom",
+   "captain": "ostra_9",
+   "perk": {
+    "kind": "pickup",
+    "value": 0.08
+   }
+  },
+  "nico_14": {
+   "name": "Nico-14",
+   "faction": "Organosynthetics",
+   "role": "Organic systems architect; infrastructure specialist.",
+   "portrait": "nico_14",
+   "captain": "ostra_9",
+   "perk": {
+    "kind": "speed",
+    "value": 0.03
+   }
+  }
+ },
+ "places": {
+  "checkpoint_9": {
+   "name": "Checkpoint 9",
+   "series": "Division Threshold",
+   "text": "A transit entrance, scanned lane by lane.",
+   "source": "Division Threshold (RexPrompt shelf, Issue 01; approved draft)"
+  },
+  "concourse_17": {
+   "name": "Concourse 17",
+   "series": "Division Threshold",
+   "text": "Three levels of shops, rail and people.",
+   "source": "Division Threshold (RexPrompt shelf, Issue 01; approved draft)"
+  },
+  "oversight_office": {
+   "name": "Oversight Office",
+   "series": "Division Threshold",
+   "text": "Glass partitions, controlled access.",
+   "source": "Division Threshold (RexPrompt shelf, Issue 01; approved draft)"
+  },
+  "augment_clinic": {
+   "name": "Augment Clinic",
+   "series": "Division Threshold",
+   "text": "A parking level turned calibration clinic.",
+   "source": "Division Threshold (RexPrompt shelf, Issue 01; approved draft)"
+  },
+  "organic_district": {
+   "name": "Organic District",
+   "series": "Division Threshold",
+   "text": "Humid service-level homes and workshops.",
+   "source": "Division Threshold (RexPrompt shelf, Issue 01; approved draft)"
+  },
+  "civic_data_core": {
+   "name": "Civic Data Core",
+   "series": "Division Threshold",
+   "text": "Quiet, machine-native, listening.",
+   "source": "Division Threshold (RexPrompt shelf, Issue 01; approved draft)"
+  },
+  "hearing_chamber": {
+   "name": "Public Hearing Chamber",
+   "series": "Division Threshold",
+   "text": "Built to make procedure look fair.",
+   "source": "Division Threshold (RexPrompt shelf, Issue 01; approved draft)"
+  },
+  "shared_rooftop": {
+   "name": "Shared-District Rooftop",
+   "series": "Division Threshold",
+   "text": "The whole Stack below, layered.",
+   "source": "Division Threshold (RexPrompt shelf, Issue 01; approved draft)"
+  }
+ },
+ "stages": [
+  {
+   "id": "dt_checkpoint",
+   "chapter": 16,
+   "power": 60,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "Checkpoint 9",
+   "place": "Checkpoint 9",
+   "region": "checkpoint_9",
+   "objective": {
+    "type": "discover",
+    "id": "dt_checkpoint"
+   },
+   "discoveries": [
+    "dt_checkpoint"
+   ],
+   "new_title": "THE STACK",
+   "new": "A vertical city where status decides the rules.",
+   "brief": "A vertical city where status decides the rules.",
+   "reward": [
+    "Place: Checkpoint 9"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "dt_concourse",
+   "chapter": 16,
+   "power": 75,
+   "prize": "Mercer & Price",
+   "icon": "visions",
+   "name": "Concourse 17",
+   "place": "Concourse 17",
+   "region": "concourse_17",
+   "objective": {
+    "type": "discover",
+    "id": "dt_concourse"
+   },
+   "discoveries": [
+    "dt_concourse"
+   ],
+   "new_title": "AUGMENTS",
+   "new": "Two of the team, between calls.",
+   "brief": "Two of the team, between calls.",
+   "reward": [
+    "Crew: John Mercer, Nathan Price (with Ostra-9)",
+    "Place: Concourse 17"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "dt_interchange",
+   "chapter": 16,
+   "prize": "+150 Signal",
+   "icon": "hostile",
+   "name": "Rush Hour",
+   "place": "Concourse 17",
+   "region": "concourse_17",
+   "objective": {
+    "type": "survive",
+    "seconds": 180.0
+   },
+   "discoveries": [],
+   "new_title": "RUSH HOUR",
+   "new": "Keep the concourse moving for three minutes.",
+   "brief": "Keep the concourse moving for three minutes.",
+   "reward": [
+    "+150 Signal"
+   ],
+   "grants": {
+    "signal": 150
+   }
+  },
+  {
+   "id": "dt_oversight",
+   "chapter": 16,
+   "power": 85,
+   "prize": "Cartwright",
+   "icon": "visions",
+   "name": "Oversight",
+   "place": "Oversight Office",
+   "region": "oversight_office",
+   "objective": {
+    "type": "discover",
+    "id": "dt_oversight"
+   },
+   "discoveries": [
+    "dt_oversight"
+   ],
+   "new_title": "OVERSIGHT",
+   "new": "Someone who reads the file twice.",
+   "brief": "Someone who reads the file twice.",
+   "reward": [
+    "Crew: Kellen Cartwright (with Ostra-9)",
+    "Place: Oversight Office"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "dt_datacore",
+   "chapter": 16,
+   "power": 95,
+   "prize": "Axiom",
+   "icon": "visions",
+   "name": "Data Core",
+   "place": "Civic Data Core",
+   "region": "civic_data_core",
+   "objective": {
+    "type": "discover",
+    "id": "dt_datacore"
+   },
+   "discoveries": [
+    "dt_datacore"
+   ],
+   "new_title": "INTELLIGENCE",
+   "new": "Observing, and starting to decide.",
+   "brief": "Observing, and starting to decide.",
+   "reward": [
+    "Crew: Axiom (with Ostra-9)",
+    "Place: Civic Data Core"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "dt_organic",
+   "chapter": 16,
+   "power": 105,
+   "prize": "Nico-14",
+   "icon": "visions",
+   "name": "Organic District",
+   "place": "Organic District",
+   "region": "organic_district",
+   "objective": {
+    "type": "discover",
+    "id": "dt_organic"
+   },
+   "discoveries": [
+    "dt_organic"
+   ],
+   "new_title": "ORGANICS",
+   "new": "Keeping the district alive.",
+   "brief": "Keeping the district alive.",
+   "reward": [
+    "Crew: Nico-14 (with Ostra-9)",
+    "Place: Organic District"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "dt_hearing",
+   "chapter": 16,
+   "power": 115,
+   "prize": "Place",
+   "icon": "signal",
+   "name": "The Hearing",
+   "place": "Public Hearing Chamber",
+   "region": "hearing_chamber",
+   "objective": {
+    "type": "discover",
+    "id": "dt_hearing"
+   },
+   "discoveries": [
+    "dt_hearing"
+   ],
+   "new_title": "THE HEARING",
+   "new": "Who gets to count as a person?",
+   "brief": "Who gets to count as a person?",
+   "reward": [
+    "Place: Public Hearing Chamber"
+   ],
+   "grants": {}
+  },
+  {
+   "id": "dt_order",
+   "chapter": 16,
+   "prize": "+300 Signal",
+   "icon": "elite",
+   "name": "The Quiet Order",
+   "place": "The Stack",
+   "start": "@v2:-800.0,600.0",
+   "objective": {
+    "type": "boss",
+    "at": 360.0,
+    "hp": 0.6
+   },
+   "discoveries": [],
+   "new_title": "THE QUIET ORDER",
+   "new": "The Silence, here, wants everyone in their lane. Arrives at 6:00.",
+   "brief": "The Silence, here, wants everyone in their lane. Arrives at 6:00.",
+   "reward": [
+    "+300 Signal",
+    "The Stack complete"
+   ],
+   "grants": {
+    "signal": 300
+   }
+  }
+ ]
+}

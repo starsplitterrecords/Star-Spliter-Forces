@@ -107,6 +107,11 @@ class Surface:
 							draw_line(p + Vector2(k * 7, 0), p + Vector2(k * 7 - 2, -9), col, 2.0)
 					"park":
 						draw_rect(Rect2(p, Vector2(36, 36)), col, false, 1.5)
+					"city":
+						# Stacked levels below: block outlines and a few lit windows.
+						draw_rect(Rect2(p, Vector2(70, 46)), col, false, 1.5)
+						if h > 0.6:
+							draw_rect(Rect2(p + Vector2(10, 10), Vector2(6, 4)), Color(1.0, 0.85, 0.5, 0.35))
 				x += step
 			y += step
 

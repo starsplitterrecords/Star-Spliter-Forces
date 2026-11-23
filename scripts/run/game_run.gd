@@ -1092,7 +1092,7 @@ func ability_def() -> Dictionary:
 func ability_cooldown() -> float:
 	var cd: float = float(ability_def()["cooldown"])
 	match character_id:
-		"ella_venn", "bjorn", "lucia", "brandon_mack", "sir_eric", "maya_serrano", "theo":
+		"ella_venn", "bjorn", "lucia", "brandon_mack", "sir_eric", "maya_serrano", "theo", "ostra_9":
 			if mastery_level >= 4:
 				cd -= 4.0
 		"jax_orien":
@@ -1168,6 +1168,11 @@ func use_ability() -> bool:
 			fx.ring(player.position, 20.0, 160.0, Color("d8323a"), 0.6, 6.0)
 			if hud:
 				hud.toast("SHARD CAPTAINS ANSWER THE CALL")
+		"unauthorized_rescue":
+			ability_active = 5.0 + (2.0 if mastery_level >= 1 else 0.0)
+			fx.ring(player.position, 20.0, 140.0, Color("4fb8ff"), 0.5, 6.0)
+			if hud:
+				hud.toast("UNAUTHORIZED RESCUE")
 		"remember":
 			# Vanguard memories: violet afterimages that fight beside Theo.
 			var nm: int = 3 if mastery_level >= 2 else 2
@@ -1314,6 +1319,15 @@ func _update_ability(delta: float) -> void:
 							e.knock += (e.position - player.position).normalized() * 900.0 * delta
 						if mastery_level >= 2:
 							damage_enemy(e, 25.0 * delta * player.damage_mult, Vector2.ZERO, 0.0, "ability", true)
+			"ostra_9":
+				# Unauthorized rescue: faster, shoving raiders aside, repairing.
+				player.speed_mult = maxf(player.speed_mult, float(start_bonuses.get("speed_mult", 1.0)) * 1.4)
+				player.heal((8.0 if mastery_level >= 3 else 4.0) * delta)
+				for e: ForceEnemy in enemy_hash.query(player.position, 110.0).duplicate():
+					if not e.dead and not e.boss and e.position.distance_to(player.position) < 110.0 + e.radius:
+						e.knock += (e.position - player.position).normalized() * (2400.0 if mastery_level >= 2 else 1400.0) * delta
+				if ability_active <= 0.0:
+					weapons.apply_passives() # speed back to normal
 			"maya_serrano":
 				# The water dome: shots cleared, raiders slowed, steady repair.
 				var rd: float = maya_dome_radius()
@@ -1818,6 +1832,8 @@ func build_result(result: String) -> Dictionary:
 			currency *= 0.5
 	if remix != "":
 		currency *= 1.5
+	if character_id == "ostra_9":
+		currency *= 0.9
 	if character_id == "jex_marrin":
 		currency *= 1.4 + (0.15 if mastery_level >= 2 else 0.0)
 	var mastery_xp: int = int(elapsed / 6.0 + found * 25 + kills / 12.0 + (150 if result == "complete" else (40 if result == "extracted" else 0)))

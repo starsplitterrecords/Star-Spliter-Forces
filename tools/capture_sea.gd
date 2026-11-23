@@ -13,6 +13,8 @@ const BRANCHES: Dictionary = {
 		"regions": ["war_camp", "raid_depot", "fortress_offices", "occupied_villages", "dragon_vault", "elven_frontier", "deadlands", "ominous_hole"]},
 	"echoes": {"chapter": 15, "done": ["ech_trench", "ech_marker"], "focus": "ech_rupture", "stage": "ech_deck",
 		"regions": ["olyria_trench", "sector_four", "grid_ruins", "zenith_archives", "observation_deck"]},
+	"city": {"chapter": 16, "done": ["dt_checkpoint", "dt_concourse"], "focus": "dt_interchange", "stage": "dt_hearing",
+		"regions": ["checkpoint_9", "concourse_17", "oversight_office", "organic_district", "hearing_chamber"]},
 	"park": {"chapter": 13, "done": ["verge_escort", "s_azure", "az_entrance", "az_queue"], "focus": "az_media", "stage": "az_media",
 		"regions": ["public_entrance", "turtle_queue", "media_prep", "glass_corridor", "ops_room", "guest_suite", "turtle_viewing", "service_corridor"]},
 }

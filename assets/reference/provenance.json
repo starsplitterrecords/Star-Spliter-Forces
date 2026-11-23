@@ -2773,6 +2773,198 @@
           "sha256": "d2052d6bdbb8e2eeeddc37acfc44a1dec2b2511010c31e25cc6a5cc8e008cec0"
         }
       ]
+    },
+    {
+      "id": "portrait_kellen_cartwright",
+      "repo": "RexPrompt",
+      "path": "production/drafts/division-threshold/division-threshold-s1-e01/dt_e001_cover.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the Division Threshold Issue 01 approved production draft (identified by shelf visual description; owner direction 2026-11-23)",
+      "source_sha256": "961e6b76869d5bc1706b4f4e473f07e4e0793806eb54d04fc0b4e8b7837d6258",
+      "review_required": false,
+      "source_size": [
+        2400,
+        3600
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/kellen_cartwright_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "a70d21a961a98babe416ac7a53020b88bfe9353d592ee755dd7c0441ac204c27"
+        },
+        {
+          "out": "assets/characters/kellen_cartwright_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "95515db05fb52892f02d11a4d1a98862537ba91a0da77e7ee51f57f7604cd945"
+        }
+      ]
+    },
+    {
+      "id": "portrait_axiom",
+      "repo": "RexPrompt",
+      "path": "production/drafts/division-threshold/division-threshold-s1-e01/dt_e001_cover.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the Division Threshold Issue 01 approved production draft (identified by shelf visual description; owner direction 2026-11-23)",
+      "source_sha256": "961e6b76869d5bc1706b4f4e473f07e4e0793806eb54d04fc0b4e8b7837d6258",
+      "review_required": false,
+      "source_size": [
+        2400,
+        3600
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/axiom_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "523e35a68240b699e65332220e6d98e66301f496c99084605baed3400bb7d31e"
+        },
+        {
+          "out": "assets/characters/axiom_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "6504b64ad6e986818332f6563a44119369f169ac9a3fe404a054403b8ec61e51"
+        }
+      ]
+    },
+    {
+      "id": "portrait_john_mercer",
+      "repo": "RexPrompt",
+      "path": "production/drafts/division-threshold/division-threshold-s1-e01/dt_e001_cover.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the Division Threshold Issue 01 approved production draft (identified by shelf visual description; owner direction 2026-11-23)",
+      "source_sha256": "961e6b76869d5bc1706b4f4e473f07e4e0793806eb54d04fc0b4e8b7837d6258",
+      "review_required": false,
+      "source_size": [
+        2400,
+        3600
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/john_mercer_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "8331f7a92889b714374bdedbefeef08a4f1b3e1f8bd047cec37e0ce6f2e368ec"
+        },
+        {
+          "out": "assets/characters/john_mercer_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "5c65776e44414d01d35ccc0dff20f16957000f85e694eb41b55b61c19b549c73"
+        }
+      ]
+    },
+    {
+      "id": "portrait_nathan_price",
+      "repo": "RexPrompt",
+      "path": "production/drafts/division-threshold/division-threshold-s1-e01/dt_e001_cover.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the Division Threshold Issue 01 approved production draft (identified by shelf visual description; owner direction 2026-11-23)",
+      "source_sha256": "961e6b76869d5bc1706b4f4e473f07e4e0793806eb54d04fc0b4e8b7837d6258",
+      "review_required": false,
+      "source_size": [
+        2400,
+        3600
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/nathan_price_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "f8a67c294cad9b7e0c01cddb9bb5e7064017cd361691ea8ee69c1fa279f1e0d6"
+        },
+        {
+          "out": "assets/characters/nathan_price_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "ec0d3e2d3084ff34b7c49065a078f7fd308d0914cb8e45a21479f8affcfcecae"
+        }
+      ]
+    },
+    {
+      "id": "portrait_nico_14",
+      "repo": "RexPrompt",
+      "path": "production/drafts/division-threshold/division-threshold-s1-e01/dt_e001_cover.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the Division Threshold Issue 01 approved production draft (identified by shelf visual description; owner direction 2026-11-23)",
+      "source_sha256": "961e6b76869d5bc1706b4f4e473f07e4e0793806eb54d04fc0b4e8b7837d6258",
+      "review_required": false,
+      "source_size": [
+        2400,
+        3600
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/nico_14_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "1d4726226990c267189881e4db096cbf3805af9248e9931cce2e0fedc514fa8a"
+        },
+        {
+          "out": "assets/characters/nico_14_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "b1878d4cb480fb9745a39ad27985fef39d68054041f774bd8fb856b74dbba28c"
+        }
+      ]
+    },
+    {
+      "id": "portrait_ostra_9",
+      "repo": "RexPrompt",
+      "path": "production/drafts/division-threshold/division-threshold-s1-e01/dt_e001_intro.png",
+      "commit": "8178044",
+      "status": "approved_draft",
+      "use": "Portrait cropped from the Division Threshold Issue 01 approved production draft (identified by shelf visual description; owner direction 2026-11-23)",
+      "source_sha256": "8f6602b2b223dab0eef20e3b8873db107eaf0a04e64f403793e565a72e0756fa",
+      "review_required": false,
+      "source_size": [
+        2400,
+        3840
+      ],
+      "outputs": [
+        {
+          "out": "assets/characters/ostra_9_256.png",
+          "size": [
+            256,
+            256
+          ],
+          "sha256": "c4ac7d3b1aa5dcccf9acc4026cb9fba07072007585ebdf6f42dfd6e40b13f457"
+        },
+        {
+          "out": "assets/characters/ostra_9_96.png",
+          "size": [
+            96,
+            96
+          ],
+          "sha256": "24fe63ace70db34ef8d045d224505a4d915a0bfe95978d0a08fa78b53977edb0"
+        }
+      ]
     }
   ]
 }

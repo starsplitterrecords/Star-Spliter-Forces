@@ -477,6 +477,11 @@ func _draw_decor(c: Color) -> void:
 			var bp: Vector2 = Vector2(r * 0.4, -r * 1.9 + sin(age * 2.0) * 3.0)
 			draw_line(Vector2(0, -r * 0.6), bp + Vector2(0, r * 0.4), Color(1, 1, 1, 0.5), 1.0)
 			draw_circle(bp, r * 0.42, Color("ff7ac8") if int(position.x) % 2 == 0 else Color("4fd8ff"))
+		"badge":
+			# A status tag: a little lit badge above, and a scan line.
+			draw_rect(Rect2(Vector2(-r * 0.45, -r * 1.55), Vector2(r * 0.9, r * 0.45)), Color("1a2030"))
+			draw_rect(Rect2(Vector2(-r * 0.45, -r * 1.55), Vector2(r * 0.9, r * 0.45)), Color(0.31, 0.72, 1.0, 0.9), false, 1.5)
+			draw_line(side * r * 1.2 + Vector2(0, sin(age * 4.0) * r * 0.6), -side * r * 1.2 + Vector2(0, sin(age * 4.0) * r * 0.6), Color(0.31, 0.72, 1.0, 0.35), 1.5)
 		"halo":
 			# A memory's halo and a lagging afterimage.
 			draw_arc(Vector2(0, -r * 1.1), r * 0.45, 0.0, TAU, 14, Color(0.84, 0.72, 1.0, 0.8), 2.0)
