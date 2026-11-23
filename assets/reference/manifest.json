@@ -2905,6 +2905,60 @@
           ]
         }
       ]
+    },
+    {
+      "id": "place_thunderbreak_bridge",
+      "repo": "RexPrompt",
+      "path": "production/references/rex-fleet/keeper/character/a8939324-00ab-48a6-9671-b087fe026b23.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art from the RexPrompt Reference Keeper (owner direction 2026-11-22)",
+      "outputs": [
+        {
+          "out": "assets/places/thunderbreak_bridge.png",
+          "size": [
+            640,
+            320
+          ],
+          "crop": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "display": [
+            640,
+            320
+          ]
+        }
+      ]
+    },
+    {
+      "id": "place_auric_bazaar",
+      "repo": "RexPrompt",
+      "path": "production/references/rex-fleet/keeper/setting/auric-bazaar.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art from the RexPrompt Reference Keeper (owner direction 2026-11-22)",
+      "outputs": [
+        {
+          "out": "assets/places/auric_bazaar.png",
+          "size": [
+            640,
+            426
+          ],
+          "crop": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "display": [
+            640,
+            426
+          ]
+        }
+      ]
     }
   ]
 }

@@ -920,7 +920,7 @@ static var PLACES: Dictionary = {
 	"kaldr_rift": {"name": "Kaldr Rift", "series": "Rex Fleet", "text": "A hazardous convoy passage through asteroid fragments, broken industry and old hull wreckage.", "source": "Rex Fleet Issue 01, page 005"},
 	"grain_freighter": {"name": "Luminara Grain Freighter", "series": "Rex Fleet", "text": "A farm freighter's working hold, shared by cargo and civilian passengers.", "source": "Rex Fleet Issue 01, page 008"},
 	"luminara_fields": {"name": "Luminara Fields", "series": "Rex Fleet", "text": "A bright Verge port embedded in cultivated land.", "source": "Rex Fleet Issue 01, page 004"},
-	"auric_bazaar": {"name": "Auric Bazaar", "series": "Rex Fleet", "text": "A dense Verge freeport and dock ring.", "source": "Rex Fleet Issue 01, pages 010-012"},
+	"auric_bazaar": {"name": "Auric Bazaar", "series": "Rex Fleet", "text": "A dense Verge freeport and dock ring.", "source": "Rex Fleet Issue 01, pages 010-012", "art": "auric_bazaar"},
 	"glass_corridor": {"name": "Glass Corridor", "series": "Azure Reach", "text": "Between glossy public spectacle and backstage operations.", "source": "Azure Reach Issue 01, pages 004, 009, 010"},
 }
 

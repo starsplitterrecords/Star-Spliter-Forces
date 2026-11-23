@@ -2357,6 +2357,54 @@
           "sha256": "62257a1ff6c55e9ecffde9b7c254d5aa659db03edcb244e84f12f9057edd4c3e"
         }
       ]
+    },
+    {
+      "id": "place_thunderbreak_bridge",
+      "repo": "RexPrompt",
+      "path": "production/references/rex-fleet/keeper/character/a8939324-00ab-48a6-9671-b087fe026b23.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art from the RexPrompt Reference Keeper (owner direction 2026-11-22)",
+      "source_sha256": "5b42c747848ea89bc3dfac0a9df4297690a8e73e9311cbfe352d91ed58902269",
+      "review_required": false,
+      "source_size": [
+        1774,
+        887
+      ],
+      "outputs": [
+        {
+          "out": "assets/places/thunderbreak_bridge.png",
+          "size": [
+            640,
+            320
+          ],
+          "sha256": "8752521a1ef3338c5fd4473251659edd986c11f2131250f11f9aa836259a7ffd"
+        }
+      ]
+    },
+    {
+      "id": "place_auric_bazaar",
+      "repo": "RexPrompt",
+      "path": "production/references/rex-fleet/keeper/setting/auric-bazaar.png",
+      "commit": "8178044",
+      "status": "keeper",
+      "use": "Archive place art from the RexPrompt Reference Keeper (owner direction 2026-11-22)",
+      "source_sha256": "ca328e19bb7d263be14c5712906254fffd6f80e64a8cfe9813500abb6fcce03c",
+      "review_required": false,
+      "source_size": [
+        1536,
+        1024
+      ],
+      "outputs": [
+        {
+          "out": "assets/places/auric_bazaar.png",
+          "size": [
+            640,
+            426
+          ],
+          "sha256": "1f3786a80af59e4023386b11fd4def6f4fe773d4d7b0b6cf461e0edd90066359"
+        }
+      ]
     }
   ]
 }

@@ -878,6 +878,12 @@ func _archive_universe() -> Control:
 		if pc:
 			pc.tooltip_text = key.replace("_", " ").capitalize()
 			cast.add_child(pc)
+	# Thunderbreak's bridge (Reference Keeper art): Ella's ship, from the start.
+	var bridge: TextureRect = _art("res://assets/places/thunderbreak_bridge.png", Vector2(0, 200))
+	if bridge:
+		bridge.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		inner.add_child(bridge)
+		inner.add_child(UiTheme.label("THUNDERBREAK COMMAND", 13, Color("74e6a5"), "bold"))
 	# People met and places charted on the Corridor Chart.
 	var met: Array = Profile.contacts_met()
 	inner.add_child(UiTheme.label("CONTACTS MET", 14, UiTheme.GOLD, "bold"))
@@ -905,6 +911,11 @@ func _archive_universe() -> Control:
 		var pdef2: Dictionary = GameData.PLACES[pk]
 		inner.add_child(UiTheme.label("%s  •  %s" % [String(pdef2["name"]), String(pdef2["series"])], 15, Color.WHITE, "bold"))
 		inner.add_child(UiTheme.label("%s  (%s)" % [String(pdef2["text"]), String(pdef2["source"])], 13, UiTheme.DIM))
+		if pdef2.has("art"):
+			var pa: TextureRect = _art("res://assets/places/%s.png" % String(pdef2["art"]), Vector2(0, 180))
+			if pa:
+				pa.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				inner.add_child(pa)
 		if not pk in charted:
 			_tag(inner, "not charted yet", true)
 	if charted.size() < GameData.PLACES.size() and not Profile.review():
