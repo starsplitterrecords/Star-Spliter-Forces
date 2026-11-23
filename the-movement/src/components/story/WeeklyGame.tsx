@@ -493,6 +493,68 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
 
               {toast && <p className="mt-2 text-center text-xs text-emerald-300" role="status">{toast}</p>}
 
+              {/* problems */}
+              {waiting > 0 && (
+                <section className="mt-4">
+                  <div className="flex items-baseline justify-between">
+                    <div className="label">Waiting for you</div>
+                    <div className="text-[11px] text-emerald-300">{(s.handsOn ?? 0) > 0 ? `Hands-on this week: +${Math.min(6, s.handsOn ?? 0) * 5}% recruiting` : 'Each one you answer yourself: +5% recruiting this week'}</div>
+                  </div>
+                  <ul className="mt-1 space-y-1">
+                    {s.inbox.map((i) => {
+                      const d = i.speaker !== 'anon' ? CHAR_BY_ID.get(i.speaker) : undefined;
+                      const old = (i.week ?? s.week) < s.week;
+                      return (
+                        <li key={i.uid}>
+                          <button className="flex w-full items-center gap-2 rounded-lg border border-ink-700 bg-ink-900 px-3 py-2 text-left text-sm hover:border-brass-400" onClick={() => openCard(i)}>
+                            <span aria-hidden>{d?.emoji ?? '🙋'}</span>
+                            <span className="min-w-0 flex-1 truncate">{d ? d.short : i.anon?.name ?? 'Someone'} in {city(i.city ?? s.hometown).name}</span>
+                            {old && <span className="text-[10px] uppercase text-red-300">waiting since last week</span>}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              )}
+
+              {canAuto(s) && (
+                <div className="mt-4 rounded-lg border border-ink-700 bg-ink-900 p-3">
+                  <label className="flex items-center justify-between gap-3 text-sm">
+                    <span>
+                      <b>Let Bev run the weeks</b>
+                      <span className="block text-xs text-ink-400">A week every {IDLE.weekMs / 1000} seconds while you watch, and up to {IDLE.offlineWeeks} weeks while you are away. She stops for anything only you can decide.</span>
+                    </span>
+                    <input
+                      type="checkbox"
+                      className="h-5 w-5 accent-[#e8cf8a]"
+                      checked={!!s.auto}
+                      onChange={(e) => {
+                        s.auto = e.target.checked;
+                        s.lastTick = Date.now();
+                        save();
+                        bump();
+                      }}
+                      aria-label="Let Bev run the weeks"
+                    />
+                  </label>
+                  {s.auto && (
+                    <div className="mt-2">
+                      <div className="h-1.5 rounded-full bg-ink-700"><div className="h-1.5 rounded-full bg-brass-400 transition-[width] duration-500" style={{ width: `${paused ? 0 : clockPct}%` }} /></div>
+                      <div className="mt-1 text-[11px] text-ink-400">{paused ? 'Paused: something is waiting that only you can decide.' : `Next week in ${Math.max(0, Math.ceil((IDLE.weekMs - (now - (s.lastTick ?? now))) / 1000))}s`}</div>
+                    </div>
+                  )}
+                </div>
+              )}
+              <button className="btn-primary mt-3 w-full py-3 text-base" onClick={() => doEndWeek()} disabled={urgent.length > 0}>
+                {urgent.length ? 'Deal with the urgent matter first' : s.auto ? 'Skip to next week →' : 'End the week →'}
+              </button>
+              {waiting > 0 && !urgent.length && (
+                <p className="mt-1 text-center text-[11px] text-ink-400">
+                  {s.auto || lvl(s, 'records') ? 'Routine problems you leave are handled by your administrators. Story moments wait for you.' : 'Problems left for more than a week go to an administrator if you have one, or get worse if you don’t.'}
+                </p>
+              )}
+
               {/* the towns, counting up */}
               <section className="mt-3">
                 <div className="label">Your towns</div>
@@ -580,67 +642,6 @@ export default function WeeklyGame({ s, onAbandon, onExit }: { s: StoryState; on
                 </p>
               </section>
 
-              {/* problems */}
-              {waiting > 0 && (
-                <section className="mt-4">
-                  <div className="flex items-baseline justify-between">
-                    <div className="label">Waiting for you</div>
-                    <div className="text-[11px] text-emerald-300">{(s.handsOn ?? 0) > 0 ? `Hands-on this week: +${Math.min(6, s.handsOn ?? 0) * 5}% recruiting` : 'Each one you answer yourself: +5% recruiting this week'}</div>
-                  </div>
-                  <ul className="mt-1 space-y-1">
-                    {s.inbox.map((i) => {
-                      const d = i.speaker !== 'anon' ? CHAR_BY_ID.get(i.speaker) : undefined;
-                      const old = (i.week ?? s.week) < s.week;
-                      return (
-                        <li key={i.uid}>
-                          <button className="flex w-full items-center gap-2 rounded-lg border border-ink-700 bg-ink-900 px-3 py-2 text-left text-sm hover:border-brass-400" onClick={() => openCard(i)}>
-                            <span aria-hidden>{d?.emoji ?? '🙋'}</span>
-                            <span className="min-w-0 flex-1 truncate">{d ? d.short : i.anon?.name ?? 'Someone'} in {city(i.city ?? s.hometown).name}</span>
-                            {old && <span className="text-[10px] uppercase text-red-300">waiting since last week</span>}
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-              )}
-
-              {canAuto(s) && (
-                <div className="mt-4 rounded-lg border border-ink-700 bg-ink-900 p-3">
-                  <label className="flex items-center justify-between gap-3 text-sm">
-                    <span>
-                      <b>Let Bev run the weeks</b>
-                      <span className="block text-xs text-ink-400">A week every {IDLE.weekMs / 1000} seconds while you watch, and up to {IDLE.offlineWeeks} weeks while you are away. She stops for anything only you can decide.</span>
-                    </span>
-                    <input
-                      type="checkbox"
-                      className="h-5 w-5 accent-[#e8cf8a]"
-                      checked={!!s.auto}
-                      onChange={(e) => {
-                        s.auto = e.target.checked;
-                        s.lastTick = Date.now();
-                        save();
-                        bump();
-                      }}
-                      aria-label="Let Bev run the weeks"
-                    />
-                  </label>
-                  {s.auto && (
-                    <div className="mt-2">
-                      <div className="h-1.5 rounded-full bg-ink-700"><div className="h-1.5 rounded-full bg-brass-400 transition-[width] duration-500" style={{ width: `${paused ? 0 : clockPct}%` }} /></div>
-                      <div className="mt-1 text-[11px] text-ink-400">{paused ? 'Paused: something is waiting that only you can decide.' : `Next week in ${Math.max(0, Math.ceil((IDLE.weekMs - (now - (s.lastTick ?? now))) / 1000))}s`}</div>
-                    </div>
-                  )}
-                </div>
-              )}
-              <button className="btn-primary mt-3 w-full py-3 text-base" onClick={() => doEndWeek()} disabled={urgent.length > 0}>
-                {urgent.length ? 'Deal with the urgent matter first' : s.auto ? 'Skip to next week →' : 'End the week →'}
-              </button>
-              {waiting > 0 && !urgent.length && (
-                <p className="mt-1 text-center text-[11px] text-ink-400">
-                  {s.auto || lvl(s, 'records') ? 'Routine problems you leave are handled by your administrators. Story moments wait for you.' : 'Problems left for more than a week go to an administrator if you have one, or get worse if you don’t.'}
-                </p>
-              )}
             </>
           )}
         </div>
