@@ -266,12 +266,10 @@
    "title": "AZURE REACH",
    "landmark": "azure_fountain",
    "color": "@c:4fd8ffff",
-   "contacts": [
-    "maya_serrano"
-   ],
+   "contacts": [],
    "place": "public_entrance",
    "crossover": "azure_reach",
-   "text": "A glass-and-water plaza. Out front it looks effortless. Maya Serrano keeps the wonder running."
+   "text": "A glass-and-water plaza. Out front it looks effortless. Underneath, Maya's systems keep it running."
   },
   "az_queue": {
    "kind": "character",
@@ -357,17 +355,6 @@
   }
  },
  "contacts": {
-  "maya_serrano": {
-   "name": "Maya Serrano",
-   "faction": "Azure Reach",
-   "role": "Life-support engineer. She keeps the wonder running.",
-   "portrait": "maya_serrano",
-   "captain": "maya_serrano",
-   "perk": {
-    "kind": "hp",
-    "value": 10
-   }
-  },
   "pip_omally": {
    "name": "Pip O'Mally",
    "faction": "Azure Reach",
@@ -457,7 +444,7 @@
    "id": "az_entrance",
    "chapter": 13,
    "power": 50,
-   "prize": "Maya Serrano",
+   "prize": "Place",
    "icon": "visions",
    "name": "Looks Effortless",
    "place": "Public Entrance",
@@ -473,7 +460,6 @@
    "new": "Signal Space shaped like a marine park. Spectacular above.",
    "brief": "A glass-and-water plaza, full of guests.",
    "reward": [
-    "Contact: Maya Serrano",
     "Place: Public Entrance"
    ],
    "grants": {}

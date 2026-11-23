@@ -219,6 +219,18 @@ func _draw_hull(c: Color) -> void:
 			draw_colored_polygon(PackedVector2Array([Vector2(4, -30), Vector2(14, -6), Vector2(20, 10), Vector2(2, 16)]), c)
 			for k in 3:
 				draw_circle(Vector2(sin(anim * 2.0 + k * 2.1) * 6.0, -10.0 + k * 9.0), 1.8, Color(t, 0.6 + 0.3 * sin(anim * 4.0 + k)))
+		"service_sub":
+			# Maya: an Azure Reach service sub — rounded navy hull, a cyan
+			# wave mark, a life-support tank on the back, a glowing porthole.
+			draw_circle(Vector2(0, 22), 5.0 * engine, Color(Color("4fd8ff"), 0.6))
+			pts = PackedVector2Array([Vector2(0, -28), Vector2(11, -18), Vector2(15, 4), Vector2(11, 20), Vector2(0, 24), Vector2(-11, 20), Vector2(-15, 4), Vector2(-11, -18)])
+			draw_colored_polygon(pts, c)
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color("0a1424"), 1.5)
+			draw_rect(Rect2(-6, 6, 12, 14), Color("8a9aa8"))
+			draw_line(Vector2(-6, 10), Vector2(6, 10), Color("4fd8ff"), 2.0)
+			draw_circle(Vector2(0, -12), 6.0, Color("bfefff", 0.85))
+			draw_arc(Vector2(0, -12), 6.0, 0.0, TAU, 14, t, 1.5)
+			draw_arc(Vector2(-2, 0), 7.0, PI * 1.1, PI * 1.9, 8, t, 2.5)
 		"requisition":
 			# Sir Eric: a company-issue transport — timber hull, iron bands,
 			# a maroon eye banner for a sail. Replacement still pending.

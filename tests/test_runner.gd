@@ -1311,6 +1311,17 @@ func test_sea_branch() -> void:
 	await get_tree().process_frame
 	check(run4.pois.items.any(func(q: Dictionary) -> bool: return String(q.id) == "seam_g53"), "seam not placed in its realm")
 	run4.queue_free()
+	# Maya Serrano captains the Azure Reach crew; old saves get her.
+	check(GameData.CHARACTERS.has("maya_serrano") and not GameData.CONTACTS.has("maya_serrano"), "Maya should be an explorer, not a contact")
+	check(GameData.crew_of("maya_serrano").size() == 3, "Azure crew should ride with Maya")
+	var old: Dictionary = Profile.migrate({"version": Profile.SAVE_VERSION, "discovered": {"vis_azure_broadcast": {"expedition": 1, "character": "ella_venn"}}})
+	check("maya_serrano" in old["unlocked_characters"], "old saves with the broadcast did not get Maya")
+	var run5: GameRun = _make_run({"character": "maya_serrano", "stop": "az_entrance"})
+	await get_tree().process_frame
+	run5.ability_cd = 0.0
+	run5.use_ability()
+	check(run5.ability_active > 0.0, "Life Support did not start")
+	run5.queue_free()
 	# A stage track counts as heard for roaming.
 	var before: int = GameData.unheard_roaming({}).size()
 	check(GameData.unheard_roaming({"des_launch_signal": {}}).size() == before - 1, "stage track still roaming")

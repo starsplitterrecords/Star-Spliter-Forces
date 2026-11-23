@@ -241,6 +241,7 @@ func _apply_start_bonuses() -> void:
 		"pickup": float(def["pickup"]) * (1.0 + 0.12 * Profile.workshop_rank("magnet")) * (1.15 if character_id == "jax_orien" and mastery_level >= 3 else 1.0),
 		"armor": float(def.get("armor", 0.0)) + (0.5 if character_id in ["tessa_banks", "bjorn", "brandon_mack", "sir_eric"] and mastery_level >= 3 else 0.0),
 		"head_start": Profile.workshop_rank("head_start") > 0 or (character_id == "jex_marrin" and mastery_level >= 4),
+		"damage_mult": 0.95 if character_id == "maya_serrano" else 1.0,
 	}
 	# Crew ride along with their captain.
 	var crew_rerolls: int = 0
@@ -775,6 +776,9 @@ func enemy_biome() -> String:
 		return remix_biome
 	return world.biome if world else "space"
 
+func maya_dome_radius() -> float:
+	return 170.0 * (1.4 if mastery_level >= 2 else 1.0)
+
 func boss_name() -> String:
 	return String(GameData.biome_get(world.biome if world else "space", "boss_name", "THE SILENCE"))
 
@@ -1085,7 +1089,7 @@ func ability_def() -> Dictionary:
 func ability_cooldown() -> float:
 	var cd: float = float(ability_def()["cooldown"])
 	match character_id:
-		"ella_venn", "bjorn", "lucia", "brandon_mack", "sir_eric":
+		"ella_venn", "bjorn", "lucia", "brandon_mack", "sir_eric", "maya_serrano":
 			if mastery_level >= 4:
 				cd -= 4.0
 		"jax_orien":
@@ -1161,6 +1165,11 @@ func use_ability() -> bool:
 			fx.ring(player.position, 20.0, 160.0, Color("d8323a"), 0.6, 6.0)
 			if hud:
 				hud.toast("SHARD CAPTAINS ANSWER THE CALL")
+		"life_support":
+			ability_active = 6.0 + (2.0 if mastery_level >= 1 else 0.0)
+			fx.ring(player.position, 20.0, maya_dome_radius(), Color("4fd8ff"), 0.6, 8.0)
+			if hud:
+				hud.toast("LIFE SUPPORT — KEEP IT RUNNING")
 		"requisition":
 			# Fodder and the skeleton legion: a ring of spears around Sir Eric.
 			var nsk: int = 4 if mastery_level >= 2 else 3
@@ -1292,6 +1301,14 @@ func _update_ability(delta: float) -> void:
 							e.knock += (e.position - player.position).normalized() * 900.0 * delta
 						if mastery_level >= 2:
 							damage_enemy(e, 25.0 * delta * player.damage_mult, Vector2.ZERO, 0.0, "ability", true)
+			"maya_serrano":
+				# The water dome: shots cleared, raiders slowed, steady repair.
+				var rd: float = maya_dome_radius()
+				clear_hostile_shots_near(player.position, rd)
+				player.heal((10.0 if mastery_level >= 3 else 5.0) * delta)
+				for e: ForceEnemy in enemy_hash.query(player.position, rd).duplicate():
+					if not e.dead and e.position.distance_to(player.position) < rd + e.radius:
+						e.slow = maxf(e.slow, 0.5)
 			"tessa_banks":
 				if ability_active <= 0.0:
 					player.max_shield = 0.0

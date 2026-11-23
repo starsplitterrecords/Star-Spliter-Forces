@@ -943,6 +943,14 @@ func _draw() -> void:
 		var sd: Vector2 = fwd.orthogonal()
 		draw_colored_polygon(PackedVector2Array([ap + fwd * 12.0, ap - fwd * 8.0 + sd * 8.0, ap - fwd * 8.0 - sd * 8.0]), Color("e6e3dc"))
 		draw_line(ap - fwd * 6.0, ap + fwd * 8.0, Color("d8323a"), 2.0)
+	if run.character_id == "maya_serrano" and run.ability_active > 0.0:
+		# Life Support: a water dome.
+		var rd: float = run.maya_dome_radius()
+		draw_circle(player.position, rd, Color(0.31, 0.85, 1.0, 0.08))
+		draw_arc(player.position, rd, 0.0, TAU, 48, Color(0.31, 0.85, 1.0, 0.55), 3.0)
+		for k in 4:
+			var a: float = anim * 0.8 + TAU * k / 4.0
+			draw_arc(player.position, rd * 0.8, a, a + 0.5, 8, Color(0.75, 0.95, 1.0, 0.4), 2.0)
 	if run.relay_time > 0.0:
 		# Launch-Shop relay: a short tripod mast with a dish and a blinking lamp.
 		var rp: Vector2 = run.relay_pos

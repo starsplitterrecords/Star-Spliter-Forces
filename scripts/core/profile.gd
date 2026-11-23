@@ -207,6 +207,12 @@ static func migrate(raw: Dictionary) -> Dictionary:
 		out["unlocked_destinations"].append("black_drift_reach")
 	if not "pulse_width_codex" in out["forces_attuned"]:
 		out["forces_attuned"].append("pulse_width_codex")
+	# Explorers added to a discovery after it was found (e.g. Maya Serrano on
+	# the Sea Turtle Thursdays broadcast) are credited to saves that have it.
+	for did: String in (out["discovered"] as Dictionary).keys():
+		var uc: String = String(GameData.DISCOVERIES.get(did, {}).get("unlock_character", ""))
+		if uc != "" and GameData.CHARACTERS.has(uc) and not uc in out["unlocked_characters"]:
+			out["unlocked_characters"].append(uc)
 	# Drop references to content that no longer exists.
 	out["unlocked_characters"] = out["unlocked_characters"].filter(func(c: Variant) -> bool: return GameData.CHARACTERS.has(String(c)))
 	out["forces_attuned"] = out["forces_attuned"].filter(func(f: Variant) -> bool: return GameData.FORCES.has(String(f)))
