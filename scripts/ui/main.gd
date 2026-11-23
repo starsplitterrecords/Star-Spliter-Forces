@@ -884,27 +884,7 @@ func _archive_universe() -> Control:
 		bridge.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		inner.add_child(bridge)
 		inner.add_child(UiTheme.label("THUNDERBREAK COMMAND", 13, Color("74e6a5"), "bold"))
-	# People met and places charted on the Corridor Chart.
-	var met: Array = Profile.contacts_met()
-	inner.add_child(UiTheme.label("CONTACTS MET", 14, UiTheme.GOLD, "bold"))
-	for ck: String in (GameData.CONTACTS.keys() if Profile.review() else met):
-		var cdef: Dictionary = GameData.CONTACTS[ck]
-		var crow: HBoxContainer = HBoxContainer.new()
-		crow.add_theme_constant_override("separation", 10)
-		inner.add_child(crow)
-		var cp: TextureRect = _art("res://assets/characters/%s_96.png" % String(cdef["portrait"]), Vector2(56, 56))
-		if cp:
-			crow.add_child(cp)
-		var cv: VBoxContainer = VBoxContainer.new()
-		cv.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		crow.add_child(cv)
-		cv.add_child(UiTheme.label("%s  •  %s" % [String(cdef["name"]), String(cdef["faction"])], 15, Color.WHITE, "bold"))
-		cv.add_child(UiTheme.label(String(cdef["role"]), 13, UiTheme.DIM))
-		if cdef.has("perk") and GameData.CHARACTERS.has(String(cdef.get("captain", ""))):
-			cv.add_child(UiTheme.label("Rides with %s: %s" % [String(GameData.CHARACTERS[String(cdef["captain"])]["name"]), GameData.perk_text(cdef["perk"])], 13, UiTheme.GOLD))
-		_tag(cv, _stage_hint(GameData.stage_for_contact(ck)), not ck in met)
-	if met.size() < GameData.CONTACTS.size() and not Profile.review():
-		inner.add_child(_more_line("%d more contact%s on the Corridor Chart." % [GameData.CONTACTS.size() - met.size(), "" if GameData.CONTACTS.size() - met.size() == 1 else "s"]))
+	# Places charted on the Corridor Chart (crew are listed with their explorer).
 	var charted: Array = Profile.places_charted()
 	inner.add_child(UiTheme.label("PLACES CHARTED", 14, UiTheme.GOLD, "bold"))
 	for pk: String in (GameData.PLACES.keys() if Profile.review() else charted):
@@ -1001,6 +981,32 @@ func _archive_explorers() -> Control:
 		for i in perks.size():
 			lines.append(("✓ " if i < int(m["level"]) else "· ") + String(perks[i]))
 		inner.add_child(UiTheme.label("Mastery %d — expeditions %d, completions %d\n%s" % [int(m["level"]), int(m["expeditions"]), int(m["completions"]), "\n".join(lines)], 13, UiTheme.DIM))
+		# This explorer's crew: only the people who ride with them.
+		var all_crew: Array = GameData.crew_of(cid)
+		var found_crew: Array = Profile.crew(cid)
+		var shown_crew: Array = all_crew if Profile.review() else found_crew
+		if not shown_crew.is_empty():
+			inner.add_child(UiTheme.label("CREW", 13, UiTheme.DIM, "bold"))
+			var cflow: HFlowContainer = HFlowContainer.new()
+			cflow.add_theme_constant_override("h_separation", 14)
+			cflow.add_theme_constant_override("v_separation", 8)
+			inner.add_child(cflow)
+			for ck: String in shown_crew:
+				var cdef: Dictionary = GameData.CONTACTS[ck]
+				var chip: HBoxContainer = HBoxContainer.new()
+				chip.add_theme_constant_override("separation", 8)
+				cflow.add_child(chip)
+				var cpt: TextureRect = _art("res://assets/characters/%s_256.png" % String(cdef["portrait"]), Vector2(56, 56))
+				if cpt:
+					if not ck in found_crew:
+						cpt.modulate = Color(0.45, 0.45, 0.5)
+					chip.add_child(cpt)
+				var cl: Label = UiTheme.label("%s\n%s" % [String(cdef["name"]), GameData.perk_text(cdef["perk"])], 13, UiTheme.TEXT if ck in found_crew else UiTheme.DIM)
+				cl.autowrap_mode = TextServer.AUTOWRAP_OFF
+				cl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+				chip.add_child(cl)
+		if all_crew.size() > found_crew.size() and not Profile.review():
+			inner.add_child(_more_line("%d more crew to find." % (all_crew.size() - found_crew.size())))
 	if unknown_contacts > 0:
 		var nx: Dictionary = _next_unlock("character")
 		inner.add_child(_more_line("%d more explorer%s to find.%s" % [unknown_contacts, "" if unknown_contacts == 1 else "s", (" Next: %s, at \"%s\"." % [String(GameData.CHARACTERS[String(nx["id"])]["name"]), String(nx["stop"]["name"])]) if not nx.is_empty() else ""]))

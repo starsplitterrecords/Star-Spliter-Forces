@@ -959,9 +959,13 @@ class HudCanvas:
 		var narrow: bool = UiTheme.is_narrow()
 		var p: ForcePlayer = run.player
 		var accent: Color = GameData.CHARACTERS[run.character_id]["accent"]
+		# Realm tint: each story realm colours the HUD (Rex Fleet space keeps the default).
+		var realm_tinted: bool = run.world.biome != "space"
+		var realm: Color = StageIcon.BIOME_TINT.get(run.world.biome, Color("68ecff"))
+		var bg: Color = Color(0.02, 0.04, 0.09, 0.72).lerp(Color(realm, 0.72), 0.16) if realm_tinted else Color(0.02, 0.04, 0.09, 0.72)
 		# Status card.
 		var card: Rect2 = Rect2(safe.position, Vector2(hud.CARD_W, hud.CARD_H))
-		draw_style_box(_panel(Color(0.02, 0.04, 0.09, 0.72), Color(accent, 0.35), 12), card)
+		draw_style_box(_panel(bg, Color(realm, 0.7) if realm_tinted else Color(accent, 0.35), 12), card)
 		var inner: float = hud.CARD_W - hud.CARD_PAD * 2.0
 		var o: Vector2 = card.position + Vector2(hud.CARD_PAD, hud.CARD_PAD)
 		# Hull bar (rounded), shield as a pale strip on top.
@@ -987,13 +991,13 @@ class HudCanvas:
 		if tl:
 			var tw0: float = font.get_string_size(tl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UiTheme.fs(15)).x + 28.0
 			var tc: Vector2 = tl.position + tl.size * 0.5
-			draw_style_box(_panel(Color(0.02, 0.04, 0.09, 0.6), Color(1, 1, 1, 0.12), 14), Rect2(tc - Vector2(tw0 * 0.5, 15), Vector2(tw0, 30)))
+			draw_style_box(_panel(Color(bg, 0.6), Color(realm, 0.5) if realm_tinted else Color(1, 1, 1, 0.12), 14), Rect2(tc - Vector2(tw0 * 0.5, 15), Vector2(tw0, 30)))
 		# Objective pill with an accent edge.
 		var ol: Label = hud.objective_label
 		if ol.text != "":
 			var orect: Rect2 = Rect2(ol.position - Vector2(12, 8), Vector2(ol.size.x + 24, ol.size.y + 16))
-			draw_style_box(_panel(Color(0.02, 0.05, 0.1, 0.72), Color(0, 0, 0, 0), 10), orect)
-			draw_rect(Rect2(orect.position + Vector2(0, 6), Vector2(4, orect.size.y - 12)), Color("68ecff"))
+			draw_style_box(_panel(bg, Color(realm, 0.35) if realm_tinted else Color(0, 0, 0, 0), 10), orect)
+			draw_rect(Rect2(orect.position + Vector2(0, 6), Vector2(4, orect.size.y - 12)), realm)
 		# Force mechanic meters.
 		_draw_force_meters(run, (Vector2(safe.position.x + 4, safe.position.y + hud.CARD_H + 6) if narrow else Vector2(safe.position.x + hud.CARD_W + 16, safe.position.y + 40)), font)
 		# Minimap.
@@ -1065,7 +1069,8 @@ class HudCanvas:
 		var hs: Vector2 = world.half_size
 		var sc: float = minf(rect.size.x / (hs.x * 2.0), rect.size.y / (hs.y * 2.0))
 		var center: Vector2 = rect.get_center()
-		draw_style_box(_panel(Color(0.02, 0.03, 0.07, 0.8), Color(1, 1, 1, 0.18), 10), rect.grow(4.0))
+		var mtint: Color = StageIcon.BIOME_TINT.get(world.biome, Color.WHITE)
+		draw_style_box(_panel(Color(0.02, 0.03, 0.07, 0.8), Color(mtint, 0.55) if world.biome != "space" else Color(1, 1, 1, 0.18), 10), rect.grow(4.0))
 		var to_map: Callable = func(p: Vector2) -> Vector2: return center + p * sc
 		for rid: String in world.region_ids:
 			var r: Dictionary = GameData.REGIONS[rid]

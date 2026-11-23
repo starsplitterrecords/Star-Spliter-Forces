@@ -11,6 +11,12 @@ func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(out_dir)
 	Profile.save_path = "user://capture_review_profile.json"
 	Profile.data = Profile.defaults()
+	Profile.data["unlocked_characters"] = ["ella_venn", "naomi_sol", "bjorn"]
+	for d: String in ["k_freighter_d", "sea_longship", "sea_dti_office", "k_auric_d"]:
+		Profile.data["discovered"][d] = {"expedition": 1, "character": "ella_venn"}
+	for d2: String in GameData.DISCOVERIES.keys():
+		if "luminara_mother" in GameData.DISCOVERIES[d2].get("contacts", []) or "chris_halev" in GameData.DISCOVERIES[d2].get("contacts", []):
+			Profile.data["discovered"][d2] = {"expedition": 1, "character": "ella_venn"}
 	var main: Node = load("res://scripts/ui/main.gd").new()
 	add_child(main)
 	await get_tree().create_timer(0.3).timeout
@@ -23,7 +29,7 @@ func _ready() -> void:
 		var tabs: TabContainer = main.screen.find_children("*", "TabContainer", true, false)[0]
 		for i in tabs.get_tab_count():
 			var nm: String = tabs.get_tab_control(i).name
-			if nm in ["Forces", "Rex Fleet", "Shelves"]:
+			if nm in ["Forces", "Rex Fleet", "Shelves", "Explorers"]:
 				tabs.current_tab = i
 				await get_tree().create_timer(0.3).timeout
 				await RenderingServer.frame_post_draw
