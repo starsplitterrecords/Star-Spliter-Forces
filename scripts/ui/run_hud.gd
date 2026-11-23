@@ -30,6 +30,7 @@ var hint_label: Label
 var hint_clock: float = 0.0
 var card: PanelContainer
 var card_clock: float = 0.0
+var card_age: float = 99.0 # seconds the current discovery card has been up
 var level_panel: Control
 var level_box: BoxContainer
 var level_options: Array = []
@@ -427,6 +428,7 @@ func discovery_card(title: String, text: String, color: Color, first_time: bool,
 	root.add_child(card)
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card_clock = 6.5 + 1.5 * gains.size()
+	card_age = 0.0
 	_fit_panel(card, true)
 
 ## Shrinks a floating panel to its content and keeps it on screen. Safe to

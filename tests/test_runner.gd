@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries", "test_checkpoint_recovery",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_playtest_mode", "test_crew_ride_along", "test_gentle_difficulty", "test_remixes", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_playtest_mode", "test_crew_ride_along", "test_gentle_difficulty", "test_remixes", "test_upgrade_after_card", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	# Optional filter: godot --headless res://tests/TestRunner.tscn -- name [name...]
 	var only: PackedStringArray = OS.get_cmdline_user_args()
@@ -62,6 +62,8 @@ func _dispatch(t: String) -> void:
 			await test_gentle_difficulty()
 		"test_remixes":
 			await test_remixes()
+		"test_upgrade_after_card":
+			await test_upgrade_after_card()
 		"test_visions_guests":
 			await test_visions_guests()
 		"test_new_content":
@@ -1179,6 +1181,20 @@ func test_remixes() -> void:
 	run2.queue_free()
 	Profile.record_expedition({"outcome": "extracted", "stop": "first_light", "remix": rmx, "character": "ella_venn", "time": 60.0})
 	check(Profile.remix_for("first_light") != rmx, "remix did not rotate")
+
+## A free upgrade from a find opens only after its discovery card is seen.
+func test_upgrade_after_card() -> void:
+	_reset_profile()
+	var run: GameRun = _make_run({})
+	await get_tree().process_frame
+	run.hud.discovery_card("TEST", "", Color.WHITE, true, "visions", ["Free upgrade"])
+	var before: int = run.upgrades_offered
+	run.pending_levels += 1
+	_sim(run, 1.0, func(_r: GameRun) -> void: pass)
+	check(run.upgrades_offered == before, "upgrade opened over the discovery card")
+	_sim(run, 2.0, func(_r: GameRun) -> void: pass)
+	check(run.upgrades_offered > before, "upgrade never opened after the card")
+	run.queue_free()
 
 ## Crew: contacts found ride along with their captain and give their perk.
 func test_crew_ride_along() -> void:

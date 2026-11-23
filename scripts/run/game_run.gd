@@ -65,6 +65,8 @@ var current_region: String = ""
 var visited_regions: Array = []
 var boss: ForceEnemy = null
 const POWER_SCALE: float = 0.65
+## Seconds a discovery card stays readable before a free upgrade opens.
+const CARD_READ_TIME: float = 2.5
 ## Boss fights are meant to be a spectacle, not a wall: 30% softer hits.
 const BOSS_EASE: float = 0.7
 ## Enemies grow tougher with how far along the whole route you are (up to +40%).
@@ -431,7 +433,10 @@ func step(delta: float) -> void:
 			end_run("complete")
 	if ended:
 		return
-	if pending_levels > 0 and not choosing:
+	if hud and hud.card:
+		hud.card_age += delta
+	# A free upgrade from a find waits until its discovery card has been seen.
+	if pending_levels > 0 and not choosing and not (hud and hud.card and hud.card_age < CARD_READ_TIME):
 		_open_level_up()
 
 func _read_input() -> void:

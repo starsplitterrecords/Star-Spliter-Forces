@@ -613,6 +613,68 @@ func _on_run_finished(result: Dictionary) -> void:
 	await get_tree().create_timer(1.2, true, false, true).timeout
 	show_results()
 
+## What a run found, grouped so each thing appears once, by what it is:
+## records (by their real titles), people and places, the mystery, unlocks.
+func _results_found(right: VBoxContainer, r: Dictionary, stop: Dictionary) -> void:
+	var new_ids: Array = last_commit.get("new_discoveries", [])
+	var unlocks: Array = last_commit.get("unlocks", [])
+	var records: Array = []   # [text, is_new]
+	var people: Array = []
+	var mystery: Array = []
+	var other: Array = []
+	var new_tracks: Dictionary = {}
+	for u: Dictionary in unlocks:
+		if String(u["kind"]) == "transmission":
+			new_tracks[String(u["id"])] = true
+	for did: String in r["discoveries"]:
+		var d: Dictionary = GameData.DISCOVERIES[did]
+		var is_new: bool = did in new_ids
+		var kind: String = String(d["kind"])
+		if d.has("transmission"):
+			var t: Dictionary = GameData.TRANSMISSIONS[String(d["transmission"])]
+			records.append(["%s — %s" % [String(t["project"]), String(t["title"])], new_tracks.has(String(d["transmission"]))])
+		elif d.has("seam") or kind in ["fragment", "anomaly"]:
+			mystery.append([String(d["title"]).capitalize() if not d.has("seam") else String(d["text"]), is_new])
+		elif kind == "character":
+			var line: String = String(GameData.PLACES[String(d["place"])]["name"]) if d.has("place") and GameData.PLACES.has(String(d["place"])) else String(d["title"]).capitalize()
+			people.append([line, is_new])
+			for c: Variant in d.get("contacts", []):
+				var cd: Dictionary = GameData.CONTACTS.get(String(c), {})
+				if not cd.is_empty():
+					var cap: String = String(cd.get("captain", ""))
+					people.append(["Crew: %s%s" % [String(cd["name"]), (" (with %s)" % String(GameData.CHARACTERS[cap]["short"]).capitalize()) if GameData.CHARACTERS.has(cap) else ""], is_new])
+		else:
+			other.append([String(d["title"]).capitalize(), is_new])
+	for u2: Dictionary in unlocks:
+		match String(u2["kind"]):
+			"character":
+				people.append(["New explorer: " + String(GameData.CHARACTERS[String(u2["id"])]["name"]), true])
+			"force":
+				other.append(["Force attuned: " + String(GameData.FORCES[String(u2["id"])]["name"]), true])
+			"destination":
+				other.append(["New destination: " + String(GameData.DESTINATIONS[String(u2["id"])]["name"]), true])
+			"fragment":
+				if mystery.is_empty():
+					mystery.append(["A fragment of the hush", true])
+	if records.is_empty() and people.is_empty() and mystery.is_empty() and other.is_empty():
+		right.add_child(UiTheme.label("FOUND", 13, UiTheme.DIM, "bold"))
+		right.add_child(UiTheme.label("Nothing this time." if not stop.is_empty() else "Nothing this time. Columns of light are signals: fly into the ring and hold still.", 15, UiTheme.TEXT))
+		return
+	for sec: Array in [["RECORDS", records, "signal"], ["PEOPLE & PLACES", people, "visions"], ["MYSTERY", mystery, "fragment"], ["UNLOCKED", other, "artifact"]]:
+		var items: Array = sec[1]
+		if items.is_empty():
+			continue
+		var head: HBoxContainer = HBoxContainer.new()
+		head.add_theme_constant_override("separation", 8)
+		right.add_child(head)
+		head.add_child(CategoryIcon.new(String(sec[2]), 26.0))
+		var hl: Label = UiTheme.label(String(sec[0]), 13, UiTheme.DIM, "bold")
+		hl.autowrap_mode = TextServer.AUTOWRAP_OFF
+		hl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		head.add_child(hl)
+		for it: Array in items:
+			right.add_child(UiTheme.label(("✦ " if bool(it[1]) else "   ") + String(it[0]), 15, UiTheme.GOLD if bool(it[1]) else UiTheme.DIM))
+
 func show_results() -> void:
 	var v: VBoxContainer = _new_screen()
 	var r: Dictionary = last_result
@@ -681,29 +743,7 @@ func show_results() -> void:
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	right.add_theme_constant_override("separation", 4)
 	row.add_child(right)
-	right.add_child(UiTheme.label("DISCOVERIES", 13, UiTheme.DIM, "bold"))
-	var discs: Array = r["discoveries"]
-	if discs.is_empty():
-		right.add_child(UiTheme.label("None this time." if not stop.is_empty() else "None this time. Columns of light are signals — fly into the ring and hold still.", 15, UiTheme.TEXT))
-	for did: String in discs:
-		var d: Dictionary = GameData.DISCOVERIES[did]
-		var is_new: bool = did in (last_commit.get("new_discoveries", []) as Array)
-		right.add_child(UiTheme.label(("NEW  " if is_new else "") + String(d["title"]) + "  —  " + String(d["kind"]).to_upper(), 15, UiTheme.GOLD if is_new else UiTheme.TEXT))
-	for u: Dictionary in last_commit.get("unlocks", []):
-		var text: String = ""
-		match String(u["kind"]):
-			"force":
-				text = "FORCE ATTUNED: " + String(GameData.FORCES[String(u["id"])]["name"])
-			"transmission":
-				var t: Dictionary = GameData.TRANSMISSIONS[String(u["id"])]
-				text = "ARCHIVE: %s — %s" % [String(t["project"]), String(t["title"])]
-			"character":
-				text = "NEW EXPLORER: " + String(GameData.CHARACTERS[String(u["id"])]["name"])
-			"fragment":
-				text = "MYSTERY FRAGMENT RECOVERED"
-			"destination":
-				text = "NEW DESTINATION: " + String(GameData.DESTINATIONS[String(u["id"])]["name"])
-		right.add_child(UiTheme.label(text, 15, Color("9ff7d0"), "bold"))
+	_results_found(right, r, stop)
 	var buttons: HFlowContainer = HFlowContainer.new()
 	buttons.add_theme_constant_override("h_separation", 12)
 	buttons.add_theme_constant_override("v_separation", 8)
