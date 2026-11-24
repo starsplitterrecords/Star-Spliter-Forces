@@ -1302,6 +1302,7 @@ func show_settings() -> void:
 	_slider(grid, "Music volume", "music_volume", 0.0, 1.0, 0.05)
 	_slider(grid, "Effects volume", "sfx_volume", 0.0, 1.0, 0.05)
 	_slider(grid, "Screen shake", "screen_shake", 0.0, 1.0, 0.25)
+	_slider(grid, "Glow", "glow", 0.0, 1.5, 0.25)
 	_slider(grid, "Text size", "text_scale", 0.8, 1.4, 0.1)
 	_slider(grid, "Screen edge padding (if the top or bottom is hidden)", "edge_padding", 0.0, 90.0, 5.0)
 	_toggle(grid, "Reduced flashes & hit-stop", "reduced_flashes")

@@ -22,11 +22,9 @@ func _ready() -> void:
 	run.scripted_input = true
 	run.player.god_mode = true
 	run.hud.teach_queue.clear()
-	for k in 6:
-		run.spawn_enemy("skiff", run.player.position + Vector2.from_angle(k) * 150.0, true)
-	run.ability_cd = 0.0
-	run.use_ability()
-	await get_tree().create_timer(0.6).timeout
+	for k in 14:
+		run.spawn_enemy(["skiff", "rail_picket", "ram_cutter"][k % 3], run.player.position + Vector2.from_angle(k * 0.45) * (220.0 + k * 12.0), true)
+	await get_tree().create_timer(1.6).timeout
 	if run.hud.teach_blocking:
 		run.hud._dismiss_teach()
 		await get_tree().create_timer(0.3).timeout

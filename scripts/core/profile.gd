@@ -49,6 +49,7 @@ static func default_settings() -> Dictionary:
 		"fps_cap": 60,
 		"high_contrast": false,
 		"edge_padding": 0.0,
+		"glow": 1.0,
 		"playtest_invincible": false,
 		"playtest_short": true,
 		"playtest_review": false,

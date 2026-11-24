@@ -73,6 +73,7 @@ const BOSS_EASE: float = 0.7
 const DEPTH_PER_STAGE: float = 0.006
 const DEPTH_MAX: float = 0.25
 var steady: bool = false
+var glow: GlowLayer
 var remix: String = ""
 var remix_biome: String = ""
 var _echo_spawning: bool = false
@@ -203,6 +204,24 @@ func _build() -> void:
 	fx.reduced_flashes = bool(Profile.setting("reduced_flashes"))
 	fx.damage_numbers = bool(Profile.setting("damage_numbers"))
 	add_child(fx)
+	# Modern light: soft additive halos, and a finishing colour pass under the HUD.
+	var glow_amt: float = float(Profile.setting("glow")) * (0.6 if bool(Profile.setting("reduced_flashes")) else 1.0)
+	glow = GlowLayer.new()
+	glow.run = self
+	glow.strength = glow_amt
+	add_child(glow)
+	if glow_amt > 0.0:
+		var grade_layer: CanvasLayer = CanvasLayer.new()
+		grade_layer.layer = 1
+		add_child(grade_layer)
+		var grade: ColorRect = ColorRect.new()
+		grade.set_anchors_preset(Control.PRESET_FULL_RECT)
+		grade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var gm: ShaderMaterial = ShaderMaterial.new()
+		gm.shader = load("res://shaders/grade.gdshader")
+		gm.set_shader_parameter("saturation", 1.0 + 0.15 * minf(1.0, glow_amt))
+		grade.material = gm
+		grade_layer.add_child(grade)
 	camera = Camera2D.new()
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 7.0
