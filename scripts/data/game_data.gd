@@ -1452,6 +1452,17 @@ const REMIXES: Dictionary = {
 	"double_time": {"name": "DOUBLE TIME", "desc": "Faster raiders. Faster levels."},
 }
 
+## The Force a track belongs to: its own "force", else the Force named after
+## its project ("" when the artist has no Force yet).
+static func track_force(tid: String) -> String:
+	var t: Dictionary = TRANSMISSIONS.get(tid, {})
+	if String(t.get("force", "")) != "":
+		return String(t["force"])
+	for fid: String in FORCES.keys():
+		if String(FORCES[fid]["name"]) == String(t.get("project", "")):
+			return fid
+	return ""
+
 static func seams() -> Array:
 	return DISCOVERIES.keys().filter(func(d: String) -> bool: return DISCOVERIES[d].has("seam"))
 

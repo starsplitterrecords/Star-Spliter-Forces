@@ -20,7 +20,7 @@ func _ready() -> void:
 		"test_simulated_expedition_minute", "test_upgrade_pause_cycle", "test_signal_discovery_attunes_force",
 		"test_hidden_sites_follow_state", "test_signal_locks", "test_camps_and_echoes", "test_extraction", "test_boss_completion_and_unlocks", "test_death_keeps_discoveries", "test_checkpoint_recovery",
 		"test_evolution_offer", "test_every_weapon_fires", "test_harmony_discovery", "test_abilities",
-		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_playtest_mode", "test_crew_ride_along", "test_gentle_difficulty", "test_remixes", "test_upgrade_after_card", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
+		"test_real_frames", "test_new_content", "test_visions_guests", "test_corridor_chart", "test_review_regressions", "test_second_destination", "test_sea_branch", "test_playtest_mode", "test_crew_ride_along", "test_gentle_difficulty", "test_remixes", "test_upgrade_after_card", "test_tracks_give_weapons", "test_menu_screens_build", "test_hud_fits_aspect_ratios", "test_performance_budget",
 	]
 	# Optional filter: godot --headless res://tests/TestRunner.tscn -- name [name...]
 	var only: PackedStringArray = OS.get_cmdline_user_args()
@@ -64,6 +64,8 @@ func _dispatch(t: String) -> void:
 			await test_remixes()
 		"test_upgrade_after_card":
 			await test_upgrade_after_card()
+		"test_tracks_give_weapons":
+			await test_tracks_give_weapons()
 		"test_visions_guests":
 			await test_visions_guests()
 		"test_new_content":
@@ -1194,6 +1196,37 @@ func test_upgrade_after_card() -> void:
 	check(run.upgrades_offered == before, "upgrade opened over the discovery card")
 	_sim(run, 2.0, func(_r: GameRun) -> void: pass)
 	check(run.upgrades_offered > before, "upgrade never opened after the card")
+	run.queue_free()
+
+## Every track arms the ship: Force tracks attune and give/level the Force's
+## weapon; tracks by artists without a Force still give a weapon.
+func test_tracks_give_weapons() -> void:
+	_reset_profile()
+	check(GameData.track_force("ido_freeze_frame") == "ion_drive_orchestra", "track not mapped to its Force")
+	var run: GameRun = _make_run({})
+	await get_tree().process_frame
+	var w0: int = run.weapons.weapons.size()
+	var lv0: int = 0
+	for k: Variant in run.weapons.weapons.values():
+		lv0 += int(k)
+	# A Force track (Ion Drive Orchestra) adds its weapon.
+	var q: Dictionary = {"id": "r3_echo_freeze", "kind": "signal", "pos": run.player.position, "title": "T", "color": Color.WHITE, "data": GameData.DISCOVERIES["r3_echo_freeze"], "claimed": false, "hidden": "", "known": true, "repeat": false, "lock": ""}
+	run._claim_discovery(q)
+	check("ion_drive_orchestra" in run.attuned, "Force track did not attune its Force")
+	# A track by an artist with no Force still adds or levels a weapon.
+	var cat: Array = GameData.DISCOVERIES.keys().filter(func(d: String) -> bool: return d.begins_with("trk_") and GameData.track_force(String(GameData.DISCOVERIES[d]["transmission"])) == "")
+	check(not cat.is_empty(), "no Force-less catalogue track to test")
+	var q2: Dictionary = q.duplicate()
+	q2["id"] = String(cat[0])
+	q2["data"] = GameData.DISCOVERIES[String(cat[0])]
+	run._claim_discovery(q2)
+	var lv1: int = 0
+	for k2: Variant in run.weapons.weapons.values():
+		lv1 += int(k2)
+	check(run.weapons.weapons.size() > w0 and lv1 >= lv0 + 2, "tracks did not arm the ship")
+	run.end_run("extracted")
+	Profile.record_expedition(finished_result)
+	check(Profile.is_attuned("ion_drive_orchestra"), "Force not attuned permanently by its track")
 	run.queue_free()
 
 ## Crew: contacts found ride along with their captain and give their perk.

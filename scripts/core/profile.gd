@@ -214,6 +214,12 @@ static func migrate(raw: Dictionary) -> Dictionary:
 		var uc: String = String(GameData.DISCOVERIES.get(did, {}).get("unlock_character", ""))
 		if uc != "" and GameData.CHARACTERS.has(uc) and not uc in out["unlocked_characters"]:
 			out["unlocked_characters"].append(uc)
+		# Forces whose tracks were heard before tracks attuned them.
+		var dd: Dictionary = GameData.DISCOVERIES.get(did, {})
+		if dd.has("transmission"):
+			var tf: String = GameData.track_force(String(dd["transmission"]))
+			if tf != "" and not tf in out["forces_attuned"]:
+				out["forces_attuned"].append(tf)
 	# Drop references to content that no longer exists.
 	out["unlocked_characters"] = out["unlocked_characters"].filter(func(c: Variant) -> bool: return GameData.CHARACTERS.has(String(c)))
 	out["forces_attuned"] = out["forces_attuned"].filter(func(f: Variant) -> bool: return GameData.FORCES.has(String(f)))
@@ -280,6 +286,9 @@ static func _apply_unlocks(target: Dictionary, discovery_id: String) -> Array:
 	if d.is_empty():
 		return gained
 	var force_id: String = String(d.get("force", ""))
+	if force_id == "" and d.has("transmission"):
+		# Hearing any track by a Force's artist attunes that Force.
+		force_id = GameData.track_force(String(d["transmission"]))
 	if force_id != "" and not force_id in target["forces_attuned"]:
 		target["forces_attuned"].append(force_id)
 		gained.append({"kind": "force", "id": force_id})

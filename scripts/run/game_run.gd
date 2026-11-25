@@ -1483,7 +1483,16 @@ func _claim_discovery(p: Dictionary) -> void:
 				if String(d.get("force", "")) == "":
 					gains.append("Record: %s" % String(t["project"]))
 				gains.append("Track: %s" % String(t["title"]))
-			att = _attune(String(d.get("force", "")))
+			# Every track arms the ship: its artist's Force and weapon, or a
+			# weapon level; artists without a Force yet still bring a weapon.
+			var tfid: String = String(d.get("force", ""))
+			if tfid == "":
+				tfid = GameData.track_force(String(d.get("transmission", "")))
+			att = _attune(tfid)
+			if not att.contains("(+"):
+				var wg: String = _track_weapon(tfid)
+				if wg != "":
+					gains.push_front(wg)
 			if mission.is_empty():
 				var left: int = goal_signals() - signals_found()
 				gains.append("SIGNALS %d / %d — %s" % [signals_found(), goal_signals(), ("%d more to call out The Silence." % left) if left > 0 else "The Silence can be called out at the gate."])
@@ -1590,6 +1599,33 @@ func spawn_guardian(p: Dictionary) -> ForceEnemy:
 
 ## Attunes a Force mid-run. A newly heard Force arrives as a weapon at once:
 ## discovery changes what you can do, right now. Returns text for the card.
+## A track's weapon gift: the Force's own weapon (new, or one level up); for
+## artists without a Force, a new weapon from an attuned Force if a slot is
+## free, else a level on one carried. Returns the card line ("" if none).
+func _track_weapon(force_id: String) -> String:
+	var ws: WeaponSystem = weapons
+	if force_id != "" and GameData.FORCES.has(force_id):
+		var prim: String = String(GameData.FORCES[force_id]["primary"])
+		if ws.weapons.has(prim) and int(ws.weapons[prim]) < 5:
+			ws.add_weapon(prim)
+			return "%s → Lv %d" % [GameData.weapon_name(prim), int(ws.weapons[prim])]
+		if not ws.has_base(prim) and ws.weapons.size() < WeaponSystem.MAX_WEAPONS:
+			ws.add_weapon(prim)
+			return "Weapon: " + GameData.weapon_name(prim)
+	if ws.weapons.size() < WeaponSystem.MAX_WEAPONS:
+		var fresh: Array = GameData.WEAPONS.keys().filter(func(w: String) -> bool: return not ws.has_base(w) and String(GameData.WEAPONS[w]["force"]) in attuned)
+		if not fresh.is_empty():
+			var pick: String = String(fresh[rng.randi() % fresh.size()])
+			ws.add_weapon(pick)
+			return "Weapon: " + GameData.weapon_name(pick)
+	var up: Array = ws.weapons.keys().filter(func(w: String) -> bool: return not ws.is_evolved(w) and int(ws.weapons[w]) < 5)
+	if not up.is_empty():
+		var w2: String = String(up[rng.randi() % up.size()])
+		ws.add_weapon(w2)
+		return "%s → Lv %d" % [GameData.weapon_name(w2), int(ws.weapons[w2])]
+	player.heal(30.0)
+	return "+30 hull"
+
 func _attune(force_id: String) -> String:
 	if force_id == "" or force_id in attuned:
 		return ""
